@@ -1,18 +1,9 @@
 name: Code Coverage
 
 on:
-  push:
-    paths-ignore:
-      - '**/*.md'
-      - 'doc/**'
-    branches:
-      - main
-  pull_request:
-    paths-ignore:
-      - 'doc/**'
-      - '**/*.md'
-    branches:
-      - main
+  schedule:
+    - cron:  '00 8 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -28,7 +19,6 @@ jobs:
       - name: Build - Linux
         run: |
           sudo apt-get update
-          sudo apt-get install llvm
           sudo apt-get install lcov
           mkdir build
           cd build
@@ -44,9 +34,17 @@ jobs:
         run: |
           cd build/bin
           ./test_spdm_responder
+      - name: Test Common
+        run: |
+          cd build/bin
+          ./test_spdm_common      
+      - name: Test Cryptography
+        run: |
+          cd build/bin
+          ./test_spdm_crypt      
       - name: Generate Coverage
         env: 
-          CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+          CI_COMMIT_MESSAGE: Publish code coverage.
           CI_COMMIT_AUTHOR: Continuous Integration
         run: |
           mkdir /tmp/coverage_log
@@ -57,7 +55,7 @@ jobs:
           rm -rf ./coverage_log
           mv /tmp/coverage_log ./
           git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
-          git config --global user.email "username@users.noreply.github.com"
+          git config --global user.email "void@void.net"
           git add -f coverage_log/\*
           git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"          
           git push --force origin github_pages
