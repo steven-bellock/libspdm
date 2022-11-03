@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">184</td>
+            <td class="headerCovTableEntry">186</td>
             <td class="headerCovTableEntry">276</td>
-            <td class="headerCovTableEntryLo">66.7 %</td>
+            <td class="headerCovTableEntryLo">67.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-30 22:39:40</td>
+            <td class="headerValue">2022-11-03 08:19:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -642,7 +642,7 @@
 <a name="580"><span class="lineNum">     580 </span>            :  * @retval true  Peer certificate chain buffer verification passed.</a>
 <a name="581"><span class="lineNum">     581 </span>            :  * @retval false Peer certificate chain buffer verification failed.</a>
 <a name="582"><span class="lineNum">     582 </span>            :  **/</a>
-<a name="583"><span class="lineNum">     583 </span><span class="lineCov">         19 : bool libspdm_verify_peer_cert_chain_buffer(libspdm_context_t *spdm_context,</span></a>
+<a name="583"><span class="lineNum">     583 </span><span class="lineCov">         28 : bool libspdm_verify_peer_cert_chain_buffer(libspdm_context_t *spdm_context,</span></a>
 <a name="584"><span class="lineNum">     584 </span>            :                                            const void *cert_chain_buffer,</a>
 <a name="585"><span class="lineNum">     585 </span>            :                                            size_t cert_chain_buffer_size,</a>
 <a name="586"><span class="lineNum">     586 </span>            :                                            const void **trust_anchor,</a>
@@ -661,15 +661,15 @@
 <a name="599"><span class="lineNum">     599 </span>            :     uint8_t root_cert_index;</a>
 <a name="600"><span class="lineNum">     600 </span>            :     bool is_device_cert_model;</a>
 <a name="601"><span class="lineNum">     601 </span>            : </a>
-<a name="602"><span class="lineNum">     602 </span><span class="lineCov">         19 :     if((spdm_context-&gt;connection_info.capability.flags &amp;</span></a>
+<a name="602"><span class="lineNum">     602 </span><span class="lineCov">         28 :     if((spdm_context-&gt;connection_info.capability.flags &amp;</span></a>
 <a name="603"><span class="lineNum">     603 </span>            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ALIAS_CERT_CAP) == 0) {</a>
-<a name="604"><span class="lineNum">     604 </span><span class="lineCov">         18 :         is_device_cert_model = true;</span></a>
+<a name="604"><span class="lineNum">     604 </span><span class="lineCov">         27 :         is_device_cert_model = true;</span></a>
 <a name="605"><span class="lineNum">     605 </span>            :     } else {</a>
 <a name="606"><span class="lineNum">     606 </span><span class="lineCov">          1 :         is_device_cert_model = false;</span></a>
 <a name="607"><span class="lineNum">     607 </span>            :     }</a>
 <a name="608"><span class="lineNum">     608 </span>            : </a>
-<a name="609"><span class="lineNum">     609 </span><span class="lineCov">         19 :     if (is_requester) {</span></a>
-<a name="610"><span class="lineNum">     610 </span><span class="lineCov">         19 :         result = libspdm_verify_certificate_chain_buffer(</span></a>
+<a name="609"><span class="lineNum">     609 </span><span class="lineCov">         28 :     if (is_requester) {</span></a>
+<a name="610"><span class="lineNum">     610 </span><span class="lineCov">         28 :         result = libspdm_verify_certificate_chain_buffer(</span></a>
 <a name="611"><span class="lineNum">     611 </span>            :             spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
 <a name="612"><span class="lineNum">     612 </span>            :             spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
 <a name="613"><span class="lineNum">     613 </span>            :             cert_chain_buffer, cert_chain_buffer_size, is_device_cert_model);</a>
@@ -679,61 +679,61 @@
 <a name="617"><span class="lineNum">     617 </span><span class="lineNoCov">          0 :             spdm_context-&gt;connection_info.algorithm.req_base_asym_alg,</span></a>
 <a name="618"><span class="lineNum">     618 </span>            :             cert_chain_buffer, cert_chain_buffer_size, is_device_cert_model);</a>
 <a name="619"><span class="lineNum">     619 </span>            :     }</a>
-<a name="620"><span class="lineNum">     620 </span><span class="lineCov">         19 :     if (!result) {</span></a>
+<a name="620"><span class="lineNum">     620 </span><span class="lineCov">         28 :     if (!result) {</span></a>
 <a name="621"><span class="lineNum">     621 </span><span class="lineCov">          4 :         return false;</span></a>
 <a name="622"><span class="lineNum">     622 </span>            :     }</a>
 <a name="623"><span class="lineNum">     623 </span>            : </a>
-<a name="624"><span class="lineNum">     624 </span><span class="lineCov">         15 :     root_cert_index = 0;</span></a>
-<a name="625"><span class="lineNum">     625 </span><span class="lineCov">         15 :     root_cert = spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index];</span></a>
-<a name="626"><span class="lineNum">     626 </span><span class="lineCov">         15 :     root_cert_size = spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index];</span></a>
-<a name="627"><span class="lineNum">     627 </span><span class="lineCov">         15 :     cert_chain_data = spdm_context-&gt;local_context.peer_cert_chain_provision;</span></a>
-<a name="628"><span class="lineNum">     628 </span><span class="lineCov">         15 :     cert_chain_data_size = spdm_context-&gt;local_context.peer_cert_chain_provision_size;</span></a>
+<a name="624"><span class="lineNum">     624 </span><span class="lineCov">         24 :     root_cert_index = 0;</span></a>
+<a name="625"><span class="lineNum">     625 </span><span class="lineCov">         24 :     root_cert = spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index];</span></a>
+<a name="626"><span class="lineNum">     626 </span><span class="lineCov">         24 :     root_cert_size = spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index];</span></a>
+<a name="627"><span class="lineNum">     627 </span><span class="lineCov">         24 :     cert_chain_data = spdm_context-&gt;local_context.peer_cert_chain_provision;</span></a>
+<a name="628"><span class="lineNum">     628 </span><span class="lineCov">         24 :     cert_chain_data_size = spdm_context-&gt;local_context.peer_cert_chain_provision_size;</span></a>
 <a name="629"><span class="lineNum">     629 </span>            : </a>
-<a name="630"><span class="lineNum">     630 </span><span class="lineCov">         15 :     root_cert_hash_size = libspdm_get_hash_size(</span></a>
+<a name="630"><span class="lineNum">     630 </span><span class="lineCov">         24 :     root_cert_hash_size = libspdm_get_hash_size(</span></a>
 <a name="631"><span class="lineNum">     631 </span>            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo);</a>
 <a name="632"><span class="lineNum">     632 </span>            : </a>
-<a name="633"><span class="lineNum">     633 </span><span class="lineCov">         15 :     if ((root_cert != NULL) &amp;&amp; (root_cert_size != 0)) {</span></a>
-<a name="634"><span class="lineNum">     634 </span><span class="lineCov">         15 :         while ((root_cert != NULL) &amp;&amp; (root_cert_size != 0)) {</span></a>
-<a name="635"><span class="lineNum">     635 </span><span class="lineCov">         15 :             result = libspdm_hash_all(</span></a>
+<a name="633"><span class="lineNum">     633 </span><span class="lineCov">         24 :     if ((root_cert != NULL) &amp;&amp; (root_cert_size != 0)) {</span></a>
+<a name="634"><span class="lineNum">     634 </span><span class="lineCov">         56 :         while ((root_cert != NULL) &amp;&amp; (root_cert_size != 0)) {</span></a>
+<a name="635"><span class="lineNum">     635 </span><span class="lineCov">         56 :             result = libspdm_hash_all(</span></a>
 <a name="636"><span class="lineNum">     636 </span>            :                 spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
 <a name="637"><span class="lineNum">     637 </span>            :                 root_cert, root_cert_size, root_cert_hash);</a>
-<a name="638"><span class="lineNum">     638 </span><span class="lineCov">         15 :             if (!result) {</span></a>
+<a name="638"><span class="lineNum">     638 </span><span class="lineCov">         56 :             if (!result) {</span></a>
 <a name="639"><span class="lineNum">     639 </span><span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="640"><span class="lineNum">     640 </span>            :                                &quot;!!! verify_peer_cert_chain_buffer - FAIL (hash calculation) !!!\n&quot;));</a>
 <a name="641"><span class="lineNum">     641 </span><span class="lineNoCov">          0 :                 return false;</span></a>
 <a name="642"><span class="lineNum">     642 </span>            :             }</a>
 <a name="643"><span class="lineNum">     643 </span>            : </a>
-<a name="644"><span class="lineNum">     644 </span><span class="lineCov">         15 :             if (libspdm_const_compare_mem((const uint8_t *)cert_chain_buffer +</span></a>
+<a name="644"><span class="lineNum">     644 </span><span class="lineCov">         56 :             if (libspdm_const_compare_mem((const uint8_t *)cert_chain_buffer +</span></a>
 <a name="645"><span class="lineNum">     645 </span>            :                                           sizeof(spdm_cert_chain_t),</a>
 <a name="646"><span class="lineNum">     646 </span>            :                                           root_cert_hash, root_cert_hash_size) == 0) {</a>
-<a name="647"><span class="lineNum">     647 </span><span class="lineCov">         12 :                 break;</span></a>
-<a name="648"><span class="lineNum">     648 </span><span class="lineCov">          3 :             } else if ((root_cert_index &lt; (LIBSPDM_MAX_ROOT_CERT_SUPPORT - 1)) &amp;&amp;</span></a>
-<a name="649"><span class="lineNum">     649 </span><span class="lineCov">          3 :                        (spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index + 1] !=</span></a>
+<a name="647"><span class="lineNum">     647 </span><span class="lineCov">         17 :                 break;</span></a>
+<a name="648"><span class="lineNum">     648 </span><span class="lineCov">         39 :             } else if ((root_cert_index &lt; (LIBSPDM_MAX_ROOT_CERT_SUPPORT - 1)) &amp;&amp;</span></a>
+<a name="649"><span class="lineNum">     649 </span><span class="lineCov">         38 :                        (spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index + 1] !=</span></a>
 <a name="650"><span class="lineNum">     650 </span>            :                         NULL)) {</a>
-<a name="651"><span class="lineNum">     651 </span><span class="lineCov">          1 :                 root_cert_index++;</span></a>
-<a name="652"><span class="lineNum">     652 </span><span class="lineCov">          1 :                 root_cert = spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index];</span></a>
-<a name="653"><span class="lineNum">     653 </span><span class="lineCov">          1 :                 root_cert_size =</span></a>
-<a name="654"><span class="lineNum">     654 </span><span class="lineCov">          1 :                     spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index];</span></a>
+<a name="651"><span class="lineNum">     651 </span><span class="lineCov">         34 :                 root_cert_index++;</span></a>
+<a name="652"><span class="lineNum">     652 </span><span class="lineCov">         34 :                 root_cert = spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index];</span></a>
+<a name="653"><span class="lineNum">     653 </span><span class="lineCov">         34 :                 root_cert_size =</span></a>
+<a name="654"><span class="lineNum">     654 </span><span class="lineCov">         34 :                     spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index];</span></a>
 <a name="655"><span class="lineNum">     655 </span>            :             } else {</a>
-<a name="656"><span class="lineNum">     656 </span><span class="lineCov">          2 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="656"><span class="lineNum">     656 </span><span class="lineCov">          5 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="657"><span class="lineNum">     657 </span>            :                                &quot;!!! verify_peer_cert_chain_buffer - &quot;</a>
 <a name="658"><span class="lineNum">     658 </span>            :                                &quot;FAIL (all root cert hash mismatch) !!!\n&quot;));</a>
-<a name="659"><span class="lineNum">     659 </span><span class="lineCov">          2 :                 return false;</span></a>
+<a name="659"><span class="lineNum">     659 </span><span class="lineCov">          5 :                 return false;</span></a>
 <a name="660"><span class="lineNum">     660 </span>            :             }</a>
 <a name="661"><span class="lineNum">     661 </span>            :         }</a>
 <a name="662"><span class="lineNum">     662 </span>            : </a>
-<a name="663"><span class="lineNum">     663 </span><span class="lineCov">         12 :         result = libspdm_x509_get_cert_from_cert_chain(</span></a>
-<a name="664"><span class="lineNum">     664 </span><span class="lineCov">         12 :             (const uint8_t *)cert_chain_buffer + sizeof(spdm_cert_chain_t) + root_cert_hash_size,</span></a>
-<a name="665"><span class="lineNum">     665 </span><span class="lineCov">         12 :             cert_chain_buffer_size - sizeof(spdm_cert_chain_t) - root_cert_hash_size,</span></a>
+<a name="663"><span class="lineNum">     663 </span><span class="lineCov">         17 :         result = libspdm_x509_get_cert_from_cert_chain(</span></a>
+<a name="664"><span class="lineNum">     664 </span><span class="lineCov">         17 :             (const uint8_t *)cert_chain_buffer + sizeof(spdm_cert_chain_t) + root_cert_hash_size,</span></a>
+<a name="665"><span class="lineNum">     665 </span><span class="lineCov">         17 :             cert_chain_buffer_size - sizeof(spdm_cert_chain_t) - root_cert_hash_size,</span></a>
 <a name="666"><span class="lineNum">     666 </span>            :             0, &amp;received_root_cert, &amp;received_root_cert_size);</a>
-<a name="667"><span class="lineNum">     667 </span><span class="lineCov">         12 :         if (!result) {</span></a>
+<a name="667"><span class="lineNum">     667 </span><span class="lineCov">         17 :         if (!result) {</span></a>
 <a name="668"><span class="lineNum">     668 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="669"><span class="lineNum">     669 </span>            :                            &quot;!!! verify_peer_cert_chain_buffer - FAIL (cert retrieval fail) !!!\n&quot;));</a>
 <a name="670"><span class="lineNum">     670 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="671"><span class="lineNum">     671 </span>            :         }</a>
-<a name="672"><span class="lineNum">     672 </span><span class="lineCov">         12 :         if (libspdm_is_root_certificate(received_root_cert, received_root_cert_size)) {</span></a>
-<a name="673"><span class="lineNum">     673 </span><span class="lineCov">         22 :             if ((root_cert != NULL) &amp;&amp;</span></a>
-<a name="674"><span class="lineNum">     674 </span><span class="lineCov">         11 :                 (libspdm_const_compare_mem(received_root_cert, root_cert, root_cert_size) != 0)) {</span></a>
+<a name="672"><span class="lineNum">     672 </span><span class="lineCov">         17 :         if (libspdm_is_root_certificate(received_root_cert, received_root_cert_size)) {</span></a>
+<a name="673"><span class="lineNum">     673 </span><span class="lineCov">         32 :             if ((root_cert != NULL) &amp;&amp;</span></a>
+<a name="674"><span class="lineNum">     674 </span><span class="lineCov">         16 :                 (libspdm_const_compare_mem(received_root_cert, root_cert, root_cert_size) != 0)) {</span></a>
 <a name="675"><span class="lineNum">     675 </span><span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="676"><span class="lineNum">     676 </span>            :                                &quot;!!! verify_peer_cert_chain_buffer - &quot;</a>
 <a name="677"><span class="lineNum">     677 </span>            :                                &quot;FAIL (root cert mismatch) !!!\n&quot;));</a>
@@ -748,13 +748,13 @@
 <a name="686"><span class="lineNum">     686 </span><span class="lineNoCov">          0 :                 return false;</span></a>
 <a name="687"><span class="lineNum">     687 </span>            :             }</a>
 <a name="688"><span class="lineNum">     688 </span>            :         }</a>
-<a name="689"><span class="lineNum">     689 </span><span class="lineCov">         12 :         if (trust_anchor != NULL) {</span></a>
-<a name="690"><span class="lineNum">     690 </span><span class="lineNoCov">          0 :             *trust_anchor = root_cert;</span></a>
+<a name="689"><span class="lineNum">     689 </span><span class="lineCov">         17 :         if (trust_anchor != NULL) {</span></a>
+<a name="690"><span class="lineNum">     690 </span><span class="lineCov">          5 :             *trust_anchor = root_cert;</span></a>
 <a name="691"><span class="lineNum">     691 </span>            :         }</a>
-<a name="692"><span class="lineNum">     692 </span><span class="lineCov">         12 :         if (trust_anchor_size != NULL) {</span></a>
-<a name="693"><span class="lineNum">     693 </span><span class="lineNoCov">          0 :             *trust_anchor_size = root_cert_size;</span></a>
+<a name="692"><span class="lineNum">     692 </span><span class="lineCov">         17 :         if (trust_anchor_size != NULL) {</span></a>
+<a name="693"><span class="lineNum">     693 </span><span class="lineCov">          5 :             *trust_anchor_size = root_cert_size;</span></a>
 <a name="694"><span class="lineNum">     694 </span>            :         }</a>
-<a name="695"><span class="lineNum">     695 </span><span class="lineCov">          1 :     } else if ((cert_chain_data != NULL) &amp;&amp; (cert_chain_data_size != 0)) {</span></a>
+<a name="695"><span class="lineNum">     695 </span><span class="lineCov">          2 :     } else if ((cert_chain_data != NULL) &amp;&amp; (cert_chain_data_size != 0)) {</span></a>
 <a name="696"><span class="lineNum">     696 </span>            :         /* Whether it contains the root certificate or not,</a>
 <a name="697"><span class="lineNum">     697 </span>            :          * it should be equal to the one provisioned in trusted environment*/</a>
 <a name="698"><span class="lineNum">     698 </span><span class="lineCov">          1 :         if (cert_chain_data_size != cert_chain_buffer_size) {</span></a>
@@ -779,9 +779,9 @@
 <a name="717"><span class="lineNum">     717 </span>            :      * When there is no root_cert and cert_chain_data in local_context, the return is true too.</a>
 <a name="718"><span class="lineNum">     718 </span>            :      * No provision means the caller wants to verify the trust anchor of the cert chain.</a>
 <a name="719"><span class="lineNum">     719 </span>            :      */</a>
-<a name="720"><span class="lineNum">     720 </span><span class="lineCov">         13 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_peer_cert_chain_buffer - PASS !!!\n&quot;));</span></a>
+<a name="720"><span class="lineNum">     720 </span><span class="lineCov">         19 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_peer_cert_chain_buffer - PASS !!!\n&quot;));</span></a>
 <a name="721"><span class="lineNum">     721 </span>            : </a>
-<a name="722"><span class="lineNum">     722 </span><span class="lineCov">         13 :     return true;</span></a>
+<a name="722"><span class="lineNum">     722 </span><span class="lineCov">         19 :     return true;</span></a>
 <a name="723"><span class="lineNum">     723 </span>            : }</a>
 <a name="724"><span class="lineNum">     724 </span>            : </a>
 <a name="725"><span class="lineNum">     725 </span>            : /**</a>

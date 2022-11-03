@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">167</td>
-            <td class="headerCovTableEntry">235</td>
-            <td class="headerCovTableEntryLo">71.1 %</td>
+            <td class="headerCovTableEntry">168</td>
+            <td class="headerCovTableEntry">236</td>
+            <td class="headerCovTableEntryLo">71.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-30 22:39:40</td>
+            <td class="headerValue">2022-11-03 08:19:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -562,109 +562,111 @@
 <a name="500"><span class="lineNum">     500 </span>            :             LIBSPDM_SESSION_STATE_ESTABLISHED);</a>
 <a name="501"><span class="lineNum">     501 </span>            :     }</a>
 <a name="502"><span class="lineNum">     502 </span>            : </a>
-<a name="503"><span class="lineNum">     503 </span><span class="lineCov">         13 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="503"><span class="lineNum">     503 </span><span class="lineCov">         13 :     session_info-&gt;heartbeat_period = spdm_response-&gt;header.param1;</span></a>
 <a name="504"><span class="lineNum">     504 </span>            : </a>
-<a name="505"><span class="lineNum">     505 </span><span class="lineCov">         44 : receive_done:</span></a>
-<a name="506"><span class="lineNum">     506 </span><span class="lineCov">         44 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="507"><span class="lineNum">     507 </span><span class="lineCov">         44 :     return status;</span></a>
-<a name="508"><span class="lineNum">     508 </span>            : }</a>
-<a name="509"><span class="lineNum">     509 </span>            : </a>
-<a name="510"><span class="lineNum">     510 </span>            : /**</a>
-<a name="511"><span class="lineNum">     511 </span>            :  * This function sends PSK_EXCHANGE and receives PSK_EXCHANGE_RSP for SPDM PSK exchange.</a>
-<a name="512"><span class="lineNum">     512 </span>            :  *</a>
-<a name="513"><span class="lineNum">     513 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
-<a name="514"><span class="lineNum">     514 </span>            :  * @param  measurement_hash_type          measurement_hash_type to the PSK_EXCHANGE request.</a>
-<a name="515"><span class="lineNum">     515 </span>            :  * @param  session_policy               The policy for the session.</a>
-<a name="516"><span class="lineNum">     516 </span>            :  * @param  session_id                    session_id from the PSK_EXCHANGE_RSP response.</a>
-<a name="517"><span class="lineNum">     517 </span>            :  * @param  heartbeat_period              heartbeat_period from the PSK_EXCHANGE_RSP response.</a>
-<a name="518"><span class="lineNum">     518 </span>            :  * @param  measurement_hash              measurement_hash from the PSK_EXCHANGE_RSP response.</a>
-<a name="519"><span class="lineNum">     519 </span>            :  *</a>
-<a name="520"><span class="lineNum">     520 </span>            :  * @retval RETURN_SUCCESS               The PSK_EXCHANGE is sent and the PSK_EXCHANGE_RSP is received.</a>
-<a name="521"><span class="lineNum">     521 </span>            :  * @retval RETURN_DEVICE_ERROR          A device error occurs when communicates with the device.</a>
-<a name="522"><span class="lineNum">     522 </span>            :  **/</a>
-<a name="523"><span class="lineNum">     523 </span><span class="lineCov">         42 : libspdm_return_t libspdm_send_receive_psk_exchange(libspdm_context_t *spdm_context,</span></a>
-<a name="524"><span class="lineNum">     524 </span>            :                                                    uint8_t measurement_hash_type,</a>
-<a name="525"><span class="lineNum">     525 </span>            :                                                    uint8_t session_policy,</a>
-<a name="526"><span class="lineNum">     526 </span>            :                                                    uint32_t *session_id,</a>
-<a name="527"><span class="lineNum">     527 </span>            :                                                    uint8_t *heartbeat_period,</a>
-<a name="528"><span class="lineNum">     528 </span>            :                                                    void *measurement_hash)</a>
-<a name="529"><span class="lineNum">     529 </span>            : {</a>
-<a name="530"><span class="lineNum">     530 </span>            :     size_t retry;</a>
-<a name="531"><span class="lineNum">     531 </span>            :     libspdm_return_t status;</a>
-<a name="532"><span class="lineNum">     532 </span>            : </a>
-<a name="533"><span class="lineNum">     533 </span><span class="lineCov">         42 :     spdm_context-&gt;crypto_request = true;</span></a>
-<a name="534"><span class="lineNum">     534 </span><span class="lineCov">         42 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="535"><span class="lineNum">     535 </span>            :     do {</a>
-<a name="536"><span class="lineNum">     536 </span><span class="lineCov">         46 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
-<a name="537"><span class="lineNum">     537 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
-<a name="538"><span class="lineNum">     538 </span>            :             heartbeat_period, measurement_hash,</a>
-<a name="539"><span class="lineNum">     539 </span>            :             NULL, 0, NULL, NULL, NULL, NULL);</a>
-<a name="540"><span class="lineNum">     540 </span><span class="lineCov">         46 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="541"><span class="lineNum">     541 </span><span class="lineCov">         41 :             return status;</span></a>
-<a name="542"><span class="lineNum">     542 </span>            :         }</a>
-<a name="543"><span class="lineNum">     543 </span><span class="lineCov">          5 :     } while (retry-- != 0);</span></a>
-<a name="544"><span class="lineNum">     544 </span>            : </a>
-<a name="545"><span class="lineNum">     545 </span><span class="lineCov">          1 :     return status;</span></a>
-<a name="546"><span class="lineNum">     546 </span>            : }</a>
-<a name="547"><span class="lineNum">     547 </span>            : </a>
-<a name="548"><span class="lineNum">     548 </span>            : /**</a>
-<a name="549"><span class="lineNum">     549 </span>            :  * This function sends PSK_EXCHANGE and receives PSK_EXCHANGE_RSP for SPDM PSK exchange.</a>
-<a name="550"><span class="lineNum">     550 </span>            :  *</a>
-<a name="551"><span class="lineNum">     551 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
-<a name="552"><span class="lineNum">     552 </span>            :  * @param  measurement_hash_type          measurement_hash_type to the PSK_EXCHANGE request.</a>
-<a name="553"><span class="lineNum">     553 </span>            :  * @param  session_policy               The policy for the session.</a>
-<a name="554"><span class="lineNum">     554 </span>            :  * @param  session_id                    session_id from the PSK_EXCHANGE_RSP response.</a>
-<a name="555"><span class="lineNum">     555 </span>            :  * @param  heartbeat_period              heartbeat_period from the PSK_EXCHANGE_RSP response.</a>
-<a name="556"><span class="lineNum">     556 </span>            :  * @param  measurement_hash              measurement_hash from the PSK_EXCHANGE_RSP response.</a>
-<a name="557"><span class="lineNum">     557 </span>            :  * @param  requester_context_in          A buffer to hold the requester context as input, if not NULL.</a>
-<a name="558"><span class="lineNum">     558 </span>            :  * @param  requester_context_in_size     The size of requester_context_in.</a>
-<a name="559"><span class="lineNum">     559 </span>            :  *                                      It must be 32 bytes at least, but not exceed LIBSPDM_PSK_CONTEXT_LENGTH.</a>
-<a name="560"><span class="lineNum">     560 </span>            :  * @param  requester_context             A buffer to hold the requester context, if not NULL.</a>
-<a name="561"><span class="lineNum">     561 </span>            :  * @param  requester_context_size        On input, the size of requester_context buffer.</a>
-<a name="562"><span class="lineNum">     562 </span>            :  *                                      On output, the size of data returned in requester_context buffer.</a>
-<a name="563"><span class="lineNum">     563 </span>            :  *                                      It must be 32 bytes at least.</a>
-<a name="564"><span class="lineNum">     564 </span>            :  * @param  responder_context             A buffer to hold the responder context, if not NULL.</a>
-<a name="565"><span class="lineNum">     565 </span>            :  * @param  responder_context_size        On input, the size of requester_context buffer.</a>
-<a name="566"><span class="lineNum">     566 </span>            :  *                                      On output, the size of data returned in requester_context buffer.</a>
-<a name="567"><span class="lineNum">     567 </span>            :  *                                      It could be 0 if device does not support context.</a>
-<a name="568"><span class="lineNum">     568 </span>            :  *</a>
-<a name="569"><span class="lineNum">     569 </span>            :  * @retval RETURN_SUCCESS               The PSK_EXCHANGE is sent and the PSK_EXCHANGE_RSP is received.</a>
-<a name="570"><span class="lineNum">     570 </span>            :  * @retval RETURN_DEVICE_ERROR          A device error occurs when communicates with the device.</a>
-<a name="571"><span class="lineNum">     571 </span>            :  **/</a>
-<a name="572"><span class="lineNum">     572 </span><span class="lineNoCov">          0 : libspdm_return_t libspdm_send_receive_psk_exchange_ex(libspdm_context_t *spdm_context,</span></a>
-<a name="573"><span class="lineNum">     573 </span>            :                                                       uint8_t measurement_hash_type,</a>
-<a name="574"><span class="lineNum">     574 </span>            :                                                       uint8_t session_policy,</a>
-<a name="575"><span class="lineNum">     575 </span>            :                                                       uint32_t *session_id,</a>
-<a name="576"><span class="lineNum">     576 </span>            :                                                       uint8_t *heartbeat_period,</a>
-<a name="577"><span class="lineNum">     577 </span>            :                                                       void *measurement_hash,</a>
-<a name="578"><span class="lineNum">     578 </span>            :                                                       const void *requester_context_in,</a>
-<a name="579"><span class="lineNum">     579 </span>            :                                                       size_t requester_context_in_size,</a>
-<a name="580"><span class="lineNum">     580 </span>            :                                                       void *requester_context,</a>
-<a name="581"><span class="lineNum">     581 </span>            :                                                       size_t *requester_context_size,</a>
-<a name="582"><span class="lineNum">     582 </span>            :                                                       void *responder_context,</a>
-<a name="583"><span class="lineNum">     583 </span>            :                                                       size_t *responder_context_size)</a>
-<a name="584"><span class="lineNum">     584 </span>            : {</a>
-<a name="585"><span class="lineNum">     585 </span>            :     size_t retry;</a>
-<a name="586"><span class="lineNum">     586 </span>            :     libspdm_return_t status;</a>
-<a name="587"><span class="lineNum">     587 </span>            : </a>
-<a name="588"><span class="lineNum">     588 </span><span class="lineNoCov">          0 :     spdm_context-&gt;crypto_request = true;</span></a>
-<a name="589"><span class="lineNum">     589 </span><span class="lineNoCov">          0 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="590"><span class="lineNum">     590 </span>            :     do {</a>
-<a name="591"><span class="lineNum">     591 </span><span class="lineNoCov">          0 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
-<a name="592"><span class="lineNum">     592 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
-<a name="593"><span class="lineNum">     593 </span>            :             heartbeat_period, measurement_hash,</a>
-<a name="594"><span class="lineNum">     594 </span>            :             requester_context_in, requester_context_in_size,</a>
-<a name="595"><span class="lineNum">     595 </span>            :             requester_context, requester_context_size,</a>
-<a name="596"><span class="lineNum">     596 </span>            :             responder_context, responder_context_size);</a>
-<a name="597"><span class="lineNum">     597 </span><span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="598"><span class="lineNum">     598 </span><span class="lineNoCov">          0 :             return status;</span></a>
-<a name="599"><span class="lineNum">     599 </span>            :         }</a>
-<a name="600"><span class="lineNum">     600 </span><span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
-<a name="601"><span class="lineNum">     601 </span>            : </a>
-<a name="602"><span class="lineNum">     602 </span><span class="lineNoCov">          0 :     return status;</span></a>
-<a name="603"><span class="lineNum">     603 </span>            : }</a>
-<a name="604"><span class="lineNum">     604 </span>            : </a>
-<a name="605"><span class="lineNum">     605 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
+<a name="505"><span class="lineNum">     505 </span><span class="lineCov">         13 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="506"><span class="lineNum">     506 </span>            : </a>
+<a name="507"><span class="lineNum">     507 </span><span class="lineCov">         44 : receive_done:</span></a>
+<a name="508"><span class="lineNum">     508 </span><span class="lineCov">         44 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="509"><span class="lineNum">     509 </span><span class="lineCov">         44 :     return status;</span></a>
+<a name="510"><span class="lineNum">     510 </span>            : }</a>
+<a name="511"><span class="lineNum">     511 </span>            : </a>
+<a name="512"><span class="lineNum">     512 </span>            : /**</a>
+<a name="513"><span class="lineNum">     513 </span>            :  * This function sends PSK_EXCHANGE and receives PSK_EXCHANGE_RSP for SPDM PSK exchange.</a>
+<a name="514"><span class="lineNum">     514 </span>            :  *</a>
+<a name="515"><span class="lineNum">     515 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
+<a name="516"><span class="lineNum">     516 </span>            :  * @param  measurement_hash_type          measurement_hash_type to the PSK_EXCHANGE request.</a>
+<a name="517"><span class="lineNum">     517 </span>            :  * @param  session_policy               The policy for the session.</a>
+<a name="518"><span class="lineNum">     518 </span>            :  * @param  session_id                    session_id from the PSK_EXCHANGE_RSP response.</a>
+<a name="519"><span class="lineNum">     519 </span>            :  * @param  heartbeat_period              heartbeat_period from the PSK_EXCHANGE_RSP response.</a>
+<a name="520"><span class="lineNum">     520 </span>            :  * @param  measurement_hash              measurement_hash from the PSK_EXCHANGE_RSP response.</a>
+<a name="521"><span class="lineNum">     521 </span>            :  *</a>
+<a name="522"><span class="lineNum">     522 </span>            :  * @retval RETURN_SUCCESS               The PSK_EXCHANGE is sent and the PSK_EXCHANGE_RSP is received.</a>
+<a name="523"><span class="lineNum">     523 </span>            :  * @retval RETURN_DEVICE_ERROR          A device error occurs when communicates with the device.</a>
+<a name="524"><span class="lineNum">     524 </span>            :  **/</a>
+<a name="525"><span class="lineNum">     525 </span><span class="lineCov">         42 : libspdm_return_t libspdm_send_receive_psk_exchange(libspdm_context_t *spdm_context,</span></a>
+<a name="526"><span class="lineNum">     526 </span>            :                                                    uint8_t measurement_hash_type,</a>
+<a name="527"><span class="lineNum">     527 </span>            :                                                    uint8_t session_policy,</a>
+<a name="528"><span class="lineNum">     528 </span>            :                                                    uint32_t *session_id,</a>
+<a name="529"><span class="lineNum">     529 </span>            :                                                    uint8_t *heartbeat_period,</a>
+<a name="530"><span class="lineNum">     530 </span>            :                                                    void *measurement_hash)</a>
+<a name="531"><span class="lineNum">     531 </span>            : {</a>
+<a name="532"><span class="lineNum">     532 </span>            :     size_t retry;</a>
+<a name="533"><span class="lineNum">     533 </span>            :     libspdm_return_t status;</a>
+<a name="534"><span class="lineNum">     534 </span>            : </a>
+<a name="535"><span class="lineNum">     535 </span><span class="lineCov">         42 :     spdm_context-&gt;crypto_request = true;</span></a>
+<a name="536"><span class="lineNum">     536 </span><span class="lineCov">         42 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="537"><span class="lineNum">     537 </span>            :     do {</a>
+<a name="538"><span class="lineNum">     538 </span><span class="lineCov">         46 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
+<a name="539"><span class="lineNum">     539 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
+<a name="540"><span class="lineNum">     540 </span>            :             heartbeat_period, measurement_hash,</a>
+<a name="541"><span class="lineNum">     541 </span>            :             NULL, 0, NULL, NULL, NULL, NULL);</a>
+<a name="542"><span class="lineNum">     542 </span><span class="lineCov">         46 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="543"><span class="lineNum">     543 </span><span class="lineCov">         41 :             return status;</span></a>
+<a name="544"><span class="lineNum">     544 </span>            :         }</a>
+<a name="545"><span class="lineNum">     545 </span><span class="lineCov">          5 :     } while (retry-- != 0);</span></a>
+<a name="546"><span class="lineNum">     546 </span>            : </a>
+<a name="547"><span class="lineNum">     547 </span><span class="lineCov">          1 :     return status;</span></a>
+<a name="548"><span class="lineNum">     548 </span>            : }</a>
+<a name="549"><span class="lineNum">     549 </span>            : </a>
+<a name="550"><span class="lineNum">     550 </span>            : /**</a>
+<a name="551"><span class="lineNum">     551 </span>            :  * This function sends PSK_EXCHANGE and receives PSK_EXCHANGE_RSP for SPDM PSK exchange.</a>
+<a name="552"><span class="lineNum">     552 </span>            :  *</a>
+<a name="553"><span class="lineNum">     553 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
+<a name="554"><span class="lineNum">     554 </span>            :  * @param  measurement_hash_type          measurement_hash_type to the PSK_EXCHANGE request.</a>
+<a name="555"><span class="lineNum">     555 </span>            :  * @param  session_policy               The policy for the session.</a>
+<a name="556"><span class="lineNum">     556 </span>            :  * @param  session_id                    session_id from the PSK_EXCHANGE_RSP response.</a>
+<a name="557"><span class="lineNum">     557 </span>            :  * @param  heartbeat_period              heartbeat_period from the PSK_EXCHANGE_RSP response.</a>
+<a name="558"><span class="lineNum">     558 </span>            :  * @param  measurement_hash              measurement_hash from the PSK_EXCHANGE_RSP response.</a>
+<a name="559"><span class="lineNum">     559 </span>            :  * @param  requester_context_in          A buffer to hold the requester context as input, if not NULL.</a>
+<a name="560"><span class="lineNum">     560 </span>            :  * @param  requester_context_in_size     The size of requester_context_in.</a>
+<a name="561"><span class="lineNum">     561 </span>            :  *                                      It must be 32 bytes at least, but not exceed LIBSPDM_PSK_CONTEXT_LENGTH.</a>
+<a name="562"><span class="lineNum">     562 </span>            :  * @param  requester_context             A buffer to hold the requester context, if not NULL.</a>
+<a name="563"><span class="lineNum">     563 </span>            :  * @param  requester_context_size        On input, the size of requester_context buffer.</a>
+<a name="564"><span class="lineNum">     564 </span>            :  *                                      On output, the size of data returned in requester_context buffer.</a>
+<a name="565"><span class="lineNum">     565 </span>            :  *                                      It must be 32 bytes at least.</a>
+<a name="566"><span class="lineNum">     566 </span>            :  * @param  responder_context             A buffer to hold the responder context, if not NULL.</a>
+<a name="567"><span class="lineNum">     567 </span>            :  * @param  responder_context_size        On input, the size of requester_context buffer.</a>
+<a name="568"><span class="lineNum">     568 </span>            :  *                                      On output, the size of data returned in requester_context buffer.</a>
+<a name="569"><span class="lineNum">     569 </span>            :  *                                      It could be 0 if device does not support context.</a>
+<a name="570"><span class="lineNum">     570 </span>            :  *</a>
+<a name="571"><span class="lineNum">     571 </span>            :  * @retval RETURN_SUCCESS               The PSK_EXCHANGE is sent and the PSK_EXCHANGE_RSP is received.</a>
+<a name="572"><span class="lineNum">     572 </span>            :  * @retval RETURN_DEVICE_ERROR          A device error occurs when communicates with the device.</a>
+<a name="573"><span class="lineNum">     573 </span>            :  **/</a>
+<a name="574"><span class="lineNum">     574 </span><span class="lineNoCov">          0 : libspdm_return_t libspdm_send_receive_psk_exchange_ex(libspdm_context_t *spdm_context,</span></a>
+<a name="575"><span class="lineNum">     575 </span>            :                                                       uint8_t measurement_hash_type,</a>
+<a name="576"><span class="lineNum">     576 </span>            :                                                       uint8_t session_policy,</a>
+<a name="577"><span class="lineNum">     577 </span>            :                                                       uint32_t *session_id,</a>
+<a name="578"><span class="lineNum">     578 </span>            :                                                       uint8_t *heartbeat_period,</a>
+<a name="579"><span class="lineNum">     579 </span>            :                                                       void *measurement_hash,</a>
+<a name="580"><span class="lineNum">     580 </span>            :                                                       const void *requester_context_in,</a>
+<a name="581"><span class="lineNum">     581 </span>            :                                                       size_t requester_context_in_size,</a>
+<a name="582"><span class="lineNum">     582 </span>            :                                                       void *requester_context,</a>
+<a name="583"><span class="lineNum">     583 </span>            :                                                       size_t *requester_context_size,</a>
+<a name="584"><span class="lineNum">     584 </span>            :                                                       void *responder_context,</a>
+<a name="585"><span class="lineNum">     585 </span>            :                                                       size_t *responder_context_size)</a>
+<a name="586"><span class="lineNum">     586 </span>            : {</a>
+<a name="587"><span class="lineNum">     587 </span>            :     size_t retry;</a>
+<a name="588"><span class="lineNum">     588 </span>            :     libspdm_return_t status;</a>
+<a name="589"><span class="lineNum">     589 </span>            : </a>
+<a name="590"><span class="lineNum">     590 </span><span class="lineNoCov">          0 :     spdm_context-&gt;crypto_request = true;</span></a>
+<a name="591"><span class="lineNum">     591 </span><span class="lineNoCov">          0 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="592"><span class="lineNum">     592 </span>            :     do {</a>
+<a name="593"><span class="lineNum">     593 </span><span class="lineNoCov">          0 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
+<a name="594"><span class="lineNum">     594 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
+<a name="595"><span class="lineNum">     595 </span>            :             heartbeat_period, measurement_hash,</a>
+<a name="596"><span class="lineNum">     596 </span>            :             requester_context_in, requester_context_in_size,</a>
+<a name="597"><span class="lineNum">     597 </span>            :             requester_context, requester_context_size,</a>
+<a name="598"><span class="lineNum">     598 </span>            :             responder_context, responder_context_size);</a>
+<a name="599"><span class="lineNum">     599 </span><span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="600"><span class="lineNum">     600 </span><span class="lineNoCov">          0 :             return status;</span></a>
+<a name="601"><span class="lineNum">     601 </span>            :         }</a>
+<a name="602"><span class="lineNum">     602 </span><span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="603"><span class="lineNum">     603 </span>            : </a>
+<a name="604"><span class="lineNum">     604 </span><span class="lineNoCov">          0 :     return status;</span></a>
+<a name="605"><span class="lineNum">     605 </span>            : }</a>
+<a name="606"><span class="lineNum">     606 </span>            : </a>
+<a name="607"><span class="lineNum">     607 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
 </pre>
       </td>
     </tr>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-30 22:39:40</td>
+            <td class="headerValue">2022-11-03 08:19:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -223,119 +223,125 @@
 <a name="161"><span class="lineNum">     161 </span>            :             }</a>
 <a name="162"><span class="lineNum">     162 </span>            :         }</a>
 <a name="163"><span class="lineNum">     163 </span><span class="lineCov">          7 :         if ((auth_attribute &amp; SPDM_CHALLENGE_AUTH_RESPONSE_ATTRIBUTE_BASIC_MUT_AUTH_REQ) != 0) {</span></a>
-<a name="164"><span class="lineNum">     164 </span><span class="lineNoCov">          0 :             libspdm_init_basic_mut_auth_encap_state(context);</span></a>
-<a name="165"><span class="lineNum">     165 </span>            :         }</a>
-<a name="166"><span class="lineNum">     166 </span>            :     }</a>
-<a name="167"><span class="lineNum">     167 </span>            : </a>
-<a name="168"><span class="lineNum">     168 </span><span class="lineCov">          7 :     spdm_response-&gt;header.param1 = auth_attribute;</span></a>
-<a name="169"><span class="lineNum">     169 </span>            : </a>
-<a name="170"><span class="lineNum">     170 </span><span class="lineCov">          7 :     if (slot_id == 0xFF) {</span></a>
-<a name="171"><span class="lineNum">     171 </span><span class="lineNoCov">          0 :         spdm_response-&gt;header.param2 = 0;</span></a>
-<a name="172"><span class="lineNum">     172 </span>            : </a>
-<a name="173"><span class="lineNum">     173 </span><span class="lineNoCov">          0 :         slot_id = spdm_context-&gt;local_context.provisioned_slot_id;</span></a>
-<a name="174"><span class="lineNum">     174 </span>            :     } else {</a>
-<a name="175"><span class="lineNum">     175 </span><span class="lineCov">          7 :         slot_mask = libspdm_get_cert_slot_mask(spdm_context);</span></a>
-<a name="176"><span class="lineNum">     176 </span><span class="lineCov">          7 :         if (slot_mask != 0) {</span></a>
-<a name="177"><span class="lineNum">     177 </span><span class="lineCov">          7 :             spdm_response-&gt;header.param2 = slot_mask;</span></a>
-<a name="178"><span class="lineNum">     178 </span>            :         } else {</a>
-<a name="179"><span class="lineNum">     179 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
-<a name="180"><span class="lineNum">     180 </span>            :                 spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
-<a name="181"><span class="lineNum">     181 </span>            :                 0, response_size, response);</a>
-<a name="182"><span class="lineNum">     182 </span>            :         }</a>
-<a name="183"><span class="lineNum">     183 </span>            :     }</a>
-<a name="184"><span class="lineNum">     184 </span>            : </a>
-<a name="185"><span class="lineNum">     185 </span><span class="lineCov">          7 :     ptr = (void *)(spdm_response + 1);</span></a>
-<a name="186"><span class="lineNum">     186 </span><span class="lineCov">          7 :     result = libspdm_generate_cert_chain_hash(spdm_context, slot_id, ptr);</span></a>
-<a name="187"><span class="lineNum">     187 </span><span class="lineCov">          7 :     if (!result) {</span></a>
-<a name="188"><span class="lineNum">     188 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="189"><span class="lineNum">     189 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="190"><span class="lineNum">     190 </span>            :                                                response_size, response);</a>
-<a name="191"><span class="lineNum">     191 </span>            :     }</a>
-<a name="192"><span class="lineNum">     192 </span><span class="lineCov">          7 :     ptr += hash_size;</span></a>
-<a name="193"><span class="lineNum">     193 </span>            : </a>
-<a name="194"><span class="lineNum">     194 </span><span class="lineCov">          7 :     result = libspdm_get_random_number(SPDM_NONCE_SIZE, ptr);</span></a>
-<a name="195"><span class="lineNum">     195 </span><span class="lineCov">          7 :     if (!result) {</span></a>
-<a name="196"><span class="lineNum">     196 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="197"><span class="lineNum">     197 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="198"><span class="lineNum">     198 </span>            :                                                response_size, response);</a>
-<a name="199"><span class="lineNum">     199 </span>            :     }</a>
-<a name="200"><span class="lineNum">     200 </span><span class="lineCov">          7 :     ptr += SPDM_NONCE_SIZE;</span></a>
-<a name="201"><span class="lineNum">     201 </span>            : </a>
-<a name="202"><span class="lineNum">     202 </span><span class="lineCov">          7 :     if (libspdm_is_capabilities_flag_supported(</span></a>
-<a name="203"><span class="lineNum">     203 </span>            :             spdm_context, false, 0, SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MEAS_CAP)) {</a>
-<a name="204"><span class="lineNum">     204 </span>            : </a>
-<a name="205"><span class="lineNum">     205 </span><span class="lineCov">          2 :         result = libspdm_generate_measurement_summary_hash(</span></a>
-<a name="206"><span class="lineNum">     206 </span><span class="lineCov">          2 :             spdm_context-&gt;connection_info.version,</span></a>
-<a name="207"><span class="lineNum">     207 </span>            :             spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
-<a name="208"><span class="lineNum">     208 </span><span class="lineCov">          2 :             spdm_context-&gt;connection_info.algorithm.measurement_spec,</span></a>
-<a name="209"><span class="lineNum">     209 </span>            :             spdm_context-&gt;connection_info.algorithm.measurement_hash_algo,</a>
-<a name="210"><span class="lineNum">     210 </span><span class="lineCov">          2 :             spdm_request-&gt;header.param2,</span></a>
-<a name="211"><span class="lineNum">     211 </span>            :             ptr,</a>
-<a name="212"><span class="lineNum">     212 </span>            :             &amp;measurement_summary_hash_size);</a>
-<a name="213"><span class="lineNum">     213 </span>            :     }</a>
-<a name="214"><span class="lineNum">     214 </span>            :     else {</a>
-<a name="215"><span class="lineNum">     215 </span><span class="lineCov">          5 :         result = true;</span></a>
-<a name="216"><span class="lineNum">     216 </span>            :     }</a>
-<a name="217"><span class="lineNum">     217 </span>            : </a>
-<a name="218"><span class="lineNum">     218 </span><span class="lineCov">          7 :     if (!result) {</span></a>
-<a name="219"><span class="lineNum">     219 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="220"><span class="lineNum">     220 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="221"><span class="lineNum">     221 </span>            :                                                response_size, response);</a>
+<a name="164"><span class="lineNum">     164 </span>            : #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) || (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)</a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineNoCov">          0 :             libspdm_init_basic_mut_auth_encap_state(context);</span></a>
+<a name="166"><span class="lineNum">     166 </span>            : #else</a>
+<a name="167"><span class="lineNum">     167 </span>            :             auth_attribute =</a>
+<a name="168"><span class="lineNum">     168 </span>            :                 (uint8_t)(auth_attribute &amp;</a>
+<a name="169"><span class="lineNum">     169 </span>            :                           ~SPDM_CHALLENGE_AUTH_RESPONSE_ATTRIBUTE_BASIC_MUT_AUTH_REQ);</a>
+<a name="170"><span class="lineNum">     170 </span>            : #endif</a>
+<a name="171"><span class="lineNum">     171 </span>            :         }</a>
+<a name="172"><span class="lineNum">     172 </span>            :     }</a>
+<a name="173"><span class="lineNum">     173 </span>            : </a>
+<a name="174"><span class="lineNum">     174 </span><span class="lineCov">          7 :     spdm_response-&gt;header.param1 = auth_attribute;</span></a>
+<a name="175"><span class="lineNum">     175 </span>            : </a>
+<a name="176"><span class="lineNum">     176 </span><span class="lineCov">          7 :     if (slot_id == 0xFF) {</span></a>
+<a name="177"><span class="lineNum">     177 </span><span class="lineNoCov">          0 :         spdm_response-&gt;header.param2 = 0;</span></a>
+<a name="178"><span class="lineNum">     178 </span>            : </a>
+<a name="179"><span class="lineNum">     179 </span><span class="lineNoCov">          0 :         slot_id = spdm_context-&gt;local_context.provisioned_slot_id;</span></a>
+<a name="180"><span class="lineNum">     180 </span>            :     } else {</a>
+<a name="181"><span class="lineNum">     181 </span><span class="lineCov">          7 :         slot_mask = libspdm_get_cert_slot_mask(spdm_context);</span></a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          7 :         if (slot_mask != 0) {</span></a>
+<a name="183"><span class="lineNum">     183 </span><span class="lineCov">          7 :             spdm_response-&gt;header.param2 = slot_mask;</span></a>
+<a name="184"><span class="lineNum">     184 </span>            :         } else {</a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
+<a name="186"><span class="lineNum">     186 </span>            :                 spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
+<a name="187"><span class="lineNum">     187 </span>            :                 0, response_size, response);</a>
+<a name="188"><span class="lineNum">     188 </span>            :         }</a>
+<a name="189"><span class="lineNum">     189 </span>            :     }</a>
+<a name="190"><span class="lineNum">     190 </span>            : </a>
+<a name="191"><span class="lineNum">     191 </span><span class="lineCov">          7 :     ptr = (void *)(spdm_response + 1);</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineCov">          7 :     result = libspdm_generate_cert_chain_hash(spdm_context, slot_id, ptr);</span></a>
+<a name="193"><span class="lineNum">     193 </span><span class="lineCov">          7 :     if (!result) {</span></a>
+<a name="194"><span class="lineNum">     194 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="195"><span class="lineNum">     195 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="196"><span class="lineNum">     196 </span>            :                                                response_size, response);</a>
+<a name="197"><span class="lineNum">     197 </span>            :     }</a>
+<a name="198"><span class="lineNum">     198 </span><span class="lineCov">          7 :     ptr += hash_size;</span></a>
+<a name="199"><span class="lineNum">     199 </span>            : </a>
+<a name="200"><span class="lineNum">     200 </span><span class="lineCov">          7 :     result = libspdm_get_random_number(SPDM_NONCE_SIZE, ptr);</span></a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineCov">          7 :     if (!result) {</span></a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="203"><span class="lineNum">     203 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="204"><span class="lineNum">     204 </span>            :                                                response_size, response);</a>
+<a name="205"><span class="lineNum">     205 </span>            :     }</a>
+<a name="206"><span class="lineNum">     206 </span><span class="lineCov">          7 :     ptr += SPDM_NONCE_SIZE;</span></a>
+<a name="207"><span class="lineNum">     207 </span>            : </a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineCov">          7 :     if (libspdm_is_capabilities_flag_supported(</span></a>
+<a name="209"><span class="lineNum">     209 </span>            :             spdm_context, false, 0, SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MEAS_CAP)) {</a>
+<a name="210"><span class="lineNum">     210 </span>            : </a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineCov">          2 :         result = libspdm_generate_measurement_summary_hash(</span></a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          2 :             spdm_context-&gt;connection_info.version,</span></a>
+<a name="213"><span class="lineNum">     213 </span>            :             spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          2 :             spdm_context-&gt;connection_info.algorithm.measurement_spec,</span></a>
+<a name="215"><span class="lineNum">     215 </span>            :             spdm_context-&gt;connection_info.algorithm.measurement_hash_algo,</a>
+<a name="216"><span class="lineNum">     216 </span><span class="lineCov">          2 :             spdm_request-&gt;header.param2,</span></a>
+<a name="217"><span class="lineNum">     217 </span>            :             ptr,</a>
+<a name="218"><span class="lineNum">     218 </span>            :             &amp;measurement_summary_hash_size);</a>
+<a name="219"><span class="lineNum">     219 </span>            :     }</a>
+<a name="220"><span class="lineNum">     220 </span>            :     else {</a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineCov">          5 :         result = true;</span></a>
 <a name="222"><span class="lineNum">     222 </span>            :     }</a>
-<a name="223"><span class="lineNum">     223 </span><span class="lineCov">          7 :     ptr += measurement_summary_hash_size;</span></a>
-<a name="224"><span class="lineNum">     224 </span>            : </a>
-<a name="225"><span class="lineNum">     225 </span><span class="lineCov">          7 :     libspdm_write_uint16 (ptr, (uint16_t)spdm_context-&gt;local_context</span></a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineCov">          7 :                           .opaque_challenge_auth_rsp_size);</span></a>
-<a name="227"><span class="lineNum">     227 </span><span class="lineCov">          7 :     ptr += sizeof(uint16_t);</span></a>
-<a name="228"><span class="lineNum">     228 </span>            : </a>
-<a name="229"><span class="lineNum">     229 </span><span class="lineCov">          7 :     if (spdm_context-&gt;local_context.opaque_challenge_auth_rsp != NULL) {</span></a>
-<a name="230"><span class="lineNum">     230 </span><span class="lineCov">          4 :         libspdm_copy_mem(ptr,</span></a>
-<a name="231"><span class="lineNum">     231 </span><span class="lineCov">          4 :                          response_capacity - (ptr - (uint8_t*)response),</span></a>
-<a name="232"><span class="lineNum">     232 </span><span class="lineCov">          4 :                          spdm_context-&gt;local_context.opaque_challenge_auth_rsp,</span></a>
-<a name="233"><span class="lineNum">     233 </span>            :                          spdm_context-&gt;local_context.opaque_challenge_auth_rsp_size);</a>
-<a name="234"><span class="lineNum">     234 </span><span class="lineCov">          4 :         ptr += spdm_context-&gt;local_context.opaque_challenge_auth_rsp_size;</span></a>
-<a name="235"><span class="lineNum">     235 </span>            :     }</a>
-<a name="236"><span class="lineNum">     236 </span>            : </a>
-<a name="237"><span class="lineNum">     237 </span>            :     /* Calc Sign*/</a>
-<a name="238"><span class="lineNum">     238 </span>            : </a>
-<a name="239"><span class="lineNum">     239 </span><span class="lineCov">          7 :     status = libspdm_append_message_c(spdm_context, spdm_request,</span></a>
-<a name="240"><span class="lineNum">     240 </span>            :                                       request_size);</a>
-<a name="241"><span class="lineNum">     241 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="243"><span class="lineNum">     243 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="244"><span class="lineNum">     244 </span>            :                                                response_size, response);</a>
-<a name="245"><span class="lineNum">     245 </span>            :     }</a>
-<a name="246"><span class="lineNum">     246 </span>            : </a>
-<a name="247"><span class="lineNum">     247 </span><span class="lineCov">          7 :     status = libspdm_append_message_c(spdm_context, spdm_response,</span></a>
-<a name="248"><span class="lineNum">     248 </span><span class="lineCov">          7 :                                       (size_t)ptr - (size_t)spdm_response);</span></a>
-<a name="249"><span class="lineNum">     249 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="250"><span class="lineNum">     250 </span><span class="lineNoCov">          0 :         libspdm_reset_message_c(spdm_context);</span></a>
-<a name="251"><span class="lineNum">     251 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="252"><span class="lineNum">     252 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="253"><span class="lineNum">     253 </span>            :                                                response_size, response);</a>
-<a name="254"><span class="lineNum">     254 </span>            :     }</a>
-<a name="255"><span class="lineNum">     255 </span><span class="lineCov">          7 :     result = libspdm_generate_challenge_auth_signature(spdm_context, false,</span></a>
-<a name="256"><span class="lineNum">     256 </span>            :                                                        ptr);</a>
-<a name="257"><span class="lineNum">     257 </span><span class="lineCov">          7 :     if (!result) {</span></a>
-<a name="258"><span class="lineNum">     258 </span><span class="lineNoCov">          0 :         libspdm_reset_message_c(spdm_context);</span></a>
-<a name="259"><span class="lineNum">     259 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="260"><span class="lineNum">     260 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
-<a name="261"><span class="lineNum">     261 </span>            :             0, response_size, response);</a>
-<a name="262"><span class="lineNum">     262 </span>            :     }</a>
-<a name="263"><span class="lineNum">     263 </span><span class="lineCov">          7 :     ptr += signature_size;</span></a>
-<a name="264"><span class="lineNum">     264 </span>            : </a>
-<a name="265"><span class="lineNum">     265 </span><span class="lineCov">          7 :     if ((auth_attribute &amp; SPDM_CHALLENGE_AUTH_RESPONSE_ATTRIBUTE_BASIC_MUT_AUTH_REQ) == 0) {</span></a>
-<a name="266"><span class="lineNum">     266 </span><span class="lineCov">          7 :         libspdm_set_connection_state(spdm_context,</span></a>
-<a name="267"><span class="lineNum">     267 </span>            :                                      LIBSPDM_CONNECTION_STATE_AUTHENTICATED);</a>
+<a name="223"><span class="lineNum">     223 </span>            : </a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineCov">          7 :     if (!result) {</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="226"><span class="lineNum">     226 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="227"><span class="lineNum">     227 </span>            :                                                response_size, response);</a>
+<a name="228"><span class="lineNum">     228 </span>            :     }</a>
+<a name="229"><span class="lineNum">     229 </span><span class="lineCov">          7 :     ptr += measurement_summary_hash_size;</span></a>
+<a name="230"><span class="lineNum">     230 </span>            : </a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineCov">          7 :     libspdm_write_uint16 (ptr, (uint16_t)spdm_context-&gt;local_context</span></a>
+<a name="232"><span class="lineNum">     232 </span><span class="lineCov">          7 :                           .opaque_challenge_auth_rsp_size);</span></a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineCov">          7 :     ptr += sizeof(uint16_t);</span></a>
+<a name="234"><span class="lineNum">     234 </span>            : </a>
+<a name="235"><span class="lineNum">     235 </span><span class="lineCov">          7 :     if (spdm_context-&gt;local_context.opaque_challenge_auth_rsp != NULL) {</span></a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineCov">          4 :         libspdm_copy_mem(ptr,</span></a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineCov">          4 :                          response_capacity - (ptr - (uint8_t*)response),</span></a>
+<a name="238"><span class="lineNum">     238 </span><span class="lineCov">          4 :                          spdm_context-&gt;local_context.opaque_challenge_auth_rsp,</span></a>
+<a name="239"><span class="lineNum">     239 </span>            :                          spdm_context-&gt;local_context.opaque_challenge_auth_rsp_size);</a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineCov">          4 :         ptr += spdm_context-&gt;local_context.opaque_challenge_auth_rsp_size;</span></a>
+<a name="241"><span class="lineNum">     241 </span>            :     }</a>
+<a name="242"><span class="lineNum">     242 </span>            : </a>
+<a name="243"><span class="lineNum">     243 </span>            :     /* Calc Sign*/</a>
+<a name="244"><span class="lineNum">     244 </span>            : </a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineCov">          7 :     status = libspdm_append_message_c(spdm_context, spdm_request,</span></a>
+<a name="246"><span class="lineNum">     246 </span>            :                                       request_size);</a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="249"><span class="lineNum">     249 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="250"><span class="lineNum">     250 </span>            :                                                response_size, response);</a>
+<a name="251"><span class="lineNum">     251 </span>            :     }</a>
+<a name="252"><span class="lineNum">     252 </span>            : </a>
+<a name="253"><span class="lineNum">     253 </span><span class="lineCov">          7 :     status = libspdm_append_message_c(spdm_context, spdm_response,</span></a>
+<a name="254"><span class="lineNum">     254 </span><span class="lineCov">          7 :                                       (size_t)ptr - (size_t)spdm_response);</span></a>
+<a name="255"><span class="lineNum">     255 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="256"><span class="lineNum">     256 </span><span class="lineNoCov">          0 :         libspdm_reset_message_c(spdm_context);</span></a>
+<a name="257"><span class="lineNum">     257 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="258"><span class="lineNum">     258 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="259"><span class="lineNum">     259 </span>            :                                                response_size, response);</a>
+<a name="260"><span class="lineNum">     260 </span>            :     }</a>
+<a name="261"><span class="lineNum">     261 </span><span class="lineCov">          7 :     result = libspdm_generate_challenge_auth_signature(spdm_context, false,</span></a>
+<a name="262"><span class="lineNum">     262 </span>            :                                                        ptr);</a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineCov">          7 :     if (!result) {</span></a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineNoCov">          0 :         libspdm_reset_message_c(spdm_context);</span></a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="266"><span class="lineNum">     266 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
+<a name="267"><span class="lineNum">     267 </span>            :             0, response_size, response);</a>
 <a name="268"><span class="lineNum">     268 </span>            :     }</a>
-<a name="269"><span class="lineNum">     269 </span>            : </a>
-<a name="270"><span class="lineNum">     270 </span><span class="lineCov">          7 :     libspdm_reset_message_b(spdm_context);</span></a>
-<a name="271"><span class="lineNum">     271 </span><span class="lineCov">          7 :     libspdm_reset_message_c(spdm_context);</span></a>
-<a name="272"><span class="lineNum">     272 </span>            : </a>
-<a name="273"><span class="lineNum">     273 </span><span class="lineCov">          7 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="274"><span class="lineNum">     274 </span>            : }</a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineCov">          7 :     ptr += signature_size;</span></a>
+<a name="270"><span class="lineNum">     270 </span>            : </a>
+<a name="271"><span class="lineNum">     271 </span><span class="lineCov">          7 :     if ((auth_attribute &amp; SPDM_CHALLENGE_AUTH_RESPONSE_ATTRIBUTE_BASIC_MUT_AUTH_REQ) == 0) {</span></a>
+<a name="272"><span class="lineNum">     272 </span><span class="lineCov">          7 :         libspdm_set_connection_state(spdm_context,</span></a>
+<a name="273"><span class="lineNum">     273 </span>            :                                      LIBSPDM_CONNECTION_STATE_AUTHENTICATED);</a>
+<a name="274"><span class="lineNum">     274 </span>            :     }</a>
 <a name="275"><span class="lineNum">     275 </span>            : </a>
-<a name="276"><span class="lineNum">     276 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP*/</a>
+<a name="276"><span class="lineNum">     276 </span><span class="lineCov">          7 :     libspdm_reset_message_b(spdm_context);</span></a>
+<a name="277"><span class="lineNum">     277 </span><span class="lineCov">          7 :     libspdm_reset_message_c(spdm_context);</span></a>
+<a name="278"><span class="lineNum">     278 </span>            : </a>
+<a name="279"><span class="lineNum">     279 </span><span class="lineCov">          7 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="280"><span class="lineNum">     280 </span>            : }</a>
+<a name="281"><span class="lineNum">     281 </span>            : </a>
+<a name="282"><span class="lineNum">     282 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP*/</a>
 </pre>
       </td>
     </tr>

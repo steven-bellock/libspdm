@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">434</td>
-            <td class="headerCovTableEntry">442</td>
-            <td class="headerCovTableEntryHi">98.2 %</td>
+            <td class="headerCovTableEntry">458</td>
+            <td class="headerCovTableEntry">466</td>
+            <td class="headerCovTableEntryHi">98.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-30 22:39:40</td>
+            <td class="headerValue">2022-11-03 08:19:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">16</td>
-            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntry">17</td>
+            <td class="headerCovTableEntry">17</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
@@ -1263,54 +1263,103 @@
 <a name="1201"><span class="lineNum">    1201 </span><span class="lineCov">          1 :     free(data);</span></a>
 <a name="1202"><span class="lineNum">    1202 </span><span class="lineCov">          1 : }</span></a>
 <a name="1203"><span class="lineNum">    1203 </span>            : </a>
-<a name="1204"><span class="lineNum">    1204 </span>            : libspdm_test_context_t m_libspdm_responder_certificate_test_context = {</a>
-<a name="1205"><span class="lineNum">    1205 </span>            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="1206"><span class="lineNum">    1206 </span>            :     false,</a>
-<a name="1207"><span class="lineNum">    1207 </span>            : };</a>
-<a name="1208"><span class="lineNum">    1208 </span>            : </a>
-<a name="1209"><span class="lineNum">    1209 </span><span class="lineCov">          1 : int libspdm_responder_certificate_test_main(void)</span></a>
+<a name="1204"><span class="lineNum">    1204 </span>            : /**</a>
+<a name="1205"><span class="lineNum">    1205 </span>            :  * Test 16: request a 0 byte certificate chain</a>
+<a name="1206"><span class="lineNum">    1206 </span>            :  * Expected Behavior: portion length should be 0 and remainder length should be the size of the</a>
+<a name="1207"><span class="lineNum">    1207 </span>            :  *                    certificate chain.</a>
+<a name="1208"><span class="lineNum">    1208 </span>            :  **/</a>
+<a name="1209"><span class="lineNum">    1209 </span><span class="lineCov">          1 : void libspdm_test_responder_certificate_case16(void **state)</span></a>
 <a name="1210"><span class="lineNum">    1210 </span>            : {</a>
-<a name="1211"><span class="lineNum">    1211 </span><span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_certificate_tests[] = {</span></a>
-<a name="1212"><span class="lineNum">    1212 </span>            :         /* Success Case*/</a>
-<a name="1213"><span class="lineNum">    1213 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case1),</a>
-<a name="1214"><span class="lineNum">    1214 </span>            :         /* Bad request size*/</a>
-<a name="1215"><span class="lineNum">    1215 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case2),</a>
-<a name="1216"><span class="lineNum">    1216 </span>            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
-<a name="1217"><span class="lineNum">    1217 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case3),</a>
-<a name="1218"><span class="lineNum">    1218 </span>            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
-<a name="1219"><span class="lineNum">    1219 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case4),</a>
-<a name="1220"><span class="lineNum">    1220 </span>            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
-<a name="1221"><span class="lineNum">    1221 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case5),</a>
-<a name="1222"><span class="lineNum">    1222 </span>            :         /* connection_state Check*/</a>
-<a name="1223"><span class="lineNum">    1223 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case6),</a>
-<a name="1224"><span class="lineNum">    1224 </span>            :         /* Tests varying length*/</a>
-<a name="1225"><span class="lineNum">    1225 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case7),</a>
-<a name="1226"><span class="lineNum">    1226 </span>            :         /* Tests varying offset*/</a>
-<a name="1227"><span class="lineNum">    1227 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case8),</a>
-<a name="1228"><span class="lineNum">    1228 </span>            :         /* Tests varying length and offset*/</a>
-<a name="1229"><span class="lineNum">    1229 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case9),</a>
-<a name="1230"><span class="lineNum">    1230 </span>            :         /* Tests large certificate chains*/</a>
-<a name="1231"><span class="lineNum">    1231 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case10),</a>
-<a name="1232"><span class="lineNum">    1232 </span>            :         /* Certificate fits in one single message*/</a>
-<a name="1233"><span class="lineNum">    1233 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case11),</a>
-<a name="1234"><span class="lineNum">    1234 </span>            :         /* Requests byte by byte*/</a>
-<a name="1235"><span class="lineNum">    1235 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case12),</a>
-<a name="1236"><span class="lineNum">    1236 </span>            :         /* Buffer verification*/</a>
-<a name="1237"><span class="lineNum">    1237 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case13),</a>
-<a name="1238"><span class="lineNum">    1238 </span>            :         /* Success Case in a session*/</a>
-<a name="1239"><span class="lineNum">    1239 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case14),</a>
-<a name="1240"><span class="lineNum">    1240 </span>            :         /* Produce a CERTIFICATE response that is meant to be chunked. */</a>
-<a name="1241"><span class="lineNum">    1241 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case15),</a>
-<a name="1242"><span class="lineNum">    1242 </span>            :     };</a>
-<a name="1243"><span class="lineNum">    1243 </span>            : </a>
-<a name="1244"><span class="lineNum">    1244 </span><span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_certificate_test_context);</span></a>
-<a name="1245"><span class="lineNum">    1245 </span>            : </a>
-<a name="1246"><span class="lineNum">    1246 </span><span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_certificate_tests,</span></a>
-<a name="1247"><span class="lineNum">    1247 </span>            :                                   libspdm_unit_test_group_setup,</a>
-<a name="1248"><span class="lineNum">    1248 </span>            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="1249"><span class="lineNum">    1249 </span>            : }</a>
-<a name="1250"><span class="lineNum">    1250 </span>            : </a>
-<a name="1251"><span class="lineNum">    1251 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1211"><span class="lineNum">    1211 </span>            :     libspdm_return_t status;</a>
+<a name="1212"><span class="lineNum">    1212 </span>            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="1213"><span class="lineNum">    1213 </span>            :     libspdm_context_t *spdm_context;</a>
+<a name="1214"><span class="lineNum">    1214 </span>            :     size_t response_size;</a>
+<a name="1215"><span class="lineNum">    1215 </span>            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1216"><span class="lineNum">    1216 </span>            :     spdm_certificate_response_t *spdm_response;</a>
+<a name="1217"><span class="lineNum">    1217 </span>            :     void *data;</a>
+<a name="1218"><span class="lineNum">    1218 </span>            :     size_t data_size;</a>
+<a name="1219"><span class="lineNum">    1219 </span>            : </a>
+<a name="1220"><span class="lineNum">    1220 </span><span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1221"><span class="lineNum">    1221 </span><span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1222"><span class="lineNum">    1222 </span><span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 16;</span></a>
+<a name="1223"><span class="lineNum">    1223 </span><span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_10 &lt;&lt;</span></a>
+<a name="1224"><span class="lineNum">    1224 </span>            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="1225"><span class="lineNum">    1225 </span><span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_AFTER_DIGESTS;</span></a>
+<a name="1226"><span class="lineNum">    1226 </span><span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
+<a name="1227"><span class="lineNum">    1227 </span><span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1228"><span class="lineNum">    1228 </span><span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="1229"><span class="lineNum">    1229 </span>            :                                                     m_libspdm_use_asym_algo, &amp;data,</a>
+<a name="1230"><span class="lineNum">    1230 </span>            :                                                     &amp;data_size, NULL, NULL);</a>
+<a name="1231"><span class="lineNum">    1231 </span><span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data;</span></a>
+<a name="1232"><span class="lineNum">    1232 </span><span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] = data_size;</span></a>
+<a name="1233"><span class="lineNum">    1233 </span>            : </a>
+<a name="1234"><span class="lineNum">    1234 </span><span class="lineCov">          1 :     m_libspdm_get_certificate_request3.offset = 0;</span></a>
+<a name="1235"><span class="lineNum">    1235 </span><span class="lineCov">          1 :     m_libspdm_get_certificate_request3.length = 0;</span></a>
+<a name="1236"><span class="lineNum">    1236 </span>            : </a>
+<a name="1237"><span class="lineNum">    1237 </span><span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1238"><span class="lineNum">    1238 </span><span class="lineCov">          1 :     status = libspdm_get_response_certificate(</span></a>
+<a name="1239"><span class="lineNum">    1239 </span>            :         spdm_context, m_libspdm_get_certificate_request3_size,</a>
+<a name="1240"><span class="lineNum">    1240 </span>            :         &amp;m_libspdm_get_certificate_request3, &amp;response_size, response);</a>
+<a name="1241"><span class="lineNum">    1241 </span><span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1242"><span class="lineNum">    1242 </span><span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_certificate_response_t));</span></a>
+<a name="1243"><span class="lineNum">    1243 </span><span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1244"><span class="lineNum">    1244 </span><span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_CERTIFICATE);</span></a>
+<a name="1245"><span class="lineNum">    1245 </span><span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.param1, 0);</span></a>
+<a name="1246"><span class="lineNum">    1246 </span><span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;portion_length, 0);</span></a>
+<a name="1247"><span class="lineNum">    1247 </span><span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;remainder_length, data_size);</span></a>
+<a name="1248"><span class="lineNum">    1248 </span>            : </a>
+<a name="1249"><span class="lineNum">    1249 </span><span class="lineCov">          1 :     free(data);</span></a>
+<a name="1250"><span class="lineNum">    1250 </span><span class="lineCov">          1 : }</span></a>
+<a name="1251"><span class="lineNum">    1251 </span>            : </a>
+<a name="1252"><span class="lineNum">    1252 </span>            : libspdm_test_context_t m_libspdm_responder_certificate_test_context = {</a>
+<a name="1253"><span class="lineNum">    1253 </span>            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="1254"><span class="lineNum">    1254 </span>            :     false,</a>
+<a name="1255"><span class="lineNum">    1255 </span>            : };</a>
+<a name="1256"><span class="lineNum">    1256 </span>            : </a>
+<a name="1257"><span class="lineNum">    1257 </span><span class="lineCov">          1 : int libspdm_responder_certificate_test_main(void)</span></a>
+<a name="1258"><span class="lineNum">    1258 </span>            : {</a>
+<a name="1259"><span class="lineNum">    1259 </span><span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_certificate_tests[] = {</span></a>
+<a name="1260"><span class="lineNum">    1260 </span>            :         /* Success Case*/</a>
+<a name="1261"><span class="lineNum">    1261 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case1),</a>
+<a name="1262"><span class="lineNum">    1262 </span>            :         /* Bad request size*/</a>
+<a name="1263"><span class="lineNum">    1263 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case2),</a>
+<a name="1264"><span class="lineNum">    1264 </span>            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
+<a name="1265"><span class="lineNum">    1265 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case3),</a>
+<a name="1266"><span class="lineNum">    1266 </span>            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
+<a name="1267"><span class="lineNum">    1267 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case4),</a>
+<a name="1268"><span class="lineNum">    1268 </span>            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
+<a name="1269"><span class="lineNum">    1269 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case5),</a>
+<a name="1270"><span class="lineNum">    1270 </span>            :         /* connection_state Check*/</a>
+<a name="1271"><span class="lineNum">    1271 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case6),</a>
+<a name="1272"><span class="lineNum">    1272 </span>            :         /* Tests varying length*/</a>
+<a name="1273"><span class="lineNum">    1273 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case7),</a>
+<a name="1274"><span class="lineNum">    1274 </span>            :         /* Tests varying offset*/</a>
+<a name="1275"><span class="lineNum">    1275 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case8),</a>
+<a name="1276"><span class="lineNum">    1276 </span>            :         /* Tests varying length and offset*/</a>
+<a name="1277"><span class="lineNum">    1277 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case9),</a>
+<a name="1278"><span class="lineNum">    1278 </span>            :         /* Tests large certificate chains*/</a>
+<a name="1279"><span class="lineNum">    1279 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case10),</a>
+<a name="1280"><span class="lineNum">    1280 </span>            :         /* Certificate fits in one single message*/</a>
+<a name="1281"><span class="lineNum">    1281 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case11),</a>
+<a name="1282"><span class="lineNum">    1282 </span>            :         /* Requests byte by byte*/</a>
+<a name="1283"><span class="lineNum">    1283 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case12),</a>
+<a name="1284"><span class="lineNum">    1284 </span>            :         /* Buffer verification*/</a>
+<a name="1285"><span class="lineNum">    1285 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case13),</a>
+<a name="1286"><span class="lineNum">    1286 </span>            :         /* Success Case in a session*/</a>
+<a name="1287"><span class="lineNum">    1287 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case14),</a>
+<a name="1288"><span class="lineNum">    1288 </span>            :         /* Produce a CERTIFICATE response that is meant to be chunked. */</a>
+<a name="1289"><span class="lineNum">    1289 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case15),</a>
+<a name="1290"><span class="lineNum">    1290 </span>            :         cmocka_unit_test(libspdm_test_responder_certificate_case16),</a>
+<a name="1291"><span class="lineNum">    1291 </span>            :     };</a>
+<a name="1292"><span class="lineNum">    1292 </span>            : </a>
+<a name="1293"><span class="lineNum">    1293 </span><span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_certificate_test_context);</span></a>
+<a name="1294"><span class="lineNum">    1294 </span>            : </a>
+<a name="1295"><span class="lineNum">    1295 </span><span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_certificate_tests,</span></a>
+<a name="1296"><span class="lineNum">    1296 </span>            :                                   libspdm_unit_test_group_setup,</a>
+<a name="1297"><span class="lineNum">    1297 </span>            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="1298"><span class="lineNum">    1298 </span>            : }</a>
+<a name="1299"><span class="lineNum">    1299 </span>            : </a>
+<a name="1300"><span class="lineNum">    1300 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
 </pre>
       </td>
     </tr>

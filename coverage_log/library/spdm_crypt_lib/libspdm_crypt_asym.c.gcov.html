@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-30 22:39:40</td>
+            <td class="headerValue">2022-11-03 08:19:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">24</td>
@@ -375,26 +375,26 @@
 <a name="313"><span class="lineNum">     313 </span>            :  *</a>
 <a name="314"><span class="lineNum">     314 </span>            :  * @return asymmetric free function</a>
 <a name="315"><span class="lineNum">     315 </span>            :  **/</a>
-<a name="316"><span class="lineNum">     316 </span><span class="lineCov">        615 : static libspdm_asym_free_func libspdm_get_asym_free(uint32_t base_asym_algo)</span></a>
+<a name="316"><span class="lineNum">     316 </span><span class="lineCov">        648 : static libspdm_asym_free_func libspdm_get_asym_free(uint32_t base_asym_algo)</span></a>
 <a name="317"><span class="lineNum">     317 </span>            : {</a>
-<a name="318"><span class="lineNum">     318 </span><span class="lineCov">        615 :     switch (base_asym_algo) {</span></a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineCov">         28 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
+<a name="318"><span class="lineNum">     318 </span><span class="lineCov">        648 :     switch (base_asym_algo) {</span></a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineCov">         38 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="320"><span class="lineNum">     320 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
 <a name="321"><span class="lineNum">     321 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_4096:</a>
 <a name="322"><span class="lineNum">     322 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_2048:</a>
 <a name="323"><span class="lineNum">     323 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_3072:</a>
 <a name="324"><span class="lineNum">     324 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_4096:</a>
 <a name="325"><span class="lineNum">     325 </span>            : #if (LIBSPDM_RSA_SSA_SUPPORT) || (LIBSPDM_RSA_PSS_SUPPORT)</a>
-<a name="326"><span class="lineNum">     326 </span><span class="lineCov">         28 :         return libspdm_rsa_free;</span></a>
+<a name="326"><span class="lineNum">     326 </span><span class="lineCov">         38 :         return libspdm_rsa_free;</span></a>
 <a name="327"><span class="lineNum">     327 </span>            : #else</a>
 <a name="328"><span class="lineNum">     328 </span>            :         LIBSPDM_ASSERT(false);</a>
 <a name="329"><span class="lineNum">     329 </span>            :         break;</a>
 <a name="330"><span class="lineNum">     330 </span>            : #endif</a>
-<a name="331"><span class="lineNum">     331 </span><span class="lineCov">        587 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="331"><span class="lineNum">     331 </span><span class="lineCov">        610 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="332"><span class="lineNum">     332 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="333"><span class="lineNum">     333 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="334"><span class="lineNum">     334 </span>            : #if LIBSPDM_ECDSA_SUPPORT</a>
-<a name="335"><span class="lineNum">     335 </span><span class="lineCov">        587 :         return libspdm_ec_free;</span></a>
+<a name="335"><span class="lineNum">     335 </span><span class="lineCov">        610 :         return libspdm_ec_free;</span></a>
 <a name="336"><span class="lineNum">     336 </span>            : #else</a>
 <a name="337"><span class="lineNum">     337 </span>            :         LIBSPDM_ASSERT(false);</a>
 <a name="338"><span class="lineNum">     338 </span>            :         break;</a>
@@ -429,14 +429,14 @@
 <a name="367"><span class="lineNum">     367 </span>            :  * @param  base_asym_algo                 SPDM base_asym_algo</a>
 <a name="368"><span class="lineNum">     368 </span>            :  * @param  context                      Pointer to the asymmetric context to be released.</a>
 <a name="369"><span class="lineNum">     369 </span>            :  **/</a>
-<a name="370"><span class="lineNum">     370 </span><span class="lineCov">        605 : void libspdm_asym_free(uint32_t base_asym_algo, void *context)</span></a>
+<a name="370"><span class="lineNum">     370 </span><span class="lineCov">        638 : void libspdm_asym_free(uint32_t base_asym_algo, void *context)</span></a>
 <a name="371"><span class="lineNum">     371 </span>            : {</a>
 <a name="372"><span class="lineNum">     372 </span>            :     libspdm_asym_free_func free_function;</a>
-<a name="373"><span class="lineNum">     373 </span><span class="lineCov">        605 :     free_function = libspdm_get_asym_free(base_asym_algo);</span></a>
-<a name="374"><span class="lineNum">     374 </span><span class="lineCov">        605 :     if (free_function == NULL) {</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineCov">        638 :     free_function = libspdm_get_asym_free(base_asym_algo);</span></a>
+<a name="374"><span class="lineNum">     374 </span><span class="lineCov">        638 :     if (free_function == NULL) {</span></a>
 <a name="375"><span class="lineNum">     375 </span><span class="lineNoCov">          0 :         return;</span></a>
 <a name="376"><span class="lineNum">     376 </span>            :     }</a>
-<a name="377"><span class="lineNum">     377 </span><span class="lineCov">        605 :     free_function(context);</span></a>
+<a name="377"><span class="lineNum">     377 </span><span class="lineCov">        638 :     free_function(context);</span></a>
 <a name="378"><span class="lineNum">     378 </span>            : }</a>
 <a name="379"><span class="lineNum">     379 </span>            : </a>
 <a name="380"><span class="lineNum">     380 </span>            : /**</a>
