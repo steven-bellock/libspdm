@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-03 08:19:29</td>
+            <td class="headerValue">2022-11-03 22:42:34</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -120,7 +120,7 @@
 <a name="58"><span class="lineNum">      58 </span>            :  * @retval RETURN_SUCCESS               The message is encoded successfully.</a>
 <a name="59"><span class="lineNum">      59 </span>            :  * @retval RETURN_INVALID_PARAMETER     The message is NULL or the message_size is zero.</a>
 <a name="60"><span class="lineNum">      60 </span>            :  **/</a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineCov">       5037 : libspdm_return_t libspdm_test_encode_message(const uint32_t *session_id, size_t message_size,</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">       5042 : libspdm_return_t libspdm_test_encode_message(const uint32_t *session_id, size_t message_size,</span></a>
 <a name="62"><span class="lineNum">      62 </span>            :                                              void *message,</a>
 <a name="63"><span class="lineNum">      63 </span>            :                                              size_t *transport_message_size,</a>
 <a name="64"><span class="lineNum">      64 </span>            :                                              void **transport_message)</a>
@@ -129,15 +129,15 @@
 <a name="67"><span class="lineNum">      67 </span>            :     size_t alignment;</a>
 <a name="68"><span class="lineNum">      68 </span>            :     libspdm_test_message_header_t *test_message_header;</a>
 <a name="69"><span class="lineNum">      69 </span>            : </a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">       5037 :     alignment = LIBSPDM_TEST_ALIGNMENT;</span></a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineCov">       5037 :     aligned_message_size =</span></a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineCov">       5037 :         (message_size + (alignment - 1)) &amp; ~(alignment - 1);</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">       5042 :     alignment = LIBSPDM_TEST_ALIGNMENT;</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">       5042 :     aligned_message_size =</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">       5042 :         (message_size + (alignment - 1)) &amp; ~(alignment - 1);</span></a>
 <a name="73"><span class="lineNum">      73 </span>            : </a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">       5037 :     *transport_message_size =</span></a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">       5037 :         aligned_message_size + sizeof(libspdm_test_message_header_t);</span></a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineCov">       5037 :     *transport_message = (uint8_t *)message - sizeof(libspdm_test_message_header_t);</span></a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">       5037 :     test_message_header = *transport_message;</span></a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineCov">       5037 :     if (session_id != NULL) {</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">       5042 :     *transport_message_size =</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">       5042 :         aligned_message_size + sizeof(libspdm_test_message_header_t);</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">       5042 :     *transport_message = (uint8_t *)message - sizeof(libspdm_test_message_header_t);</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">       5042 :     test_message_header = *transport_message;</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">       5042 :     if (session_id != NULL) {</span></a>
 <a name="79"><span class="lineNum">      79 </span><span class="lineCov">        476 :         test_message_header-&gt;message_type =</span></a>
 <a name="80"><span class="lineNum">      80 </span>            :             LIBSPDM_TEST_MESSAGE_TYPE_SECURED_TEST;</a>
 <a name="81"><span class="lineNum">      81 </span><span class="lineCov">        476 :         LIBSPDM_ASSERT(*session_id == *(uint32_t *)(message));</span></a>
@@ -145,11 +145,11 @@
 <a name="83"><span class="lineNum">      83 </span><span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="84"><span class="lineNum">      84 </span>            :         }</a>
 <a name="85"><span class="lineNum">      85 </span>            :     } else {</a>
-<a name="86"><span class="lineNum">      86 </span><span class="lineCov">       4561 :         test_message_header-&gt;message_type = LIBSPDM_TEST_MESSAGE_TYPE_SPDM;</span></a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineCov">       4566 :         test_message_header-&gt;message_type = LIBSPDM_TEST_MESSAGE_TYPE_SPDM;</span></a>
 <a name="87"><span class="lineNum">      87 </span>            :     }</a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineCov">       5037 :     libspdm_zero_mem((uint8_t *)message + message_size,</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">       5042 :     libspdm_zero_mem((uint8_t *)message + message_size,</span></a>
 <a name="89"><span class="lineNum">      89 </span>            :                      aligned_message_size - message_size);</a>
-<a name="90"><span class="lineNum">      90 </span><span class="lineCov">       5037 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="90"><span class="lineNum">      90 </span><span class="lineCov">       5042 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="91"><span class="lineNum">      91 </span>            : }</a>
 <a name="92"><span class="lineNum">      92 </span>            : </a>
 <a name="93"><span class="lineNum">      93 </span>            : /**</a>
@@ -166,21 +166,21 @@
 <a name="104"><span class="lineNum">     104 </span>            :  * @retval RETURN_SUCCESS               The message is encoded successfully.</a>
 <a name="105"><span class="lineNum">     105 </span>            :  * @retval RETURN_INVALID_PARAMETER     The message is NULL or the message_size is zero.</a>
 <a name="106"><span class="lineNum">     106 </span>            :  **/</a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">       4666 : libspdm_return_t libspdm_test_decode_message(uint32_t **session_id,</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">       4670 : libspdm_return_t libspdm_test_decode_message(uint32_t **session_id,</span></a>
 <a name="108"><span class="lineNum">     108 </span>            :                                              size_t transport_message_size,</a>
 <a name="109"><span class="lineNum">     109 </span>            :                                              void *transport_message,</a>
 <a name="110"><span class="lineNum">     110 </span>            :                                              size_t *message_size, void **message)</a>
 <a name="111"><span class="lineNum">     111 </span>            : {</a>
 <a name="112"><span class="lineNum">     112 </span>            :     const libspdm_test_message_header_t *test_message_header;</a>
 <a name="113"><span class="lineNum">     113 </span>            : </a>
-<a name="114"><span class="lineNum">     114 </span><span class="lineCov">       4666 :     LIBSPDM_ASSERT(transport_message_size &gt; sizeof(libspdm_test_message_header_t));</span></a>
-<a name="115"><span class="lineNum">     115 </span><span class="lineCov">       4666 :     if (transport_message_size &lt;= sizeof(libspdm_test_message_header_t)) {</span></a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineCov">       4670 :     LIBSPDM_ASSERT(transport_message_size &gt; sizeof(libspdm_test_message_header_t));</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineCov">       4670 :     if (transport_message_size &lt;= sizeof(libspdm_test_message_header_t)) {</span></a>
 <a name="116"><span class="lineNum">     116 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="117"><span class="lineNum">     117 </span>            :     }</a>
 <a name="118"><span class="lineNum">     118 </span>            : </a>
-<a name="119"><span class="lineNum">     119 </span><span class="lineCov">       4666 :     test_message_header = transport_message;</span></a>
+<a name="119"><span class="lineNum">     119 </span><span class="lineCov">       4670 :     test_message_header = transport_message;</span></a>
 <a name="120"><span class="lineNum">     120 </span>            : </a>
-<a name="121"><span class="lineNum">     121 </span><span class="lineCov">       4666 :     switch (test_message_header-&gt;message_type) {</span></a>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">       4670 :     switch (test_message_header-&gt;message_type) {</span></a>
 <a name="122"><span class="lineNum">     122 </span><span class="lineCov">        302 :     case LIBSPDM_TEST_MESSAGE_TYPE_SECURED_TEST:</span></a>
 <a name="123"><span class="lineNum">     123 </span><span class="lineCov">        302 :         LIBSPDM_ASSERT(session_id != NULL);</span></a>
 <a name="124"><span class="lineNum">     124 </span><span class="lineCov">        302 :         if (session_id == NULL) {</span></a>
@@ -193,21 +193,21 @@
 <a name="131"><span class="lineNum">     131 </span><span class="lineCov">        302 :         *session_id = (uint32_t *)((uint8_t *)transport_message +</span></a>
 <a name="132"><span class="lineNum">     132 </span>            :                                    sizeof(libspdm_test_message_header_t));</a>
 <a name="133"><span class="lineNum">     133 </span><span class="lineCov">        302 :         break;</span></a>
-<a name="134"><span class="lineNum">     134 </span><span class="lineCov">       4364 :     case LIBSPDM_TEST_MESSAGE_TYPE_SPDM:</span></a>
-<a name="135"><span class="lineNum">     135 </span><span class="lineCov">       4364 :         if (session_id != NULL) {</span></a>
-<a name="136"><span class="lineNum">     136 </span><span class="lineCov">       4364 :             *session_id = NULL;</span></a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">       4368 :     case LIBSPDM_TEST_MESSAGE_TYPE_SPDM:</span></a>
+<a name="135"><span class="lineNum">     135 </span><span class="lineCov">       4368 :         if (session_id != NULL) {</span></a>
+<a name="136"><span class="lineNum">     136 </span><span class="lineCov">       4368 :             *session_id = NULL;</span></a>
 <a name="137"><span class="lineNum">     137 </span>            :         }</a>
-<a name="138"><span class="lineNum">     138 </span><span class="lineCov">       4364 :         break;</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineCov">       4368 :         break;</span></a>
 <a name="139"><span class="lineNum">     139 </span><span class="lineNoCov">          0 :     default:</span></a>
 <a name="140"><span class="lineNum">     140 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
 <a name="141"><span class="lineNum">     141 </span>            :     }</a>
 <a name="142"><span class="lineNum">     142 </span>            : </a>
-<a name="143"><span class="lineNum">     143 </span><span class="lineCov">       4666 :     LIBSPDM_ASSERT(((transport_message_size - sizeof(libspdm_test_message_header_t)) &amp;</span></a>
+<a name="143"><span class="lineNum">     143 </span><span class="lineCov">       4670 :     LIBSPDM_ASSERT(((transport_message_size - sizeof(libspdm_test_message_header_t)) &amp;</span></a>
 <a name="144"><span class="lineNum">     144 </span>            :                     (LIBSPDM_TEST_ALIGNMENT - 1)) == 0);</a>
 <a name="145"><span class="lineNum">     145 </span>            : </a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineCov">       4666 :     *message_size = transport_message_size - sizeof(libspdm_test_message_header_t);</span></a>
-<a name="147"><span class="lineNum">     147 </span><span class="lineCov">       4666 :     *message = (uint8_t *)transport_message + sizeof(libspdm_test_message_header_t);</span></a>
-<a name="148"><span class="lineNum">     148 </span><span class="lineCov">       4666 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="146"><span class="lineNum">     146 </span><span class="lineCov">       4670 :     *message_size = transport_message_size - sizeof(libspdm_test_message_header_t);</span></a>
+<a name="147"><span class="lineNum">     147 </span><span class="lineCov">       4670 :     *message = (uint8_t *)transport_message + sizeof(libspdm_test_message_header_t);</span></a>
+<a name="148"><span class="lineNum">     148 </span><span class="lineCov">       4670 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="149"><span class="lineNum">     149 </span>            : }</a>
 <a name="150"><span class="lineNum">     150 </span>            : </a>
 <a name="151"><span class="lineNum">     151 </span>            : /**</a>
@@ -221,10 +221,10 @@
 <a name="159"><span class="lineNum">     159 </span>            :  *</a>
 <a name="160"><span class="lineNum">     160 </span>            :  * @return size of maximum transport layer message header size</a>
 <a name="161"><span class="lineNum">     161 </span>            :  **/</a>
-<a name="162"><span class="lineNum">     162 </span><span class="lineCov">       8129 : uint32_t libspdm_transport_test_get_header_size(</span></a>
+<a name="162"><span class="lineNum">     162 </span><span class="lineCov">       8139 : uint32_t libspdm_transport_test_get_header_size(</span></a>
 <a name="163"><span class="lineNum">     163 </span>            :     void *spdm_context)</a>
 <a name="164"><span class="lineNum">     164 </span>            : {</a>
-<a name="165"><span class="lineNum">     165 </span><span class="lineCov">       8129 :     return sizeof(libspdm_test_message_header_t) + sizeof(spdm_secured_message_cipher_header_t);</span></a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineCov">       8139 :     return sizeof(libspdm_test_message_header_t) + sizeof(spdm_secured_message_cipher_header_t);</span></a>
 <a name="166"><span class="lineNum">     166 </span>            : }</a>
 </pre>
       </td>
