@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-08 18:56:56</td>
+            <td class="headerValue">2022-11-09 08:19:09</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -227,7 +227,7 @@
 <a name="165"><span class="lineNum">     165 </span>            :         /* Need append VCA since 1.2 script*/</a>
 <a name="166"><span class="lineNum">     166 </span>            : </a>
 <a name="167"><span class="lineNum">     167 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_a data :\n&quot;));</a>
-<a name="168"><span class="lineNum">     168 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="168"><span class="lineNum">     168 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="169"><span class="lineNum">     169 </span>            :             libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_a),</a>
 <a name="170"><span class="lineNum">     170 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_a));</a>
 <a name="171"><span class="lineNum">     171 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -241,7 +241,7 @@
 <a name="179"><span class="lineNum">     179 </span>            : </a>
 <a name="180"><span class="lineNum">     180 </span>            :     if (spdm_session_info == NULL) {</a>
 <a name="181"><span class="lineNum">     181 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_m data :\n&quot;));</a>
-<a name="182"><span class="lineNum">     182 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="182"><span class="lineNum">     182 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="183"><span class="lineNum">     183 </span>            :             libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_m),</a>
 <a name="184"><span class="lineNum">     184 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_m));</a>
 <a name="185"><span class="lineNum">     185 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -250,7 +250,7 @@
 <a name="188"><span class="lineNum">     188 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_m));</a>
 <a name="189"><span class="lineNum">     189 </span>            :     } else {</a>
 <a name="190"><span class="lineNum">     190 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;use message_m in session :\n&quot;));</a>
-<a name="191"><span class="lineNum">     191 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="191"><span class="lineNum">     191 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="192"><span class="lineNum">     192 </span>            :             libspdm_get_managed_buffer(&amp;spdm_session_info-&gt;session_transcript.message_m),</a>
 <a name="193"><span class="lineNum">     193 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_session_info-&gt;session_transcript.message_m));</a>
 <a name="194"><span class="lineNum">     194 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -274,7 +274,7 @@
 <a name="212"><span class="lineNum">     212 </span>            :         return false;</a>
 <a name="213"><span class="lineNum">     213 </span>            :     }</a>
 <a name="214"><span class="lineNum">     214 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;l1l2 hash - &quot;));</a>
-<a name="215"><span class="lineNum">     215 </span>            :         libspdm_internal_dump_data(hash_data, hash_size);</a>
+<a name="215"><span class="lineNum">     215 </span>            :         LIBSPDM_INTERNAL_DUMP_DATA(hash_data, hash_size);</a>
 <a name="216"><span class="lineNum">     216 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</a>
 <a name="217"><span class="lineNum">     217 </span>            :         );</a>
 <a name="218"><span class="lineNum">     218 </span>            : </a>
@@ -320,7 +320,7 @@
 <a name="258"><span class="lineNum">     258 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="259"><span class="lineNum">     259 </span>            :     }</a>
 <a name="260"><span class="lineNum">     260 </span><span class="lineCov">         18 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;l1l2 hash - &quot;));</span></a>
-<a name="261"><span class="lineNum">     261 </span><span class="lineCov">         18 :     libspdm_internal_dump_data(l1l2_hash, hash_size);</span></a>
+<a name="261"><span class="lineNum">     261 </span><span class="lineCov">         18 :     LIBSPDM_INTERNAL_DUMP_DATA(l1l2_hash, hash_size);</span></a>
 <a name="262"><span class="lineNum">     262 </span><span class="lineCov">         18 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
 <a name="263"><span class="lineNum">     263 </span>            : </a>
 <a name="264"><span class="lineNum">     264 </span><span class="lineCov">         18 :     *l1l2_hash_size = hash_size;</span></a>
@@ -353,7 +353,7 @@
 <a name="291"><span class="lineNum">     291 </span>            :         if ((spdm_context-&gt;connection_info.version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt;</a>
 <a name="292"><span class="lineNum">     292 </span>            :             SPDM_MESSAGE_VERSION_11) {</a>
 <a name="293"><span class="lineNum">     293 </span>            :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_a data :\n&quot;));</a>
-<a name="294"><span class="lineNum">     294 </span>            :             libspdm_internal_dump_hex(</a>
+<a name="294"><span class="lineNum">     294 </span>            :             LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="295"><span class="lineNum">     295 </span>            :                 libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_a),</a>
 <a name="296"><span class="lineNum">     296 </span>            :                 libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_a));</a>
 <a name="297"><span class="lineNum">     297 </span>            :             status = libspdm_append_managed_buffer(</a>
@@ -366,7 +366,7 @@
 <a name="304"><span class="lineNum">     304 </span>            :         }</a>
 <a name="305"><span class="lineNum">     305 </span>            : </a>
 <a name="306"><span class="lineNum">     306 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_mut_b data :\n&quot;));</a>
-<a name="307"><span class="lineNum">     307 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="307"><span class="lineNum">     307 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="308"><span class="lineNum">     308 </span>            :             libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_mut_b),</a>
 <a name="309"><span class="lineNum">     309 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_mut_b));</a>
 <a name="310"><span class="lineNum">     310 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -378,7 +378,7 @@
 <a name="316"><span class="lineNum">     316 </span>            :         }</a>
 <a name="317"><span class="lineNum">     317 </span>            : </a>
 <a name="318"><span class="lineNum">     318 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_mut_c data :\n&quot;));</a>
-<a name="319"><span class="lineNum">     319 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="319"><span class="lineNum">     319 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="320"><span class="lineNum">     320 </span>            :             libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_mut_c),</a>
 <a name="321"><span class="lineNum">     321 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_mut_c));</a>
 <a name="322"><span class="lineNum">     322 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -401,13 +401,13 @@
 <a name="339"><span class="lineNum">     339 </span>            :             return false;</a>
 <a name="340"><span class="lineNum">     340 </span>            :         }</a>
 <a name="341"><span class="lineNum">     341 </span>            :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;m1m2 Mut hash - &quot;));</a>
-<a name="342"><span class="lineNum">     342 </span>            :             libspdm_internal_dump_data(hash_data, hash_size);</a>
+<a name="342"><span class="lineNum">     342 </span>            :             LIBSPDM_INTERNAL_DUMP_DATA(hash_data, hash_size);</a>
 <a name="343"><span class="lineNum">     343 </span>            :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</a>
 <a name="344"><span class="lineNum">     344 </span>            :             );</a>
 <a name="345"><span class="lineNum">     345 </span>            : </a>
 <a name="346"><span class="lineNum">     346 </span>            :     } else {</a>
 <a name="347"><span class="lineNum">     347 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_a data :\n&quot;));</a>
-<a name="348"><span class="lineNum">     348 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="348"><span class="lineNum">     348 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="349"><span class="lineNum">     349 </span>            :             libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_a),</a>
 <a name="350"><span class="lineNum">     350 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_a));</a>
 <a name="351"><span class="lineNum">     351 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -419,7 +419,7 @@
 <a name="357"><span class="lineNum">     357 </span>            :         }</a>
 <a name="358"><span class="lineNum">     358 </span>            : </a>
 <a name="359"><span class="lineNum">     359 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_b data :\n&quot;));</a>
-<a name="360"><span class="lineNum">     360 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="360"><span class="lineNum">     360 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="361"><span class="lineNum">     361 </span>            :             libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_b),</a>
 <a name="362"><span class="lineNum">     362 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_b));</a>
 <a name="363"><span class="lineNum">     363 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -431,7 +431,7 @@
 <a name="369"><span class="lineNum">     369 </span>            :         }</a>
 <a name="370"><span class="lineNum">     370 </span>            : </a>
 <a name="371"><span class="lineNum">     371 </span>            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;message_c data :\n&quot;));</a>
-<a name="372"><span class="lineNum">     372 </span>            :         libspdm_internal_dump_hex(</a>
+<a name="372"><span class="lineNum">     372 </span>            :         LIBSPDM_INTERNAL_DUMP_HEX(</a>
 <a name="373"><span class="lineNum">     373 </span>            :             libspdm_get_managed_buffer(&amp;spdm_context-&gt;transcript.message_c),</a>
 <a name="374"><span class="lineNum">     374 </span>            :             libspdm_get_managed_buffer_size(&amp;spdm_context-&gt;transcript.message_c));</a>
 <a name="375"><span class="lineNum">     375 </span>            :         status = libspdm_append_managed_buffer(</a>
@@ -454,7 +454,7 @@
 <a name="392"><span class="lineNum">     392 </span>            :             return false;</a>
 <a name="393"><span class="lineNum">     393 </span>            :         }</a>
 <a name="394"><span class="lineNum">     394 </span>            :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;m1m2 hash - &quot;));</a>
-<a name="395"><span class="lineNum">     395 </span>            :             libspdm_internal_dump_data(hash_data, hash_size);</a>
+<a name="395"><span class="lineNum">     395 </span>            :             LIBSPDM_INTERNAL_DUMP_DATA(hash_data, hash_size);</a>
 <a name="396"><span class="lineNum">     396 </span>            :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</a>
 <a name="397"><span class="lineNum">     397 </span>            :             );</a>
 <a name="398"><span class="lineNum">     398 </span>            :     }</a>
@@ -491,7 +491,7 @@
 <a name="429"><span class="lineNum">     429 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="430"><span class="lineNum">     430 </span>            :         }</a>
 <a name="431"><span class="lineNum">     431 </span><span class="lineCov">          2 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;m1m2 Mut hash - &quot;));</span></a>
-<a name="432"><span class="lineNum">     432 </span><span class="lineCov">          2 :         libspdm_internal_dump_data(m1m2_hash, hash_size);</span></a>
+<a name="432"><span class="lineNum">     432 </span><span class="lineCov">          2 :         LIBSPDM_INTERNAL_DUMP_DATA(m1m2_hash, hash_size);</span></a>
 <a name="433"><span class="lineNum">     433 </span><span class="lineCov">          2 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
 <a name="434"><span class="lineNum">     434 </span>            : </a>
 <a name="435"><span class="lineNum">     435 </span>            :     } else {</a>
@@ -501,7 +501,7 @@
 <a name="439"><span class="lineNum">     439 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="440"><span class="lineNum">     440 </span>            :         }</a>
 <a name="441"><span class="lineNum">     441 </span><span class="lineCov">         20 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;m1m2 hash - &quot;));</span></a>
-<a name="442"><span class="lineNum">     442 </span><span class="lineCov">         20 :         libspdm_internal_dump_data(m1m2_hash, hash_size);</span></a>
+<a name="442"><span class="lineNum">     442 </span><span class="lineCov">         20 :         LIBSPDM_INTERNAL_DUMP_DATA(m1m2_hash, hash_size);</span></a>
 <a name="443"><span class="lineNum">     443 </span><span class="lineCov">         20 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
 <a name="444"><span class="lineNum">     444 </span>            :     }</a>
 <a name="445"><span class="lineNum">     445 </span>            : </a>
