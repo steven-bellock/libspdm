@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-17 08:17:50</td>
+            <td class="headerValue">2022-11-18 22:37:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -585,7 +585,7 @@
 <a name="523"><span class="lineNum">     523 </span>            :  * @retval true  digest verification pass.</a>
 <a name="524"><span class="lineNum">     524 </span>            :  * @retval false digest verification fail.</a>
 <a name="525"><span class="lineNum">     525 </span>            :  **/</a>
-<a name="526"><span class="lineNum">     526 </span><span class="lineCov">         11 : bool libspdm_verify_peer_digests(libspdm_context_t *spdm_context, const void *digest,</span></a>
+<a name="526"><span class="lineNum">     526 </span><span class="lineCov">         10 : bool libspdm_verify_peer_digests(libspdm_context_t *spdm_context, const void *digest,</span></a>
 <a name="527"><span class="lineNum">     527 </span>            :                                  size_t digest_count)</a>
 <a name="528"><span class="lineNum">     528 </span>            : {</a>
 <a name="529"><span class="lineNum">     529 </span>            :     size_t hash_size;</a>
@@ -596,27 +596,27 @@
 <a name="534"><span class="lineNum">     534 </span>            :     size_t index;</a>
 <a name="535"><span class="lineNum">     535 </span>            :     bool result;</a>
 <a name="536"><span class="lineNum">     536 </span>            : </a>
-<a name="537"><span class="lineNum">     537 </span><span class="lineCov">         11 :     cert_chain_buffer = spdm_context-&gt;local_context.peer_cert_chain_provision;</span></a>
-<a name="538"><span class="lineNum">     538 </span><span class="lineCov">         11 :     cert_chain_buffer_size = spdm_context-&gt;local_context.peer_cert_chain_provision_size;</span></a>
-<a name="539"><span class="lineNum">     539 </span><span class="lineCov">         11 :     if ((cert_chain_buffer != NULL) &amp;&amp; (cert_chain_buffer_size != 0)) {</span></a>
-<a name="540"><span class="lineNum">     540 </span><span class="lineCov">          9 :         hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
-<a name="541"><span class="lineNum">     541 </span><span class="lineCov">          9 :         hash_buffer = digest;</span></a>
+<a name="537"><span class="lineNum">     537 </span><span class="lineCov">         10 :     cert_chain_buffer = spdm_context-&gt;local_context.peer_cert_chain_provision;</span></a>
+<a name="538"><span class="lineNum">     538 </span><span class="lineCov">         10 :     cert_chain_buffer_size = spdm_context-&gt;local_context.peer_cert_chain_provision_size;</span></a>
+<a name="539"><span class="lineNum">     539 </span><span class="lineCov">         10 :     if ((cert_chain_buffer != NULL) &amp;&amp; (cert_chain_buffer_size != 0)) {</span></a>
+<a name="540"><span class="lineNum">     540 </span><span class="lineCov">          8 :         hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="541"><span class="lineNum">     541 </span><span class="lineCov">          8 :         hash_buffer = digest;</span></a>
 <a name="542"><span class="lineNum">     542 </span>            : </a>
-<a name="543"><span class="lineNum">     543 </span><span class="lineCov">          9 :         result = libspdm_hash_all(</span></a>
+<a name="543"><span class="lineNum">     543 </span><span class="lineCov">          8 :         result = libspdm_hash_all(</span></a>
 <a name="544"><span class="lineNum">     544 </span>            :             spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
 <a name="545"><span class="lineNum">     545 </span>            :             cert_chain_buffer, cert_chain_buffer_size,</a>
 <a name="546"><span class="lineNum">     546 </span>            :             cert_chain_buffer_hash);</a>
-<a name="547"><span class="lineNum">     547 </span><span class="lineCov">          9 :         if (!result) {</span></a>
+<a name="547"><span class="lineNum">     547 </span><span class="lineCov">          8 :         if (!result) {</span></a>
 <a name="548"><span class="lineNum">     548 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="549"><span class="lineNum">     549 </span>            :                            &quot;!!! verify_peer_digests - FAIL (hash calculation) !!!\n&quot;));</a>
 <a name="550"><span class="lineNum">     550 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="551"><span class="lineNum">     551 </span>            :         }</a>
 <a name="552"><span class="lineNum">     552 </span>            : </a>
-<a name="553"><span class="lineNum">     553 </span><span class="lineCov">         52 :         for (index = 0; index &lt; digest_count; index++)</span></a>
+<a name="553"><span class="lineNum">     553 </span><span class="lineCov">         51 :         for (index = 0; index &lt; digest_count; index++)</span></a>
 <a name="554"><span class="lineNum">     554 </span>            :         {</a>
-<a name="555"><span class="lineNum">     555 </span><span class="lineCov">         51 :             if (libspdm_const_compare_mem(hash_buffer, cert_chain_buffer_hash, hash_size) == 0) {</span></a>
-<a name="556"><span class="lineNum">     556 </span><span class="lineCov">          8 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_peer_digests - PASS !!!\n&quot;));</span></a>
-<a name="557"><span class="lineNum">     557 </span><span class="lineCov">          8 :                 return true;</span></a>
+<a name="555"><span class="lineNum">     555 </span><span class="lineCov">         50 :             if (libspdm_const_compare_mem(hash_buffer, cert_chain_buffer_hash, hash_size) == 0) {</span></a>
+<a name="556"><span class="lineNum">     556 </span><span class="lineCov">          7 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_peer_digests - PASS !!!\n&quot;));</span></a>
+<a name="557"><span class="lineNum">     557 </span><span class="lineCov">          7 :                 return true;</span></a>
 <a name="558"><span class="lineNum">     558 </span>            :             }</a>
 <a name="559"><span class="lineNum">     559 </span><span class="lineCov">         43 :             hash_buffer += hash_size;</span></a>
 <a name="560"><span class="lineNum">     560 </span>            :         }</a>

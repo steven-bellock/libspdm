@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-17 08:17:50</td>
+            <td class="headerValue">2022-11-18 22:37:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -203,7 +203,7 @@
 <a name="141"><span class="lineNum">     141 </span>            :  * @retval RETURN_SUCCESS               The SPDM response is received successfully.</a>
 <a name="142"><span class="lineNum">     142 </span>            :  * @retval RETURN_DEVICE_ERROR          A device error occurs when the SPDM response is received from the device.</a>
 <a name="143"><span class="lineNum">     143 </span>            :  **/</a>
-<a name="144"><span class="lineNum">     144 </span><span class="lineCov">       2298 : libspdm_return_t libspdm_receive_response(void *context, const uint32_t *session_id,</span></a>
+<a name="144"><span class="lineNum">     144 </span><span class="lineCov">       2297 : libspdm_return_t libspdm_receive_response(void *context, const uint32_t *session_id,</span></a>
 <a name="145"><span class="lineNum">     145 </span>            :                                           bool is_app_message,</a>
 <a name="146"><span class="lineNum">     146 </span>            :                                           size_t *response_size,</a>
 <a name="147"><span class="lineNum">     147 </span>            :                                           void **response)</a>
@@ -219,49 +219,49 @@
 <a name="157"><span class="lineNum">     157 </span>            :     uint8_t *scratch_buffer;</a>
 <a name="158"><span class="lineNum">     158 </span>            :     size_t scratch_buffer_size;</a>
 <a name="159"><span class="lineNum">     159 </span>            : </a>
-<a name="160"><span class="lineNum">     160 </span><span class="lineCov">       2298 :     spdm_context = context;</span></a>
+<a name="160"><span class="lineNum">     160 </span><span class="lineCov">       2297 :     spdm_context = context;</span></a>
 <a name="161"><span class="lineNum">     161 </span>            : </a>
-<a name="162"><span class="lineNum">     162 </span><span class="lineCov">       2298 :     if (spdm_context-&gt;crypto_request) {</span></a>
-<a name="163"><span class="lineNum">     163 </span><span class="lineCov">       2135 :         timeout = spdm_context-&gt;local_context.capability.rtt +</span></a>
-<a name="164"><span class="lineNum">     164 </span><span class="lineCov">       2135 :                   ((uint64_t)2 &lt;&lt; spdm_context-&gt;local_context.capability.ct_exponent);</span></a>
+<a name="162"><span class="lineNum">     162 </span><span class="lineCov">       2297 :     if (spdm_context-&gt;crypto_request) {</span></a>
+<a name="163"><span class="lineNum">     163 </span><span class="lineCov">       2134 :         timeout = spdm_context-&gt;local_context.capability.rtt +</span></a>
+<a name="164"><span class="lineNum">     164 </span><span class="lineCov">       2134 :                   ((uint64_t)2 &lt;&lt; spdm_context-&gt;local_context.capability.ct_exponent);</span></a>
 <a name="165"><span class="lineNum">     165 </span>            :     } else {</a>
 <a name="166"><span class="lineNum">     166 </span><span class="lineCov">        163 :         timeout = spdm_context-&gt;local_context.capability.rtt +</span></a>
 <a name="167"><span class="lineNum">     167 </span><span class="lineCov">        163 :                   spdm_context-&gt;local_context.capability.st1;</span></a>
 <a name="168"><span class="lineNum">     168 </span>            :     }</a>
 <a name="169"><span class="lineNum">     169 </span>            : </a>
-<a name="170"><span class="lineNum">     170 </span><span class="lineCov">       2298 :     message = *response;</span></a>
-<a name="171"><span class="lineNum">     171 </span><span class="lineCov">       2298 :     message_size = *response_size;</span></a>
-<a name="172"><span class="lineNum">     172 </span><span class="lineCov">       2298 :     status = spdm_context-&gt;receive_message(spdm_context, &amp;message_size,</span></a>
+<a name="170"><span class="lineNum">     170 </span><span class="lineCov">       2297 :     message = *response;</span></a>
+<a name="171"><span class="lineNum">     171 </span><span class="lineCov">       2297 :     message_size = *response_size;</span></a>
+<a name="172"><span class="lineNum">     172 </span><span class="lineCov">       2297 :     status = spdm_context-&gt;receive_message(spdm_context, &amp;message_size,</span></a>
 <a name="173"><span class="lineNum">     173 </span>            :                                            (void **)&amp;message, timeout);</a>
-<a name="174"><span class="lineNum">     174 </span><span class="lineCov">       2298 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="174"><span class="lineNum">     174 </span><span class="lineCov">       2297 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="175"><span class="lineNum">     175 </span><span class="lineCov">          7 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="176"><span class="lineNum">     176 </span>            :                        &quot;libspdm_receive_spdm_response[%x] status - %p\n&quot;,</a>
 <a name="177"><span class="lineNum">     177 </span>            :                        (session_id != NULL) ? *session_id : 0x0, status));</a>
 <a name="178"><span class="lineNum">     178 </span><span class="lineCov">          7 :         return status;</span></a>
 <a name="179"><span class="lineNum">     179 </span>            :     }</a>
 <a name="180"><span class="lineNum">     180 </span>            : </a>
-<a name="181"><span class="lineNum">     181 </span><span class="lineCov">       2291 :     message_session_id = NULL;</span></a>
-<a name="182"><span class="lineNum">     182 </span><span class="lineCov">       2291 :     is_message_app_message = false;</span></a>
+<a name="181"><span class="lineNum">     181 </span><span class="lineCov">       2290 :     message_session_id = NULL;</span></a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">       2290 :     is_message_app_message = false;</span></a>
 <a name="183"><span class="lineNum">     183 </span>            : </a>
 <a name="184"><span class="lineNum">     184 </span>            :     /* always use scratch buffer to response.</a>
 <a name="185"><span class="lineNum">     185 </span>            :      * if it is secured message, this scratch buffer will be used.</a>
 <a name="186"><span class="lineNum">     186 </span>            :      * if it is normal message, the response ptr will point to receiver buffer. */</a>
-<a name="187"><span class="lineNum">     187 </span><span class="lineCov">       2291 :     transport_header_size = spdm_context-&gt;transport_get_header_size(spdm_context);</span></a>
-<a name="188"><span class="lineNum">     188 </span><span class="lineCov">       2291 :     libspdm_get_scratch_buffer (spdm_context, (void **)&amp;scratch_buffer, &amp;scratch_buffer_size);</span></a>
+<a name="187"><span class="lineNum">     187 </span><span class="lineCov">       2290 :     transport_header_size = spdm_context-&gt;transport_get_header_size(spdm_context);</span></a>
+<a name="188"><span class="lineNum">     188 </span><span class="lineCov">       2290 :     libspdm_get_scratch_buffer (spdm_context, (void **)&amp;scratch_buffer, &amp;scratch_buffer_size);</span></a>
 <a name="189"><span class="lineNum">     189 </span>            :     #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP || LIBSPDM_ENABLE_CHUNK_CAP</a>
-<a name="190"><span class="lineNum">     190 </span><span class="lineCov">       2291 :     *response = scratch_buffer + LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_OFFSET +</span></a>
+<a name="190"><span class="lineNum">     190 </span><span class="lineCov">       2290 :     *response = scratch_buffer + LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_OFFSET +</span></a>
 <a name="191"><span class="lineNum">     191 </span>            :                 transport_header_size;</a>
-<a name="192"><span class="lineNum">     192 </span><span class="lineCov">       2291 :     *response_size = LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_CAPACITY - transport_header_size;</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineCov">       2290 :     *response_size = LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_CAPACITY - transport_header_size;</span></a>
 <a name="193"><span class="lineNum">     193 </span>            :     #else</a>
 <a name="194"><span class="lineNum">     194 </span>            :     *response = scratch_buffer + transport_header_size;</a>
 <a name="195"><span class="lineNum">     195 </span>            :     *response_size = scratch_buffer_size - transport_header_size;</a>
 <a name="196"><span class="lineNum">     196 </span>            :     #endif</a>
 <a name="197"><span class="lineNum">     197 </span>            : </a>
-<a name="198"><span class="lineNum">     198 </span><span class="lineCov">       2291 :     status = spdm_context-&gt;transport_decode_message(</span></a>
+<a name="198"><span class="lineNum">     198 </span><span class="lineCov">       2290 :     status = spdm_context-&gt;transport_decode_message(</span></a>
 <a name="199"><span class="lineNum">     199 </span>            :         spdm_context, &amp;message_session_id, &amp;is_message_app_message,</a>
 <a name="200"><span class="lineNum">     200 </span>            :         false, message_size, message, response_size, response);</a>
 <a name="201"><span class="lineNum">     201 </span>            : </a>
-<a name="202"><span class="lineNum">     202 </span><span class="lineCov">       2291 :     if (session_id != NULL) {</span></a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineCov">       2290 :     if (session_id != NULL) {</span></a>
 <a name="203"><span class="lineNum">     203 </span><span class="lineCov">        236 :         if (message_session_id == NULL) {</span></a>
 <a name="204"><span class="lineNum">     204 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="205"><span class="lineNum">     205 </span>            :                            &quot;libspdm_receive_spdm_response[%x] GetSessionId - NULL\n&quot;,</a>
@@ -276,7 +276,7 @@
 <a name="214"><span class="lineNum">     214 </span><span class="lineNoCov">          0 :             goto error;</span></a>
 <a name="215"><span class="lineNum">     215 </span>            :         }</a>
 <a name="216"><span class="lineNum">     216 </span>            :     } else {</a>
-<a name="217"><span class="lineNum">     217 </span><span class="lineCov">       2055 :         if (message_session_id != NULL) {</span></a>
+<a name="217"><span class="lineNum">     217 </span><span class="lineCov">       2054 :         if (message_session_id != NULL) {</span></a>
 <a name="218"><span class="lineNum">     218 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="219"><span class="lineNum">     219 </span>            :                            &quot;libspdm_receive_spdm_response[%x] GetSessionId - %x\n&quot;,</a>
 <a name="220"><span class="lineNum">     220 </span>            :                            (session_id != NULL) ? *session_id : 0x0,</a>
@@ -285,24 +285,24 @@
 <a name="223"><span class="lineNum">     223 </span>            :         }</a>
 <a name="224"><span class="lineNum">     224 </span>            :     }</a>
 <a name="225"><span class="lineNum">     225 </span>            : </a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineCov">       2291 :     if ((is_app_message &amp;&amp; !is_message_app_message) ||</span></a>
-<a name="227"><span class="lineNum">     227 </span><span class="lineCov">       2291 :         (!is_app_message &amp;&amp; is_message_app_message)) {</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineCov">       2290 :     if ((is_app_message &amp;&amp; !is_message_app_message) ||</span></a>
+<a name="227"><span class="lineNum">     227 </span><span class="lineCov">       2290 :         (!is_app_message &amp;&amp; is_message_app_message)) {</span></a>
 <a name="228"><span class="lineNum">     228 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="229"><span class="lineNum">     229 </span>            :                        &quot;libspdm_receive_spdm_response[%x] app_message mismatch\n&quot;,</a>
 <a name="230"><span class="lineNum">     230 </span>            :                        (session_id != NULL) ? *session_id : 0x0));</a>
 <a name="231"><span class="lineNum">     231 </span><span class="lineNoCov">          0 :         goto error;</span></a>
 <a name="232"><span class="lineNum">     232 </span>            :     }</a>
 <a name="233"><span class="lineNum">     233 </span>            : </a>
-<a name="234"><span class="lineNum">     234 </span><span class="lineCov">       2291 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_receive_spdm_response[%x] (0x%x): \n&quot;,</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineCov">       2290 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_receive_spdm_response[%x] (0x%x): \n&quot;,</span></a>
 <a name="235"><span class="lineNum">     235 </span>            :                    (session_id != NULL) ? *session_id : 0x0, *response_size));</a>
-<a name="236"><span class="lineNum">     236 </span><span class="lineCov">       2291 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineCov">       2290 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="237"><span class="lineNum">     237 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="238"><span class="lineNum">     238 </span>            :                        &quot;libspdm_receive_spdm_response[%x] status - %p\n&quot;,</a>
 <a name="239"><span class="lineNum">     239 </span>            :                        (session_id != NULL) ? *session_id : 0x0, status));</a>
 <a name="240"><span class="lineNum">     240 </span>            :     } else {</a>
-<a name="241"><span class="lineNum">     241 </span><span class="lineCov">       2291 :         LIBSPDM_INTERNAL_DUMP_HEX(*response, *response_size);</span></a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineCov">       2290 :         LIBSPDM_INTERNAL_DUMP_HEX(*response, *response_size);</span></a>
 <a name="242"><span class="lineNum">     242 </span>            :     }</a>
-<a name="243"><span class="lineNum">     243 </span><span class="lineCov">       2291 :     return status;</span></a>
+<a name="243"><span class="lineNum">     243 </span><span class="lineCov">       2290 :     return status;</span></a>
 <a name="244"><span class="lineNum">     244 </span>            : </a>
 <a name="245"><span class="lineNum">     245 </span><span class="lineNoCov">          0 : error:</span></a>
 <a name="246"><span class="lineNum">     246 </span><span class="lineNoCov">          0 :     if (spdm_context-&gt;last_spdm_error.error_code == SPDM_ERROR_CODE_DECRYPT_ERROR) {</span></a>
@@ -646,7 +646,7 @@
 <a name="584"><span class="lineNum">     584 </span>            :  * @retval RETURN_SUCCESS               The SPDM response is received successfully.</a>
 <a name="585"><span class="lineNum">     585 </span>            :  * @retval RETURN_DEVICE_ERROR          A device error occurs when the SPDM response is received from the device.</a>
 <a name="586"><span class="lineNum">     586 </span>            :  **/</a>
-<a name="587"><span class="lineNum">     587 </span><span class="lineCov">       2291 : libspdm_return_t libspdm_receive_spdm_response(libspdm_context_t *spdm_context,</span></a>
+<a name="587"><span class="lineNum">     587 </span><span class="lineCov">       2290 : libspdm_return_t libspdm_receive_spdm_response(libspdm_context_t *spdm_context,</span></a>
 <a name="588"><span class="lineNum">     588 </span>            :                                                const uint32_t *session_id,</a>
 <a name="589"><span class="lineNum">     589 </span>            :                                                size_t *response_size,</a>
 <a name="590"><span class="lineNum">     590 </span>            :                                                void **response)</a>
@@ -661,7 +661,7 @@
 <a name="599"><span class="lineNum">     599 </span>            :     libspdm_chunk_info_t *send_info;</a>
 <a name="600"><span class="lineNum">     600 </span>            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
 <a name="601"><span class="lineNum">     601 </span>            : </a>
-<a name="602"><span class="lineNum">     602 </span><span class="lineCov">       2567 :     if ((session_id != NULL) &amp;&amp;</span></a>
+<a name="602"><span class="lineNum">     602 </span><span class="lineCov">       2566 :     if ((session_id != NULL) &amp;&amp;</span></a>
 <a name="603"><span class="lineNum">     603 </span><span class="lineCov">        276 :         libspdm_is_capabilities_flag_supported(</span></a>
 <a name="604"><span class="lineNum">     604 </span>            :             spdm_context, true,</a>
 <a name="605"><span class="lineNum">     605 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP,</a>
@@ -683,8 +683,8 @@
 <a name="621"><span class="lineNum">     621 </span>            :     #if !(LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) &amp;&amp; !(LIBSPDM_ENABLE_CHUNK_CAP)</a>
 <a name="622"><span class="lineNum">     622 </span>            :     status = libspdm_receive_response(spdm_context, session_id, false, response_size, response);</a>
 <a name="623"><span class="lineNum">     623 </span>            :     #else /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
-<a name="624"><span class="lineNum">     624 </span><span class="lineCov">       2291 :     send_info = &amp;spdm_context-&gt;chunk_context.send;</span></a>
-<a name="625"><span class="lineNum">     625 </span><span class="lineCov">       2291 :     if (send_info-&gt;chunk_in_use) {</span></a>
+<a name="624"><span class="lineNum">     624 </span><span class="lineCov">       2290 :     send_info = &amp;spdm_context-&gt;chunk_context.send;</span></a>
+<a name="625"><span class="lineNum">     625 </span><span class="lineCov">       2290 :     if (send_info-&gt;chunk_in_use) {</span></a>
 <a name="626"><span class="lineNum">     626 </span><span class="lineCov">          2 :         libspdm_copy_mem(*response, *response_size,</span></a>
 <a name="627"><span class="lineNum">     627 </span><span class="lineCov">          2 :                          send_info-&gt;large_message, send_info-&gt;large_message_size);</span></a>
 <a name="628"><span class="lineNum">     628 </span><span class="lineCov">          2 :         *response_size = send_info-&gt;large_message_size;</span></a>
@@ -703,23 +703,23 @@
 <a name="641"><span class="lineNum">     641 </span><span class="lineCov">          2 :         status = LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="642"><span class="lineNum">     642 </span>            :     }</a>
 <a name="643"><span class="lineNum">     643 </span>            :     else {</a>
-<a name="644"><span class="lineNum">     644 </span><span class="lineCov">       2289 :         response_capacity = *response_size;</span></a>
-<a name="645"><span class="lineNum">     645 </span><span class="lineCov">       2289 :         status = libspdm_receive_response(spdm_context, session_id, false,</span></a>
+<a name="644"><span class="lineNum">     644 </span><span class="lineCov">       2288 :         response_capacity = *response_size;</span></a>
+<a name="645"><span class="lineNum">     645 </span><span class="lineCov">       2288 :         status = libspdm_receive_response(spdm_context, session_id, false,</span></a>
 <a name="646"><span class="lineNum">     646 </span>            :                                           response_size, response);</a>
-<a name="647"><span class="lineNum">     647 </span><span class="lineCov">       2289 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="647"><span class="lineNum">     647 </span><span class="lineCov">       2288 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="648"><span class="lineNum">     648 </span><span class="lineCov">          6 :             goto receive_done;</span></a>
 <a name="649"><span class="lineNum">     649 </span>            :         }</a>
 <a name="650"><span class="lineNum">     650 </span>            :     }</a>
 <a name="651"><span class="lineNum">     651 </span>            : </a>
-<a name="652"><span class="lineNum">     652 </span><span class="lineCov">       2285 :     spdm_response = (spdm_message_header_t*) (*response);</span></a>
+<a name="652"><span class="lineNum">     652 </span><span class="lineCov">       2284 :     spdm_response = (spdm_message_header_t*) (*response);</span></a>
 <a name="653"><span class="lineNum">     653 </span>            : </a>
-<a name="654"><span class="lineNum">     654 </span><span class="lineCov">       2285 :     if (*response_size &lt; sizeof(spdm_message_header_t)) {</span></a>
+<a name="654"><span class="lineNum">     654 </span><span class="lineCov">       2284 :     if (*response_size &lt; sizeof(spdm_message_header_t)) {</span></a>
 <a name="655"><span class="lineNum">     655 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="656"><span class="lineNum">     656 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
 <a name="657"><span class="lineNum">     657 </span>            :     }</a>
 <a name="658"><span class="lineNum">     658 </span>            : </a>
-<a name="659"><span class="lineNum">     659 </span><span class="lineCov">       2285 :     if (spdm_response-&gt;request_response_code == SPDM_ERROR</span></a>
-<a name="660"><span class="lineNum">     660 </span><span class="lineCov">        431 :         &amp;&amp; spdm_response-&gt;param1 == SPDM_ERROR_CODE_LARGE_RESPONSE) {</span></a>
+<a name="659"><span class="lineNum">     659 </span><span class="lineCov">       2284 :     if (spdm_response-&gt;request_response_code == SPDM_ERROR</span></a>
+<a name="660"><span class="lineNum">     660 </span><span class="lineCov">        430 :         &amp;&amp; spdm_response-&gt;param1 == SPDM_ERROR_CODE_LARGE_RESPONSE) {</span></a>
 <a name="661"><span class="lineNum">     661 </span>            : </a>
 <a name="662"><span class="lineNum">     662 </span><span class="lineCov">          5 :         status = libspdm_handle_error_large_response(</span></a>
 <a name="663"><span class="lineNum">     663 </span>            :             spdm_context, session_id,</a>
@@ -744,10 +744,10 @@
 <a name="682"><span class="lineNum">     682 </span>            :         }</a>
 <a name="683"><span class="lineNum">     683 </span>            :     }</a>
 <a name="684"><span class="lineNum">     684 </span>            : </a>
-<a name="685"><span class="lineNum">     685 </span><span class="lineCov">       2285 : receive_done:</span></a>
+<a name="685"><span class="lineNum">     685 </span><span class="lineCov">       2284 : receive_done:</span></a>
 <a name="686"><span class="lineNum">     686 </span>            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
 <a name="687"><span class="lineNum">     687 </span>            : </a>
-<a name="688"><span class="lineNum">     688 </span><span class="lineCov">       2291 :     return status;</span></a>
+<a name="688"><span class="lineNum">     688 </span><span class="lineCov">       2290 :     return status;</span></a>
 <a name="689"><span class="lineNum">     689 </span>            : }</a>
 </pre>
       </td>
