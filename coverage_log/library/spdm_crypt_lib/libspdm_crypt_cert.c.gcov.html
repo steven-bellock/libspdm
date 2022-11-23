@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-23 08:17:06</td>
+            <td class="headerValue">2022-11-23 19:05:17</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -135,9 +135,9 @@
 <a name="73"><span class="lineNum">      73 </span>            :  * @return asymmetric GET_PUBLIC_KEY_FROM_X509 function</a>
 <a name="74"><span class="lineNum">      74 </span>            :  **/</a>
 <a name="75"><span class="lineNum">      75 </span>            : libspdm_asym_get_public_key_from_x509_func</a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineCov">        687 : static libspdm_get_asym_get_public_key_from_x509(uint32_t base_asym_algo)</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">        736 : static libspdm_get_asym_get_public_key_from_x509(uint32_t base_asym_algo)</span></a>
 <a name="77"><span class="lineNum">      77 </span>            : {</a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineCov">        687 :     switch (base_asym_algo) {</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">        736 :     switch (base_asym_algo) {</span></a>
 <a name="79"><span class="lineNum">      79 </span><span class="lineCov">         32 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="80"><span class="lineNum">      80 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
 <a name="81"><span class="lineNum">      81 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_4096:</a>
@@ -150,11 +150,11 @@
 <a name="88"><span class="lineNum">      88 </span>            :         LIBSPDM_ASSERT(false);</a>
 <a name="89"><span class="lineNum">      89 </span>            :         break;</a>
 <a name="90"><span class="lineNum">      90 </span>            : #endif</a>
-<a name="91"><span class="lineNum">      91 </span><span class="lineCov">        655 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="91"><span class="lineNum">      91 </span><span class="lineCov">        704 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="92"><span class="lineNum">      92 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="93"><span class="lineNum">      93 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="94"><span class="lineNum">      94 </span>            : #if LIBSPDM_ECDSA_SUPPORT</a>
-<a name="95"><span class="lineNum">      95 </span><span class="lineCov">        655 :         return libspdm_ec_get_public_key_from_x509;</span></a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineCov">        704 :         return libspdm_ec_get_public_key_from_x509;</span></a>
 <a name="96"><span class="lineNum">      96 </span>            : #else</a>
 <a name="97"><span class="lineNum">      97 </span>            :         LIBSPDM_ASSERT(false);</a>
 <a name="98"><span class="lineNum">      98 </span>            :         break;</a>
@@ -195,17 +195,17 @@
 <a name="133"><span class="lineNum">     133 </span>            :  * @retval  true   public key was retrieved successfully.</a>
 <a name="134"><span class="lineNum">     134 </span>            :  * @retval  false  Fail to retrieve public key from X509 certificate.</a>
 <a name="135"><span class="lineNum">     135 </span>            :  **/</a>
-<a name="136"><span class="lineNum">     136 </span><span class="lineCov">        687 : bool libspdm_asym_get_public_key_from_x509(uint32_t base_asym_algo,</span></a>
+<a name="136"><span class="lineNum">     136 </span><span class="lineCov">        736 : bool libspdm_asym_get_public_key_from_x509(uint32_t base_asym_algo,</span></a>
 <a name="137"><span class="lineNum">     137 </span>            :                                            const uint8_t *cert,</a>
 <a name="138"><span class="lineNum">     138 </span>            :                                            size_t cert_size,</a>
 <a name="139"><span class="lineNum">     139 </span>            :                                            void **context)</a>
 <a name="140"><span class="lineNum">     140 </span>            : {</a>
 <a name="141"><span class="lineNum">     141 </span>            :     libspdm_asym_get_public_key_from_x509_func get_public_key_from_x509_function;</a>
-<a name="142"><span class="lineNum">     142 </span><span class="lineCov">        687 :     get_public_key_from_x509_function = libspdm_get_asym_get_public_key_from_x509(base_asym_algo);</span></a>
-<a name="143"><span class="lineNum">     143 </span><span class="lineCov">        687 :     if (get_public_key_from_x509_function == NULL) {</span></a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineCov">        736 :     get_public_key_from_x509_function = libspdm_get_asym_get_public_key_from_x509(base_asym_algo);</span></a>
+<a name="143"><span class="lineNum">     143 </span><span class="lineCov">        736 :     if (get_public_key_from_x509_function == NULL) {</span></a>
 <a name="144"><span class="lineNum">     144 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="145"><span class="lineNum">     145 </span>            :     }</a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineCov">        687 :     return get_public_key_from_x509_function(cert, cert_size, context);</span></a>
+<a name="146"><span class="lineNum">     146 </span><span class="lineCov">        736 :     return get_public_key_from_x509_function(cert, cert_size, context);</span></a>
 <a name="147"><span class="lineNum">     147 </span>            : }</a>
 <a name="148"><span class="lineNum">     148 </span>            : </a>
 <a name="149"><span class="lineNum">     149 </span>            : </a>
@@ -264,7 +264,7 @@
 <a name="202"><span class="lineNum">     202 </span>            :  * @retval  true   verification pass.</a>
 <a name="203"><span class="lineNum">     203 </span>            :  * @retval  false  verification fail.</a>
 <a name="204"><span class="lineNum">     204 </span>            :  **/</a>
-<a name="205"><span class="lineNum">     205 </span><span class="lineCov">        554 : static bool libspdm_internal_x509_date_time_check(const uint8_t *from,</span></a>
+<a name="205"><span class="lineNum">     205 </span><span class="lineCov">        586 : static bool libspdm_internal_x509_date_time_check(const uint8_t *from,</span></a>
 <a name="206"><span class="lineNum">     206 </span>            :                                                   size_t from_size,</a>
 <a name="207"><span class="lineNum">     207 </span>            :                                                   const uint8_t *to,</a>
 <a name="208"><span class="lineNum">     208 </span>            :                                                   size_t to_size)</a>
@@ -276,32 +276,32 @@
 <a name="214"><span class="lineNum">     214 </span>            :     size_t f0_size;</a>
 <a name="215"><span class="lineNum">     215 </span>            :     size_t t0_size;</a>
 <a name="216"><span class="lineNum">     216 </span>            : </a>
-<a name="217"><span class="lineNum">     217 </span><span class="lineCov">        554 :     f0_size = 64;</span></a>
-<a name="218"><span class="lineNum">     218 </span><span class="lineCov">        554 :     t0_size = 64;</span></a>
+<a name="217"><span class="lineNum">     217 </span><span class="lineCov">        586 :     f0_size = 64;</span></a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">        586 :     t0_size = 64;</span></a>
 <a name="219"><span class="lineNum">     219 </span>            : </a>
-<a name="220"><span class="lineNum">     220 </span><span class="lineCov">        554 :     status = libspdm_x509_set_date_time(&quot;19700101000000Z&quot;, f0, &amp;f0_size);</span></a>
-<a name="221"><span class="lineNum">     221 </span><span class="lineCov">        554 :     if (!status) {</span></a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">        586 :     status = libspdm_x509_set_date_time(&quot;19700101000000Z&quot;, f0, &amp;f0_size);</span></a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineCov">        586 :     if (!status) {</span></a>
 <a name="222"><span class="lineNum">     222 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="223"><span class="lineNum">     223 </span>            :     }</a>
 <a name="224"><span class="lineNum">     224 </span>            : </a>
-<a name="225"><span class="lineNum">     225 </span><span class="lineCov">        554 :     status = libspdm_x509_set_date_time(&quot;99991231235959Z&quot;, t0, &amp;t0_size);</span></a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineCov">        554 :     if (!status) {</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineCov">        586 :     status = libspdm_x509_set_date_time(&quot;99991231235959Z&quot;, t0, &amp;t0_size);</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineCov">        586 :     if (!status) {</span></a>
 <a name="227"><span class="lineNum">     227 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="228"><span class="lineNum">     228 </span>            :     }</a>
 <a name="229"><span class="lineNum">     229 </span>            : </a>
 <a name="230"><span class="lineNum">     230 </span>            :     /* from &gt;= f0*/</a>
-<a name="231"><span class="lineNum">     231 </span><span class="lineCov">        554 :     ret = libspdm_x509_compare_date_time(from, f0);</span></a>
-<a name="232"><span class="lineNum">     232 </span><span class="lineCov">        554 :     if (ret &lt; 0) {</span></a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineCov">        586 :     ret = libspdm_x509_compare_date_time(from, f0);</span></a>
+<a name="232"><span class="lineNum">     232 </span><span class="lineCov">        586 :     if (ret &lt; 0) {</span></a>
 <a name="233"><span class="lineNum">     233 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="234"><span class="lineNum">     234 </span>            :     }</a>
 <a name="235"><span class="lineNum">     235 </span>            : </a>
 <a name="236"><span class="lineNum">     236 </span>            :     /* to &lt;= t0*/</a>
-<a name="237"><span class="lineNum">     237 </span><span class="lineCov">        554 :     ret = libspdm_x509_compare_date_time(t0, to);</span></a>
-<a name="238"><span class="lineNum">     238 </span><span class="lineCov">        554 :     if (ret &lt; 0) {</span></a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineCov">        586 :     ret = libspdm_x509_compare_date_time(t0, to);</span></a>
+<a name="238"><span class="lineNum">     238 </span><span class="lineCov">        586 :     if (ret &lt; 0) {</span></a>
 <a name="239"><span class="lineNum">     239 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="240"><span class="lineNum">     240 </span>            :     }</a>
 <a name="241"><span class="lineNum">     241 </span>            : </a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineCov">        554 :     return true;</span></a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">        586 :     return true;</span></a>
 <a name="243"><span class="lineNum">     243 </span>            : }</a>
 <a name="244"><span class="lineNum">     244 </span>            : </a>
 <a name="245"><span class="lineNum">     245 </span>            : /**</a>
@@ -311,9 +311,9 @@
 <a name="249"><span class="lineNum">     249 </span>            :  *</a>
 <a name="250"><span class="lineNum">     250 </span>            :  * @return SPDM public key encryption algorithms OID len.</a>
 <a name="251"><span class="lineNum">     251 </span>            :  **/</a>
-<a name="252"><span class="lineNum">     252 </span><span class="lineCov">       1112 : static uint32_t libspdm_get_public_key_algo_OID_len(uint32_t base_asym_algo)</span></a>
+<a name="252"><span class="lineNum">     252 </span><span class="lineCov">       1176 : static uint32_t libspdm_get_public_key_algo_OID_len(uint32_t base_asym_algo)</span></a>
 <a name="253"><span class="lineNum">     253 </span>            : {</a>
-<a name="254"><span class="lineNum">     254 </span><span class="lineCov">       1112 :     switch (base_asym_algo) {</span></a>
+<a name="254"><span class="lineNum">     254 </span><span class="lineCov">       1176 :     switch (base_asym_algo) {</span></a>
 <a name="255"><span class="lineNum">     255 </span><span class="lineCov">         56 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="256"><span class="lineNum">     256 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_2048:</a>
 <a name="257"><span class="lineNum">     257 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
@@ -321,8 +321,8 @@
 <a name="259"><span class="lineNum">     259 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_4096:</a>
 <a name="260"><span class="lineNum">     260 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_4096:</a>
 <a name="261"><span class="lineNum">     261 </span><span class="lineCov">         56 :         return 4;</span></a>
-<a name="262"><span class="lineNum">     262 </span><span class="lineCov">       1052 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
-<a name="263"><span class="lineNum">     263 </span><span class="lineCov">       1052 :         return 8;</span></a>
+<a name="262"><span class="lineNum">     262 </span><span class="lineCov">       1116 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineCov">       1116 :         return 8;</span></a>
 <a name="264"><span class="lineNum">     264 </span><span class="lineCov">          4 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</span></a>
 <a name="265"><span class="lineNum">     265 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="266"><span class="lineNum">     266 </span><span class="lineCov">          4 :         return 5;</span></a>
@@ -346,13 +346,13 @@
 <a name="284"><span class="lineNum">     284 </span>            :  * @retval  true   get OID sucessful.</a>
 <a name="285"><span class="lineNum">     285 </span>            :  * @retval  false  get OID fail.</a>
 <a name="286"><span class="lineNum">     286 </span>            :  **/</a>
-<a name="287"><span class="lineNum">     287 </span><span class="lineCov">        556 : static bool libspdm_get_public_key_algo_OID(uint32_t base_asym_algo, uint8_t *oid,</span></a>
+<a name="287"><span class="lineNum">     287 </span><span class="lineCov">        588 : static bool libspdm_get_public_key_algo_OID(uint32_t base_asym_algo, uint8_t *oid,</span></a>
 <a name="288"><span class="lineNum">     288 </span>            :                                             uint8_t *oid_other)</a>
 <a name="289"><span class="lineNum">     289 </span>            : {</a>
 <a name="290"><span class="lineNum">     290 </span>            :     uint32_t oid_len;</a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineCov">        556 :     oid_len = libspdm_get_public_key_algo_OID_len(base_asym_algo);</span></a>
+<a name="291"><span class="lineNum">     291 </span><span class="lineCov">        588 :     oid_len = libspdm_get_public_key_algo_OID_len(base_asym_algo);</span></a>
 <a name="292"><span class="lineNum">     292 </span>            : </a>
-<a name="293"><span class="lineNum">     293 </span><span class="lineCov">        556 :     switch (base_asym_algo) {</span></a>
+<a name="293"><span class="lineNum">     293 </span><span class="lineCov">        588 :     switch (base_asym_algo) {</span></a>
 <a name="294"><span class="lineNum">     294 </span><span class="lineCov">         23 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="295"><span class="lineNum">     295 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_2048: {</a>
 <a name="296"><span class="lineNum">     296 </span><span class="lineCov">         23 :         uint8_t encry_algo_oid_rsa2048[] = KEY_ENCRY_ALGO_RSA2048_FLAG;</span></a>
@@ -378,10 +378,10 @@
 <a name="316"><span class="lineNum">     316 </span><span class="lineCov">          2 :         break;</span></a>
 <a name="317"><span class="lineNum">     317 </span>            :     }</a>
 <a name="318"><span class="lineNum">     318 </span>            : </a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineCov">        526 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256: {</span></a>
-<a name="320"><span class="lineNum">     320 </span><span class="lineCov">        526 :         uint8_t encry_algo_oid_ecc256[] = KEY_ENCRY_ALGO_ECC256_OID;</span></a>
-<a name="321"><span class="lineNum">     321 </span><span class="lineCov">        526 :         libspdm_copy_mem(oid, oid_len, encry_algo_oid_ecc256, oid_len);</span></a>
-<a name="322"><span class="lineNum">     322 </span><span class="lineCov">        526 :         break;</span></a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineCov">        558 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256: {</span></a>
+<a name="320"><span class="lineNum">     320 </span><span class="lineCov">        558 :         uint8_t encry_algo_oid_ecc256[] = KEY_ENCRY_ALGO_ECC256_OID;</span></a>
+<a name="321"><span class="lineNum">     321 </span><span class="lineCov">        558 :         libspdm_copy_mem(oid, oid_len, encry_algo_oid_ecc256, oid_len);</span></a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineCov">        558 :         break;</span></a>
 <a name="323"><span class="lineNum">     323 </span>            :     }</a>
 <a name="324"><span class="lineNum">     324 </span><span class="lineCov">          1 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384: {</span></a>
 <a name="325"><span class="lineNum">     325 </span><span class="lineCov">          1 :         uint8_t encry_algo_oid_ecc384[] = KEY_ENCRY_ALGO_ECC384_OID;</span></a>
@@ -414,7 +414,7 @@
 <a name="352"><span class="lineNum">     352 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="353"><span class="lineNum">     353 </span>            :     }</a>
 <a name="354"><span class="lineNum">     354 </span>            : </a>
-<a name="355"><span class="lineNum">     355 </span><span class="lineCov">        556 :     return true;</span></a>
+<a name="355"><span class="lineNum">     355 </span><span class="lineCov">        588 :     return true;</span></a>
 <a name="356"><span class="lineNum">     356 </span>            : }</a>
 <a name="357"><span class="lineNum">     357 </span>            : </a>
 <a name="358"><span class="lineNum">     358 </span>            : /**</a>
@@ -429,7 +429,7 @@
 <a name="367"><span class="lineNum">     367 </span>            :  * @retval  true   get public key oid from cert successfully</a>
 <a name="368"><span class="lineNum">     368 </span>            :  * @retval  false  get public key oid from cert fail</a>
 <a name="369"><span class="lineNum">     369 </span>            :  **/</a>
-<a name="370"><span class="lineNum">     370 </span><span class="lineCov">        556 : static bool libspdm_get_public_key_oid(const uint8_t *cert, size_t cert_size,</span></a>
+<a name="370"><span class="lineNum">     370 </span><span class="lineCov">        588 : static bool libspdm_get_public_key_oid(const uint8_t *cert, size_t cert_size,</span></a>
 <a name="371"><span class="lineNum">     371 </span>            :                                        uint8_t *oid, size_t oid_size, uint32_t base_asym_algo)</a>
 <a name="372"><span class="lineNum">     372 </span>            : {</a>
 <a name="373"><span class="lineNum">     373 </span>            :     bool ret;</a>
@@ -440,42 +440,42 @@
 <a name="378"><span class="lineNum">     378 </span>            :     uint8_t index;</a>
 <a name="379"><span class="lineNum">     379 </span>            :     uint8_t sequence_time;</a>
 <a name="380"><span class="lineNum">     380 </span>            : </a>
-<a name="381"><span class="lineNum">     381 </span><span class="lineCov">        556 :     length = (int32_t)cert_size;</span></a>
-<a name="382"><span class="lineNum">     382 </span><span class="lineCov">        556 :     ptr = (uint8_t*)(size_t)cert;</span></a>
-<a name="383"><span class="lineNum">     383 </span><span class="lineCov">        556 :     obj_len = 0;</span></a>
-<a name="384"><span class="lineNum">     384 </span><span class="lineCov">        556 :     end = ptr + length;</span></a>
-<a name="385"><span class="lineNum">     385 </span><span class="lineCov">        556 :     ret = true;</span></a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineCov">        588 :     length = (int32_t)cert_size;</span></a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineCov">        588 :     ptr = (uint8_t*)(size_t)cert;</span></a>
+<a name="383"><span class="lineNum">     383 </span><span class="lineCov">        588 :     obj_len = 0;</span></a>
+<a name="384"><span class="lineNum">     384 </span><span class="lineCov">        588 :     end = ptr + length;</span></a>
+<a name="385"><span class="lineNum">     385 </span><span class="lineCov">        588 :     ret = true;</span></a>
 <a name="386"><span class="lineNum">     386 </span>            : </a>
 <a name="387"><span class="lineNum">     387 </span>            :     /* TBSCertificate have 5 sequence before subjectPublicKeyInfo*/</a>
-<a name="388"><span class="lineNum">     388 </span><span class="lineCov">        556 :     sequence_time = 5;</span></a>
+<a name="388"><span class="lineNum">     388 </span><span class="lineCov">        588 :     sequence_time = 5;</span></a>
 <a name="389"><span class="lineNum">     389 </span>            : </a>
 <a name="390"><span class="lineNum">     390 </span>            :     /*all cert sequence*/</a>
-<a name="391"><span class="lineNum">     391 </span><span class="lineCov">        556 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
+<a name="391"><span class="lineNum">     391 </span><span class="lineCov">        588 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
 <a name="392"><span class="lineNum">     392 </span>            :                                LIBSPDM_CRYPTO_ASN1_SEQUENCE | LIBSPDM_CRYPTO_ASN1_CONSTRUCTED);</a>
-<a name="393"><span class="lineNum">     393 </span><span class="lineCov">        556 :     if (!ret) {</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineCov">        588 :     if (!ret) {</span></a>
 <a name="394"><span class="lineNum">     394 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="395"><span class="lineNum">     395 </span>            :     }</a>
 <a name="396"><span class="lineNum">     396 </span>            : </a>
 <a name="397"><span class="lineNum">     397 </span>            :     /*TBSCertificate sequence*/</a>
-<a name="398"><span class="lineNum">     398 </span><span class="lineCov">        556 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
+<a name="398"><span class="lineNum">     398 </span><span class="lineCov">        588 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
 <a name="399"><span class="lineNum">     399 </span>            :                                LIBSPDM_CRYPTO_ASN1_SEQUENCE | LIBSPDM_CRYPTO_ASN1_CONSTRUCTED);</a>
-<a name="400"><span class="lineNum">     400 </span><span class="lineCov">        556 :     if (!ret) {</span></a>
+<a name="400"><span class="lineNum">     400 </span><span class="lineCov">        588 :     if (!ret) {</span></a>
 <a name="401"><span class="lineNum">     401 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="402"><span class="lineNum">     402 </span>            :     }</a>
 <a name="403"><span class="lineNum">     403 </span>            : </a>
-<a name="404"><span class="lineNum">     404 </span><span class="lineCov">        556 :     end = ptr + obj_len;</span></a>
+<a name="404"><span class="lineNum">     404 </span><span class="lineCov">        588 :     end = ptr + obj_len;</span></a>
 <a name="405"><span class="lineNum">     405 </span>            :     /*version*/</a>
-<a name="406"><span class="lineNum">     406 </span><span class="lineCov">        556 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
+<a name="406"><span class="lineNum">     406 </span><span class="lineCov">        588 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
 <a name="407"><span class="lineNum">     407 </span>            :                                LIBSPDM_CRYPTO_ASN1_CONTEXT_SPECIFIC |</a>
 <a name="408"><span class="lineNum">     408 </span>            :                                LIBSPDM_CRYPTO_ASN1_CONSTRUCTED);</a>
-<a name="409"><span class="lineNum">     409 </span><span class="lineCov">        556 :     if (!ret) {</span></a>
+<a name="409"><span class="lineNum">     409 </span><span class="lineCov">        588 :     if (!ret) {</span></a>
 <a name="410"><span class="lineNum">     410 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="411"><span class="lineNum">     411 </span>            :     }</a>
 <a name="412"><span class="lineNum">     412 </span>            : </a>
-<a name="413"><span class="lineNum">     413 </span><span class="lineCov">        556 :     ptr += obj_len;</span></a>
+<a name="413"><span class="lineNum">     413 </span><span class="lineCov">        588 :     ptr += obj_len;</span></a>
 <a name="414"><span class="lineNum">     414 </span>            :     /*serialNumber*/</a>
-<a name="415"><span class="lineNum">     415 </span><span class="lineCov">        556 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len, LIBSPDM_CRYPTO_ASN1_INTEGER);</span></a>
-<a name="416"><span class="lineNum">     416 </span><span class="lineCov">        556 :     if (!ret) {</span></a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineCov">        588 :     ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len, LIBSPDM_CRYPTO_ASN1_INTEGER);</span></a>
+<a name="416"><span class="lineNum">     416 </span><span class="lineCov">        588 :     if (!ret) {</span></a>
 <a name="417"><span class="lineNum">     417 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="418"><span class="lineNum">     418 </span>            :     }</a>
 <a name="419"><span class="lineNum">     419 </span>            : </a>
@@ -486,16 +486,16 @@
 <a name="424"><span class="lineNum">     424 </span>            :      * subject Name,</a>
 <a name="425"><span class="lineNum">     425 </span>            :      * subjectPublicKeyInfo</a>
 <a name="426"><span class="lineNum">     426 </span>            :      **/</a>
-<a name="427"><span class="lineNum">     427 </span><span class="lineCov">       3336 :     for (index = 0; index &lt; sequence_time; index++) {</span></a>
-<a name="428"><span class="lineNum">     428 </span><span class="lineCov">       2780 :         ptr += obj_len;</span></a>
-<a name="429"><span class="lineNum">     429 </span><span class="lineCov">       2780 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
+<a name="427"><span class="lineNum">     427 </span><span class="lineCov">       3528 :     for (index = 0; index &lt; sequence_time; index++) {</span></a>
+<a name="428"><span class="lineNum">     428 </span><span class="lineCov">       2940 :         ptr += obj_len;</span></a>
+<a name="429"><span class="lineNum">     429 </span><span class="lineCov">       2940 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
 <a name="430"><span class="lineNum">     430 </span>            :                                    LIBSPDM_CRYPTO_ASN1_SEQUENCE | LIBSPDM_CRYPTO_ASN1_CONSTRUCTED);</a>
-<a name="431"><span class="lineNum">     431 </span><span class="lineCov">       2780 :         if (!ret) {</span></a>
+<a name="431"><span class="lineNum">     431 </span><span class="lineCov">       2940 :         if (!ret) {</span></a>
 <a name="432"><span class="lineNum">     432 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="433"><span class="lineNum">     433 </span>            :         }</a>
 <a name="434"><span class="lineNum">     434 </span>            :     }</a>
 <a name="435"><span class="lineNum">     435 </span>            : </a>
-<a name="436"><span class="lineNum">     436 </span><span class="lineCov">        556 :     switch (base_asym_algo)</span></a>
+<a name="436"><span class="lineNum">     436 </span><span class="lineCov">        588 :     switch (base_asym_algo)</span></a>
 <a name="437"><span class="lineNum">     437 </span>            :     {</a>
 <a name="438"><span class="lineNum">     438 </span><span class="lineCov">         28 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="439"><span class="lineNum">     439 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_2048:</a>
@@ -524,32 +524,32 @@
 <a name="462"><span class="lineNum">     462 </span>            :         }</a>
 <a name="463"><span class="lineNum">     463 </span><span class="lineCov">         27 :         libspdm_copy_mem(oid, oid_size, ptr, oid_size);</span></a>
 <a name="464"><span class="lineNum">     464 </span><span class="lineCov">         27 :         break;</span></a>
-<a name="465"><span class="lineNum">     465 </span><span class="lineCov">        528 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="465"><span class="lineNum">     465 </span><span class="lineCov">        560 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="466"><span class="lineNum">     466 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="467"><span class="lineNum">     467 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
-<a name="468"><span class="lineNum">     468 </span><span class="lineCov">        528 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
+<a name="468"><span class="lineNum">     468 </span><span class="lineCov">        560 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
 <a name="469"><span class="lineNum">     469 </span>            :                                    LIBSPDM_CRYPTO_ASN1_SEQUENCE | LIBSPDM_CRYPTO_ASN1_CONSTRUCTED);</a>
-<a name="470"><span class="lineNum">     470 </span><span class="lineCov">        528 :         if (!ret) {</span></a>
+<a name="470"><span class="lineNum">     470 </span><span class="lineCov">        560 :         if (!ret) {</span></a>
 <a name="471"><span class="lineNum">     471 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="472"><span class="lineNum">     472 </span>            :         }</a>
-<a name="473"><span class="lineNum">     473 </span><span class="lineCov">        528 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len, LIBSPDM_CRYPTO_ASN1_OID);</span></a>
-<a name="474"><span class="lineNum">     474 </span><span class="lineCov">        528 :         if (!ret) {</span></a>
+<a name="473"><span class="lineNum">     473 </span><span class="lineCov">        560 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len, LIBSPDM_CRYPTO_ASN1_OID);</span></a>
+<a name="474"><span class="lineNum">     474 </span><span class="lineCov">        560 :         if (!ret) {</span></a>
 <a name="475"><span class="lineNum">     475 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="476"><span class="lineNum">     476 </span>            :         }</a>
 <a name="477"><span class="lineNum">     477 </span>            : </a>
 <a name="478"><span class="lineNum">     478 </span>            :         /*get ecc second oid*/</a>
-<a name="479"><span class="lineNum">     479 </span><span class="lineCov">        528 :         ptr +=obj_len;</span></a>
-<a name="480"><span class="lineNum">     480 </span><span class="lineCov">        528 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len, LIBSPDM_CRYPTO_ASN1_OID);</span></a>
-<a name="481"><span class="lineNum">     481 </span><span class="lineCov">        528 :         if (!ret) {</span></a>
+<a name="479"><span class="lineNum">     479 </span><span class="lineCov">        560 :         ptr +=obj_len;</span></a>
+<a name="480"><span class="lineNum">     480 </span><span class="lineCov">        560 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len, LIBSPDM_CRYPTO_ASN1_OID);</span></a>
+<a name="481"><span class="lineNum">     481 </span><span class="lineCov">        560 :         if (!ret) {</span></a>
 <a name="482"><span class="lineNum">     482 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="483"><span class="lineNum">     483 </span>            :         }</a>
 <a name="484"><span class="lineNum">     484 </span>            : </a>
-<a name="485"><span class="lineNum">     485 </span><span class="lineCov">        528 :         if (oid_size != obj_len) {</span></a>
+<a name="485"><span class="lineNum">     485 </span><span class="lineCov">        560 :         if (oid_size != obj_len) {</span></a>
 <a name="486"><span class="lineNum">     486 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="487"><span class="lineNum">     487 </span>            :         }</a>
 <a name="488"><span class="lineNum">     488 </span>            : </a>
-<a name="489"><span class="lineNum">     489 </span><span class="lineCov">        528 :         libspdm_copy_mem(oid, oid_size, ptr, obj_len);</span></a>
-<a name="490"><span class="lineNum">     490 </span><span class="lineCov">        528 :         break;</span></a>
+<a name="489"><span class="lineNum">     489 </span><span class="lineCov">        560 :         libspdm_copy_mem(oid, oid_size, ptr, obj_len);</span></a>
+<a name="490"><span class="lineNum">     490 </span><span class="lineCov">        560 :         break;</span></a>
 <a name="491"><span class="lineNum">     491 </span><span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_EDDSA_ED25519:</span></a>
 <a name="492"><span class="lineNum">     492 </span>            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_EDDSA_ED448:</a>
 <a name="493"><span class="lineNum">     493 </span><span class="lineNoCov">          0 :         ret = libspdm_asn1_get_tag(&amp;ptr, end, &amp;obj_len,</span></a>
@@ -575,7 +575,7 @@
 <a name="513"><span class="lineNum">     513 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="514"><span class="lineNum">     514 </span>            :     }</a>
 <a name="515"><span class="lineNum">     515 </span>            : </a>
-<a name="516"><span class="lineNum">     516 </span><span class="lineCov">        555 :     return true;</span></a>
+<a name="516"><span class="lineNum">     516 </span><span class="lineCov">        587 :     return true;</span></a>
 <a name="517"><span class="lineNum">     517 </span>            : }</a>
 <a name="518"><span class="lineNum">     518 </span>            : </a>
 <a name="519"><span class="lineNum">     519 </span>            : /**</a>
@@ -588,7 +588,7 @@
 <a name="526"><span class="lineNum">     526 </span>            :  * @retval  true   verify pass</a>
 <a name="527"><span class="lineNum">     527 </span>            :  * @retval  false  verify fail</a>
 <a name="528"><span class="lineNum">     528 </span>            :  **/</a>
-<a name="529"><span class="lineNum">     529 </span><span class="lineCov">        556 : static bool libspdm_verify_cert_subject_public_key_info(const uint8_t *cert, size_t cert_size,</span></a>
+<a name="529"><span class="lineNum">     529 </span><span class="lineCov">        588 : static bool libspdm_verify_cert_subject_public_key_info(const uint8_t *cert, size_t cert_size,</span></a>
 <a name="530"><span class="lineNum">     530 </span>            :                                                         uint32_t base_asym_algo)</a>
 <a name="531"><span class="lineNum">     531 </span>            : {</a>
 <a name="532"><span class="lineNum">     532 </span>            :     size_t oid_len;</a>
@@ -600,37 +600,37 @@
 <a name="538"><span class="lineNum">     538 </span>            :     uint8_t libspdm_public_key_crypt_algo_oid[LIBSPDM_MAX_ENCRYPTION_ALGO_OID_LEN];</a>
 <a name="539"><span class="lineNum">     539 </span>            :     uint8_t libspdm_public_key_crypt_algo_oid_other[LIBSPDM_MAX_ENCRYPTION_ALGO_OID_LEN];</a>
 <a name="540"><span class="lineNum">     540 </span>            : </a>
-<a name="541"><span class="lineNum">     541 </span><span class="lineCov">        556 :     libspdm_zero_mem(libspdm_public_key_crypt_algo_oid, LIBSPDM_MAX_ENCRYPTION_ALGO_OID_LEN);</span></a>
-<a name="542"><span class="lineNum">     542 </span><span class="lineCov">        556 :     libspdm_zero_mem(libspdm_public_key_crypt_algo_oid_other, LIBSPDM_MAX_ENCRYPTION_ALGO_OID_LEN);</span></a>
+<a name="541"><span class="lineNum">     541 </span><span class="lineCov">        588 :     libspdm_zero_mem(libspdm_public_key_crypt_algo_oid, LIBSPDM_MAX_ENCRYPTION_ALGO_OID_LEN);</span></a>
+<a name="542"><span class="lineNum">     542 </span><span class="lineCov">        588 :     libspdm_zero_mem(libspdm_public_key_crypt_algo_oid_other, LIBSPDM_MAX_ENCRYPTION_ALGO_OID_LEN);</span></a>
 <a name="543"><span class="lineNum">     543 </span>            : </a>
 <a name="544"><span class="lineNum">     544 </span>            :     /*work around: skip the sm2*/</a>
-<a name="545"><span class="lineNum">     545 </span><span class="lineCov">        556 :     if (base_asym_algo == SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_SM2_ECC_SM2_P256) {</span></a>
+<a name="545"><span class="lineNum">     545 </span><span class="lineCov">        588 :     if (base_asym_algo == SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_SM2_ECC_SM2_P256) {</span></a>
 <a name="546"><span class="lineNum">     546 </span><span class="lineNoCov">          0 :         return true;</span></a>
 <a name="547"><span class="lineNum">     547 </span>            :     }</a>
 <a name="548"><span class="lineNum">     548 </span>            : </a>
-<a name="549"><span class="lineNum">     549 </span><span class="lineCov">        556 :     oid_len = libspdm_get_public_key_algo_OID_len(base_asym_algo);</span></a>
-<a name="550"><span class="lineNum">     550 </span><span class="lineCov">        556 :     if(oid_len == 0) {</span></a>
+<a name="549"><span class="lineNum">     549 </span><span class="lineCov">        588 :     oid_len = libspdm_get_public_key_algo_OID_len(base_asym_algo);</span></a>
+<a name="550"><span class="lineNum">     550 </span><span class="lineCov">        588 :     if(oid_len == 0) {</span></a>
 <a name="551"><span class="lineNum">     551 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="552"><span class="lineNum">     552 </span>            :     }</a>
 <a name="553"><span class="lineNum">     553 </span>            :     /*get public key encrypt algo OID from libspdm stored*/</a>
-<a name="554"><span class="lineNum">     554 </span><span class="lineCov">        556 :     status = libspdm_get_public_key_algo_OID(base_asym_algo,</span></a>
+<a name="554"><span class="lineNum">     554 </span><span class="lineCov">        588 :     status = libspdm_get_public_key_algo_OID(base_asym_algo,</span></a>
 <a name="555"><span class="lineNum">     555 </span>            :                                              libspdm_public_key_crypt_algo_oid,</a>
 <a name="556"><span class="lineNum">     556 </span>            :                                              libspdm_public_key_crypt_algo_oid_other);</a>
-<a name="557"><span class="lineNum">     557 </span><span class="lineCov">        556 :     if (!status) {</span></a>
+<a name="557"><span class="lineNum">     557 </span><span class="lineCov">        588 :     if (!status) {</span></a>
 <a name="558"><span class="lineNum">     558 </span><span class="lineNoCov">          0 :         return status;</span></a>
 <a name="559"><span class="lineNum">     559 </span>            :     }</a>
 <a name="560"><span class="lineNum">     560 </span>            : </a>
 <a name="561"><span class="lineNum">     561 </span>            :     /*get public key encrypt algo OID from cert*/</a>
-<a name="562"><span class="lineNum">     562 </span><span class="lineCov">        556 :     status = libspdm_get_public_key_oid(cert, cert_size, cert_public_key_crypt_algo_oid, oid_len,</span></a>
+<a name="562"><span class="lineNum">     562 </span><span class="lineCov">        588 :     status = libspdm_get_public_key_oid(cert, cert_size, cert_public_key_crypt_algo_oid, oid_len,</span></a>
 <a name="563"><span class="lineNum">     563 </span>            :                                         base_asym_algo);</a>
-<a name="564"><span class="lineNum">     564 </span><span class="lineCov">        556 :     if (!status || (libspdm_const_compare_mem(cert_public_key_crypt_algo_oid,</span></a>
+<a name="564"><span class="lineNum">     564 </span><span class="lineCov">        588 :     if (!status || (libspdm_const_compare_mem(cert_public_key_crypt_algo_oid,</span></a>
 <a name="565"><span class="lineNum">     565 </span><span class="lineCov">          1 :                                               libspdm_public_key_crypt_algo_oid, oid_len) &amp;&amp;</span></a>
 <a name="566"><span class="lineNum">     566 </span><span class="lineCov">          1 :                     libspdm_const_compare_mem(cert_public_key_crypt_algo_oid,</span></a>
 <a name="567"><span class="lineNum">     567 </span>            :                                               libspdm_public_key_crypt_algo_oid_other, oid_len))) {</a>
 <a name="568"><span class="lineNum">     568 </span><span class="lineCov">          2 :         return false;</span></a>
 <a name="569"><span class="lineNum">     569 </span>            :     }</a>
 <a name="570"><span class="lineNum">     570 </span>            : </a>
-<a name="571"><span class="lineNum">     571 </span><span class="lineCov">        554 :     return status;</span></a>
+<a name="571"><span class="lineNum">     571 </span><span class="lineCov">        586 :     return status;</span></a>
 <a name="572"><span class="lineNum">     572 </span>            : }</a>
 <a name="573"><span class="lineNum">     573 </span>            : </a>
 <a name="574"><span class="lineNum">     574 </span>            : /**</a>
@@ -643,7 +643,7 @@
 <a name="581"><span class="lineNum">     581 </span>            :  *                                       2. cert basic_constraints CA is false;</a>
 <a name="582"><span class="lineNum">     582 </span>            :  * @retval  false  verify fail</a>
 <a name="583"><span class="lineNum">     583 </span>            :  **/</a>
-<a name="584"><span class="lineNum">     584 </span><span class="lineCov">        553 : static bool libspdm_verify_leaf_cert_basic_constraints(const uint8_t *cert, size_t cert_size)</span></a>
+<a name="584"><span class="lineNum">     584 </span><span class="lineCov">        585 : static bool libspdm_verify_leaf_cert_basic_constraints(const uint8_t *cert, size_t cert_size)</span></a>
 <a name="585"><span class="lineNum">     585 </span>            : {</a>
 <a name="586"><span class="lineNum">     586 </span>            :     bool status;</a>
 <a name="587"><span class="lineNum">     587 </span>            :     /*basic_constraints from cert*/</a>
@@ -652,29 +652,29 @@
 <a name="590"><span class="lineNum">     590 </span>            : </a>
 <a name="591"><span class="lineNum">     591 </span>            :     /*leaf cert basic_constraints case1: CA: false and CA object is excluded */</a>
 <a name="592"><span class="lineNum">     592 </span>            :     #define BASIC_CONSTRAINTS_STRING_CASE1 {0x30, 0x00}</a>
-<a name="593"><span class="lineNum">     593 </span><span class="lineCov">        553 :     uint8_t basic_constraints_case1[] = BASIC_CONSTRAINTS_STRING_CASE1;</span></a>
+<a name="593"><span class="lineNum">     593 </span><span class="lineCov">        585 :     uint8_t basic_constraints_case1[] = BASIC_CONSTRAINTS_STRING_CASE1;</span></a>
 <a name="594"><span class="lineNum">     594 </span>            : </a>
 <a name="595"><span class="lineNum">     595 </span>            :     /*leaf cert basic_constraints case2: CA: false */</a>
 <a name="596"><span class="lineNum">     596 </span>            :     #define BASIC_CONSTRAINTS_STRING_CASE2 {0x30, 0x03, 0x01, 0x01, 0x00}</a>
-<a name="597"><span class="lineNum">     597 </span><span class="lineCov">        553 :     uint8_t basic_constraints_case2[] = BASIC_CONSTRAINTS_STRING_CASE2;</span></a>
+<a name="597"><span class="lineNum">     597 </span><span class="lineCov">        585 :     uint8_t basic_constraints_case2[] = BASIC_CONSTRAINTS_STRING_CASE2;</span></a>
 <a name="598"><span class="lineNum">     598 </span>            : </a>
-<a name="599"><span class="lineNum">     599 </span><span class="lineCov">        553 :     len = BASIC_CONSTRAINTS_CA_LEN;</span></a>
+<a name="599"><span class="lineNum">     599 </span><span class="lineCov">        585 :     len = BASIC_CONSTRAINTS_CA_LEN;</span></a>
 <a name="600"><span class="lineNum">     600 </span>            : </a>
-<a name="601"><span class="lineNum">     601 </span><span class="lineCov">        553 :     status = libspdm_x509_get_extended_basic_constraints(cert, cert_size,</span></a>
+<a name="601"><span class="lineNum">     601 </span><span class="lineCov">        585 :     status = libspdm_x509_get_extended_basic_constraints(cert, cert_size,</span></a>
 <a name="602"><span class="lineNum">     602 </span>            :                                                          cert_basic_constraints, &amp;len);</a>
 <a name="603"><span class="lineNum">     603 </span>            : </a>
-<a name="604"><span class="lineNum">     604 </span><span class="lineCov">        553 :     if (len == 0) {</span></a>
+<a name="604"><span class="lineNum">     604 </span><span class="lineCov">        585 :     if (len == 0) {</span></a>
 <a name="605"><span class="lineNum">     605 </span>            :         /* basic constraints is not present in cert */</a>
 <a name="606"><span class="lineNum">     606 </span><span class="lineCov">          1 :         return true;</span></a>
-<a name="607"><span class="lineNum">     607 </span><span class="lineCov">        552 :     } else if (!status ) {</span></a>
+<a name="607"><span class="lineNum">     607 </span><span class="lineCov">        584 :     } else if (!status ) {</span></a>
 <a name="608"><span class="lineNum">     608 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="609"><span class="lineNum">     609 </span>            :     }</a>
 <a name="610"><span class="lineNum">     610 </span>            : </a>
-<a name="611"><span class="lineNum">     611 </span><span class="lineCov">       1103 :     if ((len == sizeof(basic_constraints_case1)) &amp;&amp;</span></a>
-<a name="612"><span class="lineNum">     612 </span><span class="lineCov">        551 :         (!libspdm_const_compare_mem(cert_basic_constraints,</span></a>
+<a name="611"><span class="lineNum">     611 </span><span class="lineCov">       1167 :     if ((len == sizeof(basic_constraints_case1)) &amp;&amp;</span></a>
+<a name="612"><span class="lineNum">     612 </span><span class="lineCov">        583 :         (!libspdm_const_compare_mem(cert_basic_constraints,</span></a>
 <a name="613"><span class="lineNum">     613 </span>            :                                     basic_constraints_case1,</a>
 <a name="614"><span class="lineNum">     614 </span>            :                                     sizeof(basic_constraints_case1)))) {</a>
-<a name="615"><span class="lineNum">     615 </span><span class="lineCov">        551 :         return true;</span></a>
+<a name="615"><span class="lineNum">     615 </span><span class="lineCov">        583 :         return true;</span></a>
 <a name="616"><span class="lineNum">     616 </span>            :     }</a>
 <a name="617"><span class="lineNum">     617 </span>            : </a>
 <a name="618"><span class="lineNum">     618 </span><span class="lineCov">          2 :     if ((len == sizeof(basic_constraints_case2)) &amp;&amp;</span></a>
@@ -697,7 +697,7 @@
 <a name="635"><span class="lineNum">     635 </span>            :  * @retval  false  verify fail,two case: 1. return is not RETURN_SUCCESS or RETURN_NOT_FOUND;</a>
 <a name="636"><span class="lineNum">     636 </span>            :  *                                       2. hardware_identity_oid is found in AliasCert model;</a>
 <a name="637"><span class="lineNum">     637 </span>            :  **/</a>
-<a name="638"><span class="lineNum">     638 </span><span class="lineCov">        554 : static bool libspdm_verify_leaf_cert_eku_spdm_OID(const uint8_t *cert, size_t cert_size,</span></a>
+<a name="638"><span class="lineNum">     638 </span><span class="lineCov">        586 : static bool libspdm_verify_leaf_cert_eku_spdm_OID(const uint8_t *cert, size_t cert_size,</span></a>
 <a name="639"><span class="lineNum">     639 </span>            :                                                   bool is_device_cert_model)</a>
 <a name="640"><span class="lineNum">     640 </span>            : {</a>
 <a name="641"><span class="lineNum">     641 </span>            :     bool status;</a>
@@ -708,42 +708,42 @@
 <a name="646"><span class="lineNum">     646 </span>            : </a>
 <a name="647"><span class="lineNum">     647 </span>            :     /* SPDM defined OID */</a>
 <a name="648"><span class="lineNum">     648 </span>            : </a>
-<a name="649"><span class="lineNum">     649 </span><span class="lineCov">        554 :     uint8_t oid_spdm_extension[] = SPDM_OID_EXTENSION;</span></a>
-<a name="650"><span class="lineNum">     650 </span><span class="lineCov">        554 :     uint8_t hardware_identity_oid[] = SPDM_OID_HARDWARE_IDENTITY;</span></a>
+<a name="649"><span class="lineNum">     649 </span><span class="lineCov">        586 :     uint8_t oid_spdm_extension[] = SPDM_OID_EXTENSION;</span></a>
+<a name="650"><span class="lineNum">     650 </span><span class="lineCov">        586 :     uint8_t hardware_identity_oid[] = SPDM_OID_HARDWARE_IDENTITY;</span></a>
 <a name="651"><span class="lineNum">     651 </span>            : </a>
-<a name="652"><span class="lineNum">     652 </span><span class="lineCov">        554 :     len = SPDM_EXTENDSION_LEN;</span></a>
+<a name="652"><span class="lineNum">     652 </span><span class="lineCov">        586 :     len = SPDM_EXTENDSION_LEN;</span></a>
 <a name="653"><span class="lineNum">     653 </span>            : </a>
-<a name="654"><span class="lineNum">     654 </span><span class="lineCov">        554 :     if (cert == NULL || cert_size == 0) {</span></a>
+<a name="654"><span class="lineNum">     654 </span><span class="lineCov">        586 :     if (cert == NULL || cert_size == 0) {</span></a>
 <a name="655"><span class="lineNum">     655 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="656"><span class="lineNum">     656 </span>            :     }</a>
 <a name="657"><span class="lineNum">     657 </span>            : </a>
-<a name="658"><span class="lineNum">     658 </span><span class="lineCov">        554 :     status = libspdm_x509_get_extension_data(cert, cert_size,</span></a>
+<a name="658"><span class="lineNum">     658 </span><span class="lineCov">        586 :     status = libspdm_x509_get_extension_data(cert, cert_size,</span></a>
 <a name="659"><span class="lineNum">     659 </span>            :                                              (const uint8_t *)oid_spdm_extension,</a>
 <a name="660"><span class="lineNum">     660 </span>            :                                              sizeof(oid_spdm_extension),</a>
 <a name="661"><span class="lineNum">     661 </span>            :                                              spdm_extension,</a>
 <a name="662"><span class="lineNum">     662 </span>            :                                              &amp;len);</a>
 <a name="663"><span class="lineNum">     663 </span>            : </a>
-<a name="664"><span class="lineNum">     664 </span><span class="lineCov">        554 :     if(len == 0) {</span></a>
+<a name="664"><span class="lineNum">     664 </span><span class="lineCov">        586 :     if(len == 0) {</span></a>
 <a name="665"><span class="lineNum">     665 </span><span class="lineCov">         34 :         return true;</span></a>
-<a name="666"><span class="lineNum">     666 </span><span class="lineCov">        520 :     } else if(!status) {</span></a>
+<a name="666"><span class="lineNum">     666 </span><span class="lineCov">        552 :     } else if(!status) {</span></a>
 <a name="667"><span class="lineNum">     667 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="668"><span class="lineNum">     668 </span>            :     }</a>
 <a name="669"><span class="lineNum">     669 </span>            : </a>
 <a name="670"><span class="lineNum">     670 </span>            :     /*find the spdm hardware identity OID*/</a>
-<a name="671"><span class="lineNum">     671 </span><span class="lineCov">        520 :     find_sucessful = false;</span></a>
-<a name="672"><span class="lineNum">     672 </span><span class="lineCov">       1560 :     for(index = 0; index &lt;= len - sizeof(hardware_identity_oid); index++) {</span></a>
-<a name="673"><span class="lineNum">     673 </span><span class="lineCov">       1560 :         if (!libspdm_const_compare_mem(spdm_extension + index, hardware_identity_oid,</span></a>
+<a name="671"><span class="lineNum">     671 </span><span class="lineCov">        552 :     find_sucessful = false;</span></a>
+<a name="672"><span class="lineNum">     672 </span><span class="lineCov">       1656 :     for(index = 0; index &lt;= len - sizeof(hardware_identity_oid); index++) {</span></a>
+<a name="673"><span class="lineNum">     673 </span><span class="lineCov">       1656 :         if (!libspdm_const_compare_mem(spdm_extension + index, hardware_identity_oid,</span></a>
 <a name="674"><span class="lineNum">     674 </span>            :                                        sizeof(hardware_identity_oid))) {</a>
-<a name="675"><span class="lineNum">     675 </span><span class="lineCov">        520 :             find_sucessful = true;</span></a>
-<a name="676"><span class="lineNum">     676 </span><span class="lineCov">        520 :             break;</span></a>
+<a name="675"><span class="lineNum">     675 </span><span class="lineCov">        552 :             find_sucessful = true;</span></a>
+<a name="676"><span class="lineNum">     676 </span><span class="lineCov">        552 :             break;</span></a>
 <a name="677"><span class="lineNum">     677 </span>            :         }</a>
 <a name="678"><span class="lineNum">     678 </span>            :     }</a>
 <a name="679"><span class="lineNum">     679 </span>            : </a>
-<a name="680"><span class="lineNum">     680 </span><span class="lineCov">        520 :     if ((find_sucessful) &amp;&amp; (!is_device_cert_model)) {</span></a>
+<a name="680"><span class="lineNum">     680 </span><span class="lineCov">        552 :     if ((find_sucessful) &amp;&amp; (!is_device_cert_model)) {</span></a>
 <a name="681"><span class="lineNum">     681 </span>            :         /* Hardware_identity_OID is found in alias cert model */</a>
 <a name="682"><span class="lineNum">     682 </span><span class="lineCov">          1 :         return false;</span></a>
 <a name="683"><span class="lineNum">     683 </span>            :     } else {</a>
-<a name="684"><span class="lineNum">     684 </span><span class="lineCov">        519 :         return true;</span></a>
+<a name="684"><span class="lineNum">     684 </span><span class="lineCov">        551 :         return true;</span></a>
 <a name="685"><span class="lineNum">     685 </span>            :     }</a>
 <a name="686"><span class="lineNum">     686 </span>            : }</a>
 <a name="687"><span class="lineNum">     687 </span>            : </a>
@@ -760,7 +760,7 @@
 <a name="698"><span class="lineNum">     698 </span>            :  * @retval  true   Success.</a>
 <a name="699"><span class="lineNum">     699 </span>            :  * @retval  false  Certificate is not valid</a>
 <a name="700"><span class="lineNum">     700 </span>            :  **/</a>
-<a name="701"><span class="lineNum">     701 </span><span class="lineCov">        556 : bool libspdm_x509_certificate_check(const uint8_t *cert, size_t cert_size,</span></a>
+<a name="701"><span class="lineNum">     701 </span><span class="lineCov">        588 : bool libspdm_x509_certificate_check(const uint8_t *cert, size_t cert_size,</span></a>
 <a name="702"><span class="lineNum">     702 </span>            :                                     uint32_t base_asym_algo,</a>
 <a name="703"><span class="lineNum">     703 </span>            :                                     uint32_t base_hash_algo,</a>
 <a name="704"><span class="lineNum">     704 </span>            :                                     bool is_device_cert_model)</a>
@@ -775,113 +775,113 @@
 <a name="713"><span class="lineNum">     713 </span>            :     size_t value;</a>
 <a name="714"><span class="lineNum">     714 </span>            :     void *context;</a>
 <a name="715"><span class="lineNum">     715 </span>            : </a>
-<a name="716"><span class="lineNum">     716 </span><span class="lineCov">        556 :     if (cert == NULL || cert_size == 0) {</span></a>
+<a name="716"><span class="lineNum">     716 </span><span class="lineCov">        588 :     if (cert == NULL || cert_size == 0) {</span></a>
 <a name="717"><span class="lineNum">     717 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="718"><span class="lineNum">     718 </span>            :     }</a>
 <a name="719"><span class="lineNum">     719 </span>            : </a>
-<a name="720"><span class="lineNum">     720 </span><span class="lineCov">        556 :     status = true;</span></a>
-<a name="721"><span class="lineNum">     721 </span><span class="lineCov">        556 :     context = NULL;</span></a>
-<a name="722"><span class="lineNum">     722 </span><span class="lineCov">        556 :     end_cert_from_len = 64;</span></a>
-<a name="723"><span class="lineNum">     723 </span><span class="lineCov">        556 :     end_cert_to_len = 64;</span></a>
+<a name="720"><span class="lineNum">     720 </span><span class="lineCov">        588 :     status = true;</span></a>
+<a name="721"><span class="lineNum">     721 </span><span class="lineCov">        588 :     context = NULL;</span></a>
+<a name="722"><span class="lineNum">     722 </span><span class="lineCov">        588 :     end_cert_from_len = 64;</span></a>
+<a name="723"><span class="lineNum">     723 </span><span class="lineCov">        588 :     end_cert_to_len = 64;</span></a>
 <a name="724"><span class="lineNum">     724 </span>            : </a>
 <a name="725"><span class="lineNum">     725 </span>            :     /* 1. version*/</a>
-<a name="726"><span class="lineNum">     726 </span><span class="lineCov">        556 :     cert_version = 0;</span></a>
-<a name="727"><span class="lineNum">     727 </span><span class="lineCov">        556 :     status = libspdm_x509_get_version(cert, cert_size, &amp;cert_version);</span></a>
-<a name="728"><span class="lineNum">     728 </span><span class="lineCov">        556 :     if (!status) {</span></a>
+<a name="726"><span class="lineNum">     726 </span><span class="lineCov">        588 :     cert_version = 0;</span></a>
+<a name="727"><span class="lineNum">     727 </span><span class="lineCov">        588 :     status = libspdm_x509_get_version(cert, cert_size, &amp;cert_version);</span></a>
+<a name="728"><span class="lineNum">     728 </span><span class="lineCov">        588 :     if (!status) {</span></a>
 <a name="729"><span class="lineNum">     729 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="730"><span class="lineNum">     730 </span>            :     }</a>
-<a name="731"><span class="lineNum">     731 </span><span class="lineCov">        556 :     if (cert_version != 2) {</span></a>
+<a name="731"><span class="lineNum">     731 </span><span class="lineCov">        588 :     if (cert_version != 2) {</span></a>
 <a name="732"><span class="lineNum">     732 </span><span class="lineNoCov">          0 :         status = false;</span></a>
 <a name="733"><span class="lineNum">     733 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="734"><span class="lineNum">     734 </span>            :     }</a>
 <a name="735"><span class="lineNum">     735 </span>            : </a>
 <a name="736"><span class="lineNum">     736 </span>            :     /* 2. serial_number*/</a>
-<a name="737"><span class="lineNum">     737 </span><span class="lineCov">        556 :     asn1_buffer_len = 0;</span></a>
-<a name="738"><span class="lineNum">     738 </span><span class="lineCov">        556 :     status = libspdm_x509_get_serial_number(cert, cert_size, NULL, &amp;asn1_buffer_len);</span></a>
-<a name="739"><span class="lineNum">     739 </span><span class="lineCov">        556 :     if (asn1_buffer_len == 0) {</span></a>
+<a name="737"><span class="lineNum">     737 </span><span class="lineCov">        588 :     asn1_buffer_len = 0;</span></a>
+<a name="738"><span class="lineNum">     738 </span><span class="lineCov">        588 :     status = libspdm_x509_get_serial_number(cert, cert_size, NULL, &amp;asn1_buffer_len);</span></a>
+<a name="739"><span class="lineNum">     739 </span><span class="lineCov">        588 :     if (asn1_buffer_len == 0) {</span></a>
 <a name="740"><span class="lineNum">     740 </span><span class="lineNoCov">          0 :         status = false;</span></a>
 <a name="741"><span class="lineNum">     741 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="742"><span class="lineNum">     742 </span>            :     }</a>
 <a name="743"><span class="lineNum">     743 </span>            : </a>
 <a name="744"><span class="lineNum">     744 </span>            :     /* 3. Verify public key algorithm. */</a>
-<a name="745"><span class="lineNum">     745 </span><span class="lineCov">        556 :     status = libspdm_verify_cert_subject_public_key_info(cert, cert_size, base_asym_algo);</span></a>
-<a name="746"><span class="lineNum">     746 </span><span class="lineCov">        556 :     if (!status) {</span></a>
+<a name="745"><span class="lineNum">     745 </span><span class="lineCov">        588 :     status = libspdm_verify_cert_subject_public_key_info(cert, cert_size, base_asym_algo);</span></a>
+<a name="746"><span class="lineNum">     746 </span><span class="lineCov">        588 :     if (!status) {</span></a>
 <a name="747"><span class="lineNum">     747 </span><span class="lineCov">          2 :         goto cleanup;</span></a>
 <a name="748"><span class="lineNum">     748 </span>            :     }</a>
 <a name="749"><span class="lineNum">     749 </span>            : </a>
 <a name="750"><span class="lineNum">     750 </span>            :     /* 4. issuer_name*/</a>
-<a name="751"><span class="lineNum">     751 </span><span class="lineCov">        554 :     asn1_buffer_len = 0;</span></a>
-<a name="752"><span class="lineNum">     752 </span><span class="lineCov">        554 :     status = libspdm_x509_get_issuer_name(cert, cert_size, NULL, &amp;asn1_buffer_len);</span></a>
-<a name="753"><span class="lineNum">     753 </span><span class="lineCov">        554 :     if (asn1_buffer_len == 0) {</span></a>
+<a name="751"><span class="lineNum">     751 </span><span class="lineCov">        586 :     asn1_buffer_len = 0;</span></a>
+<a name="752"><span class="lineNum">     752 </span><span class="lineCov">        586 :     status = libspdm_x509_get_issuer_name(cert, cert_size, NULL, &amp;asn1_buffer_len);</span></a>
+<a name="753"><span class="lineNum">     753 </span><span class="lineCov">        586 :     if (asn1_buffer_len == 0) {</span></a>
 <a name="754"><span class="lineNum">     754 </span><span class="lineNoCov">          0 :         status = false;</span></a>
 <a name="755"><span class="lineNum">     755 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="756"><span class="lineNum">     756 </span>            :     }</a>
 <a name="757"><span class="lineNum">     757 </span>            : </a>
 <a name="758"><span class="lineNum">     758 </span>            :     /* 5. subject_name*/</a>
-<a name="759"><span class="lineNum">     759 </span><span class="lineCov">        554 :     asn1_buffer_len = 0;</span></a>
-<a name="760"><span class="lineNum">     760 </span><span class="lineCov">        554 :     status = libspdm_x509_get_subject_name(cert, cert_size, NULL, &amp;asn1_buffer_len);</span></a>
-<a name="761"><span class="lineNum">     761 </span><span class="lineCov">        554 :     if (asn1_buffer_len == 0) {</span></a>
+<a name="759"><span class="lineNum">     759 </span><span class="lineCov">        586 :     asn1_buffer_len = 0;</span></a>
+<a name="760"><span class="lineNum">     760 </span><span class="lineCov">        586 :     status = libspdm_x509_get_subject_name(cert, cert_size, NULL, &amp;asn1_buffer_len);</span></a>
+<a name="761"><span class="lineNum">     761 </span><span class="lineCov">        586 :     if (asn1_buffer_len == 0) {</span></a>
 <a name="762"><span class="lineNum">     762 </span><span class="lineNoCov">          0 :         status = false;</span></a>
 <a name="763"><span class="lineNum">     763 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="764"><span class="lineNum">     764 </span>            :     }</a>
 <a name="765"><span class="lineNum">     765 </span>            : </a>
 <a name="766"><span class="lineNum">     766 </span>            :     /* 6. validaity*/</a>
-<a name="767"><span class="lineNum">     767 </span><span class="lineCov">        554 :     status = libspdm_x509_get_validity(cert, cert_size, end_cert_from,</span></a>
+<a name="767"><span class="lineNum">     767 </span><span class="lineCov">        586 :     status = libspdm_x509_get_validity(cert, cert_size, end_cert_from,</span></a>
 <a name="768"><span class="lineNum">     768 </span>            :                                        &amp;end_cert_from_len, end_cert_to,</a>
 <a name="769"><span class="lineNum">     769 </span>            :                                        &amp;end_cert_to_len);</a>
-<a name="770"><span class="lineNum">     770 </span><span class="lineCov">        554 :     if (!status) {</span></a>
+<a name="770"><span class="lineNum">     770 </span><span class="lineCov">        586 :     if (!status) {</span></a>
 <a name="771"><span class="lineNum">     771 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="772"><span class="lineNum">     772 </span>            :     }</a>
 <a name="773"><span class="lineNum">     773 </span>            : </a>
-<a name="774"><span class="lineNum">     774 </span><span class="lineCov">        554 :     status = libspdm_internal_x509_date_time_check(</span></a>
+<a name="774"><span class="lineNum">     774 </span><span class="lineCov">        586 :     status = libspdm_internal_x509_date_time_check(</span></a>
 <a name="775"><span class="lineNum">     775 </span>            :         end_cert_from, end_cert_from_len, end_cert_to, end_cert_to_len);</a>
-<a name="776"><span class="lineNum">     776 </span><span class="lineCov">        554 :     if (!status) {</span></a>
+<a name="776"><span class="lineNum">     776 </span><span class="lineCov">        586 :     if (!status) {</span></a>
 <a name="777"><span class="lineNum">     777 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="778"><span class="lineNum">     778 </span>            :     }</a>
 <a name="779"><span class="lineNum">     779 </span>            : </a>
 <a name="780"><span class="lineNum">     780 </span>            :     /* 7. subject_public_key*/</a>
-<a name="781"><span class="lineNum">     781 </span><span class="lineCov">        554 :     status = libspdm_asym_get_public_key_from_x509(base_asym_algo, cert, cert_size, &amp;context);</span></a>
-<a name="782"><span class="lineNum">     782 </span><span class="lineCov">        554 :     if (!status) {</span></a>
+<a name="781"><span class="lineNum">     781 </span><span class="lineCov">        586 :     status = libspdm_asym_get_public_key_from_x509(base_asym_algo, cert, cert_size, &amp;context);</span></a>
+<a name="782"><span class="lineNum">     782 </span><span class="lineCov">        586 :     if (!status) {</span></a>
 <a name="783"><span class="lineNum">     783 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="784"><span class="lineNum">     784 </span>            :     }</a>
 <a name="785"><span class="lineNum">     785 </span>            : </a>
 <a name="786"><span class="lineNum">     786 </span>            :     /* 8. key_usage*/</a>
-<a name="787"><span class="lineNum">     787 </span><span class="lineCov">        554 :     value = 0;</span></a>
-<a name="788"><span class="lineNum">     788 </span><span class="lineCov">        554 :     status = libspdm_x509_get_key_usage(cert, cert_size, &amp;value);</span></a>
-<a name="789"><span class="lineNum">     789 </span><span class="lineCov">        554 :     if (!status) {</span></a>
+<a name="787"><span class="lineNum">     787 </span><span class="lineCov">        586 :     value = 0;</span></a>
+<a name="788"><span class="lineNum">     788 </span><span class="lineCov">        586 :     status = libspdm_x509_get_key_usage(cert, cert_size, &amp;value);</span></a>
+<a name="789"><span class="lineNum">     789 </span><span class="lineCov">        586 :     if (!status) {</span></a>
 <a name="790"><span class="lineNum">     790 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="791"><span class="lineNum">     791 </span>            :     }</a>
-<a name="792"><span class="lineNum">     792 </span><span class="lineCov">        554 :     if (LIBSPDM_CRYPTO_X509_KU_DIGITAL_SIGNATURE &amp; value) {</span></a>
-<a name="793"><span class="lineNum">     793 </span><span class="lineCov">        554 :         status = true;</span></a>
+<a name="792"><span class="lineNum">     792 </span><span class="lineCov">        586 :     if (LIBSPDM_CRYPTO_X509_KU_DIGITAL_SIGNATURE &amp; value) {</span></a>
+<a name="793"><span class="lineNum">     793 </span><span class="lineCov">        586 :         status = true;</span></a>
 <a name="794"><span class="lineNum">     794 </span>            :     } else {</a>
 <a name="795"><span class="lineNum">     795 </span><span class="lineNoCov">          0 :         status = false;</span></a>
 <a name="796"><span class="lineNum">     796 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="797"><span class="lineNum">     797 </span>            :     }</a>
 <a name="798"><span class="lineNum">     798 </span>            : </a>
 <a name="799"><span class="lineNum">     799 </span>            :     /* 9. verify SPDM extension OID*/</a>
-<a name="800"><span class="lineNum">     800 </span><span class="lineCov">        554 :     status = libspdm_verify_leaf_cert_eku_spdm_OID(cert, cert_size, is_device_cert_model);</span></a>
-<a name="801"><span class="lineNum">     801 </span><span class="lineCov">        554 :     if (!status) {</span></a>
+<a name="800"><span class="lineNum">     800 </span><span class="lineCov">        586 :     status = libspdm_verify_leaf_cert_eku_spdm_OID(cert, cert_size, is_device_cert_model);</span></a>
+<a name="801"><span class="lineNum">     801 </span><span class="lineCov">        586 :     if (!status) {</span></a>
 <a name="802"><span class="lineNum">     802 </span><span class="lineCov">          1 :         goto cleanup;</span></a>
 <a name="803"><span class="lineNum">     803 </span>            :     }</a>
 <a name="804"><span class="lineNum">     804 </span>            : </a>
 <a name="805"><span class="lineNum">     805 </span>            :     /* 10. verify basic constraints*/</a>
-<a name="806"><span class="lineNum">     806 </span><span class="lineCov">        553 :     status = libspdm_verify_leaf_cert_basic_constraints(cert, cert_size);</span></a>
-<a name="807"><span class="lineNum">     807 </span><span class="lineCov">        553 :     if (!status) {</span></a>
+<a name="806"><span class="lineNum">     806 </span><span class="lineCov">        585 :     status = libspdm_verify_leaf_cert_basic_constraints(cert, cert_size);</span></a>
+<a name="807"><span class="lineNum">     807 </span><span class="lineCov">        585 :     if (!status) {</span></a>
 <a name="808"><span class="lineNum">     808 </span><span class="lineCov">          1 :         goto cleanup;</span></a>
 <a name="809"><span class="lineNum">     809 </span>            :     }</a>
 <a name="810"><span class="lineNum">     810 </span>            : </a>
 <a name="811"><span class="lineNum">     811 </span>            :     /* 11. extended_key_usage*/</a>
-<a name="812"><span class="lineNum">     812 </span><span class="lineCov">        552 :     value = 0;</span></a>
-<a name="813"><span class="lineNum">     813 </span><span class="lineCov">        552 :     status = libspdm_x509_get_extended_key_usage(cert, cert_size, NULL, &amp;value);</span></a>
-<a name="814"><span class="lineNum">     814 </span><span class="lineCov">        552 :     if (value == 0) {</span></a>
+<a name="812"><span class="lineNum">     812 </span><span class="lineCov">        584 :     value = 0;</span></a>
+<a name="813"><span class="lineNum">     813 </span><span class="lineCov">        584 :     status = libspdm_x509_get_extended_key_usage(cert, cert_size, NULL, &amp;value);</span></a>
+<a name="814"><span class="lineNum">     814 </span><span class="lineCov">        584 :     if (value == 0) {</span></a>
 <a name="815"><span class="lineNum">     815 </span><span class="lineNoCov">          0 :         status = false;</span></a>
 <a name="816"><span class="lineNum">     816 </span><span class="lineNoCov">          0 :         goto cleanup;</span></a>
 <a name="817"><span class="lineNum">     817 </span>            :     }</a>
-<a name="818"><span class="lineNum">     818 </span><span class="lineCov">        552 :     status = true;</span></a>
+<a name="818"><span class="lineNum">     818 </span><span class="lineCov">        584 :     status = true;</span></a>
 <a name="819"><span class="lineNum">     819 </span>            : </a>
-<a name="820"><span class="lineNum">     820 </span><span class="lineCov">        556 : cleanup:</span></a>
-<a name="821"><span class="lineNum">     821 </span><span class="lineCov">        556 :     libspdm_asym_free(base_asym_algo, context);</span></a>
-<a name="822"><span class="lineNum">     822 </span><span class="lineCov">        556 :     return status;</span></a>
+<a name="820"><span class="lineNum">     820 </span><span class="lineCov">        588 : cleanup:</span></a>
+<a name="821"><span class="lineNum">     821 </span><span class="lineCov">        588 :     libspdm_asym_free(base_asym_algo, context);</span></a>
+<a name="822"><span class="lineNum">     822 </span><span class="lineCov">        588 :     return status;</span></a>
 <a name="823"><span class="lineNum">     823 </span>            : }</a>
 <a name="824"><span class="lineNum">     824 </span>            : </a>
 <a name="825"><span class="lineNum">     825 </span>            : /**</a>
@@ -1115,7 +1115,7 @@
 <a name="1053"><span class="lineNum">    1053 </span>            :  * @retval true  certificate chain data integrity verification pass.</a>
 <a name="1054"><span class="lineNum">    1054 </span>            :  * @retval false certificate chain data integrity verification fail.</a>
 <a name="1055"><span class="lineNum">    1055 </span>            :  **/</a>
-<a name="1056"><span class="lineNum">    1056 </span><span class="lineCov">        517 : bool libspdm_verify_cert_chain_data(uint8_t *cert_chain_data, size_t cert_chain_data_size,</span></a>
+<a name="1056"><span class="lineNum">    1056 </span><span class="lineCov">        549 : bool libspdm_verify_cert_chain_data(uint8_t *cert_chain_data, size_t cert_chain_data_size,</span></a>
 <a name="1057"><span class="lineNum">    1057 </span>            :                                     uint32_t base_asym_algo, uint32_t base_hash_algo,</a>
 <a name="1058"><span class="lineNum">    1058 </span>            :                                     bool is_device_cert_model)</a>
 <a name="1059"><span class="lineNum">    1059 </span>            : {</a>
@@ -1124,14 +1124,14 @@
 <a name="1062"><span class="lineNum">    1062 </span>            :     const uint8_t *leaf_cert_buffer;</a>
 <a name="1063"><span class="lineNum">    1063 </span>            :     size_t leaf_cert_buffer_size;</a>
 <a name="1064"><span class="lineNum">    1064 </span>            : </a>
-<a name="1065"><span class="lineNum">    1065 </span><span class="lineCov">        517 :     if (cert_chain_data_size &gt;</span></a>
+<a name="1065"><span class="lineNum">    1065 </span><span class="lineCov">        549 :     if (cert_chain_data_size &gt;</span></a>
 <a name="1066"><span class="lineNum">    1066 </span>            :         0xFFFF - (sizeof(spdm_cert_chain_t) + LIBSPDM_MAX_HASH_SIZE)) {</a>
 <a name="1067"><span class="lineNum">    1067 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="1068"><span class="lineNum">    1068 </span>            :                        &quot;!!! VerifyCertificateChainData - FAIL (chain size too large) !!!\n&quot;));</a>
 <a name="1069"><span class="lineNum">    1069 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="1070"><span class="lineNum">    1070 </span>            :     }</a>
 <a name="1071"><span class="lineNum">    1071 </span>            : </a>
-<a name="1072"><span class="lineNum">    1072 </span><span class="lineCov">        517 :     if (!libspdm_x509_get_cert_from_cert_chain(</span></a>
+<a name="1072"><span class="lineNum">    1072 </span><span class="lineCov">        549 :     if (!libspdm_x509_get_cert_from_cert_chain(</span></a>
 <a name="1073"><span class="lineNum">    1073 </span>            :             cert_chain_data, cert_chain_data_size, 0, &amp;root_cert_buffer,</a>
 <a name="1074"><span class="lineNum">    1074 </span>            :             &amp;root_cert_buffer_size)) {</a>
 <a name="1075"><span class="lineNum">    1075 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
@@ -1139,14 +1139,14 @@
 <a name="1077"><span class="lineNum">    1077 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="1078"><span class="lineNum">    1078 </span>            :     }</a>
 <a name="1079"><span class="lineNum">    1079 </span>            : </a>
-<a name="1080"><span class="lineNum">    1080 </span><span class="lineCov">        517 :     if (!libspdm_x509_verify_cert_chain(root_cert_buffer, root_cert_buffer_size,</span></a>
+<a name="1080"><span class="lineNum">    1080 </span><span class="lineCov">        549 :     if (!libspdm_x509_verify_cert_chain(root_cert_buffer, root_cert_buffer_size,</span></a>
 <a name="1081"><span class="lineNum">    1081 </span>            :                                         cert_chain_data, cert_chain_data_size)) {</a>
 <a name="1082"><span class="lineNum">    1082 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="1083"><span class="lineNum">    1083 </span>            :                        &quot;!!! VerifyCertificateChainData - FAIL (cert chain verify failed)!!!\n&quot;));</a>
 <a name="1084"><span class="lineNum">    1084 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="1085"><span class="lineNum">    1085 </span>            :     }</a>
 <a name="1086"><span class="lineNum">    1086 </span>            : </a>
-<a name="1087"><span class="lineNum">    1087 </span><span class="lineCov">        517 :     if (!libspdm_x509_get_cert_from_cert_chain(</span></a>
+<a name="1087"><span class="lineNum">    1087 </span><span class="lineCov">        549 :     if (!libspdm_x509_get_cert_from_cert_chain(</span></a>
 <a name="1088"><span class="lineNum">    1088 </span>            :             cert_chain_data, cert_chain_data_size, -1,</a>
 <a name="1089"><span class="lineNum">    1089 </span>            :             &amp;leaf_cert_buffer, &amp;leaf_cert_buffer_size)) {</a>
 <a name="1090"><span class="lineNum">    1090 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
@@ -1154,7 +1154,7 @@
 <a name="1092"><span class="lineNum">    1092 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="1093"><span class="lineNum">    1093 </span>            :     }</a>
 <a name="1094"><span class="lineNum">    1094 </span>            : </a>
-<a name="1095"><span class="lineNum">    1095 </span><span class="lineCov">        517 :     if (!libspdm_x509_certificate_check(leaf_cert_buffer, leaf_cert_buffer_size,</span></a>
+<a name="1095"><span class="lineNum">    1095 </span><span class="lineCov">        549 :     if (!libspdm_x509_certificate_check(leaf_cert_buffer, leaf_cert_buffer_size,</span></a>
 <a name="1096"><span class="lineNum">    1096 </span>            :                                         base_asym_algo, base_hash_algo,</a>
 <a name="1097"><span class="lineNum">    1097 </span>            :                                         is_device_cert_model)) {</a>
 <a name="1098"><span class="lineNum">    1098 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
@@ -1162,7 +1162,7 @@
 <a name="1100"><span class="lineNum">    1100 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="1101"><span class="lineNum">    1101 </span>            :     }</a>
 <a name="1102"><span class="lineNum">    1102 </span>            : </a>
-<a name="1103"><span class="lineNum">    1103 </span><span class="lineCov">        517 :     return true;</span></a>
+<a name="1103"><span class="lineNum">    1103 </span><span class="lineCov">        549 :     return true;</span></a>
 <a name="1104"><span class="lineNum">    1104 </span>            : }</a>
 <a name="1105"><span class="lineNum">    1105 </span>            : </a>
 <a name="1106"><span class="lineNum">    1106 </span>            : /**</a>
@@ -1281,7 +1281,7 @@
 <a name="1219"><span class="lineNum">    1219 </span>            :  * @retval  true   public key was retrieved successfully.</a>
 <a name="1220"><span class="lineNum">    1220 </span>            :  * @retval  false  Fail to retrieve public key from X509 certificate.</a>
 <a name="1221"><span class="lineNum">    1221 </span>            :  **/</a>
-<a name="1222"><span class="lineNum">    1222 </span><span class="lineCov">        133 : bool libspdm_get_leaf_cert_public_key_from_cert_chain(uint32_t base_hash_algo,</span></a>
+<a name="1222"><span class="lineNum">    1222 </span><span class="lineCov">        150 : bool libspdm_get_leaf_cert_public_key_from_cert_chain(uint32_t base_hash_algo,</span></a>
 <a name="1223"><span class="lineNum">    1223 </span>            :                                                       uint32_t base_asym_alg,</a>
 <a name="1224"><span class="lineNum">    1224 </span>            :                                                       uint8_t *cert_chain_data,</a>
 <a name="1225"><span class="lineNum">    1225 </span>            :                                                       size_t cert_chain_data_size,</a>
@@ -1292,27 +1292,27 @@
 <a name="1230"><span class="lineNum">    1230 </span>            :     size_t cert_buffer_size;</a>
 <a name="1231"><span class="lineNum">    1231 </span>            :     bool result;</a>
 <a name="1232"><span class="lineNum">    1232 </span>            : </a>
-<a name="1233"><span class="lineNum">    1233 </span><span class="lineCov">        133 :     hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
+<a name="1233"><span class="lineNum">    1233 </span><span class="lineCov">        150 :     hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
 <a name="1234"><span class="lineNum">    1234 </span>            : </a>
-<a name="1235"><span class="lineNum">    1235 </span><span class="lineCov">        133 :     cert_chain_data = cert_chain_data + sizeof(spdm_cert_chain_t) + hash_size;</span></a>
-<a name="1236"><span class="lineNum">    1236 </span><span class="lineCov">        133 :     cert_chain_data_size = cert_chain_data_size - (sizeof(spdm_cert_chain_t) + hash_size);</span></a>
+<a name="1235"><span class="lineNum">    1235 </span><span class="lineCov">        150 :     cert_chain_data = cert_chain_data + sizeof(spdm_cert_chain_t) + hash_size;</span></a>
+<a name="1236"><span class="lineNum">    1236 </span><span class="lineCov">        150 :     cert_chain_data_size = cert_chain_data_size - (sizeof(spdm_cert_chain_t) + hash_size);</span></a>
 <a name="1237"><span class="lineNum">    1237 </span>            : </a>
 <a name="1238"><span class="lineNum">    1238 </span>            :     /* Get leaf cert from cert chain */</a>
-<a name="1239"><span class="lineNum">    1239 </span><span class="lineCov">        133 :     result = libspdm_x509_get_cert_from_cert_chain(cert_chain_data,</span></a>
+<a name="1239"><span class="lineNum">    1239 </span><span class="lineCov">        150 :     result = libspdm_x509_get_cert_from_cert_chain(cert_chain_data,</span></a>
 <a name="1240"><span class="lineNum">    1240 </span>            :                                                    cert_chain_data_size, -1,</a>
 <a name="1241"><span class="lineNum">    1241 </span>            :                                                    &amp;cert_buffer, &amp;cert_buffer_size);</a>
-<a name="1242"><span class="lineNum">    1242 </span><span class="lineCov">        133 :     if (!result) {</span></a>
+<a name="1242"><span class="lineNum">    1242 </span><span class="lineCov">        150 :     if (!result) {</span></a>
 <a name="1243"><span class="lineNum">    1243 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="1244"><span class="lineNum">    1244 </span>            :     }</a>
 <a name="1245"><span class="lineNum">    1245 </span>            : </a>
-<a name="1246"><span class="lineNum">    1246 </span><span class="lineCov">        133 :     result = libspdm_asym_get_public_key_from_x509(</span></a>
+<a name="1246"><span class="lineNum">    1246 </span><span class="lineCov">        150 :     result = libspdm_asym_get_public_key_from_x509(</span></a>
 <a name="1247"><span class="lineNum">    1247 </span>            :         base_asym_alg,</a>
 <a name="1248"><span class="lineNum">    1248 </span>            :         cert_buffer, cert_buffer_size, public_key);</a>
-<a name="1249"><span class="lineNum">    1249 </span><span class="lineCov">        133 :     if (!result) {</span></a>
+<a name="1249"><span class="lineNum">    1249 </span><span class="lineCov">        150 :     if (!result) {</span></a>
 <a name="1250"><span class="lineNum">    1250 </span><span class="lineCov">          5 :         return false;</span></a>
 <a name="1251"><span class="lineNum">    1251 </span>            :     }</a>
 <a name="1252"><span class="lineNum">    1252 </span>            : </a>
-<a name="1253"><span class="lineNum">    1253 </span><span class="lineCov">        128 :     return true;</span></a>
+<a name="1253"><span class="lineNum">    1253 </span><span class="lineCov">        145 :     return true;</span></a>
 <a name="1254"><span class="lineNum">    1254 </span>            : }</a>
 <a name="1255"><span class="lineNum">    1255 </span>            : </a>
 <a name="1256"><span class="lineNum">    1256 </span>            : /**</a>

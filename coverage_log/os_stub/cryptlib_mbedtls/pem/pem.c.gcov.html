@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-23 08:17:06</td>
+            <td class="headerValue">2022-11-23 19:05:17</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -198,7 +198,7 @@
 <a name="136"><span class="lineNum">     136 </span>            :  * @retval  false  Invalid PEM key data or incorrect password.</a>
 <a name="137"><span class="lineNum">     137 </span>            :  *</a>
 <a name="138"><span class="lineNum">     138 </span>            :  **/</a>
-<a name="139"><span class="lineNum">     139 </span><span class="lineCov">         81 : bool libspdm_ec_get_private_key_from_pem(const uint8_t *pem_data, size_t pem_size,</span></a>
+<a name="139"><span class="lineNum">     139 </span><span class="lineCov">         96 : bool libspdm_ec_get_private_key_from_pem(const uint8_t *pem_data, size_t pem_size,</span></a>
 <a name="140"><span class="lineNum">     140 </span>            :                                          const char *password,</a>
 <a name="141"><span class="lineNum">     141 </span>            :                                          void **ec_context)</a>
 <a name="142"><span class="lineNum">     142 </span>            : {</a>
@@ -208,67 +208,67 @@
 <a name="146"><span class="lineNum">     146 </span>            :     uint8_t *new_pem_data;</a>
 <a name="147"><span class="lineNum">     147 </span>            :     size_t password_len;</a>
 <a name="148"><span class="lineNum">     148 </span>            : </a>
-<a name="149"><span class="lineNum">     149 </span><span class="lineCov">         81 :     if (pem_data == NULL || ec_context == NULL || pem_size &gt; INT_MAX) {</span></a>
+<a name="149"><span class="lineNum">     149 </span><span class="lineCov">         96 :     if (pem_data == NULL || ec_context == NULL || pem_size &gt; INT_MAX) {</span></a>
 <a name="150"><span class="lineNum">     150 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="151"><span class="lineNum">     151 </span>            :     }</a>
 <a name="152"><span class="lineNum">     152 </span>            : </a>
-<a name="153"><span class="lineNum">     153 </span><span class="lineCov">         81 :     new_pem_data = NULL;</span></a>
-<a name="154"><span class="lineNum">     154 </span><span class="lineCov">         81 :     if (pem_data[pem_size - 1] != 0) {</span></a>
-<a name="155"><span class="lineNum">     155 </span><span class="lineCov">         81 :         new_pem_data = allocate_pool(pem_size + 1);</span></a>
-<a name="156"><span class="lineNum">     156 </span><span class="lineCov">         81 :         if (new_pem_data == NULL) {</span></a>
+<a name="153"><span class="lineNum">     153 </span><span class="lineCov">         96 :     new_pem_data = NULL;</span></a>
+<a name="154"><span class="lineNum">     154 </span><span class="lineCov">         96 :     if (pem_data[pem_size - 1] != 0) {</span></a>
+<a name="155"><span class="lineNum">     155 </span><span class="lineCov">         96 :         new_pem_data = allocate_pool(pem_size + 1);</span></a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">         96 :         if (new_pem_data == NULL) {</span></a>
 <a name="157"><span class="lineNum">     157 </span><span class="lineNoCov">          0 :             return false;</span></a>
 <a name="158"><span class="lineNum">     158 </span>            :         }</a>
-<a name="159"><span class="lineNum">     159 </span><span class="lineCov">         81 :         libspdm_copy_mem(new_pem_data, pem_size + 1, pem_data, pem_size);</span></a>
-<a name="160"><span class="lineNum">     160 </span><span class="lineCov">         81 :         new_pem_data[pem_size] = 0;</span></a>
-<a name="161"><span class="lineNum">     161 </span><span class="lineCov">         81 :         pem_data = new_pem_data;</span></a>
-<a name="162"><span class="lineNum">     162 </span><span class="lineCov">         81 :         pem_size += 1;</span></a>
+<a name="159"><span class="lineNum">     159 </span><span class="lineCov">         96 :         libspdm_copy_mem(new_pem_data, pem_size + 1, pem_data, pem_size);</span></a>
+<a name="160"><span class="lineNum">     160 </span><span class="lineCov">         96 :         new_pem_data[pem_size] = 0;</span></a>
+<a name="161"><span class="lineNum">     161 </span><span class="lineCov">         96 :         pem_data = new_pem_data;</span></a>
+<a name="162"><span class="lineNum">     162 </span><span class="lineCov">         96 :         pem_size += 1;</span></a>
 <a name="163"><span class="lineNum">     163 </span>            :     }</a>
 <a name="164"><span class="lineNum">     164 </span>            : </a>
-<a name="165"><span class="lineNum">     165 </span><span class="lineCov">         81 :     mbedtls_pk_init(&amp;pk);</span></a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineCov">         96 :     mbedtls_pk_init(&amp;pk);</span></a>
 <a name="166"><span class="lineNum">     166 </span>            : </a>
-<a name="167"><span class="lineNum">     167 </span><span class="lineCov">         81 :     if (password != NULL) {</span></a>
+<a name="167"><span class="lineNum">     167 </span><span class="lineCov">         96 :     if (password != NULL) {</span></a>
 <a name="168"><span class="lineNum">     168 </span><span class="lineNoCov">          0 :         password_len = ascii_str_len(password);</span></a>
 <a name="169"><span class="lineNum">     169 </span>            :     } else {</a>
-<a name="170"><span class="lineNum">     170 </span><span class="lineCov">         81 :         password_len = 0;</span></a>
+<a name="170"><span class="lineNum">     170 </span><span class="lineCov">         96 :         password_len = 0;</span></a>
 <a name="171"><span class="lineNum">     171 </span>            :     }</a>
 <a name="172"><span class="lineNum">     172 </span>            : </a>
-<a name="173"><span class="lineNum">     173 </span><span class="lineCov">         81 :     ret = mbedtls_pk_parse_key(&amp;pk, pem_data, pem_size,</span></a>
+<a name="173"><span class="lineNum">     173 </span><span class="lineCov">         96 :     ret = mbedtls_pk_parse_key(&amp;pk, pem_data, pem_size,</span></a>
 <a name="174"><span class="lineNum">     174 </span>            :                                (const uint8_t *)password, password_len);</a>
 <a name="175"><span class="lineNum">     175 </span>            : </a>
-<a name="176"><span class="lineNum">     176 </span><span class="lineCov">         81 :     if (new_pem_data != NULL) {</span></a>
-<a name="177"><span class="lineNum">     177 </span><span class="lineCov">         81 :         free_pool(new_pem_data);</span></a>
-<a name="178"><span class="lineNum">     178 </span><span class="lineCov">         81 :         new_pem_data = NULL;</span></a>
+<a name="176"><span class="lineNum">     176 </span><span class="lineCov">         96 :     if (new_pem_data != NULL) {</span></a>
+<a name="177"><span class="lineNum">     177 </span><span class="lineCov">         96 :         free_pool(new_pem_data);</span></a>
+<a name="178"><span class="lineNum">     178 </span><span class="lineCov">         96 :         new_pem_data = NULL;</span></a>
 <a name="179"><span class="lineNum">     179 </span>            :     }</a>
 <a name="180"><span class="lineNum">     180 </span>            : </a>
-<a name="181"><span class="lineNum">     181 </span><span class="lineCov">         81 :     if (ret != 0) {</span></a>
+<a name="181"><span class="lineNum">     181 </span><span class="lineCov">         96 :     if (ret != 0) {</span></a>
 <a name="182"><span class="lineNum">     182 </span><span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="183"><span class="lineNum">     183 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="184"><span class="lineNum">     184 </span>            :     }</a>
 <a name="185"><span class="lineNum">     185 </span>            : </a>
-<a name="186"><span class="lineNum">     186 </span><span class="lineCov">         81 :     if (mbedtls_pk_get_type(&amp;pk) != MBEDTLS_PK_ECKEY) {</span></a>
+<a name="186"><span class="lineNum">     186 </span><span class="lineCov">         96 :     if (mbedtls_pk_get_type(&amp;pk) != MBEDTLS_PK_ECKEY) {</span></a>
 <a name="187"><span class="lineNum">     187 </span><span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="188"><span class="lineNum">     188 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="189"><span class="lineNum">     189 </span>            :     }</a>
 <a name="190"><span class="lineNum">     190 </span>            : </a>
-<a name="191"><span class="lineNum">     191 </span><span class="lineCov">         81 :     ecdh = allocate_zero_pool(sizeof(mbedtls_ecdh_context));</span></a>
-<a name="192"><span class="lineNum">     192 </span><span class="lineCov">         81 :     if (ecdh == NULL) {</span></a>
+<a name="191"><span class="lineNum">     191 </span><span class="lineCov">         96 :     ecdh = allocate_zero_pool(sizeof(mbedtls_ecdh_context));</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineCov">         96 :     if (ecdh == NULL) {</span></a>
 <a name="193"><span class="lineNum">     193 </span><span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="194"><span class="lineNum">     194 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="195"><span class="lineNum">     195 </span>            :     }</a>
-<a name="196"><span class="lineNum">     196 </span><span class="lineCov">         81 :     mbedtls_ecdh_init(ecdh);</span></a>
+<a name="196"><span class="lineNum">     196 </span><span class="lineCov">         96 :     mbedtls_ecdh_init(ecdh);</span></a>
 <a name="197"><span class="lineNum">     197 </span>            : </a>
-<a name="198"><span class="lineNum">     198 </span><span class="lineCov">         81 :     ret = mbedtls_ecdh_get_params(ecdh, mbedtls_pk_ec(pk),</span></a>
+<a name="198"><span class="lineNum">     198 </span><span class="lineCov">         96 :     ret = mbedtls_ecdh_get_params(ecdh, mbedtls_pk_ec(pk),</span></a>
 <a name="199"><span class="lineNum">     199 </span>            :                                   MBEDTLS_ECDH_OURS);</a>
-<a name="200"><span class="lineNum">     200 </span><span class="lineCov">         81 :     if (ret != 0) {</span></a>
+<a name="200"><span class="lineNum">     200 </span><span class="lineCov">         96 :     if (ret != 0) {</span></a>
 <a name="201"><span class="lineNum">     201 </span><span class="lineNoCov">          0 :         mbedtls_ecdh_free(ecdh);</span></a>
 <a name="202"><span class="lineNum">     202 </span><span class="lineNoCov">          0 :         free_pool(ecdh);</span></a>
 <a name="203"><span class="lineNum">     203 </span><span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="204"><span class="lineNum">     204 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="205"><span class="lineNum">     205 </span>            :     }</a>
-<a name="206"><span class="lineNum">     206 </span><span class="lineCov">         81 :     mbedtls_pk_free(&amp;pk);</span></a>
+<a name="206"><span class="lineNum">     206 </span><span class="lineCov">         96 :     mbedtls_pk_free(&amp;pk);</span></a>
 <a name="207"><span class="lineNum">     207 </span>            : </a>
-<a name="208"><span class="lineNum">     208 </span><span class="lineCov">         81 :     *ec_context = ecdh;</span></a>
-<a name="209"><span class="lineNum">     209 </span><span class="lineCov">         81 :     return true;</span></a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineCov">         96 :     *ec_context = ecdh;</span></a>
+<a name="209"><span class="lineNum">     209 </span><span class="lineCov">         96 :     return true;</span></a>
 <a name="210"><span class="lineNum">     210 </span>            : }</a>
 <a name="211"><span class="lineNum">     211 </span>            : </a>
 <a name="212"><span class="lineNum">     212 </span>            : /**</a>
