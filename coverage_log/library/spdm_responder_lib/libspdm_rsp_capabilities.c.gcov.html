@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-24 08:17:31</td>
+            <td class="headerValue">2022-11-25 08:18:04</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -181,156 +181,144 @@
 <a name="119"><span class="lineNum">     119 </span>            :     }</a>
 <a name="120"><span class="lineNum">     120 </span>            : }</a>
 <a name="121"><span class="lineNum">     121 </span>            : </a>
-<a name="122"><span class="lineNum">     122 </span>            : /**</a>
-<a name="123"><span class="lineNum">     123 </span>            :  * Process the SPDM GET_CAPABILITIES request and return the response.</a>
-<a name="124"><span class="lineNum">     124 </span>            :  *</a>
-<a name="125"><span class="lineNum">     125 </span>            :  * @param  spdm_context   A pointer to the SPDM context.</a>
-<a name="126"><span class="lineNum">     126 </span>            :  * @param  request_size   Size in bytes of the request data.</a>
-<a name="127"><span class="lineNum">     127 </span>            :  * @param  request        A pointer to the request data.</a>
-<a name="128"><span class="lineNum">     128 </span>            :  * @param  response_size  Size in bytes of the response data.</a>
-<a name="129"><span class="lineNum">     129 </span>            :  *                        On input, it means the size in bytes of response data buffer.</a>
-<a name="130"><span class="lineNum">     130 </span>            :  *                        On output, it means the size in bytes of copied response data buffer if RETURN_SUCCESS is returned,</a>
-<a name="131"><span class="lineNum">     131 </span>            :  *                        and means the size in bytes of desired response data buffer if RETURN_BUFFER_TOO_SMALL is returned.</a>
-<a name="132"><span class="lineNum">     132 </span>            :  * @param  response       A pointer to the response data.</a>
-<a name="133"><span class="lineNum">     133 </span>            :  **/</a>
-<a name="134"><span class="lineNum">     134 </span><span class="lineCov">         24 : libspdm_return_t libspdm_get_response_capabilities(void *context,</span></a>
-<a name="135"><span class="lineNum">     135 </span>            :                                                    size_t request_size,</a>
-<a name="136"><span class="lineNum">     136 </span>            :                                                    const void *request,</a>
-<a name="137"><span class="lineNum">     137 </span>            :                                                    size_t *response_size,</a>
-<a name="138"><span class="lineNum">     138 </span>            :                                                    void *response)</a>
-<a name="139"><span class="lineNum">     139 </span>            : {</a>
-<a name="140"><span class="lineNum">     140 </span>            :     const spdm_get_capabilities_request_t *spdm_request;</a>
-<a name="141"><span class="lineNum">     141 </span>            :     spdm_capabilities_response_t *spdm_response;</a>
-<a name="142"><span class="lineNum">     142 </span>            :     libspdm_context_t *spdm_context;</a>
-<a name="143"><span class="lineNum">     143 </span>            :     libspdm_return_t status;</a>
-<a name="144"><span class="lineNum">     144 </span>            : </a>
-<a name="145"><span class="lineNum">     145 </span><span class="lineCov">         24 :     spdm_context = context;</span></a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineCov">         24 :     spdm_request = request;</span></a>
-<a name="147"><span class="lineNum">     147 </span>            : </a>
-<a name="148"><span class="lineNum">     148 </span>            :     /* -=[Verify State Phase]=- */</a>
-<a name="149"><span class="lineNum">     149 </span><span class="lineCov">         24 :     if (spdm_context-&gt;response_state != LIBSPDM_RESPONSE_STATE_NORMAL) {</span></a>
-<a name="150"><span class="lineNum">     150 </span><span class="lineCov">          2 :         return libspdm_responder_handle_response_state(</span></a>
-<a name="151"><span class="lineNum">     151 </span>            :             spdm_context,</a>
-<a name="152"><span class="lineNum">     152 </span><span class="lineCov">          2 :             spdm_request-&gt;header.request_response_code,</span></a>
-<a name="153"><span class="lineNum">     153 </span>            :             response_size, response);</a>
-<a name="154"><span class="lineNum">     154 </span>            :     }</a>
-<a name="155"><span class="lineNum">     155 </span><span class="lineCov">         22 :     if (spdm_context-&gt;connection_info.connection_state != LIBSPDM_CONNECTION_STATE_AFTER_VERSION) {</span></a>
-<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="157"><span class="lineNum">     157 </span>            :                                                SPDM_ERROR_CODE_UNEXPECTED_REQUEST,</a>
-<a name="158"><span class="lineNum">     158 </span>            :                                                0, response_size, response);</a>
-<a name="159"><span class="lineNum">     159 </span>            :     }</a>
-<a name="160"><span class="lineNum">     160 </span>            : </a>
-<a name="161"><span class="lineNum">     161 </span>            :     /* -=[Validate Request Phase]=- */</a>
-<a name="162"><span class="lineNum">     162 </span><span class="lineCov">         21 :     if (!libspdm_check_request_version_compability(</span></a>
-<a name="163"><span class="lineNum">     163 </span><span class="lineCov">         21 :             spdm_context, spdm_request-&gt;header.spdm_version)) {</span></a>
-<a name="164"><span class="lineNum">     164 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="165"><span class="lineNum">     165 </span>            :                                                SPDM_ERROR_CODE_VERSION_MISMATCH, 0,</a>
-<a name="166"><span class="lineNum">     166 </span>            :                                                response_size, response);</a>
-<a name="167"><span class="lineNum">     167 </span>            :     }</a>
-<a name="168"><span class="lineNum">     168 </span><span class="lineCov">         21 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="169"><span class="lineNum">     169 </span><span class="lineCov">          2 :         if (request_size != sizeof(spdm_get_capabilities_request_t)) {</span></a>
-<a name="170"><span class="lineNum">     170 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
-<a name="171"><span class="lineNum">     171 </span>            :                 spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST,</a>
-<a name="172"><span class="lineNum">     172 </span>            :                 0, response_size, response);</a>
-<a name="173"><span class="lineNum">     173 </span>            :         }</a>
-<a name="174"><span class="lineNum">     174 </span><span class="lineCov">         19 :     } else if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_11) {</span></a>
-<a name="175"><span class="lineNum">     175 </span><span class="lineCov">         17 :         if (request_size != sizeof(spdm_get_capabilities_request_t) -</span></a>
-<a name="176"><span class="lineNum">     176 </span>            :             sizeof(spdm_request-&gt;data_transfer_size) - sizeof(spdm_request-&gt;max_spdm_msg_size)) {</a>
-<a name="177"><span class="lineNum">     177 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
-<a name="178"><span class="lineNum">     178 </span>            :                 spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST,</a>
-<a name="179"><span class="lineNum">     179 </span>            :                 0, response_size, response);</a>
-<a name="180"><span class="lineNum">     180 </span>            :         }</a>
-<a name="181"><span class="lineNum">     181 </span>            :     } else {</a>
-<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          2 :         if (request_size != sizeof(spdm_message_header_t)) {</span></a>
-<a name="183"><span class="lineNum">     183 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(</span></a>
-<a name="184"><span class="lineNum">     184 </span>            :                 spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST,</a>
-<a name="185"><span class="lineNum">     185 </span>            :                 0, response_size, response);</a>
-<a name="186"><span class="lineNum">     186 </span>            :         }</a>
-<a name="187"><span class="lineNum">     187 </span>            :     }</a>
-<a name="188"><span class="lineNum">     188 </span><span class="lineCov">         20 :     if (!libspdm_check_request_flag_compability(</span></a>
-<a name="189"><span class="lineNum">     189 </span><span class="lineCov">         20 :             spdm_request-&gt;flags, spdm_request-&gt;header.spdm_version)) {</span></a>
-<a name="190"><span class="lineNum">     190 </span><span class="lineCov">         12 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="191"><span class="lineNum">     191 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
-<a name="192"><span class="lineNum">     192 </span>            :                                                response_size, response);</a>
-<a name="193"><span class="lineNum">     193 </span>            :     }</a>
-<a name="194"><span class="lineNum">     194 </span><span class="lineCov">          8 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="195"><span class="lineNum">     195 </span><span class="lineCov">          2 :         if ((spdm_request-&gt;data_transfer_size &lt; SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12) ||</span></a>
-<a name="196"><span class="lineNum">     196 </span><span class="lineCov">          2 :             (spdm_request-&gt;data_transfer_size &gt; spdm_request-&gt;max_spdm_msg_size)) {</span></a>
-<a name="197"><span class="lineNum">     197 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="198"><span class="lineNum">     198 </span>            :                                                    SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
-<a name="199"><span class="lineNum">     199 </span>            :                                                    response_size, response);</a>
-<a name="200"><span class="lineNum">     200 </span>            :         }</a>
-<a name="201"><span class="lineNum">     201 </span><span class="lineCov">          2 :         if (((spdm_request-&gt;flags &amp; SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP) == 0) &amp;&amp;</span></a>
-<a name="202"><span class="lineNum">     202 </span><span class="lineCov">          1 :             (spdm_request-&gt;data_transfer_size != spdm_request-&gt;max_spdm_msg_size)) {</span></a>
-<a name="203"><span class="lineNum">     203 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="204"><span class="lineNum">     204 </span>            :                                                    SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
-<a name="205"><span class="lineNum">     205 </span>            :                                                    response_size, response);</a>
-<a name="206"><span class="lineNum">     206 </span>            :         }</a>
-<a name="207"><span class="lineNum">     207 </span>            :     }</a>
-<a name="208"><span class="lineNum">     208 </span>            : </a>
-<a name="209"><span class="lineNum">     209 </span><span class="lineCov">          7 :     libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,</span></a>
-<a name="210"><span class="lineNum">     210 </span><span class="lineCov">          7 :                                                   spdm_request-&gt;header.request_response_code);</span></a>
-<a name="211"><span class="lineNum">     211 </span>            : </a>
-<a name="212"><span class="lineNum">     212 </span>            :     /* -=[Construct Response Phase]=- */</a>
-<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          7 :     LIBSPDM_ASSERT(*response_size &gt;= sizeof(spdm_capabilities_response_t));</span></a>
-<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          7 :     *response_size = sizeof(spdm_capabilities_response_t);</span></a>
-<a name="215"><span class="lineNum">     215 </span><span class="lineCov">          7 :     libspdm_zero_mem(response, *response_size);</span></a>
-<a name="216"><span class="lineNum">     216 </span><span class="lineCov">          7 :     spdm_response = response;</span></a>
-<a name="217"><span class="lineNum">     217 </span>            : </a>
-<a name="218"><span class="lineNum">     218 </span><span class="lineCov">          7 :     spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
-<a name="219"><span class="lineNum">     219 </span><span class="lineCov">          7 :     spdm_response-&gt;header.request_response_code = SPDM_CAPABILITIES;</span></a>
-<a name="220"><span class="lineNum">     220 </span><span class="lineCov">          7 :     spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="221"><span class="lineNum">     221 </span><span class="lineCov">          7 :     spdm_response-&gt;header.param2 = 0;</span></a>
-<a name="222"><span class="lineNum">     222 </span><span class="lineCov">          7 :     spdm_response-&gt;ct_exponent = spdm_context-&gt;local_context.capability.ct_exponent;</span></a>
-<a name="223"><span class="lineNum">     223 </span><span class="lineCov">          7 :     spdm_response-&gt;flags = spdm_context-&gt;local_context.capability.flags;</span></a>
-<a name="224"><span class="lineNum">     224 </span><span class="lineCov">          7 :     spdm_response-&gt;data_transfer_size = spdm_context-&gt;local_context.capability.data_transfer_size;</span></a>
-<a name="225"><span class="lineNum">     225 </span><span class="lineCov">          7 :     spdm_response-&gt;max_spdm_msg_size = spdm_context-&gt;local_context.capability.max_spdm_msg_size;</span></a>
-<a name="226"><span class="lineNum">     226 </span>            : </a>
-<a name="227"><span class="lineNum">     227 </span><span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="228"><span class="lineNum">     228 </span><span class="lineCov">          1 :         *response_size = sizeof(spdm_capabilities_response_t);</span></a>
-<a name="229"><span class="lineNum">     229 </span>            :     } else {</a>
-<a name="230"><span class="lineNum">     230 </span><span class="lineCov">          6 :         *response_size = sizeof(spdm_capabilities_response_t) -</span></a>
-<a name="231"><span class="lineNum">     231 </span>            :                          sizeof(spdm_response-&gt;data_transfer_size) -</a>
-<a name="232"><span class="lineNum">     232 </span>            :                          sizeof(spdm_response-&gt;max_spdm_msg_size);</a>
-<a name="233"><span class="lineNum">     233 </span>            :     }</a>
-<a name="234"><span class="lineNum">     234 </span>            : </a>
-<a name="235"><span class="lineNum">     235 </span>            :     /* -=[Process Request Phase]=- */</a>
-<a name="236"><span class="lineNum">     236 </span><span class="lineCov">          7 :     status = libspdm_append_message_a(spdm_context, spdm_request, request_size);</span></a>
-<a name="237"><span class="lineNum">     237 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="238"><span class="lineNum">     238 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="239"><span class="lineNum">     239 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="240"><span class="lineNum">     240 </span>            :                                                response_size, response);</a>
-<a name="241"><span class="lineNum">     241 </span>            :     }</a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineCov">          7 :     status = libspdm_append_message_a(spdm_context,</span></a>
-<a name="243"><span class="lineNum">     243 </span>            :                                       spdm_response, *response_size);</a>
-<a name="244"><span class="lineNum">     244 </span>            : </a>
-<a name="245"><span class="lineNum">     245 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="246"><span class="lineNum">     246 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="247"><span class="lineNum">     247 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="248"><span class="lineNum">     248 </span>            :                                                response_size, response);</a>
-<a name="249"><span class="lineNum">     249 </span>            :     }</a>
-<a name="250"><span class="lineNum">     250 </span><span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_11) {</span></a>
-<a name="251"><span class="lineNum">     251 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.ct_exponent = spdm_request-&gt;ct_exponent;</span></a>
-<a name="252"><span class="lineNum">     252 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.flags = spdm_request-&gt;flags;</span></a>
-<a name="253"><span class="lineNum">     253 </span>            :     } else {</a>
-<a name="254"><span class="lineNum">     254 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.ct_exponent = 0;</span></a>
-<a name="255"><span class="lineNum">     255 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.flags = 0;</span></a>
-<a name="256"><span class="lineNum">     256 </span>            :     }</a>
-<a name="257"><span class="lineNum">     257 </span><span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="258"><span class="lineNum">     258 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.data_transfer_size =</span></a>
-<a name="259"><span class="lineNum">     259 </span><span class="lineCov">          1 :             spdm_request-&gt;data_transfer_size;</span></a>
-<a name="260"><span class="lineNum">     260 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size =</span></a>
-<a name="261"><span class="lineNum">     261 </span><span class="lineCov">          1 :             spdm_request-&gt;max_spdm_msg_size;</span></a>
-<a name="262"><span class="lineNum">     262 </span>            :     } else {</a>
-<a name="263"><span class="lineNum">     263 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.data_transfer_size = 0;</span></a>
-<a name="264"><span class="lineNum">     264 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size = 0;</span></a>
-<a name="265"><span class="lineNum">     265 </span>            :     }</a>
-<a name="266"><span class="lineNum">     266 </span>            : </a>
-<a name="267"><span class="lineNum">     267 </span>            :     /* -=[Update State Phase]=- */</a>
-<a name="268"><span class="lineNum">     268 </span><span class="lineCov">          7 :     libspdm_set_connection_state(spdm_context, LIBSPDM_CONNECTION_STATE_AFTER_CAPABILITIES);</span></a>
-<a name="269"><span class="lineNum">     269 </span>            : </a>
-<a name="270"><span class="lineNum">     270 </span><span class="lineCov">          7 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="271"><span class="lineNum">     271 </span>            : }</a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">         24 : libspdm_return_t libspdm_get_response_capabilities(void *context,</span></a>
+<a name="123"><span class="lineNum">     123 </span>            :                                                    size_t request_size,</a>
+<a name="124"><span class="lineNum">     124 </span>            :                                                    const void *request,</a>
+<a name="125"><span class="lineNum">     125 </span>            :                                                    size_t *response_size,</a>
+<a name="126"><span class="lineNum">     126 </span>            :                                                    void *response)</a>
+<a name="127"><span class="lineNum">     127 </span>            : {</a>
+<a name="128"><span class="lineNum">     128 </span>            :     const spdm_get_capabilities_request_t *spdm_request;</a>
+<a name="129"><span class="lineNum">     129 </span>            :     spdm_capabilities_response_t *spdm_response;</a>
+<a name="130"><span class="lineNum">     130 </span>            :     libspdm_context_t *spdm_context;</a>
+<a name="131"><span class="lineNum">     131 </span>            :     libspdm_return_t status;</a>
+<a name="132"><span class="lineNum">     132 </span>            : </a>
+<a name="133"><span class="lineNum">     133 </span><span class="lineCov">         24 :     spdm_context = context;</span></a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">         24 :     spdm_request = request;</span></a>
+<a name="135"><span class="lineNum">     135 </span>            : </a>
+<a name="136"><span class="lineNum">     136 </span>            :     /* -=[Verify State Phase]=- */</a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineCov">         24 :     if (spdm_context-&gt;response_state != LIBSPDM_RESPONSE_STATE_NORMAL) {</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineCov">          2 :         return libspdm_responder_handle_response_state(</span></a>
+<a name="139"><span class="lineNum">     139 </span>            :             spdm_context,</a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">          2 :             spdm_request-&gt;header.request_response_code,</span></a>
+<a name="141"><span class="lineNum">     141 </span>            :             response_size, response);</a>
+<a name="142"><span class="lineNum">     142 </span>            :     }</a>
+<a name="143"><span class="lineNum">     143 </span><span class="lineCov">         22 :     if (spdm_context-&gt;connection_info.connection_state != LIBSPDM_CONNECTION_STATE_AFTER_VERSION) {</span></a>
+<a name="144"><span class="lineNum">     144 </span><span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="145"><span class="lineNum">     145 </span>            :                                                SPDM_ERROR_CODE_UNEXPECTED_REQUEST,</a>
+<a name="146"><span class="lineNum">     146 </span>            :                                                0, response_size, response);</a>
+<a name="147"><span class="lineNum">     147 </span>            :     }</a>
+<a name="148"><span class="lineNum">     148 </span>            : </a>
+<a name="149"><span class="lineNum">     149 </span>            :     /* -=[Validate Request Phase]=- */</a>
+<a name="150"><span class="lineNum">     150 </span><span class="lineCov">         21 :     if (!libspdm_check_request_version_compability(</span></a>
+<a name="151"><span class="lineNum">     151 </span><span class="lineCov">         21 :             spdm_context, spdm_request-&gt;header.spdm_version)) {</span></a>
+<a name="152"><span class="lineNum">     152 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="153"><span class="lineNum">     153 </span>            :                                                SPDM_ERROR_CODE_VERSION_MISMATCH, 0,</a>
+<a name="154"><span class="lineNum">     154 </span>            :                                                response_size, response);</a>
+<a name="155"><span class="lineNum">     155 </span>            :     }</a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">         21 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="157"><span class="lineNum">     157 </span><span class="lineCov">          2 :         if (request_size != sizeof(spdm_get_capabilities_request_t)) {</span></a>
+<a name="158"><span class="lineNum">     158 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
+<a name="159"><span class="lineNum">     159 </span>            :                 spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST,</a>
+<a name="160"><span class="lineNum">     160 </span>            :                 0, response_size, response);</a>
+<a name="161"><span class="lineNum">     161 </span>            :         }</a>
+<a name="162"><span class="lineNum">     162 </span><span class="lineCov">         19 :     } else if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_11) {</span></a>
+<a name="163"><span class="lineNum">     163 </span><span class="lineCov">         17 :         if (request_size != sizeof(spdm_get_capabilities_request_t) -</span></a>
+<a name="164"><span class="lineNum">     164 </span>            :             sizeof(spdm_request-&gt;data_transfer_size) - sizeof(spdm_request-&gt;max_spdm_msg_size)) {</a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
+<a name="166"><span class="lineNum">     166 </span>            :                 spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST,</a>
+<a name="167"><span class="lineNum">     167 </span>            :                 0, response_size, response);</a>
+<a name="168"><span class="lineNum">     168 </span>            :         }</a>
+<a name="169"><span class="lineNum">     169 </span>            :     } else {</a>
+<a name="170"><span class="lineNum">     170 </span><span class="lineCov">          2 :         if (request_size != sizeof(spdm_message_header_t)) {</span></a>
+<a name="171"><span class="lineNum">     171 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(</span></a>
+<a name="172"><span class="lineNum">     172 </span>            :                 spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST,</a>
+<a name="173"><span class="lineNum">     173 </span>            :                 0, response_size, response);</a>
+<a name="174"><span class="lineNum">     174 </span>            :         }</a>
+<a name="175"><span class="lineNum">     175 </span>            :     }</a>
+<a name="176"><span class="lineNum">     176 </span><span class="lineCov">         20 :     if (!libspdm_check_request_flag_compability(</span></a>
+<a name="177"><span class="lineNum">     177 </span><span class="lineCov">         20 :             spdm_request-&gt;flags, spdm_request-&gt;header.spdm_version)) {</span></a>
+<a name="178"><span class="lineNum">     178 </span><span class="lineCov">         12 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="179"><span class="lineNum">     179 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
+<a name="180"><span class="lineNum">     180 </span>            :                                                response_size, response);</a>
+<a name="181"><span class="lineNum">     181 </span>            :     }</a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">          8 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="183"><span class="lineNum">     183 </span><span class="lineCov">          2 :         if ((spdm_request-&gt;data_transfer_size &lt; SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12) ||</span></a>
+<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          2 :             (spdm_request-&gt;data_transfer_size &gt; spdm_request-&gt;max_spdm_msg_size)) {</span></a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="186"><span class="lineNum">     186 </span>            :                                                    SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
+<a name="187"><span class="lineNum">     187 </span>            :                                                    response_size, response);</a>
+<a name="188"><span class="lineNum">     188 </span>            :         }</a>
+<a name="189"><span class="lineNum">     189 </span><span class="lineCov">          2 :         if (((spdm_request-&gt;flags &amp; SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP) == 0) &amp;&amp;</span></a>
+<a name="190"><span class="lineNum">     190 </span><span class="lineCov">          1 :             (spdm_request-&gt;data_transfer_size != spdm_request-&gt;max_spdm_msg_size)) {</span></a>
+<a name="191"><span class="lineNum">     191 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="192"><span class="lineNum">     192 </span>            :                                                    SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
+<a name="193"><span class="lineNum">     193 </span>            :                                                    response_size, response);</a>
+<a name="194"><span class="lineNum">     194 </span>            :         }</a>
+<a name="195"><span class="lineNum">     195 </span>            :     }</a>
+<a name="196"><span class="lineNum">     196 </span>            : </a>
+<a name="197"><span class="lineNum">     197 </span><span class="lineCov">          7 :     libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,</span></a>
+<a name="198"><span class="lineNum">     198 </span><span class="lineCov">          7 :                                                   spdm_request-&gt;header.request_response_code);</span></a>
+<a name="199"><span class="lineNum">     199 </span>            : </a>
+<a name="200"><span class="lineNum">     200 </span>            :     /* -=[Construct Response Phase]=- */</a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineCov">          7 :     LIBSPDM_ASSERT(*response_size &gt;= sizeof(spdm_capabilities_response_t));</span></a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineCov">          7 :     *response_size = sizeof(spdm_capabilities_response_t);</span></a>
+<a name="203"><span class="lineNum">     203 </span><span class="lineCov">          7 :     libspdm_zero_mem(response, *response_size);</span></a>
+<a name="204"><span class="lineNum">     204 </span><span class="lineCov">          7 :     spdm_response = response;</span></a>
+<a name="205"><span class="lineNum">     205 </span>            : </a>
+<a name="206"><span class="lineNum">     206 </span><span class="lineCov">          7 :     spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
+<a name="207"><span class="lineNum">     207 </span><span class="lineCov">          7 :     spdm_response-&gt;header.request_response_code = SPDM_CAPABILITIES;</span></a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineCov">          7 :     spdm_response-&gt;header.param1 = 0;</span></a>
+<a name="209"><span class="lineNum">     209 </span><span class="lineCov">          7 :     spdm_response-&gt;header.param2 = 0;</span></a>
+<a name="210"><span class="lineNum">     210 </span><span class="lineCov">          7 :     spdm_response-&gt;ct_exponent = spdm_context-&gt;local_context.capability.ct_exponent;</span></a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineCov">          7 :     spdm_response-&gt;flags = spdm_context-&gt;local_context.capability.flags;</span></a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          7 :     spdm_response-&gt;data_transfer_size = spdm_context-&gt;local_context.capability.data_transfer_size;</span></a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineCov">          7 :     spdm_response-&gt;max_spdm_msg_size = spdm_context-&gt;local_context.capability.max_spdm_msg_size;</span></a>
+<a name="214"><span class="lineNum">     214 </span>            : </a>
+<a name="215"><span class="lineNum">     215 </span><span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="216"><span class="lineNum">     216 </span><span class="lineCov">          1 :         *response_size = sizeof(spdm_capabilities_response_t);</span></a>
+<a name="217"><span class="lineNum">     217 </span>            :     } else {</a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">          6 :         *response_size = sizeof(spdm_capabilities_response_t) -</span></a>
+<a name="219"><span class="lineNum">     219 </span>            :                          sizeof(spdm_response-&gt;data_transfer_size) -</a>
+<a name="220"><span class="lineNum">     220 </span>            :                          sizeof(spdm_response-&gt;max_spdm_msg_size);</a>
+<a name="221"><span class="lineNum">     221 </span>            :     }</a>
+<a name="222"><span class="lineNum">     222 </span>            : </a>
+<a name="223"><span class="lineNum">     223 </span>            :     /* -=[Process Request Phase]=- */</a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineCov">          7 :     status = libspdm_append_message_a(spdm_context, spdm_request, request_size);</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="227"><span class="lineNum">     227 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="228"><span class="lineNum">     228 </span>            :                                                response_size, response);</a>
+<a name="229"><span class="lineNum">     229 </span>            :     }</a>
+<a name="230"><span class="lineNum">     230 </span><span class="lineCov">          7 :     status = libspdm_append_message_a(spdm_context,</span></a>
+<a name="231"><span class="lineNum">     231 </span>            :                                       spdm_response, *response_size);</a>
+<a name="232"><span class="lineNum">     232 </span>            : </a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineCov">          7 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="235"><span class="lineNum">     235 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="236"><span class="lineNum">     236 </span>            :                                                response_size, response);</a>
+<a name="237"><span class="lineNum">     237 </span>            :     }</a>
+<a name="238"><span class="lineNum">     238 </span><span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_11) {</span></a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.ct_exponent = spdm_request-&gt;ct_exponent;</span></a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.flags = spdm_request-&gt;flags;</span></a>
+<a name="241"><span class="lineNum">     241 </span>            :     } else {</a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.ct_exponent = 0;</span></a>
+<a name="243"><span class="lineNum">     243 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.flags = 0;</span></a>
+<a name="244"><span class="lineNum">     244 </span>            :     }</a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="246"><span class="lineNum">     246 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.data_transfer_size =</span></a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineCov">          1 :             spdm_request-&gt;data_transfer_size;</span></a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size =</span></a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineCov">          1 :             spdm_request-&gt;max_spdm_msg_size;</span></a>
+<a name="250"><span class="lineNum">     250 </span>            :     } else {</a>
+<a name="251"><span class="lineNum">     251 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.data_transfer_size = 0;</span></a>
+<a name="252"><span class="lineNum">     252 </span><span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size = 0;</span></a>
+<a name="253"><span class="lineNum">     253 </span>            :     }</a>
+<a name="254"><span class="lineNum">     254 </span>            : </a>
+<a name="255"><span class="lineNum">     255 </span>            :     /* -=[Update State Phase]=- */</a>
+<a name="256"><span class="lineNum">     256 </span><span class="lineCov">          7 :     libspdm_set_connection_state(spdm_context, LIBSPDM_CONNECTION_STATE_AFTER_CAPABILITIES);</span></a>
+<a name="257"><span class="lineNum">     257 </span>            : </a>
+<a name="258"><span class="lineNum">     258 </span><span class="lineCov">          7 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="259"><span class="lineNum">     259 </span>            : }</a>
 </pre>
       </td>
     </tr>

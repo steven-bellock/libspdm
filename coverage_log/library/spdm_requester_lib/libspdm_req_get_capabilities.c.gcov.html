@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-24 08:17:31</td>
+            <td class="headerValue">2022-11-25 08:18:04</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -381,45 +381,22 @@
 <a name="319"><span class="lineNum">     319 </span><span class="lineCov">         63 :     return status;</span></a>
 <a name="320"><span class="lineNum">     320 </span>            : }</a>
 <a name="321"><span class="lineNum">     321 </span>            : </a>
-<a name="322"><span class="lineNum">     322 </span>            : /**</a>
-<a name="323"><span class="lineNum">     323 </span>            :  * This function sends GET_CAPABILITIES and receives CAPABILITIES. It may retry GET_CAPABILITIES</a>
-<a name="324"><span class="lineNum">     324 </span>            :  * multiple times if the Responder replies with a Busy error.</a>
-<a name="325"><span class="lineNum">     325 </span>            :  *</a>
-<a name="326"><span class="lineNum">     326 </span>            :  * @param  spdm_context A pointer to the SPDM context.</a>
-<a name="327"><span class="lineNum">     327 </span>            :  *</a>
-<a name="328"><span class="lineNum">     328 </span>            :  * @retval LIBSPDM_STATUS_SUCCESS</a>
-<a name="329"><span class="lineNum">     329 </span>            :  *         GET_CAPABILITIES was sent and CAPABILITIES was received.</a>
-<a name="330"><span class="lineNum">     330 </span>            :  * @retval LIBSPDM_STATUS_INVALID_STATE_LOCAL</a>
-<a name="331"><span class="lineNum">     331 </span>            :  *         Cannot send GET_CAPABILITIES due to Requester's state. Send GET_VERSION first.</a>
-<a name="332"><span class="lineNum">     332 </span>            :  * @retval LIBSPDM_STATUS_INVALID_MSG_SIZE</a>
-<a name="333"><span class="lineNum">     333 </span>            :  *         The size of the CAPABILITIES response is invalid.</a>
-<a name="334"><span class="lineNum">     334 </span>            :  * @retval LIBSPDM_STATUS_INVALID_MSG_FIELD</a>
-<a name="335"><span class="lineNum">     335 </span>            :  *         The CAPABILITIES response contains one or more invalid fields.</a>
-<a name="336"><span class="lineNum">     336 </span>            :  * @retval LIBSPDM_STATUS_ERROR_PEER</a>
-<a name="337"><span class="lineNum">     337 </span>            :  *         The Responder returned an unexpected error.</a>
-<a name="338"><span class="lineNum">     338 </span>            :  * @retval LIBSPDM_STATUS_BUSY_PEER</a>
-<a name="339"><span class="lineNum">     339 </span>            :  *         The Responder continually returned Busy error messages.</a>
-<a name="340"><span class="lineNum">     340 </span>            :  * @retval LIBSPDM_STATUS_RESYNCH_PEER</a>
-<a name="341"><span class="lineNum">     341 </span>            :  *         The Responder returned a RequestResynch error message.</a>
-<a name="342"><span class="lineNum">     342 </span>            :  * @retval LIBSPDM_STATUS_BUFFER_FULL</a>
-<a name="343"><span class="lineNum">     343 </span>            :  *         The buffer used to store transcripts is exhausted.</a>
-<a name="344"><span class="lineNum">     344 </span>            :  **/</a>
-<a name="345"><span class="lineNum">     345 </span><span class="lineCov">         63 : libspdm_return_t libspdm_get_capabilities(libspdm_context_t *spdm_context)</span></a>
-<a name="346"><span class="lineNum">     346 </span>            : {</a>
-<a name="347"><span class="lineNum">     347 </span>            :     size_t retry;</a>
-<a name="348"><span class="lineNum">     348 </span>            :     libspdm_return_t status;</a>
-<a name="349"><span class="lineNum">     349 </span>            : </a>
-<a name="350"><span class="lineNum">     350 </span><span class="lineCov">         63 :     spdm_context-&gt;crypto_request = false;</span></a>
-<a name="351"><span class="lineNum">     351 </span><span class="lineCov">         63 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="352"><span class="lineNum">     352 </span>            :     do {</a>
-<a name="353"><span class="lineNum">     353 </span><span class="lineCov">         67 :         status = libspdm_try_get_capabilities(spdm_context);</span></a>
-<a name="354"><span class="lineNum">     354 </span><span class="lineCov">         67 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
-<a name="355"><span class="lineNum">     355 </span><span class="lineCov">         62 :             return status;</span></a>
-<a name="356"><span class="lineNum">     356 </span>            :         }</a>
-<a name="357"><span class="lineNum">     357 </span><span class="lineCov">          5 :     } while (retry-- != 0);</span></a>
-<a name="358"><span class="lineNum">     358 </span>            : </a>
-<a name="359"><span class="lineNum">     359 </span><span class="lineCov">          1 :     return status;</span></a>
-<a name="360"><span class="lineNum">     360 </span>            : }</a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineCov">         63 : libspdm_return_t libspdm_get_capabilities(libspdm_context_t *spdm_context)</span></a>
+<a name="323"><span class="lineNum">     323 </span>            : {</a>
+<a name="324"><span class="lineNum">     324 </span>            :     size_t retry;</a>
+<a name="325"><span class="lineNum">     325 </span>            :     libspdm_return_t status;</a>
+<a name="326"><span class="lineNum">     326 </span>            : </a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineCov">         63 :     spdm_context-&gt;crypto_request = false;</span></a>
+<a name="328"><span class="lineNum">     328 </span><span class="lineCov">         63 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="329"><span class="lineNum">     329 </span>            :     do {</a>
+<a name="330"><span class="lineNum">     330 </span><span class="lineCov">         67 :         status = libspdm_try_get_capabilities(spdm_context);</span></a>
+<a name="331"><span class="lineNum">     331 </span><span class="lineCov">         67 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
+<a name="332"><span class="lineNum">     332 </span><span class="lineCov">         62 :             return status;</span></a>
+<a name="333"><span class="lineNum">     333 </span>            :         }</a>
+<a name="334"><span class="lineNum">     334 </span><span class="lineCov">          5 :     } while (retry-- != 0);</span></a>
+<a name="335"><span class="lineNum">     335 </span>            : </a>
+<a name="336"><span class="lineNum">     336 </span><span class="lineCov">          1 :     return status;</span></a>
+<a name="337"><span class="lineNum">     337 </span>            : }</a>
 </pre>
       </td>
     </tr>
