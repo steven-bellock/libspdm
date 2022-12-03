@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-02 08:16:11</td>
+            <td class="headerValue">2022-12-03 08:16:16</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">43</td>
@@ -1233,32 +1233,32 @@
 <a name="1171"><span class="lineNum">    1171 </span>            :  *</a>
 <a name="1172"><span class="lineNum">    1172 </span>            :  * This function is in the critial loop for mbedtls_ecp_mul, so pay attention to perf.</a>
 <a name="1173"><span class="lineNum">    1173 </span>            :  */</a>
-<a name="1174"><span class="lineNum">    1174 </span><span class="lineCov">    8000080 : static int ecp_modp( mbedtls_mpi *N, const mbedtls_ecp_group *grp )</span></a>
+<a name="1174"><span class="lineNum">    1174 </span><span class="lineCov">    8000076 : static int ecp_modp( mbedtls_mpi *N, const mbedtls_ecp_group *grp )</span></a>
 <a name="1175"><span class="lineNum">    1175 </span>            : {</a>
-<a name="1176"><span class="lineNum">    1176 </span><span class="lineCov">    8000080 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="1176"><span class="lineNum">    1176 </span><span class="lineCov">    8000076 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="1177"><span class="lineNum">    1177 </span>            : </a>
-<a name="1178"><span class="lineNum">    1178 </span><span class="lineCov">    8000080 :     if( grp-&gt;modp == NULL )</span></a>
+<a name="1178"><span class="lineNum">    1178 </span><span class="lineCov">    8000076 :     if( grp-&gt;modp == NULL )</span></a>
 <a name="1179"><span class="lineNum">    1179 </span><span class="lineNoCov">          0 :         return( mbedtls_mpi_mod_mpi( N, N, &amp;grp-&gt;P ) );</span></a>
 <a name="1180"><span class="lineNum">    1180 </span>            : </a>
 <a name="1181"><span class="lineNum">    1181 </span>            :     /* N-&gt;s &lt; 0 is a much faster test, which fails only if N is 0 */</a>
-<a name="1182"><span class="lineNum">    1182 </span><span class="lineCov">    8000080 :     if( ( N-&gt;s &lt; 0 &amp;&amp; mbedtls_mpi_cmp_int( N, 0 ) != 0 ) ||</span></a>
-<a name="1183"><span class="lineNum">    1183 </span><span class="lineCov">    8000080 :         mbedtls_mpi_bitlen( N ) &gt; 2 * grp-&gt;pbits )</span></a>
+<a name="1182"><span class="lineNum">    1182 </span><span class="lineCov">    8000076 :     if( ( N-&gt;s &lt; 0 &amp;&amp; mbedtls_mpi_cmp_int( N, 0 ) != 0 ) ||</span></a>
+<a name="1183"><span class="lineNum">    1183 </span><span class="lineCov">    8000076 :         mbedtls_mpi_bitlen( N ) &gt; 2 * grp-&gt;pbits )</span></a>
 <a name="1184"><span class="lineNum">    1184 </span>            :     {</a>
 <a name="1185"><span class="lineNum">    1185 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );</span></a>
 <a name="1186"><span class="lineNum">    1186 </span>            :     }</a>
 <a name="1187"><span class="lineNum">    1187 </span>            : </a>
-<a name="1188"><span class="lineNum">    1188 </span><span class="lineCov">    8000080 :     MBEDTLS_MPI_CHK( grp-&gt;modp( N ) );</span></a>
+<a name="1188"><span class="lineNum">    1188 </span><span class="lineCov">    8000076 :     MBEDTLS_MPI_CHK( grp-&gt;modp( N ) );</span></a>
 <a name="1189"><span class="lineNum">    1189 </span>            : </a>
 <a name="1190"><span class="lineNum">    1190 </span>            :     /* N-&gt;s &lt; 0 is a much faster test, which fails only if N is 0 */</a>
-<a name="1191"><span class="lineNum">    1191 </span><span class="lineCov">   14472300 :     while( N-&gt;s &lt; 0 &amp;&amp; mbedtls_mpi_cmp_int( N, 0 ) != 0 )</span></a>
-<a name="1192"><span class="lineNum">    1192 </span><span class="lineCov">    6472180 :         MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( N, N, &amp;grp-&gt;P ) );</span></a>
+<a name="1191"><span class="lineNum">    1191 </span><span class="lineCov">   14472596 :     while( N-&gt;s &lt; 0 &amp;&amp; mbedtls_mpi_cmp_int( N, 0 ) != 0 )</span></a>
+<a name="1192"><span class="lineNum">    1192 </span><span class="lineCov">    6472520 :         MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( N, N, &amp;grp-&gt;P ) );</span></a>
 <a name="1193"><span class="lineNum">    1193 </span>            : </a>
-<a name="1194"><span class="lineNum">    1194 </span><span class="lineCov">    9485390 :     while( mbedtls_mpi_cmp_mpi( N, &amp;grp-&gt;P ) &gt;= 0 )</span></a>
+<a name="1194"><span class="lineNum">    1194 </span><span class="lineCov">    9484915 :     while( mbedtls_mpi_cmp_mpi( N, &amp;grp-&gt;P ) &gt;= 0 )</span></a>
 <a name="1195"><span class="lineNum">    1195 </span>            :         /* we known P, N and the result are positive */</a>
-<a name="1196"><span class="lineNum">    1196 </span><span class="lineCov">    1485320 :         MBEDTLS_MPI_CHK( mbedtls_mpi_sub_abs( N, N, &amp;grp-&gt;P ) );</span></a>
+<a name="1196"><span class="lineNum">    1196 </span><span class="lineCov">    1484839 :         MBEDTLS_MPI_CHK( mbedtls_mpi_sub_abs( N, N, &amp;grp-&gt;P ) );</span></a>
 <a name="1197"><span class="lineNum">    1197 </span>            : </a>
-<a name="1198"><span class="lineNum">    1198 </span><span class="lineCov">    8000080 : cleanup:</span></a>
-<a name="1199"><span class="lineNum">    1199 </span><span class="lineCov">    8000080 :     return( ret );</span></a>
+<a name="1198"><span class="lineNum">    1198 </span><span class="lineCov">    8000076 : cleanup:</span></a>
+<a name="1199"><span class="lineNum">    1199 </span><span class="lineCov">    8000076 :     return( ret );</span></a>
 <a name="1200"><span class="lineNum">    1200 </span>            : }</a>
 <a name="1201"><span class="lineNum">    1201 </span>            : </a>
 <a name="1202"><span class="lineNum">    1202 </span>            : /*</a>
@@ -1287,16 +1287,16 @@
 <a name="1225"><span class="lineNum">    1225 </span>            :         INC_MUL_COUNT                                                   \</a>
 <a name="1226"><span class="lineNum">    1226 </span>            :     } while( 0 )</a>
 <a name="1227"><span class="lineNum">    1227 </span>            : </a>
-<a name="1228"><span class="lineNum">    1228 </span><span class="lineCov">    8000080 : static inline int mbedtls_mpi_mul_mod( const mbedtls_ecp_group *grp,</span></a>
+<a name="1228"><span class="lineNum">    1228 </span><span class="lineCov">    8000076 : static inline int mbedtls_mpi_mul_mod( const mbedtls_ecp_group *grp,</span></a>
 <a name="1229"><span class="lineNum">    1229 </span>            :                                        mbedtls_mpi *X,</a>
 <a name="1230"><span class="lineNum">    1230 </span>            :                                        const mbedtls_mpi *A,</a>
 <a name="1231"><span class="lineNum">    1231 </span>            :                                        const mbedtls_mpi *B )</a>
 <a name="1232"><span class="lineNum">    1232 </span>            : {</a>
-<a name="1233"><span class="lineNum">    1233 </span><span class="lineCov">    8000080 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
-<a name="1234"><span class="lineNum">    1234 </span><span class="lineCov">    8000080 :     MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( X, A, B ) );</span></a>
-<a name="1235"><span class="lineNum">    1235 </span><span class="lineCov">    8000080 :     MOD_MUL( *X );</span></a>
-<a name="1236"><span class="lineNum">    1236 </span><span class="lineCov">    8000080 : cleanup:</span></a>
-<a name="1237"><span class="lineNum">    1237 </span><span class="lineCov">    8000080 :     return( ret );</span></a>
+<a name="1233"><span class="lineNum">    1233 </span><span class="lineCov">    8000076 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="1234"><span class="lineNum">    1234 </span><span class="lineCov">    8000076 :     MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( X, A, B ) );</span></a>
+<a name="1235"><span class="lineNum">    1235 </span><span class="lineCov">    8000076 :     MOD_MUL( *X );</span></a>
+<a name="1236"><span class="lineNum">    1236 </span><span class="lineCov">    8000076 : cleanup:</span></a>
+<a name="1237"><span class="lineNum">    1237 </span><span class="lineCov">    8000076 :     return( ret );</span></a>
 <a name="1238"><span class="lineNum">    1238 </span>            : }</a>
 <a name="1239"><span class="lineNum">    1239 </span>            : </a>
 <a name="1240"><span class="lineNum">    1240 </span>            : /*</a>
@@ -1314,16 +1314,16 @@
 <a name="1252"><span class="lineNum">    1252 </span>            :     ( defined(MBEDTLS_ECP_MONTGOMERY_ENABLED) &amp;&amp; \</a>
 <a name="1253"><span class="lineNum">    1253 </span>            :       !( defined(MBEDTLS_ECP_NO_FALLBACK) &amp;&amp; \</a>
 <a name="1254"><span class="lineNum">    1254 </span>            :          defined(MBEDTLS_ECP_DOUBLE_ADD_MXZ_ALT) ) )</a>
-<a name="1255"><span class="lineNum">    1255 </span><span class="lineCov">    4669730 : static inline int mbedtls_mpi_sub_mod( const mbedtls_ecp_group *grp,</span></a>
+<a name="1255"><span class="lineNum">    1255 </span><span class="lineCov">    4669728 : static inline int mbedtls_mpi_sub_mod( const mbedtls_ecp_group *grp,</span></a>
 <a name="1256"><span class="lineNum">    1256 </span>            :                                        mbedtls_mpi *X,</a>
 <a name="1257"><span class="lineNum">    1257 </span>            :                                        const mbedtls_mpi *A,</a>
 <a name="1258"><span class="lineNum">    1258 </span>            :                                        const mbedtls_mpi *B )</a>
 <a name="1259"><span class="lineNum">    1259 </span>            : {</a>
-<a name="1260"><span class="lineNum">    1260 </span><span class="lineCov">    4669730 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
-<a name="1261"><span class="lineNum">    1261 </span><span class="lineCov">    4669730 :     MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( X, A, B ) );</span></a>
-<a name="1262"><span class="lineNum">    1262 </span><span class="lineCov">    7018920 :     MOD_SUB( *X );</span></a>
-<a name="1263"><span class="lineNum">    1263 </span><span class="lineCov">    4669730 : cleanup:</span></a>
-<a name="1264"><span class="lineNum">    1264 </span><span class="lineCov">    4669730 :     return( ret );</span></a>
+<a name="1260"><span class="lineNum">    1260 </span><span class="lineCov">    4669728 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="1261"><span class="lineNum">    1261 </span><span class="lineCov">    4669728 :     MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( X, A, B ) );</span></a>
+<a name="1262"><span class="lineNum">    1262 </span><span class="lineCov">    7018239 :     MOD_SUB( *X );</span></a>
+<a name="1263"><span class="lineNum">    1263 </span><span class="lineCov">    4669728 : cleanup:</span></a>
+<a name="1264"><span class="lineNum">    1264 </span><span class="lineCov">    4669728 :     return( ret );</span></a>
 <a name="1265"><span class="lineNum">    1265 </span>            : }</a>
 <a name="1266"><span class="lineNum">    1266 </span>            : #endif /* All functions referencing mbedtls_mpi_sub_mod() are alt-implemented without fallback */</a>
 <a name="1267"><span class="lineNum">    1267 </span>            : </a>
@@ -1343,7 +1343,7 @@
 <a name="1281"><span class="lineNum">    1281 </span>            : {</a>
 <a name="1282"><span class="lineNum">    1282 </span><span class="lineCov">     712038 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="1283"><span class="lineNum">    1283 </span><span class="lineCov">     712038 :     MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( X, A, B ) );</span></a>
-<a name="1284"><span class="lineNum">    1284 </span><span class="lineCov">    1053180 :     MOD_ADD( *X );</span></a>
+<a name="1284"><span class="lineNum">    1284 </span><span class="lineCov">    1053079 :     MOD_ADD( *X );</span></a>
 <a name="1285"><span class="lineNum">    1285 </span><span class="lineCov">     712038 : cleanup:</span></a>
 <a name="1286"><span class="lineNum">    1286 </span><span class="lineCov">     712038 :     return( ret );</span></a>
 <a name="1287"><span class="lineNum">    1287 </span>            : }</a>
@@ -1358,7 +1358,7 @@
 <a name="1296"><span class="lineNum">    1296 </span>            : {</a>
 <a name="1297"><span class="lineNum">    1297 </span><span class="lineCov">    2993840 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="1298"><span class="lineNum">    1298 </span><span class="lineCov">    2993840 :     MBEDTLS_MPI_CHK( mbedtls_mpi_shift_l( X, count ) );</span></a>
-<a name="1299"><span class="lineNum">    1299 </span><span class="lineCov">    4474870 :     MOD_ADD( *X );</span></a>
+<a name="1299"><span class="lineNum">    1299 </span><span class="lineCov">    4475639 :     MOD_ADD( *X );</span></a>
 <a name="1300"><span class="lineNum">    1300 </span><span class="lineCov">    2993840 : cleanup:</span></a>
 <a name="1301"><span class="lineNum">    1301 </span><span class="lineCov">    2993840 :     return( ret );</span></a>
 <a name="1302"><span class="lineNum">    1302 </span>            : }</a>
@@ -1586,7 +1586,7 @@
 <a name="1524"><span class="lineNum">    1524 </span><span class="lineCov">     699648 :         MBEDTLS_MPI_CHK( mbedtls_mpi_add_mod( grp, &amp;T,  &amp;P-&gt;X,  &amp;S      ) );</span></a>
 <a name="1525"><span class="lineNum">    1525 </span><span class="lineCov">     699648 :         MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mod( grp, &amp;U,  &amp;P-&gt;X,  &amp;S      ) );</span></a>
 <a name="1526"><span class="lineNum">    1526 </span><span class="lineCov">     699648 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mod( grp, &amp;S,  &amp;T,     &amp;U      ) );</span></a>
-<a name="1527"><span class="lineNum">    1527 </span><span class="lineCov">    1405350 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_int( &amp;M,  &amp;S,     3       ) ); MOD_ADD( M );</span></a>
+<a name="1527"><span class="lineNum">    1527 </span><span class="lineCov">    1405604 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_int( &amp;M,  &amp;S,     3       ) ); MOD_ADD( M );</span></a>
 <a name="1528"><span class="lineNum">    1528 </span>            :     }</a>
 <a name="1529"><span class="lineNum">    1529 </span>            :     else</a>
 <a name="1530"><span class="lineNum">    1530 </span>            :     {</a>
@@ -2061,7 +2061,7 @@
 <a name="1999"><span class="lineNum">    1999 </span><span class="lineCov">     177645 :     ii =  ( i &amp; 0x7Fu ) &gt;&gt; 1;</span></a>
 <a name="2000"><span class="lineNum">    2000 </span>            : </a>
 <a name="2001"><span class="lineNum">    2001 </span>            :     /* Read the whole table to thwart cache-based timing attacks */</a>
-<a name="2002"><span class="lineNum">    2002 </span><span class="lineCov">    1598800 :     for( j = 0; j &lt; T_size; j++ )</span></a>
+<a name="2002"><span class="lineNum">    2002 </span><span class="lineCov">    1598805 :     for( j = 0; j &lt; T_size; j++ )</span></a>
 <a name="2003"><span class="lineNum">    2003 </span>            :     {</a>
 <a name="2004"><span class="lineNum">    2004 </span><span class="lineCov">    1421160 :         MBEDTLS_MPI_CHK( mbedtls_mpi_safe_cond_assign( &amp;R-&gt;X, &amp;T[j].X, j == ii ) );</span></a>
 <a name="2005"><span class="lineNum">    2005 </span><span class="lineCov">    1421160 :         MBEDTLS_MPI_CHK( mbedtls_mpi_safe_cond_assign( &amp;R-&gt;Y, &amp;T[j].Y, j == ii ) );</span></a>

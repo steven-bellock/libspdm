@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">124</td>
-            <td class="headerCovTableEntry">326</td>
-            <td class="headerCovTableEntryLo">38.0 %</td>
+            <td class="headerCovTableEntry">336</td>
+            <td class="headerCovTableEntryLo">36.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-02 08:16:11</td>
+            <td class="headerValue">2022-12-03 08:16:16</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -251,24 +251,24 @@
 <a name="189"><span class="lineNum">     189 </span>            :  * Sets output to x times H using the precomputed tables.</a>
 <a name="190"><span class="lineNum">     190 </span>            :  * x and output are seen as elements of GF(2^128) as in [MGV].</a>
 <a name="191"><span class="lineNum">     191 </span>            :  */</a>
-<a name="192"><span class="lineNum">     192 </span><span class="lineCov">       3591 : static void gcm_mult( mbedtls_gcm_context *ctx, const unsigned char x[16],</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineCov">       3650 : static void gcm_mult( mbedtls_gcm_context *ctx, const unsigned char x[16],</span></a>
 <a name="193"><span class="lineNum">     193 </span>            :                       unsigned char output[16] )</a>
 <a name="194"><span class="lineNum">     194 </span>            : {</a>
-<a name="195"><span class="lineNum">     195 </span><span class="lineCov">       3591 :     int i = 0;</span></a>
+<a name="195"><span class="lineNum">     195 </span><span class="lineCov">       3650 :     int i = 0;</span></a>
 <a name="196"><span class="lineNum">     196 </span>            :     unsigned char lo, hi, rem;</a>
 <a name="197"><span class="lineNum">     197 </span>            :     uint64_t zh, zl;</a>
 <a name="198"><span class="lineNum">     198 </span>            : </a>
 <a name="199"><span class="lineNum">     199 </span>            : #if defined(MBEDTLS_AESNI_C) &amp;&amp; defined(MBEDTLS_HAVE_X86_64)</a>
-<a name="200"><span class="lineNum">     200 </span><span class="lineCov">       3591 :     if( mbedtls_aesni_has_support( MBEDTLS_AESNI_CLMUL ) ) {</span></a>
+<a name="200"><span class="lineNum">     200 </span><span class="lineCov">       3650 :     if( mbedtls_aesni_has_support( MBEDTLS_AESNI_CLMUL ) ) {</span></a>
 <a name="201"><span class="lineNum">     201 </span>            :         unsigned char h[16];</a>
 <a name="202"><span class="lineNum">     202 </span>            : </a>
-<a name="203"><span class="lineNum">     203 </span><span class="lineCov">       3591 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8] &gt;&gt; 32, h,  0 );</span></a>
-<a name="204"><span class="lineNum">     204 </span><span class="lineCov">       3591 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8],       h,  4 );</span></a>
-<a name="205"><span class="lineNum">     205 </span><span class="lineCov">       3591 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8] &gt;&gt; 32, h,  8 );</span></a>
-<a name="206"><span class="lineNum">     206 </span><span class="lineCov">       3591 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8],       h, 12 );</span></a>
+<a name="203"><span class="lineNum">     203 </span><span class="lineCov">       3650 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8] &gt;&gt; 32, h,  0 );</span></a>
+<a name="204"><span class="lineNum">     204 </span><span class="lineCov">       3650 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8],       h,  4 );</span></a>
+<a name="205"><span class="lineNum">     205 </span><span class="lineCov">       3650 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8] &gt;&gt; 32, h,  8 );</span></a>
+<a name="206"><span class="lineNum">     206 </span><span class="lineCov">       3650 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8],       h, 12 );</span></a>
 <a name="207"><span class="lineNum">     207 </span>            : </a>
-<a name="208"><span class="lineNum">     208 </span><span class="lineCov">       3591 :         mbedtls_aesni_gcm_mult( output, x, h );</span></a>
-<a name="209"><span class="lineNum">     209 </span><span class="lineCov">       3591 :         return;</span></a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineCov">       3650 :         mbedtls_aesni_gcm_mult( output, x, h );</span></a>
+<a name="209"><span class="lineNum">     209 </span><span class="lineCov">       3650 :         return;</span></a>
 <a name="210"><span class="lineNum">     210 </span>            :     }</a>
 <a name="211"><span class="lineNum">     211 </span>            : #endif /* MBEDTLS_AESNI_C &amp;&amp; MBEDTLS_HAVE_X86_64 */</a>
 <a name="212"><span class="lineNum">     212 </span>            : </a>
@@ -426,34 +426,34 @@
 <a name="364"><span class="lineNum">     364 </span><span class="lineCov">        805 :     ctx-&gt;len += length;</span></a>
 <a name="365"><span class="lineNum">     365 </span>            : </a>
 <a name="366"><span class="lineNum">     366 </span><span class="lineCov">        805 :     p = input;</span></a>
-<a name="367"><span class="lineNum">     367 </span><span class="lineCov">       2786 :     while( length &gt; 0 )</span></a>
+<a name="367"><span class="lineNum">     367 </span><span class="lineCov">       2845 :     while( length &gt; 0 )</span></a>
 <a name="368"><span class="lineNum">     368 </span>            :     {</a>
-<a name="369"><span class="lineNum">     369 </span><span class="lineCov">       1981 :         use_len = ( length &lt; 16 ) ? length : 16;</span></a>
+<a name="369"><span class="lineNum">     369 </span><span class="lineCov">       2040 :         use_len = ( length &lt; 16 ) ? length : 16;</span></a>
 <a name="370"><span class="lineNum">     370 </span>            : </a>
-<a name="371"><span class="lineNum">     371 </span><span class="lineCov">       1981 :         for( i = 16; i &gt; 12; i-- )</span></a>
-<a name="372"><span class="lineNum">     372 </span><span class="lineCov">       1981 :             if( ++ctx-&gt;y[i - 1] != 0 )</span></a>
-<a name="373"><span class="lineNum">     373 </span><span class="lineCov">       1981 :                 break;</span></a>
+<a name="371"><span class="lineNum">     371 </span><span class="lineCov">       2040 :         for( i = 16; i &gt; 12; i-- )</span></a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineCov">       2040 :             if( ++ctx-&gt;y[i - 1] != 0 )</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineCov">       2040 :                 break;</span></a>
 <a name="374"><span class="lineNum">     374 </span>            : </a>
-<a name="375"><span class="lineNum">     375 </span><span class="lineCov">       1981 :         if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, ctx-&gt;y, 16, ectr,</span></a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineCov">       2040 :         if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, ctx-&gt;y, 16, ectr,</span></a>
 <a name="376"><span class="lineNum">     376 </span>            :                                    &amp;olen ) ) != 0 )</a>
 <a name="377"><span class="lineNum">     377 </span>            :         {</a>
 <a name="378"><span class="lineNum">     378 </span><span class="lineNoCov">          0 :             return( ret );</span></a>
 <a name="379"><span class="lineNum">     379 </span>            :         }</a>
 <a name="380"><span class="lineNum">     380 </span>            : </a>
-<a name="381"><span class="lineNum">     381 </span><span class="lineCov">      27723 :         for( i = 0; i &lt; use_len; i++ )</span></a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineCov">      28840 :         for( i = 0; i &lt; use_len; i++ )</span></a>
 <a name="382"><span class="lineNum">     382 </span>            :         {</a>
-<a name="383"><span class="lineNum">     383 </span><span class="lineCov">      25742 :             if( ctx-&gt;mode == MBEDTLS_GCM_DECRYPT )</span></a>
-<a name="384"><span class="lineNum">     384 </span><span class="lineCov">      10625 :                 ctx-&gt;buf[i] ^= p[i];</span></a>
-<a name="385"><span class="lineNum">     385 </span><span class="lineCov">      25742 :             out_p[i] = ectr[i] ^ p[i];</span></a>
-<a name="386"><span class="lineNum">     386 </span><span class="lineCov">      25742 :             if( ctx-&gt;mode == MBEDTLS_GCM_ENCRYPT )</span></a>
-<a name="387"><span class="lineNum">     387 </span><span class="lineCov">      15117 :                 ctx-&gt;buf[i] ^= out_p[i];</span></a>
+<a name="383"><span class="lineNum">     383 </span><span class="lineCov">      26800 :             if( ctx-&gt;mode == MBEDTLS_GCM_DECRYPT )</span></a>
+<a name="384"><span class="lineNum">     384 </span><span class="lineCov">      11116 :                 ctx-&gt;buf[i] ^= p[i];</span></a>
+<a name="385"><span class="lineNum">     385 </span><span class="lineCov">      26800 :             out_p[i] = ectr[i] ^ p[i];</span></a>
+<a name="386"><span class="lineNum">     386 </span><span class="lineCov">      26800 :             if( ctx-&gt;mode == MBEDTLS_GCM_ENCRYPT )</span></a>
+<a name="387"><span class="lineNum">     387 </span><span class="lineCov">      15684 :                 ctx-&gt;buf[i] ^= out_p[i];</span></a>
 <a name="388"><span class="lineNum">     388 </span>            :         }</a>
 <a name="389"><span class="lineNum">     389 </span>            : </a>
-<a name="390"><span class="lineNum">     390 </span><span class="lineCov">       1981 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineCov">       2040 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
 <a name="391"><span class="lineNum">     391 </span>            : </a>
-<a name="392"><span class="lineNum">     392 </span><span class="lineCov">       1981 :         length -= use_len;</span></a>
-<a name="393"><span class="lineNum">     393 </span><span class="lineCov">       1981 :         p += use_len;</span></a>
-<a name="394"><span class="lineNum">     394 </span><span class="lineCov">       1981 :         out_p += use_len;</span></a>
+<a name="392"><span class="lineNum">     392 </span><span class="lineCov">       2040 :         length -= use_len;</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineCov">       2040 :         p += use_len;</span></a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineCov">       2040 :         out_p += use_len;</span></a>
 <a name="395"><span class="lineNum">     395 </span>            :     }</a>
 <a name="396"><span class="lineNum">     396 </span>            : </a>
 <a name="397"><span class="lineNum">     397 </span><span class="lineCov">        805 :     return( 0 );</span></a>
@@ -853,11 +853,11 @@
 <a name="791"><span class="lineNum">     791 </span>            :             }</a>
 <a name="792"><span class="lineNum">     792 </span>            : </a>
 <a name="793"><span class="lineNum">     793 </span><span class="lineNoCov">          0 :             ret = mbedtls_gcm_crypt_and_tag( &amp;ctx, MBEDTLS_GCM_ENCRYPT,</span></a>
-<a name="794"><span class="lineNum">     794 </span>            :                                 pt_len_test_data[i],</a>
+<a name="794"><span class="lineNum">     794 </span><span class="lineNoCov">          0 :                                 pt_len_test_data[i],</span></a>
 <a name="795"><span class="lineNum">     795 </span><span class="lineNoCov">          0 :                                 iv_test_data[iv_index_test_data[i]],</span></a>
-<a name="796"><span class="lineNum">     796 </span>            :                                 iv_len_test_data[i],</a>
+<a name="796"><span class="lineNum">     796 </span><span class="lineNoCov">          0 :                                 iv_len_test_data[i],</span></a>
 <a name="797"><span class="lineNum">     797 </span><span class="lineNoCov">          0 :                                 additional_test_data[add_index_test_data[i]],</span></a>
-<a name="798"><span class="lineNum">     798 </span>            :                                 add_len_test_data[i],</a>
+<a name="798"><span class="lineNum">     798 </span><span class="lineNoCov">          0 :                                 add_len_test_data[i],</span></a>
 <a name="799"><span class="lineNum">     799 </span><span class="lineNoCov">          0 :                                 pt_test_data[pt_index_test_data[i]],</span></a>
 <a name="800"><span class="lineNum">     800 </span>            :                                 buf, 16, tag_buf );</a>
 <a name="801"><span class="lineNum">     801 </span>            : #if defined(MBEDTLS_GCM_ALT)</a>
@@ -898,11 +898,11 @@
 <a name="836"><span class="lineNum">     836 </span><span class="lineNoCov">          0 :                 goto exit;</span></a>
 <a name="837"><span class="lineNum">     837 </span>            : </a>
 <a name="838"><span class="lineNum">     838 </span><span class="lineNoCov">          0 :             ret = mbedtls_gcm_crypt_and_tag( &amp;ctx, MBEDTLS_GCM_DECRYPT,</span></a>
-<a name="839"><span class="lineNum">     839 </span>            :                                 pt_len_test_data[i],</a>
+<a name="839"><span class="lineNum">     839 </span><span class="lineNoCov">          0 :                                 pt_len_test_data[i],</span></a>
 <a name="840"><span class="lineNum">     840 </span><span class="lineNoCov">          0 :                                 iv_test_data[iv_index_test_data[i]],</span></a>
-<a name="841"><span class="lineNum">     841 </span>            :                                 iv_len_test_data[i],</a>
+<a name="841"><span class="lineNum">     841 </span><span class="lineNoCov">          0 :                                 iv_len_test_data[i],</span></a>
 <a name="842"><span class="lineNum">     842 </span><span class="lineNoCov">          0 :                                 additional_test_data[add_index_test_data[i]],</span></a>
-<a name="843"><span class="lineNum">     843 </span>            :                                 add_len_test_data[i],</a>
+<a name="843"><span class="lineNum">     843 </span><span class="lineNoCov">          0 :                                 add_len_test_data[i],</span></a>
 <a name="844"><span class="lineNum">     844 </span><span class="lineNoCov">          0 :                                 ct_test_data[j * 6 + i], buf, 16, tag_buf );</span></a>
 <a name="845"><span class="lineNum">     845 </span>            : </a>
 <a name="846"><span class="lineNum">     846 </span><span class="lineNoCov">          0 :             if( ret != 0 )</span></a>
@@ -935,9 +935,9 @@
 <a name="873"><span class="lineNum">     873 </span>            : </a>
 <a name="874"><span class="lineNum">     874 </span><span class="lineNoCov">          0 :             ret = mbedtls_gcm_starts( &amp;ctx, MBEDTLS_GCM_ENCRYPT,</span></a>
 <a name="875"><span class="lineNum">     875 </span><span class="lineNoCov">          0 :                                   iv_test_data[iv_index_test_data[i]],</span></a>
-<a name="876"><span class="lineNum">     876 </span>            :                                   iv_len_test_data[i],</a>
+<a name="876"><span class="lineNum">     876 </span><span class="lineNoCov">          0 :                                   iv_len_test_data[i],</span></a>
 <a name="877"><span class="lineNum">     877 </span><span class="lineNoCov">          0 :                                   additional_test_data[add_index_test_data[i]],</span></a>
-<a name="878"><span class="lineNum">     878 </span>            :                                   add_len_test_data[i] );</a>
+<a name="878"><span class="lineNum">     878 </span><span class="lineNoCov">          0 :                                   add_len_test_data[i] );</span></a>
 <a name="879"><span class="lineNum">     879 </span><span class="lineNoCov">          0 :             if( ret != 0 )</span></a>
 <a name="880"><span class="lineNum">     880 </span><span class="lineNoCov">          0 :                 goto exit;</span></a>
 <a name="881"><span class="lineNum">     881 </span>            : </a>
@@ -996,9 +996,9 @@
 <a name="934"><span class="lineNum">     934 </span>            : </a>
 <a name="935"><span class="lineNum">     935 </span><span class="lineNoCov">          0 :             ret = mbedtls_gcm_starts( &amp;ctx, MBEDTLS_GCM_DECRYPT,</span></a>
 <a name="936"><span class="lineNum">     936 </span><span class="lineNoCov">          0 :                               iv_test_data[iv_index_test_data[i]],</span></a>
-<a name="937"><span class="lineNum">     937 </span>            :                               iv_len_test_data[i],</a>
+<a name="937"><span class="lineNum">     937 </span><span class="lineNoCov">          0 :                               iv_len_test_data[i],</span></a>
 <a name="938"><span class="lineNum">     938 </span><span class="lineNoCov">          0 :                               additional_test_data[add_index_test_data[i]],</span></a>
-<a name="939"><span class="lineNum">     939 </span>            :                               add_len_test_data[i] );</a>
+<a name="939"><span class="lineNum">     939 </span><span class="lineNoCov">          0 :                               add_len_test_data[i] );</span></a>
 <a name="940"><span class="lineNum">     940 </span><span class="lineNoCov">          0 :             if( ret != 0 )</span></a>
 <a name="941"><span class="lineNum">     941 </span><span class="lineNoCov">          0 :                 goto exit;</span></a>
 <a name="942"><span class="lineNum">     942 </span>            : </a>
