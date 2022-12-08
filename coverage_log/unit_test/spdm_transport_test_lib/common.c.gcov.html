@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">51</td>
+            <td class="headerCovTableEntry">55</td>
             <td class="headerCovTableEntry">82</td>
-            <td class="headerCovTableEntryLo">62.2 %</td>
+            <td class="headerCovTableEntryLo">67.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-07 08:16:37</td>
+            <td class="headerValue">2022-12-08 08:16:42</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -254,7 +254,7 @@
 <a name="192"><span class="lineNum">     192 </span>            :  * @retval RETURN_INVALID_PARAMETER     The message is NULL or the message_size is zero.</a>
 <a name="193"><span class="lineNum">     193 </span>            :  * @retval RETURN_UNSUPPORTED           The transport_message is unsupported.</a>
 <a name="194"><span class="lineNum">     194 </span>            :  **/</a>
-<a name="195"><span class="lineNum">     195 </span><span class="lineCov">       2538 : libspdm_return_t libspdm_transport_test_decode_message(</span></a>
+<a name="195"><span class="lineNum">     195 </span><span class="lineCov">       2565 : libspdm_return_t libspdm_transport_test_decode_message(</span></a>
 <a name="196"><span class="lineNum">     196 </span>            :     void *spdm_context, uint32_t **session_id,</a>
 <a name="197"><span class="lineNum">     197 </span>            :     bool *is_app_message, bool is_requester,</a>
 <a name="198"><span class="lineNum">     198 </span>            :     size_t transport_message_size, void *transport_message,</a>
@@ -270,38 +270,38 @@
 <a name="208"><span class="lineNum">     208 </span>            :     void *secured_message_context;</a>
 <a name="209"><span class="lineNum">     209 </span>            :     libspdm_error_struct_t spdm_error;</a>
 <a name="210"><span class="lineNum">     210 </span>            : </a>
-<a name="211"><span class="lineNum">     211 </span><span class="lineCov">       2538 :     spdm_error.error_code = 0;</span></a>
-<a name="212"><span class="lineNum">     212 </span><span class="lineCov">       2538 :     spdm_error.session_id = 0;</span></a>
-<a name="213"><span class="lineNum">     213 </span><span class="lineCov">       2538 :     libspdm_set_last_spdm_error_struct(spdm_context, &amp;spdm_error);</span></a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineCov">       2565 :     spdm_error.error_code = 0;</span></a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">       2565 :     spdm_error.session_id = 0;</span></a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineCov">       2565 :     libspdm_set_last_spdm_error_struct(spdm_context, &amp;spdm_error);</span></a>
 <a name="214"><span class="lineNum">     214 </span>            : </a>
-<a name="215"><span class="lineNum">     215 </span><span class="lineCov">       2538 :     spdm_secured_message_callbacks.version =</span></a>
+<a name="215"><span class="lineNum">     215 </span><span class="lineCov">       2565 :     spdm_secured_message_callbacks.version =</span></a>
 <a name="216"><span class="lineNum">     216 </span>            :         SPDM_SECURED_MESSAGE_CALLBACKS_VERSION;</a>
-<a name="217"><span class="lineNum">     217 </span><span class="lineCov">       2538 :     spdm_secured_message_callbacks.get_sequence_number =</span></a>
+<a name="217"><span class="lineNum">     217 </span><span class="lineCov">       2565 :     spdm_secured_message_callbacks.get_sequence_number =</span></a>
 <a name="218"><span class="lineNum">     218 </span>            :         libspdm_test_get_sequence_number;</a>
-<a name="219"><span class="lineNum">     219 </span><span class="lineCov">       2538 :     spdm_secured_message_callbacks.get_max_random_number_count =</span></a>
+<a name="219"><span class="lineNum">     219 </span><span class="lineCov">       2565 :     spdm_secured_message_callbacks.get_max_random_number_count =</span></a>
 <a name="220"><span class="lineNum">     220 </span>            :         libspdm_test_get_max_random_number_count;</a>
 <a name="221"><span class="lineNum">     221 </span>            : </a>
-<a name="222"><span class="lineNum">     222 </span><span class="lineCov">       2538 :     if ((session_id == NULL) || (is_app_message == NULL)) {</span></a>
+<a name="222"><span class="lineNum">     222 </span><span class="lineCov">       2565 :     if ((session_id == NULL) || (is_app_message == NULL)) {</span></a>
 <a name="223"><span class="lineNum">     223 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
 <a name="224"><span class="lineNum">     224 </span>            :     }</a>
 <a name="225"><span class="lineNum">     225 </span>            : </a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineCov">       2538 :     secured_message_session_id = NULL;</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineCov">       2565 :     secured_message_session_id = NULL;</span></a>
 <a name="227"><span class="lineNum">     227 </span>            :     /* Detect received message*/</a>
-<a name="228"><span class="lineNum">     228 </span><span class="lineCov">       2538 :     status = libspdm_test_decode_message(</span></a>
+<a name="228"><span class="lineNum">     228 </span><span class="lineCov">       2565 :     status = libspdm_test_decode_message(</span></a>
 <a name="229"><span class="lineNum">     229 </span>            :         &amp;secured_message_session_id, transport_message_size,</a>
 <a name="230"><span class="lineNum">     230 </span>            :         transport_message, &amp;secured_message_size, (void **)&amp;secured_message);</a>
-<a name="231"><span class="lineNum">     231 </span><span class="lineCov">       2538 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineCov">       2565 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="232"><span class="lineNum">     232 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;transport_decode_message - %p\n&quot;, status));</span></a>
 <a name="233"><span class="lineNum">     233 </span><span class="lineNoCov">          0 :         return status;</span></a>
 <a name="234"><span class="lineNum">     234 </span>            :     }</a>
 <a name="235"><span class="lineNum">     235 </span>            : </a>
-<a name="236"><span class="lineNum">     236 </span><span class="lineCov">       2538 :     if (secured_message_session_id != NULL) {</span></a>
-<a name="237"><span class="lineNum">     237 </span><span class="lineCov">        302 :         *session_id = secured_message_session_id;</span></a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineCov">       2565 :     if (secured_message_session_id != NULL) {</span></a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineCov">        329 :         *session_id = secured_message_session_id;</span></a>
 <a name="238"><span class="lineNum">     238 </span>            : </a>
 <a name="239"><span class="lineNum">     239 </span>            :         secured_message_context =</a>
-<a name="240"><span class="lineNum">     240 </span><span class="lineCov">        302 :             libspdm_get_secured_message_context_via_session_id(</span></a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineCov">        329 :             libspdm_get_secured_message_context_via_session_id(</span></a>
 <a name="241"><span class="lineNum">     241 </span>            :                 spdm_context, *secured_message_session_id);</a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineCov">        302 :         if (secured_message_context == NULL) {</span></a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">        329 :         if (secured_message_context == NULL) {</span></a>
 <a name="243"><span class="lineNum">     243 </span><span class="lineNoCov">          0 :             spdm_error.error_code = SPDM_ERROR_CODE_INVALID_SESSION;</span></a>
 <a name="244"><span class="lineNum">     244 </span><span class="lineNoCov">          0 :             spdm_error.session_id = *secured_message_session_id;</span></a>
 <a name="245"><span class="lineNum">     245 </span><span class="lineNoCov">          0 :             libspdm_set_last_spdm_error_struct(spdm_context,</span></a>
@@ -310,21 +310,21 @@
 <a name="248"><span class="lineNum">     248 </span>            :         }</a>
 <a name="249"><span class="lineNum">     249 </span>            : </a>
 <a name="250"><span class="lineNum">     250 </span>            :         /* Secured message to APP message*/</a>
-<a name="251"><span class="lineNum">     251 </span><span class="lineCov">        302 :         app_message = *message;</span></a>
-<a name="252"><span class="lineNum">     252 </span><span class="lineCov">        302 :         app_message_size = *message_size;</span></a>
-<a name="253"><span class="lineNum">     253 </span><span class="lineCov">        302 :         status = libspdm_decode_secured_message(</span></a>
+<a name="251"><span class="lineNum">     251 </span><span class="lineCov">        329 :         app_message = *message;</span></a>
+<a name="252"><span class="lineNum">     252 </span><span class="lineCov">        329 :         app_message_size = *message_size;</span></a>
+<a name="253"><span class="lineNum">     253 </span><span class="lineCov">        329 :         status = libspdm_decode_secured_message(</span></a>
 <a name="254"><span class="lineNum">     254 </span>            :             secured_message_context, *secured_message_session_id,</a>
 <a name="255"><span class="lineNum">     255 </span>            :             is_requester, secured_message_size, secured_message,</a>
 <a name="256"><span class="lineNum">     256 </span>            :             &amp;app_message_size, (void **)&amp;app_message,</a>
 <a name="257"><span class="lineNum">     257 </span>            :             &amp;spdm_secured_message_callbacks);</a>
-<a name="258"><span class="lineNum">     258 </span><span class="lineCov">        302 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="259"><span class="lineNum">     259 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
+<a name="258"><span class="lineNum">     258 </span><span class="lineCov">        329 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="259"><span class="lineNum">     259 </span><span class="lineCov">         27 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="260"><span class="lineNum">     260 </span>            :                            &quot;libspdm_decode_secured_message - %p\n&quot;, status));</a>
-<a name="261"><span class="lineNum">     261 </span><span class="lineNoCov">          0 :             libspdm_secured_message_get_last_spdm_error_struct(</span></a>
+<a name="261"><span class="lineNum">     261 </span><span class="lineCov">         27 :             libspdm_secured_message_get_last_spdm_error_struct(</span></a>
 <a name="262"><span class="lineNum">     262 </span>            :                 secured_message_context, &amp;spdm_error);</a>
-<a name="263"><span class="lineNum">     263 </span><span class="lineNoCov">          0 :             libspdm_set_last_spdm_error_struct(spdm_context,</span></a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineCov">         27 :             libspdm_set_last_spdm_error_struct(spdm_context,</span></a>
 <a name="264"><span class="lineNum">     264 </span>            :                                                &amp;spdm_error);</a>
-<a name="265"><span class="lineNum">     265 </span><span class="lineNoCov">          0 :             return status;</span></a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineCov">         27 :             return status;</span></a>
 <a name="266"><span class="lineNum">     266 </span>            :         }</a>
 <a name="267"><span class="lineNum">     267 </span>            : </a>
 <a name="268"><span class="lineNum">     268 </span>            :         /* APP message to SPDM message.*/</a>
