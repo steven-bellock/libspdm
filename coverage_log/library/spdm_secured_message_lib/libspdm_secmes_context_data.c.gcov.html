@@ -31,18 +31,18 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">58</td>
-            <td class="headerCovTableEntry">147</td>
-            <td class="headerCovTableEntryLo">39.5 %</td>
+            <td class="headerCovTableEntry">70</td>
+            <td class="headerCovTableEntry">145</td>
+            <td class="headerCovTableEntryLo">48.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-08 08:16:42</td>
+            <td class="headerValue">2022-12-09 08:16:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">12</td>
             <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntryLo">66.7 %</td>
+            <td class="headerCovTableEntryMed">80.0 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -248,220 +248,212 @@
 <a name="186"><span class="lineNum">     186 </span><span class="lineNoCov">          0 :     return true;</span></a>
 <a name="187"><span class="lineNum">     187 </span>            : }</a>
 <a name="188"><span class="lineNum">     188 </span>            : </a>
-<a name="189"><span class="lineNum">     189 </span>            : /**</a>
-<a name="190"><span class="lineNum">     190 </span>            :  * Export the export_master_secret from an SPDM secured message context.</a>
-<a name="191"><span class="lineNum">     191 </span>            :  *</a>
-<a name="192"><span class="lineNum">     192 </span>            :  * @param  spdm_secured_message_context    A pointer to the SPDM secured message context.</a>
-<a name="193"><span class="lineNum">     193 </span>            :  * @param  export_master_secret           Indicate the buffer to store the export_master_secret.</a>
-<a name="194"><span class="lineNum">     194 </span>            :  * @param  export_master_secret_size       The size in bytes of the export_master_secret.</a>
-<a name="195"><span class="lineNum">     195 </span>            :  *</a>
-<a name="196"><span class="lineNum">     196 </span>            :  * @retval RETURN_SUCCESS  export_master_secret is exported.</a>
-<a name="197"><span class="lineNum">     197 </span>            :  */</a>
-<a name="198"><span class="lineNum">     198 </span><span class="lineNoCov">          0 : bool libspdm_secured_message_export_master_secret(</span></a>
-<a name="199"><span class="lineNum">     199 </span>            :     void *spdm_secured_message_context, void *export_master_secret,</a>
-<a name="200"><span class="lineNum">     200 </span>            :     size_t *export_master_secret_size)</a>
-<a name="201"><span class="lineNum">     201 </span>            : {</a>
-<a name="202"><span class="lineNum">     202 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
-<a name="203"><span class="lineNum">     203 </span>            : </a>
-<a name="204"><span class="lineNum">     204 </span><span class="lineNoCov">          0 :     secured_message_context = spdm_secured_message_context;</span></a>
-<a name="205"><span class="lineNum">     205 </span><span class="lineNoCov">          0 :     if (*export_master_secret_size &lt; secured_message_context-&gt;hash_size) {</span></a>
-<a name="206"><span class="lineNum">     206 </span><span class="lineNoCov">          0 :         *export_master_secret_size = secured_message_context-&gt;hash_size;</span></a>
-<a name="207"><span class="lineNum">     207 </span><span class="lineNoCov">          0 :         return false;</span></a>
-<a name="208"><span class="lineNum">     208 </span>            :     }</a>
-<a name="209"><span class="lineNum">     209 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(export_master_secret, *export_master_secret_size,</span></a>
-<a name="210"><span class="lineNum">     210 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;export_master_secret,</span></a>
-<a name="211"><span class="lineNum">     211 </span>            :                      secured_message_context-&gt;hash_size);</a>
-<a name="212"><span class="lineNum">     212 </span><span class="lineNoCov">          0 :     *export_master_secret_size = secured_message_context-&gt;hash_size;</span></a>
-<a name="213"><span class="lineNum">     213 </span><span class="lineNoCov">          0 :     return true;</span></a>
-<a name="214"><span class="lineNum">     214 </span>            : }</a>
+<a name="189"><span class="lineNum">     189 </span><span class="lineCov">          3 : bool libspdm_secured_message_export_master_secret(</span></a>
+<a name="190"><span class="lineNum">     190 </span>            :     void *spdm_secured_message_context, void *export_master_secret,</a>
+<a name="191"><span class="lineNum">     191 </span>            :     size_t *export_master_secret_size)</a>
+<a name="192"><span class="lineNum">     192 </span>            : {</a>
+<a name="193"><span class="lineNum">     193 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
+<a name="194"><span class="lineNum">     194 </span>            : </a>
+<a name="195"><span class="lineNum">     195 </span><span class="lineCov">          3 :     secured_message_context = spdm_secured_message_context;</span></a>
+<a name="196"><span class="lineNum">     196 </span>            : </a>
+<a name="197"><span class="lineNum">     197 </span><span class="lineCov">          3 :     if (*export_master_secret_size &gt; secured_message_context-&gt;hash_size) {</span></a>
+<a name="198"><span class="lineNum">     198 </span><span class="lineCov">          1 :         *export_master_secret_size = secured_message_context-&gt;hash_size;</span></a>
+<a name="199"><span class="lineNum">     199 </span>            :     }</a>
+<a name="200"><span class="lineNum">     200 </span>            : </a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineCov">          3 :     libspdm_copy_mem(export_master_secret, *export_master_secret_size,</span></a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineCov">          3 :                      secured_message_context-&gt;export_master_secret,</span></a>
+<a name="203"><span class="lineNum">     203 </span>            :                      *export_master_secret_size);</a>
+<a name="204"><span class="lineNum">     204 </span>            : </a>
+<a name="205"><span class="lineNum">     205 </span><span class="lineCov">          3 :     return true;</span></a>
+<a name="206"><span class="lineNum">     206 </span>            : }</a>
+<a name="207"><span class="lineNum">     207 </span>            : </a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineCov">          1 : void libspdm_secured_message_clear_export_master_secret(void *spdm_secured_message_context)</span></a>
+<a name="209"><span class="lineNum">     209 </span>            : {</a>
+<a name="210"><span class="lineNum">     210 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
+<a name="211"><span class="lineNum">     211 </span>            : </a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineCov">          1 :     LIBSPDM_ASSERT(spdm_secured_message_context != NULL);</span></a>
+<a name="213"><span class="lineNum">     213 </span>            : </a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineCov">          1 :     secured_message_context = spdm_secured_message_context;</span></a>
 <a name="215"><span class="lineNum">     215 </span>            : </a>
-<a name="216"><span class="lineNum">     216 </span><span class="lineNoCov">          0 : void libspdm_secured_message_clear_export_master_secret(void *spdm_secured_message_context)</span></a>
-<a name="217"><span class="lineNum">     217 </span>            : {</a>
-<a name="218"><span class="lineNum">     218 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
+<a name="216"><span class="lineNum">     216 </span><span class="lineCov">          1 :     libspdm_zero_mem(secured_message_context-&gt;export_master_secret,</span></a>
+<a name="217"><span class="lineNum">     217 </span>            :                      sizeof(secured_message_context-&gt;export_master_secret));</a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">          1 : }</span></a>
 <a name="219"><span class="lineNum">     219 </span>            : </a>
-<a name="220"><span class="lineNum">     220 </span><span class="lineNoCov">          0 :     LIBSPDM_ASSERT(spdm_secured_message_context != NULL);</span></a>
-<a name="221"><span class="lineNum">     221 </span>            : </a>
-<a name="222"><span class="lineNum">     222 </span><span class="lineNoCov">          0 :     secured_message_context = spdm_secured_message_context;</span></a>
-<a name="223"><span class="lineNum">     223 </span>            : </a>
-<a name="224"><span class="lineNum">     224 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(secured_message_context-&gt;export_master_secret,</span></a>
-<a name="225"><span class="lineNum">     225 </span>            :                      sizeof(secured_message_context-&gt;export_master_secret));</a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineNoCov">          0 : }</span></a>
-<a name="227"><span class="lineNum">     227 </span>            : </a>
-<a name="228"><span class="lineNum">     228 </span>            : /**</a>
-<a name="229"><span class="lineNum">     229 </span>            :  * Export the session_keys from an SPDM secured message context.</a>
-<a name="230"><span class="lineNum">     230 </span>            :  *</a>
-<a name="231"><span class="lineNum">     231 </span>            :  * @param  spdm_secured_message_context    A pointer to the SPDM secured message context.</a>
-<a name="232"><span class="lineNum">     232 </span>            :  * @param  session_keys                  Indicate the buffer to store the session_keys in libspdm_secure_session_keys_struct_t.</a>
-<a name="233"><span class="lineNum">     233 </span>            :  * @param  session_keys_size              The size in bytes of the session_keys in libspdm_secure_session_keys_struct_t.</a>
-<a name="234"><span class="lineNum">     234 </span>            :  *</a>
-<a name="235"><span class="lineNum">     235 </span>            :  * @retval RETURN_SUCCESS  session_keys are exported.</a>
-<a name="236"><span class="lineNum">     236 </span>            :  */</a>
-<a name="237"><span class="lineNum">     237 </span><span class="lineNoCov">          0 : bool libspdm_secured_message_export_session_keys(void *spdm_secured_message_context,</span></a>
-<a name="238"><span class="lineNum">     238 </span>            :                                                  void *session_keys,</a>
-<a name="239"><span class="lineNum">     239 </span>            :                                                  size_t *session_keys_size)</a>
-<a name="240"><span class="lineNum">     240 </span>            : {</a>
-<a name="241"><span class="lineNum">     241 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
-<a name="242"><span class="lineNum">     242 </span>            :     size_t struct_size;</a>
-<a name="243"><span class="lineNum">     243 </span>            :     libspdm_secure_session_keys_struct_t *session_keys_struct;</a>
-<a name="244"><span class="lineNum">     244 </span>            :     uint8_t *ptr;</a>
-<a name="245"><span class="lineNum">     245 </span>            : </a>
-<a name="246"><span class="lineNum">     246 </span><span class="lineNoCov">          0 :     secured_message_context = spdm_secured_message_context;</span></a>
-<a name="247"><span class="lineNum">     247 </span><span class="lineNoCov">          0 :     struct_size = sizeof(libspdm_secure_session_keys_struct_t) +</span></a>
-<a name="248"><span class="lineNum">     248 </span><span class="lineNoCov">          0 :                   (secured_message_context-&gt;aead_key_size +</span></a>
-<a name="249"><span class="lineNum">     249 </span><span class="lineNoCov">          0 :                    secured_message_context-&gt;aead_iv_size + sizeof(uint64_t)) * 2;</span></a>
-<a name="250"><span class="lineNum">     250 </span>            : </a>
-<a name="251"><span class="lineNum">     251 </span><span class="lineNoCov">          0 :     if (*session_keys_size &lt; struct_size) {</span></a>
-<a name="252"><span class="lineNum">     252 </span><span class="lineNoCov">          0 :         *session_keys_size = struct_size;</span></a>
-<a name="253"><span class="lineNum">     253 </span><span class="lineNoCov">          0 :         return false;</span></a>
-<a name="254"><span class="lineNum">     254 </span>            :     }</a>
-<a name="255"><span class="lineNum">     255 </span>            : </a>
-<a name="256"><span class="lineNum">     256 </span><span class="lineNoCov">          0 :     session_keys_struct = session_keys;</span></a>
-<a name="257"><span class="lineNum">     257 </span><span class="lineNoCov">          0 :     session_keys_struct-&gt;version = LIBSPDM_SECURE_SESSION_KEYS_STRUCT_VERSION;</span></a>
-<a name="258"><span class="lineNum">     258 </span><span class="lineNoCov">          0 :     session_keys_struct-&gt;aead_key_size = (uint32_t)secured_message_context-&gt;aead_key_size;</span></a>
-<a name="259"><span class="lineNum">     259 </span><span class="lineNoCov">          0 :     session_keys_struct-&gt;aead_iv_size =  (uint32_t)secured_message_context-&gt;aead_iv_size;</span></a>
-<a name="260"><span class="lineNum">     260 </span>            : </a>
-<a name="261"><span class="lineNum">     261 </span><span class="lineNoCov">          0 :     ptr = (void *)(session_keys_struct + 1);</span></a>
-<a name="262"><span class="lineNum">     262 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
-<a name="263"><span class="lineNum">     263 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
-<a name="264"><span class="lineNum">     264 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.request_data_encryption_key,</span></a>
-<a name="265"><span class="lineNum">     265 </span>            :                      secured_message_context-&gt;aead_key_size);</a>
-<a name="266"><span class="lineNum">     266 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
-<a name="267"><span class="lineNum">     267 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
-<a name="268"><span class="lineNum">     268 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
-<a name="269"><span class="lineNum">     269 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.request_data_salt,</span></a>
-<a name="270"><span class="lineNum">     270 </span>            :                      secured_message_context-&gt;aead_iv_size);</a>
-<a name="271"><span class="lineNum">     271 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
-<a name="272"><span class="lineNum">     272 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
-<a name="273"><span class="lineNum">     273 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
-<a name="274"><span class="lineNum">     274 </span><span class="lineNoCov">          0 :                      &amp;secured_message_context-&gt;application_secret.request_data_sequence_number,</span></a>
-<a name="275"><span class="lineNum">     275 </span>            :                      sizeof(uint64_t));</a>
-<a name="276"><span class="lineNum">     276 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
-<a name="277"><span class="lineNum">     277 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
-<a name="278"><span class="lineNum">     278 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
-<a name="279"><span class="lineNum">     279 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.response_data_encryption_key,</span></a>
-<a name="280"><span class="lineNum">     280 </span>            :                      secured_message_context-&gt;aead_key_size);</a>
-<a name="281"><span class="lineNum">     281 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
-<a name="282"><span class="lineNum">     282 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
-<a name="283"><span class="lineNum">     283 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
-<a name="284"><span class="lineNum">     284 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.response_data_salt,</span></a>
-<a name="285"><span class="lineNum">     285 </span>            :                      secured_message_context-&gt;aead_iv_size);</a>
-<a name="286"><span class="lineNum">     286 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
-<a name="287"><span class="lineNum">     287 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
-<a name="288"><span class="lineNum">     288 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
-<a name="289"><span class="lineNum">     289 </span><span class="lineNoCov">          0 :                      &amp;secured_message_context-&gt;application_secret.response_data_sequence_number,</span></a>
-<a name="290"><span class="lineNum">     290 </span>            :                      sizeof(uint64_t));</a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
-<a name="292"><span class="lineNum">     292 </span><span class="lineNoCov">          0 :     return true;</span></a>
-<a name="293"><span class="lineNum">     293 </span>            : }</a>
-<a name="294"><span class="lineNum">     294 </span>            : </a>
-<a name="295"><span class="lineNum">     295 </span>            : /**</a>
-<a name="296"><span class="lineNum">     296 </span>            :  * Import the session_keys from an SPDM secured message context.</a>
-<a name="297"><span class="lineNum">     297 </span>            :  *</a>
-<a name="298"><span class="lineNum">     298 </span>            :  * @param  spdm_secured_message_context    A pointer to the SPDM secured message context.</a>
-<a name="299"><span class="lineNum">     299 </span>            :  * @param  session_keys                  Indicate the buffer to store the session_keys in libspdm_secure_session_keys_struct_t.</a>
-<a name="300"><span class="lineNum">     300 </span>            :  * @param  session_keys_size              The size in bytes of the session_keys in libspdm_secure_session_keys_struct_t.</a>
-<a name="301"><span class="lineNum">     301 </span>            :  *</a>
-<a name="302"><span class="lineNum">     302 </span>            :  * @retval RETURN_SUCCESS  session_keys are imported.</a>
-<a name="303"><span class="lineNum">     303 </span>            :  */</a>
-<a name="304"><span class="lineNum">     304 </span>            : bool</a>
-<a name="305"><span class="lineNum">     305 </span><span class="lineNoCov">          0 : libspdm_secured_message_import_session_keys(void *spdm_secured_message_context,</span></a>
-<a name="306"><span class="lineNum">     306 </span>            :                                             const void *session_keys,</a>
-<a name="307"><span class="lineNum">     307 </span>            :                                             size_t session_keys_size)</a>
-<a name="308"><span class="lineNum">     308 </span>            : {</a>
-<a name="309"><span class="lineNum">     309 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
-<a name="310"><span class="lineNum">     310 </span>            :     size_t struct_size;</a>
-<a name="311"><span class="lineNum">     311 </span>            :     const libspdm_secure_session_keys_struct_t *session_keys_struct;</a>
-<a name="312"><span class="lineNum">     312 </span>            :     const uint8_t *ptr;</a>
-<a name="313"><span class="lineNum">     313 </span>            : </a>
-<a name="314"><span class="lineNum">     314 </span><span class="lineNoCov">          0 :     secured_message_context = spdm_secured_message_context;</span></a>
-<a name="315"><span class="lineNum">     315 </span><span class="lineNoCov">          0 :     struct_size = sizeof(libspdm_secure_session_keys_struct_t) +</span></a>
-<a name="316"><span class="lineNum">     316 </span><span class="lineNoCov">          0 :                   (secured_message_context-&gt;aead_key_size +</span></a>
-<a name="317"><span class="lineNum">     317 </span><span class="lineNoCov">          0 :                    secured_message_context-&gt;aead_iv_size + sizeof(uint64_t)) * 2;</span></a>
-<a name="318"><span class="lineNum">     318 </span>            : </a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineNoCov">          0 :     if (session_keys_size != struct_size) {</span></a>
-<a name="320"><span class="lineNum">     320 </span><span class="lineNoCov">          0 :         return false;</span></a>
-<a name="321"><span class="lineNum">     321 </span>            :     }</a>
-<a name="322"><span class="lineNum">     322 </span>            : </a>
-<a name="323"><span class="lineNum">     323 </span><span class="lineNoCov">          0 :     session_keys_struct = session_keys;</span></a>
-<a name="324"><span class="lineNum">     324 </span><span class="lineNoCov">          0 :     if ((session_keys_struct-&gt;version !=</span></a>
-<a name="325"><span class="lineNum">     325 </span><span class="lineNoCov">          0 :          LIBSPDM_SECURE_SESSION_KEYS_STRUCT_VERSION) ||</span></a>
-<a name="326"><span class="lineNum">     326 </span><span class="lineNoCov">          0 :         (session_keys_struct-&gt;aead_key_size !=</span></a>
-<a name="327"><span class="lineNum">     327 </span><span class="lineNoCov">          0 :          secured_message_context-&gt;aead_key_size) ||</span></a>
-<a name="328"><span class="lineNum">     328 </span><span class="lineNoCov">          0 :         (session_keys_struct-&gt;aead_iv_size !=</span></a>
-<a name="329"><span class="lineNum">     329 </span><span class="lineNoCov">          0 :          secured_message_context-&gt;aead_iv_size)) {</span></a>
-<a name="330"><span class="lineNum">     330 </span><span class="lineNoCov">          0 :         return false;</span></a>
-<a name="331"><span class="lineNum">     331 </span>            :     }</a>
-<a name="332"><span class="lineNum">     332 </span>            : </a>
-<a name="333"><span class="lineNum">     333 </span><span class="lineNoCov">          0 :     ptr = (const void *)(session_keys_struct + 1);</span></a>
-<a name="334"><span class="lineNum">     334 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret.request_data_encryption_key,</span></a>
-<a name="335"><span class="lineNum">     335 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
-<a name="336"><span class="lineNum">     336 </span>            :                             .request_data_encryption_key),</a>
-<a name="337"><span class="lineNum">     337 </span>            :                      ptr, secured_message_context-&gt;aead_key_size);</a>
-<a name="338"><span class="lineNum">     338 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
-<a name="339"><span class="lineNum">     339 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret.request_data_salt,</span></a>
-<a name="340"><span class="lineNum">     340 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
-<a name="341"><span class="lineNum">     341 </span>            :                             .request_data_salt),</a>
-<a name="342"><span class="lineNum">     342 </span>            :                      ptr, secured_message_context-&gt;aead_iv_size);</a>
-<a name="343"><span class="lineNum">     343 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
-<a name="344"><span class="lineNum">     344 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(&amp;secured_message_context-&gt;application_secret.request_data_sequence_number,</span></a>
-<a name="345"><span class="lineNum">     345 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
-<a name="346"><span class="lineNum">     346 </span>            :                             .request_data_sequence_number),</a>
-<a name="347"><span class="lineNum">     347 </span>            :                      ptr, sizeof(uint64_t));</a>
-<a name="348"><span class="lineNum">     348 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
-<a name="349"><span class="lineNum">     349 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret</span></a>
-<a name="350"><span class="lineNum">     350 </span><span class="lineNoCov">          0 :                      .response_data_encryption_key,</span></a>
-<a name="351"><span class="lineNum">     351 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
-<a name="352"><span class="lineNum">     352 </span>            :                             .response_data_encryption_key),</a>
-<a name="353"><span class="lineNum">     353 </span>            :                      ptr, secured_message_context-&gt;aead_key_size);</a>
-<a name="354"><span class="lineNum">     354 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
-<a name="355"><span class="lineNum">     355 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret.response_data_salt,</span></a>
-<a name="356"><span class="lineNum">     356 </span>            :                      sizeof(secured_message_context-&gt;application_secret.response_data_salt),</a>
-<a name="357"><span class="lineNum">     357 </span>            :                      ptr, secured_message_context-&gt;aead_iv_size);</a>
-<a name="358"><span class="lineNum">     358 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
-<a name="359"><span class="lineNum">     359 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(&amp;secured_message_context-&gt;application_secret.response_data_sequence_number,</span></a>
-<a name="360"><span class="lineNum">     360 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
-<a name="361"><span class="lineNum">     361 </span>            :                             .response_data_sequence_number),</a>
-<a name="362"><span class="lineNum">     362 </span>            :                      ptr, sizeof(uint64_t));</a>
-<a name="363"><span class="lineNum">     363 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
-<a name="364"><span class="lineNum">     364 </span><span class="lineNoCov">          0 :     return true;</span></a>
-<a name="365"><span class="lineNum">     365 </span>            : }</a>
-<a name="366"><span class="lineNum">     366 </span>            : </a>
-<a name="367"><span class="lineNum">     367 </span>            : /**</a>
-<a name="368"><span class="lineNum">     368 </span>            :  * Get the last SPDM error struct of an SPDM context.</a>
-<a name="369"><span class="lineNum">     369 </span>            :  *</a>
-<a name="370"><span class="lineNum">     370 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
-<a name="371"><span class="lineNum">     371 </span>            :  * @param  last_spdm_error                Last SPDM error struct of an SPDM context.</a>
-<a name="372"><span class="lineNum">     372 </span>            :  */</a>
-<a name="373"><span class="lineNum">     373 </span><span class="lineCov">         27 : void libspdm_secured_message_get_last_spdm_error_struct(</span></a>
-<a name="374"><span class="lineNum">     374 </span>            :     void *spdm_secured_message_context,</a>
-<a name="375"><span class="lineNum">     375 </span>            :     libspdm_error_struct_t *last_spdm_error)</a>
-<a name="376"><span class="lineNum">     376 </span>            : {</a>
-<a name="377"><span class="lineNum">     377 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
-<a name="378"><span class="lineNum">     378 </span>            : </a>
-<a name="379"><span class="lineNum">     379 </span><span class="lineCov">         27 :     secured_message_context = spdm_secured_message_context;</span></a>
-<a name="380"><span class="lineNum">     380 </span><span class="lineCov">         27 :     libspdm_copy_mem(last_spdm_error, sizeof(libspdm_error_struct_t),</span></a>
-<a name="381"><span class="lineNum">     381 </span><span class="lineCov">         27 :                      &amp;secured_message_context-&gt;last_spdm_error,</span></a>
-<a name="382"><span class="lineNum">     382 </span>            :                      sizeof(libspdm_error_struct_t));</a>
-<a name="383"><span class="lineNum">     383 </span><span class="lineCov">         27 : }</span></a>
-<a name="384"><span class="lineNum">     384 </span>            : </a>
-<a name="385"><span class="lineNum">     385 </span>            : /**</a>
-<a name="386"><span class="lineNum">     386 </span>            :  * Set the last SPDM error struct of an SPDM context.</a>
-<a name="387"><span class="lineNum">     387 </span>            :  *</a>
-<a name="388"><span class="lineNum">     388 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
-<a name="389"><span class="lineNum">     389 </span>            :  * @param  last_spdm_error                Last SPDM error struct of an SPDM context.</a>
-<a name="390"><span class="lineNum">     390 </span>            :  */</a>
-<a name="391"><span class="lineNum">     391 </span><span class="lineCov">        329 : void libspdm_secured_message_set_last_spdm_error_struct(</span></a>
-<a name="392"><span class="lineNum">     392 </span>            :     void *spdm_secured_message_context,</a>
-<a name="393"><span class="lineNum">     393 </span>            :     const libspdm_error_struct_t *last_spdm_error)</a>
-<a name="394"><span class="lineNum">     394 </span>            : {</a>
-<a name="395"><span class="lineNum">     395 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
-<a name="396"><span class="lineNum">     396 </span>            : </a>
-<a name="397"><span class="lineNum">     397 </span><span class="lineCov">        329 :     secured_message_context = spdm_secured_message_context;</span></a>
-<a name="398"><span class="lineNum">     398 </span><span class="lineCov">        329 :     libspdm_copy_mem(&amp;secured_message_context-&gt;last_spdm_error,</span></a>
-<a name="399"><span class="lineNum">     399 </span>            :                      sizeof(secured_message_context-&gt;last_spdm_error),</a>
-<a name="400"><span class="lineNum">     400 </span>            :                      last_spdm_error,</a>
-<a name="401"><span class="lineNum">     401 </span>            :                      sizeof(libspdm_error_struct_t));</a>
-<a name="402"><span class="lineNum">     402 </span><span class="lineCov">        329 : }</span></a>
+<a name="220"><span class="lineNum">     220 </span>            : /**</a>
+<a name="221"><span class="lineNum">     221 </span>            :  * Export the session_keys from an SPDM secured message context.</a>
+<a name="222"><span class="lineNum">     222 </span>            :  *</a>
+<a name="223"><span class="lineNum">     223 </span>            :  * @param  spdm_secured_message_context    A pointer to the SPDM secured message context.</a>
+<a name="224"><span class="lineNum">     224 </span>            :  * @param  session_keys                  Indicate the buffer to store the session_keys in libspdm_secure_session_keys_struct_t.</a>
+<a name="225"><span class="lineNum">     225 </span>            :  * @param  session_keys_size              The size in bytes of the session_keys in libspdm_secure_session_keys_struct_t.</a>
+<a name="226"><span class="lineNum">     226 </span>            :  *</a>
+<a name="227"><span class="lineNum">     227 </span>            :  * @retval RETURN_SUCCESS  session_keys are exported.</a>
+<a name="228"><span class="lineNum">     228 </span>            :  */</a>
+<a name="229"><span class="lineNum">     229 </span><span class="lineNoCov">          0 : bool libspdm_secured_message_export_session_keys(void *spdm_secured_message_context,</span></a>
+<a name="230"><span class="lineNum">     230 </span>            :                                                  void *session_keys,</a>
+<a name="231"><span class="lineNum">     231 </span>            :                                                  size_t *session_keys_size)</a>
+<a name="232"><span class="lineNum">     232 </span>            : {</a>
+<a name="233"><span class="lineNum">     233 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
+<a name="234"><span class="lineNum">     234 </span>            :     size_t struct_size;</a>
+<a name="235"><span class="lineNum">     235 </span>            :     libspdm_secure_session_keys_struct_t *session_keys_struct;</a>
+<a name="236"><span class="lineNum">     236 </span>            :     uint8_t *ptr;</a>
+<a name="237"><span class="lineNum">     237 </span>            : </a>
+<a name="238"><span class="lineNum">     238 </span><span class="lineNoCov">          0 :     secured_message_context = spdm_secured_message_context;</span></a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineNoCov">          0 :     struct_size = sizeof(libspdm_secure_session_keys_struct_t) +</span></a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineNoCov">          0 :                   (secured_message_context-&gt;aead_key_size +</span></a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineNoCov">          0 :                    secured_message_context-&gt;aead_iv_size + sizeof(uint64_t)) * 2;</span></a>
+<a name="242"><span class="lineNum">     242 </span>            : </a>
+<a name="243"><span class="lineNum">     243 </span><span class="lineNoCov">          0 :     if (*session_keys_size &lt; struct_size) {</span></a>
+<a name="244"><span class="lineNum">     244 </span><span class="lineNoCov">          0 :         *session_keys_size = struct_size;</span></a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineNoCov">          0 :         return false;</span></a>
+<a name="246"><span class="lineNum">     246 </span>            :     }</a>
+<a name="247"><span class="lineNum">     247 </span>            : </a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineNoCov">          0 :     session_keys_struct = session_keys;</span></a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineNoCov">          0 :     session_keys_struct-&gt;version = LIBSPDM_SECURE_SESSION_KEYS_STRUCT_VERSION;</span></a>
+<a name="250"><span class="lineNum">     250 </span><span class="lineNoCov">          0 :     session_keys_struct-&gt;aead_key_size = (uint32_t)secured_message_context-&gt;aead_key_size;</span></a>
+<a name="251"><span class="lineNum">     251 </span><span class="lineNoCov">          0 :     session_keys_struct-&gt;aead_iv_size =  (uint32_t)secured_message_context-&gt;aead_iv_size;</span></a>
+<a name="252"><span class="lineNum">     252 </span>            : </a>
+<a name="253"><span class="lineNum">     253 </span><span class="lineNoCov">          0 :     ptr = (void *)(session_keys_struct + 1);</span></a>
+<a name="254"><span class="lineNum">     254 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
+<a name="255"><span class="lineNum">     255 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
+<a name="256"><span class="lineNum">     256 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.request_data_encryption_key,</span></a>
+<a name="257"><span class="lineNum">     257 </span>            :                      secured_message_context-&gt;aead_key_size);</a>
+<a name="258"><span class="lineNum">     258 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
+<a name="259"><span class="lineNum">     259 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
+<a name="260"><span class="lineNum">     260 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
+<a name="261"><span class="lineNum">     261 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.request_data_salt,</span></a>
+<a name="262"><span class="lineNum">     262 </span>            :                      secured_message_context-&gt;aead_iv_size);</a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
+<a name="266"><span class="lineNum">     266 </span><span class="lineNoCov">          0 :                      &amp;secured_message_context-&gt;application_secret.request_data_sequence_number,</span></a>
+<a name="267"><span class="lineNum">     267 </span>            :                      sizeof(uint64_t));</a>
+<a name="268"><span class="lineNum">     268 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
+<a name="270"><span class="lineNum">     270 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
+<a name="271"><span class="lineNum">     271 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.response_data_encryption_key,</span></a>
+<a name="272"><span class="lineNum">     272 </span>            :                      secured_message_context-&gt;aead_key_size);</a>
+<a name="273"><span class="lineNum">     273 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
+<a name="274"><span class="lineNum">     274 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
+<a name="275"><span class="lineNum">     275 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
+<a name="276"><span class="lineNum">     276 </span><span class="lineNoCov">          0 :                      secured_message_context-&gt;application_secret.response_data_salt,</span></a>
+<a name="277"><span class="lineNum">     277 </span>            :                      secured_message_context-&gt;aead_iv_size);</a>
+<a name="278"><span class="lineNum">     278 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
+<a name="279"><span class="lineNum">     279 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(ptr,</span></a>
+<a name="280"><span class="lineNum">     280 </span><span class="lineNoCov">          0 :                      *session_keys_size - (ptr - (uint8_t*)session_keys),</span></a>
+<a name="281"><span class="lineNum">     281 </span><span class="lineNoCov">          0 :                      &amp;secured_message_context-&gt;application_secret.response_data_sequence_number,</span></a>
+<a name="282"><span class="lineNum">     282 </span>            :                      sizeof(uint64_t));</a>
+<a name="283"><span class="lineNum">     283 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
+<a name="284"><span class="lineNum">     284 </span><span class="lineNoCov">          0 :     return true;</span></a>
+<a name="285"><span class="lineNum">     285 </span>            : }</a>
+<a name="286"><span class="lineNum">     286 </span>            : </a>
+<a name="287"><span class="lineNum">     287 </span>            : /**</a>
+<a name="288"><span class="lineNum">     288 </span>            :  * Import the session_keys from an SPDM secured message context.</a>
+<a name="289"><span class="lineNum">     289 </span>            :  *</a>
+<a name="290"><span class="lineNum">     290 </span>            :  * @param  spdm_secured_message_context    A pointer to the SPDM secured message context.</a>
+<a name="291"><span class="lineNum">     291 </span>            :  * @param  session_keys                  Indicate the buffer to store the session_keys in libspdm_secure_session_keys_struct_t.</a>
+<a name="292"><span class="lineNum">     292 </span>            :  * @param  session_keys_size              The size in bytes of the session_keys in libspdm_secure_session_keys_struct_t.</a>
+<a name="293"><span class="lineNum">     293 </span>            :  *</a>
+<a name="294"><span class="lineNum">     294 </span>            :  * @retval RETURN_SUCCESS  session_keys are imported.</a>
+<a name="295"><span class="lineNum">     295 </span>            :  */</a>
+<a name="296"><span class="lineNum">     296 </span>            : bool</a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineNoCov">          0 : libspdm_secured_message_import_session_keys(void *spdm_secured_message_context,</span></a>
+<a name="298"><span class="lineNum">     298 </span>            :                                             const void *session_keys,</a>
+<a name="299"><span class="lineNum">     299 </span>            :                                             size_t session_keys_size)</a>
+<a name="300"><span class="lineNum">     300 </span>            : {</a>
+<a name="301"><span class="lineNum">     301 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
+<a name="302"><span class="lineNum">     302 </span>            :     size_t struct_size;</a>
+<a name="303"><span class="lineNum">     303 </span>            :     const libspdm_secure_session_keys_struct_t *session_keys_struct;</a>
+<a name="304"><span class="lineNum">     304 </span>            :     const uint8_t *ptr;</a>
+<a name="305"><span class="lineNum">     305 </span>            : </a>
+<a name="306"><span class="lineNum">     306 </span><span class="lineNoCov">          0 :     secured_message_context = spdm_secured_message_context;</span></a>
+<a name="307"><span class="lineNum">     307 </span><span class="lineNoCov">          0 :     struct_size = sizeof(libspdm_secure_session_keys_struct_t) +</span></a>
+<a name="308"><span class="lineNum">     308 </span><span class="lineNoCov">          0 :                   (secured_message_context-&gt;aead_key_size +</span></a>
+<a name="309"><span class="lineNum">     309 </span><span class="lineNoCov">          0 :                    secured_message_context-&gt;aead_iv_size + sizeof(uint64_t)) * 2;</span></a>
+<a name="310"><span class="lineNum">     310 </span>            : </a>
+<a name="311"><span class="lineNum">     311 </span><span class="lineNoCov">          0 :     if (session_keys_size != struct_size) {</span></a>
+<a name="312"><span class="lineNum">     312 </span><span class="lineNoCov">          0 :         return false;</span></a>
+<a name="313"><span class="lineNum">     313 </span>            :     }</a>
+<a name="314"><span class="lineNum">     314 </span>            : </a>
+<a name="315"><span class="lineNum">     315 </span><span class="lineNoCov">          0 :     session_keys_struct = session_keys;</span></a>
+<a name="316"><span class="lineNum">     316 </span><span class="lineNoCov">          0 :     if ((session_keys_struct-&gt;version !=</span></a>
+<a name="317"><span class="lineNum">     317 </span><span class="lineNoCov">          0 :          LIBSPDM_SECURE_SESSION_KEYS_STRUCT_VERSION) ||</span></a>
+<a name="318"><span class="lineNum">     318 </span><span class="lineNoCov">          0 :         (session_keys_struct-&gt;aead_key_size !=</span></a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineNoCov">          0 :          secured_message_context-&gt;aead_key_size) ||</span></a>
+<a name="320"><span class="lineNum">     320 </span><span class="lineNoCov">          0 :         (session_keys_struct-&gt;aead_iv_size !=</span></a>
+<a name="321"><span class="lineNum">     321 </span><span class="lineNoCov">          0 :          secured_message_context-&gt;aead_iv_size)) {</span></a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineNoCov">          0 :         return false;</span></a>
+<a name="323"><span class="lineNum">     323 </span>            :     }</a>
+<a name="324"><span class="lineNum">     324 </span>            : </a>
+<a name="325"><span class="lineNum">     325 </span><span class="lineNoCov">          0 :     ptr = (const void *)(session_keys_struct + 1);</span></a>
+<a name="326"><span class="lineNum">     326 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret.request_data_encryption_key,</span></a>
+<a name="327"><span class="lineNum">     327 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
+<a name="328"><span class="lineNum">     328 </span>            :                             .request_data_encryption_key),</a>
+<a name="329"><span class="lineNum">     329 </span>            :                      ptr, secured_message_context-&gt;aead_key_size);</a>
+<a name="330"><span class="lineNum">     330 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
+<a name="331"><span class="lineNum">     331 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret.request_data_salt,</span></a>
+<a name="332"><span class="lineNum">     332 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
+<a name="333"><span class="lineNum">     333 </span>            :                             .request_data_salt),</a>
+<a name="334"><span class="lineNum">     334 </span>            :                      ptr, secured_message_context-&gt;aead_iv_size);</a>
+<a name="335"><span class="lineNum">     335 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
+<a name="336"><span class="lineNum">     336 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(&amp;secured_message_context-&gt;application_secret.request_data_sequence_number,</span></a>
+<a name="337"><span class="lineNum">     337 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
+<a name="338"><span class="lineNum">     338 </span>            :                             .request_data_sequence_number),</a>
+<a name="339"><span class="lineNum">     339 </span>            :                      ptr, sizeof(uint64_t));</a>
+<a name="340"><span class="lineNum">     340 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
+<a name="341"><span class="lineNum">     341 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret</span></a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineNoCov">          0 :                      .response_data_encryption_key,</span></a>
+<a name="343"><span class="lineNum">     343 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
+<a name="344"><span class="lineNum">     344 </span>            :                             .response_data_encryption_key),</a>
+<a name="345"><span class="lineNum">     345 </span>            :                      ptr, secured_message_context-&gt;aead_key_size);</a>
+<a name="346"><span class="lineNum">     346 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_key_size;</span></a>
+<a name="347"><span class="lineNum">     347 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(secured_message_context-&gt;application_secret.response_data_salt,</span></a>
+<a name="348"><span class="lineNum">     348 </span>            :                      sizeof(secured_message_context-&gt;application_secret.response_data_salt),</a>
+<a name="349"><span class="lineNum">     349 </span>            :                      ptr, secured_message_context-&gt;aead_iv_size);</a>
+<a name="350"><span class="lineNum">     350 </span><span class="lineNoCov">          0 :     ptr += secured_message_context-&gt;aead_iv_size;</span></a>
+<a name="351"><span class="lineNum">     351 </span><span class="lineNoCov">          0 :     libspdm_copy_mem(&amp;secured_message_context-&gt;application_secret.response_data_sequence_number,</span></a>
+<a name="352"><span class="lineNum">     352 </span>            :                      sizeof(secured_message_context-&gt;application_secret</a>
+<a name="353"><span class="lineNum">     353 </span>            :                             .response_data_sequence_number),</a>
+<a name="354"><span class="lineNum">     354 </span>            :                      ptr, sizeof(uint64_t));</a>
+<a name="355"><span class="lineNum">     355 </span><span class="lineNoCov">          0 :     ptr += sizeof(uint64_t);</span></a>
+<a name="356"><span class="lineNum">     356 </span><span class="lineNoCov">          0 :     return true;</span></a>
+<a name="357"><span class="lineNum">     357 </span>            : }</a>
+<a name="358"><span class="lineNum">     358 </span>            : </a>
+<a name="359"><span class="lineNum">     359 </span>            : /**</a>
+<a name="360"><span class="lineNum">     360 </span>            :  * Get the last SPDM error struct of an SPDM context.</a>
+<a name="361"><span class="lineNum">     361 </span>            :  *</a>
+<a name="362"><span class="lineNum">     362 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
+<a name="363"><span class="lineNum">     363 </span>            :  * @param  last_spdm_error                Last SPDM error struct of an SPDM context.</a>
+<a name="364"><span class="lineNum">     364 </span>            :  */</a>
+<a name="365"><span class="lineNum">     365 </span><span class="lineCov">         27 : void libspdm_secured_message_get_last_spdm_error_struct(</span></a>
+<a name="366"><span class="lineNum">     366 </span>            :     void *spdm_secured_message_context,</a>
+<a name="367"><span class="lineNum">     367 </span>            :     libspdm_error_struct_t *last_spdm_error)</a>
+<a name="368"><span class="lineNum">     368 </span>            : {</a>
+<a name="369"><span class="lineNum">     369 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
+<a name="370"><span class="lineNum">     370 </span>            : </a>
+<a name="371"><span class="lineNum">     371 </span><span class="lineCov">         27 :     secured_message_context = spdm_secured_message_context;</span></a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineCov">         27 :     libspdm_copy_mem(last_spdm_error, sizeof(libspdm_error_struct_t),</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineCov">         27 :                      &amp;secured_message_context-&gt;last_spdm_error,</span></a>
+<a name="374"><span class="lineNum">     374 </span>            :                      sizeof(libspdm_error_struct_t));</a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineCov">         27 : }</span></a>
+<a name="376"><span class="lineNum">     376 </span>            : </a>
+<a name="377"><span class="lineNum">     377 </span>            : /**</a>
+<a name="378"><span class="lineNum">     378 </span>            :  * Set the last SPDM error struct of an SPDM context.</a>
+<a name="379"><span class="lineNum">     379 </span>            :  *</a>
+<a name="380"><span class="lineNum">     380 </span>            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
+<a name="381"><span class="lineNum">     381 </span>            :  * @param  last_spdm_error                Last SPDM error struct of an SPDM context.</a>
+<a name="382"><span class="lineNum">     382 </span>            :  */</a>
+<a name="383"><span class="lineNum">     383 </span><span class="lineCov">        329 : void libspdm_secured_message_set_last_spdm_error_struct(</span></a>
+<a name="384"><span class="lineNum">     384 </span>            :     void *spdm_secured_message_context,</a>
+<a name="385"><span class="lineNum">     385 </span>            :     const libspdm_error_struct_t *last_spdm_error)</a>
+<a name="386"><span class="lineNum">     386 </span>            : {</a>
+<a name="387"><span class="lineNum">     387 </span>            :     libspdm_secured_message_context_t *secured_message_context;</a>
+<a name="388"><span class="lineNum">     388 </span>            : </a>
+<a name="389"><span class="lineNum">     389 </span><span class="lineCov">        329 :     secured_message_context = spdm_secured_message_context;</span></a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineCov">        329 :     libspdm_copy_mem(&amp;secured_message_context-&gt;last_spdm_error,</span></a>
+<a name="391"><span class="lineNum">     391 </span>            :                      sizeof(secured_message_context-&gt;last_spdm_error),</a>
+<a name="392"><span class="lineNum">     392 </span>            :                      last_spdm_error,</a>
+<a name="393"><span class="lineNum">     393 </span>            :                      sizeof(libspdm_error_struct_t));</a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineCov">        329 : }</span></a>
 </pre>
       </td>
     </tr>
