@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">121</td>
-            <td class="headerCovTableEntry">162</td>
-            <td class="headerCovTableEntryLo">74.7 %</td>
+            <td class="headerCovTableEntry">120</td>
+            <td class="headerCovTableEntry">164</td>
+            <td class="headerCovTableEntryLo">73.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-09 08:16:22</td>
+            <td class="headerValue">2022-12-10 08:15:57</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -642,17 +642,25 @@
 <a name="580"><span class="lineNum">     580 </span>            :                                                response_size, response);</a>
 <a name="581"><span class="lineNum">     581 </span>            :     }</a>
 <a name="582"><span class="lineNum">     582 </span>            : </a>
-<a name="583"><span class="lineNum">     583 </span><span class="lineCov">          5 :     result = libspdm_start_watchdog(session_id, spdm_context-&gt;local_context.heartbeat_period * 2);</span></a>
-<a name="584"><span class="lineNum">     584 </span><span class="lineCov">          5 :     if (!result) {</span></a>
-<a name="585"><span class="lineNum">     585 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="586"><span class="lineNum">     586 </span>            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="587"><span class="lineNum">     587 </span>            :                                                response_size, response);</a>
-<a name="588"><span class="lineNum">     588 </span>            :     }</a>
-<a name="589"><span class="lineNum">     589 </span>            : </a>
-<a name="590"><span class="lineNum">     590 </span><span class="lineCov">          5 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="591"><span class="lineNum">     591 </span>            : }</a>
-<a name="592"><span class="lineNum">     592 </span>            : </a>
-<a name="593"><span class="lineNum">     593 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP */</a>
+<a name="583"><span class="lineNum">     583 </span>            :     #if LIBSPDM_ENABLE_CAPABILITY_HBEAT_CAP</a>
+<a name="584"><span class="lineNum">     584 </span><span class="lineCov">          5 :     if (libspdm_is_capabilities_flag_supported(</span></a>
+<a name="585"><span class="lineNum">     585 </span>            :             spdm_context, false,</a>
+<a name="586"><span class="lineNum">     586 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HBEAT_CAP,</a>
+<a name="587"><span class="lineNum">     587 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HBEAT_CAP)) {</a>
+<a name="588"><span class="lineNum">     588 </span><span class="lineNoCov">          0 :         result = libspdm_start_watchdog(</span></a>
+<a name="589"><span class="lineNum">     589 </span><span class="lineNoCov">          0 :             session_id, spdm_context-&gt;local_context.heartbeat_period * 2);</span></a>
+<a name="590"><span class="lineNum">     590 </span><span class="lineNoCov">          0 :         if (!result) {</span></a>
+<a name="591"><span class="lineNum">     591 </span><span class="lineNoCov">          0 :             return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="592"><span class="lineNum">     592 </span>            :                                                    SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="593"><span class="lineNum">     593 </span>            :                                                    response_size, response);</a>
+<a name="594"><span class="lineNum">     594 </span>            :         }</a>
+<a name="595"><span class="lineNum">     595 </span>            :     }</a>
+<a name="596"><span class="lineNum">     596 </span>            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_HBEAT_CAP */</a>
+<a name="597"><span class="lineNum">     597 </span>            : </a>
+<a name="598"><span class="lineNum">     598 </span><span class="lineCov">          5 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="599"><span class="lineNum">     599 </span>            : }</a>
+<a name="600"><span class="lineNum">     600 </span>            : </a>
+<a name="601"><span class="lineNum">     601 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP */</a>
 </pre>
       </td>
     </tr>
