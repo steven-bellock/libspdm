@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-15 08:17:27</td>
+            <td class="headerValue">2022-12-16 08:16:16</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -86,7 +86,7 @@
 <a name="24"><span class="lineNum">      24 </span><span class="lineNoCov">          0 :     return (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16;</span></a>
 <a name="25"><span class="lineNum">      25 </span>            : }</a>
 <a name="26"><span class="lineNum">      26 </span>            : </a>
-<a name="27"><span class="lineNum">      27 </span><span class="lineCov">        169 : libspdm_return_t libspdm_build_opaque_data_supported_version_data(libspdm_context_t *spdm_context,</span></a>
+<a name="27"><span class="lineNum">      27 </span><span class="lineCov">        168 : libspdm_return_t libspdm_build_opaque_data_supported_version_data(libspdm_context_t *spdm_context,</span></a>
 <a name="28"><span class="lineNum">      28 </span>            :                                                                   size_t *data_out_size,</a>
 <a name="29"><span class="lineNum">      29 </span>            :                                                                   void *data_out)</a>
 <a name="30"><span class="lineNum">      30 </span>            : {</a>
@@ -102,57 +102,57 @@
 <a name="40"><span class="lineNum">      40 </span>            :     spdm_version_number_t *versions_list;</a>
 <a name="41"><span class="lineNum">      41 </span>            :     void *end;</a>
 <a name="42"><span class="lineNum">      42 </span>            : </a>
-<a name="43"><span class="lineNum">      43 </span><span class="lineCov">        169 :     if (spdm_context-&gt;local_context.secured_message_version.spdm_version_count == 0) {</span></a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">        168 :     if (spdm_context-&gt;local_context.secured_message_version.spdm_version_count == 0) {</span></a>
 <a name="44"><span class="lineNum">      44 </span><span class="lineNoCov">          0 :         *data_out_size = 0;</span></a>
 <a name="45"><span class="lineNum">      45 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="46"><span class="lineNum">      46 </span>            :     }</a>
 <a name="47"><span class="lineNum">      47 </span>            : </a>
-<a name="48"><span class="lineNum">      48 </span><span class="lineCov">        169 :     final_data_size = libspdm_get_opaque_data_supported_version_data_size(spdm_context);</span></a>
-<a name="49"><span class="lineNum">      49 </span><span class="lineCov">        169 :     if (*data_out_size &lt; final_data_size) {</span></a>
+<a name="48"><span class="lineNum">      48 </span><span class="lineCov">        168 :     final_data_size = libspdm_get_opaque_data_supported_version_data_size(spdm_context);</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">        168 :     if (*data_out_size &lt; final_data_size) {</span></a>
 <a name="50"><span class="lineNum">      50 </span><span class="lineNoCov">          0 :         *data_out_size = final_data_size;</span></a>
 <a name="51"><span class="lineNum">      51 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="52"><span class="lineNum">      52 </span>            :     }</a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">        169 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">        168 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
 <a name="54"><span class="lineNum">      54 </span><span class="lineCov">          4 :         spdm_general_opaque_data_table_header = data_out;</span></a>
 <a name="55"><span class="lineNum">      55 </span><span class="lineCov">          4 :         spdm_general_opaque_data_table_header-&gt;total_elements = 1;</span></a>
 <a name="56"><span class="lineNum">      56 </span><span class="lineCov">          4 :         libspdm_write_uint24(spdm_general_opaque_data_table_header-&gt;reserved, 0);</span></a>
 <a name="57"><span class="lineNum">      57 </span><span class="lineCov">          4 :         opaque_element_table_header = (void *)(spdm_general_opaque_data_table_header + 1);</span></a>
 <a name="58"><span class="lineNum">      58 </span>            :     } else {</a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">        165 :         general_opaque_data_table_header = data_out;</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">        165 :         general_opaque_data_table_header-&gt;spec_id = SECURED_MESSAGE_OPAQUE_DATA_SPEC_ID;</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineCov">        165 :         general_opaque_data_table_header-&gt;opaque_version = SECURED_MESSAGE_OPAQUE_VERSION;</span></a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineCov">        165 :         general_opaque_data_table_header-&gt;total_elements = 1;</span></a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">        165 :         general_opaque_data_table_header-&gt;reserved = 0;</span></a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">        165 :         opaque_element_table_header = (void *)(general_opaque_data_table_header + 1);</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">        164 :         general_opaque_data_table_header = data_out;</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">        164 :         general_opaque_data_table_header-&gt;spec_id = SECURED_MESSAGE_OPAQUE_DATA_SPEC_ID;</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">        164 :         general_opaque_data_table_header-&gt;opaque_version = SECURED_MESSAGE_OPAQUE_VERSION;</span></a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">        164 :         general_opaque_data_table_header-&gt;total_elements = 1;</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">        164 :         general_opaque_data_table_header-&gt;reserved = 0;</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">        164 :         opaque_element_table_header = (void *)(general_opaque_data_table_header + 1);</span></a>
 <a name="65"><span class="lineNum">      65 </span>            :     }</a>
 <a name="66"><span class="lineNum">      66 </span>            : </a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineCov">        169 :     opaque_element_table_header-&gt;id = SPDM_REGISTRY_ID_DMTF;</span></a>
-<a name="68"><span class="lineNum">      68 </span><span class="lineCov">        169 :     opaque_element_table_header-&gt;vendor_len = 0;</span></a>
-<a name="69"><span class="lineNum">      69 </span><span class="lineCov">        169 :     opaque_element_table_header-&gt;opaque_element_data_len =</span></a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">        169 :         sizeof(secured_message_opaque_element_supported_version_t) +</span></a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineCov">        169 :         sizeof(spdm_version_number_t) *</span></a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineCov">        169 :         spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">        168 :     opaque_element_table_header-&gt;id = SPDM_REGISTRY_ID_DMTF;</span></a>
+<a name="68"><span class="lineNum">      68 </span><span class="lineCov">        168 :     opaque_element_table_header-&gt;vendor_len = 0;</span></a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">        168 :     opaque_element_table_header-&gt;opaque_element_data_len =</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineCov">        168 :         sizeof(secured_message_opaque_element_supported_version_t) +</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">        168 :         sizeof(spdm_version_number_t) *</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">        168 :         spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
 <a name="73"><span class="lineNum">      73 </span>            : </a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">        169 :     opaque_element_support_version = (void *)(opaque_element_table_header + 1);</span></a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">        169 :     opaque_element_support_version-&gt;sm_data_version =</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">        168 :     opaque_element_support_version = (void *)(opaque_element_table_header + 1);</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">        168 :     opaque_element_support_version-&gt;sm_data_version =</span></a>
 <a name="76"><span class="lineNum">      76 </span>            :         SECURED_MESSAGE_OPAQUE_ELEMENT_SMDATA_DATA_VERSION;</a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">        169 :     opaque_element_support_version-&gt;sm_data_id =</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">        168 :     opaque_element_support_version-&gt;sm_data_id =</span></a>
 <a name="78"><span class="lineNum">      78 </span>            :         SECURED_MESSAGE_OPAQUE_ELEMENT_SMDATA_ID_SUPPORTED_VERSION;</a>
-<a name="79"><span class="lineNum">      79 </span><span class="lineCov">        169 :     opaque_element_support_version-&gt;version_count =</span></a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineCov">        169 :         spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
+<a name="79"><span class="lineNum">      79 </span><span class="lineCov">        168 :     opaque_element_support_version-&gt;version_count =</span></a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineCov">        168 :         spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
 <a name="81"><span class="lineNum">      81 </span>            : </a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineCov">        169 :     versions_list = (void *)(opaque_element_support_version + 1);</span></a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineCov">        169 :     libspdm_copy_mem(versions_list,</span></a>
-<a name="84"><span class="lineNum">      84 </span><span class="lineCov">        169 :                      *data_out_size - ((uint8_t*)versions_list - (uint8_t*)data_out),</span></a>
-<a name="85"><span class="lineNum">      85 </span><span class="lineCov">        169 :                      spdm_context-&gt;local_context.secured_message_version.spdm_version,</span></a>
-<a name="86"><span class="lineNum">      86 </span><span class="lineCov">        169 :                      spdm_context-&gt;local_context.secured_message_version.spdm_version_count *</span></a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">        168 :     versions_list = (void *)(opaque_element_support_version + 1);</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">        168 :     libspdm_copy_mem(versions_list,</span></a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">        168 :                      *data_out_size - ((uint8_t*)versions_list - (uint8_t*)data_out),</span></a>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">        168 :                      spdm_context-&gt;local_context.secured_message_version.spdm_version,</span></a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineCov">        168 :                      spdm_context-&gt;local_context.secured_message_version.spdm_version_count *</span></a>
 <a name="87"><span class="lineNum">      87 </span>            :                      sizeof(spdm_version_number_t));</a>
 <a name="88"><span class="lineNum">      88 </span>            : </a>
 <a name="89"><span class="lineNum">      89 </span>            :     /* Zero Padding. *data_out_size does not need to be changed, because data is 0 padded */</a>
-<a name="90"><span class="lineNum">      90 </span><span class="lineCov">        169 :     end = versions_list + spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
-<a name="91"><span class="lineNum">      91 </span><span class="lineCov">        169 :     libspdm_zero_mem(end, (size_t)data_out + final_data_size - (size_t)end);</span></a>
+<a name="90"><span class="lineNum">      90 </span><span class="lineCov">        168 :     end = versions_list + spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
+<a name="91"><span class="lineNum">      91 </span><span class="lineCov">        168 :     libspdm_zero_mem(end, (size_t)data_out + final_data_size - (size_t)end);</span></a>
 <a name="92"><span class="lineNum">      92 </span>            : </a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineCov">        169 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">        168 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="94"><span class="lineNum">      94 </span>            : }</a>
 </pre>
       </td>
