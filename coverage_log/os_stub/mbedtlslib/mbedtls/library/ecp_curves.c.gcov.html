@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-16 08:16:16</td>
+            <td class="headerValue">2022-12-17 08:14:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -1034,17 +1034,17 @@
 <a name="972"><span class="lineNum">     972 </span>            : /*</a>
 <a name="973"><span class="lineNum">     973 </span>            :  * Helpers for addition and subtraction of chunks, with signed carry.</a>
 <a name="974"><span class="lineNum">     974 </span>            :  */</a>
-<a name="975"><span class="lineNum">     975 </span><span class="lineCov">  288237244 : static inline void add32( uint32_t *dst, uint32_t src, signed char *carry )</span></a>
+<a name="975"><span class="lineNum">     975 </span><span class="lineCov">  288237561 : static inline void add32( uint32_t *dst, uint32_t src, signed char *carry )</span></a>
 <a name="976"><span class="lineNum">     976 </span>            : {</a>
-<a name="977"><span class="lineNum">     977 </span><span class="lineCov">  288237244 :     *dst += src;</span></a>
-<a name="978"><span class="lineNum">     978 </span><span class="lineCov">  288237244 :     *carry += ( *dst &lt; src );</span></a>
-<a name="979"><span class="lineNum">     979 </span><span class="lineCov">  288237244 : }</span></a>
+<a name="977"><span class="lineNum">     977 </span><span class="lineCov">  288237561 :     *dst += src;</span></a>
+<a name="978"><span class="lineNum">     978 </span><span class="lineCov">  288237561 :     *carry += ( *dst &lt; src );</span></a>
+<a name="979"><span class="lineNum">     979 </span><span class="lineCov">  288237561 : }</span></a>
 <a name="980"><span class="lineNum">     980 </span>            : </a>
-<a name="981"><span class="lineNum">     981 </span><span class="lineCov">  206498000 : static inline void sub32( uint32_t *dst, uint32_t src, signed char *carry )</span></a>
+<a name="981"><span class="lineNum">     981 </span><span class="lineCov">  206497683 : static inline void sub32( uint32_t *dst, uint32_t src, signed char *carry )</span></a>
 <a name="982"><span class="lineNum">     982 </span>            : {</a>
-<a name="983"><span class="lineNum">     983 </span><span class="lineCov">  206498000 :     *carry -= ( *dst &lt; src );</span></a>
-<a name="984"><span class="lineNum">     984 </span><span class="lineCov">  206498000 :     *dst -= src;</span></a>
-<a name="985"><span class="lineNum">     985 </span><span class="lineCov">  206498000 : }</span></a>
+<a name="983"><span class="lineNum">     983 </span><span class="lineCov">  206497683 :     *carry -= ( *dst &lt; src );</span></a>
+<a name="984"><span class="lineNum">     984 </span><span class="lineCov">  206497683 :     *dst -= src;</span></a>
+<a name="985"><span class="lineNum">     985 </span><span class="lineCov">  206497683 : }</span></a>
 <a name="986"><span class="lineNum">     986 </span>            : </a>
 <a name="987"><span class="lineNum">     987 </span>            : #define ADD( j )    add32( &amp;cur, A( j ), &amp;c );</a>
 <a name="988"><span class="lineNum">     988 </span>            : #define SUB( j )    sub32( &amp;cur, A( j ), &amp;c );</a>
@@ -1084,35 +1084,35 @@
 <a name="1022"><span class="lineNum">    1022 </span>            :  * c * 2^bits + N, with c negative and N positive shorter than 'bits'</a>
 <a name="1023"><span class="lineNum">    1023 </span>            :  */</a>
 <a name="1024"><span class="lineNum">    1024 </span>            : MBEDTLS_STATIC_TESTABLE</a>
-<a name="1025"><span class="lineNum">    1025 </span><span class="lineCov">    4581480 : void mbedtls_ecp_fix_negative( mbedtls_mpi *N, signed char c, size_t bits )</span></a>
+<a name="1025"><span class="lineNum">    1025 </span><span class="lineCov">    4581562 : void mbedtls_ecp_fix_negative( mbedtls_mpi *N, signed char c, size_t bits )</span></a>
 <a name="1026"><span class="lineNum">    1026 </span>            : {</a>
 <a name="1027"><span class="lineNum">    1027 </span>            :     size_t i;</a>
 <a name="1028"><span class="lineNum">    1028 </span>            : </a>
 <a name="1029"><span class="lineNum">    1029 </span>            :     /* Set N := 2^bits - 1 - N. We know that 0 &lt;= N &lt; 2^bits, so</a>
 <a name="1030"><span class="lineNum">    1030 </span>            :      * set the absolute value to 0xfff...fff - N. There is no carry</a>
 <a name="1031"><span class="lineNum">    1031 </span>            :      * since we're subtracting from all-bits-one.  */</a>
-<a name="1032"><span class="lineNum">    1032 </span><span class="lineCov">   27488880 :     for( i = 0; i &lt;= bits / 8 / sizeof( mbedtls_mpi_uint ); i++ )</span></a>
+<a name="1032"><span class="lineNum">    1032 </span><span class="lineCov">   27489372 :     for( i = 0; i &lt;= bits / 8 / sizeof( mbedtls_mpi_uint ); i++ )</span></a>
 <a name="1033"><span class="lineNum">    1033 </span>            :     {</a>
-<a name="1034"><span class="lineNum">    1034 </span><span class="lineCov">   22907400 :         N-&gt;p[i] = ~(mbedtls_mpi_uint)0 - N-&gt;p[i];</span></a>
+<a name="1034"><span class="lineNum">    1034 </span><span class="lineCov">   22907810 :         N-&gt;p[i] = ~(mbedtls_mpi_uint)0 - N-&gt;p[i];</span></a>
 <a name="1035"><span class="lineNum">    1035 </span>            :     }</a>
 <a name="1036"><span class="lineNum">    1036 </span>            :     /* Add 1, taking care of the carry. */</a>
-<a name="1037"><span class="lineNum">    1037 </span><span class="lineCov">    4581480 :     i = 0;</span></a>
+<a name="1037"><span class="lineNum">    1037 </span><span class="lineCov">    4581562 :     i = 0;</span></a>
 <a name="1038"><span class="lineNum">    1038 </span>            :     do</a>
-<a name="1039"><span class="lineNum">    1039 </span><span class="lineCov">    4581480 :         ++N-&gt;p[i];</span></a>
-<a name="1040"><span class="lineNum">    1040 </span><span class="lineCov">    4581480 :     while( N-&gt;p[i++] == 0 &amp;&amp; i &lt;= bits / 8 / sizeof( mbedtls_mpi_uint ) );</span></a>
+<a name="1039"><span class="lineNum">    1039 </span><span class="lineCov">    4581562 :         ++N-&gt;p[i];</span></a>
+<a name="1040"><span class="lineNum">    1040 </span><span class="lineCov">    4581562 :     while( N-&gt;p[i++] == 0 &amp;&amp; i &lt;= bits / 8 / sizeof( mbedtls_mpi_uint ) );</span></a>
 <a name="1041"><span class="lineNum">    1041 </span>            :     /* Invert the sign.</a>
 <a name="1042"><span class="lineNum">    1042 </span>            :      * Now N = N0 - 2^bits where N0 is the initial value of N. */</a>
-<a name="1043"><span class="lineNum">    1043 </span><span class="lineCov">    4581480 :     N-&gt;s = -1;</span></a>
+<a name="1043"><span class="lineNum">    1043 </span><span class="lineCov">    4581562 :     N-&gt;s = -1;</span></a>
 <a name="1044"><span class="lineNum">    1044 </span>            : </a>
 <a name="1045"><span class="lineNum">    1045 </span>            :     /* Add |c| * 2^bits to the absolute value. Since c and N are</a>
 <a name="1046"><span class="lineNum">    1046 </span>            :     * negative, this adds c * 2^bits. */</a>
-<a name="1047"><span class="lineNum">    1047 </span><span class="lineCov">    4581480 :     mbedtls_mpi_uint msw = (mbedtls_mpi_uint) -c;</span></a>
+<a name="1047"><span class="lineNum">    1047 </span><span class="lineCov">    4581562 :     mbedtls_mpi_uint msw = (mbedtls_mpi_uint) -c;</span></a>
 <a name="1048"><span class="lineNum">    1048 </span>            : #if defined(MBEDTLS_HAVE_INT64)</a>
-<a name="1049"><span class="lineNum">    1049 </span><span class="lineCov">    4581480 :     if( bits == 224 )</span></a>
+<a name="1049"><span class="lineNum">    1049 </span><span class="lineCov">    4581562 :     if( bits == 224 )</span></a>
 <a name="1050"><span class="lineNum">    1050 </span><span class="lineNoCov">          0 :         msw &lt;&lt;= 32;</span></a>
 <a name="1051"><span class="lineNum">    1051 </span>            : #endif</a>
-<a name="1052"><span class="lineNum">    1052 </span><span class="lineCov">    4581480 :     N-&gt;p[bits / 8 / sizeof( mbedtls_mpi_uint)] += msw;</span></a>
-<a name="1053"><span class="lineNum">    1053 </span><span class="lineCov">    4581480 : }</span></a>
+<a name="1052"><span class="lineNum">    1052 </span><span class="lineCov">    4581562 :     N-&gt;p[bits / 8 / sizeof( mbedtls_mpi_uint)] += msw;</span></a>
+<a name="1053"><span class="lineNum">    1053 </span><span class="lineCov">    4581562 : }</span></a>
 <a name="1054"><span class="lineNum">    1054 </span>            : </a>
 <a name="1055"><span class="lineNum">    1055 </span>            : #if defined(MBEDTLS_ECP_DP_SECP224R1_ENABLED)</a>
 <a name="1056"><span class="lineNum">    1056 </span>            : /*</a>
@@ -1167,7 +1167,7 @@
 <a name="1105"><span class="lineNum">    1105 </span><span class="lineCov">    7979556 :     ADD( 15 ); ADD( 15 ); ADD( 15 ); ADD( 8 );</span></a>
 <a name="1106"><span class="lineNum">    1106 </span><span class="lineCov">   79795560 :     SUB( 10 ); SUB( 11 ); SUB( 12 ); SUB( 13 );             LAST; // A7</span></a>
 <a name="1107"><span class="lineNum">    1107 </span>            : </a>
-<a name="1108"><span class="lineNum">    1108 </span><span class="lineCov">    3398076 : cleanup:</span></a>
+<a name="1108"><span class="lineNum">    1108 </span><span class="lineCov">    3397994 : cleanup:</span></a>
 <a name="1109"><span class="lineNum">    1109 </span><span class="lineCov">    7979556 :     return( ret );</span></a>
 <a name="1110"><span class="lineNum">    1110 </span>            : }</a>
 <a name="1111"><span class="lineNum">    1111 </span>            : #endif /* MBEDTLS_ECP_DP_SECP256R1_ENABLED */</a>
