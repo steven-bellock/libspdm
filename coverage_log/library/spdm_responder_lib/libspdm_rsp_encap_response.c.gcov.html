@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">119</td>
-            <td class="headerCovTableEntry">199</td>
-            <td class="headerCovTableEntryLo">59.8 %</td>
+            <td class="headerCovTableEntry">206</td>
+            <td class="headerCovTableEntryLo">57.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-24 08:15:01</td>
+            <td class="headerValue">2022-12-25 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -249,330 +249,334 @@
 <a name="187"><span class="lineNum">     187 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(&amp;spdm_context-&gt;encap_context.last_encap_request_header,</span></a>
 <a name="188"><span class="lineNum">     188 </span>            :                      sizeof(spdm_context-&gt;encap_context.last_encap_request_header));</a>
 <a name="189"><span class="lineNum">     189 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.certificate_chain_buffer.buffer_size = 0;</span></a>
-<a name="190"><span class="lineNum">     190 </span><span class="lineNoCov">          0 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;</span></a>
-<a name="191"><span class="lineNum">     191 </span>            : </a>
+<a name="190"><span class="lineNum">     190 </span>            : </a>
+<a name="191"><span class="lineNum">     191 </span>            :     /* Clear Cache*/</a>
 <a name="192"><span class="lineNum">     192 </span>            : </a>
-<a name="193"><span class="lineNum">     193 </span>            :     /* Clear Cache*/</a>
-<a name="194"><span class="lineNum">     194 </span>            : </a>
-<a name="195"><span class="lineNum">     195 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(spdm_context);</span></a>
-<a name="196"><span class="lineNum">     196 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(spdm_context);</span></a>
-<a name="197"><span class="lineNum">     197 </span>            : </a>
-<a name="198"><span class="lineNum">     198 </span>            : </a>
-<a name="199"><span class="lineNum">     199 </span>            :     /* Possible Sequence:</a>
-<a name="200"><span class="lineNum">     200 </span>            :      * 2. Session Mutual Auth: (spdm_context-&gt;last_spdm_request_session_id_valid)</a>
-<a name="201"><span class="lineNum">     201 </span>            :      *    2.1 GET_DIGEST/GET_CERTIFICATE (spdm_context-&gt;encap_context.req_slot_id != 0xFF)</a>
-<a name="202"><span class="lineNum">     202 </span>            :      *    2.2 GET_DIGEST (spdm_context-&gt;encap_context.req_slot_id == 0xFF)</a>
-<a name="203"><span class="lineNum">     203 </span>            :      *    2.3 N/A (SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP)*/</a>
-<a name="204"><span class="lineNum">     204 </span>            : </a>
-<a name="205"><span class="lineNum">     205 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(spdm_context-&gt;encap_context.request_op_code_sequence,</span></a>
-<a name="206"><span class="lineNum">     206 </span>            :                      sizeof(spdm_context-&gt;encap_context.request_op_code_sequence));</a>
-<a name="207"><span class="lineNum">     207 </span>            :     /* Session Mutual Auth*/</a>
-<a name="208"><span class="lineNum">     208 </span><span class="lineNoCov">          0 :     if (libspdm_is_capabilities_flag_supported(</span></a>
-<a name="209"><span class="lineNum">     209 </span>            :             spdm_context, false,</a>
-<a name="210"><span class="lineNum">     210 </span><span class="lineNoCov">          0 :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP, 0) ||</span></a>
-<a name="211"><span class="lineNum">     211 </span>            :         (mut_auth_requested ==</a>
-<a name="212"><span class="lineNum">     212 </span>            :          SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED)) {</a>
+<a name="193"><span class="lineNum">     193 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(spdm_context);</span></a>
+<a name="194"><span class="lineNum">     194 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(spdm_context);</span></a>
+<a name="195"><span class="lineNum">     195 </span>            : </a>
+<a name="196"><span class="lineNum">     196 </span>            : </a>
+<a name="197"><span class="lineNum">     197 </span>            :     /* Possible Sequence:</a>
+<a name="198"><span class="lineNum">     198 </span>            :      * 2. Session Mutual Auth: (spdm_context-&gt;last_spdm_request_session_id_valid)</a>
+<a name="199"><span class="lineNum">     199 </span>            :      *    2.1 GET_DIGEST/GET_CERTIFICATE (MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST or MUT_AUTH_REQUESTED_WITH_GET_DIGESTS, encap_context.req_slot_id must not be 0xFF)</a>
+<a name="200"><span class="lineNum">     200 </span>            :      *    2.2 N/A (REQUEST_FLAGS_PUB_KEY_ID_CAP, MUT_AUTH_REQUESTED, encap_context.req_slot_id may or may not be 0xFF)*/</a>
+<a name="201"><span class="lineNum">     201 </span>            : </a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(spdm_context-&gt;encap_context.request_op_code_sequence,</span></a>
+<a name="203"><span class="lineNum">     203 </span>            :                      sizeof(spdm_context-&gt;encap_context.request_op_code_sequence));</a>
+<a name="204"><span class="lineNum">     204 </span>            :     /* Session Mutual Auth*/</a>
+<a name="205"><span class="lineNum">     205 </span><span class="lineNoCov">          0 :     if (libspdm_is_capabilities_flag_supported(</span></a>
+<a name="206"><span class="lineNum">     206 </span>            :             spdm_context, false,</a>
+<a name="207"><span class="lineNum">     207 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP, 0)) {</a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineNoCov">          0 :         LIBSPDM_ASSERT (spdm_context-&gt;encap_context.req_slot_id == 0xFF);</span></a>
+<a name="209"><span class="lineNum">     209 </span><span class="lineNoCov">          0 :         LIBSPDM_ASSERT (mut_auth_requested == SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED);</span></a>
+<a name="210"><span class="lineNum">     210 </span>            :     }</a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineNoCov">          0 :     switch (mut_auth_requested) {</span></a>
+<a name="212"><span class="lineNum">     212 </span><span class="lineNoCov">          0 :     case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED:</span></a>
 <a name="213"><span class="lineNum">     213 </span>            :         /* no encap is required*/</a>
 <a name="214"><span class="lineNum">     214 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 0;</span></a>
-<a name="215"><span class="lineNum">     215 </span><span class="lineNoCov">          0 :     } else if (spdm_context-&gt;encap_context.req_slot_id != 0xFF) {</span></a>
-<a name="216"><span class="lineNum">     216 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 2;</span></a>
-<a name="217"><span class="lineNum">     217 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
-<a name="218"><span class="lineNum">     218 </span>            :             SPDM_GET_DIGESTS;</a>
-<a name="219"><span class="lineNum">     219 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[1] =</span></a>
-<a name="220"><span class="lineNum">     220 </span>            :             SPDM_GET_CERTIFICATE;</a>
-<a name="221"><span class="lineNum">     221 </span>            :     } else {</a>
-<a name="222"><span class="lineNum">     222 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 1;</span></a>
-<a name="223"><span class="lineNum">     223 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
-<a name="224"><span class="lineNum">     224 </span>            :             SPDM_GET_DIGESTS;</a>
-<a name="225"><span class="lineNum">     225 </span>            :     }</a>
-<a name="226"><span class="lineNum">     226 </span><span class="lineNoCov">          0 : }</span></a>
-<a name="227"><span class="lineNum">     227 </span>            : </a>
-<a name="228"><span class="lineNum">     228 </span><span class="lineNoCov">          0 : void libspdm_init_basic_mut_auth_encap_state(libspdm_context_t *spdm_context)</span></a>
-<a name="229"><span class="lineNum">     229 </span>            : {</a>
-<a name="230"><span class="lineNum">     230 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.current_request_op_code = 0x00;</span></a>
-<a name="231"><span class="lineNum">     231 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_id = 0;</span></a>
-<a name="232"><span class="lineNum">     232 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.last_encap_request_size = 0;</span></a>
-<a name="233"><span class="lineNum">     233 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(&amp;spdm_context-&gt;encap_context.last_encap_request_header,</span></a>
-<a name="234"><span class="lineNum">     234 </span>            :                      sizeof(spdm_context-&gt;encap_context.last_encap_request_header));</a>
-<a name="235"><span class="lineNum">     235 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.certificate_chain_buffer.buffer_size = 0;</span></a>
-<a name="236"><span class="lineNum">     236 </span><span class="lineNoCov">          0 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;</span></a>
-<a name="237"><span class="lineNum">     237 </span>            : </a>
-<a name="238"><span class="lineNum">     238 </span>            : </a>
-<a name="239"><span class="lineNum">     239 </span>            :     /* Clear Cache*/</a>
-<a name="240"><span class="lineNum">     240 </span>            : </a>
-<a name="241"><span class="lineNum">     241 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(spdm_context);</span></a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(spdm_context);</span></a>
-<a name="243"><span class="lineNum">     243 </span>            : </a>
-<a name="244"><span class="lineNum">     244 </span>            : </a>
-<a name="245"><span class="lineNum">     245 </span>            :     /* Possible Sequence:</a>
-<a name="246"><span class="lineNum">     246 </span>            :      * 1. Basic Mutual Auth:</a>
-<a name="247"><span class="lineNum">     247 </span>            :      *    1.1 GET_DIGEST/GET_CERTIFICATE/CHALLENGE (spdm_context-&gt;encap_context.req_slot_id != 0xFF)</a>
-<a name="248"><span class="lineNum">     248 </span>            :      *    1.2 GET_DIGEST/CHALLENGE (spdm_context-&gt;encap_context.req_slot_id == 0xFF)</a>
-<a name="249"><span class="lineNum">     249 </span>            :      *    1.3 CHALLENGE (SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP)*/</a>
+<a name="215"><span class="lineNum">     215 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="216"><span class="lineNum">     216 </span><span class="lineNoCov">          0 :     case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST:</span></a>
+<a name="217"><span class="lineNum">     217 </span>            :     case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS:</a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineNoCov">          0 :         LIBSPDM_ASSERT (spdm_context-&gt;encap_context.req_slot_id != 0xFF);</span></a>
+<a name="219"><span class="lineNum">     219 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 2;</span></a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
+<a name="221"><span class="lineNum">     221 </span>            :             SPDM_GET_DIGESTS;</a>
+<a name="222"><span class="lineNum">     222 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[1] =</span></a>
+<a name="223"><span class="lineNum">     223 </span>            :             SPDM_GET_CERTIFICATE;</a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineNoCov">          0 :     default:</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineNoCov">          0 :         LIBSPDM_ASSERT (false);</span></a>
+<a name="227"><span class="lineNum">     227 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 0;</span></a>
+<a name="228"><span class="lineNum">     228 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="229"><span class="lineNum">     229 </span>            :     }</a>
+<a name="230"><span class="lineNum">     230 </span>            : </a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineNoCov">          0 :     if (spdm_context-&gt;encap_context.request_op_code_count != 0) {</span></a>
+<a name="232"><span class="lineNum">     232 </span>            :         /* change state only if ENCAP is required */</a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineNoCov">          0 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;</span></a>
+<a name="234"><span class="lineNum">     234 </span>            :     }</a>
+<a name="235"><span class="lineNum">     235 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="236"><span class="lineNum">     236 </span>            : </a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineNoCov">          0 : void libspdm_init_basic_mut_auth_encap_state(libspdm_context_t *spdm_context)</span></a>
+<a name="238"><span class="lineNum">     238 </span>            : {</a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.current_request_op_code = 0x00;</span></a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_id = 0;</span></a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.last_encap_request_size = 0;</span></a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(&amp;spdm_context-&gt;encap_context.last_encap_request_header,</span></a>
+<a name="243"><span class="lineNum">     243 </span>            :                      sizeof(spdm_context-&gt;encap_context.last_encap_request_header));</a>
+<a name="244"><span class="lineNum">     244 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.certificate_chain_buffer.buffer_size = 0;</span></a>
+<a name="245"><span class="lineNum">     245 </span>            : </a>
+<a name="246"><span class="lineNum">     246 </span>            :     /* Clear Cache*/</a>
+<a name="247"><span class="lineNum">     247 </span>            : </a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(spdm_context);</span></a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(spdm_context);</span></a>
 <a name="250"><span class="lineNum">     250 </span>            : </a>
-<a name="251"><span class="lineNum">     251 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(spdm_context-&gt;encap_context.request_op_code_sequence,</span></a>
-<a name="252"><span class="lineNum">     252 </span>            :                      sizeof(spdm_context-&gt;encap_context.request_op_code_sequence));</a>
-<a name="253"><span class="lineNum">     253 </span>            :     /* Basic Mutual Auth*/</a>
-<a name="254"><span class="lineNum">     254 </span><span class="lineNoCov">          0 :     if (libspdm_is_capabilities_flag_supported(</span></a>
-<a name="255"><span class="lineNum">     255 </span>            :             spdm_context, false,</a>
-<a name="256"><span class="lineNum">     256 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP, 0)) {</a>
-<a name="257"><span class="lineNum">     257 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 1;</span></a>
-<a name="258"><span class="lineNum">     258 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
-<a name="259"><span class="lineNum">     259 </span>            :             SPDM_CHALLENGE;</a>
-<a name="260"><span class="lineNum">     260 </span><span class="lineNoCov">          0 :     } else if (spdm_context-&gt;encap_context.req_slot_id != 0xFF) {</span></a>
-<a name="261"><span class="lineNum">     261 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 3;</span></a>
-<a name="262"><span class="lineNum">     262 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
-<a name="263"><span class="lineNum">     263 </span>            :             SPDM_GET_DIGESTS;</a>
-<a name="264"><span class="lineNum">     264 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[1] =</span></a>
-<a name="265"><span class="lineNum">     265 </span>            :             SPDM_GET_CERTIFICATE;</a>
-<a name="266"><span class="lineNum">     266 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[2] =</span></a>
-<a name="267"><span class="lineNum">     267 </span>            :             SPDM_CHALLENGE;</a>
-<a name="268"><span class="lineNum">     268 </span>            :     } else {</a>
-<a name="269"><span class="lineNum">     269 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 2;</span></a>
+<a name="251"><span class="lineNum">     251 </span>            : </a>
+<a name="252"><span class="lineNum">     252 </span>            :     /* Possible Sequence:</a>
+<a name="253"><span class="lineNum">     253 </span>            :      * 1. Basic Mutual Auth:</a>
+<a name="254"><span class="lineNum">     254 </span>            :      *    1.1 GET_DIGEST/GET_CERTIFICATE/CHALLENGE (encap_context.req_slot_id must not be 0xFF)</a>
+<a name="255"><span class="lineNum">     255 </span>            :      *    1.2 CHALLENGE (REQUEST_FLAGS_PUB_KEY_ID_CAP, encap_context req_slot_id must be 0xFF)*/</a>
+<a name="256"><span class="lineNum">     256 </span>            : </a>
+<a name="257"><span class="lineNum">     257 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(spdm_context-&gt;encap_context.request_op_code_sequence,</span></a>
+<a name="258"><span class="lineNum">     258 </span>            :                      sizeof(spdm_context-&gt;encap_context.request_op_code_sequence));</a>
+<a name="259"><span class="lineNum">     259 </span>            :     /* Basic Mutual Auth*/</a>
+<a name="260"><span class="lineNum">     260 </span><span class="lineNoCov">          0 :     if (libspdm_is_capabilities_flag_supported(</span></a>
+<a name="261"><span class="lineNum">     261 </span>            :             spdm_context, false,</a>
+<a name="262"><span class="lineNum">     262 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP, 0)) {</a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineNoCov">          0 :         LIBSPDM_ASSERT (spdm_context-&gt;encap_context.req_slot_id == 0xFF);</span></a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 1;</span></a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
+<a name="266"><span class="lineNum">     266 </span>            :             SPDM_CHALLENGE;</a>
+<a name="267"><span class="lineNum">     267 </span>            :     } else {</a>
+<a name="268"><span class="lineNum">     268 </span><span class="lineNoCov">          0 :         LIBSPDM_ASSERT (spdm_context-&gt;encap_context.req_slot_id != 0xFF);</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_count = 3;</span></a>
 <a name="270"><span class="lineNum">     270 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
 <a name="271"><span class="lineNum">     271 </span>            :             SPDM_GET_DIGESTS;</a>
 <a name="272"><span class="lineNum">     272 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[1] =</span></a>
-<a name="273"><span class="lineNum">     273 </span>            :             SPDM_CHALLENGE;</a>
-<a name="274"><span class="lineNum">     274 </span>            :     }</a>
-<a name="275"><span class="lineNum">     275 </span><span class="lineNoCov">          0 : }</span></a>
-<a name="276"><span class="lineNum">     276 </span>            : </a>
-<a name="277"><span class="lineNum">     277 </span><span class="lineNoCov">          0 : void libspdm_init_key_update_encap_state(void *context)</span></a>
-<a name="278"><span class="lineNum">     278 </span>            : {</a>
-<a name="279"><span class="lineNum">     279 </span>            :     libspdm_context_t *spdm_context;</a>
+<a name="273"><span class="lineNum">     273 </span>            :             SPDM_GET_CERTIFICATE;</a>
+<a name="274"><span class="lineNum">     274 </span><span class="lineNoCov">          0 :         spdm_context-&gt;encap_context.request_op_code_sequence[2] =</span></a>
+<a name="275"><span class="lineNum">     275 </span>            :             SPDM_CHALLENGE;</a>
+<a name="276"><span class="lineNum">     276 </span>            :     }</a>
+<a name="277"><span class="lineNum">     277 </span>            : </a>
+<a name="278"><span class="lineNum">     278 </span><span class="lineNoCov">          0 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;</span></a>
+<a name="279"><span class="lineNum">     279 </span><span class="lineNoCov">          0 : }</span></a>
 <a name="280"><span class="lineNum">     280 </span>            : </a>
-<a name="281"><span class="lineNum">     281 </span><span class="lineNoCov">          0 :     spdm_context = context;</span></a>
-<a name="282"><span class="lineNum">     282 </span>            : </a>
-<a name="283"><span class="lineNum">     283 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.current_request_op_code = 0x00;</span></a>
-<a name="284"><span class="lineNum">     284 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_id = 0;</span></a>
-<a name="285"><span class="lineNum">     285 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.last_encap_request_size = 0;</span></a>
-<a name="286"><span class="lineNum">     286 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(&amp;spdm_context-&gt;encap_context.last_encap_request_header,</span></a>
-<a name="287"><span class="lineNum">     287 </span>            :                      sizeof(spdm_context-&gt;encap_context.last_encap_request_header));</a>
-<a name="288"><span class="lineNum">     288 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.certificate_chain_buffer.buffer_size = 0;</span></a>
-<a name="289"><span class="lineNum">     289 </span><span class="lineNoCov">          0 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;</span></a>
-<a name="290"><span class="lineNum">     290 </span>            : </a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(spdm_context);</span></a>
-<a name="292"><span class="lineNum">     292 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(spdm_context);</span></a>
-<a name="293"><span class="lineNum">     293 </span>            : </a>
-<a name="294"><span class="lineNum">     294 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(spdm_context-&gt;encap_context.request_op_code_sequence,</span></a>
-<a name="295"><span class="lineNum">     295 </span>            :                      sizeof(spdm_context-&gt;encap_context.request_op_code_sequence));</a>
-<a name="296"><span class="lineNum">     296 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_op_code_count = 1;</span></a>
-<a name="297"><span class="lineNum">     297 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
-<a name="298"><span class="lineNum">     298 </span>            :         SPDM_KEY_UPDATE;</a>
-<a name="299"><span class="lineNum">     299 </span><span class="lineNoCov">          0 : }</span></a>
-<a name="300"><span class="lineNum">     300 </span>            : </a>
-<a name="301"><span class="lineNum">     301 </span><span class="lineCov">          6 : libspdm_return_t libspdm_get_response_encapsulated_request(</span></a>
-<a name="302"><span class="lineNum">     302 </span>            :     void *context, size_t request_size, const void *request,</a>
-<a name="303"><span class="lineNum">     303 </span>            :     size_t *response_size, void *response)</a>
-<a name="304"><span class="lineNum">     304 </span>            : {</a>
-<a name="305"><span class="lineNum">     305 </span>            :     spdm_encapsulated_request_response_t *spdm_response;</a>
-<a name="306"><span class="lineNum">     306 </span>            :     libspdm_context_t *spdm_context;</a>
-<a name="307"><span class="lineNum">     307 </span>            :     void *encap_request;</a>
-<a name="308"><span class="lineNum">     308 </span>            :     size_t encap_request_size;</a>
-<a name="309"><span class="lineNum">     309 </span>            :     libspdm_return_t status;</a>
-<a name="310"><span class="lineNum">     310 </span>            :     const spdm_get_encapsulated_request_request_t *spdm_request;</a>
-<a name="311"><span class="lineNum">     311 </span>            : </a>
-<a name="312"><span class="lineNum">     312 </span><span class="lineCov">          6 :     spdm_context = context;</span></a>
-<a name="313"><span class="lineNum">     313 </span><span class="lineCov">          6 :     spdm_request = request;</span></a>
-<a name="314"><span class="lineNum">     314 </span>            : </a>
-<a name="315"><span class="lineNum">     315 </span><span class="lineCov">          6 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
-<a name="316"><span class="lineNum">     316 </span>            :             spdm_context, false,</a>
-<a name="317"><span class="lineNum">     317 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP,</a>
-<a name="318"><span class="lineNum">     318 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP)) {</a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="320"><span class="lineNum">     320 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,</a>
-<a name="321"><span class="lineNum">     321 </span>            :             SPDM_GET_ENCAPSULATED_REQUEST, response_size, response);</a>
-<a name="322"><span class="lineNum">     322 </span>            :     }</a>
-<a name="323"><span class="lineNum">     323 </span><span class="lineCov">          6 :     if (spdm_context-&gt;response_state !=</span></a>
-<a name="324"><span class="lineNum">     324 </span>            :         LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP) {</a>
-<a name="325"><span class="lineNum">     325 </span><span class="lineCov">          2 :         if (spdm_context-&gt;response_state ==</span></a>
-<a name="326"><span class="lineNum">     326 </span>            :             LIBSPDM_RESPONSE_STATE_NORMAL) {</a>
-<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(</span></a>
-<a name="328"><span class="lineNum">     328 </span>            :                 spdm_context,</a>
-<a name="329"><span class="lineNum">     329 </span>            :                 SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
-<a name="330"><span class="lineNum">     330 </span>            :                 response_size, response);</a>
-<a name="331"><span class="lineNum">     331 </span>            :         }</a>
-<a name="332"><span class="lineNum">     332 </span><span class="lineCov">          1 :         return libspdm_responder_handle_response_state(</span></a>
-<a name="333"><span class="lineNum">     333 </span>            :             spdm_context,</a>
-<a name="334"><span class="lineNum">     334 </span><span class="lineCov">          1 :             spdm_request-&gt;header.request_response_code,</span></a>
-<a name="335"><span class="lineNum">     335 </span>            :             response_size, response);</a>
-<a name="336"><span class="lineNum">     336 </span>            :     }</a>
-<a name="337"><span class="lineNum">     337 </span>            : </a>
-<a name="338"><span class="lineNum">     338 </span><span class="lineCov">          4 :     if (request_size != sizeof(spdm_get_encapsulated_request_request_t)) {</span></a>
-<a name="339"><span class="lineNum">     339 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="340"><span class="lineNum">     340 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
-<a name="341"><span class="lineNum">     341 </span>            :                                                response_size, response);</a>
-<a name="342"><span class="lineNum">     342 </span>            :     }</a>
-<a name="343"><span class="lineNum">     343 </span>            : </a>
-<a name="344"><span class="lineNum">     344 </span><span class="lineCov">          4 :     libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,</span></a>
-<a name="345"><span class="lineNum">     345 </span><span class="lineCov">          4 :                                                   spdm_request-&gt;header.request_response_code);</span></a>
-<a name="346"><span class="lineNum">     346 </span>            : </a>
-<a name="347"><span class="lineNum">     347 </span><span class="lineCov">          4 :     LIBSPDM_ASSERT(*response_size &gt; sizeof(spdm_encapsulated_request_response_t));</span></a>
-<a name="348"><span class="lineNum">     348 </span><span class="lineCov">          4 :     libspdm_zero_mem(response, *response_size);</span></a>
-<a name="349"><span class="lineNum">     349 </span>            : </a>
-<a name="350"><span class="lineNum">     350 </span><span class="lineCov">          4 :     spdm_response = response;</span></a>
-<a name="351"><span class="lineNum">     351 </span><span class="lineCov">          4 :     spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
-<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          4 :     spdm_response-&gt;header.request_response_code = SPDM_ENCAPSULATED_REQUEST;</span></a>
-<a name="353"><span class="lineNum">     353 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param2 = 0;</span></a>
-<a name="355"><span class="lineNum">     355 </span>            : </a>
-<a name="356"><span class="lineNum">     356 </span><span class="lineCov">          4 :     encap_request_size =</span></a>
-<a name="357"><span class="lineNum">     357 </span><span class="lineCov">          4 :         *response_size - sizeof(spdm_encapsulated_request_response_t);</span></a>
-<a name="358"><span class="lineNum">     358 </span><span class="lineCov">          4 :     encap_request = spdm_response + 1;</span></a>
+<a name="281"><span class="lineNum">     281 </span><span class="lineNoCov">          0 : void libspdm_init_key_update_encap_state(void *context)</span></a>
+<a name="282"><span class="lineNum">     282 </span>            : {</a>
+<a name="283"><span class="lineNum">     283 </span>            :     libspdm_context_t *spdm_context;</a>
+<a name="284"><span class="lineNum">     284 </span>            : </a>
+<a name="285"><span class="lineNum">     285 </span><span class="lineNoCov">          0 :     spdm_context = context;</span></a>
+<a name="286"><span class="lineNum">     286 </span>            : </a>
+<a name="287"><span class="lineNum">     287 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.current_request_op_code = 0x00;</span></a>
+<a name="288"><span class="lineNum">     288 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_id = 0;</span></a>
+<a name="289"><span class="lineNum">     289 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.last_encap_request_size = 0;</span></a>
+<a name="290"><span class="lineNum">     290 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(&amp;spdm_context-&gt;encap_context.last_encap_request_header,</span></a>
+<a name="291"><span class="lineNum">     291 </span>            :                      sizeof(spdm_context-&gt;encap_context.last_encap_request_header));</a>
+<a name="292"><span class="lineNum">     292 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.certificate_chain_buffer.buffer_size = 0;</span></a>
+<a name="293"><span class="lineNum">     293 </span><span class="lineNoCov">          0 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;</span></a>
+<a name="294"><span class="lineNum">     294 </span>            : </a>
+<a name="295"><span class="lineNum">     295 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(spdm_context);</span></a>
+<a name="296"><span class="lineNum">     296 </span><span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(spdm_context);</span></a>
+<a name="297"><span class="lineNum">     297 </span>            : </a>
+<a name="298"><span class="lineNum">     298 </span><span class="lineNoCov">          0 :     libspdm_zero_mem(spdm_context-&gt;encap_context.request_op_code_sequence,</span></a>
+<a name="299"><span class="lineNum">     299 </span>            :                      sizeof(spdm_context-&gt;encap_context.request_op_code_sequence));</a>
+<a name="300"><span class="lineNum">     300 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_op_code_count = 1;</span></a>
+<a name="301"><span class="lineNum">     301 </span><span class="lineNoCov">          0 :     spdm_context-&gt;encap_context.request_op_code_sequence[0] =</span></a>
+<a name="302"><span class="lineNum">     302 </span>            :         SPDM_KEY_UPDATE;</a>
+<a name="303"><span class="lineNum">     303 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="304"><span class="lineNum">     304 </span>            : </a>
+<a name="305"><span class="lineNum">     305 </span><span class="lineCov">          6 : libspdm_return_t libspdm_get_response_encapsulated_request(</span></a>
+<a name="306"><span class="lineNum">     306 </span>            :     void *context, size_t request_size, const void *request,</a>
+<a name="307"><span class="lineNum">     307 </span>            :     size_t *response_size, void *response)</a>
+<a name="308"><span class="lineNum">     308 </span>            : {</a>
+<a name="309"><span class="lineNum">     309 </span>            :     spdm_encapsulated_request_response_t *spdm_response;</a>
+<a name="310"><span class="lineNum">     310 </span>            :     libspdm_context_t *spdm_context;</a>
+<a name="311"><span class="lineNum">     311 </span>            :     void *encap_request;</a>
+<a name="312"><span class="lineNum">     312 </span>            :     size_t encap_request_size;</a>
+<a name="313"><span class="lineNum">     313 </span>            :     libspdm_return_t status;</a>
+<a name="314"><span class="lineNum">     314 </span>            :     const spdm_get_encapsulated_request_request_t *spdm_request;</a>
+<a name="315"><span class="lineNum">     315 </span>            : </a>
+<a name="316"><span class="lineNum">     316 </span><span class="lineCov">          6 :     spdm_context = context;</span></a>
+<a name="317"><span class="lineNum">     317 </span><span class="lineCov">          6 :     spdm_request = request;</span></a>
+<a name="318"><span class="lineNum">     318 </span>            : </a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          6 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
+<a name="320"><span class="lineNum">     320 </span>            :             spdm_context, false,</a>
+<a name="321"><span class="lineNum">     321 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP,</a>
+<a name="322"><span class="lineNum">     322 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP)) {</a>
+<a name="323"><span class="lineNum">     323 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="324"><span class="lineNum">     324 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,</a>
+<a name="325"><span class="lineNum">     325 </span>            :             SPDM_GET_ENCAPSULATED_REQUEST, response_size, response);</a>
+<a name="326"><span class="lineNum">     326 </span>            :     }</a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          6 :     if (spdm_context-&gt;response_state !=</span></a>
+<a name="328"><span class="lineNum">     328 </span>            :         LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP) {</a>
+<a name="329"><span class="lineNum">     329 </span><span class="lineCov">          2 :         if (spdm_context-&gt;response_state ==</span></a>
+<a name="330"><span class="lineNum">     330 </span>            :             LIBSPDM_RESPONSE_STATE_NORMAL) {</a>
+<a name="331"><span class="lineNum">     331 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(</span></a>
+<a name="332"><span class="lineNum">     332 </span>            :                 spdm_context,</a>
+<a name="333"><span class="lineNum">     333 </span>            :                 SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
+<a name="334"><span class="lineNum">     334 </span>            :                 response_size, response);</a>
+<a name="335"><span class="lineNum">     335 </span>            :         }</a>
+<a name="336"><span class="lineNum">     336 </span><span class="lineCov">          1 :         return libspdm_responder_handle_response_state(</span></a>
+<a name="337"><span class="lineNum">     337 </span>            :             spdm_context,</a>
+<a name="338"><span class="lineNum">     338 </span><span class="lineCov">          1 :             spdm_request-&gt;header.request_response_code,</span></a>
+<a name="339"><span class="lineNum">     339 </span>            :             response_size, response);</a>
+<a name="340"><span class="lineNum">     340 </span>            :     }</a>
+<a name="341"><span class="lineNum">     341 </span>            : </a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineCov">          4 :     if (request_size != sizeof(spdm_get_encapsulated_request_request_t)) {</span></a>
+<a name="343"><span class="lineNum">     343 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="344"><span class="lineNum">     344 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
+<a name="345"><span class="lineNum">     345 </span>            :                                                response_size, response);</a>
+<a name="346"><span class="lineNum">     346 </span>            :     }</a>
+<a name="347"><span class="lineNum">     347 </span>            : </a>
+<a name="348"><span class="lineNum">     348 </span><span class="lineCov">          4 :     libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,</span></a>
+<a name="349"><span class="lineNum">     349 </span><span class="lineCov">          4 :                                                   spdm_request-&gt;header.request_response_code);</span></a>
+<a name="350"><span class="lineNum">     350 </span>            : </a>
+<a name="351"><span class="lineNum">     351 </span><span class="lineCov">          4 :     LIBSPDM_ASSERT(*response_size &gt; sizeof(spdm_encapsulated_request_response_t));</span></a>
+<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          4 :     libspdm_zero_mem(response, *response_size);</span></a>
+<a name="353"><span class="lineNum">     353 </span>            : </a>
+<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          4 :     spdm_response = response;</span></a>
+<a name="355"><span class="lineNum">     355 </span><span class="lineCov">          4 :     spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
+<a name="356"><span class="lineNum">     356 </span><span class="lineCov">          4 :     spdm_response-&gt;header.request_response_code = SPDM_ENCAPSULATED_REQUEST;</span></a>
+<a name="357"><span class="lineNum">     357 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = 0;</span></a>
+<a name="358"><span class="lineNum">     358 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param2 = 0;</span></a>
 <a name="359"><span class="lineNum">     359 </span>            : </a>
-<a name="360"><span class="lineNum">     360 </span><span class="lineCov">          4 :     status = libspdm_process_encapsulated_response(</span></a>
-<a name="361"><span class="lineNum">     361 </span>            :         context, 0, NULL, &amp;encap_request_size, encap_request);</a>
-<a name="362"><span class="lineNum">     362 </span><span class="lineCov">          4 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="363"><span class="lineNum">     363 </span><span class="lineNoCov">          0 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="364"><span class="lineNum">     364 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="365"><span class="lineNum">     365 </span>            :             spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,</a>
-<a name="366"><span class="lineNum">     366 </span>            :             response_size, response);</a>
-<a name="367"><span class="lineNum">     367 </span>            :     }</a>
-<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          4 :     *response_size = sizeof(spdm_encapsulated_request_response_t) +</span></a>
-<a name="369"><span class="lineNum">     369 </span>            :                      encap_request_size;</a>
-<a name="370"><span class="lineNum">     370 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = spdm_context-&gt;encap_context.request_id;</span></a>
-<a name="371"><span class="lineNum">     371 </span>            : </a>
-<a name="372"><span class="lineNum">     372 </span><span class="lineCov">          4 :     if (encap_request_size == 0) {</span></a>
-<a name="373"><span class="lineNum">     373 </span><span class="lineNoCov">          0 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="374"><span class="lineNum">     374 </span>            :     }</a>
+<a name="360"><span class="lineNum">     360 </span><span class="lineCov">          4 :     encap_request_size =</span></a>
+<a name="361"><span class="lineNum">     361 </span><span class="lineCov">          4 :         *response_size - sizeof(spdm_encapsulated_request_response_t);</span></a>
+<a name="362"><span class="lineNum">     362 </span><span class="lineCov">          4 :     encap_request = spdm_response + 1;</span></a>
+<a name="363"><span class="lineNum">     363 </span>            : </a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          4 :     status = libspdm_process_encapsulated_response(</span></a>
+<a name="365"><span class="lineNum">     365 </span>            :         context, 0, NULL, &amp;encap_request_size, encap_request);</a>
+<a name="366"><span class="lineNum">     366 </span><span class="lineCov">          4 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="367"><span class="lineNum">     367 </span><span class="lineNoCov">          0 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="369"><span class="lineNum">     369 </span>            :             spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,</a>
+<a name="370"><span class="lineNum">     370 </span>            :             response_size, response);</a>
+<a name="371"><span class="lineNum">     371 </span>            :     }</a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineCov">          4 :     *response_size = sizeof(spdm_encapsulated_request_response_t) +</span></a>
+<a name="373"><span class="lineNum">     373 </span>            :                      encap_request_size;</a>
+<a name="374"><span class="lineNum">     374 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = spdm_context-&gt;encap_context.request_id;</span></a>
 <a name="375"><span class="lineNum">     375 </span>            : </a>
-<a name="376"><span class="lineNum">     376 </span><span class="lineCov">          4 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="377"><span class="lineNum">     377 </span>            : }</a>
-<a name="378"><span class="lineNum">     378 </span>            : </a>
-<a name="379"><span class="lineNum">     379 </span><span class="lineCov">          8 : libspdm_return_t libspdm_get_response_encapsulated_response_ack(</span></a>
-<a name="380"><span class="lineNum">     380 </span>            :     void *context, size_t request_size, const void *request,</a>
-<a name="381"><span class="lineNum">     381 </span>            :     size_t *response_size, void *response)</a>
-<a name="382"><span class="lineNum">     382 </span>            : {</a>
-<a name="383"><span class="lineNum">     383 </span>            :     const spdm_deliver_encapsulated_response_request_t *spdm_request;</a>
-<a name="384"><span class="lineNum">     384 </span>            :     size_t spdm_request_size;</a>
-<a name="385"><span class="lineNum">     385 </span>            :     spdm_encapsulated_response_ack_response_t *spdm_response;</a>
-<a name="386"><span class="lineNum">     386 </span>            :     libspdm_context_t *spdm_context;</a>
-<a name="387"><span class="lineNum">     387 </span>            :     const void *encap_response;</a>
-<a name="388"><span class="lineNum">     388 </span>            :     size_t encap_response_size;</a>
-<a name="389"><span class="lineNum">     389 </span>            :     void *encap_request;</a>
-<a name="390"><span class="lineNum">     390 </span>            :     size_t encap_request_size;</a>
-<a name="391"><span class="lineNum">     391 </span>            :     libspdm_return_t status;</a>
-<a name="392"><span class="lineNum">     392 </span>            :     size_t ack_header_size;</a>
-<a name="393"><span class="lineNum">     393 </span>            : </a>
-<a name="394"><span class="lineNum">     394 </span><span class="lineCov">          8 :     spdm_context = context;</span></a>
-<a name="395"><span class="lineNum">     395 </span><span class="lineCov">          8 :     spdm_request = request;</span></a>
-<a name="396"><span class="lineNum">     396 </span>            : </a>
-<a name="397"><span class="lineNum">     397 </span><span class="lineCov">          8 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
-<a name="398"><span class="lineNum">     398 </span>            :             spdm_context, false,</a>
-<a name="399"><span class="lineNum">     399 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP,</a>
-<a name="400"><span class="lineNum">     400 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP)) {</a>
-<a name="401"><span class="lineNum">     401 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="402"><span class="lineNum">     402 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,</a>
-<a name="403"><span class="lineNum">     403 </span>            :             SPDM_DELIVER_ENCAPSULATED_RESPONSE, response_size,</a>
-<a name="404"><span class="lineNum">     404 </span>            :             response);</a>
-<a name="405"><span class="lineNum">     405 </span>            :     }</a>
-<a name="406"><span class="lineNum">     406 </span><span class="lineCov">          8 :     if (spdm_context-&gt;response_state !=</span></a>
-<a name="407"><span class="lineNum">     407 </span>            :         LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP) {</a>
-<a name="408"><span class="lineNum">     408 </span><span class="lineCov">          2 :         if (spdm_context-&gt;response_state ==</span></a>
-<a name="409"><span class="lineNum">     409 </span>            :             LIBSPDM_RESPONSE_STATE_NORMAL) {</a>
-<a name="410"><span class="lineNum">     410 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(</span></a>
-<a name="411"><span class="lineNum">     411 </span>            :                 spdm_context,</a>
-<a name="412"><span class="lineNum">     412 </span>            :                 SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
-<a name="413"><span class="lineNum">     413 </span>            :                 response_size, response);</a>
-<a name="414"><span class="lineNum">     414 </span>            :         }</a>
-<a name="415"><span class="lineNum">     415 </span><span class="lineCov">          1 :         return libspdm_responder_handle_response_state(</span></a>
-<a name="416"><span class="lineNum">     416 </span>            :             spdm_context,</a>
-<a name="417"><span class="lineNum">     417 </span><span class="lineCov">          1 :             spdm_request-&gt;header.request_response_code,</span></a>
-<a name="418"><span class="lineNum">     418 </span>            :             response_size, response);</a>
-<a name="419"><span class="lineNum">     419 </span>            :     }</a>
-<a name="420"><span class="lineNum">     420 </span>            : </a>
-<a name="421"><span class="lineNum">     421 </span><span class="lineCov">          6 :     if (request_size &lt;=</span></a>
-<a name="422"><span class="lineNum">     422 </span>            :         sizeof(spdm_deliver_encapsulated_response_request_t)) {</a>
-<a name="423"><span class="lineNum">     423 </span><span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="424"><span class="lineNum">     424 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
-<a name="425"><span class="lineNum">     425 </span>            :                                                response_size, response);</a>
-<a name="426"><span class="lineNum">     426 </span>            :     }</a>
-<a name="427"><span class="lineNum">     427 </span>            : </a>
-<a name="428"><span class="lineNum">     428 </span><span class="lineCov">          5 :     spdm_request_size = request_size;</span></a>
-<a name="429"><span class="lineNum">     429 </span>            : </a>
-<a name="430"><span class="lineNum">     430 </span><span class="lineCov">          5 :     if (spdm_request-&gt;header.param1 !=</span></a>
-<a name="431"><span class="lineNum">     431 </span><span class="lineCov">          5 :         spdm_context-&gt;encap_context.request_id) {</span></a>
-<a name="432"><span class="lineNum">     432 </span><span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="433"><span class="lineNum">     433 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
-<a name="434"><span class="lineNum">     434 </span>            :                                                response_size, response);</a>
-<a name="435"><span class="lineNum">     435 </span>            :     }</a>
-<a name="436"><span class="lineNum">     436 </span>            : </a>
-<a name="437"><span class="lineNum">     437 </span><span class="lineCov">          4 :     encap_response = (spdm_request + 1);</span></a>
-<a name="438"><span class="lineNum">     438 </span><span class="lineCov">          4 :     encap_response_size =</span></a>
-<a name="439"><span class="lineNum">     439 </span>            :         spdm_request_size -</a>
-<a name="440"><span class="lineNum">     440 </span>            :         sizeof(spdm_deliver_encapsulated_response_request_t);</a>
-<a name="441"><span class="lineNum">     441 </span>            : </a>
-<a name="442"><span class="lineNum">     442 </span><span class="lineCov">          4 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="443"><span class="lineNum">     443 </span><span class="lineCov">          1 :         ack_header_size = sizeof(spdm_encapsulated_response_ack_response_t);</span></a>
-<a name="444"><span class="lineNum">     444 </span>            :     } else {</a>
-<a name="445"><span class="lineNum">     445 </span><span class="lineCov">          3 :         ack_header_size = sizeof(spdm_message_header_t);</span></a>
-<a name="446"><span class="lineNum">     446 </span>            :     }</a>
-<a name="447"><span class="lineNum">     447 </span>            : </a>
-<a name="448"><span class="lineNum">     448 </span><span class="lineCov">          4 :     LIBSPDM_ASSERT(*response_size &gt; ack_header_size);</span></a>
-<a name="449"><span class="lineNum">     449 </span><span class="lineCov">          4 :     libspdm_zero_mem(response, *response_size);</span></a>
-<a name="450"><span class="lineNum">     450 </span>            : </a>
-<a name="451"><span class="lineNum">     451 </span><span class="lineCov">          4 :     spdm_response = response;</span></a>
-<a name="452"><span class="lineNum">     452 </span><span class="lineCov">          4 :     spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
-<a name="453"><span class="lineNum">     453 </span><span class="lineCov">          4 :     spdm_response-&gt;header.request_response_code =</span></a>
-<a name="454"><span class="lineNum">     454 </span>            :         SPDM_ENCAPSULATED_RESPONSE_ACK;</a>
-<a name="455"><span class="lineNum">     455 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="456"><span class="lineNum">     456 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param2 =</span></a>
-<a name="457"><span class="lineNum">     457 </span>            :         SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_PRESENT;</a>
-<a name="458"><span class="lineNum">     458 </span>            : </a>
-<a name="459"><span class="lineNum">     459 </span><span class="lineCov">          4 :     encap_request_size = *response_size - ack_header_size;</span></a>
-<a name="460"><span class="lineNum">     460 </span><span class="lineCov">          4 :     encap_request = (uint8_t *)spdm_response + ack_header_size;</span></a>
-<a name="461"><span class="lineNum">     461 </span><span class="lineCov">          4 :     if (encap_response_size &lt; sizeof(spdm_message_header_t)) {</span></a>
-<a name="462"><span class="lineNum">     462 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="463"><span class="lineNum">     463 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
-<a name="464"><span class="lineNum">     464 </span>            :                                                response_size, response);</a>
-<a name="465"><span class="lineNum">     465 </span>            :     }</a>
-<a name="466"><span class="lineNum">     466 </span>            : </a>
-<a name="467"><span class="lineNum">     467 </span><span class="lineCov">          4 :     libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,</span></a>
-<a name="468"><span class="lineNum">     468 </span><span class="lineCov">          4 :                                                   spdm_request-&gt;header.request_response_code);</span></a>
-<a name="469"><span class="lineNum">     469 </span>            : </a>
-<a name="470"><span class="lineNum">     470 </span><span class="lineCov">          4 :     status = libspdm_process_encapsulated_response(</span></a>
-<a name="471"><span class="lineNum">     471 </span>            :         context, encap_response_size, encap_response,</a>
-<a name="472"><span class="lineNum">     472 </span>            :         &amp;encap_request_size, encap_request);</a>
-<a name="473"><span class="lineNum">     473 </span><span class="lineCov">          4 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="474"><span class="lineNum">     474 </span><span class="lineNoCov">          0 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="475"><span class="lineNum">     475 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="476"><span class="lineNum">     476 </span>            :             spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,</a>
-<a name="477"><span class="lineNum">     477 </span>            :             response_size, response);</a>
-<a name="478"><span class="lineNum">     478 </span>            :     }</a>
-<a name="479"><span class="lineNum">     479 </span>            : </a>
-<a name="480"><span class="lineNum">     480 </span><span class="lineCov">          4 :     *response_size = ack_header_size + encap_request_size;</span></a>
-<a name="481"><span class="lineNum">     481 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = spdm_context-&gt;encap_context.request_id;</span></a>
-<a name="482"><span class="lineNum">     482 </span>            : </a>
-<a name="483"><span class="lineNum">     483 </span><span class="lineCov">          4 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="484"><span class="lineNum">     484 </span><span class="lineCov">          1 :         spdm_response-&gt;ack_request_id = spdm_request-&gt;header.param1;</span></a>
-<a name="485"><span class="lineNum">     485 </span>            :     }</a>
+<a name="376"><span class="lineNum">     376 </span><span class="lineCov">          4 :     if (encap_request_size == 0) {</span></a>
+<a name="377"><span class="lineNum">     377 </span><span class="lineNoCov">          0 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
+<a name="378"><span class="lineNum">     378 </span>            :     }</a>
+<a name="379"><span class="lineNum">     379 </span>            : </a>
+<a name="380"><span class="lineNum">     380 </span><span class="lineCov">          4 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="381"><span class="lineNum">     381 </span>            : }</a>
+<a name="382"><span class="lineNum">     382 </span>            : </a>
+<a name="383"><span class="lineNum">     383 </span><span class="lineCov">          8 : libspdm_return_t libspdm_get_response_encapsulated_response_ack(</span></a>
+<a name="384"><span class="lineNum">     384 </span>            :     void *context, size_t request_size, const void *request,</a>
+<a name="385"><span class="lineNum">     385 </span>            :     size_t *response_size, void *response)</a>
+<a name="386"><span class="lineNum">     386 </span>            : {</a>
+<a name="387"><span class="lineNum">     387 </span>            :     const spdm_deliver_encapsulated_response_request_t *spdm_request;</a>
+<a name="388"><span class="lineNum">     388 </span>            :     size_t spdm_request_size;</a>
+<a name="389"><span class="lineNum">     389 </span>            :     spdm_encapsulated_response_ack_response_t *spdm_response;</a>
+<a name="390"><span class="lineNum">     390 </span>            :     libspdm_context_t *spdm_context;</a>
+<a name="391"><span class="lineNum">     391 </span>            :     const void *encap_response;</a>
+<a name="392"><span class="lineNum">     392 </span>            :     size_t encap_response_size;</a>
+<a name="393"><span class="lineNum">     393 </span>            :     void *encap_request;</a>
+<a name="394"><span class="lineNum">     394 </span>            :     size_t encap_request_size;</a>
+<a name="395"><span class="lineNum">     395 </span>            :     libspdm_return_t status;</a>
+<a name="396"><span class="lineNum">     396 </span>            :     size_t ack_header_size;</a>
+<a name="397"><span class="lineNum">     397 </span>            : </a>
+<a name="398"><span class="lineNum">     398 </span><span class="lineCov">          8 :     spdm_context = context;</span></a>
+<a name="399"><span class="lineNum">     399 </span><span class="lineCov">          8 :     spdm_request = request;</span></a>
+<a name="400"><span class="lineNum">     400 </span>            : </a>
+<a name="401"><span class="lineNum">     401 </span><span class="lineCov">          8 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
+<a name="402"><span class="lineNum">     402 </span>            :             spdm_context, false,</a>
+<a name="403"><span class="lineNum">     403 </span>            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP,</a>
+<a name="404"><span class="lineNum">     404 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP)) {</a>
+<a name="405"><span class="lineNum">     405 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="406"><span class="lineNum">     406 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,</a>
+<a name="407"><span class="lineNum">     407 </span>            :             SPDM_DELIVER_ENCAPSULATED_RESPONSE, response_size,</a>
+<a name="408"><span class="lineNum">     408 </span>            :             response);</a>
+<a name="409"><span class="lineNum">     409 </span>            :     }</a>
+<a name="410"><span class="lineNum">     410 </span><span class="lineCov">          8 :     if (spdm_context-&gt;response_state !=</span></a>
+<a name="411"><span class="lineNum">     411 </span>            :         LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP) {</a>
+<a name="412"><span class="lineNum">     412 </span><span class="lineCov">          2 :         if (spdm_context-&gt;response_state ==</span></a>
+<a name="413"><span class="lineNum">     413 </span>            :             LIBSPDM_RESPONSE_STATE_NORMAL) {</a>
+<a name="414"><span class="lineNum">     414 </span><span class="lineCov">          1 :             return libspdm_generate_error_response(</span></a>
+<a name="415"><span class="lineNum">     415 </span>            :                 spdm_context,</a>
+<a name="416"><span class="lineNum">     416 </span>            :                 SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
+<a name="417"><span class="lineNum">     417 </span>            :                 response_size, response);</a>
+<a name="418"><span class="lineNum">     418 </span>            :         }</a>
+<a name="419"><span class="lineNum">     419 </span><span class="lineCov">          1 :         return libspdm_responder_handle_response_state(</span></a>
+<a name="420"><span class="lineNum">     420 </span>            :             spdm_context,</a>
+<a name="421"><span class="lineNum">     421 </span><span class="lineCov">          1 :             spdm_request-&gt;header.request_response_code,</span></a>
+<a name="422"><span class="lineNum">     422 </span>            :             response_size, response);</a>
+<a name="423"><span class="lineNum">     423 </span>            :     }</a>
+<a name="424"><span class="lineNum">     424 </span>            : </a>
+<a name="425"><span class="lineNum">     425 </span><span class="lineCov">          6 :     if (request_size &lt;=</span></a>
+<a name="426"><span class="lineNum">     426 </span>            :         sizeof(spdm_deliver_encapsulated_response_request_t)) {</a>
+<a name="427"><span class="lineNum">     427 </span><span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="428"><span class="lineNum">     428 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
+<a name="429"><span class="lineNum">     429 </span>            :                                                response_size, response);</a>
+<a name="430"><span class="lineNum">     430 </span>            :     }</a>
+<a name="431"><span class="lineNum">     431 </span>            : </a>
+<a name="432"><span class="lineNum">     432 </span><span class="lineCov">          5 :     spdm_request_size = request_size;</span></a>
+<a name="433"><span class="lineNum">     433 </span>            : </a>
+<a name="434"><span class="lineNum">     434 </span><span class="lineCov">          5 :     if (spdm_request-&gt;header.param1 !=</span></a>
+<a name="435"><span class="lineNum">     435 </span><span class="lineCov">          5 :         spdm_context-&gt;encap_context.request_id) {</span></a>
+<a name="436"><span class="lineNum">     436 </span><span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="437"><span class="lineNum">     437 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
+<a name="438"><span class="lineNum">     438 </span>            :                                                response_size, response);</a>
+<a name="439"><span class="lineNum">     439 </span>            :     }</a>
+<a name="440"><span class="lineNum">     440 </span>            : </a>
+<a name="441"><span class="lineNum">     441 </span><span class="lineCov">          4 :     encap_response = (spdm_request + 1);</span></a>
+<a name="442"><span class="lineNum">     442 </span><span class="lineCov">          4 :     encap_response_size =</span></a>
+<a name="443"><span class="lineNum">     443 </span>            :         spdm_request_size -</a>
+<a name="444"><span class="lineNum">     444 </span>            :         sizeof(spdm_deliver_encapsulated_response_request_t);</a>
+<a name="445"><span class="lineNum">     445 </span>            : </a>
+<a name="446"><span class="lineNum">     446 </span><span class="lineCov">          4 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="447"><span class="lineNum">     447 </span><span class="lineCov">          1 :         ack_header_size = sizeof(spdm_encapsulated_response_ack_response_t);</span></a>
+<a name="448"><span class="lineNum">     448 </span>            :     } else {</a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineCov">          3 :         ack_header_size = sizeof(spdm_message_header_t);</span></a>
+<a name="450"><span class="lineNum">     450 </span>            :     }</a>
+<a name="451"><span class="lineNum">     451 </span>            : </a>
+<a name="452"><span class="lineNum">     452 </span><span class="lineCov">          4 :     LIBSPDM_ASSERT(*response_size &gt; ack_header_size);</span></a>
+<a name="453"><span class="lineNum">     453 </span><span class="lineCov">          4 :     libspdm_zero_mem(response, *response_size);</span></a>
+<a name="454"><span class="lineNum">     454 </span>            : </a>
+<a name="455"><span class="lineNum">     455 </span><span class="lineCov">          4 :     spdm_response = response;</span></a>
+<a name="456"><span class="lineNum">     456 </span><span class="lineCov">          4 :     spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
+<a name="457"><span class="lineNum">     457 </span><span class="lineCov">          4 :     spdm_response-&gt;header.request_response_code =</span></a>
+<a name="458"><span class="lineNum">     458 </span>            :         SPDM_ENCAPSULATED_RESPONSE_ACK;</a>
+<a name="459"><span class="lineNum">     459 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = 0;</span></a>
+<a name="460"><span class="lineNum">     460 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param2 =</span></a>
+<a name="461"><span class="lineNum">     461 </span>            :         SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_PRESENT;</a>
+<a name="462"><span class="lineNum">     462 </span>            : </a>
+<a name="463"><span class="lineNum">     463 </span><span class="lineCov">          4 :     encap_request_size = *response_size - ack_header_size;</span></a>
+<a name="464"><span class="lineNum">     464 </span><span class="lineCov">          4 :     encap_request = (uint8_t *)spdm_response + ack_header_size;</span></a>
+<a name="465"><span class="lineNum">     465 </span><span class="lineCov">          4 :     if (encap_response_size &lt; sizeof(spdm_message_header_t)) {</span></a>
+<a name="466"><span class="lineNum">     466 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="467"><span class="lineNum">     467 </span>            :                                                SPDM_ERROR_CODE_INVALID_REQUEST, 0,</a>
+<a name="468"><span class="lineNum">     468 </span>            :                                                response_size, response);</a>
+<a name="469"><span class="lineNum">     469 </span>            :     }</a>
+<a name="470"><span class="lineNum">     470 </span>            : </a>
+<a name="471"><span class="lineNum">     471 </span><span class="lineCov">          4 :     libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,</span></a>
+<a name="472"><span class="lineNum">     472 </span><span class="lineCov">          4 :                                                   spdm_request-&gt;header.request_response_code);</span></a>
+<a name="473"><span class="lineNum">     473 </span>            : </a>
+<a name="474"><span class="lineNum">     474 </span><span class="lineCov">          4 :     status = libspdm_process_encapsulated_response(</span></a>
+<a name="475"><span class="lineNum">     475 </span>            :         context, encap_response_size, encap_response,</a>
+<a name="476"><span class="lineNum">     476 </span>            :         &amp;encap_request_size, encap_request);</a>
+<a name="477"><span class="lineNum">     477 </span><span class="lineCov">          4 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="478"><span class="lineNum">     478 </span><span class="lineNoCov">          0 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
+<a name="479"><span class="lineNum">     479 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="480"><span class="lineNum">     480 </span>            :             spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,</a>
+<a name="481"><span class="lineNum">     481 </span>            :             response_size, response);</a>
+<a name="482"><span class="lineNum">     482 </span>            :     }</a>
+<a name="483"><span class="lineNum">     483 </span>            : </a>
+<a name="484"><span class="lineNum">     484 </span><span class="lineCov">          4 :     *response_size = ack_header_size + encap_request_size;</span></a>
+<a name="485"><span class="lineNum">     485 </span><span class="lineCov">          4 :     spdm_response-&gt;header.param1 = spdm_context-&gt;encap_context.request_id;</span></a>
 <a name="486"><span class="lineNum">     486 </span>            : </a>
-<a name="487"><span class="lineNum">     487 </span><span class="lineCov">          4 :     if (encap_request_size == 0) {</span></a>
-<a name="488"><span class="lineNum">     488 </span><span class="lineCov">          2 :         spdm_response-&gt;header.param2 =</span></a>
-<a name="489"><span class="lineNum">     489 </span>            :             SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_ABSENT;</a>
-<a name="490"><span class="lineNum">     490 </span><span class="lineCov">          2 :         if (spdm_context-&gt;encap_context.req_slot_id != 0) {</span></a>
-<a name="491"><span class="lineNum">     491 </span><span class="lineNoCov">          0 :             spdm_response-&gt;header.param2 =</span></a>
-<a name="492"><span class="lineNum">     492 </span>            :                 SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_REQ_SLOT_NUMBER;</a>
-<a name="493"><span class="lineNum">     493 </span><span class="lineNoCov">          0 :             *response_size = ack_header_size + 1;</span></a>
-<a name="494"><span class="lineNum">     494 </span><span class="lineNoCov">          0 :             *(uint8_t *)(spdm_response + 1) =</span></a>
-<a name="495"><span class="lineNum">     495 </span><span class="lineNoCov">          0 :                 spdm_context-&gt;encap_context.req_slot_id;</span></a>
-<a name="496"><span class="lineNum">     496 </span>            :         }</a>
-<a name="497"><span class="lineNum">     497 </span><span class="lineCov">          2 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="498"><span class="lineNum">     498 </span>            :     }</a>
-<a name="499"><span class="lineNum">     499 </span>            : </a>
-<a name="500"><span class="lineNum">     500 </span><span class="lineCov">          4 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="501"><span class="lineNum">     501 </span>            : }</a>
-<a name="502"><span class="lineNum">     502 </span>            : </a>
-<a name="503"><span class="lineNum">     503 </span><span class="lineCov">          4 : libspdm_return_t libspdm_handle_encap_error_response_main(</span></a>
-<a name="504"><span class="lineNum">     504 </span>            :     libspdm_context_t *spdm_context, uint8_t error_code)</a>
-<a name="505"><span class="lineNum">     505 </span>            : {</a>
+<a name="487"><span class="lineNum">     487 </span><span class="lineCov">          4 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="488"><span class="lineNum">     488 </span><span class="lineCov">          1 :         spdm_response-&gt;ack_request_id = spdm_request-&gt;header.param1;</span></a>
+<a name="489"><span class="lineNum">     489 </span>            :     }</a>
+<a name="490"><span class="lineNum">     490 </span>            : </a>
+<a name="491"><span class="lineNum">     491 </span><span class="lineCov">          4 :     if (encap_request_size == 0) {</span></a>
+<a name="492"><span class="lineNum">     492 </span><span class="lineCov">          2 :         spdm_response-&gt;header.param2 =</span></a>
+<a name="493"><span class="lineNum">     493 </span>            :             SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_ABSENT;</a>
+<a name="494"><span class="lineNum">     494 </span><span class="lineCov">          2 :         if (spdm_context-&gt;encap_context.req_slot_id != 0) {</span></a>
+<a name="495"><span class="lineNum">     495 </span><span class="lineNoCov">          0 :             spdm_response-&gt;header.param2 =</span></a>
+<a name="496"><span class="lineNum">     496 </span>            :                 SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_REQ_SLOT_NUMBER;</a>
+<a name="497"><span class="lineNum">     497 </span><span class="lineNoCov">          0 :             *response_size = ack_header_size + 1;</span></a>
+<a name="498"><span class="lineNum">     498 </span><span class="lineNoCov">          0 :             *(uint8_t *)(spdm_response + 1) =</span></a>
+<a name="499"><span class="lineNum">     499 </span><span class="lineNoCov">          0 :                 spdm_context-&gt;encap_context.req_slot_id;</span></a>
+<a name="500"><span class="lineNum">     500 </span>            :         }</a>
+<a name="501"><span class="lineNum">     501 </span><span class="lineCov">          2 :         spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
+<a name="502"><span class="lineNum">     502 </span>            :     }</a>
+<a name="503"><span class="lineNum">     503 </span>            : </a>
+<a name="504"><span class="lineNum">     504 </span><span class="lineCov">          4 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="505"><span class="lineNum">     505 </span>            : }</a>
 <a name="506"><span class="lineNum">     506 </span>            : </a>
-<a name="507"><span class="lineNum">     507 </span>            :     /* According to &quot;Timing Specification for SPDM messages&quot;, RESPONSE_NOT_READY is only for responder.</a>
-<a name="508"><span class="lineNum">     508 </span>            :      * RESPONSE_NOT_READY should not be sent by requester. No need to check it.*/</a>
-<a name="509"><span class="lineNum">     509 </span>            : </a>
-<a name="510"><span class="lineNum">     510 </span><span class="lineCov">          4 :     return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
-<a name="511"><span class="lineNum">     511 </span>            : }</a>
-<a name="512"><span class="lineNum">     512 </span>            : </a>
-<a name="513"><span class="lineNum">     513 </span>            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) || (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)*/</a>
+<a name="507"><span class="lineNum">     507 </span><span class="lineCov">          4 : libspdm_return_t libspdm_handle_encap_error_response_main(</span></a>
+<a name="508"><span class="lineNum">     508 </span>            :     libspdm_context_t *spdm_context, uint8_t error_code)</a>
+<a name="509"><span class="lineNum">     509 </span>            : {</a>
+<a name="510"><span class="lineNum">     510 </span>            : </a>
+<a name="511"><span class="lineNum">     511 </span>            :     /* According to &quot;Timing Specification for SPDM messages&quot;, RESPONSE_NOT_READY is only for responder.</a>
+<a name="512"><span class="lineNum">     512 </span>            :      * RESPONSE_NOT_READY should not be sent by requester. No need to check it.*/</a>
+<a name="513"><span class="lineNum">     513 </span>            : </a>
+<a name="514"><span class="lineNum">     514 </span><span class="lineCov">          4 :     return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
+<a name="515"><span class="lineNum">     515 </span>            : }</a>
+<a name="516"><span class="lineNum">     516 </span>            : </a>
+<a name="517"><span class="lineNum">     517 </span>            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) || (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)*/</a>
 </pre>
       </td>
     </tr>

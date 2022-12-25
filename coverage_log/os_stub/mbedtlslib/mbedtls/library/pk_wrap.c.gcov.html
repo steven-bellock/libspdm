@@ -32,17 +32,17 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">56</td>
-            <td class="headerCovTableEntry">149</td>
-            <td class="headerCovTableEntryLo">37.6 %</td>
+            <td class="headerCovTableEntry">111</td>
+            <td class="headerCovTableEntryLo">50.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-24 08:15:01</td>
+            <td class="headerValue">2022-12-25 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
-            <td class="headerCovTableEntry">31</td>
-            <td class="headerCovTableEntryLo">38.7 %</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
           </tr>
           <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -804,100 +804,100 @@
 <a name="742"><span class="lineNum">     742 </span>            :  * Support for alternative RSA-private implementations</a>
 <a name="743"><span class="lineNum">     743 </span>            :  */</a>
 <a name="744"><span class="lineNum">     744 </span>            : </a>
-<a name="745"><span class="lineNum">     745 </span><span class="lineNoCov">          0 : static int rsa_alt_can_do( mbedtls_pk_type_t type )</span></a>
+<a name="745"><span class="lineNum">     745 </span>            : static int rsa_alt_can_do( mbedtls_pk_type_t type )</a>
 <a name="746"><span class="lineNum">     746 </span>            : {</a>
-<a name="747"><span class="lineNum">     747 </span><span class="lineNoCov">          0 :     return( type == MBEDTLS_PK_RSA );</span></a>
+<a name="747"><span class="lineNum">     747 </span>            :     return( type == MBEDTLS_PK_RSA );</a>
 <a name="748"><span class="lineNum">     748 </span>            : }</a>
 <a name="749"><span class="lineNum">     749 </span>            : </a>
-<a name="750"><span class="lineNum">     750 </span><span class="lineNoCov">          0 : static size_t rsa_alt_get_bitlen( const void *ctx )</span></a>
+<a name="750"><span class="lineNum">     750 </span>            : static size_t rsa_alt_get_bitlen( const void *ctx )</a>
 <a name="751"><span class="lineNum">     751 </span>            : {</a>
-<a name="752"><span class="lineNum">     752 </span><span class="lineNoCov">          0 :     const mbedtls_rsa_alt_context *rsa_alt = (const mbedtls_rsa_alt_context *) ctx;</span></a>
+<a name="752"><span class="lineNum">     752 </span>            :     const mbedtls_rsa_alt_context *rsa_alt = (const mbedtls_rsa_alt_context *) ctx;</a>
 <a name="753"><span class="lineNum">     753 </span>            : </a>
-<a name="754"><span class="lineNum">     754 </span><span class="lineNoCov">          0 :     return( 8 * rsa_alt-&gt;key_len_func( rsa_alt-&gt;key ) );</span></a>
+<a name="754"><span class="lineNum">     754 </span>            :     return( 8 * rsa_alt-&gt;key_len_func( rsa_alt-&gt;key ) );</a>
 <a name="755"><span class="lineNum">     755 </span>            : }</a>
 <a name="756"><span class="lineNum">     756 </span>            : </a>
-<a name="757"><span class="lineNum">     757 </span><span class="lineNoCov">          0 : static int rsa_alt_sign_wrap( void *ctx, mbedtls_md_type_t md_alg,</span></a>
+<a name="757"><span class="lineNum">     757 </span>            : static int rsa_alt_sign_wrap( void *ctx, mbedtls_md_type_t md_alg,</a>
 <a name="758"><span class="lineNum">     758 </span>            :                    const unsigned char *hash, size_t hash_len,</a>
 <a name="759"><span class="lineNum">     759 </span>            :                    unsigned char *sig, size_t *sig_len,</a>
 <a name="760"><span class="lineNum">     760 </span>            :                    int (*f_rng)(void *, unsigned char *, size_t), void *p_rng )</a>
 <a name="761"><span class="lineNum">     761 </span>            : {</a>
-<a name="762"><span class="lineNum">     762 </span><span class="lineNoCov">          0 :     mbedtls_rsa_alt_context *rsa_alt = (mbedtls_rsa_alt_context *) ctx;</span></a>
+<a name="762"><span class="lineNum">     762 </span>            :     mbedtls_rsa_alt_context *rsa_alt = (mbedtls_rsa_alt_context *) ctx;</a>
 <a name="763"><span class="lineNum">     763 </span>            : </a>
 <a name="764"><span class="lineNum">     764 </span>            : #if SIZE_MAX &gt; UINT_MAX</a>
-<a name="765"><span class="lineNum">     765 </span><span class="lineNoCov">          0 :     if( UINT_MAX &lt; hash_len )</span></a>
-<a name="766"><span class="lineNum">     766 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_PK_BAD_INPUT_DATA );</span></a>
+<a name="765"><span class="lineNum">     765 </span>            :     if( UINT_MAX &lt; hash_len )</a>
+<a name="766"><span class="lineNum">     766 </span>            :         return( MBEDTLS_ERR_PK_BAD_INPUT_DATA );</a>
 <a name="767"><span class="lineNum">     767 </span>            : #endif /* SIZE_MAX &gt; UINT_MAX */</a>
 <a name="768"><span class="lineNum">     768 </span>            : </a>
-<a name="769"><span class="lineNum">     769 </span><span class="lineNoCov">          0 :     *sig_len = rsa_alt-&gt;key_len_func( rsa_alt-&gt;key );</span></a>
-<a name="770"><span class="lineNum">     770 </span><span class="lineNoCov">          0 :     if( *sig_len &gt; MBEDTLS_PK_SIGNATURE_MAX_SIZE )</span></a>
-<a name="771"><span class="lineNum">     771 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_PK_BAD_INPUT_DATA );</span></a>
+<a name="769"><span class="lineNum">     769 </span>            :     *sig_len = rsa_alt-&gt;key_len_func( rsa_alt-&gt;key );</a>
+<a name="770"><span class="lineNum">     770 </span>            :     if( *sig_len &gt; MBEDTLS_PK_SIGNATURE_MAX_SIZE )</a>
+<a name="771"><span class="lineNum">     771 </span>            :         return( MBEDTLS_ERR_PK_BAD_INPUT_DATA );</a>
 <a name="772"><span class="lineNum">     772 </span>            : </a>
-<a name="773"><span class="lineNum">     773 </span><span class="lineNoCov">          0 :     return( rsa_alt-&gt;sign_func( rsa_alt-&gt;key, f_rng, p_rng, MBEDTLS_RSA_PRIVATE,</span></a>
+<a name="773"><span class="lineNum">     773 </span>            :     return( rsa_alt-&gt;sign_func( rsa_alt-&gt;key, f_rng, p_rng, MBEDTLS_RSA_PRIVATE,</a>
 <a name="774"><span class="lineNum">     774 </span>            :                 md_alg, (unsigned int) hash_len, hash, sig ) );</a>
 <a name="775"><span class="lineNum">     775 </span>            : }</a>
 <a name="776"><span class="lineNum">     776 </span>            : </a>
-<a name="777"><span class="lineNum">     777 </span><span class="lineNoCov">          0 : static int rsa_alt_decrypt_wrap( void *ctx,</span></a>
+<a name="777"><span class="lineNum">     777 </span>            : static int rsa_alt_decrypt_wrap( void *ctx,</a>
 <a name="778"><span class="lineNum">     778 </span>            :                     const unsigned char *input, size_t ilen,</a>
 <a name="779"><span class="lineNum">     779 </span>            :                     unsigned char *output, size_t *olen, size_t osize,</a>
 <a name="780"><span class="lineNum">     780 </span>            :                     int (*f_rng)(void *, unsigned char *, size_t), void *p_rng )</a>
 <a name="781"><span class="lineNum">     781 </span>            : {</a>
-<a name="782"><span class="lineNum">     782 </span><span class="lineNoCov">          0 :     mbedtls_rsa_alt_context *rsa_alt = (mbedtls_rsa_alt_context *) ctx;</span></a>
+<a name="782"><span class="lineNum">     782 </span>            :     mbedtls_rsa_alt_context *rsa_alt = (mbedtls_rsa_alt_context *) ctx;</a>
 <a name="783"><span class="lineNum">     783 </span>            : </a>
 <a name="784"><span class="lineNum">     784 </span>            :     ((void) f_rng);</a>
 <a name="785"><span class="lineNum">     785 </span>            :     ((void) p_rng);</a>
 <a name="786"><span class="lineNum">     786 </span>            : </a>
-<a name="787"><span class="lineNum">     787 </span><span class="lineNoCov">          0 :     if( ilen != rsa_alt-&gt;key_len_func( rsa_alt-&gt;key ) )</span></a>
-<a name="788"><span class="lineNum">     788 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_RSA_BAD_INPUT_DATA );</span></a>
+<a name="787"><span class="lineNum">     787 </span>            :     if( ilen != rsa_alt-&gt;key_len_func( rsa_alt-&gt;key ) )</a>
+<a name="788"><span class="lineNum">     788 </span>            :         return( MBEDTLS_ERR_RSA_BAD_INPUT_DATA );</a>
 <a name="789"><span class="lineNum">     789 </span>            : </a>
-<a name="790"><span class="lineNum">     790 </span><span class="lineNoCov">          0 :     return( rsa_alt-&gt;decrypt_func( rsa_alt-&gt;key,</span></a>
+<a name="790"><span class="lineNum">     790 </span>            :     return( rsa_alt-&gt;decrypt_func( rsa_alt-&gt;key,</a>
 <a name="791"><span class="lineNum">     791 </span>            :                 MBEDTLS_RSA_PRIVATE, olen, input, output, osize ) );</a>
 <a name="792"><span class="lineNum">     792 </span>            : }</a>
 <a name="793"><span class="lineNum">     793 </span>            : </a>
 <a name="794"><span class="lineNum">     794 </span>            : #if defined(MBEDTLS_RSA_C)</a>
-<a name="795"><span class="lineNum">     795 </span><span class="lineNoCov">          0 : static int rsa_alt_check_pair( const void *pub, const void *prv )</span></a>
+<a name="795"><span class="lineNum">     795 </span>            : static int rsa_alt_check_pair( const void *pub, const void *prv )</a>
 <a name="796"><span class="lineNum">     796 </span>            : {</a>
 <a name="797"><span class="lineNum">     797 </span>            :     unsigned char sig[MBEDTLS_MPI_MAX_SIZE];</a>
 <a name="798"><span class="lineNum">     798 </span>            :     unsigned char hash[32];</a>
-<a name="799"><span class="lineNum">     799 </span><span class="lineNoCov">          0 :     size_t sig_len = 0;</span></a>
-<a name="800"><span class="lineNum">     800 </span><span class="lineNoCov">          0 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="799"><span class="lineNum">     799 </span>            :     size_t sig_len = 0;</a>
+<a name="800"><span class="lineNum">     800 </span>            :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</a>
 <a name="801"><span class="lineNum">     801 </span>            : </a>
-<a name="802"><span class="lineNum">     802 </span><span class="lineNoCov">          0 :     if( rsa_alt_get_bitlen( prv ) != rsa_get_bitlen( pub ) )</span></a>
-<a name="803"><span class="lineNum">     803 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_RSA_KEY_CHECK_FAILED );</span></a>
+<a name="802"><span class="lineNum">     802 </span>            :     if( rsa_alt_get_bitlen( prv ) != rsa_get_bitlen( pub ) )</a>
+<a name="803"><span class="lineNum">     803 </span>            :         return( MBEDTLS_ERR_RSA_KEY_CHECK_FAILED );</a>
 <a name="804"><span class="lineNum">     804 </span>            : </a>
-<a name="805"><span class="lineNum">     805 </span><span class="lineNoCov">          0 :     memset( hash, 0x2a, sizeof( hash ) );</span></a>
+<a name="805"><span class="lineNum">     805 </span>            :     memset( hash, 0x2a, sizeof( hash ) );</a>
 <a name="806"><span class="lineNum">     806 </span>            : </a>
-<a name="807"><span class="lineNum">     807 </span><span class="lineNoCov">          0 :     if( ( ret = rsa_alt_sign_wrap( (void *) prv, MBEDTLS_MD_NONE,</span></a>
+<a name="807"><span class="lineNum">     807 </span>            :     if( ( ret = rsa_alt_sign_wrap( (void *) prv, MBEDTLS_MD_NONE,</a>
 <a name="808"><span class="lineNum">     808 </span>            :                                    hash, sizeof( hash ),</a>
 <a name="809"><span class="lineNum">     809 </span>            :                                    sig, &amp;sig_len, NULL, NULL ) ) != 0 )</a>
 <a name="810"><span class="lineNum">     810 </span>            :     {</a>
-<a name="811"><span class="lineNum">     811 </span><span class="lineNoCov">          0 :         return( ret );</span></a>
+<a name="811"><span class="lineNum">     811 </span>            :         return( ret );</a>
 <a name="812"><span class="lineNum">     812 </span>            :     }</a>
 <a name="813"><span class="lineNum">     813 </span>            : </a>
-<a name="814"><span class="lineNum">     814 </span><span class="lineNoCov">          0 :     if( rsa_verify_wrap( (void *) pub, MBEDTLS_MD_NONE,</span></a>
+<a name="814"><span class="lineNum">     814 </span>            :     if( rsa_verify_wrap( (void *) pub, MBEDTLS_MD_NONE,</a>
 <a name="815"><span class="lineNum">     815 </span>            :                          hash, sizeof( hash ), sig, sig_len ) != 0 )</a>
 <a name="816"><span class="lineNum">     816 </span>            :     {</a>
-<a name="817"><span class="lineNum">     817 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_RSA_KEY_CHECK_FAILED );</span></a>
+<a name="817"><span class="lineNum">     817 </span>            :         return( MBEDTLS_ERR_RSA_KEY_CHECK_FAILED );</a>
 <a name="818"><span class="lineNum">     818 </span>            :     }</a>
 <a name="819"><span class="lineNum">     819 </span>            : </a>
-<a name="820"><span class="lineNum">     820 </span><span class="lineNoCov">          0 :     return( 0 );</span></a>
+<a name="820"><span class="lineNum">     820 </span>            :     return( 0 );</a>
 <a name="821"><span class="lineNum">     821 </span>            : }</a>
 <a name="822"><span class="lineNum">     822 </span>            : #endif /* MBEDTLS_RSA_C */</a>
 <a name="823"><span class="lineNum">     823 </span>            : </a>
-<a name="824"><span class="lineNum">     824 </span><span class="lineNoCov">          0 : static void *rsa_alt_alloc_wrap( void )</span></a>
+<a name="824"><span class="lineNum">     824 </span>            : static void *rsa_alt_alloc_wrap( void )</a>
 <a name="825"><span class="lineNum">     825 </span>            : {</a>
-<a name="826"><span class="lineNum">     826 </span><span class="lineNoCov">          0 :     void *ctx = mbedtls_calloc( 1, sizeof( mbedtls_rsa_alt_context ) );</span></a>
+<a name="826"><span class="lineNum">     826 </span>            :     void *ctx = mbedtls_calloc( 1, sizeof( mbedtls_rsa_alt_context ) );</a>
 <a name="827"><span class="lineNum">     827 </span>            : </a>
-<a name="828"><span class="lineNum">     828 </span><span class="lineNoCov">          0 :     if( ctx != NULL )</span></a>
-<a name="829"><span class="lineNum">     829 </span><span class="lineNoCov">          0 :         memset( ctx, 0, sizeof( mbedtls_rsa_alt_context ) );</span></a>
+<a name="828"><span class="lineNum">     828 </span>            :     if( ctx != NULL )</a>
+<a name="829"><span class="lineNum">     829 </span>            :         memset( ctx, 0, sizeof( mbedtls_rsa_alt_context ) );</a>
 <a name="830"><span class="lineNum">     830 </span>            : </a>
-<a name="831"><span class="lineNum">     831 </span><span class="lineNoCov">          0 :     return( ctx );</span></a>
+<a name="831"><span class="lineNum">     831 </span>            :     return( ctx );</a>
 <a name="832"><span class="lineNum">     832 </span>            : }</a>
 <a name="833"><span class="lineNum">     833 </span>            : </a>
-<a name="834"><span class="lineNum">     834 </span><span class="lineNoCov">          0 : static void rsa_alt_free_wrap( void *ctx )</span></a>
+<a name="834"><span class="lineNum">     834 </span>            : static void rsa_alt_free_wrap( void *ctx )</a>
 <a name="835"><span class="lineNum">     835 </span>            : {</a>
-<a name="836"><span class="lineNum">     836 </span><span class="lineNoCov">          0 :     mbedtls_platform_zeroize( ctx, sizeof( mbedtls_rsa_alt_context ) );</span></a>
-<a name="837"><span class="lineNum">     837 </span><span class="lineNoCov">          0 :     mbedtls_free( ctx );</span></a>
-<a name="838"><span class="lineNum">     838 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="836"><span class="lineNum">     836 </span>            :     mbedtls_platform_zeroize( ctx, sizeof( mbedtls_rsa_alt_context ) );</a>
+<a name="837"><span class="lineNum">     837 </span>            :     mbedtls_free( ctx );</a>
+<a name="838"><span class="lineNum">     838 </span>            : }</a>
 <a name="839"><span class="lineNum">     839 </span>            : </a>
 <a name="840"><span class="lineNum">     840 </span>            : const mbedtls_pk_info_t mbedtls_rsa_alt_info = {</a>
 <a name="841"><span class="lineNum">     841 </span>            :     MBEDTLS_PK_RSA_ALT,</a>

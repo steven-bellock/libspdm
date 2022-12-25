@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">90</td>
-            <td class="headerCovTableEntry">105</td>
-            <td class="headerCovTableEntryMed">85.7 %</td>
+            <td class="headerCovTableEntry">68</td>
+            <td class="headerCovTableEntry">79</td>
+            <td class="headerCovTableEntryMed">86.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-24 08:15:01</td>
+            <td class="headerValue">2022-12-25 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">5</td>
-            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
@@ -172,7 +172,7 @@
 <a name="110"><span class="lineNum">     110 </span>            :  * @retval true                            get element successfully</a>
 <a name="111"><span class="lineNum">     111 </span>            :  * @retval false                           get element failed</a>
 <a name="112"><span class="lineNum">     112 </span>            :  **/</a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">         59 : bool libspdm_get_element_from_opaque_data(libspdm_context_t *spdm_context,</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineCov">         58 : bool libspdm_get_element_from_opaque_data(libspdm_context_t *spdm_context,</span></a>
 <a name="114"><span class="lineNum">     114 </span>            :                                           size_t data_in_size, const void *data_in,</a>
 <a name="115"><span class="lineNum">     115 </span>            :                                           uint8_t element_id, uint8_t sm_data_id,</a>
 <a name="116"><span class="lineNum">     116 </span>            :                                           const void **get_element_ptr, size_t *get_element_len)</a>
@@ -193,15 +193,15 @@
 <a name="131"><span class="lineNum">     131 </span>            :     size_t current_element_len;</a>
 <a name="132"><span class="lineNum">     132 </span>            :     size_t total_element_len;</a>
 <a name="133"><span class="lineNum">     133 </span>            : </a>
-<a name="134"><span class="lineNum">     134 </span><span class="lineCov">         59 :     total_element_len = 0;</span></a>
-<a name="135"><span class="lineNum">     135 </span><span class="lineCov">         59 :     result = false;</span></a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">         58 :     total_element_len = 0;</span></a>
+<a name="135"><span class="lineNum">     135 </span><span class="lineCov">         58 :     result = false;</span></a>
 <a name="136"><span class="lineNum">     136 </span>            : </a>
 <a name="137"><span class="lineNum">     137 </span>            :     /*check parameter in*/</a>
-<a name="138"><span class="lineNum">     138 </span><span class="lineCov">         59 :     if (element_id &gt; SPDM_REGISTRY_ID_JEDEC) {</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineCov">         58 :     if (element_id &gt; SPDM_REGISTRY_ID_JEDEC) {</span></a>
 <a name="139"><span class="lineNum">     139 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="140"><span class="lineNum">     140 </span>            :     }</a>
-<a name="141"><span class="lineNum">     141 </span><span class="lineCov">         59 :     if ((data_in_size == 0) || (data_in == NULL)) {</span></a>
-<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          1 :         return false;</span></a>
+<a name="141"><span class="lineNum">     141 </span><span class="lineCov">         58 :     if ((data_in_size == 0) || (data_in == NULL)) {</span></a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="143"><span class="lineNum">     143 </span>            :     }</a>
 <a name="144"><span class="lineNum">     144 </span>            : </a>
 <a name="145"><span class="lineNum">     145 </span><span class="lineCov">         58 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
@@ -292,86 +292,6 @@
 <a name="230"><span class="lineNum">     230 </span>            : </a>
 <a name="231"><span class="lineNum">     231 </span><span class="lineCov">         53 :     return result;</span></a>
 <a name="232"><span class="lineNum">     232 </span>            : }</a>
-<a name="233"><span class="lineNum">     233 </span>            : </a>
-<a name="234"><span class="lineNum">     234 </span>            : </a>
-<a name="235"><span class="lineNum">     235 </span>            : </a>
-<a name="236"><span class="lineNum">     236 </span>            : </a>
-<a name="237"><span class="lineNum">     237 </span>            : </a>
-<a name="238"><span class="lineNum">     238 </span>            : /**</a>
-<a name="239"><span class="lineNum">     239 </span>            :  * Process opaque data version selection.</a>
-<a name="240"><span class="lineNum">     240 </span>            :  *</a>
-<a name="241"><span class="lineNum">     241 </span>            :  * This function should be called in KEY_EXCHANGE/PSK_EXCHANGE response parsing in requester.</a>
-<a name="242"><span class="lineNum">     242 </span>            :  *</a>
-<a name="243"><span class="lineNum">     243 </span>            :  * @param  data_in_size                   size in bytes of the data_in.</a>
-<a name="244"><span class="lineNum">     244 </span>            :  * @param  data_in                       A pointer to the buffer to store the opaque data version selection.</a>
-<a name="245"><span class="lineNum">     245 </span>            :  *</a>
-<a name="246"><span class="lineNum">     246 </span>            :  * @retval RETURN_SUCCESS               The opaque data version selection is processed successfully.</a>
-<a name="247"><span class="lineNum">     247 </span>            :  * @retval RETURN_UNSUPPORTED           The data_in is NOT opaque data version selection.</a>
-<a name="248"><span class="lineNum">     248 </span>            :  **/</a>
-<a name="249"><span class="lineNum">     249 </span><span class="lineCov">         37 : libspdm_return_t libspdm_process_opaque_data_version_selection_data(libspdm_context_t *spdm_context,</span></a>
-<a name="250"><span class="lineNum">     250 </span>            :                                                                     size_t data_in_size,</a>
-<a name="251"><span class="lineNum">     251 </span>            :                                                                     void *data_in)</a>
-<a name="252"><span class="lineNum">     252 </span>            : {</a>
-<a name="253"><span class="lineNum">     253 </span>            :     const secured_message_opaque_element_table_header_t</a>
-<a name="254"><span class="lineNum">     254 </span>            :     *opaque_element_table_header;</a>
-<a name="255"><span class="lineNum">     255 </span>            :     const secured_message_opaque_element_version_selection_t</a>
-<a name="256"><span class="lineNum">     256 </span>            :     *opaque_element_version_section;</a>
-<a name="257"><span class="lineNum">     257 </span>            : </a>
-<a name="258"><span class="lineNum">     258 </span>            :     bool result;</a>
-<a name="259"><span class="lineNum">     259 </span>            :     uint8_t secured_message_version_index;</a>
-<a name="260"><span class="lineNum">     260 </span>            :     const void *get_element_ptr;</a>
-<a name="261"><span class="lineNum">     261 </span>            :     size_t get_element_len;</a>
-<a name="262"><span class="lineNum">     262 </span>            : </a>
-<a name="263"><span class="lineNum">     263 </span><span class="lineCov">         37 :     result = false;</span></a>
-<a name="264"><span class="lineNum">     264 </span><span class="lineCov">         37 :     get_element_ptr = NULL;</span></a>
-<a name="265"><span class="lineNum">     265 </span>            : </a>
-<a name="266"><span class="lineNum">     266 </span><span class="lineCov">         37 :     if (spdm_context-&gt;local_context.secured_message_version.spdm_version_count == 0) {</span></a>
-<a name="267"><span class="lineNum">     267 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="268"><span class="lineNum">     268 </span>            :     }</a>
-<a name="269"><span class="lineNum">     269 </span>            : </a>
-<a name="270"><span class="lineNum">     270 </span><span class="lineCov">         37 :     result = libspdm_get_element_from_opaque_data(</span></a>
-<a name="271"><span class="lineNum">     271 </span>            :         spdm_context, data_in_size,</a>
-<a name="272"><span class="lineNum">     272 </span>            :         data_in, SPDM_REGISTRY_ID_DMTF,</a>
-<a name="273"><span class="lineNum">     273 </span>            :         SECURED_MESSAGE_OPAQUE_ELEMENT_SMDATA_ID_VERSION_SELECTION,</a>
-<a name="274"><span class="lineNum">     274 </span>            :         &amp;get_element_ptr, &amp;get_element_len);</a>
-<a name="275"><span class="lineNum">     275 </span><span class="lineCov">         37 :     if ((!result) || (get_element_ptr == NULL)) {</span></a>
-<a name="276"><span class="lineNum">     276 </span><span class="lineCov">          4 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;get element error!\n&quot;));</span></a>
-<a name="277"><span class="lineNum">     277 </span><span class="lineCov">          4 :         return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
-<a name="278"><span class="lineNum">     278 </span>            :     }</a>
-<a name="279"><span class="lineNum">     279 </span>            : </a>
-<a name="280"><span class="lineNum">     280 </span><span class="lineCov">         33 :     opaque_element_table_header = (const secured_message_opaque_element_table_header_t*)</span></a>
-<a name="281"><span class="lineNum">     281 </span>            :                                   get_element_ptr;</a>
-<a name="282"><span class="lineNum">     282 </span>            : </a>
-<a name="283"><span class="lineNum">     283 </span>            :     /*check for selection vesion data*/</a>
-<a name="284"><span class="lineNum">     284 </span><span class="lineCov">         33 :     if ((opaque_element_table_header-&gt;vendor_len != 0) ||</span></a>
-<a name="285"><span class="lineNum">     285 </span><span class="lineCov">         33 :         (opaque_element_table_header-&gt;opaque_element_data_len !=</span></a>
-<a name="286"><span class="lineNum">     286 </span>            :          sizeof(secured_message_opaque_element_version_selection_t))) {</a>
-<a name="287"><span class="lineNum">     287 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
-<a name="288"><span class="lineNum">     288 </span>            :     }</a>
-<a name="289"><span class="lineNum">     289 </span><span class="lineCov">         33 :     opaque_element_version_section = (const void *)(opaque_element_table_header + 1);</span></a>
-<a name="290"><span class="lineNum">     290 </span>            : </a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineCov">         33 :     if ((const uint8_t *)opaque_element_version_section +</span></a>
-<a name="292"><span class="lineNum">     292 </span>            :         sizeof(secured_message_opaque_element_version_selection_t) &gt;</a>
-<a name="293"><span class="lineNum">     293 </span><span class="lineCov">         33 :         (const uint8_t *)opaque_element_table_header + get_element_len) {</span></a>
-<a name="294"><span class="lineNum">     294 </span><span class="lineNoCov">          0 :         return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
-<a name="295"><span class="lineNum">     295 </span>            :     }</a>
-<a name="296"><span class="lineNum">     296 </span>            : </a>
-<a name="297"><span class="lineNum">     297 </span><span class="lineCov">         33 :     for (secured_message_version_index = 0;</span></a>
-<a name="298"><span class="lineNum">     298 </span><span class="lineCov">         33 :          secured_message_version_index &lt;</span></a>
-<a name="299"><span class="lineNum">     299 </span><span class="lineCov">         33 :          spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
-<a name="300"><span class="lineNum">     300 </span><span class="lineNoCov">          0 :          secured_message_version_index++) {</span></a>
-<a name="301"><span class="lineNum">     301 </span><span class="lineCov">         66 :         if (libspdm_get_version_from_version_number(opaque_element_version_section-&gt;</span></a>
-<a name="302"><span class="lineNum">     302 </span>            :                                                     selected_version)</a>
-<a name="303"><span class="lineNum">     303 </span>            :             ==</a>
-<a name="304"><span class="lineNum">     304 </span><span class="lineCov">         33 :             libspdm_get_version_from_version_number(</span></a>
-<a name="305"><span class="lineNum">     305 </span><span class="lineCov">         33 :                 spdm_context-&gt;local_context.secured_message_version.spdm_version[</span></a>
-<a name="306"><span class="lineNum">     306 </span>            :                     secured_message_version_index])) {</a>
-<a name="307"><span class="lineNum">     307 </span><span class="lineCov">         33 :             return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="308"><span class="lineNum">     308 </span>            :         }</a>
-<a name="309"><span class="lineNum">     309 </span>            :     }</a>
-<a name="310"><span class="lineNum">     310 </span>            : </a>
-<a name="311"><span class="lineNum">     311 </span><span class="lineNoCov">          0 :     return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
-<a name="312"><span class="lineNum">     312 </span>            : }</a>
 </pre>
       </td>
     </tr>

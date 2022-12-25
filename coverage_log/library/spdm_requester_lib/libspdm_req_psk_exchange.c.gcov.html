@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">169</td>
-            <td class="headerCovTableEntry">238</td>
-            <td class="headerCovTableEntryLo">71.0 %</td>
+            <td class="headerCovTableEntry">167</td>
+            <td class="headerCovTableEntry">235</td>
+            <td class="headerCovTableEntryLo">71.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-24 08:15:01</td>
+            <td class="headerValue">2022-12-25 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -391,239 +391,236 @@
 <a name="329"><span class="lineNum">     329 </span><span class="lineCov">         17 :     if (heartbeat_period != NULL) {</span></a>
 <a name="330"><span class="lineNum">     330 </span><span class="lineCov">         17 :         *heartbeat_period = spdm_response-&gt;header.param1;</span></a>
 <a name="331"><span class="lineNum">     331 </span>            :     }</a>
-<a name="332"><span class="lineNum">     332 </span><span class="lineCov">         17 :     rsp_session_id = spdm_response-&gt;rsp_session_id;</span></a>
-<a name="333"><span class="lineNum">     333 </span><span class="lineCov">         17 :     *session_id = libspdm_generate_session_id(req_session_id, rsp_session_id);</span></a>
-<a name="334"><span class="lineNum">     334 </span><span class="lineCov">         17 :     session_info = libspdm_assign_session_id(spdm_context, *session_id, true);</span></a>
-<a name="335"><span class="lineNum">     335 </span><span class="lineCov">         17 :     if (session_info == NULL) {</span></a>
-<a name="336"><span class="lineNum">     336 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_SESSION_NUMBER_EXCEED;</span></a>
-<a name="337"><span class="lineNum">     337 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="338"><span class="lineNum">     338 </span>            :     }</a>
-<a name="339"><span class="lineNum">     339 </span><span class="lineCov">         17 :     libspdm_session_info_set_psk_hint(session_info,</span></a>
-<a name="340"><span class="lineNum">     340 </span>            :                                       spdm_context-&gt;local_context.psk_hint,</a>
-<a name="341"><span class="lineNum">     341 </span>            :                                       spdm_context-&gt;local_context.psk_hint_size);</a>
-<a name="342"><span class="lineNum">     342 </span>            : </a>
-<a name="343"><span class="lineNum">     343 </span><span class="lineCov">         17 :     measurement_summary_hash_size = libspdm_get_measurement_summary_hash_size(</span></a>
-<a name="344"><span class="lineNum">     344 </span>            :         spdm_context, true, measurement_hash_type);</a>
-<a name="345"><span class="lineNum">     345 </span><span class="lineCov">         17 :     hmac_size = libspdm_get_hash_size(</span></a>
-<a name="346"><span class="lineNum">     346 </span>            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo);</a>
-<a name="347"><span class="lineNum">     347 </span>            : </a>
-<a name="348"><span class="lineNum">     348 </span><span class="lineCov">         17 :     if (spdm_response_size &lt;</span></a>
-<a name="349"><span class="lineNum">     349 </span>            :         sizeof(spdm_psk_exchange_response_t) +</a>
-<a name="350"><span class="lineNum">     350 </span><span class="lineCov">         17 :         spdm_response-&gt;context_length + spdm_response-&gt;opaque_length +</span></a>
-<a name="351"><span class="lineNum">     351 </span><span class="lineCov">         17 :         measurement_summary_hash_size + hmac_size) {</span></a>
-<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          2 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="353"><span class="lineNum">     353 </span><span class="lineCov">          2 :         status = LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
-<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          2 :         goto receive_done;</span></a>
+<a name="332"><span class="lineNum">     332 </span>            : </a>
+<a name="333"><span class="lineNum">     333 </span><span class="lineCov">         17 :     measurement_summary_hash_size = libspdm_get_measurement_summary_hash_size(</span></a>
+<a name="334"><span class="lineNum">     334 </span>            :         spdm_context, true, measurement_hash_type);</a>
+<a name="335"><span class="lineNum">     335 </span><span class="lineCov">         17 :     hmac_size = libspdm_get_hash_size(</span></a>
+<a name="336"><span class="lineNum">     336 </span>            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo);</a>
+<a name="337"><span class="lineNum">     337 </span>            : </a>
+<a name="338"><span class="lineNum">     338 </span><span class="lineCov">         17 :     if (spdm_response_size &lt;</span></a>
+<a name="339"><span class="lineNum">     339 </span>            :         sizeof(spdm_psk_exchange_response_t) +</a>
+<a name="340"><span class="lineNum">     340 </span><span class="lineCov">         17 :         spdm_response-&gt;context_length + spdm_response-&gt;opaque_length +</span></a>
+<a name="341"><span class="lineNum">     341 </span><span class="lineCov">         17 :         measurement_summary_hash_size + hmac_size) {</span></a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineCov">          2 :         status = LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
+<a name="343"><span class="lineNum">     343 </span><span class="lineCov">          2 :         goto receive_done;</span></a>
+<a name="344"><span class="lineNum">     344 </span>            :     }</a>
+<a name="345"><span class="lineNum">     345 </span>            : </a>
+<a name="346"><span class="lineNum">     346 </span><span class="lineCov">         15 :     ptr = (uint8_t *)spdm_response + sizeof(spdm_psk_exchange_response_t) +</span></a>
+<a name="347"><span class="lineNum">     347 </span><span class="lineCov">         15 :           measurement_summary_hash_size + spdm_response-&gt;context_length;</span></a>
+<a name="348"><span class="lineNum">     348 </span><span class="lineCov">         15 :     if (spdm_response-&gt;opaque_length != 0) {</span></a>
+<a name="349"><span class="lineNum">     349 </span><span class="lineCov">         13 :         status = libspdm_process_opaque_data_version_selection_data(</span></a>
+<a name="350"><span class="lineNum">     350 </span><span class="lineCov">         13 :             spdm_context, spdm_response-&gt;opaque_length, ptr);</span></a>
+<a name="351"><span class="lineNum">     351 </span><span class="lineCov">         13 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          1 :             status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
+<a name="353"><span class="lineNum">     353 </span><span class="lineCov">          1 :             goto receive_done;</span></a>
+<a name="354"><span class="lineNum">     354 </span>            :         }</a>
 <a name="355"><span class="lineNum">     355 </span>            :     }</a>
 <a name="356"><span class="lineNum">     356 </span>            : </a>
-<a name="357"><span class="lineNum">     357 </span><span class="lineCov">         15 :     ptr = (uint8_t *)spdm_response + sizeof(spdm_psk_exchange_response_t) +</span></a>
-<a name="358"><span class="lineNum">     358 </span><span class="lineCov">         15 :           measurement_summary_hash_size + spdm_response-&gt;context_length;</span></a>
-<a name="359"><span class="lineNum">     359 </span><span class="lineCov">         15 :     if (spdm_response-&gt;opaque_length != 0) {</span></a>
-<a name="360"><span class="lineNum">     360 </span><span class="lineCov">         13 :         status = libspdm_process_opaque_data_version_selection_data(</span></a>
-<a name="361"><span class="lineNum">     361 </span><span class="lineCov">         13 :             spdm_context, spdm_response-&gt;opaque_length, ptr);</span></a>
-<a name="362"><span class="lineNum">     362 </span><span class="lineCov">         13 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          1 :             libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          1 :             status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
-<a name="365"><span class="lineNum">     365 </span><span class="lineCov">          1 :             goto receive_done;</span></a>
-<a name="366"><span class="lineNum">     366 </span>            :         }</a>
-<a name="367"><span class="lineNum">     367 </span>            :     }</a>
-<a name="368"><span class="lineNum">     368 </span>            : </a>
-<a name="369"><span class="lineNum">     369 </span><span class="lineCov">         14 :     spdm_response_size = sizeof(spdm_psk_exchange_response_t) +</span></a>
-<a name="370"><span class="lineNum">     370 </span><span class="lineCov">         14 :                          spdm_response-&gt;context_length +</span></a>
-<a name="371"><span class="lineNum">     371 </span><span class="lineCov">         14 :                          spdm_response-&gt;opaque_length +</span></a>
-<a name="372"><span class="lineNum">     372 </span><span class="lineCov">         14 :                          measurement_summary_hash_size + hmac_size;</span></a>
-<a name="373"><span class="lineNum">     373 </span>            : </a>
-<a name="374"><span class="lineNum">     374 </span><span class="lineCov">         14 :     ptr = (uint8_t *)(spdm_response-&gt;measurement_summary_hash);</span></a>
-<a name="375"><span class="lineNum">     375 </span><span class="lineCov">         14 :     measurement_summary_hash = ptr;</span></a>
-<a name="376"><span class="lineNum">     376 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;measurement_summary_hash (0x%x) - &quot;,</span></a>
-<a name="377"><span class="lineNum">     377 </span>            :                    measurement_summary_hash_size));</a>
-<a name="378"><span class="lineNum">     378 </span><span class="lineCov">         14 :     LIBSPDM_INTERNAL_DUMP_DATA(measurement_summary_hash,</span></a>
-<a name="379"><span class="lineNum">     379 </span>            :                                measurement_summary_hash_size);</a>
-<a name="380"><span class="lineNum">     380 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
-<a name="381"><span class="lineNum">     381 </span>            : </a>
-<a name="382"><span class="lineNum">     382 </span><span class="lineCov">         14 :     ptr += measurement_summary_hash_size;</span></a>
-<a name="383"><span class="lineNum">     383 </span>            : </a>
-<a name="384"><span class="lineNum">     384 </span><span class="lineCov">         14 :     if ( spdm_response-&gt;opaque_length &gt; SPDM_MAX_OPAQUE_DATA_SIZE) {</span></a>
-<a name="385"><span class="lineNum">     385 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="386"><span class="lineNum">     386 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
-<a name="387"><span class="lineNum">     387 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="388"><span class="lineNum">     388 </span>            :     }</a>
-<a name="389"><span class="lineNum">     389 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;ServerContextData (0x%x) - &quot;,</span></a>
-<a name="390"><span class="lineNum">     390 </span>            :                    spdm_response-&gt;context_length));</a>
-<a name="391"><span class="lineNum">     391 </span><span class="lineCov">         14 :     LIBSPDM_INTERNAL_DUMP_DATA(ptr, spdm_response-&gt;context_length);</span></a>
-<a name="392"><span class="lineNum">     392 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
-<a name="393"><span class="lineNum">     393 </span><span class="lineCov">         14 :     if (responder_context != NULL) {</span></a>
-<a name="394"><span class="lineNum">     394 </span><span class="lineNoCov">          0 :         if (*responder_context_size &gt; spdm_response-&gt;context_length) {</span></a>
-<a name="395"><span class="lineNum">     395 </span><span class="lineNoCov">          0 :             *responder_context_size = spdm_response-&gt;context_length;</span></a>
-<a name="396"><span class="lineNum">     396 </span>            :         }</a>
-<a name="397"><span class="lineNum">     397 </span><span class="lineNoCov">          0 :         libspdm_copy_mem(responder_context, *responder_context_size,</span></a>
-<a name="398"><span class="lineNum">     398 </span>            :                          ptr, *responder_context_size);</a>
-<a name="399"><span class="lineNum">     399 </span>            :     }</a>
-<a name="400"><span class="lineNum">     400 </span>            : </a>
-<a name="401"><span class="lineNum">     401 </span><span class="lineCov">         14 :     ptr += spdm_response-&gt;context_length;</span></a>
+<a name="357"><span class="lineNum">     357 </span><span class="lineCov">         14 :     spdm_response_size = sizeof(spdm_psk_exchange_response_t) +</span></a>
+<a name="358"><span class="lineNum">     358 </span><span class="lineCov">         14 :                          spdm_response-&gt;context_length +</span></a>
+<a name="359"><span class="lineNum">     359 </span><span class="lineCov">         14 :                          spdm_response-&gt;opaque_length +</span></a>
+<a name="360"><span class="lineNum">     360 </span><span class="lineCov">         14 :                          measurement_summary_hash_size + hmac_size;</span></a>
+<a name="361"><span class="lineNum">     361 </span>            : </a>
+<a name="362"><span class="lineNum">     362 </span><span class="lineCov">         14 :     ptr = (uint8_t *)(spdm_response-&gt;measurement_summary_hash);</span></a>
+<a name="363"><span class="lineNum">     363 </span><span class="lineCov">         14 :     measurement_summary_hash = ptr;</span></a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;measurement_summary_hash (0x%x) - &quot;,</span></a>
+<a name="365"><span class="lineNum">     365 </span>            :                    measurement_summary_hash_size));</a>
+<a name="366"><span class="lineNum">     366 </span><span class="lineCov">         14 :     LIBSPDM_INTERNAL_DUMP_DATA(measurement_summary_hash,</span></a>
+<a name="367"><span class="lineNum">     367 </span>            :                                measurement_summary_hash_size);</a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
+<a name="369"><span class="lineNum">     369 </span>            : </a>
+<a name="370"><span class="lineNum">     370 </span><span class="lineCov">         14 :     ptr += measurement_summary_hash_size;</span></a>
+<a name="371"><span class="lineNum">     371 </span>            : </a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineCov">         14 :     if ( spdm_response-&gt;opaque_length &gt; SPDM_MAX_OPAQUE_DATA_SIZE) {</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
+<a name="374"><span class="lineNum">     374 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="375"><span class="lineNum">     375 </span>            :     }</a>
+<a name="376"><span class="lineNum">     376 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;ServerContextData (0x%x) - &quot;,</span></a>
+<a name="377"><span class="lineNum">     377 </span>            :                    spdm_response-&gt;context_length));</a>
+<a name="378"><span class="lineNum">     378 </span><span class="lineCov">         14 :     LIBSPDM_INTERNAL_DUMP_DATA(ptr, spdm_response-&gt;context_length);</span></a>
+<a name="379"><span class="lineNum">     379 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
+<a name="380"><span class="lineNum">     380 </span><span class="lineCov">         14 :     if (responder_context != NULL) {</span></a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineNoCov">          0 :         if (*responder_context_size &gt; spdm_response-&gt;context_length) {</span></a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineNoCov">          0 :             *responder_context_size = spdm_response-&gt;context_length;</span></a>
+<a name="383"><span class="lineNum">     383 </span>            :         }</a>
+<a name="384"><span class="lineNum">     384 </span><span class="lineNoCov">          0 :         libspdm_copy_mem(responder_context, *responder_context_size,</span></a>
+<a name="385"><span class="lineNum">     385 </span>            :                          ptr, *responder_context_size);</a>
+<a name="386"><span class="lineNum">     386 </span>            :     }</a>
+<a name="387"><span class="lineNum">     387 </span>            : </a>
+<a name="388"><span class="lineNum">     388 </span><span class="lineCov">         14 :     ptr += spdm_response-&gt;context_length;</span></a>
+<a name="389"><span class="lineNum">     389 </span>            : </a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineCov">         14 :     ptr += spdm_response-&gt;opaque_length;</span></a>
+<a name="391"><span class="lineNum">     391 </span>            : </a>
+<a name="392"><span class="lineNum">     392 </span><span class="lineCov">         14 :     rsp_session_id = spdm_response-&gt;rsp_session_id;</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineCov">         14 :     *session_id = libspdm_generate_session_id(req_session_id, rsp_session_id);</span></a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineCov">         14 :     session_info = libspdm_assign_session_id(spdm_context, *session_id, true);</span></a>
+<a name="395"><span class="lineNum">     395 </span><span class="lineCov">         14 :     if (session_info == NULL) {</span></a>
+<a name="396"><span class="lineNum">     396 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_SESSION_NUMBER_EXCEED;</span></a>
+<a name="397"><span class="lineNum">     397 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="398"><span class="lineNum">     398 </span>            :     }</a>
+<a name="399"><span class="lineNum">     399 </span><span class="lineCov">         14 :     libspdm_session_info_set_psk_hint(session_info,</span></a>
+<a name="400"><span class="lineNum">     400 </span>            :                                       spdm_context-&gt;local_context.psk_hint,</a>
+<a name="401"><span class="lineNum">     401 </span>            :                                       spdm_context-&gt;local_context.psk_hint_size);</a>
 <a name="402"><span class="lineNum">     402 </span>            : </a>
-<a name="403"><span class="lineNum">     403 </span><span class="lineCov">         14 :     ptr += spdm_response-&gt;opaque_length;</span></a>
+<a name="403"><span class="lineNum">     403 </span>            :     /* Cache session data*/</a>
 <a name="404"><span class="lineNum">     404 </span>            : </a>
-<a name="405"><span class="lineNum">     405 </span>            : </a>
-<a name="406"><span class="lineNum">     406 </span>            :     /* Cache session data*/</a>
-<a name="407"><span class="lineNum">     407 </span>            : </a>
-<a name="408"><span class="lineNum">     408 </span><span class="lineCov">         14 :     status = libspdm_append_message_k(spdm_context, session_info, true, spdm_request,</span></a>
-<a name="409"><span class="lineNum">     409 </span>            :                                       spdm_request_size);</a>
-<a name="410"><span class="lineNum">     410 </span><span class="lineCov">         14 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="411"><span class="lineNum">     411 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="412"><span class="lineNum">     412 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
-<a name="413"><span class="lineNum">     413 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="414"><span class="lineNum">     414 </span>            :     }</a>
-<a name="415"><span class="lineNum">     415 </span>            : </a>
-<a name="416"><span class="lineNum">     416 </span><span class="lineCov">         14 :     status = libspdm_append_message_k(spdm_context, session_info, true, spdm_response,</span></a>
-<a name="417"><span class="lineNum">     417 </span>            :                                       spdm_response_size - hmac_size);</a>
-<a name="418"><span class="lineNum">     418 </span><span class="lineCov">         14 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="419"><span class="lineNum">     419 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="420"><span class="lineNum">     420 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
-<a name="421"><span class="lineNum">     421 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="422"><span class="lineNum">     422 </span>            :     }</a>
-<a name="423"><span class="lineNum">     423 </span>            : </a>
-<a name="424"><span class="lineNum">     424 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_handshake_key[%x]\n&quot;,</span></a>
-<a name="425"><span class="lineNum">     425 </span>            :                    *session_id));</a>
-<a name="426"><span class="lineNum">     426 </span><span class="lineCov">         14 :     result = libspdm_calculate_th1_hash(spdm_context, session_info, true,</span></a>
-<a name="427"><span class="lineNum">     427 </span>            :                                         th1_hash_data);</a>
-<a name="428"><span class="lineNum">     428 </span><span class="lineCov">         14 :     if (!result) {</span></a>
-<a name="429"><span class="lineNum">     429 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="430"><span class="lineNum">     430 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
-<a name="431"><span class="lineNum">     431 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="432"><span class="lineNum">     432 </span>            :     }</a>
-<a name="433"><span class="lineNum">     433 </span><span class="lineCov">         14 :     result = libspdm_generate_session_handshake_key(</span></a>
-<a name="434"><span class="lineNum">     434 </span>            :         session_info-&gt;secured_message_context, th1_hash_data);</a>
-<a name="435"><span class="lineNum">     435 </span><span class="lineCov">         14 :     if (!result) {</span></a>
-<a name="436"><span class="lineNum">     436 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="437"><span class="lineNum">     437 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
-<a name="438"><span class="lineNum">     438 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="439"><span class="lineNum">     439 </span>            :     }</a>
-<a name="440"><span class="lineNum">     440 </span>            : </a>
-<a name="441"><span class="lineNum">     441 </span><span class="lineCov">         14 :     verify_data = ptr;</span></a>
-<a name="442"><span class="lineNum">     442 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;verify_data (0x%x):\n&quot;, hmac_size));</span></a>
-<a name="443"><span class="lineNum">     443 </span><span class="lineCov">         14 :     LIBSPDM_INTERNAL_DUMP_HEX(verify_data, hmac_size);</span></a>
-<a name="444"><span class="lineNum">     444 </span><span class="lineCov">         14 :     result = libspdm_verify_psk_exchange_rsp_hmac(spdm_context, session_info,</span></a>
-<a name="445"><span class="lineNum">     445 </span>            :                                                   verify_data, hmac_size);</a>
-<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         14 :     if (!result) {</span></a>
-<a name="447"><span class="lineNum">     447 </span><span class="lineCov">          1 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="448"><span class="lineNum">     448 </span><span class="lineCov">          1 :         status = LIBSPDM_STATUS_VERIF_FAIL;</span></a>
-<a name="449"><span class="lineNum">     449 </span><span class="lineCov">          1 :         goto receive_done;</span></a>
-<a name="450"><span class="lineNum">     450 </span>            :     }</a>
-<a name="451"><span class="lineNum">     451 </span>            : </a>
-<a name="452"><span class="lineNum">     452 </span><span class="lineCov">         13 :     status = libspdm_append_message_k(spdm_context, session_info, true, verify_data, hmac_size);</span></a>
-<a name="453"><span class="lineNum">     453 </span><span class="lineCov">         13 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="454"><span class="lineNum">     454 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="455"><span class="lineNum">     455 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
-<a name="456"><span class="lineNum">     456 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="457"><span class="lineNum">     457 </span>            :     }</a>
-<a name="458"><span class="lineNum">     458 </span>            : </a>
-<a name="459"><span class="lineNum">     459 </span><span class="lineCov">         13 :     if (measurement_hash != NULL) {</span></a>
-<a name="460"><span class="lineNum">     460 </span><span class="lineCov">         13 :         libspdm_copy_mem(measurement_hash, measurement_summary_hash_size,</span></a>
-<a name="461"><span class="lineNum">     461 </span>            :                          measurement_summary_hash, measurement_summary_hash_size);</a>
-<a name="462"><span class="lineNum">     462 </span>            :     }</a>
-<a name="463"><span class="lineNum">     463 </span>            : </a>
-<a name="464"><span class="lineNum">     464 </span><span class="lineCov">         13 :     session_info-&gt;session_policy = session_policy;</span></a>
-<a name="465"><span class="lineNum">     465 </span>            : </a>
-<a name="466"><span class="lineNum">     466 </span><span class="lineCov">         13 :     libspdm_secured_message_set_session_state(</span></a>
-<a name="467"><span class="lineNum">     467 </span>            :         session_info-&gt;secured_message_context,</a>
-<a name="468"><span class="lineNum">     468 </span>            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
-<a name="469"><span class="lineNum">     469 </span>            : </a>
-<a name="470"><span class="lineNum">     470 </span><span class="lineCov">         13 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
-<a name="471"><span class="lineNum">     471 </span>            :             spdm_context, true, 0,</a>
-<a name="472"><span class="lineNum">     472 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PSK_CAP_RESPONDER_WITH_CONTEXT)) {</a>
-<a name="473"><span class="lineNum">     473 </span>            :         /* No need to send PSK_FINISH, enter application phase directly.*/</a>
-<a name="474"><span class="lineNum">     474 </span>            : </a>
-<a name="475"><span class="lineNum">     475 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_data_key[%x]\n&quot;,</span></a>
-<a name="476"><span class="lineNum">     476 </span>            :                        session_id));</a>
-<a name="477"><span class="lineNum">     477 </span><span class="lineNoCov">          0 :         result = libspdm_calculate_th2_hash(spdm_context, session_info,</span></a>
-<a name="478"><span class="lineNum">     478 </span>            :                                             true, th2_hash_data);</a>
-<a name="479"><span class="lineNum">     479 </span><span class="lineNoCov">          0 :         if (!result) {</span></a>
-<a name="480"><span class="lineNum">     480 </span><span class="lineNoCov">          0 :             libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="481"><span class="lineNum">     481 </span><span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
-<a name="482"><span class="lineNum">     482 </span><span class="lineNoCov">          0 :             goto receive_done;</span></a>
-<a name="483"><span class="lineNum">     483 </span>            :         }</a>
-<a name="484"><span class="lineNum">     484 </span><span class="lineNoCov">          0 :         result = libspdm_generate_session_data_key(</span></a>
-<a name="485"><span class="lineNum">     485 </span>            :             session_info-&gt;secured_message_context, th2_hash_data);</a>
-<a name="486"><span class="lineNum">     486 </span><span class="lineNoCov">          0 :         if (!result) {</span></a>
-<a name="487"><span class="lineNum">     487 </span><span class="lineNoCov">          0 :             libspdm_free_session_id(spdm_context, *session_id);</span></a>
-<a name="488"><span class="lineNum">     488 </span><span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
-<a name="489"><span class="lineNum">     489 </span><span class="lineNoCov">          0 :             goto receive_done;</span></a>
-<a name="490"><span class="lineNum">     490 </span>            :         }</a>
-<a name="491"><span class="lineNum">     491 </span>            : </a>
-<a name="492"><span class="lineNum">     492 </span><span class="lineNoCov">          0 :         libspdm_secured_message_set_session_state(</span></a>
-<a name="493"><span class="lineNum">     493 </span>            :             session_info-&gt;secured_message_context,</a>
-<a name="494"><span class="lineNum">     494 </span>            :             LIBSPDM_SESSION_STATE_ESTABLISHED);</a>
-<a name="495"><span class="lineNum">     495 </span>            :     }</a>
-<a name="496"><span class="lineNum">     496 </span>            : </a>
-<a name="497"><span class="lineNum">     497 </span><span class="lineCov">         13 :     session_info-&gt;heartbeat_period = spdm_response-&gt;header.param1;</span></a>
-<a name="498"><span class="lineNum">     498 </span>            : </a>
-<a name="499"><span class="lineNum">     499 </span><span class="lineCov">         13 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="500"><span class="lineNum">     500 </span>            : </a>
-<a name="501"><span class="lineNum">     501 </span><span class="lineCov">         44 : receive_done:</span></a>
-<a name="502"><span class="lineNum">     502 </span><span class="lineCov">         44 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="503"><span class="lineNum">     503 </span><span class="lineCov">         44 :     return status;</span></a>
-<a name="504"><span class="lineNum">     504 </span>            : }</a>
-<a name="505"><span class="lineNum">     505 </span>            : </a>
-<a name="506"><span class="lineNum">     506 </span><span class="lineCov">         42 : libspdm_return_t libspdm_send_receive_psk_exchange(libspdm_context_t *spdm_context,</span></a>
-<a name="507"><span class="lineNum">     507 </span>            :                                                    uint8_t measurement_hash_type,</a>
-<a name="508"><span class="lineNum">     508 </span>            :                                                    uint8_t session_policy,</a>
-<a name="509"><span class="lineNum">     509 </span>            :                                                    uint32_t *session_id,</a>
-<a name="510"><span class="lineNum">     510 </span>            :                                                    uint8_t *heartbeat_period,</a>
-<a name="511"><span class="lineNum">     511 </span>            :                                                    void *measurement_hash)</a>
-<a name="512"><span class="lineNum">     512 </span>            : {</a>
-<a name="513"><span class="lineNum">     513 </span>            :     size_t retry;</a>
-<a name="514"><span class="lineNum">     514 </span>            :     libspdm_return_t status;</a>
-<a name="515"><span class="lineNum">     515 </span>            : </a>
-<a name="516"><span class="lineNum">     516 </span><span class="lineCov">         42 :     spdm_context-&gt;crypto_request = true;</span></a>
-<a name="517"><span class="lineNum">     517 </span><span class="lineCov">         42 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="518"><span class="lineNum">     518 </span>            :     do {</a>
-<a name="519"><span class="lineNum">     519 </span><span class="lineCov">         46 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
-<a name="520"><span class="lineNum">     520 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
-<a name="521"><span class="lineNum">     521 </span>            :             heartbeat_period, measurement_hash,</a>
-<a name="522"><span class="lineNum">     522 </span>            :             NULL, 0, NULL, NULL, NULL, NULL);</a>
-<a name="523"><span class="lineNum">     523 </span><span class="lineCov">         46 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="524"><span class="lineNum">     524 </span><span class="lineCov">         41 :             return status;</span></a>
-<a name="525"><span class="lineNum">     525 </span>            :         }</a>
-<a name="526"><span class="lineNum">     526 </span><span class="lineCov">          5 :     } while (retry-- != 0);</span></a>
+<a name="405"><span class="lineNum">     405 </span><span class="lineCov">         14 :     status = libspdm_append_message_k(spdm_context, session_info, true, spdm_request,</span></a>
+<a name="406"><span class="lineNum">     406 </span>            :                                       spdm_request_size);</a>
+<a name="407"><span class="lineNum">     407 </span><span class="lineCov">         14 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="408"><span class="lineNum">     408 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="409"><span class="lineNum">     409 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
+<a name="410"><span class="lineNum">     410 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="411"><span class="lineNum">     411 </span>            :     }</a>
+<a name="412"><span class="lineNum">     412 </span>            : </a>
+<a name="413"><span class="lineNum">     413 </span><span class="lineCov">         14 :     status = libspdm_append_message_k(spdm_context, session_info, true, spdm_response,</span></a>
+<a name="414"><span class="lineNum">     414 </span>            :                                       spdm_response_size - hmac_size);</a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineCov">         14 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="416"><span class="lineNum">     416 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="417"><span class="lineNum">     417 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
+<a name="418"><span class="lineNum">     418 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="419"><span class="lineNum">     419 </span>            :     }</a>
+<a name="420"><span class="lineNum">     420 </span>            : </a>
+<a name="421"><span class="lineNum">     421 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_handshake_key[%x]\n&quot;,</span></a>
+<a name="422"><span class="lineNum">     422 </span>            :                    *session_id));</a>
+<a name="423"><span class="lineNum">     423 </span><span class="lineCov">         14 :     result = libspdm_calculate_th1_hash(spdm_context, session_info, true,</span></a>
+<a name="424"><span class="lineNum">     424 </span>            :                                         th1_hash_data);</a>
+<a name="425"><span class="lineNum">     425 </span><span class="lineCov">         14 :     if (!result) {</span></a>
+<a name="426"><span class="lineNum">     426 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="427"><span class="lineNum">     427 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
+<a name="428"><span class="lineNum">     428 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="429"><span class="lineNum">     429 </span>            :     }</a>
+<a name="430"><span class="lineNum">     430 </span><span class="lineCov">         14 :     result = libspdm_generate_session_handshake_key(</span></a>
+<a name="431"><span class="lineNum">     431 </span>            :         session_info-&gt;secured_message_context, th1_hash_data);</a>
+<a name="432"><span class="lineNum">     432 </span><span class="lineCov">         14 :     if (!result) {</span></a>
+<a name="433"><span class="lineNum">     433 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="434"><span class="lineNum">     434 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
+<a name="435"><span class="lineNum">     435 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="436"><span class="lineNum">     436 </span>            :     }</a>
+<a name="437"><span class="lineNum">     437 </span>            : </a>
+<a name="438"><span class="lineNum">     438 </span><span class="lineCov">         14 :     verify_data = ptr;</span></a>
+<a name="439"><span class="lineNum">     439 </span><span class="lineCov">         14 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;verify_data (0x%x):\n&quot;, hmac_size));</span></a>
+<a name="440"><span class="lineNum">     440 </span><span class="lineCov">         14 :     LIBSPDM_INTERNAL_DUMP_HEX(verify_data, hmac_size);</span></a>
+<a name="441"><span class="lineNum">     441 </span><span class="lineCov">         14 :     result = libspdm_verify_psk_exchange_rsp_hmac(spdm_context, session_info,</span></a>
+<a name="442"><span class="lineNum">     442 </span>            :                                                   verify_data, hmac_size);</a>
+<a name="443"><span class="lineNum">     443 </span><span class="lineCov">         14 :     if (!result) {</span></a>
+<a name="444"><span class="lineNum">     444 </span><span class="lineCov">          1 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="445"><span class="lineNum">     445 </span><span class="lineCov">          1 :         status = LIBSPDM_STATUS_VERIF_FAIL;</span></a>
+<a name="446"><span class="lineNum">     446 </span><span class="lineCov">          1 :         goto receive_done;</span></a>
+<a name="447"><span class="lineNum">     447 </span>            :     }</a>
+<a name="448"><span class="lineNum">     448 </span>            : </a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineCov">         13 :     status = libspdm_append_message_k(spdm_context, session_info, true, verify_data, hmac_size);</span></a>
+<a name="450"><span class="lineNum">     450 </span><span class="lineCov">         13 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="451"><span class="lineNum">     451 </span><span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="452"><span class="lineNum">     452 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
+<a name="453"><span class="lineNum">     453 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="454"><span class="lineNum">     454 </span>            :     }</a>
+<a name="455"><span class="lineNum">     455 </span>            : </a>
+<a name="456"><span class="lineNum">     456 </span><span class="lineCov">         13 :     if (measurement_hash != NULL) {</span></a>
+<a name="457"><span class="lineNum">     457 </span><span class="lineCov">         13 :         libspdm_copy_mem(measurement_hash, measurement_summary_hash_size,</span></a>
+<a name="458"><span class="lineNum">     458 </span>            :                          measurement_summary_hash, measurement_summary_hash_size);</a>
+<a name="459"><span class="lineNum">     459 </span>            :     }</a>
+<a name="460"><span class="lineNum">     460 </span>            : </a>
+<a name="461"><span class="lineNum">     461 </span><span class="lineCov">         13 :     session_info-&gt;session_policy = session_policy;</span></a>
+<a name="462"><span class="lineNum">     462 </span>            : </a>
+<a name="463"><span class="lineNum">     463 </span><span class="lineCov">         13 :     libspdm_secured_message_set_session_state(</span></a>
+<a name="464"><span class="lineNum">     464 </span>            :         session_info-&gt;secured_message_context,</a>
+<a name="465"><span class="lineNum">     465 </span>            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
+<a name="466"><span class="lineNum">     466 </span>            : </a>
+<a name="467"><span class="lineNum">     467 </span><span class="lineCov">         13 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
+<a name="468"><span class="lineNum">     468 </span>            :             spdm_context, true, 0,</a>
+<a name="469"><span class="lineNum">     469 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PSK_CAP_RESPONDER_WITH_CONTEXT)) {</a>
+<a name="470"><span class="lineNum">     470 </span>            :         /* No need to send PSK_FINISH, enter application phase directly.*/</a>
+<a name="471"><span class="lineNum">     471 </span>            : </a>
+<a name="472"><span class="lineNum">     472 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_data_key[%x]\n&quot;,</span></a>
+<a name="473"><span class="lineNum">     473 </span>            :                        session_id));</a>
+<a name="474"><span class="lineNum">     474 </span><span class="lineNoCov">          0 :         result = libspdm_calculate_th2_hash(spdm_context, session_info,</span></a>
+<a name="475"><span class="lineNum">     475 </span>            :                                             true, th2_hash_data);</a>
+<a name="476"><span class="lineNum">     476 </span><span class="lineNoCov">          0 :         if (!result) {</span></a>
+<a name="477"><span class="lineNum">     477 </span><span class="lineNoCov">          0 :             libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="478"><span class="lineNum">     478 </span><span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
+<a name="479"><span class="lineNum">     479 </span><span class="lineNoCov">          0 :             goto receive_done;</span></a>
+<a name="480"><span class="lineNum">     480 </span>            :         }</a>
+<a name="481"><span class="lineNum">     481 </span><span class="lineNoCov">          0 :         result = libspdm_generate_session_data_key(</span></a>
+<a name="482"><span class="lineNum">     482 </span>            :             session_info-&gt;secured_message_context, th2_hash_data);</a>
+<a name="483"><span class="lineNum">     483 </span><span class="lineNoCov">          0 :         if (!result) {</span></a>
+<a name="484"><span class="lineNum">     484 </span><span class="lineNoCov">          0 :             libspdm_free_session_id(spdm_context, *session_id);</span></a>
+<a name="485"><span class="lineNum">     485 </span><span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
+<a name="486"><span class="lineNum">     486 </span><span class="lineNoCov">          0 :             goto receive_done;</span></a>
+<a name="487"><span class="lineNum">     487 </span>            :         }</a>
+<a name="488"><span class="lineNum">     488 </span>            : </a>
+<a name="489"><span class="lineNum">     489 </span><span class="lineNoCov">          0 :         libspdm_secured_message_set_session_state(</span></a>
+<a name="490"><span class="lineNum">     490 </span>            :             session_info-&gt;secured_message_context,</a>
+<a name="491"><span class="lineNum">     491 </span>            :             LIBSPDM_SESSION_STATE_ESTABLISHED);</a>
+<a name="492"><span class="lineNum">     492 </span>            :     }</a>
+<a name="493"><span class="lineNum">     493 </span>            : </a>
+<a name="494"><span class="lineNum">     494 </span><span class="lineCov">         13 :     session_info-&gt;heartbeat_period = spdm_response-&gt;header.param1;</span></a>
+<a name="495"><span class="lineNum">     495 </span>            : </a>
+<a name="496"><span class="lineNum">     496 </span><span class="lineCov">         13 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="497"><span class="lineNum">     497 </span>            : </a>
+<a name="498"><span class="lineNum">     498 </span><span class="lineCov">         44 : receive_done:</span></a>
+<a name="499"><span class="lineNum">     499 </span><span class="lineCov">         44 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="500"><span class="lineNum">     500 </span><span class="lineCov">         44 :     return status;</span></a>
+<a name="501"><span class="lineNum">     501 </span>            : }</a>
+<a name="502"><span class="lineNum">     502 </span>            : </a>
+<a name="503"><span class="lineNum">     503 </span><span class="lineCov">         42 : libspdm_return_t libspdm_send_receive_psk_exchange(libspdm_context_t *spdm_context,</span></a>
+<a name="504"><span class="lineNum">     504 </span>            :                                                    uint8_t measurement_hash_type,</a>
+<a name="505"><span class="lineNum">     505 </span>            :                                                    uint8_t session_policy,</a>
+<a name="506"><span class="lineNum">     506 </span>            :                                                    uint32_t *session_id,</a>
+<a name="507"><span class="lineNum">     507 </span>            :                                                    uint8_t *heartbeat_period,</a>
+<a name="508"><span class="lineNum">     508 </span>            :                                                    void *measurement_hash)</a>
+<a name="509"><span class="lineNum">     509 </span>            : {</a>
+<a name="510"><span class="lineNum">     510 </span>            :     size_t retry;</a>
+<a name="511"><span class="lineNum">     511 </span>            :     libspdm_return_t status;</a>
+<a name="512"><span class="lineNum">     512 </span>            : </a>
+<a name="513"><span class="lineNum">     513 </span><span class="lineCov">         42 :     spdm_context-&gt;crypto_request = true;</span></a>
+<a name="514"><span class="lineNum">     514 </span><span class="lineCov">         42 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="515"><span class="lineNum">     515 </span>            :     do {</a>
+<a name="516"><span class="lineNum">     516 </span><span class="lineCov">         46 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
+<a name="517"><span class="lineNum">     517 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
+<a name="518"><span class="lineNum">     518 </span>            :             heartbeat_period, measurement_hash,</a>
+<a name="519"><span class="lineNum">     519 </span>            :             NULL, 0, NULL, NULL, NULL, NULL);</a>
+<a name="520"><span class="lineNum">     520 </span><span class="lineCov">         46 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="521"><span class="lineNum">     521 </span><span class="lineCov">         41 :             return status;</span></a>
+<a name="522"><span class="lineNum">     522 </span>            :         }</a>
+<a name="523"><span class="lineNum">     523 </span><span class="lineCov">          5 :     } while (retry-- != 0);</span></a>
+<a name="524"><span class="lineNum">     524 </span>            : </a>
+<a name="525"><span class="lineNum">     525 </span><span class="lineCov">          1 :     return status;</span></a>
+<a name="526"><span class="lineNum">     526 </span>            : }</a>
 <a name="527"><span class="lineNum">     527 </span>            : </a>
-<a name="528"><span class="lineNum">     528 </span><span class="lineCov">          1 :     return status;</span></a>
-<a name="529"><span class="lineNum">     529 </span>            : }</a>
-<a name="530"><span class="lineNum">     530 </span>            : </a>
-<a name="531"><span class="lineNum">     531 </span><span class="lineNoCov">          0 : libspdm_return_t libspdm_send_receive_psk_exchange_ex(libspdm_context_t *spdm_context,</span></a>
-<a name="532"><span class="lineNum">     532 </span>            :                                                       uint8_t measurement_hash_type,</a>
-<a name="533"><span class="lineNum">     533 </span>            :                                                       uint8_t session_policy,</a>
-<a name="534"><span class="lineNum">     534 </span>            :                                                       uint32_t *session_id,</a>
-<a name="535"><span class="lineNum">     535 </span>            :                                                       uint8_t *heartbeat_period,</a>
-<a name="536"><span class="lineNum">     536 </span>            :                                                       void *measurement_hash,</a>
-<a name="537"><span class="lineNum">     537 </span>            :                                                       const void *requester_context_in,</a>
-<a name="538"><span class="lineNum">     538 </span>            :                                                       size_t requester_context_in_size,</a>
-<a name="539"><span class="lineNum">     539 </span>            :                                                       void *requester_context,</a>
-<a name="540"><span class="lineNum">     540 </span>            :                                                       size_t *requester_context_size,</a>
-<a name="541"><span class="lineNum">     541 </span>            :                                                       void *responder_context,</a>
-<a name="542"><span class="lineNum">     542 </span>            :                                                       size_t *responder_context_size)</a>
-<a name="543"><span class="lineNum">     543 </span>            : {</a>
-<a name="544"><span class="lineNum">     544 </span>            :     size_t retry;</a>
-<a name="545"><span class="lineNum">     545 </span>            :     libspdm_return_t status;</a>
-<a name="546"><span class="lineNum">     546 </span>            : </a>
-<a name="547"><span class="lineNum">     547 </span><span class="lineNoCov">          0 :     spdm_context-&gt;crypto_request = true;</span></a>
-<a name="548"><span class="lineNum">     548 </span><span class="lineNoCov">          0 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="549"><span class="lineNum">     549 </span>            :     do {</a>
-<a name="550"><span class="lineNum">     550 </span><span class="lineNoCov">          0 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
-<a name="551"><span class="lineNum">     551 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
-<a name="552"><span class="lineNum">     552 </span>            :             heartbeat_period, measurement_hash,</a>
-<a name="553"><span class="lineNum">     553 </span>            :             requester_context_in, requester_context_in_size,</a>
-<a name="554"><span class="lineNum">     554 </span>            :             requester_context, requester_context_size,</a>
-<a name="555"><span class="lineNum">     555 </span>            :             responder_context, responder_context_size);</a>
-<a name="556"><span class="lineNum">     556 </span><span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="557"><span class="lineNum">     557 </span><span class="lineNoCov">          0 :             return status;</span></a>
-<a name="558"><span class="lineNum">     558 </span>            :         }</a>
-<a name="559"><span class="lineNum">     559 </span><span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="528"><span class="lineNum">     528 </span><span class="lineNoCov">          0 : libspdm_return_t libspdm_send_receive_psk_exchange_ex(libspdm_context_t *spdm_context,</span></a>
+<a name="529"><span class="lineNum">     529 </span>            :                                                       uint8_t measurement_hash_type,</a>
+<a name="530"><span class="lineNum">     530 </span>            :                                                       uint8_t session_policy,</a>
+<a name="531"><span class="lineNum">     531 </span>            :                                                       uint32_t *session_id,</a>
+<a name="532"><span class="lineNum">     532 </span>            :                                                       uint8_t *heartbeat_period,</a>
+<a name="533"><span class="lineNum">     533 </span>            :                                                       void *measurement_hash,</a>
+<a name="534"><span class="lineNum">     534 </span>            :                                                       const void *requester_context_in,</a>
+<a name="535"><span class="lineNum">     535 </span>            :                                                       size_t requester_context_in_size,</a>
+<a name="536"><span class="lineNum">     536 </span>            :                                                       void *requester_context,</a>
+<a name="537"><span class="lineNum">     537 </span>            :                                                       size_t *requester_context_size,</a>
+<a name="538"><span class="lineNum">     538 </span>            :                                                       void *responder_context,</a>
+<a name="539"><span class="lineNum">     539 </span>            :                                                       size_t *responder_context_size)</a>
+<a name="540"><span class="lineNum">     540 </span>            : {</a>
+<a name="541"><span class="lineNum">     541 </span>            :     size_t retry;</a>
+<a name="542"><span class="lineNum">     542 </span>            :     libspdm_return_t status;</a>
+<a name="543"><span class="lineNum">     543 </span>            : </a>
+<a name="544"><span class="lineNum">     544 </span><span class="lineNoCov">          0 :     spdm_context-&gt;crypto_request = true;</span></a>
+<a name="545"><span class="lineNum">     545 </span><span class="lineNoCov">          0 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="546"><span class="lineNum">     546 </span>            :     do {</a>
+<a name="547"><span class="lineNum">     547 </span><span class="lineNoCov">          0 :         status = libspdm_try_send_receive_psk_exchange(</span></a>
+<a name="548"><span class="lineNum">     548 </span>            :             spdm_context, measurement_hash_type, session_policy, session_id,</a>
+<a name="549"><span class="lineNum">     549 </span>            :             heartbeat_period, measurement_hash,</a>
+<a name="550"><span class="lineNum">     550 </span>            :             requester_context_in, requester_context_in_size,</a>
+<a name="551"><span class="lineNum">     551 </span>            :             requester_context, requester_context_size,</a>
+<a name="552"><span class="lineNum">     552 </span>            :             responder_context, responder_context_size);</a>
+<a name="553"><span class="lineNum">     553 </span><span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="554"><span class="lineNum">     554 </span><span class="lineNoCov">          0 :             return status;</span></a>
+<a name="555"><span class="lineNum">     555 </span>            :         }</a>
+<a name="556"><span class="lineNum">     556 </span><span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="557"><span class="lineNum">     557 </span>            : </a>
+<a name="558"><span class="lineNum">     558 </span><span class="lineNoCov">          0 :     return status;</span></a>
+<a name="559"><span class="lineNum">     559 </span>            : }</a>
 <a name="560"><span class="lineNum">     560 </span>            : </a>
-<a name="561"><span class="lineNum">     561 </span><span class="lineNoCov">          0 :     return status;</span></a>
-<a name="562"><span class="lineNum">     562 </span>            : }</a>
-<a name="563"><span class="lineNum">     563 </span>            : </a>
-<a name="564"><span class="lineNum">     564 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
+<a name="561"><span class="lineNum">     561 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
 </pre>
       </td>
     </tr>

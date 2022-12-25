@@ -31,18 +31,18 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">41</td>
-            <td class="headerCovTableEntry">448</td>
-            <td class="headerCovTableEntryLo">9.2 %</td>
+            <td class="headerCovTableEntry">37</td>
+            <td class="headerCovTableEntry">250</td>
+            <td class="headerCovTableEntryLo">14.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-24 08:15:01</td>
+            <td class="headerValue">2022-12-25 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">6</td>
-            <td class="headerCovTableEntry">32</td>
-            <td class="headerCovTableEntryLo">18.8 %</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntryLo">22.7 %</td>
           </tr>
           <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -271,7 +271,7 @@
 <a name="209"><span class="lineNum">     209 </span>            :      * Ignore possible errors caused by a cipher mode that doesn't use padding</a>
 <a name="210"><span class="lineNum">     210 </span>            :      */</a>
 <a name="211"><span class="lineNum">     211 </span>            : #if defined(MBEDTLS_CIPHER_PADDING_PKCS7)</a>
-<a name="212"><span class="lineNum">     212 </span><span class="lineCov">        805 :     (void) mbedtls_cipher_set_padding_mode( ctx, MBEDTLS_PADDING_PKCS7 );</span></a>
+<a name="212"><span class="lineNum">     212 </span>            :     (void) mbedtls_cipher_set_padding_mode( ctx, MBEDTLS_PADDING_PKCS7 );</a>
 <a name="213"><span class="lineNum">     213 </span>            : #else</a>
 <a name="214"><span class="lineNum">     214 </span>            :     (void) mbedtls_cipher_set_padding_mode( ctx, MBEDTLS_PADDING_NONE );</a>
 <a name="215"><span class="lineNum">     215 </span>            : #endif</a>
@@ -549,17 +549,17 @@
 <a name="487"><span class="lineNum">     487 </span>            : }</a>
 <a name="488"><span class="lineNum">     488 </span>            : #endif /* MBEDTLS_GCM_C || MBEDTLS_CHACHAPOLY_C */</a>
 <a name="489"><span class="lineNum">     489 </span>            : </a>
-<a name="490"><span class="lineNum">     490 </span><span class="lineCov">       3670 : int mbedtls_cipher_update( mbedtls_cipher_context_t *ctx, const unsigned char *input,</span></a>
+<a name="490"><span class="lineNum">     490 </span><span class="lineCov">       3638 : int mbedtls_cipher_update( mbedtls_cipher_context_t *ctx, const unsigned char *input,</span></a>
 <a name="491"><span class="lineNum">     491 </span>            :                    size_t ilen, unsigned char *output, size_t *olen )</a>
 <a name="492"><span class="lineNum">     492 </span>            : {</a>
-<a name="493"><span class="lineNum">     493 </span><span class="lineCov">       3670 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="493"><span class="lineNum">     493 </span><span class="lineCov">       3638 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="494"><span class="lineNum">     494 </span>            :     size_t block_size;</a>
 <a name="495"><span class="lineNum">     495 </span>            : </a>
 <a name="496"><span class="lineNum">     496 </span>            :     CIPHER_VALIDATE_RET( ctx != NULL );</a>
 <a name="497"><span class="lineNum">     497 </span>            :     CIPHER_VALIDATE_RET( ilen == 0 || input != NULL );</a>
 <a name="498"><span class="lineNum">     498 </span>            :     CIPHER_VALIDATE_RET( output != NULL );</a>
 <a name="499"><span class="lineNum">     499 </span>            :     CIPHER_VALIDATE_RET( olen != NULL );</a>
-<a name="500"><span class="lineNum">     500 </span><span class="lineCov">       3670 :     if( ctx-&gt;cipher_info == NULL )</span></a>
+<a name="500"><span class="lineNum">     500 </span><span class="lineCov">       3638 :     if( ctx-&gt;cipher_info == NULL )</span></a>
 <a name="501"><span class="lineNum">     501 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</span></a>
 <a name="502"><span class="lineNum">     502 </span>            : </a>
 <a name="503"><span class="lineNum">     503 </span>            : #if defined(MBEDTLS_USE_PSA_CRYPTO)</a>
@@ -572,27 +572,27 @@
 <a name="510"><span class="lineNum">     510 </span>            :     }</a>
 <a name="511"><span class="lineNum">     511 </span>            : #endif /* MBEDTLS_USE_PSA_CRYPTO */</a>
 <a name="512"><span class="lineNum">     512 </span>            : </a>
-<a name="513"><span class="lineNum">     513 </span><span class="lineCov">       3670 :     *olen = 0;</span></a>
-<a name="514"><span class="lineNum">     514 </span><span class="lineCov">       3670 :     block_size = mbedtls_cipher_get_block_size( ctx );</span></a>
-<a name="515"><span class="lineNum">     515 </span><span class="lineCov">       3670 :     if ( 0 == block_size )</span></a>
+<a name="513"><span class="lineNum">     513 </span><span class="lineCov">       3638 :     *olen = 0;</span></a>
+<a name="514"><span class="lineNum">     514 </span><span class="lineCov">       3638 :     block_size = mbedtls_cipher_get_block_size( ctx );</span></a>
+<a name="515"><span class="lineNum">     515 </span><span class="lineCov">       3638 :     if ( 0 == block_size )</span></a>
 <a name="516"><span class="lineNum">     516 </span>            :     {</a>
 <a name="517"><span class="lineNum">     517 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_INVALID_CONTEXT );</span></a>
 <a name="518"><span class="lineNum">     518 </span>            :     }</a>
 <a name="519"><span class="lineNum">     519 </span>            : </a>
-<a name="520"><span class="lineNum">     520 </span><span class="lineCov">       3670 :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_ECB )</span></a>
+<a name="520"><span class="lineNum">     520 </span><span class="lineCov">       3638 :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_ECB )</span></a>
 <a name="521"><span class="lineNum">     521 </span>            :     {</a>
-<a name="522"><span class="lineNum">     522 </span><span class="lineCov">       3670 :         if( ilen != block_size )</span></a>
+<a name="522"><span class="lineNum">     522 </span><span class="lineCov">       3638 :         if( ilen != block_size )</span></a>
 <a name="523"><span class="lineNum">     523 </span><span class="lineNoCov">          0 :             return( MBEDTLS_ERR_CIPHER_FULL_BLOCK_EXPECTED );</span></a>
 <a name="524"><span class="lineNum">     524 </span>            : </a>
-<a name="525"><span class="lineNum">     525 </span><span class="lineCov">       3670 :         *olen = ilen;</span></a>
+<a name="525"><span class="lineNum">     525 </span><span class="lineCov">       3638 :         *olen = ilen;</span></a>
 <a name="526"><span class="lineNum">     526 </span>            : </a>
-<a name="527"><span class="lineNum">     527 </span><span class="lineCov">       3670 :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;ecb_func( ctx-&gt;cipher_ctx,</span></a>
+<a name="527"><span class="lineNum">     527 </span><span class="lineCov">       3638 :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;ecb_func( ctx-&gt;cipher_ctx,</span></a>
 <a name="528"><span class="lineNum">     528 </span>            :                     ctx-&gt;operation, input, output ) ) )</a>
 <a name="529"><span class="lineNum">     529 </span>            :         {</a>
 <a name="530"><span class="lineNum">     530 </span><span class="lineNoCov">          0 :             return( ret );</span></a>
 <a name="531"><span class="lineNum">     531 </span>            :         }</a>
 <a name="532"><span class="lineNum">     532 </span>            : </a>
-<a name="533"><span class="lineNum">     533 </span><span class="lineCov">       3670 :         return( 0 );</span></a>
+<a name="533"><span class="lineNum">     533 </span><span class="lineCov">       3638 :         return( 0 );</span></a>
 <a name="534"><span class="lineNum">     534 </span>            :     }</a>
 <a name="535"><span class="lineNum">     535 </span>            : </a>
 <a name="536"><span class="lineNum">     536 </span>            : #if defined(MBEDTLS_GCM_C)</a>
@@ -620,159 +620,159 @@
 <a name="558"><span class="lineNum">     558 </span>            :     }</a>
 <a name="559"><span class="lineNum">     559 </span>            : </a>
 <a name="560"><span class="lineNum">     560 </span>            : #if defined(MBEDTLS_CIPHER_MODE_CBC)</a>
-<a name="561"><span class="lineNum">     561 </span><span class="lineNoCov">          0 :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_CBC )</span></a>
+<a name="561"><span class="lineNum">     561 </span>            :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_CBC )</a>
 <a name="562"><span class="lineNum">     562 </span>            :     {</a>
-<a name="563"><span class="lineNum">     563 </span><span class="lineNoCov">          0 :         size_t copy_len = 0;</span></a>
+<a name="563"><span class="lineNum">     563 </span>            :         size_t copy_len = 0;</a>
 <a name="564"><span class="lineNum">     564 </span>            : </a>
 <a name="565"><span class="lineNum">     565 </span>            :         /*</a>
 <a name="566"><span class="lineNum">     566 </span>            :          * If there is not enough data for a full block, cache it.</a>
 <a name="567"><span class="lineNum">     567 </span>            :          */</a>
-<a name="568"><span class="lineNum">     568 </span><span class="lineNoCov">          0 :         if( ( ctx-&gt;operation == MBEDTLS_DECRYPT &amp;&amp; NULL != ctx-&gt;add_padding &amp;&amp;</span></a>
-<a name="569"><span class="lineNum">     569 </span><span class="lineNoCov">          0 :                 ilen &lt;= block_size - ctx-&gt;unprocessed_len ) ||</span></a>
-<a name="570"><span class="lineNum">     570 </span><span class="lineNoCov">          0 :             ( ctx-&gt;operation == MBEDTLS_DECRYPT &amp;&amp; NULL == ctx-&gt;add_padding &amp;&amp;</span></a>
-<a name="571"><span class="lineNum">     571 </span><span class="lineNoCov">          0 :                 ilen &lt; block_size - ctx-&gt;unprocessed_len ) ||</span></a>
-<a name="572"><span class="lineNum">     572 </span><span class="lineNoCov">          0 :              ( ctx-&gt;operation == MBEDTLS_ENCRYPT &amp;&amp;</span></a>
-<a name="573"><span class="lineNum">     573 </span><span class="lineNoCov">          0 :                 ilen &lt; block_size - ctx-&gt;unprocessed_len ) )</span></a>
+<a name="568"><span class="lineNum">     568 </span>            :         if( ( ctx-&gt;operation == MBEDTLS_DECRYPT &amp;&amp; NULL != ctx-&gt;add_padding &amp;&amp;</a>
+<a name="569"><span class="lineNum">     569 </span>            :                 ilen &lt;= block_size - ctx-&gt;unprocessed_len ) ||</a>
+<a name="570"><span class="lineNum">     570 </span>            :             ( ctx-&gt;operation == MBEDTLS_DECRYPT &amp;&amp; NULL == ctx-&gt;add_padding &amp;&amp;</a>
+<a name="571"><span class="lineNum">     571 </span>            :                 ilen &lt; block_size - ctx-&gt;unprocessed_len ) ||</a>
+<a name="572"><span class="lineNum">     572 </span>            :              ( ctx-&gt;operation == MBEDTLS_ENCRYPT &amp;&amp;</a>
+<a name="573"><span class="lineNum">     573 </span>            :                 ilen &lt; block_size - ctx-&gt;unprocessed_len ) )</a>
 <a name="574"><span class="lineNum">     574 </span>            :         {</a>
-<a name="575"><span class="lineNum">     575 </span><span class="lineNoCov">          0 :             memcpy( &amp;( ctx-&gt;unprocessed_data[ctx-&gt;unprocessed_len] ), input,</span></a>
+<a name="575"><span class="lineNum">     575 </span>            :             memcpy( &amp;( ctx-&gt;unprocessed_data[ctx-&gt;unprocessed_len] ), input,</a>
 <a name="576"><span class="lineNum">     576 </span>            :                     ilen );</a>
 <a name="577"><span class="lineNum">     577 </span>            : </a>
-<a name="578"><span class="lineNum">     578 </span><span class="lineNoCov">          0 :             ctx-&gt;unprocessed_len += ilen;</span></a>
-<a name="579"><span class="lineNum">     579 </span><span class="lineNoCov">          0 :             return( 0 );</span></a>
+<a name="578"><span class="lineNum">     578 </span>            :             ctx-&gt;unprocessed_len += ilen;</a>
+<a name="579"><span class="lineNum">     579 </span>            :             return( 0 );</a>
 <a name="580"><span class="lineNum">     580 </span>            :         }</a>
 <a name="581"><span class="lineNum">     581 </span>            : </a>
 <a name="582"><span class="lineNum">     582 </span>            :         /*</a>
 <a name="583"><span class="lineNum">     583 </span>            :          * Process cached data first</a>
 <a name="584"><span class="lineNum">     584 </span>            :          */</a>
-<a name="585"><span class="lineNum">     585 </span><span class="lineNoCov">          0 :         if( 0 != ctx-&gt;unprocessed_len )</span></a>
+<a name="585"><span class="lineNum">     585 </span>            :         if( 0 != ctx-&gt;unprocessed_len )</a>
 <a name="586"><span class="lineNum">     586 </span>            :         {</a>
-<a name="587"><span class="lineNum">     587 </span><span class="lineNoCov">          0 :             copy_len = block_size - ctx-&gt;unprocessed_len;</span></a>
+<a name="587"><span class="lineNum">     587 </span>            :             copy_len = block_size - ctx-&gt;unprocessed_len;</a>
 <a name="588"><span class="lineNum">     588 </span>            : </a>
-<a name="589"><span class="lineNum">     589 </span><span class="lineNoCov">          0 :             memcpy( &amp;( ctx-&gt;unprocessed_data[ctx-&gt;unprocessed_len] ), input,</span></a>
+<a name="589"><span class="lineNum">     589 </span>            :             memcpy( &amp;( ctx-&gt;unprocessed_data[ctx-&gt;unprocessed_len] ), input,</a>
 <a name="590"><span class="lineNum">     590 </span>            :                     copy_len );</a>
 <a name="591"><span class="lineNum">     591 </span>            : </a>
-<a name="592"><span class="lineNum">     592 </span><span class="lineNoCov">          0 :             if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cbc_func( ctx-&gt;cipher_ctx,</span></a>
-<a name="593"><span class="lineNum">     593 </span><span class="lineNoCov">          0 :                     ctx-&gt;operation, block_size, ctx-&gt;iv,</span></a>
-<a name="594"><span class="lineNum">     594 </span><span class="lineNoCov">          0 :                     ctx-&gt;unprocessed_data, output ) ) )</span></a>
+<a name="592"><span class="lineNum">     592 </span>            :             if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cbc_func( ctx-&gt;cipher_ctx,</a>
+<a name="593"><span class="lineNum">     593 </span>            :                     ctx-&gt;operation, block_size, ctx-&gt;iv,</a>
+<a name="594"><span class="lineNum">     594 </span>            :                     ctx-&gt;unprocessed_data, output ) ) )</a>
 <a name="595"><span class="lineNum">     595 </span>            :             {</a>
-<a name="596"><span class="lineNum">     596 </span><span class="lineNoCov">          0 :                 return( ret );</span></a>
+<a name="596"><span class="lineNum">     596 </span>            :                 return( ret );</a>
 <a name="597"><span class="lineNum">     597 </span>            :             }</a>
 <a name="598"><span class="lineNum">     598 </span>            : </a>
-<a name="599"><span class="lineNum">     599 </span><span class="lineNoCov">          0 :             *olen += block_size;</span></a>
-<a name="600"><span class="lineNum">     600 </span><span class="lineNoCov">          0 :             output += block_size;</span></a>
-<a name="601"><span class="lineNum">     601 </span><span class="lineNoCov">          0 :             ctx-&gt;unprocessed_len = 0;</span></a>
+<a name="599"><span class="lineNum">     599 </span>            :             *olen += block_size;</a>
+<a name="600"><span class="lineNum">     600 </span>            :             output += block_size;</a>
+<a name="601"><span class="lineNum">     601 </span>            :             ctx-&gt;unprocessed_len = 0;</a>
 <a name="602"><span class="lineNum">     602 </span>            : </a>
-<a name="603"><span class="lineNum">     603 </span><span class="lineNoCov">          0 :             input += copy_len;</span></a>
-<a name="604"><span class="lineNum">     604 </span><span class="lineNoCov">          0 :             ilen -= copy_len;</span></a>
+<a name="603"><span class="lineNum">     603 </span>            :             input += copy_len;</a>
+<a name="604"><span class="lineNum">     604 </span>            :             ilen -= copy_len;</a>
 <a name="605"><span class="lineNum">     605 </span>            :         }</a>
 <a name="606"><span class="lineNum">     606 </span>            : </a>
 <a name="607"><span class="lineNum">     607 </span>            :         /*</a>
 <a name="608"><span class="lineNum">     608 </span>            :          * Cache final, incomplete block</a>
 <a name="609"><span class="lineNum">     609 </span>            :          */</a>
-<a name="610"><span class="lineNum">     610 </span><span class="lineNoCov">          0 :         if( 0 != ilen )</span></a>
+<a name="610"><span class="lineNum">     610 </span>            :         if( 0 != ilen )</a>
 <a name="611"><span class="lineNum">     611 </span>            :         {</a>
 <a name="612"><span class="lineNum">     612 </span>            :             /* Encryption: only cache partial blocks</a>
 <a name="613"><span class="lineNum">     613 </span>            :              * Decryption w/ padding: always keep at least one whole block</a>
 <a name="614"><span class="lineNum">     614 </span>            :              * Decryption w/o padding: only cache partial blocks</a>
 <a name="615"><span class="lineNum">     615 </span>            :              */</a>
-<a name="616"><span class="lineNum">     616 </span><span class="lineNoCov">          0 :             copy_len = ilen % block_size;</span></a>
-<a name="617"><span class="lineNum">     617 </span><span class="lineNoCov">          0 :             if( copy_len == 0 &amp;&amp;</span></a>
-<a name="618"><span class="lineNum">     618 </span><span class="lineNoCov">          0 :                 ctx-&gt;operation == MBEDTLS_DECRYPT &amp;&amp;</span></a>
-<a name="619"><span class="lineNum">     619 </span><span class="lineNoCov">          0 :                 NULL != ctx-&gt;add_padding)</span></a>
+<a name="616"><span class="lineNum">     616 </span>            :             copy_len = ilen % block_size;</a>
+<a name="617"><span class="lineNum">     617 </span>            :             if( copy_len == 0 &amp;&amp;</a>
+<a name="618"><span class="lineNum">     618 </span>            :                 ctx-&gt;operation == MBEDTLS_DECRYPT &amp;&amp;</a>
+<a name="619"><span class="lineNum">     619 </span>            :                 NULL != ctx-&gt;add_padding)</a>
 <a name="620"><span class="lineNum">     620 </span>            :             {</a>
-<a name="621"><span class="lineNum">     621 </span><span class="lineNoCov">          0 :                 copy_len = block_size;</span></a>
+<a name="621"><span class="lineNum">     621 </span>            :                 copy_len = block_size;</a>
 <a name="622"><span class="lineNum">     622 </span>            :             }</a>
 <a name="623"><span class="lineNum">     623 </span>            : </a>
-<a name="624"><span class="lineNum">     624 </span><span class="lineNoCov">          0 :             memcpy( ctx-&gt;unprocessed_data, &amp;( input[ilen - copy_len] ),</span></a>
+<a name="624"><span class="lineNum">     624 </span>            :             memcpy( ctx-&gt;unprocessed_data, &amp;( input[ilen - copy_len] ),</a>
 <a name="625"><span class="lineNum">     625 </span>            :                     copy_len );</a>
 <a name="626"><span class="lineNum">     626 </span>            : </a>
-<a name="627"><span class="lineNum">     627 </span><span class="lineNoCov">          0 :             ctx-&gt;unprocessed_len += copy_len;</span></a>
-<a name="628"><span class="lineNum">     628 </span><span class="lineNoCov">          0 :             ilen -= copy_len;</span></a>
+<a name="627"><span class="lineNum">     627 </span>            :             ctx-&gt;unprocessed_len += copy_len;</a>
+<a name="628"><span class="lineNum">     628 </span>            :             ilen -= copy_len;</a>
 <a name="629"><span class="lineNum">     629 </span>            :         }</a>
 <a name="630"><span class="lineNum">     630 </span>            : </a>
 <a name="631"><span class="lineNum">     631 </span>            :         /*</a>
 <a name="632"><span class="lineNum">     632 </span>            :          * Process remaining full blocks</a>
 <a name="633"><span class="lineNum">     633 </span>            :          */</a>
-<a name="634"><span class="lineNum">     634 </span><span class="lineNoCov">          0 :         if( ilen )</span></a>
+<a name="634"><span class="lineNum">     634 </span>            :         if( ilen )</a>
 <a name="635"><span class="lineNum">     635 </span>            :         {</a>
-<a name="636"><span class="lineNum">     636 </span><span class="lineNoCov">          0 :             if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cbc_func( ctx-&gt;cipher_ctx,</span></a>
-<a name="637"><span class="lineNum">     637 </span><span class="lineNoCov">          0 :                     ctx-&gt;operation, ilen, ctx-&gt;iv, input, output ) ) )</span></a>
+<a name="636"><span class="lineNum">     636 </span>            :             if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cbc_func( ctx-&gt;cipher_ctx,</a>
+<a name="637"><span class="lineNum">     637 </span>            :                     ctx-&gt;operation, ilen, ctx-&gt;iv, input, output ) ) )</a>
 <a name="638"><span class="lineNum">     638 </span>            :             {</a>
-<a name="639"><span class="lineNum">     639 </span><span class="lineNoCov">          0 :                 return( ret );</span></a>
+<a name="639"><span class="lineNum">     639 </span>            :                 return( ret );</a>
 <a name="640"><span class="lineNum">     640 </span>            :             }</a>
 <a name="641"><span class="lineNum">     641 </span>            : </a>
-<a name="642"><span class="lineNum">     642 </span><span class="lineNoCov">          0 :             *olen += ilen;</span></a>
+<a name="642"><span class="lineNum">     642 </span>            :             *olen += ilen;</a>
 <a name="643"><span class="lineNum">     643 </span>            :         }</a>
 <a name="644"><span class="lineNum">     644 </span>            : </a>
-<a name="645"><span class="lineNum">     645 </span><span class="lineNoCov">          0 :         return( 0 );</span></a>
+<a name="645"><span class="lineNum">     645 </span>            :         return( 0 );</a>
 <a name="646"><span class="lineNum">     646 </span>            :     }</a>
 <a name="647"><span class="lineNum">     647 </span>            : #endif /* MBEDTLS_CIPHER_MODE_CBC */</a>
 <a name="648"><span class="lineNum">     648 </span>            : </a>
 <a name="649"><span class="lineNum">     649 </span>            : #if defined(MBEDTLS_CIPHER_MODE_CFB)</a>
-<a name="650"><span class="lineNum">     650 </span><span class="lineNoCov">          0 :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_CFB )</span></a>
+<a name="650"><span class="lineNum">     650 </span>            :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_CFB )</a>
 <a name="651"><span class="lineNum">     651 </span>            :     {</a>
-<a name="652"><span class="lineNum">     652 </span><span class="lineNoCov">          0 :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cfb_func( ctx-&gt;cipher_ctx,</span></a>
-<a name="653"><span class="lineNum">     653 </span><span class="lineNoCov">          0 :                 ctx-&gt;operation, ilen, &amp;ctx-&gt;unprocessed_len, ctx-&gt;iv,</span></a>
+<a name="652"><span class="lineNum">     652 </span>            :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cfb_func( ctx-&gt;cipher_ctx,</a>
+<a name="653"><span class="lineNum">     653 </span>            :                 ctx-&gt;operation, ilen, &amp;ctx-&gt;unprocessed_len, ctx-&gt;iv,</a>
 <a name="654"><span class="lineNum">     654 </span>            :                 input, output ) ) )</a>
 <a name="655"><span class="lineNum">     655 </span>            :         {</a>
-<a name="656"><span class="lineNum">     656 </span><span class="lineNoCov">          0 :             return( ret );</span></a>
+<a name="656"><span class="lineNum">     656 </span>            :             return( ret );</a>
 <a name="657"><span class="lineNum">     657 </span>            :         }</a>
 <a name="658"><span class="lineNum">     658 </span>            : </a>
-<a name="659"><span class="lineNum">     659 </span><span class="lineNoCov">          0 :         *olen = ilen;</span></a>
+<a name="659"><span class="lineNum">     659 </span>            :         *olen = ilen;</a>
 <a name="660"><span class="lineNum">     660 </span>            : </a>
-<a name="661"><span class="lineNum">     661 </span><span class="lineNoCov">          0 :         return( 0 );</span></a>
+<a name="661"><span class="lineNum">     661 </span>            :         return( 0 );</a>
 <a name="662"><span class="lineNum">     662 </span>            :     }</a>
 <a name="663"><span class="lineNum">     663 </span>            : #endif /* MBEDTLS_CIPHER_MODE_CFB */</a>
 <a name="664"><span class="lineNum">     664 </span>            : </a>
 <a name="665"><span class="lineNum">     665 </span>            : #if defined(MBEDTLS_CIPHER_MODE_OFB)</a>
-<a name="666"><span class="lineNum">     666 </span><span class="lineNoCov">          0 :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_OFB )</span></a>
+<a name="666"><span class="lineNum">     666 </span>            :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_OFB )</a>
 <a name="667"><span class="lineNum">     667 </span>            :     {</a>
-<a name="668"><span class="lineNum">     668 </span><span class="lineNoCov">          0 :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;ofb_func( ctx-&gt;cipher_ctx,</span></a>
-<a name="669"><span class="lineNum">     669 </span><span class="lineNoCov">          0 :                 ilen, &amp;ctx-&gt;unprocessed_len, ctx-&gt;iv, input, output ) ) )</span></a>
+<a name="668"><span class="lineNum">     668 </span>            :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;ofb_func( ctx-&gt;cipher_ctx,</a>
+<a name="669"><span class="lineNum">     669 </span>            :                 ilen, &amp;ctx-&gt;unprocessed_len, ctx-&gt;iv, input, output ) ) )</a>
 <a name="670"><span class="lineNum">     670 </span>            :         {</a>
-<a name="671"><span class="lineNum">     671 </span><span class="lineNoCov">          0 :             return( ret );</span></a>
+<a name="671"><span class="lineNum">     671 </span>            :             return( ret );</a>
 <a name="672"><span class="lineNum">     672 </span>            :         }</a>
 <a name="673"><span class="lineNum">     673 </span>            : </a>
-<a name="674"><span class="lineNum">     674 </span><span class="lineNoCov">          0 :         *olen = ilen;</span></a>
+<a name="674"><span class="lineNum">     674 </span>            :         *olen = ilen;</a>
 <a name="675"><span class="lineNum">     675 </span>            : </a>
-<a name="676"><span class="lineNum">     676 </span><span class="lineNoCov">          0 :         return( 0 );</span></a>
+<a name="676"><span class="lineNum">     676 </span>            :         return( 0 );</a>
 <a name="677"><span class="lineNum">     677 </span>            :     }</a>
 <a name="678"><span class="lineNum">     678 </span>            : #endif /* MBEDTLS_CIPHER_MODE_OFB */</a>
 <a name="679"><span class="lineNum">     679 </span>            : </a>
 <a name="680"><span class="lineNum">     680 </span>            : #if defined(MBEDTLS_CIPHER_MODE_CTR)</a>
-<a name="681"><span class="lineNum">     681 </span><span class="lineNoCov">          0 :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_CTR )</span></a>
+<a name="681"><span class="lineNum">     681 </span>            :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_CTR )</a>
 <a name="682"><span class="lineNum">     682 </span>            :     {</a>
-<a name="683"><span class="lineNum">     683 </span><span class="lineNoCov">          0 :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;ctr_func( ctx-&gt;cipher_ctx,</span></a>
-<a name="684"><span class="lineNum">     684 </span><span class="lineNoCov">          0 :                 ilen, &amp;ctx-&gt;unprocessed_len, ctx-&gt;iv,</span></a>
-<a name="685"><span class="lineNum">     685 </span><span class="lineNoCov">          0 :                 ctx-&gt;unprocessed_data, input, output ) ) )</span></a>
+<a name="683"><span class="lineNum">     683 </span>            :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;ctr_func( ctx-&gt;cipher_ctx,</a>
+<a name="684"><span class="lineNum">     684 </span>            :                 ilen, &amp;ctx-&gt;unprocessed_len, ctx-&gt;iv,</a>
+<a name="685"><span class="lineNum">     685 </span>            :                 ctx-&gt;unprocessed_data, input, output ) ) )</a>
 <a name="686"><span class="lineNum">     686 </span>            :         {</a>
-<a name="687"><span class="lineNum">     687 </span><span class="lineNoCov">          0 :             return( ret );</span></a>
+<a name="687"><span class="lineNum">     687 </span>            :             return( ret );</a>
 <a name="688"><span class="lineNum">     688 </span>            :         }</a>
 <a name="689"><span class="lineNum">     689 </span>            : </a>
-<a name="690"><span class="lineNum">     690 </span><span class="lineNoCov">          0 :         *olen = ilen;</span></a>
+<a name="690"><span class="lineNum">     690 </span>            :         *olen = ilen;</a>
 <a name="691"><span class="lineNum">     691 </span>            : </a>
-<a name="692"><span class="lineNum">     692 </span><span class="lineNoCov">          0 :         return( 0 );</span></a>
+<a name="692"><span class="lineNum">     692 </span>            :         return( 0 );</a>
 <a name="693"><span class="lineNum">     693 </span>            :     }</a>
 <a name="694"><span class="lineNum">     694 </span>            : #endif /* MBEDTLS_CIPHER_MODE_CTR */</a>
 <a name="695"><span class="lineNum">     695 </span>            : </a>
 <a name="696"><span class="lineNum">     696 </span>            : #if defined(MBEDTLS_CIPHER_MODE_XTS)</a>
-<a name="697"><span class="lineNum">     697 </span><span class="lineNoCov">          0 :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_XTS )</span></a>
+<a name="697"><span class="lineNum">     697 </span>            :     if( ctx-&gt;cipher_info-&gt;mode == MBEDTLS_MODE_XTS )</a>
 <a name="698"><span class="lineNum">     698 </span>            :     {</a>
-<a name="699"><span class="lineNum">     699 </span><span class="lineNoCov">          0 :         if( ctx-&gt;unprocessed_len &gt; 0 ) {</span></a>
+<a name="699"><span class="lineNum">     699 </span>            :         if( ctx-&gt;unprocessed_len &gt; 0 ) {</a>
 <a name="700"><span class="lineNum">     700 </span>            :             /* We can only process an entire data unit at a time. */</a>
-<a name="701"><span class="lineNum">     701 </span><span class="lineNoCov">          0 :             return( MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE );</span></a>
+<a name="701"><span class="lineNum">     701 </span>            :             return( MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE );</a>
 <a name="702"><span class="lineNum">     702 </span>            :         }</a>
 <a name="703"><span class="lineNum">     703 </span>            : </a>
-<a name="704"><span class="lineNum">     704 </span><span class="lineNoCov">          0 :         ret = ctx-&gt;cipher_info-&gt;base-&gt;xts_func( ctx-&gt;cipher_ctx,</span></a>
-<a name="705"><span class="lineNum">     705 </span><span class="lineNoCov">          0 :                 ctx-&gt;operation, ilen, ctx-&gt;iv, input, output );</span></a>
-<a name="706"><span class="lineNum">     706 </span><span class="lineNoCov">          0 :         if( ret != 0 )</span></a>
+<a name="704"><span class="lineNum">     704 </span>            :         ret = ctx-&gt;cipher_info-&gt;base-&gt;xts_func( ctx-&gt;cipher_ctx,</a>
+<a name="705"><span class="lineNum">     705 </span>            :                 ctx-&gt;operation, ilen, ctx-&gt;iv, input, output );</a>
+<a name="706"><span class="lineNum">     706 </span>            :         if( ret != 0 )</a>
 <a name="707"><span class="lineNum">     707 </span>            :         {</a>
-<a name="708"><span class="lineNum">     708 </span><span class="lineNoCov">          0 :             return( ret );</span></a>
+<a name="708"><span class="lineNum">     708 </span>            :             return( ret );</a>
 <a name="709"><span class="lineNum">     709 </span>            :         }</a>
 <a name="710"><span class="lineNum">     710 </span>            : </a>
-<a name="711"><span class="lineNum">     711 </span><span class="lineNoCov">          0 :         *olen = ilen;</span></a>
+<a name="711"><span class="lineNum">     711 </span>            :         *olen = ilen;</a>
 <a name="712"><span class="lineNum">     712 </span>            : </a>
-<a name="713"><span class="lineNum">     713 </span><span class="lineNoCov">          0 :         return( 0 );</span></a>
+<a name="713"><span class="lineNum">     713 </span>            :         return( 0 );</a>
 <a name="714"><span class="lineNum">     714 </span>            :     }</a>
 <a name="715"><span class="lineNum">     715 </span>            : #endif /* MBEDTLS_CIPHER_MODE_XTS */</a>
 <a name="716"><span class="lineNum">     716 </span>            : </a>
@@ -799,39 +799,39 @@
 <a name="737"><span class="lineNum">     737 </span>            : /*</a>
 <a name="738"><span class="lineNum">     738 </span>            :  * PKCS7 (and PKCS5) padding: fill with ll bytes, with ll = padding_len</a>
 <a name="739"><span class="lineNum">     739 </span>            :  */</a>
-<a name="740"><span class="lineNum">     740 </span><span class="lineNoCov">          0 : static void add_pkcs_padding( unsigned char *output, size_t output_len,</span></a>
+<a name="740"><span class="lineNum">     740 </span>            : static void add_pkcs_padding( unsigned char *output, size_t output_len,</a>
 <a name="741"><span class="lineNum">     741 </span>            :         size_t data_len )</a>
 <a name="742"><span class="lineNum">     742 </span>            : {</a>
-<a name="743"><span class="lineNum">     743 </span><span class="lineNoCov">          0 :     size_t padding_len = output_len - data_len;</span></a>
+<a name="743"><span class="lineNum">     743 </span>            :     size_t padding_len = output_len - data_len;</a>
 <a name="744"><span class="lineNum">     744 </span>            :     unsigned char i;</a>
 <a name="745"><span class="lineNum">     745 </span>            : </a>
-<a name="746"><span class="lineNum">     746 </span><span class="lineNoCov">          0 :     for( i = 0; i &lt; padding_len; i++ )</span></a>
-<a name="747"><span class="lineNum">     747 </span><span class="lineNoCov">          0 :         output[data_len + i] = (unsigned char) padding_len;</span></a>
-<a name="748"><span class="lineNum">     748 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="746"><span class="lineNum">     746 </span>            :     for( i = 0; i &lt; padding_len; i++ )</a>
+<a name="747"><span class="lineNum">     747 </span>            :         output[data_len + i] = (unsigned char) padding_len;</a>
+<a name="748"><span class="lineNum">     748 </span>            : }</a>
 <a name="749"><span class="lineNum">     749 </span>            : </a>
-<a name="750"><span class="lineNum">     750 </span><span class="lineNoCov">          0 : static int get_pkcs_padding( unsigned char *input, size_t input_len,</span></a>
+<a name="750"><span class="lineNum">     750 </span>            : static int get_pkcs_padding( unsigned char *input, size_t input_len,</a>
 <a name="751"><span class="lineNum">     751 </span>            :         size_t *data_len )</a>
 <a name="752"><span class="lineNum">     752 </span>            : {</a>
 <a name="753"><span class="lineNum">     753 </span>            :     size_t i, pad_idx;</a>
-<a name="754"><span class="lineNum">     754 </span><span class="lineNoCov">          0 :     unsigned char padding_len, bad = 0;</span></a>
+<a name="754"><span class="lineNum">     754 </span>            :     unsigned char padding_len, bad = 0;</a>
 <a name="755"><span class="lineNum">     755 </span>            : </a>
-<a name="756"><span class="lineNum">     756 </span><span class="lineNoCov">          0 :     if( NULL == input || NULL == data_len )</span></a>
-<a name="757"><span class="lineNum">     757 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</span></a>
+<a name="756"><span class="lineNum">     756 </span>            :     if( NULL == input || NULL == data_len )</a>
+<a name="757"><span class="lineNum">     757 </span>            :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</a>
 <a name="758"><span class="lineNum">     758 </span>            : </a>
-<a name="759"><span class="lineNum">     759 </span><span class="lineNoCov">          0 :     padding_len = input[input_len - 1];</span></a>
-<a name="760"><span class="lineNum">     760 </span><span class="lineNoCov">          0 :     *data_len = input_len - padding_len;</span></a>
+<a name="759"><span class="lineNum">     759 </span>            :     padding_len = input[input_len - 1];</a>
+<a name="760"><span class="lineNum">     760 </span>            :     *data_len = input_len - padding_len;</a>
 <a name="761"><span class="lineNum">     761 </span>            : </a>
 <a name="762"><span class="lineNum">     762 </span>            :     /* Avoid logical || since it results in a branch */</a>
-<a name="763"><span class="lineNum">     763 </span><span class="lineNoCov">          0 :     bad |= padding_len &gt; input_len;</span></a>
-<a name="764"><span class="lineNum">     764 </span><span class="lineNoCov">          0 :     bad |= padding_len == 0;</span></a>
+<a name="763"><span class="lineNum">     763 </span>            :     bad |= padding_len &gt; input_len;</a>
+<a name="764"><span class="lineNum">     764 </span>            :     bad |= padding_len == 0;</a>
 <a name="765"><span class="lineNum">     765 </span>            : </a>
 <a name="766"><span class="lineNum">     766 </span>            :     /* The number of bytes checked must be independent of padding_len,</a>
 <a name="767"><span class="lineNum">     767 </span>            :      * so pick input_len, which is usually 8 or 16 (one block) */</a>
-<a name="768"><span class="lineNum">     768 </span><span class="lineNoCov">          0 :     pad_idx = input_len - padding_len;</span></a>
-<a name="769"><span class="lineNum">     769 </span><span class="lineNoCov">          0 :     for( i = 0; i &lt; input_len; i++ )</span></a>
-<a name="770"><span class="lineNum">     770 </span><span class="lineNoCov">          0 :         bad |= ( input[i] ^ padding_len ) * ( i &gt;= pad_idx );</span></a>
+<a name="768"><span class="lineNum">     768 </span>            :     pad_idx = input_len - padding_len;</a>
+<a name="769"><span class="lineNum">     769 </span>            :     for( i = 0; i &lt; input_len; i++ )</a>
+<a name="770"><span class="lineNum">     770 </span>            :         bad |= ( input[i] ^ padding_len ) * ( i &gt;= pad_idx );</a>
 <a name="771"><span class="lineNum">     771 </span>            : </a>
-<a name="772"><span class="lineNum">     772 </span><span class="lineNoCov">          0 :     return( MBEDTLS_ERR_CIPHER_INVALID_PADDING * ( bad != 0 ) );</span></a>
+<a name="772"><span class="lineNum">     772 </span>            :     return( MBEDTLS_ERR_CIPHER_INVALID_PADDING * ( bad != 0 ) );</a>
 <a name="773"><span class="lineNum">     773 </span>            : }</a>
 <a name="774"><span class="lineNum">     774 </span>            : #endif /* MBEDTLS_CIPHER_PADDING_PKCS7 */</a>
 <a name="775"><span class="lineNum">     775 </span>            : </a>
@@ -839,37 +839,37 @@
 <a name="777"><span class="lineNum">     777 </span>            : /*</a>
 <a name="778"><span class="lineNum">     778 </span>            :  * One and zeros padding: fill with 80 00 ... 00</a>
 <a name="779"><span class="lineNum">     779 </span>            :  */</a>
-<a name="780"><span class="lineNum">     780 </span><span class="lineNoCov">          0 : static void add_one_and_zeros_padding( unsigned char *output,</span></a>
+<a name="780"><span class="lineNum">     780 </span>            : static void add_one_and_zeros_padding( unsigned char *output,</a>
 <a name="781"><span class="lineNum">     781 </span>            :                                        size_t output_len, size_t data_len )</a>
 <a name="782"><span class="lineNum">     782 </span>            : {</a>
-<a name="783"><span class="lineNum">     783 </span><span class="lineNoCov">          0 :     size_t padding_len = output_len - data_len;</span></a>
-<a name="784"><span class="lineNum">     784 </span><span class="lineNoCov">          0 :     unsigned char i = 0;</span></a>
+<a name="783"><span class="lineNum">     783 </span>            :     size_t padding_len = output_len - data_len;</a>
+<a name="784"><span class="lineNum">     784 </span>            :     unsigned char i = 0;</a>
 <a name="785"><span class="lineNum">     785 </span>            : </a>
-<a name="786"><span class="lineNum">     786 </span><span class="lineNoCov">          0 :     output[data_len] = 0x80;</span></a>
-<a name="787"><span class="lineNum">     787 </span><span class="lineNoCov">          0 :     for( i = 1; i &lt; padding_len; i++ )</span></a>
-<a name="788"><span class="lineNum">     788 </span><span class="lineNoCov">          0 :         output[data_len + i] = 0x00;</span></a>
-<a name="789"><span class="lineNum">     789 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="786"><span class="lineNum">     786 </span>            :     output[data_len] = 0x80;</a>
+<a name="787"><span class="lineNum">     787 </span>            :     for( i = 1; i &lt; padding_len; i++ )</a>
+<a name="788"><span class="lineNum">     788 </span>            :         output[data_len + i] = 0x00;</a>
+<a name="789"><span class="lineNum">     789 </span>            : }</a>
 <a name="790"><span class="lineNum">     790 </span>            : </a>
-<a name="791"><span class="lineNum">     791 </span><span class="lineNoCov">          0 : static int get_one_and_zeros_padding( unsigned char *input, size_t input_len,</span></a>
+<a name="791"><span class="lineNum">     791 </span>            : static int get_one_and_zeros_padding( unsigned char *input, size_t input_len,</a>
 <a name="792"><span class="lineNum">     792 </span>            :                                       size_t *data_len )</a>
 <a name="793"><span class="lineNum">     793 </span>            : {</a>
 <a name="794"><span class="lineNum">     794 </span>            :     size_t i;</a>
-<a name="795"><span class="lineNum">     795 </span><span class="lineNoCov">          0 :     unsigned char done = 0, prev_done, bad;</span></a>
+<a name="795"><span class="lineNum">     795 </span>            :     unsigned char done = 0, prev_done, bad;</a>
 <a name="796"><span class="lineNum">     796 </span>            : </a>
-<a name="797"><span class="lineNum">     797 </span><span class="lineNoCov">          0 :     if( NULL == input || NULL == data_len )</span></a>
-<a name="798"><span class="lineNum">     798 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</span></a>
+<a name="797"><span class="lineNum">     797 </span>            :     if( NULL == input || NULL == data_len )</a>
+<a name="798"><span class="lineNum">     798 </span>            :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</a>
 <a name="799"><span class="lineNum">     799 </span>            : </a>
-<a name="800"><span class="lineNum">     800 </span><span class="lineNoCov">          0 :     bad = 0x80;</span></a>
-<a name="801"><span class="lineNum">     801 </span><span class="lineNoCov">          0 :     *data_len = 0;</span></a>
-<a name="802"><span class="lineNum">     802 </span><span class="lineNoCov">          0 :     for( i = input_len; i &gt; 0; i-- )</span></a>
+<a name="800"><span class="lineNum">     800 </span>            :     bad = 0x80;</a>
+<a name="801"><span class="lineNum">     801 </span>            :     *data_len = 0;</a>
+<a name="802"><span class="lineNum">     802 </span>            :     for( i = input_len; i &gt; 0; i-- )</a>
 <a name="803"><span class="lineNum">     803 </span>            :     {</a>
-<a name="804"><span class="lineNum">     804 </span><span class="lineNoCov">          0 :         prev_done = done;</span></a>
-<a name="805"><span class="lineNum">     805 </span><span class="lineNoCov">          0 :         done |= ( input[i - 1] != 0 );</span></a>
-<a name="806"><span class="lineNum">     806 </span><span class="lineNoCov">          0 :         *data_len |= ( i - 1 ) * ( done != prev_done );</span></a>
-<a name="807"><span class="lineNum">     807 </span><span class="lineNoCov">          0 :         bad ^= input[i - 1] * ( done != prev_done );</span></a>
+<a name="804"><span class="lineNum">     804 </span>            :         prev_done = done;</a>
+<a name="805"><span class="lineNum">     805 </span>            :         done |= ( input[i - 1] != 0 );</a>
+<a name="806"><span class="lineNum">     806 </span>            :         *data_len |= ( i - 1 ) * ( done != prev_done );</a>
+<a name="807"><span class="lineNum">     807 </span>            :         bad ^= input[i - 1] * ( done != prev_done );</a>
 <a name="808"><span class="lineNum">     808 </span>            :     }</a>
 <a name="809"><span class="lineNum">     809 </span>            : </a>
-<a name="810"><span class="lineNum">     810 </span><span class="lineNoCov">          0 :     return( MBEDTLS_ERR_CIPHER_INVALID_PADDING * ( bad != 0 ) );</span></a>
+<a name="810"><span class="lineNum">     810 </span>            :     return( MBEDTLS_ERR_CIPHER_INVALID_PADDING * ( bad != 0 ) );</a>
 <a name="811"><span class="lineNum">     811 </span>            : </a>
 <a name="812"><span class="lineNum">     812 </span>            : }</a>
 <a name="813"><span class="lineNum">     813 </span>            : #endif /* MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS */</a>
@@ -878,39 +878,39 @@
 <a name="816"><span class="lineNum">     816 </span>            : /*</a>
 <a name="817"><span class="lineNum">     817 </span>            :  * Zeros and len padding: fill with 00 ... 00 ll, where ll is padding length</a>
 <a name="818"><span class="lineNum">     818 </span>            :  */</a>
-<a name="819"><span class="lineNum">     819 </span><span class="lineNoCov">          0 : static void add_zeros_and_len_padding( unsigned char *output,</span></a>
+<a name="819"><span class="lineNum">     819 </span>            : static void add_zeros_and_len_padding( unsigned char *output,</a>
 <a name="820"><span class="lineNum">     820 </span>            :                                        size_t output_len, size_t data_len )</a>
 <a name="821"><span class="lineNum">     821 </span>            : {</a>
-<a name="822"><span class="lineNum">     822 </span><span class="lineNoCov">          0 :     size_t padding_len = output_len - data_len;</span></a>
-<a name="823"><span class="lineNum">     823 </span><span class="lineNoCov">          0 :     unsigned char i = 0;</span></a>
+<a name="822"><span class="lineNum">     822 </span>            :     size_t padding_len = output_len - data_len;</a>
+<a name="823"><span class="lineNum">     823 </span>            :     unsigned char i = 0;</a>
 <a name="824"><span class="lineNum">     824 </span>            : </a>
-<a name="825"><span class="lineNum">     825 </span><span class="lineNoCov">          0 :     for( i = 1; i &lt; padding_len; i++ )</span></a>
-<a name="826"><span class="lineNum">     826 </span><span class="lineNoCov">          0 :         output[data_len + i - 1] = 0x00;</span></a>
-<a name="827"><span class="lineNum">     827 </span><span class="lineNoCov">          0 :     output[output_len - 1] = (unsigned char) padding_len;</span></a>
-<a name="828"><span class="lineNum">     828 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="825"><span class="lineNum">     825 </span>            :     for( i = 1; i &lt; padding_len; i++ )</a>
+<a name="826"><span class="lineNum">     826 </span>            :         output[data_len + i - 1] = 0x00;</a>
+<a name="827"><span class="lineNum">     827 </span>            :     output[output_len - 1] = (unsigned char) padding_len;</a>
+<a name="828"><span class="lineNum">     828 </span>            : }</a>
 <a name="829"><span class="lineNum">     829 </span>            : </a>
-<a name="830"><span class="lineNum">     830 </span><span class="lineNoCov">          0 : static int get_zeros_and_len_padding( unsigned char *input, size_t input_len,</span></a>
+<a name="830"><span class="lineNum">     830 </span>            : static int get_zeros_and_len_padding( unsigned char *input, size_t input_len,</a>
 <a name="831"><span class="lineNum">     831 </span>            :                                       size_t *data_len )</a>
 <a name="832"><span class="lineNum">     832 </span>            : {</a>
 <a name="833"><span class="lineNum">     833 </span>            :     size_t i, pad_idx;</a>
-<a name="834"><span class="lineNum">     834 </span><span class="lineNoCov">          0 :     unsigned char padding_len, bad = 0;</span></a>
+<a name="834"><span class="lineNum">     834 </span>            :     unsigned char padding_len, bad = 0;</a>
 <a name="835"><span class="lineNum">     835 </span>            : </a>
-<a name="836"><span class="lineNum">     836 </span><span class="lineNoCov">          0 :     if( NULL == input || NULL == data_len )</span></a>
-<a name="837"><span class="lineNum">     837 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</span></a>
+<a name="836"><span class="lineNum">     836 </span>            :     if( NULL == input || NULL == data_len )</a>
+<a name="837"><span class="lineNum">     837 </span>            :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</a>
 <a name="838"><span class="lineNum">     838 </span>            : </a>
-<a name="839"><span class="lineNum">     839 </span><span class="lineNoCov">          0 :     padding_len = input[input_len - 1];</span></a>
-<a name="840"><span class="lineNum">     840 </span><span class="lineNoCov">          0 :     *data_len = input_len - padding_len;</span></a>
+<a name="839"><span class="lineNum">     839 </span>            :     padding_len = input[input_len - 1];</a>
+<a name="840"><span class="lineNum">     840 </span>            :     *data_len = input_len - padding_len;</a>
 <a name="841"><span class="lineNum">     841 </span>            : </a>
 <a name="842"><span class="lineNum">     842 </span>            :     /* Avoid logical || since it results in a branch */</a>
-<a name="843"><span class="lineNum">     843 </span><span class="lineNoCov">          0 :     bad |= padding_len &gt; input_len;</span></a>
-<a name="844"><span class="lineNum">     844 </span><span class="lineNoCov">          0 :     bad |= padding_len == 0;</span></a>
+<a name="843"><span class="lineNum">     843 </span>            :     bad |= padding_len &gt; input_len;</a>
+<a name="844"><span class="lineNum">     844 </span>            :     bad |= padding_len == 0;</a>
 <a name="845"><span class="lineNum">     845 </span>            : </a>
 <a name="846"><span class="lineNum">     846 </span>            :     /* The number of bytes checked must be independent of padding_len */</a>
-<a name="847"><span class="lineNum">     847 </span><span class="lineNoCov">          0 :     pad_idx = input_len - padding_len;</span></a>
-<a name="848"><span class="lineNum">     848 </span><span class="lineNoCov">          0 :     for( i = 0; i &lt; input_len - 1; i++ )</span></a>
-<a name="849"><span class="lineNum">     849 </span><span class="lineNoCov">          0 :         bad |= input[i] * ( i &gt;= pad_idx );</span></a>
+<a name="847"><span class="lineNum">     847 </span>            :     pad_idx = input_len - padding_len;</a>
+<a name="848"><span class="lineNum">     848 </span>            :     for( i = 0; i &lt; input_len - 1; i++ )</a>
+<a name="849"><span class="lineNum">     849 </span>            :         bad |= input[i] * ( i &gt;= pad_idx );</a>
 <a name="850"><span class="lineNum">     850 </span>            : </a>
-<a name="851"><span class="lineNum">     851 </span><span class="lineNoCov">          0 :     return( MBEDTLS_ERR_CIPHER_INVALID_PADDING * ( bad != 0 ) );</span></a>
+<a name="851"><span class="lineNum">     851 </span>            :     return( MBEDTLS_ERR_CIPHER_INVALID_PADDING * ( bad != 0 ) );</a>
 <a name="852"><span class="lineNum">     852 </span>            : }</a>
 <a name="853"><span class="lineNum">     853 </span>            : #endif /* MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN */</a>
 <a name="854"><span class="lineNum">     854 </span>            : </a>
@@ -918,33 +918,33 @@
 <a name="856"><span class="lineNum">     856 </span>            : /*</a>
 <a name="857"><span class="lineNum">     857 </span>            :  * Zero padding: fill with 00 ... 00</a>
 <a name="858"><span class="lineNum">     858 </span>            :  */</a>
-<a name="859"><span class="lineNum">     859 </span><span class="lineNoCov">          0 : static void add_zeros_padding( unsigned char *output,</span></a>
+<a name="859"><span class="lineNum">     859 </span>            : static void add_zeros_padding( unsigned char *output,</a>
 <a name="860"><span class="lineNum">     860 </span>            :                                size_t output_len, size_t data_len )</a>
 <a name="861"><span class="lineNum">     861 </span>            : {</a>
 <a name="862"><span class="lineNum">     862 </span>            :     size_t i;</a>
 <a name="863"><span class="lineNum">     863 </span>            : </a>
-<a name="864"><span class="lineNum">     864 </span><span class="lineNoCov">          0 :     for( i = data_len; i &lt; output_len; i++ )</span></a>
-<a name="865"><span class="lineNum">     865 </span><span class="lineNoCov">          0 :         output[i] = 0x00;</span></a>
-<a name="866"><span class="lineNum">     866 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="864"><span class="lineNum">     864 </span>            :     for( i = data_len; i &lt; output_len; i++ )</a>
+<a name="865"><span class="lineNum">     865 </span>            :         output[i] = 0x00;</a>
+<a name="866"><span class="lineNum">     866 </span>            : }</a>
 <a name="867"><span class="lineNum">     867 </span>            : </a>
-<a name="868"><span class="lineNum">     868 </span><span class="lineNoCov">          0 : static int get_zeros_padding( unsigned char *input, size_t input_len,</span></a>
+<a name="868"><span class="lineNum">     868 </span>            : static int get_zeros_padding( unsigned char *input, size_t input_len,</a>
 <a name="869"><span class="lineNum">     869 </span>            :                               size_t *data_len )</a>
 <a name="870"><span class="lineNum">     870 </span>            : {</a>
 <a name="871"><span class="lineNum">     871 </span>            :     size_t i;</a>
-<a name="872"><span class="lineNum">     872 </span><span class="lineNoCov">          0 :     unsigned char done = 0, prev_done;</span></a>
+<a name="872"><span class="lineNum">     872 </span>            :     unsigned char done = 0, prev_done;</a>
 <a name="873"><span class="lineNum">     873 </span>            : </a>
-<a name="874"><span class="lineNum">     874 </span><span class="lineNoCov">          0 :     if( NULL == input || NULL == data_len )</span></a>
-<a name="875"><span class="lineNum">     875 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</span></a>
+<a name="874"><span class="lineNum">     874 </span>            :     if( NULL == input || NULL == data_len )</a>
+<a name="875"><span class="lineNum">     875 </span>            :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</a>
 <a name="876"><span class="lineNum">     876 </span>            : </a>
-<a name="877"><span class="lineNum">     877 </span><span class="lineNoCov">          0 :     *data_len = 0;</span></a>
-<a name="878"><span class="lineNum">     878 </span><span class="lineNoCov">          0 :     for( i = input_len; i &gt; 0; i-- )</span></a>
+<a name="877"><span class="lineNum">     877 </span>            :     *data_len = 0;</a>
+<a name="878"><span class="lineNum">     878 </span>            :     for( i = input_len; i &gt; 0; i-- )</a>
 <a name="879"><span class="lineNum">     879 </span>            :     {</a>
-<a name="880"><span class="lineNum">     880 </span><span class="lineNoCov">          0 :         prev_done = done;</span></a>
-<a name="881"><span class="lineNum">     881 </span><span class="lineNoCov">          0 :         done |= ( input[i-1] != 0 );</span></a>
-<a name="882"><span class="lineNum">     882 </span><span class="lineNoCov">          0 :         *data_len |= i * ( done != prev_done );</span></a>
+<a name="880"><span class="lineNum">     880 </span>            :         prev_done = done;</a>
+<a name="881"><span class="lineNum">     881 </span>            :         done |= ( input[i-1] != 0 );</a>
+<a name="882"><span class="lineNum">     882 </span>            :         *data_len |= i * ( done != prev_done );</a>
 <a name="883"><span class="lineNum">     883 </span>            :     }</a>
 <a name="884"><span class="lineNum">     884 </span>            : </a>
-<a name="885"><span class="lineNum">     885 </span><span class="lineNoCov">          0 :     return( 0 );</span></a>
+<a name="885"><span class="lineNum">     885 </span>            :     return( 0 );</a>
 <a name="886"><span class="lineNum">     886 </span>            : }</a>
 <a name="887"><span class="lineNum">     887 </span>            : #endif /* MBEDTLS_CIPHER_PADDING_ZEROS */</a>
 <a name="888"><span class="lineNum">     888 </span>            : </a>
@@ -954,15 +954,15 @@
 <a name="892"><span class="lineNum">     892 </span>            :  * There is no add_padding function (check for NULL in mbedtls_cipher_finish)</a>
 <a name="893"><span class="lineNum">     893 </span>            :  * but a trivial get_padding function</a>
 <a name="894"><span class="lineNum">     894 </span>            :  */</a>
-<a name="895"><span class="lineNum">     895 </span><span class="lineNoCov">          0 : static int get_no_padding( unsigned char *input, size_t input_len,</span></a>
+<a name="895"><span class="lineNum">     895 </span>            : static int get_no_padding( unsigned char *input, size_t input_len,</a>
 <a name="896"><span class="lineNum">     896 </span>            :                               size_t *data_len )</a>
 <a name="897"><span class="lineNum">     897 </span>            : {</a>
-<a name="898"><span class="lineNum">     898 </span><span class="lineNoCov">          0 :     if( NULL == input || NULL == data_len )</span></a>
-<a name="899"><span class="lineNum">     899 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</span></a>
+<a name="898"><span class="lineNum">     898 </span>            :     if( NULL == input || NULL == data_len )</a>
+<a name="899"><span class="lineNum">     899 </span>            :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</a>
 <a name="900"><span class="lineNum">     900 </span>            : </a>
-<a name="901"><span class="lineNum">     901 </span><span class="lineNoCov">          0 :     *data_len = input_len;</span></a>
+<a name="901"><span class="lineNum">     901 </span>            :     *data_len = input_len;</a>
 <a name="902"><span class="lineNum">     902 </span>            : </a>
-<a name="903"><span class="lineNum">     903 </span><span class="lineNoCov">          0 :     return( 0 );</span></a>
+<a name="903"><span class="lineNum">     903 </span>            :     return( 0 );</a>
 <a name="904"><span class="lineNum">     904 </span>            : }</a>
 <a name="905"><span class="lineNum">     905 </span>            : #endif /* MBEDTLS_CIPHER_MODE_WITH_PADDING */</a>
 <a name="906"><span class="lineNum">     906 </span>            : </a>
@@ -1012,52 +1012,52 @@
 <a name="950"><span class="lineNum">     950 </span>            :     }</a>
 <a name="951"><span class="lineNum">     951 </span>            : </a>
 <a name="952"><span class="lineNum">     952 </span>            : #if defined(MBEDTLS_CIPHER_MODE_CBC)</a>
-<a name="953"><span class="lineNum">     953 </span><span class="lineNoCov">          0 :     if( MBEDTLS_MODE_CBC == ctx-&gt;cipher_info-&gt;mode )</span></a>
+<a name="953"><span class="lineNum">     953 </span>            :     if( MBEDTLS_MODE_CBC == ctx-&gt;cipher_info-&gt;mode )</a>
 <a name="954"><span class="lineNum">     954 </span>            :     {</a>
-<a name="955"><span class="lineNum">     955 </span><span class="lineNoCov">          0 :         int ret = 0;</span></a>
+<a name="955"><span class="lineNum">     955 </span>            :         int ret = 0;</a>
 <a name="956"><span class="lineNum">     956 </span>            : </a>
-<a name="957"><span class="lineNum">     957 </span><span class="lineNoCov">          0 :         if( MBEDTLS_ENCRYPT == ctx-&gt;operation )</span></a>
+<a name="957"><span class="lineNum">     957 </span>            :         if( MBEDTLS_ENCRYPT == ctx-&gt;operation )</a>
 <a name="958"><span class="lineNum">     958 </span>            :         {</a>
 <a name="959"><span class="lineNum">     959 </span>            :             /* check for 'no padding' mode */</a>
-<a name="960"><span class="lineNum">     960 </span><span class="lineNoCov">          0 :             if( NULL == ctx-&gt;add_padding )</span></a>
+<a name="960"><span class="lineNum">     960 </span>            :             if( NULL == ctx-&gt;add_padding )</a>
 <a name="961"><span class="lineNum">     961 </span>            :             {</a>
-<a name="962"><span class="lineNum">     962 </span><span class="lineNoCov">          0 :                 if( 0 != ctx-&gt;unprocessed_len )</span></a>
-<a name="963"><span class="lineNum">     963 </span><span class="lineNoCov">          0 :                     return( MBEDTLS_ERR_CIPHER_FULL_BLOCK_EXPECTED );</span></a>
+<a name="962"><span class="lineNum">     962 </span>            :                 if( 0 != ctx-&gt;unprocessed_len )</a>
+<a name="963"><span class="lineNum">     963 </span>            :                     return( MBEDTLS_ERR_CIPHER_FULL_BLOCK_EXPECTED );</a>
 <a name="964"><span class="lineNum">     964 </span>            : </a>
-<a name="965"><span class="lineNum">     965 </span><span class="lineNoCov">          0 :                 return( 0 );</span></a>
+<a name="965"><span class="lineNum">     965 </span>            :                 return( 0 );</a>
 <a name="966"><span class="lineNum">     966 </span>            :             }</a>
 <a name="967"><span class="lineNum">     967 </span>            : </a>
-<a name="968"><span class="lineNum">     968 </span><span class="lineNoCov">          0 :             ctx-&gt;add_padding( ctx-&gt;unprocessed_data, mbedtls_cipher_get_iv_size( ctx ),</span></a>
+<a name="968"><span class="lineNum">     968 </span>            :             ctx-&gt;add_padding( ctx-&gt;unprocessed_data, mbedtls_cipher_get_iv_size( ctx ),</a>
 <a name="969"><span class="lineNum">     969 </span>            :                     ctx-&gt;unprocessed_len );</a>
 <a name="970"><span class="lineNum">     970 </span>            :         }</a>
-<a name="971"><span class="lineNum">     971 </span><span class="lineNoCov">          0 :         else if( mbedtls_cipher_get_block_size( ctx ) != ctx-&gt;unprocessed_len )</span></a>
+<a name="971"><span class="lineNum">     971 </span>            :         else if( mbedtls_cipher_get_block_size( ctx ) != ctx-&gt;unprocessed_len )</a>
 <a name="972"><span class="lineNum">     972 </span>            :         {</a>
 <a name="973"><span class="lineNum">     973 </span>            :             /*</a>
 <a name="974"><span class="lineNum">     974 </span>            :              * For decrypt operations, expect a full block,</a>
 <a name="975"><span class="lineNum">     975 </span>            :              * or an empty block if no padding</a>
 <a name="976"><span class="lineNum">     976 </span>            :              */</a>
-<a name="977"><span class="lineNum">     977 </span><span class="lineNoCov">          0 :             if( NULL == ctx-&gt;add_padding &amp;&amp; 0 == ctx-&gt;unprocessed_len )</span></a>
-<a name="978"><span class="lineNum">     978 </span><span class="lineNoCov">          0 :                 return( 0 );</span></a>
+<a name="977"><span class="lineNum">     977 </span>            :             if( NULL == ctx-&gt;add_padding &amp;&amp; 0 == ctx-&gt;unprocessed_len )</a>
+<a name="978"><span class="lineNum">     978 </span>            :                 return( 0 );</a>
 <a name="979"><span class="lineNum">     979 </span>            : </a>
-<a name="980"><span class="lineNum">     980 </span><span class="lineNoCov">          0 :             return( MBEDTLS_ERR_CIPHER_FULL_BLOCK_EXPECTED );</span></a>
+<a name="980"><span class="lineNum">     980 </span>            :             return( MBEDTLS_ERR_CIPHER_FULL_BLOCK_EXPECTED );</a>
 <a name="981"><span class="lineNum">     981 </span>            :         }</a>
 <a name="982"><span class="lineNum">     982 </span>            : </a>
 <a name="983"><span class="lineNum">     983 </span>            :         /* cipher block */</a>
-<a name="984"><span class="lineNum">     984 </span><span class="lineNoCov">          0 :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cbc_func( ctx-&gt;cipher_ctx,</span></a>
-<a name="985"><span class="lineNum">     985 </span><span class="lineNoCov">          0 :                 ctx-&gt;operation, mbedtls_cipher_get_block_size( ctx ), ctx-&gt;iv,</span></a>
-<a name="986"><span class="lineNum">     986 </span><span class="lineNoCov">          0 :                 ctx-&gt;unprocessed_data, output ) ) )</span></a>
+<a name="984"><span class="lineNum">     984 </span>            :         if( 0 != ( ret = ctx-&gt;cipher_info-&gt;base-&gt;cbc_func( ctx-&gt;cipher_ctx,</a>
+<a name="985"><span class="lineNum">     985 </span>            :                 ctx-&gt;operation, mbedtls_cipher_get_block_size( ctx ), ctx-&gt;iv,</a>
+<a name="986"><span class="lineNum">     986 </span>            :                 ctx-&gt;unprocessed_data, output ) ) )</a>
 <a name="987"><span class="lineNum">     987 </span>            :         {</a>
-<a name="988"><span class="lineNum">     988 </span><span class="lineNoCov">          0 :             return( ret );</span></a>
+<a name="988"><span class="lineNum">     988 </span>            :             return( ret );</a>
 <a name="989"><span class="lineNum">     989 </span>            :         }</a>
 <a name="990"><span class="lineNum">     990 </span>            : </a>
 <a name="991"><span class="lineNum">     991 </span>            :         /* Set output size for decryption */</a>
-<a name="992"><span class="lineNum">     992 </span><span class="lineNoCov">          0 :         if( MBEDTLS_DECRYPT == ctx-&gt;operation )</span></a>
-<a name="993"><span class="lineNum">     993 </span><span class="lineNoCov">          0 :             return( ctx-&gt;get_padding( output, mbedtls_cipher_get_block_size( ctx ),</span></a>
+<a name="992"><span class="lineNum">     992 </span>            :         if( MBEDTLS_DECRYPT == ctx-&gt;operation )</a>
+<a name="993"><span class="lineNum">     993 </span>            :             return( ctx-&gt;get_padding( output, mbedtls_cipher_get_block_size( ctx ),</a>
 <a name="994"><span class="lineNum">     994 </span>            :                                       olen ) );</a>
 <a name="995"><span class="lineNum">     995 </span>            : </a>
 <a name="996"><span class="lineNum">     996 </span>            :         /* Set output size for encryption */</a>
-<a name="997"><span class="lineNum">     997 </span><span class="lineNoCov">          0 :         *olen = mbedtls_cipher_get_block_size( ctx );</span></a>
-<a name="998"><span class="lineNum">     998 </span><span class="lineNoCov">          0 :         return( 0 );</span></a>
+<a name="997"><span class="lineNum">     997 </span>            :         *olen = mbedtls_cipher_get_block_size( ctx );</a>
+<a name="998"><span class="lineNum">     998 </span>            :         return( 0 );</a>
 <a name="999"><span class="lineNum">     999 </span>            :     }</a>
 <a name="1000"><span class="lineNum">    1000 </span>            : #else</a>
 <a name="1001"><span class="lineNum">    1001 </span>            :     ((void) output);</a>
@@ -1067,14 +1067,14 @@
 <a name="1005"><span class="lineNum">    1005 </span>            : }</a>
 <a name="1006"><span class="lineNum">    1006 </span>            : </a>
 <a name="1007"><span class="lineNum">    1007 </span>            : #if defined(MBEDTLS_CIPHER_MODE_WITH_PADDING)</a>
-<a name="1008"><span class="lineNum">    1008 </span><span class="lineCov">        805 : int mbedtls_cipher_set_padding_mode( mbedtls_cipher_context_t *ctx,</span></a>
+<a name="1008"><span class="lineNum">    1008 </span>            : int mbedtls_cipher_set_padding_mode( mbedtls_cipher_context_t *ctx,</a>
 <a name="1009"><span class="lineNum">    1009 </span>            :                                      mbedtls_cipher_padding_t mode )</a>
 <a name="1010"><span class="lineNum">    1010 </span>            : {</a>
 <a name="1011"><span class="lineNum">    1011 </span>            :     CIPHER_VALIDATE_RET( ctx != NULL );</a>
 <a name="1012"><span class="lineNum">    1012 </span>            : </a>
-<a name="1013"><span class="lineNum">    1013 </span><span class="lineCov">        805 :     if( NULL == ctx-&gt;cipher_info || MBEDTLS_MODE_CBC != ctx-&gt;cipher_info-&gt;mode )</span></a>
+<a name="1013"><span class="lineNum">    1013 </span>            :     if( NULL == ctx-&gt;cipher_info || MBEDTLS_MODE_CBC != ctx-&gt;cipher_info-&gt;mode )</a>
 <a name="1014"><span class="lineNum">    1014 </span>            :     {</a>
-<a name="1015"><span class="lineNum">    1015 </span><span class="lineCov">        805 :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</span></a>
+<a name="1015"><span class="lineNum">    1015 </span>            :         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );</a>
 <a name="1016"><span class="lineNum">    1016 </span>            :     }</a>
 <a name="1017"><span class="lineNum">    1017 </span>            : </a>
 <a name="1018"><span class="lineNum">    1018 </span>            : #if defined(MBEDTLS_USE_PSA_CRYPTO)</a>
@@ -1090,42 +1090,42 @@
 <a name="1028"><span class="lineNum">    1028 </span>            :     }</a>
 <a name="1029"><span class="lineNum">    1029 </span>            : #endif /* MBEDTLS_USE_PSA_CRYPTO */</a>
 <a name="1030"><span class="lineNum">    1030 </span>            : </a>
-<a name="1031"><span class="lineNum">    1031 </span><span class="lineNoCov">          0 :     switch( mode )</span></a>
+<a name="1031"><span class="lineNum">    1031 </span>            :     switch( mode )</a>
 <a name="1032"><span class="lineNum">    1032 </span>            :     {</a>
 <a name="1033"><span class="lineNum">    1033 </span>            : #if defined(MBEDTLS_CIPHER_PADDING_PKCS7)</a>
-<a name="1034"><span class="lineNum">    1034 </span><span class="lineNoCov">          0 :     case MBEDTLS_PADDING_PKCS7:</span></a>
-<a name="1035"><span class="lineNum">    1035 </span><span class="lineNoCov">          0 :         ctx-&gt;add_padding = add_pkcs_padding;</span></a>
-<a name="1036"><span class="lineNum">    1036 </span><span class="lineNoCov">          0 :         ctx-&gt;get_padding = get_pkcs_padding;</span></a>
-<a name="1037"><span class="lineNum">    1037 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1034"><span class="lineNum">    1034 </span>            :     case MBEDTLS_PADDING_PKCS7:</a>
+<a name="1035"><span class="lineNum">    1035 </span>            :         ctx-&gt;add_padding = add_pkcs_padding;</a>
+<a name="1036"><span class="lineNum">    1036 </span>            :         ctx-&gt;get_padding = get_pkcs_padding;</a>
+<a name="1037"><span class="lineNum">    1037 </span>            :         break;</a>
 <a name="1038"><span class="lineNum">    1038 </span>            : #endif</a>
 <a name="1039"><span class="lineNum">    1039 </span>            : #if defined(MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS)</a>
-<a name="1040"><span class="lineNum">    1040 </span><span class="lineNoCov">          0 :     case MBEDTLS_PADDING_ONE_AND_ZEROS:</span></a>
-<a name="1041"><span class="lineNum">    1041 </span><span class="lineNoCov">          0 :         ctx-&gt;add_padding = add_one_and_zeros_padding;</span></a>
-<a name="1042"><span class="lineNum">    1042 </span><span class="lineNoCov">          0 :         ctx-&gt;get_padding = get_one_and_zeros_padding;</span></a>
-<a name="1043"><span class="lineNum">    1043 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1040"><span class="lineNum">    1040 </span>            :     case MBEDTLS_PADDING_ONE_AND_ZEROS:</a>
+<a name="1041"><span class="lineNum">    1041 </span>            :         ctx-&gt;add_padding = add_one_and_zeros_padding;</a>
+<a name="1042"><span class="lineNum">    1042 </span>            :         ctx-&gt;get_padding = get_one_and_zeros_padding;</a>
+<a name="1043"><span class="lineNum">    1043 </span>            :         break;</a>
 <a name="1044"><span class="lineNum">    1044 </span>            : #endif</a>
 <a name="1045"><span class="lineNum">    1045 </span>            : #if defined(MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN)</a>
-<a name="1046"><span class="lineNum">    1046 </span><span class="lineNoCov">          0 :     case MBEDTLS_PADDING_ZEROS_AND_LEN:</span></a>
-<a name="1047"><span class="lineNum">    1047 </span><span class="lineNoCov">          0 :         ctx-&gt;add_padding = add_zeros_and_len_padding;</span></a>
-<a name="1048"><span class="lineNum">    1048 </span><span class="lineNoCov">          0 :         ctx-&gt;get_padding = get_zeros_and_len_padding;</span></a>
-<a name="1049"><span class="lineNum">    1049 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1046"><span class="lineNum">    1046 </span>            :     case MBEDTLS_PADDING_ZEROS_AND_LEN:</a>
+<a name="1047"><span class="lineNum">    1047 </span>            :         ctx-&gt;add_padding = add_zeros_and_len_padding;</a>
+<a name="1048"><span class="lineNum">    1048 </span>            :         ctx-&gt;get_padding = get_zeros_and_len_padding;</a>
+<a name="1049"><span class="lineNum">    1049 </span>            :         break;</a>
 <a name="1050"><span class="lineNum">    1050 </span>            : #endif</a>
 <a name="1051"><span class="lineNum">    1051 </span>            : #if defined(MBEDTLS_CIPHER_PADDING_ZEROS)</a>
-<a name="1052"><span class="lineNum">    1052 </span><span class="lineNoCov">          0 :     case MBEDTLS_PADDING_ZEROS:</span></a>
-<a name="1053"><span class="lineNum">    1053 </span><span class="lineNoCov">          0 :         ctx-&gt;add_padding = add_zeros_padding;</span></a>
-<a name="1054"><span class="lineNum">    1054 </span><span class="lineNoCov">          0 :         ctx-&gt;get_padding = get_zeros_padding;</span></a>
-<a name="1055"><span class="lineNum">    1055 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1052"><span class="lineNum">    1052 </span>            :     case MBEDTLS_PADDING_ZEROS:</a>
+<a name="1053"><span class="lineNum">    1053 </span>            :         ctx-&gt;add_padding = add_zeros_padding;</a>
+<a name="1054"><span class="lineNum">    1054 </span>            :         ctx-&gt;get_padding = get_zeros_padding;</a>
+<a name="1055"><span class="lineNum">    1055 </span>            :         break;</a>
 <a name="1056"><span class="lineNum">    1056 </span>            : #endif</a>
-<a name="1057"><span class="lineNum">    1057 </span><span class="lineNoCov">          0 :     case MBEDTLS_PADDING_NONE:</span></a>
-<a name="1058"><span class="lineNum">    1058 </span><span class="lineNoCov">          0 :         ctx-&gt;add_padding = NULL;</span></a>
-<a name="1059"><span class="lineNum">    1059 </span><span class="lineNoCov">          0 :         ctx-&gt;get_padding = get_no_padding;</span></a>
-<a name="1060"><span class="lineNum">    1060 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1057"><span class="lineNum">    1057 </span>            :     case MBEDTLS_PADDING_NONE:</a>
+<a name="1058"><span class="lineNum">    1058 </span>            :         ctx-&gt;add_padding = NULL;</a>
+<a name="1059"><span class="lineNum">    1059 </span>            :         ctx-&gt;get_padding = get_no_padding;</a>
+<a name="1060"><span class="lineNum">    1060 </span>            :         break;</a>
 <a name="1061"><span class="lineNum">    1061 </span>            : </a>
-<a name="1062"><span class="lineNum">    1062 </span><span class="lineNoCov">          0 :     default:</span></a>
-<a name="1063"><span class="lineNum">    1063 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE );</span></a>
+<a name="1062"><span class="lineNum">    1062 </span>            :     default:</a>
+<a name="1063"><span class="lineNum">    1063 </span>            :         return( MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE );</a>
 <a name="1064"><span class="lineNum">    1064 </span>            :     }</a>
 <a name="1065"><span class="lineNum">    1065 </span>            : </a>
-<a name="1066"><span class="lineNum">    1066 </span><span class="lineNoCov">          0 :     return( 0 );</span></a>
+<a name="1066"><span class="lineNum">    1066 </span>            :     return( 0 );</a>
 <a name="1067"><span class="lineNum">    1067 </span>            : }</a>
 <a name="1068"><span class="lineNum">    1068 </span>            : #endif /* MBEDTLS_CIPHER_MODE_WITH_PADDING */</a>
 <a name="1069"><span class="lineNum">    1069 </span>            : </a>
@@ -1406,10 +1406,10 @@
 <a name="1344"><span class="lineNum">    1344 </span>            :     }</a>
 <a name="1345"><span class="lineNum">    1345 </span>            : #endif /* MBEDTLS_GCM_C */</a>
 <a name="1346"><span class="lineNum">    1346 </span>            : #if defined(MBEDTLS_CCM_C)</a>
-<a name="1347"><span class="lineNum">    1347 </span><span class="lineNoCov">          0 :     if( MBEDTLS_MODE_CCM == ctx-&gt;cipher_info-&gt;mode )</span></a>
+<a name="1347"><span class="lineNum">    1347 </span>            :     if( MBEDTLS_MODE_CCM == ctx-&gt;cipher_info-&gt;mode )</a>
 <a name="1348"><span class="lineNum">    1348 </span>            :     {</a>
-<a name="1349"><span class="lineNum">    1349 </span><span class="lineNoCov">          0 :         *olen = ilen;</span></a>
-<a name="1350"><span class="lineNum">    1350 </span><span class="lineNoCov">          0 :         return( mbedtls_ccm_encrypt_and_tag( ctx-&gt;cipher_ctx, ilen,</span></a>
+<a name="1349"><span class="lineNum">    1349 </span>            :         *olen = ilen;</a>
+<a name="1350"><span class="lineNum">    1350 </span>            :         return( mbedtls_ccm_encrypt_and_tag( ctx-&gt;cipher_ctx, ilen,</a>
 <a name="1351"><span class="lineNum">    1351 </span>            :                                      iv, iv_len, ad, ad_len, input, output,</a>
 <a name="1352"><span class="lineNum">    1352 </span>            :                                      tag, tag_len ) );</a>
 <a name="1353"><span class="lineNum">    1353 </span>            :     }</a>
@@ -1494,19 +1494,19 @@
 <a name="1432"><span class="lineNum">    1432 </span>            :     }</a>
 <a name="1433"><span class="lineNum">    1433 </span>            : #endif /* MBEDTLS_GCM_C */</a>
 <a name="1434"><span class="lineNum">    1434 </span>            : #if defined(MBEDTLS_CCM_C)</a>
-<a name="1435"><span class="lineNum">    1435 </span><span class="lineNoCov">          0 :     if( MBEDTLS_MODE_CCM == ctx-&gt;cipher_info-&gt;mode )</span></a>
+<a name="1435"><span class="lineNum">    1435 </span>            :     if( MBEDTLS_MODE_CCM == ctx-&gt;cipher_info-&gt;mode )</a>
 <a name="1436"><span class="lineNum">    1436 </span>            :     {</a>
-<a name="1437"><span class="lineNum">    1437 </span><span class="lineNoCov">          0 :         int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="1437"><span class="lineNum">    1437 </span>            :         int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</a>
 <a name="1438"><span class="lineNum">    1438 </span>            : </a>
-<a name="1439"><span class="lineNum">    1439 </span><span class="lineNoCov">          0 :         *olen = ilen;</span></a>
-<a name="1440"><span class="lineNum">    1440 </span><span class="lineNoCov">          0 :         ret = mbedtls_ccm_auth_decrypt( ctx-&gt;cipher_ctx, ilen,</span></a>
+<a name="1439"><span class="lineNum">    1439 </span>            :         *olen = ilen;</a>
+<a name="1440"><span class="lineNum">    1440 </span>            :         ret = mbedtls_ccm_auth_decrypt( ctx-&gt;cipher_ctx, ilen,</a>
 <a name="1441"><span class="lineNum">    1441 </span>            :                                 iv, iv_len, ad, ad_len,</a>
 <a name="1442"><span class="lineNum">    1442 </span>            :                                 input, output, tag, tag_len );</a>
 <a name="1443"><span class="lineNum">    1443 </span>            : </a>
-<a name="1444"><span class="lineNum">    1444 </span><span class="lineNoCov">          0 :         if( ret == MBEDTLS_ERR_CCM_AUTH_FAILED )</span></a>
-<a name="1445"><span class="lineNum">    1445 </span><span class="lineNoCov">          0 :             ret = MBEDTLS_ERR_CIPHER_AUTH_FAILED;</span></a>
+<a name="1444"><span class="lineNum">    1444 </span>            :         if( ret == MBEDTLS_ERR_CCM_AUTH_FAILED )</a>
+<a name="1445"><span class="lineNum">    1445 </span>            :             ret = MBEDTLS_ERR_CIPHER_AUTH_FAILED;</a>
 <a name="1446"><span class="lineNum">    1446 </span>            : </a>
-<a name="1447"><span class="lineNum">    1447 </span><span class="lineNoCov">          0 :         return( ret );</span></a>
+<a name="1447"><span class="lineNum">    1447 </span>            :         return( ret );</a>
 <a name="1448"><span class="lineNum">    1448 </span>            :     }</a>
 <a name="1449"><span class="lineNum">    1449 </span>            : #endif /* MBEDTLS_CCM_C */</a>
 <a name="1450"><span class="lineNum">    1450 </span>            : #if defined(MBEDTLS_CHACHAPOLY_C)</a>

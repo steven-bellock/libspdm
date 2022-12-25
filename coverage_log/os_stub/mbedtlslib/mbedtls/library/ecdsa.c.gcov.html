@@ -31,18 +31,18 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">154</td>
-            <td class="headerCovTableEntry">192</td>
-            <td class="headerCovTableEntryMed">80.2 %</td>
+            <td class="headerCovTableEntry">130</td>
+            <td class="headerCovTableEntry">158</td>
+            <td class="headerCovTableEntryMed">82.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-12-24 08:15:01</td>
+            <td class="headerValue">2022-12-25 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">14</td>
             <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntry">19</td>
-            <td class="headerCovTableEntryMed">78.9 %</td>
+            <td class="headerCovTableEntryHi">93.3 %</td>
           </tr>
           <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -286,23 +286,23 @@
 <a name="224"><span class="lineNum">     224 </span>            :  * Derive a suitable integer for group grp from a buffer of length len</a>
 <a name="225"><span class="lineNum">     225 </span>            :  * SEC1 4.1.3 step 5 aka SEC1 4.1.4 step 3</a>
 <a name="226"><span class="lineNum">     226 </span>            :  */</a>
-<a name="227"><span class="lineNum">     227 </span><span class="lineCov">       1307 : static int derive_mpi( const mbedtls_ecp_group *grp, mbedtls_mpi *x,</span></a>
+<a name="227"><span class="lineNum">     227 </span><span class="lineCov">       1304 : static int derive_mpi( const mbedtls_ecp_group *grp, mbedtls_mpi *x,</span></a>
 <a name="228"><span class="lineNum">     228 </span>            :                        const unsigned char *buf, size_t blen )</a>
 <a name="229"><span class="lineNum">     229 </span>            : {</a>
-<a name="230"><span class="lineNum">     230 </span><span class="lineCov">       1307 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
-<a name="231"><span class="lineNum">     231 </span><span class="lineCov">       1307 :     size_t n_size = ( grp-&gt;nbits + 7 ) / 8;</span></a>
-<a name="232"><span class="lineNum">     232 </span><span class="lineCov">       1307 :     size_t use_size = blen &gt; n_size ? n_size : blen;</span></a>
+<a name="230"><span class="lineNum">     230 </span><span class="lineCov">       1304 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineCov">       1304 :     size_t n_size = ( grp-&gt;nbits + 7 ) / 8;</span></a>
+<a name="232"><span class="lineNum">     232 </span><span class="lineCov">       1304 :     size_t use_size = blen &gt; n_size ? n_size : blen;</span></a>
 <a name="233"><span class="lineNum">     233 </span>            : </a>
-<a name="234"><span class="lineNum">     234 </span><span class="lineCov">       1307 :     MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( x, buf, use_size ) );</span></a>
-<a name="235"><span class="lineNum">     235 </span><span class="lineCov">       1307 :     if( use_size * 8 &gt; grp-&gt;nbits )</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineCov">       1304 :     MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( x, buf, use_size ) );</span></a>
+<a name="235"><span class="lineNum">     235 </span><span class="lineCov">       1304 :     if( use_size * 8 &gt; grp-&gt;nbits )</span></a>
 <a name="236"><span class="lineNum">     236 </span><span class="lineNoCov">          0 :         MBEDTLS_MPI_CHK( mbedtls_mpi_shift_r( x, use_size * 8 - grp-&gt;nbits ) );</span></a>
 <a name="237"><span class="lineNum">     237 </span>            : </a>
 <a name="238"><span class="lineNum">     238 </span>            :     /* While at it, reduce modulo N */</a>
-<a name="239"><span class="lineNum">     239 </span><span class="lineCov">       1307 :     if( mbedtls_mpi_cmp_mpi( x, &amp;grp-&gt;N ) &gt;= 0 )</span></a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineCov">       1304 :     if( mbedtls_mpi_cmp_mpi( x, &amp;grp-&gt;N ) &gt;= 0 )</span></a>
 <a name="240"><span class="lineNum">     240 </span><span class="lineNoCov">          0 :         MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( x, x, &amp;grp-&gt;N ) );</span></a>
 <a name="241"><span class="lineNum">     241 </span>            : </a>
-<a name="242"><span class="lineNum">     242 </span><span class="lineCov">       1307 : cleanup:</span></a>
-<a name="243"><span class="lineNum">     243 </span><span class="lineCov">       1307 :     return( ret );</span></a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">       1304 : cleanup:</span></a>
+<a name="243"><span class="lineNum">     243 </span><span class="lineCov">       1304 :     return( ret );</span></a>
 <a name="244"><span class="lineNum">     244 </span>            : }</a>
 <a name="245"><span class="lineNum">     245 </span>            : #endif /* ECDSA_DETERMINISTIC || !ECDSA_SIGN_ALT || !ECDSA_VERIFY_ALT */</a>
 <a name="246"><span class="lineNum">     246 </span>            : </a>
@@ -483,7 +483,7 @@
 <a name="421"><span class="lineNum">     421 </span>            : /*</a>
 <a name="422"><span class="lineNum">     422 </span>            :  * Deterministic signature wrapper</a>
 <a name="423"><span class="lineNum">     423 </span>            :  */</a>
-<a name="424"><span class="lineNum">     424 </span><span class="lineCov">          3 : static int ecdsa_sign_det_restartable( mbedtls_ecp_group *grp,</span></a>
+<a name="424"><span class="lineNum">     424 </span>            : static int ecdsa_sign_det_restartable( mbedtls_ecp_group *grp,</a>
 <a name="425"><span class="lineNum">     425 </span>            :                     mbedtls_mpi *r, mbedtls_mpi *s,</a>
 <a name="426"><span class="lineNum">     426 </span>            :                     const mbedtls_mpi *d, const unsigned char *buf, size_t blen,</a>
 <a name="427"><span class="lineNum">     427 </span>            :                     mbedtls_md_type_t md_alg,</a>
@@ -491,19 +491,19 @@
 <a name="429"><span class="lineNum">     429 </span>            :                     void *p_rng_blind,</a>
 <a name="430"><span class="lineNum">     430 </span>            :                     mbedtls_ecdsa_restart_ctx *rs_ctx )</a>
 <a name="431"><span class="lineNum">     431 </span>            : {</a>
-<a name="432"><span class="lineNum">     432 </span><span class="lineCov">          3 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="432"><span class="lineNum">     432 </span>            :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</a>
 <a name="433"><span class="lineNum">     433 </span>            :     mbedtls_hmac_drbg_context rng_ctx;</a>
-<a name="434"><span class="lineNum">     434 </span><span class="lineCov">          3 :     mbedtls_hmac_drbg_context *p_rng = &amp;rng_ctx;</span></a>
+<a name="434"><span class="lineNum">     434 </span>            :     mbedtls_hmac_drbg_context *p_rng = &amp;rng_ctx;</a>
 <a name="435"><span class="lineNum">     435 </span>            :     unsigned char data[2 * MBEDTLS_ECP_MAX_BYTES];</a>
-<a name="436"><span class="lineNum">     436 </span><span class="lineCov">          3 :     size_t grp_len = ( grp-&gt;nbits + 7 ) / 8;</span></a>
+<a name="436"><span class="lineNum">     436 </span>            :     size_t grp_len = ( grp-&gt;nbits + 7 ) / 8;</a>
 <a name="437"><span class="lineNum">     437 </span>            :     const mbedtls_md_info_t *md_info;</a>
 <a name="438"><span class="lineNum">     438 </span>            :     mbedtls_mpi h;</a>
 <a name="439"><span class="lineNum">     439 </span>            : </a>
-<a name="440"><span class="lineNum">     440 </span><span class="lineCov">          3 :     if( ( md_info = mbedtls_md_info_from_type( md_alg ) ) == NULL )</span></a>
-<a name="441"><span class="lineNum">     441 </span><span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );</span></a>
+<a name="440"><span class="lineNum">     440 </span>            :     if( ( md_info = mbedtls_md_info_from_type( md_alg ) ) == NULL )</a>
+<a name="441"><span class="lineNum">     441 </span>            :         return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );</a>
 <a name="442"><span class="lineNum">     442 </span>            : </a>
-<a name="443"><span class="lineNum">     443 </span><span class="lineCov">          3 :     mbedtls_mpi_init( &amp;h );</span></a>
-<a name="444"><span class="lineNum">     444 </span><span class="lineCov">          3 :     mbedtls_hmac_drbg_init( &amp;rng_ctx );</span></a>
+<a name="443"><span class="lineNum">     443 </span>            :     mbedtls_mpi_init( &amp;h );</a>
+<a name="444"><span class="lineNum">     444 </span>            :     mbedtls_hmac_drbg_init( &amp;rng_ctx );</a>
 <a name="445"><span class="lineNum">     445 </span>            : </a>
 <a name="446"><span class="lineNum">     446 </span>            :     ECDSA_RS_ENTER( det );</a>
 <a name="447"><span class="lineNum">     447 </span>            : </a>
@@ -520,10 +520,10 @@
 <a name="458"><span class="lineNum">     458 </span>            : #endif /* MBEDTLS_ECP_RESTARTABLE */</a>
 <a name="459"><span class="lineNum">     459 </span>            : </a>
 <a name="460"><span class="lineNum">     460 </span>            :     /* Use private key and message hash (reduced) to initialize HMAC_DRBG */</a>
-<a name="461"><span class="lineNum">     461 </span><span class="lineCov">          3 :     MBEDTLS_MPI_CHK( mbedtls_mpi_write_binary( d, data, grp_len ) );</span></a>
-<a name="462"><span class="lineNum">     462 </span><span class="lineCov">          3 :     MBEDTLS_MPI_CHK( derive_mpi( grp, &amp;h, buf, blen ) );</span></a>
-<a name="463"><span class="lineNum">     463 </span><span class="lineCov">          3 :     MBEDTLS_MPI_CHK( mbedtls_mpi_write_binary( &amp;h, data + grp_len, grp_len ) );</span></a>
-<a name="464"><span class="lineNum">     464 </span><span class="lineCov">          3 :     mbedtls_hmac_drbg_seed_buf( p_rng, md_info, data, 2 * grp_len );</span></a>
+<a name="461"><span class="lineNum">     461 </span>            :     MBEDTLS_MPI_CHK( mbedtls_mpi_write_binary( d, data, grp_len ) );</a>
+<a name="462"><span class="lineNum">     462 </span>            :     MBEDTLS_MPI_CHK( derive_mpi( grp, &amp;h, buf, blen ) );</a>
+<a name="463"><span class="lineNum">     463 </span>            :     MBEDTLS_MPI_CHK( mbedtls_mpi_write_binary( &amp;h, data + grp_len, grp_len ) );</a>
+<a name="464"><span class="lineNum">     464 </span>            :     mbedtls_hmac_drbg_seed_buf( p_rng, md_info, data, 2 * grp_len );</a>
 <a name="465"><span class="lineNum">     465 </span>            : </a>
 <a name="466"><span class="lineNum">     466 </span>            : #if defined(MBEDTLS_ECP_RESTARTABLE)</a>
 <a name="467"><span class="lineNum">     467 </span>            :     if( rs_ctx != NULL &amp;&amp; rs_ctx-&gt;det != NULL )</a>
@@ -537,8 +537,8 @@
 <a name="475"><span class="lineNum">     475 </span>            :     ret = mbedtls_ecdsa_sign( grp, r, s, d, buf, blen,</a>
 <a name="476"><span class="lineNum">     476 </span>            :                               mbedtls_hmac_drbg_random, p_rng );</a>
 <a name="477"><span class="lineNum">     477 </span>            : #else</a>
-<a name="478"><span class="lineNum">     478 </span><span class="lineCov">          3 :     if( f_rng_blind != NULL )</span></a>
-<a name="479"><span class="lineNum">     479 </span><span class="lineNoCov">          0 :         ret = ecdsa_sign_restartable( grp, r, s, d, buf, blen,</span></a>
+<a name="478"><span class="lineNum">     478 </span>            :     if( f_rng_blind != NULL )</a>
+<a name="479"><span class="lineNum">     479 </span>            :         ret = ecdsa_sign_restartable( grp, r, s, d, buf, blen,</a>
 <a name="480"><span class="lineNum">     480 </span>            :                                       mbedtls_hmac_drbg_random, p_rng,</a>
 <a name="481"><span class="lineNum">     481 </span>            :                                       f_rng_blind, p_rng_blind, rs_ctx );</a>
 <a name="482"><span class="lineNum">     482 </span>            :     else</a>
@@ -552,20 +552,20 @@
 <a name="490"><span class="lineNum">     490 </span>            :          * reusing the bits of the ephemeral key for blinding and eliminate the</a>
 <a name="491"><span class="lineNum">     491 </span>            :          * risk that they leak this way.</a>
 <a name="492"><span class="lineNum">     492 </span>            :          */</a>
-<a name="493"><span class="lineNum">     493 </span><span class="lineCov">          3 :         const char* blind_label = &quot;BLINDING CONTEXT&quot;;</span></a>
+<a name="493"><span class="lineNum">     493 </span>            :         const char* blind_label = &quot;BLINDING CONTEXT&quot;;</a>
 <a name="494"><span class="lineNum">     494 </span>            :         mbedtls_hmac_drbg_context rng_ctx_blind;</a>
 <a name="495"><span class="lineNum">     495 </span>            : </a>
-<a name="496"><span class="lineNum">     496 </span><span class="lineCov">          3 :         mbedtls_hmac_drbg_init( &amp;rng_ctx_blind );</span></a>
-<a name="497"><span class="lineNum">     497 </span><span class="lineCov">          3 :         p_rng_blind_det = &amp;rng_ctx_blind;</span></a>
-<a name="498"><span class="lineNum">     498 </span><span class="lineCov">          3 :         mbedtls_hmac_drbg_seed_buf( p_rng_blind_det, md_info,</span></a>
+<a name="496"><span class="lineNum">     496 </span>            :         mbedtls_hmac_drbg_init( &amp;rng_ctx_blind );</a>
+<a name="497"><span class="lineNum">     497 </span>            :         p_rng_blind_det = &amp;rng_ctx_blind;</a>
+<a name="498"><span class="lineNum">     498 </span>            :         mbedtls_hmac_drbg_seed_buf( p_rng_blind_det, md_info,</a>
 <a name="499"><span class="lineNum">     499 </span>            :                                     data, 2 * grp_len );</a>
-<a name="500"><span class="lineNum">     500 </span><span class="lineCov">          3 :         ret = mbedtls_hmac_drbg_update_ret( p_rng_blind_det,</span></a>
+<a name="500"><span class="lineNum">     500 </span>            :         ret = mbedtls_hmac_drbg_update_ret( p_rng_blind_det,</a>
 <a name="501"><span class="lineNum">     501 </span>            :                                             (const unsigned char*) blind_label,</a>
 <a name="502"><span class="lineNum">     502 </span>            :                                             strlen( blind_label ) );</a>
-<a name="503"><span class="lineNum">     503 </span><span class="lineCov">          3 :         if( ret != 0 )</span></a>
+<a name="503"><span class="lineNum">     503 </span>            :         if( ret != 0 )</a>
 <a name="504"><span class="lineNum">     504 </span>            :         {</a>
-<a name="505"><span class="lineNum">     505 </span><span class="lineNoCov">          0 :             mbedtls_hmac_drbg_free( &amp;rng_ctx_blind );</span></a>
-<a name="506"><span class="lineNum">     506 </span><span class="lineNoCov">          0 :             goto cleanup;</span></a>
+<a name="505"><span class="lineNum">     505 </span>            :             mbedtls_hmac_drbg_free( &amp;rng_ctx_blind );</a>
+<a name="506"><span class="lineNum">     506 </span>            :             goto cleanup;</a>
 <a name="507"><span class="lineNum">     507 </span>            :         }</a>
 <a name="508"><span class="lineNum">     508 </span>            : #else</a>
 <a name="509"><span class="lineNum">     509 </span>            :         /*</a>
@@ -591,24 +591,24 @@
 <a name="529"><span class="lineNum">     529 </span>            :          * won't be a valid value for f_rng_blind anymore. Therefore it should</a>
 <a name="530"><span class="lineNum">     530 </span>            :          * be checked by the caller and this branch and check can be removed.</a>
 <a name="531"><span class="lineNum">     531 </span>            :          */</a>
-<a name="532"><span class="lineNum">     532 </span><span class="lineCov">          3 :         ret = ecdsa_sign_restartable( grp, r, s, d, buf, blen,</span></a>
+<a name="532"><span class="lineNum">     532 </span>            :         ret = ecdsa_sign_restartable( grp, r, s, d, buf, blen,</a>
 <a name="533"><span class="lineNum">     533 </span>            :                                       mbedtls_hmac_drbg_random, p_rng,</a>
 <a name="534"><span class="lineNum">     534 </span>            :                                       mbedtls_hmac_drbg_random, p_rng_blind_det,</a>
 <a name="535"><span class="lineNum">     535 </span>            :                                       rs_ctx );</a>
 <a name="536"><span class="lineNum">     536 </span>            : </a>
 <a name="537"><span class="lineNum">     537 </span>            : #if !defined(MBEDTLS_ECP_RESTARTABLE)</a>
-<a name="538"><span class="lineNum">     538 </span><span class="lineCov">          3 :         mbedtls_hmac_drbg_free( &amp;rng_ctx_blind );</span></a>
+<a name="538"><span class="lineNum">     538 </span>            :         mbedtls_hmac_drbg_free( &amp;rng_ctx_blind );</a>
 <a name="539"><span class="lineNum">     539 </span>            : #endif</a>
 <a name="540"><span class="lineNum">     540 </span>            :     }</a>
 <a name="541"><span class="lineNum">     541 </span>            : #endif /* MBEDTLS_ECDSA_SIGN_ALT */</a>
 <a name="542"><span class="lineNum">     542 </span>            : </a>
-<a name="543"><span class="lineNum">     543 </span><span class="lineCov">          3 : cleanup:</span></a>
-<a name="544"><span class="lineNum">     544 </span><span class="lineCov">          3 :     mbedtls_hmac_drbg_free( &amp;rng_ctx );</span></a>
-<a name="545"><span class="lineNum">     545 </span><span class="lineCov">          3 :     mbedtls_mpi_free( &amp;h );</span></a>
+<a name="543"><span class="lineNum">     543 </span>            : cleanup:</a>
+<a name="544"><span class="lineNum">     544 </span>            :     mbedtls_hmac_drbg_free( &amp;rng_ctx );</a>
+<a name="545"><span class="lineNum">     545 </span>            :     mbedtls_mpi_free( &amp;h );</a>
 <a name="546"><span class="lineNum">     546 </span>            : </a>
 <a name="547"><span class="lineNum">     547 </span>            :     ECDSA_RS_LEAVE( det );</a>
 <a name="548"><span class="lineNum">     548 </span>            : </a>
-<a name="549"><span class="lineNum">     549 </span><span class="lineCov">          3 :     return( ret );</span></a>
+<a name="549"><span class="lineNum">     549 </span>            :     return( ret );</a>
 <a name="550"><span class="lineNum">     550 </span>            : }</a>
 <a name="551"><span class="lineNum">     551 </span>            : </a>
 <a name="552"><span class="lineNum">     552 </span>            : /*</a>
@@ -616,7 +616,7 @@
 <a name="554"><span class="lineNum">     554 </span>            :  */</a>
 <a name="555"><span class="lineNum">     555 </span>            : </a>
 <a name="556"><span class="lineNum">     556 </span>            : #if !defined(MBEDTLS_DEPRECATED_REMOVED)</a>
-<a name="557"><span class="lineNum">     557 </span><span class="lineNoCov">          0 : int mbedtls_ecdsa_sign_det( mbedtls_ecp_group *grp, mbedtls_mpi *r,</span></a>
+<a name="557"><span class="lineNum">     557 </span>            : int mbedtls_ecdsa_sign_det( mbedtls_ecp_group *grp, mbedtls_mpi *r,</a>
 <a name="558"><span class="lineNum">     558 </span>            :                             mbedtls_mpi *s, const mbedtls_mpi *d,</a>
 <a name="559"><span class="lineNum">     559 </span>            :                             const unsigned char *buf, size_t blen,</a>
 <a name="560"><span class="lineNum">     560 </span>            :                             mbedtls_md_type_t md_alg )</a>
@@ -627,12 +627,12 @@
 <a name="565"><span class="lineNum">     565 </span>            :     ECDSA_VALIDATE_RET( d     != NULL );</a>
 <a name="566"><span class="lineNum">     566 </span>            :     ECDSA_VALIDATE_RET( buf   != NULL || blen == 0 );</a>
 <a name="567"><span class="lineNum">     567 </span>            : </a>
-<a name="568"><span class="lineNum">     568 </span><span class="lineNoCov">          0 :     return( ecdsa_sign_det_restartable( grp, r, s, d, buf, blen, md_alg,</span></a>
+<a name="568"><span class="lineNum">     568 </span>            :     return( ecdsa_sign_det_restartable( grp, r, s, d, buf, blen, md_alg,</a>
 <a name="569"><span class="lineNum">     569 </span>            :                                         NULL, NULL, NULL ) );</a>
 <a name="570"><span class="lineNum">     570 </span>            : }</a>
 <a name="571"><span class="lineNum">     571 </span>            : #endif /* MBEDTLS_DEPRECATED_REMOVED */</a>
 <a name="572"><span class="lineNum">     572 </span>            : </a>
-<a name="573"><span class="lineNum">     573 </span><span class="lineNoCov">          0 : int mbedtls_ecdsa_sign_det_ext( mbedtls_ecp_group *grp, mbedtls_mpi *r,</span></a>
+<a name="573"><span class="lineNum">     573 </span>            : int mbedtls_ecdsa_sign_det_ext( mbedtls_ecp_group *grp, mbedtls_mpi *r,</a>
 <a name="574"><span class="lineNum">     574 </span>            :                                 mbedtls_mpi *s, const mbedtls_mpi *d,</a>
 <a name="575"><span class="lineNum">     575 </span>            :                                 const unsigned char *buf, size_t blen,</a>
 <a name="576"><span class="lineNum">     576 </span>            :                                 mbedtls_md_type_t md_alg,</a>
@@ -647,7 +647,7 @@
 <a name="585"><span class="lineNum">     585 </span>            :     ECDSA_VALIDATE_RET( buf   != NULL || blen == 0 );</a>
 <a name="586"><span class="lineNum">     586 </span>            :     ECDSA_VALIDATE_RET( f_rng_blind != NULL );</a>
 <a name="587"><span class="lineNum">     587 </span>            : </a>
-<a name="588"><span class="lineNum">     588 </span><span class="lineNoCov">          0 :     return( ecdsa_sign_det_restartable( grp, r, s, d, buf, blen, md_alg,</span></a>
+<a name="588"><span class="lineNum">     588 </span>            :     return( ecdsa_sign_det_restartable( grp, r, s, d, buf, blen, md_alg,</a>
 <a name="589"><span class="lineNum">     589 </span>            :                                         f_rng_blind, p_rng_blind, NULL ) );</a>
 <a name="590"><span class="lineNum">     590 </span>            : }</a>
 <a name="591"><span class="lineNum">     591 </span>            : #endif /* MBEDTLS_ECDSA_DETERMINISTIC */</a>
@@ -827,7 +827,7 @@
 <a name="765"><span class="lineNum">     765 </span><span class="lineCov">          3 :     mbedtls_mpi_init( &amp;s );</span></a>
 <a name="766"><span class="lineNum">     766 </span>            : </a>
 <a name="767"><span class="lineNum">     767 </span>            : #if defined(MBEDTLS_ECDSA_DETERMINISTIC)</a>
-<a name="768"><span class="lineNum">     768 </span><span class="lineCov">          3 :     MBEDTLS_MPI_CHK( ecdsa_sign_det_restartable( &amp;ctx-&gt;grp, &amp;r, &amp;s, &amp;ctx-&gt;d,</span></a>
+<a name="768"><span class="lineNum">     768 </span>            :     MBEDTLS_MPI_CHK( ecdsa_sign_det_restartable( &amp;ctx-&gt;grp, &amp;r, &amp;s, &amp;ctx-&gt;d,</a>
 <a name="769"><span class="lineNum">     769 </span>            :                                                  hash, hlen, md_alg, f_rng,</a>
 <a name="770"><span class="lineNum">     770 </span>            :                                                  p_rng, rs_ctx ) );</a>
 <a name="771"><span class="lineNum">     771 </span>            : #else</a>
@@ -840,7 +840,7 @@
 <a name="778"><span class="lineNum">     778 </span>            :                          hash, hlen, f_rng, p_rng ) );</a>
 <a name="779"><span class="lineNum">     779 </span>            : #else</a>
 <a name="780"><span class="lineNum">     780 </span>            :     /* Use the same RNG for both blinding and ephemeral key generation */</a>
-<a name="781"><span class="lineNum">     781 </span>            :     MBEDTLS_MPI_CHK( ecdsa_sign_restartable( &amp;ctx-&gt;grp, &amp;r, &amp;s, &amp;ctx-&gt;d,</a>
+<a name="781"><span class="lineNum">     781 </span><span class="lineCov">          3 :     MBEDTLS_MPI_CHK( ecdsa_sign_restartable( &amp;ctx-&gt;grp, &amp;r, &amp;s, &amp;ctx-&gt;d,</span></a>
 <a name="782"><span class="lineNum">     782 </span>            :                                              hash, hlen, f_rng, p_rng, f_rng,</a>
 <a name="783"><span class="lineNum">     783 </span>            :                                              p_rng, rs_ctx ) );</a>
 <a name="784"><span class="lineNum">     784 </span>            : #endif /* MBEDTLS_ECDSA_SIGN_ALT */</a>
@@ -875,7 +875,7 @@
 <a name="813"><span class="lineNum">     813 </span>            : </a>
 <a name="814"><span class="lineNum">     814 </span>            : #if !defined(MBEDTLS_DEPRECATED_REMOVED) &amp;&amp; \</a>
 <a name="815"><span class="lineNum">     815 </span>            :     defined(MBEDTLS_ECDSA_DETERMINISTIC)</a>
-<a name="816"><span class="lineNum">     816 </span><span class="lineNoCov">          0 : int mbedtls_ecdsa_write_signature_det( mbedtls_ecdsa_context *ctx,</span></a>
+<a name="816"><span class="lineNum">     816 </span>            : int mbedtls_ecdsa_write_signature_det( mbedtls_ecdsa_context *ctx,</a>
 <a name="817"><span class="lineNum">     817 </span>            :                                const unsigned char *hash, size_t hlen,</a>
 <a name="818"><span class="lineNum">     818 </span>            :                                unsigned char *sig, size_t *slen,</a>
 <a name="819"><span class="lineNum">     819 </span>            :                                mbedtls_md_type_t md_alg )</a>
@@ -884,7 +884,7 @@
 <a name="822"><span class="lineNum">     822 </span>            :     ECDSA_VALIDATE_RET( hash != NULL );</a>
 <a name="823"><span class="lineNum">     823 </span>            :     ECDSA_VALIDATE_RET( sig  != NULL );</a>
 <a name="824"><span class="lineNum">     824 </span>            :     ECDSA_VALIDATE_RET( slen != NULL );</a>
-<a name="825"><span class="lineNum">     825 </span><span class="lineNoCov">          0 :     return( mbedtls_ecdsa_write_signature( ctx, md_alg, hash, hlen, sig, slen,</span></a>
+<a name="825"><span class="lineNum">     825 </span>            :     return( mbedtls_ecdsa_write_signature( ctx, md_alg, hash, hlen, sig, slen,</a>
 <a name="826"><span class="lineNum">     826 </span>            :                                    NULL, NULL ) );</a>
 <a name="827"><span class="lineNum">     827 </span>            : }</a>
 <a name="828"><span class="lineNum">     828 </span>            : #endif</a>
