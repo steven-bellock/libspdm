@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">338</td>
-            <td class="headerCovTableEntry">554</td>
-            <td class="headerCovTableEntryLo">61.0 %</td>
+            <td class="headerCovTableEntry">340</td>
+            <td class="headerCovTableEntry">560</td>
+            <td class="headerCovTableEntryLo">60.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-02 08:16:40</td>
+            <td class="headerValue">2023-01-03 08:15:40</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">22</td>
@@ -1819,84 +1819,91 @@
 <a name="1757"><span class="lineNum">    1757 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;failed\n ! mbedtls_rsa_copy %d&quot;, ret));</span></a>
 <a name="1758"><span class="lineNum">    1758 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
 <a name="1759"><span class="lineNum">    1759 </span>            :         }</a>
-<a name="1760"><span class="lineNum">    1760 </span><span class="lineNoCov">          0 :         break;</span></a>
-<a name="1761"><span class="lineNum">    1761 </span><span class="lineCov">          3 :     case LIBSPDM_CRYPTO_NID_ECDSA_NIST_P256:</span></a>
-<a name="1762"><span class="lineNum">    1762 </span>            :     case LIBSPDM_CRYPTO_NID_ECDSA_NIST_P384:</a>
-<a name="1763"><span class="lineNum">    1763 </span>            :     case LIBSPDM_CRYPTO_NID_ECDSA_NIST_P521:</a>
-<a name="1764"><span class="lineNum">    1764 </span><span class="lineCov">          3 :         ret = mbedtls_pk_setup(&amp;key, mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY));</span></a>
-<a name="1765"><span class="lineNum">    1765 </span><span class="lineCov">          3 :         if (ret != 0) {</span></a>
-<a name="1766"><span class="lineNum">    1766 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;failed\n ! mbedtls_pk_setup %d&quot;, ret));</span></a>
-<a name="1767"><span class="lineNum">    1767 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
-<a name="1768"><span class="lineNum">    1768 </span>            :         }</a>
-<a name="1769"><span class="lineNum">    1769 </span>            :         /*mbedtls_ecdh_context include mbedtls_ecdsa_context,can be treated as mbedtls_ecdsa_context*/</a>
-<a name="1770"><span class="lineNum">    1770 </span><span class="lineCov">          3 :         ret = mbedtls_ecdsa_from_keypair(mbedtls_pk_ec(key), (mbedtls_ecdsa_context *)context);</span></a>
-<a name="1771"><span class="lineNum">    1771 </span><span class="lineCov">          3 :         if (ret != 0) {</span></a>
-<a name="1772"><span class="lineNum">    1772 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;failed\n ! mbedtls_ecdsa_from_keypair %d&quot;, ret));</span></a>
-<a name="1773"><span class="lineNum">    1773 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
-<a name="1774"><span class="lineNum">    1774 </span>            :         }</a>
-<a name="1775"><span class="lineNum">    1775 </span><span class="lineCov">          3 :         break;</span></a>
-<a name="1776"><span class="lineNum">    1776 </span><span class="lineNoCov">          0 :     default:</span></a>
-<a name="1777"><span class="lineNum">    1777 </span><span class="lineNoCov">          0 :         return false;</span></a>
-<a name="1778"><span class="lineNum">    1778 </span>            :     }</a>
-<a name="1779"><span class="lineNum">    1779 </span>            : </a>
-<a name="1780"><span class="lineNum">    1780 </span><span class="lineCov">          3 :     switch (hash_nid)</span></a>
-<a name="1781"><span class="lineNum">    1781 </span>            :     {</a>
-<a name="1782"><span class="lineNum">    1782 </span><span class="lineCov">          3 :     case LIBSPDM_CRYPTO_NID_SHA256:</span></a>
-<a name="1783"><span class="lineNum">    1783 </span><span class="lineCov">          3 :         md_alg = MBEDTLS_MD_SHA256;</span></a>
-<a name="1784"><span class="lineNum">    1784 </span><span class="lineCov">          3 :         break;</span></a>
-<a name="1785"><span class="lineNum">    1785 </span><span class="lineNoCov">          0 :     case LIBSPDM_CRYPTO_NID_SHA384:</span></a>
-<a name="1786"><span class="lineNum">    1786 </span><span class="lineNoCov">          0 :         md_alg = MBEDTLS_MD_SHA384;</span></a>
-<a name="1787"><span class="lineNum">    1787 </span><span class="lineNoCov">          0 :         break;</span></a>
-<a name="1788"><span class="lineNum">    1788 </span><span class="lineNoCov">          0 :     case LIBSPDM_CRYPTO_NID_SHA512:</span></a>
-<a name="1789"><span class="lineNum">    1789 </span><span class="lineNoCov">          0 :         md_alg = MBEDTLS_MD_SHA512;</span></a>
-<a name="1790"><span class="lineNum">    1790 </span><span class="lineNoCov">          0 :         break;</span></a>
-<a name="1791"><span class="lineNum">    1791 </span><span class="lineNoCov">          0 :     default:</span></a>
-<a name="1792"><span class="lineNum">    1792 </span><span class="lineNoCov">          0 :         ret = 1;</span></a>
-<a name="1793"><span class="lineNum">    1793 </span><span class="lineNoCov">          0 :         goto free_all;</span></a>
-<a name="1794"><span class="lineNum">    1794 </span>            :     }</a>
-<a name="1795"><span class="lineNum">    1795 </span>            : </a>
-<a name="1796"><span class="lineNum">    1796 </span>            :     /* requester info parse*/</a>
-<a name="1797"><span class="lineNum">    1797 </span><span class="lineCov">          3 :     if (requester_info_length != 0) {</span></a>
-<a name="1798"><span class="lineNum">    1798 </span><span class="lineCov">          1 :         result = libspdm_set_attribute_for_req(&amp;req, requester_info, requester_info_length);</span></a>
-<a name="1799"><span class="lineNum">    1799 </span><span class="lineCov">          1 :         if (!result) {</span></a>
-<a name="1800"><span class="lineNum">    1800 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;set_attribute failed !\n&quot;));</span></a>
-<a name="1801"><span class="lineNum">    1801 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
-<a name="1802"><span class="lineNum">    1802 </span>            :         }</a>
-<a name="1803"><span class="lineNum">    1803 </span>            :     }</a>
-<a name="1804"><span class="lineNum">    1804 </span>            : </a>
-<a name="1805"><span class="lineNum">    1805 </span>            :     /* Set the md alg */</a>
-<a name="1806"><span class="lineNum">    1806 </span><span class="lineCov">          3 :     mbedtls_x509write_csr_set_md_alg(&amp;req, md_alg);</span></a>
-<a name="1807"><span class="lineNum">    1807 </span>            : </a>
-<a name="1808"><span class="lineNum">    1808 </span>            :     /* Set the subject name */</a>
-<a name="1809"><span class="lineNum">    1809 </span><span class="lineCov">          3 :     if (subject_name != NULL) {</span></a>
-<a name="1810"><span class="lineNum">    1810 </span><span class="lineCov">          3 :         ret = mbedtls_x509write_csr_set_subject_name(&amp;req, subject_name);</span></a>
-<a name="1811"><span class="lineNum">    1811 </span><span class="lineCov">          3 :         if (ret != 0) {</span></a>
-<a name="1812"><span class="lineNum">    1812 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
-<a name="1813"><span class="lineNum">    1813 </span>            :                            &quot;failed\n ! mbedtls_x509write_csr_set_subject_name returned %d&quot;, ret));</a>
-<a name="1814"><span class="lineNum">    1814 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
-<a name="1815"><span class="lineNum">    1815 </span>            :         }</a>
-<a name="1816"><span class="lineNum">    1816 </span>            :     }</a>
-<a name="1817"><span class="lineNum">    1817 </span>            : </a>
-<a name="1818"><span class="lineNum">    1818 </span>            :     /* Set key */</a>
-<a name="1819"><span class="lineNum">    1819 </span><span class="lineCov">          3 :     mbedtls_x509write_csr_set_key(&amp;req, &amp;key);</span></a>
-<a name="1820"><span class="lineNum">    1820 </span>            : </a>
-<a name="1821"><span class="lineNum">    1821 </span>            :     /*data is written at the end of the buffer*/</a>
-<a name="1822"><span class="lineNum">    1822 </span><span class="lineCov">          3 :     *csr_len = mbedtls_x509write_csr_der(&amp;req, *csr_pointer, csr_buffer_size, libspdm_myrand, NULL);</span></a>
-<a name="1823"><span class="lineNum">    1823 </span><span class="lineCov">          3 :     if (*csr_len &lt;= 0) {</span></a>
-<a name="1824"><span class="lineNum">    1824 </span><span class="lineNoCov">          0 :         ret = 1;</span></a>
-<a name="1825"><span class="lineNum">    1825 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;mbedtls_x509write_csr_der failed \n&quot;));</span></a>
-<a name="1826"><span class="lineNum">    1826 </span><span class="lineNoCov">          0 :         goto free_all;</span></a>
-<a name="1827"><span class="lineNum">    1827 </span>            :     }</a>
-<a name="1828"><span class="lineNum">    1828 </span>            : </a>
-<a name="1829"><span class="lineNum">    1829 </span>            :     /*change csr_pointer to start location*/</a>
-<a name="1830"><span class="lineNum">    1830 </span><span class="lineCov">          3 :     *csr_pointer = *csr_pointer + csr_buffer_size - *csr_len;</span></a>
-<a name="1831"><span class="lineNum">    1831 </span>            : </a>
-<a name="1832"><span class="lineNum">    1832 </span><span class="lineCov">          3 : free_all:</span></a>
-<a name="1833"><span class="lineNum">    1833 </span><span class="lineCov">          3 :     mbedtls_x509write_csr_free(&amp;req);</span></a>
-<a name="1834"><span class="lineNum">    1834 </span><span class="lineCov">          3 :     mbedtls_pk_free(&amp;key);</span></a>
-<a name="1835"><span class="lineNum">    1835 </span>            : </a>
-<a name="1836"><span class="lineNum">    1836 </span><span class="lineCov">          3 :     return(ret == 0);</span></a>
-<a name="1837"><span class="lineNum">    1837 </span>            : }</a>
+<a name="1760"><span class="lineNum">    1760 </span><span class="lineNoCov">          0 :         ret = mbedtls_rsa_complete(mbedtls_pk_rsa(key));</span></a>
+<a name="1761"><span class="lineNum">    1761 </span><span class="lineNoCov">          0 :         if (ret != 0) {</span></a>
+<a name="1762"><span class="lineNum">    1762 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;failed\n ! mbedtls_rsa_complete %d&quot;, ret));</span></a>
+<a name="1763"><span class="lineNum">    1763 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
+<a name="1764"><span class="lineNum">    1764 </span>            :         }</a>
+<a name="1765"><span class="lineNum">    1765 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1766"><span class="lineNum">    1766 </span><span class="lineCov">          3 :     case LIBSPDM_CRYPTO_NID_ECDSA_NIST_P256:</span></a>
+<a name="1767"><span class="lineNum">    1767 </span>            :     case LIBSPDM_CRYPTO_NID_ECDSA_NIST_P384:</a>
+<a name="1768"><span class="lineNum">    1768 </span>            :     case LIBSPDM_CRYPTO_NID_ECDSA_NIST_P521:</a>
+<a name="1769"><span class="lineNum">    1769 </span><span class="lineCov">          3 :         ret = mbedtls_pk_setup(&amp;key, mbedtls_pk_info_from_type(MBEDTLS_PK_ECKEY));</span></a>
+<a name="1770"><span class="lineNum">    1770 </span><span class="lineCov">          3 :         if (ret != 0) {</span></a>
+<a name="1771"><span class="lineNum">    1771 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;failed\n ! mbedtls_pk_setup %d&quot;, ret));</span></a>
+<a name="1772"><span class="lineNum">    1772 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
+<a name="1773"><span class="lineNum">    1773 </span>            :         }</a>
+<a name="1774"><span class="lineNum">    1774 </span>            :         /*mbedtls_ecdh_context include mbedtls_ecdsa_context,can be treated as mbedtls_ecdsa_context*/</a>
+<a name="1775"><span class="lineNum">    1775 </span><span class="lineCov">          3 :         ret = mbedtls_ecdsa_from_keypair(mbedtls_pk_ec(key), (mbedtls_ecdsa_context *)context);</span></a>
+<a name="1776"><span class="lineNum">    1776 </span><span class="lineCov">          3 :         if (ret != 0) {</span></a>
+<a name="1777"><span class="lineNum">    1777 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;failed\n ! mbedtls_ecdsa_from_keypair %d&quot;, ret));</span></a>
+<a name="1778"><span class="lineNum">    1778 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
+<a name="1779"><span class="lineNum">    1779 </span>            :         }</a>
+<a name="1780"><span class="lineNum">    1780 </span><span class="lineCov">          3 :         break;</span></a>
+<a name="1781"><span class="lineNum">    1781 </span><span class="lineNoCov">          0 :     default:</span></a>
+<a name="1782"><span class="lineNum">    1782 </span><span class="lineNoCov">          0 :         return false;</span></a>
+<a name="1783"><span class="lineNum">    1783 </span>            :     }</a>
+<a name="1784"><span class="lineNum">    1784 </span>            : </a>
+<a name="1785"><span class="lineNum">    1785 </span><span class="lineCov">          3 :     switch (hash_nid)</span></a>
+<a name="1786"><span class="lineNum">    1786 </span>            :     {</a>
+<a name="1787"><span class="lineNum">    1787 </span><span class="lineCov">          3 :     case LIBSPDM_CRYPTO_NID_SHA256:</span></a>
+<a name="1788"><span class="lineNum">    1788 </span><span class="lineCov">          3 :         md_alg = MBEDTLS_MD_SHA256;</span></a>
+<a name="1789"><span class="lineNum">    1789 </span><span class="lineCov">          3 :         break;</span></a>
+<a name="1790"><span class="lineNum">    1790 </span><span class="lineNoCov">          0 :     case LIBSPDM_CRYPTO_NID_SHA384:</span></a>
+<a name="1791"><span class="lineNum">    1791 </span><span class="lineNoCov">          0 :         md_alg = MBEDTLS_MD_SHA384;</span></a>
+<a name="1792"><span class="lineNum">    1792 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1793"><span class="lineNum">    1793 </span><span class="lineNoCov">          0 :     case LIBSPDM_CRYPTO_NID_SHA512:</span></a>
+<a name="1794"><span class="lineNum">    1794 </span><span class="lineNoCov">          0 :         md_alg = MBEDTLS_MD_SHA512;</span></a>
+<a name="1795"><span class="lineNum">    1795 </span><span class="lineNoCov">          0 :         break;</span></a>
+<a name="1796"><span class="lineNum">    1796 </span><span class="lineNoCov">          0 :     default:</span></a>
+<a name="1797"><span class="lineNum">    1797 </span><span class="lineNoCov">          0 :         ret = 1;</span></a>
+<a name="1798"><span class="lineNum">    1798 </span><span class="lineNoCov">          0 :         goto free_all;</span></a>
+<a name="1799"><span class="lineNum">    1799 </span>            :     }</a>
+<a name="1800"><span class="lineNum">    1800 </span>            : </a>
+<a name="1801"><span class="lineNum">    1801 </span>            :     /* requester info parse*/</a>
+<a name="1802"><span class="lineNum">    1802 </span><span class="lineCov">          3 :     if (requester_info_length != 0) {</span></a>
+<a name="1803"><span class="lineNum">    1803 </span><span class="lineCov">          1 :         result = libspdm_set_attribute_for_req(&amp;req, requester_info, requester_info_length);</span></a>
+<a name="1804"><span class="lineNum">    1804 </span><span class="lineCov">          1 :         if (!result) {</span></a>
+<a name="1805"><span class="lineNum">    1805 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;set_attribute failed !\n&quot;));</span></a>
+<a name="1806"><span class="lineNum">    1806 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
+<a name="1807"><span class="lineNum">    1807 </span>            :         }</a>
+<a name="1808"><span class="lineNum">    1808 </span>            :     }</a>
+<a name="1809"><span class="lineNum">    1809 </span>            : </a>
+<a name="1810"><span class="lineNum">    1810 </span>            :     /* Set the md alg */</a>
+<a name="1811"><span class="lineNum">    1811 </span><span class="lineCov">          3 :     mbedtls_x509write_csr_set_md_alg(&amp;req, md_alg);</span></a>
+<a name="1812"><span class="lineNum">    1812 </span>            : </a>
+<a name="1813"><span class="lineNum">    1813 </span>            :     /* Set the subject name */</a>
+<a name="1814"><span class="lineNum">    1814 </span><span class="lineCov">          3 :     if (subject_name != NULL) {</span></a>
+<a name="1815"><span class="lineNum">    1815 </span><span class="lineCov">          3 :         ret = mbedtls_x509write_csr_set_subject_name(&amp;req, subject_name);</span></a>
+<a name="1816"><span class="lineNum">    1816 </span><span class="lineCov">          3 :         if (ret != 0) {</span></a>
+<a name="1817"><span class="lineNum">    1817 </span><span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="1818"><span class="lineNum">    1818 </span>            :                            &quot;failed\n ! mbedtls_x509write_csr_set_subject_name returned %d&quot;, ret));</a>
+<a name="1819"><span class="lineNum">    1819 </span><span class="lineNoCov">          0 :             goto free_all;</span></a>
+<a name="1820"><span class="lineNum">    1820 </span>            :         }</a>
+<a name="1821"><span class="lineNum">    1821 </span>            :     }</a>
+<a name="1822"><span class="lineNum">    1822 </span>            : </a>
+<a name="1823"><span class="lineNum">    1823 </span>            :     /* Set key */</a>
+<a name="1824"><span class="lineNum">    1824 </span><span class="lineCov">          3 :     mbedtls_x509write_csr_set_key(&amp;req, &amp;key);</span></a>
+<a name="1825"><span class="lineNum">    1825 </span>            : </a>
+<a name="1826"><span class="lineNum">    1826 </span>            :     /*data is written at the end of the buffer*/</a>
+<a name="1827"><span class="lineNum">    1827 </span><span class="lineCov">          3 :     ret = mbedtls_x509write_csr_der(&amp;req, *csr_pointer, csr_buffer_size, libspdm_myrand, NULL);</span></a>
+<a name="1828"><span class="lineNum">    1828 </span><span class="lineCov">          3 :     if (ret &lt;= 0) {</span></a>
+<a name="1829"><span class="lineNum">    1829 </span><span class="lineNoCov">          0 :         ret = 1;</span></a>
+<a name="1830"><span class="lineNum">    1830 </span><span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;mbedtls_x509write_csr_der failed \n&quot;));</span></a>
+<a name="1831"><span class="lineNum">    1831 </span><span class="lineNoCov">          0 :         goto free_all;</span></a>
+<a name="1832"><span class="lineNum">    1832 </span>            :     }</a>
+<a name="1833"><span class="lineNum">    1833 </span>            : </a>
+<a name="1834"><span class="lineNum">    1834 </span><span class="lineCov">          3 :     *csr_len = (size_t)ret;</span></a>
+<a name="1835"><span class="lineNum">    1835 </span>            :     /*change csr_pointer to start location*/</a>
+<a name="1836"><span class="lineNum">    1836 </span><span class="lineCov">          3 :     *csr_pointer = *csr_pointer + csr_buffer_size - *csr_len;</span></a>
+<a name="1837"><span class="lineNum">    1837 </span>            : </a>
+<a name="1838"><span class="lineNum">    1838 </span><span class="lineCov">          3 :     ret = 0;</span></a>
+<a name="1839"><span class="lineNum">    1839 </span><span class="lineCov">          3 : free_all:</span></a>
+<a name="1840"><span class="lineNum">    1840 </span><span class="lineCov">          3 :     mbedtls_x509write_csr_free(&amp;req);</span></a>
+<a name="1841"><span class="lineNum">    1841 </span><span class="lineCov">          3 :     mbedtls_pk_free(&amp;key);</span></a>
+<a name="1842"><span class="lineNum">    1842 </span>            : </a>
+<a name="1843"><span class="lineNum">    1843 </span><span class="lineCov">          3 :     return(ret == 0);</span></a>
+<a name="1844"><span class="lineNum">    1844 </span>            : }</a>
 </pre>
       </td>
     </tr>
