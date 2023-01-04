@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-03 08:15:40</td>
+            <td class="headerValue">2023-01-04 08:16:06</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -76,14 +76,14 @@
 <a name="14"><span class="lineNum">      14 </span>            : </a>
 <a name="15"><span class="lineNum">      15 </span><span class="lineCov">         76 :     session_info = spdm_context-&gt;session_info;</span></a>
 <a name="16"><span class="lineNum">      16 </span><span class="lineCov">         89 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++) {</span></a>
-<a name="17"><span class="lineNum">      17 </span><span class="lineCov">         89 :         if ((session_info[index].session_id &amp; 0xFFFF) == (INVALID_SESSION_ID &amp; 0xFFFF)) {</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">         89 :         if ((session_info[index].session_id &amp; 0xFFFF0000) == (INVALID_SESSION_ID &amp; 0xFFFF0000)) {</span></a>
 <a name="18"><span class="lineNum">      18 </span><span class="lineCov">         76 :             rsp_session_id = (uint16_t)(0xFFFF - index);</span></a>
 <a name="19"><span class="lineNum">      19 </span><span class="lineCov">         76 :             return rsp_session_id;</span></a>
 <a name="20"><span class="lineNum">      20 </span>            :         }</a>
 <a name="21"><span class="lineNum">      21 </span>            :     }</a>
 <a name="22"><span class="lineNum">      22 </span>            : </a>
 <a name="23"><span class="lineNum">      23 </span><span class="lineNoCov">          0 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;libspdm_allocate_rsp_session_id - MAX session_id\n&quot;));</span></a>
-<a name="24"><span class="lineNum">      24 </span><span class="lineNoCov">          0 :     return (INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineNoCov">          0 :     return (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16;</span></a>
 <a name="25"><span class="lineNum">      25 </span>            : }</a>
 <a name="26"><span class="lineNum">      26 </span>            : </a>
 <a name="27"><span class="lineNum">      27 </span>            : libspdm_return_t</a>
