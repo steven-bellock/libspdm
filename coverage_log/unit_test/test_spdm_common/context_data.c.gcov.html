@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">515</td>
-            <td class="headerCovTableEntry">524</td>
+            <td class="headerCovTableEntry">536</td>
+            <td class="headerCovTableEntry">545</td>
             <td class="headerCovTableEntryHi">98.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-10 08:16:12</td>
+            <td class="headerValue">2023-01-11 08:16:24</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">24</td>
-            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntry">25</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
@@ -1389,58 +1389,98 @@
 <a name="1327"><span class="lineNum">    1327 </span><span class="lineCov">          1 :     assert_int_equal(export_master_secret_size, LIBSPDM_MAX_HASH_SIZE - 4);</span></a>
 <a name="1328"><span class="lineNum">    1328 </span><span class="lineCov">          1 : }</span></a>
 <a name="1329"><span class="lineNum">    1329 </span>            : </a>
-<a name="1330"><span class="lineNum">    1330 </span>            : static libspdm_test_context_t m_libspdm_common_context_data_test_context = {</a>
-<a name="1331"><span class="lineNum">    1331 </span>            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="1332"><span class="lineNum">    1332 </span>            :     true,</a>
-<a name="1333"><span class="lineNum">    1333 </span>            :     NULL,</a>
-<a name="1334"><span class="lineNum">    1334 </span>            :     NULL,</a>
-<a name="1335"><span class="lineNum">    1335 </span>            : };</a>
+<a name="1330"><span class="lineNum">    1330 </span><span class="lineCov">          1 : static void libspdm_test_check_context_case20(void **state)</span></a>
+<a name="1331"><span class="lineNum">    1331 </span>            : {</a>
+<a name="1332"><span class="lineNum">    1332 </span>            :     void *context;</a>
+<a name="1333"><span class="lineNum">    1333 </span>            :     uint32_t data32;</a>
+<a name="1334"><span class="lineNum">    1334 </span>            :     libspdm_data_parameter_t parameter;</a>
+<a name="1335"><span class="lineNum">    1335 </span>            :     bool result;</a>
 <a name="1336"><span class="lineNum">    1336 </span>            : </a>
-<a name="1337"><span class="lineNum">    1337 </span><span class="lineCov">          1 : int libspdm_common_context_data_test_main(void)</span></a>
-<a name="1338"><span class="lineNum">    1338 </span>            : {</a>
-<a name="1339"><span class="lineNum">    1339 </span><span class="lineCov">          1 :     const struct CMUnitTest spdm_common_context_data_tests[] = {</span></a>
-<a name="1340"><span class="lineNum">    1340 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case1),</a>
-<a name="1341"><span class="lineNum">    1341 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case2),</a>
-<a name="1342"><span class="lineNum">    1342 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case3),</a>
-<a name="1343"><span class="lineNum">    1343 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case4),</a>
-<a name="1344"><span class="lineNum">    1344 </span>            : </a>
-<a name="1345"><span class="lineNum">    1345 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case5),</a>
-<a name="1346"><span class="lineNum">    1346 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case6),</a>
-<a name="1347"><span class="lineNum">    1347 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case7),</a>
-<a name="1348"><span class="lineNum">    1348 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case8),</a>
-<a name="1349"><span class="lineNum">    1349 </span>            : </a>
-<a name="1350"><span class="lineNum">    1350 </span>            :         cmocka_unit_test(libspdm_test_set_data_case9),</a>
+<a name="1337"><span class="lineNum">    1337 </span><span class="lineCov">          1 :     context = (void *)malloc (libspdm_get_context_size());</span></a>
+<a name="1338"><span class="lineNum">    1338 </span>            : </a>
+<a name="1339"><span class="lineNum">    1339 </span><span class="lineCov">          1 :     libspdm_init_context (context);</span></a>
+<a name="1340"><span class="lineNum">    1340 </span>            : </a>
+<a name="1341"><span class="lineNum">    1341 </span><span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
+<a name="1342"><span class="lineNum">    1342 </span><span class="lineCov">          1 :     assert_int_equal(true, result);</span></a>
+<a name="1343"><span class="lineNum">    1343 </span>            : </a>
+<a name="1344"><span class="lineNum">    1344 </span><span class="lineCov">          1 :     parameter.location = LIBSPDM_DATA_LOCATION_LOCAL;</span></a>
+<a name="1345"><span class="lineNum">    1345 </span>            : </a>
+<a name="1346"><span class="lineNum">    1346 </span><span class="lineCov">          1 :     data32 = SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12 - 1;</span></a>
+<a name="1347"><span class="lineNum">    1347 </span><span class="lineCov">          1 :     libspdm_set_data (context, LIBSPDM_DATA_CAPABILITY_DATA_TRANSFER_SIZE, &amp;parameter, &amp;data32,</span></a>
+<a name="1348"><span class="lineNum">    1348 </span>            :                       sizeof(data32));</a>
+<a name="1349"><span class="lineNum">    1349 </span><span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
+<a name="1350"><span class="lineNum">    1350 </span><span class="lineCov">          1 :     assert_int_equal(false, result);</span></a>
 <a name="1351"><span class="lineNum">    1351 </span>            : </a>
-<a name="1352"><span class="lineNum">    1352 </span>            :         /* Successful response V1.1 for multi element opaque data supported vesion, element number is 2*/</a>
-<a name="1353"><span class="lineNum">    1353 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case10),</a>
-<a name="1354"><span class="lineNum">    1354 </span>            :         /* Failed response V1.1 for multi element opaque data supported vesion, element id is wrong*/</a>
-<a name="1355"><span class="lineNum">    1355 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case11),</a>
-<a name="1356"><span class="lineNum">    1356 </span>            :         /* Successful response V1.2 for multi element opaque data supported vesion, element number is 2*/</a>
-<a name="1357"><span class="lineNum">    1357 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case12),</a>
-<a name="1358"><span class="lineNum">    1358 </span>            :         /* Failed response V1.2 for multi element opaque data supported vesion, element id is wrong*/</a>
-<a name="1359"><span class="lineNum">    1359 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case13),</a>
-<a name="1360"><span class="lineNum">    1360 </span>            :         /* Successful response V1.1 for multi element opaque data selecetion vesion, element number is 2*/</a>
-<a name="1361"><span class="lineNum">    1361 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case14),</a>
-<a name="1362"><span class="lineNum">    1362 </span>            :         /* Failed response V1.1 for multi element opaque data selecetion vesion, element number is wrong*/</a>
-<a name="1363"><span class="lineNum">    1363 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case15),</a>
-<a name="1364"><span class="lineNum">    1364 </span>            :         /* Successful response V1.2 for multi element opaque data selecetion vesion, element number is 2*/</a>
-<a name="1365"><span class="lineNum">    1365 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case16),</a>
-<a name="1366"><span class="lineNum">    1366 </span>            :         /* Failed response V1.2 for multi element opaque data selecetion vesion, element number is wrong*/</a>
-<a name="1367"><span class="lineNum">    1367 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case17),</a>
+<a name="1352"><span class="lineNum">    1352 </span><span class="lineCov">          1 :     data32 = SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12;</span></a>
+<a name="1353"><span class="lineNum">    1353 </span><span class="lineCov">          1 :     libspdm_set_data (context, LIBSPDM_DATA_CAPABILITY_DATA_TRANSFER_SIZE, &amp;parameter, &amp;data32,</span></a>
+<a name="1354"><span class="lineNum">    1354 </span>            :                       sizeof(data32));</a>
+<a name="1355"><span class="lineNum">    1355 </span><span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
+<a name="1356"><span class="lineNum">    1356 </span><span class="lineCov">          1 :     assert_int_equal(true, result);</span></a>
+<a name="1357"><span class="lineNum">    1357 </span>            : </a>
+<a name="1358"><span class="lineNum">    1358 </span><span class="lineCov">          1 :     data32 = SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12 + 10;</span></a>
+<a name="1359"><span class="lineNum">    1359 </span><span class="lineCov">          1 :     libspdm_set_data (context, LIBSPDM_DATA_CAPABILITY_DATA_TRANSFER_SIZE, &amp;parameter, &amp;data32,</span></a>
+<a name="1360"><span class="lineNum">    1360 </span>            :                       sizeof(data32));</a>
+<a name="1361"><span class="lineNum">    1361 </span>            : </a>
+<a name="1362"><span class="lineNum">    1362 </span><span class="lineCov">          1 :     data32 = SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12 + 5;</span></a>
+<a name="1363"><span class="lineNum">    1363 </span><span class="lineCov">          1 :     libspdm_set_data (context, LIBSPDM_DATA_CAPABILITY_MAX_SPDM_MSG_SIZE, &amp;parameter, &amp;data32,</span></a>
+<a name="1364"><span class="lineNum">    1364 </span>            :                       sizeof(data32));</a>
+<a name="1365"><span class="lineNum">    1365 </span><span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
+<a name="1366"><span class="lineNum">    1366 </span><span class="lineCov">          1 :     assert_int_equal(false, result);</span></a>
+<a name="1367"><span class="lineNum">    1367 </span><span class="lineCov">          1 : }</span></a>
 <a name="1368"><span class="lineNum">    1368 </span>            : </a>
-<a name="1369"><span class="lineNum">    1369 </span>            :         /* Successful initialization and setting of secured message context location. */</a>
-<a name="1370"><span class="lineNum">    1370 </span>            :         cmocka_unit_test(libspdm_test_secured_message_context_location_selection_case18),</a>
-<a name="1371"><span class="lineNum">    1371 </span>            : </a>
-<a name="1372"><span class="lineNum">    1372 </span>            :         /* Test that the Export Master Secret can be exported and cleared. */</a>
-<a name="1373"><span class="lineNum">    1373 </span>            :         cmocka_unit_test(libspdm_test_export_master_secret_case19),</a>
-<a name="1374"><span class="lineNum">    1374 </span>            :     };</a>
+<a name="1369"><span class="lineNum">    1369 </span>            : static libspdm_test_context_t m_libspdm_common_context_data_test_context = {</a>
+<a name="1370"><span class="lineNum">    1370 </span>            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="1371"><span class="lineNum">    1371 </span>            :     true,</a>
+<a name="1372"><span class="lineNum">    1372 </span>            :     NULL,</a>
+<a name="1373"><span class="lineNum">    1373 </span>            :     NULL,</a>
+<a name="1374"><span class="lineNum">    1374 </span>            : };</a>
 <a name="1375"><span class="lineNum">    1375 </span>            : </a>
-<a name="1376"><span class="lineNum">    1376 </span><span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_common_context_data_test_context);</span></a>
-<a name="1377"><span class="lineNum">    1377 </span>            : </a>
-<a name="1378"><span class="lineNum">    1378 </span><span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_common_context_data_tests,</span></a>
-<a name="1379"><span class="lineNum">    1379 </span>            :                                   libspdm_unit_test_group_setup,</a>
-<a name="1380"><span class="lineNum">    1380 </span>            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="1381"><span class="lineNum">    1381 </span>            : }</a>
+<a name="1376"><span class="lineNum">    1376 </span><span class="lineCov">          1 : int libspdm_common_context_data_test_main(void)</span></a>
+<a name="1377"><span class="lineNum">    1377 </span>            : {</a>
+<a name="1378"><span class="lineNum">    1378 </span><span class="lineCov">          1 :     const struct CMUnitTest spdm_common_context_data_tests[] = {</span></a>
+<a name="1379"><span class="lineNum">    1379 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case1),</a>
+<a name="1380"><span class="lineNum">    1380 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case2),</a>
+<a name="1381"><span class="lineNum">    1381 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case3),</a>
+<a name="1382"><span class="lineNum">    1382 </span>            :         cmocka_unit_test(libspdm_test_common_context_data_case4),</a>
+<a name="1383"><span class="lineNum">    1383 </span>            : </a>
+<a name="1384"><span class="lineNum">    1384 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case5),</a>
+<a name="1385"><span class="lineNum">    1385 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case6),</a>
+<a name="1386"><span class="lineNum">    1386 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case7),</a>
+<a name="1387"><span class="lineNum">    1387 </span>            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case8),</a>
+<a name="1388"><span class="lineNum">    1388 </span>            : </a>
+<a name="1389"><span class="lineNum">    1389 </span>            :         cmocka_unit_test(libspdm_test_set_data_case9),</a>
+<a name="1390"><span class="lineNum">    1390 </span>            : </a>
+<a name="1391"><span class="lineNum">    1391 </span>            :         /* Successful response V1.1 for multi element opaque data supported vesion, element number is 2*/</a>
+<a name="1392"><span class="lineNum">    1392 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case10),</a>
+<a name="1393"><span class="lineNum">    1393 </span>            :         /* Failed response V1.1 for multi element opaque data supported vesion, element id is wrong*/</a>
+<a name="1394"><span class="lineNum">    1394 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case11),</a>
+<a name="1395"><span class="lineNum">    1395 </span>            :         /* Successful response V1.2 for multi element opaque data supported vesion, element number is 2*/</a>
+<a name="1396"><span class="lineNum">    1396 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case12),</a>
+<a name="1397"><span class="lineNum">    1397 </span>            :         /* Failed response V1.2 for multi element opaque data supported vesion, element id is wrong*/</a>
+<a name="1398"><span class="lineNum">    1398 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case13),</a>
+<a name="1399"><span class="lineNum">    1399 </span>            :         /* Successful response V1.1 for multi element opaque data selecetion vesion, element number is 2*/</a>
+<a name="1400"><span class="lineNum">    1400 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case14),</a>
+<a name="1401"><span class="lineNum">    1401 </span>            :         /* Failed response V1.1 for multi element opaque data selecetion vesion, element number is wrong*/</a>
+<a name="1402"><span class="lineNum">    1402 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case15),</a>
+<a name="1403"><span class="lineNum">    1403 </span>            :         /* Successful response V1.2 for multi element opaque data selecetion vesion, element number is 2*/</a>
+<a name="1404"><span class="lineNum">    1404 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case16),</a>
+<a name="1405"><span class="lineNum">    1405 </span>            :         /* Failed response V1.2 for multi element opaque data selecetion vesion, element number is wrong*/</a>
+<a name="1406"><span class="lineNum">    1406 </span>            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case17),</a>
+<a name="1407"><span class="lineNum">    1407 </span>            : </a>
+<a name="1408"><span class="lineNum">    1408 </span>            :         /* Successful initialization and setting of secured message context location. */</a>
+<a name="1409"><span class="lineNum">    1409 </span>            :         cmocka_unit_test(libspdm_test_secured_message_context_location_selection_case18),</a>
+<a name="1410"><span class="lineNum">    1410 </span>            : </a>
+<a name="1411"><span class="lineNum">    1411 </span>            :         /* Test that the Export Master Secret can be exported and cleared. */</a>
+<a name="1412"><span class="lineNum">    1412 </span>            :         cmocka_unit_test(libspdm_test_export_master_secret_case19),</a>
+<a name="1413"><span class="lineNum">    1413 </span>            :         cmocka_unit_test(libspdm_test_check_context_case20),</a>
+<a name="1414"><span class="lineNum">    1414 </span>            :     };</a>
+<a name="1415"><span class="lineNum">    1415 </span>            : </a>
+<a name="1416"><span class="lineNum">    1416 </span><span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_common_context_data_test_context);</span></a>
+<a name="1417"><span class="lineNum">    1417 </span>            : </a>
+<a name="1418"><span class="lineNum">    1418 </span><span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_common_context_data_tests,</span></a>
+<a name="1419"><span class="lineNum">    1419 </span>            :                                   libspdm_unit_test_group_setup,</a>
+<a name="1420"><span class="lineNum">    1420 </span>            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="1421"><span class="lineNum">    1421 </span>            : }</a>
 </pre>
       </td>
     </tr>
