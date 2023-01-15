@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-14 08:14:57</td>
+            <td class="headerValue">2023-01-15 08:14:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -166,18 +166,18 @@
 <a name="104"><span class="lineNum">     104 </span><span class="lineCov">         12 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="105"><span class="lineNum">     105 </span>            : }</a>
 <a name="106"><span class="lineNum">     106 </span>            : </a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">        441 : libspdm_return_t libspdm_handle_simple_error_response(void *context, uint8_t error_code)</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">        393 : libspdm_return_t libspdm_handle_simple_error_response(void *context, uint8_t error_code)</span></a>
 <a name="108"><span class="lineNum">     108 </span>            : {</a>
 <a name="109"><span class="lineNum">     109 </span>            :     libspdm_context_t *spdm_context;</a>
 <a name="110"><span class="lineNum">     110 </span>            : </a>
-<a name="111"><span class="lineNum">     111 </span><span class="lineCov">        441 :     spdm_context = context;</span></a>
+<a name="111"><span class="lineNum">     111 </span><span class="lineCov">        393 :     spdm_context = context;</span></a>
 <a name="112"><span class="lineNum">     112 </span>            : </a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">        441 :     if (error_code == SPDM_ERROR_CODE_RESPONSE_NOT_READY) {</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineCov">        393 :     if (error_code == SPDM_ERROR_CODE_RESPONSE_NOT_READY) {</span></a>
 <a name="114"><span class="lineNum">     114 </span><span class="lineCov">         18 :         return LIBSPDM_STATUS_NOT_READY_PEER;</span></a>
 <a name="115"><span class="lineNum">     115 </span>            :     }</a>
 <a name="116"><span class="lineNum">     116 </span>            : </a>
-<a name="117"><span class="lineNum">     117 </span><span class="lineCov">        423 :     if (error_code == SPDM_ERROR_CODE_BUSY) {</span></a>
-<a name="118"><span class="lineNum">     118 </span><span class="lineCov">         87 :         return LIBSPDM_STATUS_BUSY_PEER;</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineCov">        375 :     if (error_code == SPDM_ERROR_CODE_BUSY) {</span></a>
+<a name="118"><span class="lineNum">     118 </span><span class="lineCov">         39 :         return LIBSPDM_STATUS_BUSY_PEER;</span></a>
 <a name="119"><span class="lineNum">     119 </span>            :     }</a>
 <a name="120"><span class="lineNum">     120 </span>            : </a>
 <a name="121"><span class="lineNum">     121 </span><span class="lineCov">        336 :     if (error_code == SPDM_ERROR_CODE_REQUEST_RESYNCH) {</span></a>
@@ -242,7 +242,7 @@
 <a name="180"><span class="lineNum">     180 </span>            :                                               expected_response_size);</a>
 <a name="181"><span class="lineNum">     181 </span>            : }</a>
 <a name="182"><span class="lineNum">     182 </span>            : </a>
-<a name="183"><span class="lineNum">     183 </span>            : #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="183"><span class="lineNum">     183 </span>            : #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="184"><span class="lineNum">     184 </span><span class="lineCov">          5 : libspdm_return_t libspdm_handle_error_large_response(</span></a>
 <a name="185"><span class="lineNum">     185 </span>            :     libspdm_context_t *spdm_context,</a>
 <a name="186"><span class="lineNum">     186 </span>            :     const uint32_t *session_id,</a>
@@ -452,7 +452,7 @@
 <a name="390"><span class="lineNum">     390 </span>            : }</a>
 <a name="391"><span class="lineNum">     391 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
 <a name="392"><span class="lineNum">     392 </span>            : </a>
-<a name="393"><span class="lineNum">     393 </span><span class="lineCov">        397 : libspdm_return_t libspdm_handle_error_response_main(</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineCov">        358 : libspdm_return_t libspdm_handle_error_response_main(</span></a>
 <a name="394"><span class="lineNum">     394 </span>            :     libspdm_context_t *spdm_context, const uint32_t *session_id,</a>
 <a name="395"><span class="lineNum">     395 </span>            :     size_t *response_size, void **response,</a>
 <a name="396"><span class="lineNum">     396 </span>            :     uint8_t original_request_code, uint8_t expected_response_code,</a>
@@ -460,22 +460,22 @@
 <a name="398"><span class="lineNum">     398 </span>            : {</a>
 <a name="399"><span class="lineNum">     399 </span>            :     spdm_message_header_t *spdm_response;</a>
 <a name="400"><span class="lineNum">     400 </span>            : </a>
-<a name="401"><span class="lineNum">     401 </span><span class="lineCov">        397 :     spdm_response = *response;</span></a>
-<a name="402"><span class="lineNum">     402 </span><span class="lineCov">        397 :     LIBSPDM_ASSERT(spdm_response-&gt;request_response_code == SPDM_ERROR);</span></a>
+<a name="401"><span class="lineNum">     401 </span><span class="lineCov">        358 :     spdm_response = *response;</span></a>
+<a name="402"><span class="lineNum">     402 </span><span class="lineCov">        358 :     LIBSPDM_ASSERT(spdm_response-&gt;request_response_code == SPDM_ERROR);</span></a>
 <a name="403"><span class="lineNum">     403 </span>            : </a>
-<a name="404"><span class="lineNum">     404 </span><span class="lineCov">        397 :     if ((spdm_response-&gt;param1 == SPDM_ERROR_CODE_DECRYPT_ERROR) &amp;&amp;</span></a>
+<a name="404"><span class="lineNum">     404 </span><span class="lineCov">        358 :     if ((spdm_response-&gt;param1 == SPDM_ERROR_CODE_DECRYPT_ERROR) &amp;&amp;</span></a>
 <a name="405"><span class="lineNum">     405 </span>            :         (session_id != NULL)) {</a>
 <a name="406"><span class="lineNum">     406 </span><span class="lineCov">          5 :         libspdm_free_session_id(spdm_context, *session_id);</span></a>
 <a name="407"><span class="lineNum">     407 </span><span class="lineCov">          5 :         return LIBSPDM_STATUS_SESSION_MSG_ERROR;</span></a>
-<a name="408"><span class="lineNum">     408 </span><span class="lineCov">        392 :     } else if(spdm_response-&gt;param1 == SPDM_ERROR_CODE_RESPONSE_NOT_READY) {</span></a>
+<a name="408"><span class="lineNum">     408 </span><span class="lineCov">        353 :     } else if(spdm_response-&gt;param1 == SPDM_ERROR_CODE_RESPONSE_NOT_READY) {</span></a>
 <a name="409"><span class="lineNum">     409 </span><span class="lineCov">         27 :         return libspdm_handle_response_not_ready(spdm_context, session_id,</span></a>
 <a name="410"><span class="lineNum">     410 </span>            :                                                  response_size, response,</a>
 <a name="411"><span class="lineNum">     411 </span>            :                                                  original_request_code,</a>
 <a name="412"><span class="lineNum">     412 </span>            :                                                  expected_response_code,</a>
 <a name="413"><span class="lineNum">     413 </span>            :                                                  expected_response_size);</a>
 <a name="414"><span class="lineNum">     414 </span>            :     } else {</a>
-<a name="415"><span class="lineNum">     415 </span><span class="lineCov">        365 :         return libspdm_handle_simple_error_response(spdm_context,</span></a>
-<a name="416"><span class="lineNum">     416 </span><span class="lineCov">        365 :                                                     spdm_response-&gt;param1);</span></a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineCov">        326 :         return libspdm_handle_simple_error_response(spdm_context,</span></a>
+<a name="416"><span class="lineNum">     416 </span><span class="lineCov">        326 :                                                     spdm_response-&gt;param1);</span></a>
 <a name="417"><span class="lineNum">     417 </span>            :     }</a>
 <a name="418"><span class="lineNum">     418 </span>            : }</a>
 </pre>

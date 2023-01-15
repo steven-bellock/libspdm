@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-14 08:14:57</td>
+            <td class="headerValue">2023-01-15 08:14:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -103,7 +103,7 @@
 <a name="41"><span class="lineNum">      41 </span>            :  * @retval LIBSPDM_STATUS_BUFFER_FULL</a>
 <a name="42"><span class="lineNum">      42 </span>            :  *         The buffer used to store transcripts is exhausted.</a>
 <a name="43"><span class="lineNum">      43 </span>            :  **/</a>
-<a name="44"><span class="lineNum">      44 </span><span class="lineCov">         41 : static libspdm_return_t libspdm_try_get_digest(void *context, const uint32_t *session_id,</span></a>
+<a name="44"><span class="lineNum">      44 </span><span class="lineCov">         38 : static libspdm_return_t libspdm_try_get_digest(void *context, const uint32_t *session_id,</span></a>
 <a name="45"><span class="lineNum">      45 </span>            :                                                uint8_t *slot_mask,</a>
 <a name="46"><span class="lineNum">      46 </span>            :                                                void *total_digest_buffer)</a>
 <a name="47"><span class="lineNum">      47 </span>            : {</a>
@@ -122,20 +122,20 @@
 <a name="60"><span class="lineNum">      60 </span>            :     libspdm_session_info_t *session_info;</a>
 <a name="61"><span class="lineNum">      61 </span>            :     libspdm_session_state_t session_state;</a>
 <a name="62"><span class="lineNum">      62 </span>            : </a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">         41 :     spdm_context = context;</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">         38 :     spdm_context = context;</span></a>
 <a name="64"><span class="lineNum">      64 </span>            : </a>
 <a name="65"><span class="lineNum">      65 </span>            :     /* -=[Verify State Phase]=- */</a>
-<a name="66"><span class="lineNum">      66 </span><span class="lineCov">         41 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">         38 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
 <a name="67"><span class="lineNum">      67 </span>            :             spdm_context, true, 0,</a>
 <a name="68"><span class="lineNum">      68 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP)) {</a>
 <a name="69"><span class="lineNum">      69 </span><span class="lineCov">          1 :         return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
 <a name="70"><span class="lineNum">      70 </span>            :     }</a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineCov">         40 :     if (spdm_context-&gt;connection_info.connection_state &lt; LIBSPDM_CONNECTION_STATE_NEGOTIATED) {</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">         37 :     if (spdm_context-&gt;connection_info.connection_state &lt; LIBSPDM_CONNECTION_STATE_NEGOTIATED) {</span></a>
 <a name="72"><span class="lineNum">      72 </span><span class="lineCov">          1 :         return LIBSPDM_STATUS_INVALID_STATE_LOCAL;</span></a>
 <a name="73"><span class="lineNum">      73 </span>            :     }</a>
 <a name="74"><span class="lineNum">      74 </span>            : </a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">         39 :     session_info = NULL;</span></a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineCov">         39 :     if (session_id != NULL) {</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">         36 :     session_info = NULL;</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">         36 :     if (session_id != NULL) {</span></a>
 <a name="77"><span class="lineNum">      77 </span><span class="lineCov">          1 :         session_info = libspdm_get_session_info_via_session_id(spdm_context, *session_id);</span></a>
 <a name="78"><span class="lineNum">      78 </span><span class="lineCov">          1 :         if (session_info == NULL) {</span></a>
 <a name="79"><span class="lineNum">      79 </span><span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_STATE_LOCAL;</span></a>
@@ -147,66 +147,66 @@
 <a name="85"><span class="lineNum">      85 </span>            :         }</a>
 <a name="86"><span class="lineNum">      86 </span>            :     }</a>
 <a name="87"><span class="lineNum">      87 </span>            : </a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineCov">         39 :     libspdm_reset_message_buffer_via_request_code(spdm_context, session_info, SPDM_GET_DIGESTS);</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">         36 :     libspdm_reset_message_buffer_via_request_code(spdm_context, session_info, SPDM_GET_DIGESTS);</span></a>
 <a name="89"><span class="lineNum">      89 </span>            : </a>
 <a name="90"><span class="lineNum">      90 </span>            :     /* -=[Construct Request Phase]=- */</a>
-<a name="91"><span class="lineNum">      91 </span><span class="lineCov">         39 :     transport_header_size = spdm_context-&gt;transport_get_header_size(spdm_context);</span></a>
-<a name="92"><span class="lineNum">      92 </span><span class="lineCov">         39 :     status = libspdm_acquire_sender_buffer (spdm_context, &amp;message_size, (void **)&amp;message);</span></a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         39 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="91"><span class="lineNum">      91 </span><span class="lineCov">         36 :     transport_header_size = spdm_context-&gt;transport_get_header_size(spdm_context);</span></a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineCov">         36 :     status = libspdm_acquire_sender_buffer (spdm_context, &amp;message_size, (void **)&amp;message);</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         36 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="94"><span class="lineNum">      94 </span><span class="lineCov">          1 :         return status;</span></a>
 <a name="95"><span class="lineNum">      95 </span>            :     }</a>
-<a name="96"><span class="lineNum">      96 </span><span class="lineCov">         38 :     LIBSPDM_ASSERT (message_size &gt;= transport_header_size);</span></a>
-<a name="97"><span class="lineNum">      97 </span><span class="lineCov">         38 :     spdm_request = (void *)(message + transport_header_size);</span></a>
-<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         38 :     spdm_request_size = message_size - transport_header_size;</span></a>
+<a name="96"><span class="lineNum">      96 </span><span class="lineCov">         35 :     LIBSPDM_ASSERT (message_size &gt;= transport_header_size);</span></a>
+<a name="97"><span class="lineNum">      97 </span><span class="lineCov">         35 :     spdm_request = (void *)(message + transport_header_size);</span></a>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         35 :     spdm_request_size = message_size - transport_header_size;</span></a>
 <a name="99"><span class="lineNum">      99 </span>            : </a>
-<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         38 :     spdm_request-&gt;header.spdm_version = libspdm_get_connection_version (spdm_context);</span></a>
-<a name="101"><span class="lineNum">     101 </span><span class="lineCov">         38 :     spdm_request-&gt;header.request_response_code = SPDM_GET_DIGESTS;</span></a>
-<a name="102"><span class="lineNum">     102 </span><span class="lineCov">         38 :     spdm_request-&gt;header.param1 = 0;</span></a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineCov">         38 :     spdm_request-&gt;header.param2 = 0;</span></a>
-<a name="104"><span class="lineNum">     104 </span><span class="lineCov">         38 :     spdm_request_size = sizeof(spdm_get_digest_request_t);</span></a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         35 :     spdm_request-&gt;header.spdm_version = libspdm_get_connection_version (spdm_context);</span></a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineCov">         35 :     spdm_request-&gt;header.request_response_code = SPDM_GET_DIGESTS;</span></a>
+<a name="102"><span class="lineNum">     102 </span><span class="lineCov">         35 :     spdm_request-&gt;header.param1 = 0;</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">         35 :     spdm_request-&gt;header.param2 = 0;</span></a>
+<a name="104"><span class="lineNum">     104 </span><span class="lineCov">         35 :     spdm_request_size = sizeof(spdm_get_digest_request_t);</span></a>
 <a name="105"><span class="lineNum">     105 </span>            : </a>
 <a name="106"><span class="lineNum">     106 </span>            :     /* -=[Send Request Phase]=- */</a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">         38 :     status = libspdm_send_spdm_request(spdm_context, session_id, spdm_request_size, spdm_request);</span></a>
-<a name="108"><span class="lineNum">     108 </span><span class="lineCov">         38 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">         35 :     status = libspdm_send_spdm_request(spdm_context, session_id, spdm_request_size, spdm_request);</span></a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineCov">         35 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="109"><span class="lineNum">     109 </span><span class="lineCov">          1 :         libspdm_release_sender_buffer (spdm_context);</span></a>
 <a name="110"><span class="lineNum">     110 </span><span class="lineCov">          1 :         return status;</span></a>
 <a name="111"><span class="lineNum">     111 </span>            :     }</a>
-<a name="112"><span class="lineNum">     112 </span><span class="lineCov">         37 :     libspdm_release_sender_buffer (spdm_context);</span></a>
-<a name="113"><span class="lineNum">     113 </span><span class="lineCov">         37 :     spdm_request = (void *)spdm_context-&gt;last_spdm_request;</span></a>
+<a name="112"><span class="lineNum">     112 </span><span class="lineCov">         34 :     libspdm_release_sender_buffer (spdm_context);</span></a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineCov">         34 :     spdm_request = (void *)spdm_context-&gt;last_spdm_request;</span></a>
 <a name="114"><span class="lineNum">     114 </span>            : </a>
 <a name="115"><span class="lineNum">     115 </span>            :     /* -=[Receive Response Phase]=- */</a>
-<a name="116"><span class="lineNum">     116 </span><span class="lineCov">         37 :     status = libspdm_acquire_receiver_buffer (spdm_context, &amp;message_size, (void **)&amp;message);</span></a>
-<a name="117"><span class="lineNum">     117 </span><span class="lineCov">         37 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineCov">         34 :     status = libspdm_acquire_receiver_buffer (spdm_context, &amp;message_size, (void **)&amp;message);</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineCov">         34 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="118"><span class="lineNum">     118 </span><span class="lineCov">          1 :         return status;</span></a>
 <a name="119"><span class="lineNum">     119 </span>            :     }</a>
-<a name="120"><span class="lineNum">     120 </span><span class="lineCov">         36 :     LIBSPDM_ASSERT (message_size &gt;= transport_header_size);</span></a>
-<a name="121"><span class="lineNum">     121 </span><span class="lineCov">         36 :     spdm_response = (void *)(message);</span></a>
-<a name="122"><span class="lineNum">     122 </span><span class="lineCov">         36 :     spdm_response_size = message_size;</span></a>
+<a name="120"><span class="lineNum">     120 </span><span class="lineCov">         33 :     LIBSPDM_ASSERT (message_size &gt;= transport_header_size);</span></a>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">         33 :     spdm_response = (void *)(message);</span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">         33 :     spdm_response_size = message_size;</span></a>
 <a name="123"><span class="lineNum">     123 </span>            : </a>
-<a name="124"><span class="lineNum">     124 </span><span class="lineCov">         36 :     libspdm_zero_mem(spdm_response, spdm_response_size);</span></a>
-<a name="125"><span class="lineNum">     125 </span><span class="lineCov">         36 :     status = libspdm_receive_spdm_response(</span></a>
+<a name="124"><span class="lineNum">     124 </span><span class="lineCov">         33 :     libspdm_zero_mem(spdm_response, spdm_response_size);</span></a>
+<a name="125"><span class="lineNum">     125 </span><span class="lineCov">         33 :     status = libspdm_receive_spdm_response(</span></a>
 <a name="126"><span class="lineNum">     126 </span>            :         spdm_context, session_id, &amp;spdm_response_size, (void **)&amp;spdm_response);</a>
-<a name="127"><span class="lineNum">     127 </span><span class="lineCov">         36 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="127"><span class="lineNum">     127 </span><span class="lineCov">         33 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="128"><span class="lineNum">     128 </span><span class="lineCov">          1 :         goto receive_done;</span></a>
 <a name="129"><span class="lineNum">     129 </span>            :     }</a>
 <a name="130"><span class="lineNum">     130 </span>            : </a>
 <a name="131"><span class="lineNum">     131 </span>            :     /* -=[Validate Response Phase]=- */</a>
-<a name="132"><span class="lineNum">     132 </span><span class="lineCov">         35 :     if (spdm_response_size &lt; sizeof(spdm_message_header_t)) {</span></a>
+<a name="132"><span class="lineNum">     132 </span><span class="lineCov">         32 :     if (spdm_response_size &lt; sizeof(spdm_message_header_t)) {</span></a>
 <a name="133"><span class="lineNum">     133 </span><span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="134"><span class="lineNum">     134 </span><span class="lineNoCov">          0 :         goto receive_done;</span></a>
 <a name="135"><span class="lineNum">     135 </span>            :     }</a>
-<a name="136"><span class="lineNum">     136 </span><span class="lineCov">         35 :     if (spdm_response-&gt;header.spdm_version != spdm_request-&gt;header.spdm_version) {</span></a>
+<a name="136"><span class="lineNum">     136 </span><span class="lineCov">         32 :     if (spdm_response-&gt;header.spdm_version != spdm_request-&gt;header.spdm_version) {</span></a>
 <a name="137"><span class="lineNum">     137 </span><span class="lineCov">          1 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="138"><span class="lineNum">     138 </span><span class="lineCov">          1 :         goto receive_done;</span></a>
 <a name="139"><span class="lineNum">     139 </span>            :     }</a>
-<a name="140"><span class="lineNum">     140 </span><span class="lineCov">         34 :     if (spdm_response-&gt;header.request_response_code == SPDM_ERROR) {</span></a>
-<a name="141"><span class="lineNum">     141 </span><span class="lineCov">         25 :         status = libspdm_handle_error_response_main(</span></a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">         31 :     if (spdm_response-&gt;header.request_response_code == SPDM_ERROR) {</span></a>
+<a name="141"><span class="lineNum">     141 </span><span class="lineCov">         22 :         status = libspdm_handle_error_response_main(</span></a>
 <a name="142"><span class="lineNum">     142 </span>            :             spdm_context, session_id,</a>
 <a name="143"><span class="lineNum">     143 </span>            :             &amp;spdm_response_size,</a>
 <a name="144"><span class="lineNum">     144 </span>            :             (void **)&amp;spdm_response, SPDM_GET_DIGESTS, SPDM_DIGESTS,</a>
 <a name="145"><span class="lineNum">     145 </span>            :             sizeof(libspdm_digests_response_max_t));</a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineCov">         25 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="147"><span class="lineNum">     147 </span><span class="lineCov">         25 :             goto receive_done;</span></a>
+<a name="146"><span class="lineNum">     146 </span><span class="lineCov">         22 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="147"><span class="lineNum">     147 </span><span class="lineCov">         22 :             goto receive_done;</span></a>
 <a name="148"><span class="lineNum">     148 </span>            :         }</a>
 <a name="149"><span class="lineNum">     149 </span><span class="lineCov">          9 :     } else if (spdm_response-&gt;header.request_response_code != SPDM_DIGESTS) {</span></a>
 <a name="150"><span class="lineNum">     150 </span><span class="lineCov">          1 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
@@ -277,9 +277,9 @@
 <a name="215"><span class="lineNum">     215 </span>            :     }</a>
 <a name="216"><span class="lineNum">     216 </span><span class="lineCov">          6 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="217"><span class="lineNum">     217 </span>            : </a>
-<a name="218"><span class="lineNum">     218 </span><span class="lineCov">         36 : receive_done:</span></a>
-<a name="219"><span class="lineNum">     219 </span><span class="lineCov">         36 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="220"><span class="lineNum">     220 </span><span class="lineCov">         36 :     return status;</span></a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">         33 : receive_done:</span></a>
+<a name="219"><span class="lineNum">     219 </span><span class="lineCov">         33 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineCov">         33 :     return status;</span></a>
 <a name="221"><span class="lineNum">     221 </span>            : }</a>
 <a name="222"><span class="lineNum">     222 </span>            : </a>
 <a name="223"><span class="lineNum">     223 </span><span class="lineCov">         37 : libspdm_return_t libspdm_get_digest(void *context, uint8_t *slot_mask, void *total_digest_buffer)</span></a>
@@ -292,11 +292,11 @@
 <a name="230"><span class="lineNum">     230 </span><span class="lineCov">         37 :     spdm_context-&gt;crypto_request = true;</span></a>
 <a name="231"><span class="lineNum">     231 </span><span class="lineCov">         37 :     retry = spdm_context-&gt;retry_times;</span></a>
 <a name="232"><span class="lineNum">     232 </span>            :     do {</a>
-<a name="233"><span class="lineNum">     233 </span><span class="lineCov">         40 :         status = libspdm_try_get_digest(spdm_context, NULL, slot_mask, total_digest_buffer);</span></a>
-<a name="234"><span class="lineNum">     234 </span><span class="lineCov">         40 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineCov">         37 :         status = libspdm_try_get_digest(spdm_context, NULL, slot_mask, total_digest_buffer);</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineCov">         37 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
 <a name="235"><span class="lineNum">     235 </span><span class="lineCov">         36 :             return status;</span></a>
 <a name="236"><span class="lineNum">     236 </span>            :         }</a>
-<a name="237"><span class="lineNum">     237 </span><span class="lineCov">          4 :     } while (retry-- != 0);</span></a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineCov">          1 :     } while (retry-- != 0);</span></a>
 <a name="238"><span class="lineNum">     238 </span>            : </a>
 <a name="239"><span class="lineNum">     239 </span><span class="lineCov">          1 :     return status;</span></a>
 <a name="240"><span class="lineNum">     240 </span>            : }</a>

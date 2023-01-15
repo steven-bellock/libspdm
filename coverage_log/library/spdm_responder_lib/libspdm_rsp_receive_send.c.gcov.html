@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-14 08:14:57</td>
+            <td class="headerValue">2023-01-15 08:14:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -136,11 +136,11 @@
 <a name="74"><span class="lineNum">      74 </span>            :         { SPDM_GET_CSR, libspdm_get_response_csr },</a>
 <a name="75"><span class="lineNum">      75 </span>            :         #endif /*LIBSPDM_ENABLE_CAPABILITY_GET_CSR_CAP*/</a>
 <a name="76"><span class="lineNum">      76 </span>            : </a>
-<a name="77"><span class="lineNum">      77 </span>            :         #if (LIBSPDM_ENABLE_CAPABILITY_SET_CERTIFICATE_CAP) || (LIBSPDM_ENABLE_SET_CERTIFICATE_CAP)</a>
+<a name="77"><span class="lineNum">      77 </span>            :         #if LIBSPDM_ENABLE_CAPABILITY_SET_CERTIFICATE_CAP</a>
 <a name="78"><span class="lineNum">      78 </span>            :         { SPDM_SET_CERTIFICATE, libspdm_get_response_set_certificate },</a>
 <a name="79"><span class="lineNum">      79 </span>            :         #endif /*LIBSPDM_ENABLE_CAPABILITY_SET_CERTIFICATE_CAP*/</a>
 <a name="80"><span class="lineNum">      80 </span>            : </a>
-<a name="81"><span class="lineNum">      81 </span>            :         #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="81"><span class="lineNum">      81 </span>            :         #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="82"><span class="lineNum">      82 </span>            :         { SPDM_CHUNK_GET, libspdm_get_response_chunk_get},</a>
 <a name="83"><span class="lineNum">      83 </span>            :         { SPDM_CHUNK_SEND, libspdm_get_response_chunk_send},</a>
 <a name="84"><span class="lineNum">      84 </span>            :         #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
@@ -226,7 +226,7 @@
 <a name="164"><span class="lineNum">     164 </span>            :      * if it is normal message, the response ptr will point to receiver buffer. */</a>
 <a name="165"><span class="lineNum">     165 </span><span class="lineNoCov">          0 :     transport_header_size = spdm_context-&gt;transport_get_header_size(spdm_context);</span></a>
 <a name="166"><span class="lineNum">     166 </span><span class="lineNoCov">          0 :     libspdm_get_scratch_buffer (spdm_context, (void **)&amp;scratch_buffer, &amp;scratch_buffer_size);</span></a>
-<a name="167"><span class="lineNum">     167 </span>            :     #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="167"><span class="lineNum">     167 </span>            :     #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="168"><span class="lineNum">     168 </span><span class="lineNoCov">          0 :     decoded_message_ptr = scratch_buffer + LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_OFFSET +</span></a>
 <a name="169"><span class="lineNum">     169 </span>            :                           transport_header_size;</a>
 <a name="170"><span class="lineNum">     170 </span><span class="lineNoCov">          0 :     decoded_message_size = LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_CAPACITY - transport_header_size;</span></a>
@@ -483,7 +483,7 @@
 <a name="421"><span class="lineNum">     421 </span>            :     bool result;</a>
 <a name="422"><span class="lineNum">     422 </span>            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_HBEAT_CAP */</a>
 <a name="423"><span class="lineNum">     423 </span>            : </a>
-<a name="424"><span class="lineNum">     424 </span>            :     #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="424"><span class="lineNum">     424 </span>            :     #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="425"><span class="lineNum">     425 </span>            :     uint8_t *large_buffer;</a>
 <a name="426"><span class="lineNum">     426 </span>            :     size_t large_buffer_size;</a>
 <a name="427"><span class="lineNum">     427 </span>            :     libspdm_chunk_info_t* get_info;</a>
@@ -499,7 +499,7 @@
 <a name="437"><span class="lineNum">     437 </span><span class="lineCov">          1 :     transport_header_size = spdm_context-&gt;transport_get_header_size(spdm_context);</span></a>
 <a name="438"><span class="lineNum">     438 </span><span class="lineCov">          1 :     if (session_id != NULL) {</span></a>
 <a name="439"><span class="lineNum">     439 </span><span class="lineNoCov">          0 :         libspdm_get_scratch_buffer (spdm_context, (void **)&amp;scratch_buffer, &amp;scratch_buffer_size);</span></a>
-<a name="440"><span class="lineNum">     440 </span>            :         #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="440"><span class="lineNum">     440 </span>            :         #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="441"><span class="lineNum">     441 </span><span class="lineNoCov">          0 :         my_response = scratch_buffer + LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_OFFSET +</span></a>
 <a name="442"><span class="lineNum">     442 </span>            :                       transport_header_size;</a>
 <a name="443"><span class="lineNum">     443 </span><span class="lineNoCov">          0 :         my_response_size = LIBSPDM_SCRATCH_BUFFER_SECURE_MESSAGE_CAPACITY - transport_header_size;</span></a>
@@ -598,7 +598,7 @@
 <a name="536"><span class="lineNum">     536 </span><span class="lineCov">          1 :     if (!is_app_message) {</span></a>
 <a name="537"><span class="lineNum">     537 </span><span class="lineCov">          1 :         get_response_func = libspdm_get_response_func_via_last_request(spdm_context);</span></a>
 <a name="538"><span class="lineNum">     538 </span>            : </a>
-<a name="539"><span class="lineNum">     539 </span>            :         #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="539"><span class="lineNum">     539 </span>            :         #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="540"><span class="lineNum">     540 </span>            :         /* If responder is expecting chunk_get or chunk_send requests</a>
 <a name="541"><span class="lineNum">     541 </span>            :          * and gets other requests instead, drop out of chunking mode */</a>
 <a name="542"><span class="lineNum">     542 </span><span class="lineCov">          1 :         if (spdm_context-&gt;chunk_context.get.chunk_in_use</span></a>
@@ -623,7 +623,7 @@
 <a name="561"><span class="lineNum">     561 </span><span class="lineNoCov">          0 :             spdm_context-&gt;chunk_context.send.large_message_size = 0;</span></a>
 <a name="562"><span class="lineNum">     562 </span><span class="lineNoCov">          0 :             spdm_context-&gt;chunk_context.send.chunk_bytes_transferred = 0;</span></a>
 <a name="563"><span class="lineNum">     563 </span>            :         }</a>
-<a name="564"><span class="lineNum">     564 </span>            :         #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP*/</a>
+<a name="564"><span class="lineNum">     564 </span>            :         #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
 <a name="565"><span class="lineNum">     565 </span>            : </a>
 <a name="566"><span class="lineNum">     566 </span><span class="lineCov">          1 :         if (get_response_func != NULL) {</span></a>
 <a name="567"><span class="lineNum">     567 </span><span class="lineCov">          1 :             status = get_response_func(</span></a>
@@ -650,7 +650,7 @@
 <a name="588"><span class="lineNum">     588 </span><span class="lineCov">          1 :         libspdm_is_capabilities_flag_supported(</span></a>
 <a name="589"><span class="lineNum">     589 </span>            :             spdm_context, false, 0,</a>
 <a name="590"><span class="lineNum">     590 </span>            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP)) {</a>
-<a name="591"><span class="lineNum">     591 </span>            :         #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="591"><span class="lineNum">     591 </span>            :         #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="592"><span class="lineNum">     592 </span>            : </a>
 <a name="593"><span class="lineNum">     593 </span><span class="lineCov">          1 :         get_info = &amp;spdm_context-&gt;chunk_context.get;</span></a>
 <a name="594"><span class="lineNum">     594 </span>            : </a>
@@ -757,7 +757,7 @@
 <a name="695"><span class="lineNum">     695 </span>            : </a>
 <a name="696"><span class="lineNum">     696 </span><span class="lineCov">          1 :     spdm_response = (void *)my_response;</span></a>
 <a name="697"><span class="lineNum">     697 </span><span class="lineCov">          1 :     request_response_code = spdm_response-&gt;request_response_code;</span></a>
-<a name="698"><span class="lineNum">     698 </span>            :     #if (LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP) || (LIBSPDM_ENABLE_CHUNK_CAP)</a>
+<a name="698"><span class="lineNum">     698 </span>            :     #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP</a>
 <a name="699"><span class="lineNum">     699 </span><span class="lineCov">          1 :     switch (request_response_code) {</span></a>
 <a name="700"><span class="lineNum">     700 </span><span class="lineNoCov">          0 :     case SPDM_CHUNK_SEND_ACK:</span></a>
 <a name="701"><span class="lineNum">     701 </span><span class="lineNoCov">          0 :         if (my_response_size &gt; sizeof(spdm_chunk_send_ack_response_t)) {</span></a>

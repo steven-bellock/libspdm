@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-14 08:14:57</td>
+            <td class="headerValue">2023-01-15 08:14:53</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -505,7 +505,7 @@
 <a name="443"><span class="lineNum">     443 </span>            :  *</a>
 <a name="444"><span class="lineNum">     444 </span>            :  * @retval RETURN_SUCCESS  current TH hmac is calculated.</a>
 <a name="445"><span class="lineNum">     445 </span>            :  */</a>
-<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         88 : bool libspdm_calculate_th_hmac_for_finish_req(void *context,</span></a>
+<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         82 : bool libspdm_calculate_th_hmac_for_finish_req(void *context,</span></a>
 <a name="447"><span class="lineNum">     447 </span>            :                                               void *spdm_session_info,</a>
 <a name="448"><span class="lineNum">     448 </span>            :                                               size_t *th_hmac_buffer_size,</a>
 <a name="449"><span class="lineNum">     449 </span>            :                                               void *th_hmac_buffer)</a>
@@ -518,42 +518,42 @@
 <a name="456"><span class="lineNum">     456 </span>            :     uint8_t hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="457"><span class="lineNum">     457 </span>            :     bool result;</a>
 <a name="458"><span class="lineNum">     458 </span>            : </a>
-<a name="459"><span class="lineNum">     459 </span><span class="lineCov">         88 :     spdm_context = context;</span></a>
-<a name="460"><span class="lineNum">     460 </span><span class="lineCov">         88 :     session_info = spdm_session_info;</span></a>
-<a name="461"><span class="lineNum">     461 </span><span class="lineCov">         88 :     secured_message_context = session_info-&gt;secured_message_context;</span></a>
+<a name="459"><span class="lineNum">     459 </span><span class="lineCov">         82 :     spdm_context = context;</span></a>
+<a name="460"><span class="lineNum">     460 </span><span class="lineCov">         82 :     session_info = spdm_session_info;</span></a>
+<a name="461"><span class="lineNum">     461 </span><span class="lineCov">         82 :     secured_message_context = session_info-&gt;secured_message_context;</span></a>
 <a name="462"><span class="lineNum">     462 </span>            : </a>
-<a name="463"><span class="lineNum">     463 </span><span class="lineCov">         88 :     hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="463"><span class="lineNum">     463 </span><span class="lineCov">         82 :     hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
 <a name="464"><span class="lineNum">     464 </span>            : </a>
-<a name="465"><span class="lineNum">     465 </span><span class="lineCov">         88 :     LIBSPDM_ASSERT(*th_hmac_buffer_size &gt;= hash_size);</span></a>
-<a name="466"><span class="lineNum">     466 </span><span class="lineCov">         88 :     LIBSPDM_ASSERT(session_info-&gt;session_transcript.digest_context_th != NULL);</span></a>
+<a name="465"><span class="lineNum">     465 </span><span class="lineCov">         82 :     LIBSPDM_ASSERT(*th_hmac_buffer_size &gt;= hash_size);</span></a>
+<a name="466"><span class="lineNum">     466 </span><span class="lineCov">         82 :     LIBSPDM_ASSERT(session_info-&gt;session_transcript.digest_context_th != NULL);</span></a>
 <a name="467"><span class="lineNum">     467 </span>            : </a>
 <a name="468"><span class="lineNum">     468 </span>            :     /* duplicate the th context, because we still need use original context to continue.*/</a>
-<a name="469"><span class="lineNum">     469 </span><span class="lineCov">         88 :     hash_context_th = libspdm_hash_new (spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
-<a name="470"><span class="lineNum">     470 </span><span class="lineCov">         88 :     if (hash_context_th == NULL) {</span></a>
+<a name="469"><span class="lineNum">     469 </span><span class="lineCov">         82 :     hash_context_th = libspdm_hash_new (spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="470"><span class="lineNum">     470 </span><span class="lineCov">         82 :     if (hash_context_th == NULL) {</span></a>
 <a name="471"><span class="lineNum">     471 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="472"><span class="lineNum">     472 </span>            :     }</a>
-<a name="473"><span class="lineNum">     473 </span><span class="lineCov">         88 :     result = libspdm_hash_duplicate (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
-<a name="474"><span class="lineNum">     474 </span><span class="lineCov">         88 :                                      session_info-&gt;session_transcript.digest_context_th,</span></a>
+<a name="473"><span class="lineNum">     473 </span><span class="lineCov">         82 :     result = libspdm_hash_duplicate (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
+<a name="474"><span class="lineNum">     474 </span><span class="lineCov">         82 :                                      session_info-&gt;session_transcript.digest_context_th,</span></a>
 <a name="475"><span class="lineNum">     475 </span>            :                                      hash_context_th);</a>
-<a name="476"><span class="lineNum">     476 </span><span class="lineCov">         88 :     if (!result) {</span></a>
+<a name="476"><span class="lineNum">     476 </span><span class="lineCov">         82 :     if (!result) {</span></a>
 <a name="477"><span class="lineNum">     477 </span><span class="lineNoCov">          0 :         libspdm_hash_free (spdm_context-&gt;connection_info.algorithm.base_hash_algo, hash_context_th);</span></a>
 <a name="478"><span class="lineNum">     478 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="479"><span class="lineNum">     479 </span>            :     }</a>
-<a name="480"><span class="lineNum">     480 </span><span class="lineCov">         88 :     result = libspdm_hash_final (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
+<a name="480"><span class="lineNum">     480 </span><span class="lineCov">         82 :     result = libspdm_hash_final (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
 <a name="481"><span class="lineNum">     481 </span>            :                                  hash_context_th, hash_data);</a>
-<a name="482"><span class="lineNum">     482 </span><span class="lineCov">         88 :     libspdm_hash_free (spdm_context-&gt;connection_info.algorithm.base_hash_algo, hash_context_th);</span></a>
-<a name="483"><span class="lineNum">     483 </span><span class="lineCov">         88 :     if (!result) {</span></a>
+<a name="482"><span class="lineNum">     482 </span><span class="lineCov">         82 :     libspdm_hash_free (spdm_context-&gt;connection_info.algorithm.base_hash_algo, hash_context_th);</span></a>
+<a name="483"><span class="lineNum">     483 </span><span class="lineCov">         82 :     if (!result) {</span></a>
 <a name="484"><span class="lineNum">     484 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="485"><span class="lineNum">     485 </span>            :     }</a>
 <a name="486"><span class="lineNum">     486 </span>            : </a>
-<a name="487"><span class="lineNum">     487 </span><span class="lineCov">         88 :     result = libspdm_hmac_all_with_request_finished_key (secured_message_context,</span></a>
+<a name="487"><span class="lineNum">     487 </span><span class="lineCov">         82 :     result = libspdm_hmac_all_with_request_finished_key (secured_message_context,</span></a>
 <a name="488"><span class="lineNum">     488 </span>            :                                                          hash_data, hash_size, th_hmac_buffer);</a>
-<a name="489"><span class="lineNum">     489 </span><span class="lineCov">         88 :     if (!result) {</span></a>
+<a name="489"><span class="lineNum">     489 </span><span class="lineCov">         82 :     if (!result) {</span></a>
 <a name="490"><span class="lineNum">     490 </span><span class="lineNoCov">          0 :         return false;</span></a>
 <a name="491"><span class="lineNum">     491 </span>            :     }</a>
-<a name="492"><span class="lineNum">     492 </span><span class="lineCov">         88 :     *th_hmac_buffer_size = hash_size;</span></a>
+<a name="492"><span class="lineNum">     492 </span><span class="lineCov">         82 :     *th_hmac_buffer_size = hash_size;</span></a>
 <a name="493"><span class="lineNum">     493 </span>            : </a>
-<a name="494"><span class="lineNum">     494 </span><span class="lineCov">         88 :     return true;</span></a>
+<a name="494"><span class="lineNum">     494 </span><span class="lineCov">         82 :     return true;</span></a>
 <a name="495"><span class="lineNum">     495 </span>            : }</a>
 <a name="496"><span class="lineNum">     496 </span>            : #endif</a>
 <a name="497"><span class="lineNum">     497 </span>            : </a>
