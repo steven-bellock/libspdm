@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">21</td>
-            <td class="headerCovTableEntry">25</td>
-            <td class="headerCovTableEntryMed">84.0 %</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntryMed">83.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-18 08:16:12</td>
+            <td class="headerValue">2023-01-19 08:16:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -68,18 +68,18 @@
 <a name="6"><span class="lineNum">       6 </span>            : </a>
 <a name="7"><span class="lineNum">       7 </span>            : #include &quot;internal/libspdm_responder_lib.h&quot;</a>
 <a name="8"><span class="lineNum">       8 </span>            : </a>
-<a name="9"><span class="lineNum">       9 </span><span class="lineCov">         14 : libspdm_return_t libspdm_get_response_respond_if_ready(void *context,</span></a>
-<a name="10"><span class="lineNum">      10 </span>            :                                                        size_t request_size,</a>
-<a name="11"><span class="lineNum">      11 </span>            :                                                        const void *request,</a>
-<a name="12"><span class="lineNum">      12 </span>            :                                                        size_t *response_size,</a>
-<a name="13"><span class="lineNum">      13 </span>            :                                                        void *response)</a>
-<a name="14"><span class="lineNum">      14 </span>            : {</a>
-<a name="15"><span class="lineNum">      15 </span>            :     const spdm_message_header_t *spdm_request;</a>
-<a name="16"><span class="lineNum">      16 </span>            :     libspdm_context_t *spdm_context;</a>
-<a name="17"><span class="lineNum">      17 </span>            :     libspdm_get_spdm_response_func get_response_func;</a>
-<a name="18"><span class="lineNum">      18 </span>            :     libspdm_return_t status;</a>
-<a name="19"><span class="lineNum">      19 </span>            : </a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineCov">         14 :     spdm_context = context;</span></a>
+<a name="9"><span class="lineNum">       9 </span>            : #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
+<a name="10"><span class="lineNum">      10 </span>            : </a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         14 : libspdm_return_t libspdm_get_response_respond_if_ready(libspdm_context_t *spdm_context,</span></a>
+<a name="12"><span class="lineNum">      12 </span>            :                                                        size_t request_size,</a>
+<a name="13"><span class="lineNum">      13 </span>            :                                                        const void *request,</a>
+<a name="14"><span class="lineNum">      14 </span>            :                                                        size_t *response_size,</a>
+<a name="15"><span class="lineNum">      15 </span>            :                                                        void *response)</a>
+<a name="16"><span class="lineNum">      16 </span>            : {</a>
+<a name="17"><span class="lineNum">      17 </span>            :     const spdm_message_header_t *spdm_request;</a>
+<a name="18"><span class="lineNum">      18 </span>            :     libspdm_get_spdm_response_func get_response_func;</a>
+<a name="19"><span class="lineNum">      19 </span>            :     libspdm_return_t status;</a>
+<a name="20"><span class="lineNum">      20 </span>            : </a>
 <a name="21"><span class="lineNum">      21 </span><span class="lineCov">         14 :     spdm_request = request;</span></a>
 <a name="22"><span class="lineNum">      22 </span>            : </a>
 <a name="23"><span class="lineNum">      23 </span><span class="lineCov">         14 :     if (spdm_request-&gt;spdm_version != libspdm_get_connection_version(spdm_context)) {</span></a>
@@ -117,20 +117,21 @@
 <a name="55"><span class="lineNum">      55 </span>            :     }</a>
 <a name="56"><span class="lineNum">      56 </span>            : </a>
 <a name="57"><span class="lineNum">      57 </span><span class="lineCov">          9 :     get_response_func = NULL;</span></a>
-<a name="58"><span class="lineNum">      58 </span>            :     get_response_func =</a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          9 :         libspdm_get_response_func_via_request_code(spdm_request-&gt;param1);</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          9 :     if (get_response_func == NULL) {</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="62"><span class="lineNum">      62 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,</a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineNoCov">          0 :             spdm_request-&gt;param1, response_size, response);</span></a>
-<a name="64"><span class="lineNum">      64 </span>            :     }</a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          9 :     status = get_response_func(spdm_context,</span></a>
-<a name="66"><span class="lineNum">      66 </span>            :                                spdm_context-&gt;cache_spdm_request_size,</a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          9 :                                spdm_context-&gt;cache_spdm_request,</span></a>
-<a name="68"><span class="lineNum">      68 </span>            :                                response_size, response);</a>
-<a name="69"><span class="lineNum">      69 </span>            : </a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          9 :     return status;</span></a>
-<a name="71"><span class="lineNum">      71 </span>            : }</a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          9 :     get_response_func = libspdm_get_response_func_via_request_code(spdm_request-&gt;param1);</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          9 :     if (get_response_func == NULL) {</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="61"><span class="lineNum">      61 </span>            :             spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,</a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineNoCov">          0 :             spdm_request-&gt;param1, response_size, response);</span></a>
+<a name="63"><span class="lineNum">      63 </span>            :     }</a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          9 :     status = get_response_func(spdm_context,</span></a>
+<a name="65"><span class="lineNum">      65 </span>            :                                spdm_context-&gt;cache_spdm_request_size,</a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          9 :                                spdm_context-&gt;cache_spdm_request,</span></a>
+<a name="67"><span class="lineNum">      67 </span>            :                                response_size, response);</a>
+<a name="68"><span class="lineNum">      68 </span>            : </a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          9 :     return status;</span></a>
+<a name="70"><span class="lineNum">      70 </span>            : }</a>
+<a name="71"><span class="lineNum">      71 </span>            : </a>
+<a name="72"><span class="lineNum">      72 </span>            : #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
 </pre>
       </td>
     </tr>

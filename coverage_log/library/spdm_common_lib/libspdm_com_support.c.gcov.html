@@ -32,17 +32,17 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">60</td>
-            <td class="headerCovTableEntry">90</td>
-            <td class="headerCovTableEntryLo">66.7 %</td>
+            <td class="headerCovTableEntry">94</td>
+            <td class="headerCovTableEntryLo">63.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-18 08:16:12</td>
+            <td class="headerValue">2023-01-19 08:16:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
-            <td class="headerCovTableEntry">16</td>
-            <td class="headerCovTableEntryLo">68.8 %</td>
+            <td class="headerCovTableEntry">18</td>
+            <td class="headerCovTableEntryLo">61.1 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -291,6 +291,31 @@
 <a name="229"><span class="lineNum">     229 </span>            : </a>
 <a name="230"><span class="lineNum">     230 </span><span class="lineCov">        146 :     libspdm_reset_managed_buffer(m_buffer);</span></a>
 <a name="231"><span class="lineNum">     231 </span><span class="lineCov">        146 : }</span></a>
+<a name="232"><span class="lineNum">     232 </span>            : </a>
+<a name="233"><span class="lineNum">     233 </span>            : /**</a>
+<a name="234"><span class="lineNum">     234 </span>            :  * byte3 - libspdm major version</a>
+<a name="235"><span class="lineNum">     235 </span>            :  * byte2 - libspdm minor version</a>
+<a name="236"><span class="lineNum">     236 </span>            :  * byte1 - libspdm patch version</a>
+<a name="237"><span class="lineNum">     237 </span>            :  * byte0 - libspdm alpha</a>
+<a name="238"><span class="lineNum">     238 </span>            :  *         (office release with tag: 0, release candidate with tag: 1, non official release: 0xFF)</a>
+<a name="239"><span class="lineNum">     239 </span>            :  **/</a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineNoCov">          0 : uint32_t libspdm_module_version(void)</span></a>
+<a name="241"><span class="lineNum">     241 </span>            : {</a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineNoCov">          0 :     return (LIBSPDM_MAJOR_VERSION &lt;&lt; 24) |</span></a>
+<a name="243"><span class="lineNum">     243 </span>            :            (LIBSPDM_MINOR_VERSION &lt;&lt; 16) |</a>
+<a name="244"><span class="lineNum">     244 </span>            :            (LIBSPDM_PATCH_VERSION &lt;&lt; 8) |</a>
+<a name="245"><span class="lineNum">     245 </span>            :            (LIBSPDM_ALPHA);</a>
+<a name="246"><span class="lineNum">     246 </span>            : }</a>
+<a name="247"><span class="lineNum">     247 </span>            : </a>
+<a name="248"><span class="lineNum">     248 </span>            : /*true: FIPS enabled, false: FIPS disabled*/</a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineNoCov">          0 : bool libspdm_get_fips_mode(void)</span></a>
+<a name="250"><span class="lineNum">     250 </span>            : {</a>
+<a name="251"><span class="lineNum">     251 </span>            : #if LIBSPDM_FIPS_MODE</a>
+<a name="252"><span class="lineNum">     252 </span>            :     return true;</a>
+<a name="253"><span class="lineNum">     253 </span>            : #else</a>
+<a name="254"><span class="lineNum">     254 </span><span class="lineNoCov">          0 :     return false;</span></a>
+<a name="255"><span class="lineNum">     255 </span>            : #endif</a>
+<a name="256"><span class="lineNum">     256 </span>            : }</a>
 </pre>
       </td>
     </tr>
