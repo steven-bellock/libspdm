@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-23 08:17:00</td>
+            <td class="headerValue">2023-01-24 08:16:11</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -392,61 +392,63 @@
 <a name="330"><span class="lineNum">     330 </span><span class="lineCov">         41 :     return status;</span></a>
 <a name="331"><span class="lineNum">     331 </span>            : }</a>
 <a name="332"><span class="lineNum">     332 </span>            : </a>
-<a name="333"><span class="lineNum">     333 </span><span class="lineCov">         43 : libspdm_return_t libspdm_challenge(void *spdm_context, uint8_t slot_id,</span></a>
-<a name="334"><span class="lineNum">     334 </span>            :                                    uint8_t measurement_hash_type,</a>
-<a name="335"><span class="lineNum">     335 </span>            :                                    void *measurement_hash,</a>
-<a name="336"><span class="lineNum">     336 </span>            :                                    uint8_t *slot_mask)</a>
-<a name="337"><span class="lineNum">     337 </span>            : {</a>
-<a name="338"><span class="lineNum">     338 </span>            :     libspdm_context_t *context;</a>
-<a name="339"><span class="lineNum">     339 </span>            :     size_t retry;</a>
-<a name="340"><span class="lineNum">     340 </span>            :     libspdm_return_t status;</a>
-<a name="341"><span class="lineNum">     341 </span>            : </a>
-<a name="342"><span class="lineNum">     342 </span><span class="lineCov">         43 :     context = spdm_context;</span></a>
-<a name="343"><span class="lineNum">     343 </span><span class="lineCov">         43 :     context-&gt;crypto_request = true;</span></a>
-<a name="344"><span class="lineNum">     344 </span><span class="lineCov">         43 :     retry = context-&gt;retry_times;</span></a>
-<a name="345"><span class="lineNum">     345 </span>            :     do {</a>
-<a name="346"><span class="lineNum">     346 </span><span class="lineCov">         44 :         status = libspdm_try_challenge(context, slot_id,</span></a>
-<a name="347"><span class="lineNum">     347 </span>            :                                        measurement_hash_type,</a>
-<a name="348"><span class="lineNum">     348 </span>            :                                        measurement_hash, slot_mask, NULL, NULL, NULL);</a>
-<a name="349"><span class="lineNum">     349 </span><span class="lineCov">         44 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="350"><span class="lineNum">     350 </span><span class="lineCov">         42 :             return status;</span></a>
-<a name="351"><span class="lineNum">     351 </span>            :         }</a>
-<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
-<a name="353"><span class="lineNum">     353 </span>            : </a>
-<a name="354"><span class="lineNum">     354 </span><span class="lineCov">          1 :     return status;</span></a>
-<a name="355"><span class="lineNum">     355 </span>            : }</a>
-<a name="356"><span class="lineNum">     356 </span>            : </a>
-<a name="357"><span class="lineNum">     357 </span><span class="lineNoCov">          0 : libspdm_return_t libspdm_challenge_ex(void *spdm_context, uint8_t slot_id,</span></a>
-<a name="358"><span class="lineNum">     358 </span>            :                                       uint8_t measurement_hash_type,</a>
-<a name="359"><span class="lineNum">     359 </span>            :                                       void *measurement_hash,</a>
-<a name="360"><span class="lineNum">     360 </span>            :                                       uint8_t *slot_mask,</a>
-<a name="361"><span class="lineNum">     361 </span>            :                                       const void *requester_nonce_in,</a>
-<a name="362"><span class="lineNum">     362 </span>            :                                       void *requester_nonce,</a>
-<a name="363"><span class="lineNum">     363 </span>            :                                       void *responder_nonce)</a>
-<a name="364"><span class="lineNum">     364 </span>            : {</a>
-<a name="365"><span class="lineNum">     365 </span>            :     libspdm_context_t *context;</a>
-<a name="366"><span class="lineNum">     366 </span>            :     size_t retry;</a>
-<a name="367"><span class="lineNum">     367 </span>            :     libspdm_return_t status;</a>
-<a name="368"><span class="lineNum">     368 </span>            : </a>
-<a name="369"><span class="lineNum">     369 </span><span class="lineNoCov">          0 :     context = spdm_context;</span></a>
-<a name="370"><span class="lineNum">     370 </span><span class="lineNoCov">          0 :     context-&gt;crypto_request = true;</span></a>
-<a name="371"><span class="lineNum">     371 </span><span class="lineNoCov">          0 :     retry = context-&gt;retry_times;</span></a>
-<a name="372"><span class="lineNum">     372 </span>            :     do {</a>
-<a name="373"><span class="lineNum">     373 </span><span class="lineNoCov">          0 :         status = libspdm_try_challenge(context, slot_id,</span></a>
-<a name="374"><span class="lineNum">     374 </span>            :                                        measurement_hash_type,</a>
-<a name="375"><span class="lineNum">     375 </span>            :                                        measurement_hash,</a>
-<a name="376"><span class="lineNum">     376 </span>            :                                        slot_mask,</a>
-<a name="377"><span class="lineNum">     377 </span>            :                                        requester_nonce_in,</a>
-<a name="378"><span class="lineNum">     378 </span>            :                                        requester_nonce, responder_nonce);</a>
-<a name="379"><span class="lineNum">     379 </span><span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="380"><span class="lineNum">     380 </span><span class="lineNoCov">          0 :             return status;</span></a>
-<a name="381"><span class="lineNum">     381 </span>            :         }</a>
-<a name="382"><span class="lineNum">     382 </span><span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
-<a name="383"><span class="lineNum">     383 </span>            : </a>
-<a name="384"><span class="lineNum">     384 </span><span class="lineNoCov">          0 :     return status;</span></a>
-<a name="385"><span class="lineNum">     385 </span>            : }</a>
-<a name="386"><span class="lineNum">     386 </span>            : </a>
-<a name="387"><span class="lineNum">     387 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP */</a>
+<a name="333"><span class="lineNum">     333 </span><span class="lineCov">         43 : libspdm_return_t libspdm_challenge(void *spdm_context, void *reserved,</span></a>
+<a name="334"><span class="lineNum">     334 </span>            :                                    uint8_t slot_id,</a>
+<a name="335"><span class="lineNum">     335 </span>            :                                    uint8_t measurement_hash_type,</a>
+<a name="336"><span class="lineNum">     336 </span>            :                                    void *measurement_hash,</a>
+<a name="337"><span class="lineNum">     337 </span>            :                                    uint8_t *slot_mask)</a>
+<a name="338"><span class="lineNum">     338 </span>            : {</a>
+<a name="339"><span class="lineNum">     339 </span>            :     libspdm_context_t *context;</a>
+<a name="340"><span class="lineNum">     340 </span>            :     size_t retry;</a>
+<a name="341"><span class="lineNum">     341 </span>            :     libspdm_return_t status;</a>
+<a name="342"><span class="lineNum">     342 </span>            : </a>
+<a name="343"><span class="lineNum">     343 </span><span class="lineCov">         43 :     context = spdm_context;</span></a>
+<a name="344"><span class="lineNum">     344 </span><span class="lineCov">         43 :     context-&gt;crypto_request = true;</span></a>
+<a name="345"><span class="lineNum">     345 </span><span class="lineCov">         43 :     retry = context-&gt;retry_times;</span></a>
+<a name="346"><span class="lineNum">     346 </span>            :     do {</a>
+<a name="347"><span class="lineNum">     347 </span><span class="lineCov">         44 :         status = libspdm_try_challenge(context, slot_id,</span></a>
+<a name="348"><span class="lineNum">     348 </span>            :                                        measurement_hash_type,</a>
+<a name="349"><span class="lineNum">     349 </span>            :                                        measurement_hash, slot_mask, NULL, NULL, NULL);</a>
+<a name="350"><span class="lineNum">     350 </span><span class="lineCov">         44 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="351"><span class="lineNum">     351 </span><span class="lineCov">         42 :             return status;</span></a>
+<a name="352"><span class="lineNum">     352 </span>            :         }</a>
+<a name="353"><span class="lineNum">     353 </span><span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
+<a name="354"><span class="lineNum">     354 </span>            : </a>
+<a name="355"><span class="lineNum">     355 </span><span class="lineCov">          1 :     return status;</span></a>
+<a name="356"><span class="lineNum">     356 </span>            : }</a>
+<a name="357"><span class="lineNum">     357 </span>            : </a>
+<a name="358"><span class="lineNum">     358 </span><span class="lineNoCov">          0 : libspdm_return_t libspdm_challenge_ex(void *spdm_context, void *reserved,</span></a>
+<a name="359"><span class="lineNum">     359 </span>            :                                       uint8_t slot_id,</a>
+<a name="360"><span class="lineNum">     360 </span>            :                                       uint8_t measurement_hash_type,</a>
+<a name="361"><span class="lineNum">     361 </span>            :                                       void *measurement_hash,</a>
+<a name="362"><span class="lineNum">     362 </span>            :                                       uint8_t *slot_mask,</a>
+<a name="363"><span class="lineNum">     363 </span>            :                                       const void *requester_nonce_in,</a>
+<a name="364"><span class="lineNum">     364 </span>            :                                       void *requester_nonce,</a>
+<a name="365"><span class="lineNum">     365 </span>            :                                       void *responder_nonce)</a>
+<a name="366"><span class="lineNum">     366 </span>            : {</a>
+<a name="367"><span class="lineNum">     367 </span>            :     libspdm_context_t *context;</a>
+<a name="368"><span class="lineNum">     368 </span>            :     size_t retry;</a>
+<a name="369"><span class="lineNum">     369 </span>            :     libspdm_return_t status;</a>
+<a name="370"><span class="lineNum">     370 </span>            : </a>
+<a name="371"><span class="lineNum">     371 </span><span class="lineNoCov">          0 :     context = spdm_context;</span></a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineNoCov">          0 :     context-&gt;crypto_request = true;</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineNoCov">          0 :     retry = context-&gt;retry_times;</span></a>
+<a name="374"><span class="lineNum">     374 </span>            :     do {</a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineNoCov">          0 :         status = libspdm_try_challenge(context, slot_id,</span></a>
+<a name="376"><span class="lineNum">     376 </span>            :                                        measurement_hash_type,</a>
+<a name="377"><span class="lineNum">     377 </span>            :                                        measurement_hash,</a>
+<a name="378"><span class="lineNum">     378 </span>            :                                        slot_mask,</a>
+<a name="379"><span class="lineNum">     379 </span>            :                                        requester_nonce_in,</a>
+<a name="380"><span class="lineNum">     380 </span>            :                                        requester_nonce, responder_nonce);</a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineNoCov">          0 :             return status;</span></a>
+<a name="383"><span class="lineNum">     383 </span>            :         }</a>
+<a name="384"><span class="lineNum">     384 </span><span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="385"><span class="lineNum">     385 </span>            : </a>
+<a name="386"><span class="lineNum">     386 </span><span class="lineNoCov">          0 :     return status;</span></a>
+<a name="387"><span class="lineNum">     387 </span>            : }</a>
+<a name="388"><span class="lineNum">     388 </span>            : </a>
+<a name="389"><span class="lineNum">     389 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP */</a>
 </pre>
       </td>
     </tr>
