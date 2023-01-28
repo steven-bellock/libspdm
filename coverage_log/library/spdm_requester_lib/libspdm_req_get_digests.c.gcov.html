@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">97</td>
-            <td class="headerCovTableEntry">107</td>
+            <td class="headerCovTableEntry">98</td>
+            <td class="headerCovTableEntry">108</td>
             <td class="headerCovTableEntryHi">90.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-27 08:15:21</td>
+            <td class="headerValue">2023-01-28 08:14:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -275,32 +275,37 @@
 <a name="213"><span class="lineNum">     213 </span>            :     }</a>
 <a name="214"><span class="lineNum">     214 </span><span class="lineCov">          6 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="215"><span class="lineNum">     215 </span>            : </a>
-<a name="216"><span class="lineNum">     216 </span><span class="lineCov">         33 : receive_done:</span></a>
-<a name="217"><span class="lineNum">     217 </span><span class="lineCov">         33 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="218"><span class="lineNum">     218 </span><span class="lineCov">         33 :     return status;</span></a>
-<a name="219"><span class="lineNum">     219 </span>            : }</a>
+<a name="216"><span class="lineNum">     216 </span>            :     /* -=[Log Message Phase]=- */</a>
+<a name="217"><span class="lineNum">     217 </span>            :     #if LIBSPDM_ENABLE_MSG_LOG</a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineCov">          6 :     libspdm_append_msg_log(spdm_context, spdm_response, spdm_response_size);</span></a>
+<a name="219"><span class="lineNum">     219 </span>            :     #endif /* LIBSPDM_ENABLE_MSG_LOG */</a>
 <a name="220"><span class="lineNum">     220 </span>            : </a>
-<a name="221"><span class="lineNum">     221 </span><span class="lineCov">         38 : libspdm_return_t libspdm_get_digest(void *spdm_context, const uint32_t *session_id,</span></a>
-<a name="222"><span class="lineNum">     222 </span>            :                                     uint8_t *slot_mask, void *total_digest_buffer)</a>
-<a name="223"><span class="lineNum">     223 </span>            : {</a>
-<a name="224"><span class="lineNum">     224 </span>            :     libspdm_context_t *context;</a>
-<a name="225"><span class="lineNum">     225 </span>            :     size_t retry;</a>
-<a name="226"><span class="lineNum">     226 </span>            :     libspdm_return_t status;</a>
-<a name="227"><span class="lineNum">     227 </span>            : </a>
-<a name="228"><span class="lineNum">     228 </span><span class="lineCov">         38 :     context = spdm_context;</span></a>
-<a name="229"><span class="lineNum">     229 </span><span class="lineCov">         38 :     context-&gt;crypto_request = true;</span></a>
-<a name="230"><span class="lineNum">     230 </span><span class="lineCov">         38 :     retry = context-&gt;retry_times;</span></a>
-<a name="231"><span class="lineNum">     231 </span>            :     do {</a>
-<a name="232"><span class="lineNum">     232 </span><span class="lineCov">         38 :         status = libspdm_try_get_digest(context, session_id, slot_mask, total_digest_buffer);</span></a>
-<a name="233"><span class="lineNum">     233 </span><span class="lineCov">         38 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
-<a name="234"><span class="lineNum">     234 </span><span class="lineCov">         37 :             return status;</span></a>
-<a name="235"><span class="lineNum">     235 </span>            :         }</a>
-<a name="236"><span class="lineNum">     236 </span><span class="lineCov">          1 :     } while (retry-- != 0);</span></a>
-<a name="237"><span class="lineNum">     237 </span>            : </a>
-<a name="238"><span class="lineNum">     238 </span><span class="lineCov">          1 :     return status;</span></a>
-<a name="239"><span class="lineNum">     239 </span>            : }</a>
-<a name="240"><span class="lineNum">     240 </span>            : </a>
-<a name="241"><span class="lineNum">     241 </span>            : #endif /*LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineCov">         33 : receive_done:</span></a>
+<a name="222"><span class="lineNum">     222 </span><span class="lineCov">         33 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="223"><span class="lineNum">     223 </span><span class="lineCov">         33 :     return status;</span></a>
+<a name="224"><span class="lineNum">     224 </span>            : }</a>
+<a name="225"><span class="lineNum">     225 </span>            : </a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineCov">         38 : libspdm_return_t libspdm_get_digest(void *spdm_context, const uint32_t *session_id,</span></a>
+<a name="227"><span class="lineNum">     227 </span>            :                                     uint8_t *slot_mask, void *total_digest_buffer)</a>
+<a name="228"><span class="lineNum">     228 </span>            : {</a>
+<a name="229"><span class="lineNum">     229 </span>            :     libspdm_context_t *context;</a>
+<a name="230"><span class="lineNum">     230 </span>            :     size_t retry;</a>
+<a name="231"><span class="lineNum">     231 </span>            :     libspdm_return_t status;</a>
+<a name="232"><span class="lineNum">     232 </span>            : </a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineCov">         38 :     context = spdm_context;</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineCov">         38 :     context-&gt;crypto_request = true;</span></a>
+<a name="235"><span class="lineNum">     235 </span><span class="lineCov">         38 :     retry = context-&gt;retry_times;</span></a>
+<a name="236"><span class="lineNum">     236 </span>            :     do {</a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineCov">         38 :         status = libspdm_try_get_digest(context, session_id, slot_mask, total_digest_buffer);</span></a>
+<a name="238"><span class="lineNum">     238 </span><span class="lineCov">         38 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineCov">         37 :             return status;</span></a>
+<a name="240"><span class="lineNum">     240 </span>            :         }</a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineCov">          1 :     } while (retry-- != 0);</span></a>
+<a name="242"><span class="lineNum">     242 </span>            : </a>
+<a name="243"><span class="lineNum">     243 </span><span class="lineCov">          1 :     return status;</span></a>
+<a name="244"><span class="lineNum">     244 </span>            : }</a>
+<a name="245"><span class="lineNum">     245 </span>            : </a>
+<a name="246"><span class="lineNum">     246 </span>            : #endif /*LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
 </pre>
       </td>
     </tr>

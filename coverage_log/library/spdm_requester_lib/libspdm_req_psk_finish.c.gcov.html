@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">94</td>
-            <td class="headerCovTableEntry">122</td>
-            <td class="headerCovTableEntryMed">77.0 %</td>
+            <td class="headerCovTableEntry">95</td>
+            <td class="headerCovTableEntry">123</td>
+            <td class="headerCovTableEntryMed">77.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-01-27 08:15:21</td>
+            <td class="headerValue">2023-01-28 08:14:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -327,38 +327,43 @@
 <a name="265"><span class="lineNum">     265 </span>            :         session_info-&gt;secured_message_context,</a>
 <a name="266"><span class="lineNum">     266 </span>            :         LIBSPDM_SESSION_STATE_ESTABLISHED);</a>
 <a name="267"><span class="lineNum">     267 </span>            : </a>
-<a name="268"><span class="lineNum">     268 </span><span class="lineCov">          5 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="269"><span class="lineNum">     269 </span><span class="lineCov">          5 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="270"><span class="lineNum">     270 </span>            : </a>
-<a name="271"><span class="lineNum">     271 </span><span class="lineCov">         25 : receive_done:</span></a>
-<a name="272"><span class="lineNum">     272 </span><span class="lineCov">         25 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="273"><span class="lineNum">     273 </span><span class="lineCov">         29 : error:</span></a>
-<a name="274"><span class="lineNum">     274 </span><span class="lineCov">         29 :     if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="275"><span class="lineNum">     275 </span><span class="lineCov">         27 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
-<a name="276"><span class="lineNum">     276 </span>            :     }</a>
-<a name="277"><span class="lineNum">     277 </span><span class="lineCov">         29 :     return status;</span></a>
-<a name="278"><span class="lineNum">     278 </span>            : }</a>
-<a name="279"><span class="lineNum">     279 </span>            : </a>
-<a name="280"><span class="lineNum">     280 </span><span class="lineCov">         33 : libspdm_return_t libspdm_send_receive_psk_finish(libspdm_context_t *spdm_context,</span></a>
-<a name="281"><span class="lineNum">     281 </span>            :                                                  uint32_t session_id)</a>
-<a name="282"><span class="lineNum">     282 </span>            : {</a>
-<a name="283"><span class="lineNum">     283 </span>            :     size_t retry;</a>
-<a name="284"><span class="lineNum">     284 </span>            :     libspdm_return_t status;</a>
-<a name="285"><span class="lineNum">     285 </span>            : </a>
-<a name="286"><span class="lineNum">     286 </span><span class="lineCov">         33 :     spdm_context-&gt;crypto_request = true;</span></a>
-<a name="287"><span class="lineNum">     287 </span><span class="lineCov">         33 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="288"><span class="lineNum">     288 </span>            :     do {</a>
-<a name="289"><span class="lineNum">     289 </span><span class="lineCov">         34 :         status = libspdm_try_send_receive_psk_finish(spdm_context,</span></a>
-<a name="290"><span class="lineNum">     290 </span>            :                                                      session_id);</a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineCov">         34 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="292"><span class="lineNum">     292 </span><span class="lineCov">         32 :             return status;</span></a>
-<a name="293"><span class="lineNum">     293 </span>            :         }</a>
-<a name="294"><span class="lineNum">     294 </span><span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
-<a name="295"><span class="lineNum">     295 </span>            : </a>
-<a name="296"><span class="lineNum">     296 </span><span class="lineCov">          1 :     return status;</span></a>
-<a name="297"><span class="lineNum">     297 </span>            : }</a>
-<a name="298"><span class="lineNum">     298 </span>            : </a>
-<a name="299"><span class="lineNum">     299 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
+<a name="268"><span class="lineNum">     268 </span>            :     /* -=[Log Message Phase]=- */</a>
+<a name="269"><span class="lineNum">     269 </span>            :     #if LIBSPDM_ENABLE_MSG_LOG</a>
+<a name="270"><span class="lineNum">     270 </span><span class="lineCov">          5 :     libspdm_append_msg_log(spdm_context, spdm_response, spdm_response_size);</span></a>
+<a name="271"><span class="lineNum">     271 </span>            :     #endif /* LIBSPDM_ENABLE_MSG_LOG */</a>
+<a name="272"><span class="lineNum">     272 </span>            : </a>
+<a name="273"><span class="lineNum">     273 </span><span class="lineCov">          5 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="274"><span class="lineNum">     274 </span><span class="lineCov">          5 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="275"><span class="lineNum">     275 </span>            : </a>
+<a name="276"><span class="lineNum">     276 </span><span class="lineCov">         25 : receive_done:</span></a>
+<a name="277"><span class="lineNum">     277 </span><span class="lineCov">         25 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="278"><span class="lineNum">     278 </span><span class="lineCov">         29 : error:</span></a>
+<a name="279"><span class="lineNum">     279 </span><span class="lineCov">         29 :     if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="280"><span class="lineNum">     280 </span><span class="lineCov">         27 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
+<a name="281"><span class="lineNum">     281 </span>            :     }</a>
+<a name="282"><span class="lineNum">     282 </span><span class="lineCov">         29 :     return status;</span></a>
+<a name="283"><span class="lineNum">     283 </span>            : }</a>
+<a name="284"><span class="lineNum">     284 </span>            : </a>
+<a name="285"><span class="lineNum">     285 </span><span class="lineCov">         33 : libspdm_return_t libspdm_send_receive_psk_finish(libspdm_context_t *spdm_context,</span></a>
+<a name="286"><span class="lineNum">     286 </span>            :                                                  uint32_t session_id)</a>
+<a name="287"><span class="lineNum">     287 </span>            : {</a>
+<a name="288"><span class="lineNum">     288 </span>            :     size_t retry;</a>
+<a name="289"><span class="lineNum">     289 </span>            :     libspdm_return_t status;</a>
+<a name="290"><span class="lineNum">     290 </span>            : </a>
+<a name="291"><span class="lineNum">     291 </span><span class="lineCov">         33 :     spdm_context-&gt;crypto_request = true;</span></a>
+<a name="292"><span class="lineNum">     292 </span><span class="lineCov">         33 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="293"><span class="lineNum">     293 </span>            :     do {</a>
+<a name="294"><span class="lineNum">     294 </span><span class="lineCov">         34 :         status = libspdm_try_send_receive_psk_finish(spdm_context,</span></a>
+<a name="295"><span class="lineNum">     295 </span>            :                                                      session_id);</a>
+<a name="296"><span class="lineNum">     296 </span><span class="lineCov">         34 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineCov">         32 :             return status;</span></a>
+<a name="298"><span class="lineNum">     298 </span>            :         }</a>
+<a name="299"><span class="lineNum">     299 </span><span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
+<a name="300"><span class="lineNum">     300 </span>            : </a>
+<a name="301"><span class="lineNum">     301 </span><span class="lineCov">          1 :     return status;</span></a>
+<a name="302"><span class="lineNum">     302 </span>            : }</a>
+<a name="303"><span class="lineNum">     303 </span>            : </a>
+<a name="304"><span class="lineNum">     304 </span>            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
 </pre>
       </td>
     </tr>
