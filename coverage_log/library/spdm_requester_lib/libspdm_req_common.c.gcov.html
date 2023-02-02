@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-02 20:12:18</td>
+            <td class="headerValue">2023-02-02 20:25:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntryLo">61.5 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -84,8 +84,8 @@
 <a name="13"><span class="lineNum">      13 </span>                :            :     size_t index;</a>
 <a name="14"><span class="lineNum">      14 </span>                :            : </a>
 <a name="15"><span class="lineNum">      15 </span>                :<span class="lineCov">        130 :     session_info = spdm_context-&gt;session_info;</span></a>
-<a name="16"><span class="lineNum">      16 </span>                :<span class="lineCov">        288 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++) {</span></a>
-<a name="17"><span class="lineNum">      17 </span>                :<span class="lineCov">        288 :         if ((session_info[index].session_id &amp; 0xFFFF) == (INVALID_SESSION_ID &amp; 0xFFFF)) {</span></a>
+<a name="16"><span class="lineNum">      16 </span>        [<span class="branchCov" title="Branch 0 was taken 288 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        288 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++) {</span></a>
+<a name="17"><span class="lineNum">      17 </span>        [<span class="branchCov" title="Branch 0 was taken 130 times"> + </span><span class="branchCov" title="Branch 1 was taken 158 times"> + </span>]:<span class="lineCov">        288 :         if ((session_info[index].session_id &amp; 0xFFFF) == (INVALID_SESSION_ID &amp; 0xFFFF)) {</span></a>
 <a name="18"><span class="lineNum">      18 </span>                :<span class="lineCov">        130 :             req_session_id = (uint16_t)(0xFFFF - index);</span></a>
 <a name="19"><span class="lineNum">      19 </span>                :<span class="lineCov">        130 :             return req_session_id;</span></a>
 <a name="20"><span class="lineNum">      20 </span>                :            :         }</a>
@@ -111,17 +111,17 @@
 <a name="40"><span class="lineNum">      40 </span>                :            :     spdm_version_number_t *versions_list;</a>
 <a name="41"><span class="lineNum">      41 </span>                :            :     void *end;</a>
 <a name="42"><span class="lineNum">      42 </span>                :            : </a>
-<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">        160 :     if (spdm_context-&gt;local_context.secured_message_version.spdm_version_count == 0) {</span></a>
+<a name="43"><span class="lineNum">      43 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 160 times"> + </span>]:<span class="lineCov">        160 :     if (spdm_context-&gt;local_context.secured_message_version.spdm_version_count == 0) {</span></a>
 <a name="44"><span class="lineNum">      44 </span>                :<span class="lineNoCov">          0 :         *data_out_size = 0;</span></a>
 <a name="45"><span class="lineNum">      45 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="46"><span class="lineNum">      46 </span>                :            :     }</a>
 <a name="47"><span class="lineNum">      47 </span>                :            : </a>
 <a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">        160 :     final_data_size = libspdm_get_opaque_data_supported_version_data_size(spdm_context);</span></a>
-<a name="49"><span class="lineNum">      49 </span>                :<span class="lineCov">        160 :     if (*data_out_size &lt; final_data_size) {</span></a>
+<a name="49"><span class="lineNum">      49 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 160 times"> + </span>]:<span class="lineCov">        160 :     if (*data_out_size &lt; final_data_size) {</span></a>
 <a name="50"><span class="lineNum">      50 </span>                :<span class="lineNoCov">          0 :         *data_out_size = final_data_size;</span></a>
 <a name="51"><span class="lineNum">      51 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="52"><span class="lineNum">      52 </span>                :            :     }</a>
-<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">        160 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="53"><span class="lineNum">      53 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 155 times"> + </span>]:<span class="lineCov">        160 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
 <a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">          5 :         spdm_general_opaque_data_table_header = data_out;</span></a>
 <a name="55"><span class="lineNum">      55 </span>                :<span class="lineCov">          5 :         spdm_general_opaque_data_table_header-&gt;total_elements = 1;</span></a>
 <a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">          5 :         libspdm_write_uint24(spdm_general_opaque_data_table_header-&gt;reserved, 0);</span></a>
@@ -192,7 +192,7 @@
 <a name="121"><span class="lineNum">     121 </span>                :<span class="lineCov">         37 :     result = false;</span></a>
 <a name="122"><span class="lineNum">     122 </span>                :<span class="lineCov">         37 :     get_element_ptr = NULL;</span></a>
 <a name="123"><span class="lineNum">     123 </span>                :            : </a>
-<a name="124"><span class="lineNum">     124 </span>                :<span class="lineCov">         37 :     if (spdm_context-&gt;local_context.secured_message_version.spdm_version_count == 0) {</span></a>
+<a name="124"><span class="lineNum">     124 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 37 times"> + </span>]:<span class="lineCov">         37 :     if (spdm_context-&gt;local_context.secured_message_version.spdm_version_count == 0) {</span></a>
 <a name="125"><span class="lineNum">     125 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="126"><span class="lineNum">     126 </span>                :            :     }</a>
 <a name="127"><span class="lineNum">     127 </span>                :            : </a>
@@ -201,7 +201,7 @@
 <a name="130"><span class="lineNum">     130 </span>                :            :         data_in, SPDM_REGISTRY_ID_DMTF,</a>
 <a name="131"><span class="lineNum">     131 </span>                :            :         SECURED_MESSAGE_OPAQUE_ELEMENT_SMDATA_ID_VERSION_SELECTION,</a>
 <a name="132"><span class="lineNum">     132 </span>                :            :         &amp;get_element_ptr, &amp;get_element_len);</a>
-<a name="133"><span class="lineNum">     133 </span>                :<span class="lineCov">         37 :     if ((!result) || (get_element_ptr == NULL)) {</span></a>
+<a name="133"><span class="lineNum">     133 </span>  [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 34 times"> + </span>]:<span class="lineCov">         37 :     if ((!result) || (get_element_ptr == NULL)) {</span></a>
 <a name="134"><span class="lineNum">     134 </span>                :<span class="lineCov">          3 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,&quot;get element error!\n&quot;));</span></a>
 <a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">          3 :         return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :            :     }</a>
@@ -210,8 +210,8 @@
 <a name="139"><span class="lineNum">     139 </span>                :            :                                   get_element_ptr;</a>
 <a name="140"><span class="lineNum">     140 </span>                :            : </a>
 <a name="141"><span class="lineNum">     141 </span>                :            :     /*check for selection vesion data*/</a>
-<a name="142"><span class="lineNum">     142 </span>                :<span class="lineCov">         34 :     if ((opaque_element_table_header-&gt;vendor_len != 0) ||</span></a>
-<a name="143"><span class="lineNum">     143 </span>                :<span class="lineCov">         34 :         (opaque_element_table_header-&gt;opaque_element_data_len !=</span></a>
+<a name="142"><span class="lineNum">     142 </span>        [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         34 :     if ((opaque_element_table_header-&gt;vendor_len != 0) ||</span></a>
+<a name="143"><span class="lineNum">     143 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">         34 :         (opaque_element_table_header-&gt;opaque_element_data_len !=</span></a>
 <a name="144"><span class="lineNum">     144 </span>                :            :          sizeof(secured_message_opaque_element_version_selection_t))) {</a>
 <a name="145"><span class="lineNum">     145 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="146"><span class="lineNum">     146 </span>                :            :     }</a>
@@ -219,15 +219,15 @@
 <a name="148"><span class="lineNum">     148 </span>                :            : </a>
 <a name="149"><span class="lineNum">     149 </span>                :<span class="lineCov">         34 :     if ((const uint8_t *)opaque_element_version_section +</span></a>
 <a name="150"><span class="lineNum">     150 </span>                :            :         sizeof(secured_message_opaque_element_version_selection_t) &gt;</a>
-<a name="151"><span class="lineNum">     151 </span>                :<span class="lineCov">         34 :         (const uint8_t *)opaque_element_table_header + get_element_len) {</span></a>
+<a name="151"><span class="lineNum">     151 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">         34 :         (const uint8_t *)opaque_element_table_header + get_element_len) {</span></a>
 <a name="152"><span class="lineNum">     152 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="153"><span class="lineNum">     153 </span>                :            :     }</a>
 <a name="154"><span class="lineNum">     154 </span>                :            : </a>
 <a name="155"><span class="lineNum">     155 </span>                :<span class="lineCov">         34 :     for (secured_message_version_index = 0;</span></a>
 <a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">         34 :          secured_message_version_index &lt;</span></a>
-<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">         34 :          spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
+<a name="157"><span class="lineNum">     157 </span>        [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         34 :          spdm_context-&gt;local_context.secured_message_version.spdm_version_count;</span></a>
 <a name="158"><span class="lineNum">     158 </span>                :<span class="lineNoCov">          0 :          secured_message_version_index++) {</span></a>
-<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">         68 :         if (libspdm_get_version_from_version_number(opaque_element_version_section-&gt;</span></a>
+<a name="159"><span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         68 :         if (libspdm_get_version_from_version_number(opaque_element_version_section-&gt;</span></a>
 <a name="160"><span class="lineNum">     160 </span>                :            :                                                     selected_version)</a>
 <a name="161"><span class="lineNum">     161 </span>                :            :             ==</a>
 <a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">         34 :             libspdm_get_version_from_version_number(</span></a>

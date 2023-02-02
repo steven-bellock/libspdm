@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-02 20:12:18</td>
+            <td class="headerValue">2023-02-02 20:25:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntryMed">77.8 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -469,7 +469,7 @@
 <a name="398"><span class="lineNum">     398 </span>                :            :     /* This tests considers only offset = 0, other tests vary offset value*/</a>
 <a name="399"><span class="lineNum">     399 </span>                :<span class="lineCov">          1 :     m_libspdm_get_certificate_request3.offset = 0;</span></a>
 <a name="400"><span class="lineNum">     400 </span>                :            : </a>
-<a name="401"><span class="lineNum">     401 </span>                :<span class="lineCov">          9 :     for (int i = 0; i &lt; sizeof(test_lenghts) / sizeof(test_lenghts[0]); i++) {</span></a>
+<a name="401"><span class="lineNum">     401 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          9 :     for (int i = 0; i &lt; sizeof(test_lenghts) / sizeof(test_lenghts[0]); i++) {</span></a>
 <a name="402"><span class="lineNum">     402 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;i:%d test_lenghts[i]:%u\n&quot;, i, test_lenghts[i]);</a>
 <a name="403"><span class="lineNum">     403 </span>                :<span class="lineCov">          8 :         m_libspdm_get_certificate_request3.length = test_lenghts[i];</span></a>
 <a name="404"><span class="lineNum">     404 </span>                :            :         /* Expected received length is limited by LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN (implementation specific?)*/</a>
@@ -554,7 +554,7 @@
 <a name="483"><span class="lineNum">     483 </span>                :<span class="lineCov">          1 :     test_offsets[1] = (uint16_t)(test_offsets[1] + data_size);</span></a>
 <a name="484"><span class="lineNum">     484 </span>                :<span class="lineCov">          1 :     test_offsets[2] = (uint16_t)(test_offsets[2] + data_size);</span></a>
 <a name="485"><span class="lineNum">     485 </span>                :            : </a>
-<a name="486"><span class="lineNum">     486 </span>                :<span class="lineCov">         12 :     for (int i = 0; i &lt; sizeof(test_offsets) / sizeof(test_offsets[0]); i++) {</span></a>
+<a name="486"><span class="lineNum">     486 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         12 :     for (int i = 0; i &lt; sizeof(test_offsets) / sizeof(test_offsets[0]); i++) {</span></a>
 <a name="487"><span class="lineNum">     487 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;i:%d test_offsets[i]:%u\n&quot;, i, test_offsets[i]);</a>
 <a name="488"><span class="lineNum">     488 </span>                :<span class="lineCov">         11 :         m_libspdm_get_certificate_request3.offset = test_offsets[i];</span></a>
 <a name="489"><span class="lineNum">     489 </span>                :            : </a>
@@ -567,7 +567,7 @@
 <a name="496"><span class="lineNum">     496 </span>                :            :             response);</a>
 <a name="497"><span class="lineNum">     497 </span>                :<span class="lineCov">         11 :         assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
 <a name="498"><span class="lineNum">     498 </span>                :            : </a>
-<a name="499"><span class="lineNum">     499 </span>                :<span class="lineCov">         11 :         if (m_libspdm_get_certificate_request3.offset &gt;= data_size) {</span></a>
+<a name="499"><span class="lineNum">     499 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         11 :         if (m_libspdm_get_certificate_request3.offset &gt;= data_size) {</span></a>
 <a name="500"><span class="lineNum">     500 </span>                :            :             /* A too long of an offset should return an error*/</a>
 <a name="501"><span class="lineNum">     501 </span>                :<span class="lineCov">          6 :             spdm_responseError = (void *)response;</span></a>
 <a name="502"><span class="lineNum">     502 </span>                :<span class="lineCov">          6 :             assert_int_equal(</span></a>
@@ -657,11 +657,11 @@
 <a name="586"><span class="lineNum">     586 </span>                :<span class="lineCov">          1 :     test_sizes[1] += (uint16_t)(test_sizes[1] + data_size);</span></a>
 <a name="587"><span class="lineNum">     587 </span>                :<span class="lineCov">          1 :     test_sizes[2] += (uint16_t)(test_sizes[2] + data_size);</span></a>
 <a name="588"><span class="lineNum">     588 </span>                :            : </a>
-<a name="589"><span class="lineNum">     589 </span>                :<span class="lineCov">         16 :     for (int i = 0; i &lt; sizeof(test_sizes) / sizeof(test_sizes[0]); i++) {</span></a>
+<a name="589"><span class="lineNum">     589 </span>        [<span class="branchCov" title="Branch 0 was taken 15 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         16 :     for (int i = 0; i &lt; sizeof(test_sizes) / sizeof(test_sizes[0]); i++) {</span></a>
 <a name="590"><span class="lineNum">     590 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;i:%d test_sizes[i]=length:%u\n&quot;, i,</a>
 <a name="591"><span class="lineNum">     591 </span>                :            :                                  test_sizes[i]);</a>
 <a name="592"><span class="lineNum">     592 </span>                :<span class="lineCov">         15 :         m_libspdm_get_certificate_request3.length = test_sizes[i];</span></a>
-<a name="593"><span class="lineNum">     593 </span>                :<span class="lineCov">        240 :         for (int j = 0; j &lt; sizeof(test_sizes) / sizeof(test_sizes[0]);</span></a>
+<a name="593"><span class="lineNum">     593 </span>        [<span class="branchCov" title="Branch 0 was taken 225 times"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">        240 :         for (int j = 0; j &lt; sizeof(test_sizes) / sizeof(test_sizes[0]);</span></a>
 <a name="594"><span class="lineNum">     594 </span>                :<span class="lineCov">        225 :              j++) {</span></a>
 <a name="595"><span class="lineNum">     595 </span>                :            :             TEST_LIBSPDM_DEBUG_PRINT(&quot;\tj:%d test_sizes[j]=offset:%u\n&quot;, j,</a>
 <a name="596"><span class="lineNum">     596 </span>                :            :                                      test_sizes[j]);</a>
@@ -677,7 +677,7 @@
 <a name="606"><span class="lineNum">     606 </span>                :            :                 &amp;response_size, response);</a>
 <a name="607"><span class="lineNum">     607 </span>                :<span class="lineCov">        225 :             assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
 <a name="608"><span class="lineNum">     608 </span>                :            : </a>
-<a name="609"><span class="lineNum">     609 </span>                :<span class="lineCov">        225 :             if (m_libspdm_get_certificate_request3.offset &gt;=</span></a>
+<a name="609"><span class="lineNum">     609 </span>        [<span class="branchCov" title="Branch 0 was taken 120 times"> + </span><span class="branchCov" title="Branch 1 was taken 105 times"> + </span>]:<span class="lineCov">        225 :             if (m_libspdm_get_certificate_request3.offset &gt;=</span></a>
 <a name="610"><span class="lineNum">     610 </span>                :            :                 data_size) {</a>
 <a name="611"><span class="lineNum">     611 </span>                :            :                 /* A too long of an offset should return an error*/</a>
 <a name="612"><span class="lineNum">     612 </span>                :<span class="lineCov">        120 :                 spdm_responseError = (void *)response;</span></a>
@@ -691,7 +691,7 @@
 <a name="620"><span class="lineNum">     620 </span>                :            :                 /* Otherwise it should work properly*/</a>
 <a name="621"><span class="lineNum">     621 </span>                :            : </a>
 <a name="622"><span class="lineNum">     622 </span>                :            :                 /* Expected received length is limited by LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN and by the remaining length*/</a>
-<a name="623"><span class="lineNum">     623 </span>                :<span class="lineCov">        105 :                 expected_chunk_size = (uint16_t)(LIBSPDM_MIN(</span></a>
+<a name="623"><span class="lineNum">     623 </span>        [<span class="branchCov" title="Branch 0 was taken 38 times"> + </span><span class="branchCov" title="Branch 1 was taken 67 times"> + </span>]:<span class="lineCov">        105 :                 expected_chunk_size = (uint16_t)(LIBSPDM_MIN(</span></a>
 <a name="624"><span class="lineNum">     624 </span>                :            :                                                      m_libspdm_get_certificate_request3.length,</a>
 <a name="625"><span class="lineNum">     625 </span>                :            :                                                      data_size -</a>
 <a name="626"><span class="lineNum">     626 </span>                :            :                                                      m_libspdm_get_certificate_request3</a>
@@ -762,7 +762,7 @@
 <a name="691"><span class="lineNum">     691 </span>                :            : </a>
 <a name="692"><span class="lineNum">     692 </span>                :<span class="lineCov">          1 :     m_libspdm_get_certificate_request3.length = LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN;</span></a>
 <a name="693"><span class="lineNum">     693 </span>                :            : </a>
-<a name="694"><span class="lineNum">     694 </span>                :<span class="lineCov">          3 :     for (int i = 0; i &lt; sizeof(test_cases) / sizeof(test_cases[0]); i++) {</span></a>
+<a name="694"><span class="lineNum">     694 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          3 :     for (int i = 0; i &lt; sizeof(test_cases) / sizeof(test_cases[0]); i++) {</span></a>
 <a name="695"><span class="lineNum">     695 </span>                :<span class="lineCov">          2 :         libspdm_read_responder_public_certificate_chain_by_size(</span></a>
 <a name="696"><span class="lineNum">     696 </span>                :            :             /*MAXUINT16_CERT signature_algo is SHA256RSA */</a>
 <a name="697"><span class="lineNum">     697 </span>                :            :             m_libspdm_use_hash_algo, SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048,</a>
@@ -774,7 +774,7 @@
 <a name="703"><span class="lineNum">     703 </span>                :            :             data_size;</a>
 <a name="704"><span class="lineNum">     704 </span>                :            : </a>
 <a name="705"><span class="lineNum">     705 </span>                :<span class="lineCov">          2 :         m_libspdm_get_certificate_request3.offset =</span></a>
-<a name="706"><span class="lineNum">     706 </span>                :<span class="lineCov">          2 :             (uint16_t)(LIBSPDM_MIN(data_size - 1, 0xFFFF));</span></a>
+<a name="706"><span class="lineNum">     706 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          2 :             (uint16_t)(LIBSPDM_MIN(data_size - 1, 0xFFFF));</span></a>
 <a name="707"><span class="lineNum">     707 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;data_size: %u\n&quot;, data_size);</a>
 <a name="708"><span class="lineNum">     708 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;m_libspdm_get_certificate_request3.offset: %u\n&quot;,</a>
 <a name="709"><span class="lineNum">     709 </span>                :            :                                  m_libspdm_get_certificate_request3.offset);</a>
@@ -795,7 +795,7 @@
 <a name="724"><span class="lineNum">     724 </span>                :<span class="lineCov">          2 :         assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
 <a name="725"><span class="lineNum">     725 </span>                :            : </a>
 <a name="726"><span class="lineNum">     726 </span>                :            :         /* Expected received length is limited by LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN and by the remaining length*/</a>
-<a name="727"><span class="lineNum">     727 </span>                :<span class="lineCov">          2 :         expected_chunk_size = (uint16_t)(LIBSPDM_MIN(</span></a>
+<a name="727"><span class="lineNum">     727 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :         expected_chunk_size = (uint16_t)(LIBSPDM_MIN(</span></a>
 <a name="728"><span class="lineNum">     728 </span>                :            :                                              m_libspdm_get_certificate_request3.length,</a>
 <a name="729"><span class="lineNum">     729 </span>                :            :                                              data_size -</a>
 <a name="730"><span class="lineNum">     730 </span>                :            :                                              m_libspdm_get_certificate_request3.offset));</a>
@@ -809,7 +809,7 @@
 <a name="738"><span class="lineNum">     738 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;expected_chunk_size %u\n&quot;, expected_chunk_size);</a>
 <a name="739"><span class="lineNum">     739 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;expected_remainder %u\n&quot;, expected_remainder);</a>
 <a name="740"><span class="lineNum">     740 </span>                :            : </a>
-<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">          2 :         if (expected_remainder &gt; 0xFFFF ||</span></a>
+<a name="741"><span class="lineNum">     741 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 2 times"> + </span>]:<span class="lineCov">          2 :         if (expected_remainder &gt; 0xFFFF ||</span></a>
 <a name="742"><span class="lineNum">     742 </span>                :            :             expected_chunk_size &gt; 0xFFFF) {</a>
 <a name="743"><span class="lineNum">     743 </span>                :<span class="lineNoCov">          0 :             spdm_responseError = (void *)response;</span></a>
 <a name="744"><span class="lineNum">     744 </span>                :<span class="lineNoCov">          0 :             assert_int_equal(</span></a>
@@ -879,7 +879,7 @@
 <a name="808"><span class="lineNum">     808 </span>                :<span class="lineCov">          1 :     m_libspdm_get_certificate_request3.length = LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN;</span></a>
 <a name="809"><span class="lineNum">     809 </span>                :<span class="lineCov">          1 :     m_libspdm_get_certificate_request3.offset = 0;</span></a>
 <a name="810"><span class="lineNum">     810 </span>                :            : </a>
-<a name="811"><span class="lineNum">     811 </span>                :<span class="lineCov">          2 :     for (int i = 0; i &lt; sizeof(test_cases) / sizeof(test_cases[0]); i++) {</span></a>
+<a name="811"><span class="lineNum">     811 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     for (int i = 0; i &lt; sizeof(test_cases) / sizeof(test_cases[0]); i++) {</span></a>
 <a name="812"><span class="lineNum">     812 </span>                :<span class="lineCov">          1 :         libspdm_read_responder_public_certificate_chain_by_size(</span></a>
 <a name="813"><span class="lineNum">     813 </span>                :<span class="lineCov">          1 :             m_libspdm_use_hash_algo, m_libspdm_use_asym_algo, test_cases[i], &amp;data,</span></a>
 <a name="814"><span class="lineNum">     814 </span>                :            :             &amp;data_size, NULL, NULL);</a>
@@ -921,7 +921,7 @@
 <a name="850"><span class="lineNum">     850 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;expected_chunk_size %u\n&quot;, expected_chunk_size);</a>
 <a name="851"><span class="lineNum">     851 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;expected_remainder %u\n&quot;, expected_remainder);</a>
 <a name="852"><span class="lineNum">     852 </span>                :            : </a>
-<a name="853"><span class="lineNum">     853 </span>                :<span class="lineCov">          1 :         if (expected_remainder &gt; 0xFFFF ||</span></a>
+<a name="853"><span class="lineNum">     853 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">          1 :         if (expected_remainder &gt; 0xFFFF ||</span></a>
 <a name="854"><span class="lineNum">     854 </span>                :            :             expected_chunk_size &gt; 0xFFFF) {</a>
 <a name="855"><span class="lineNum">     855 </span>                :<span class="lineNoCov">          0 :             spdm_responseError = (void *)response;</span></a>
 <a name="856"><span class="lineNum">     856 </span>                :<span class="lineNoCov">          0 :             assert_int_equal(</span></a>
@@ -996,7 +996,7 @@
 <a name="925"><span class="lineNum">     925 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
 <a name="926"><span class="lineNum">     926 </span>                :            : </a>
 <a name="927"><span class="lineNum">     927 </span>                :<span class="lineCov">          1 :     spdm_response = NULL;</span></a>
-<a name="928"><span class="lineNum">     928 </span>                :<span class="lineCov">       1374 :     for (size_t offset = 0; offset &lt; data_size; offset++) {</span></a>
+<a name="928"><span class="lineNum">     928 </span>        [<span class="branchCov" title="Branch 0 was taken 1373 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">       1374 :     for (size_t offset = 0; offset &lt; data_size; offset++) {</span></a>
 <a name="929"><span class="lineNum">     929 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;offset:%u \n&quot;, offset);</a>
 <a name="930"><span class="lineNum">     930 </span>                :<span class="lineCov">       1373 :         m_libspdm_get_certificate_request3.offset = (uint16_t)offset;</span></a>
 <a name="931"><span class="lineNum">     931 </span>                :            : </a>
@@ -1009,7 +1009,7 @@
 <a name="938"><span class="lineNum">     938 </span>                :<span class="lineCov">       1373 :         spdm_response = (void *)response;</span></a>
 <a name="939"><span class="lineNum">     939 </span>                :            :         /* It may fail because the spdm does not support too many messages.</a>
 <a name="940"><span class="lineNum">     940 </span>                :            :          * assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_CERTIFICATE);*/</a>
-<a name="941"><span class="lineNum">     941 </span>                :<span class="lineCov">       1373 :         if (spdm_response-&gt;header.request_response_code ==</span></a>
+<a name="941"><span class="lineNum">     941 </span>        [<span class="branchCov" title="Branch 0 was taken 1373 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1373 :         if (spdm_response-&gt;header.request_response_code ==</span></a>
 <a name="942"><span class="lineNum">     942 </span>                :            :             SPDM_CERTIFICATE) {</a>
 <a name="943"><span class="lineNum">     943 </span>                :<span class="lineCov">       1373 :             assert_int_equal(</span></a>
 <a name="944"><span class="lineNum">     944 </span>                :            :                 spdm_response-&gt;header.request_response_code,</a>
@@ -1034,7 +1034,7 @@
 <a name="963"><span class="lineNum">     963 </span>                :<span class="lineNoCov">          0 :             break;</span></a>
 <a name="964"><span class="lineNum">     964 </span>                :            :         }</a>
 <a name="965"><span class="lineNum">     965 </span>                :            :     }</a>
-<a name="966"><span class="lineNum">     966 </span>                :<span class="lineCov">          1 :     if (spdm_response != NULL) {</span></a>
+<a name="966"><span class="lineNum">     966 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     if (spdm_response != NULL) {</span></a>
 <a name="967"><span class="lineNum">     967 </span>                :<span class="lineCov">          1 :         if (spdm_response-&gt;header.request_response_code ==</span></a>
 <a name="968"><span class="lineNum">     968 </span>                :            :             SPDM_CERTIFICATE) {</a>
 <a name="969"><span class="lineNum">     969 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>

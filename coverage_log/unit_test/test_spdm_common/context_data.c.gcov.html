@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-02 20:12:18</td>
+            <td class="headerValue">2023-02-02 20:25:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">25</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">63</td>
+            <td class="headerCovTableEntry">68</td>
+            <td class="headerCovTableEntryHi">92.6 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -95,9 +95,9 @@
 <a name="24"><span class="lineNum">      24 </span>                :            :     size_t size;</a>
 <a name="25"><span class="lineNum">      25 </span>                :            :     uint8_t element_index;</a>
 <a name="26"><span class="lineNum">      26 </span>                :            : </a>
-<a name="27"><span class="lineNum">      27 </span>                :<span class="lineCov">         32 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="27"><span class="lineNum">      27 </span>        [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         32 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
 <a name="28"><span class="lineNum">      28 </span>                :<span class="lineCov">         16 :         size = sizeof(spdm_general_opaque_data_table_header_t);</span></a>
-<a name="29"><span class="lineNum">      29 </span>                :<span class="lineCov">         52 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
+<a name="29"><span class="lineNum">      29 </span>        [<span class="branchCov" title="Branch 0 was taken 36 times"> + </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         52 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
 <a name="30"><span class="lineNum">      30 </span>                :<span class="lineCov">         36 :             size += sizeof(secured_message_opaque_element_table_header_t) +</span></a>
 <a name="31"><span class="lineNum">      31 </span>                :            :                     sizeof(secured_message_opaque_element_supported_version_t) +</a>
 <a name="32"><span class="lineNum">      32 </span>                :<span class="lineCov">         36 :                     sizeof(spdm_version_number_t) * version_count;</span></a>
@@ -106,7 +106,7 @@
 <a name="35"><span class="lineNum">      35 </span>                :            :         }</a>
 <a name="36"><span class="lineNum">      36 </span>                :            :     } else {</a>
 <a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">         16 :         size = sizeof(secured_message_general_opaque_data_table_header_t);</span></a>
-<a name="38"><span class="lineNum">      38 </span>                :<span class="lineCov">         52 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
+<a name="38"><span class="lineNum">      38 </span>        [<span class="branchCov" title="Branch 0 was taken 36 times"> + </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         52 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
 <a name="39"><span class="lineNum">      39 </span>                :<span class="lineCov">         36 :             size += sizeof(secured_message_opaque_element_table_header_t) +</span></a>
 <a name="40"><span class="lineNum">      40 </span>                :            :                     sizeof(secured_message_opaque_element_supported_version_t) +</a>
 <a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">         36 :                     sizeof(spdm_version_number_t) * version_count;</span></a>
@@ -151,7 +151,7 @@
 <a name="80"><span class="lineNum">      80 </span>                :            :     uint8_t element_index;</a>
 <a name="81"><span class="lineNum">      81 </span>                :            : </a>
 <a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">          4 :     if (spdm_context-&gt;local_context.secured_message_version</span></a>
-<a name="83"><span class="lineNum">      83 </span>                :<span class="lineCov">          4 :         .spdm_version_count == 0) {</span></a>
+<a name="83"><span class="lineNum">      83 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :         .spdm_version_count == 0) {</span></a>
 <a name="84"><span class="lineNum">      84 </span>                :<span class="lineNoCov">          0 :         *data_out_size = 0;</span></a>
 <a name="85"><span class="lineNum">      85 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="86"><span class="lineNum">      86 </span>                :            :     }</a>
@@ -161,12 +161,12 @@
 <a name="90"><span class="lineNum">      90 </span>                :            :             spdm_context,</a>
 <a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">          4 :             spdm_context-&gt;local_context.secured_message_version.spdm_version_count,</span></a>
 <a name="92"><span class="lineNum">      92 </span>                :            :             element_num);</a>
-<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">          4 :     if (*data_out_size &lt; final_data_size) {</span></a>
+<a name="93"><span class="lineNum">      93 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     if (*data_out_size &lt; final_data_size) {</span></a>
 <a name="94"><span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 :         *data_out_size = final_data_size;</span></a>
 <a name="95"><span class="lineNum">      95 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="96"><span class="lineNum">      96 </span>                :            :     }</a>
 <a name="97"><span class="lineNum">      97 </span>                :            : </a>
-<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">          4 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="98"><span class="lineNum">      98 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          4 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
 <a name="99"><span class="lineNum">      99 </span>                :<span class="lineCov">          2 :         spdm_general_opaque_data_table_header = data_out;</span></a>
 <a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">          2 :         spdm_general_opaque_data_table_header-&gt;total_elements = element_num;</span></a>
 <a name="101"><span class="lineNum">     101 </span>                :<span class="lineCov">          2 :         libspdm_write_uint24(spdm_general_opaque_data_table_header-&gt;reserved, 0);</span></a>
@@ -184,7 +184,7 @@
 <a name="113"><span class="lineNum">     113 </span>                :            :             (void *)(general_opaque_data_table_header + 1);</a>
 <a name="114"><span class="lineNum">     114 </span>                :            :     }</a>
 <a name="115"><span class="lineNum">     115 </span>                :            : </a>
-<a name="116"><span class="lineNum">     116 </span>                :<span class="lineCov">         28 :     for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
+<a name="116"><span class="lineNum">     116 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">         28 :     for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
 <a name="117"><span class="lineNum">     117 </span>                :            :         /*id is changed with element_index*/</a>
 <a name="118"><span class="lineNum">     118 </span>                :<span class="lineCov">         24 :         opaque_element_table_header-&gt;id = element_index;</span></a>
 <a name="119"><span class="lineNum">     119 </span>                :<span class="lineCov">         24 :         opaque_element_table_header-&gt;vendor_len = 0;</span></a>
@@ -211,7 +211,7 @@
 <a name="140"><span class="lineNum">     140 </span>                :            :                          sizeof(spdm_version_number_t));</a>
 <a name="141"><span class="lineNum">     141 </span>                :            : </a>
 <a name="142"><span class="lineNum">     142 </span>                :            :         /*move to next element*/</a>
-<a name="143"><span class="lineNum">     143 </span>                :<span class="lineCov">         24 :         if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="143"><span class="lineNum">     143 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span>]:<span class="lineCov">         24 :         if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
 <a name="144"><span class="lineNum">     144 </span>                :<span class="lineCov">         12 :             opaque_element_table_header =</span></a>
 <a name="145"><span class="lineNum">     145 </span>                :            :                 (secured_message_opaque_element_table_header_t *)(</a>
 <a name="146"><span class="lineNum">     146 </span>                :            :                     (uint8_t *)opaque_element_table_header +</a>
@@ -256,13 +256,13 @@
 <a name="185"><span class="lineNum">     185 </span>                :            :     uint8_t element_index;</a>
 <a name="186"><span class="lineNum">     186 </span>                :            : </a>
 <a name="187"><span class="lineNum">     187 </span>                :<span class="lineCov">          8 :     if (spdm_context-&gt;local_context.secured_message_version</span></a>
-<a name="188"><span class="lineNum">     188 </span>                :<span class="lineCov">          8 :         .spdm_version_count == 0) {</span></a>
+<a name="188"><span class="lineNum">     188 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">          8 :         .spdm_version_count == 0) {</span></a>
 <a name="189"><span class="lineNum">     189 </span>                :<span class="lineNoCov">          0 :         return 0;</span></a>
 <a name="190"><span class="lineNum">     190 </span>                :            :     }</a>
 <a name="191"><span class="lineNum">     191 </span>                :            : </a>
-<a name="192"><span class="lineNum">     192 </span>                :<span class="lineCov">          8 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="192"><span class="lineNum">     192 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          8 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
 <a name="193"><span class="lineNum">     193 </span>                :<span class="lineCov">          4 :         size = sizeof(spdm_general_opaque_data_table_header_t);</span></a>
-<a name="194"><span class="lineNum">     194 </span>                :<span class="lineCov">         28 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
+<a name="194"><span class="lineNum">     194 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">         28 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
 <a name="195"><span class="lineNum">     195 </span>                :<span class="lineCov">         24 :             size += sizeof(secured_message_opaque_element_table_header_t) +</span></a>
 <a name="196"><span class="lineNum">     196 </span>                :            :                     sizeof(secured_message_opaque_element_version_selection_t);</a>
 <a name="197"><span class="lineNum">     197 </span>                :            :             /* Add Padding*/</a>
@@ -270,7 +270,7 @@
 <a name="199"><span class="lineNum">     199 </span>                :            :         }</a>
 <a name="200"><span class="lineNum">     200 </span>                :            :     } else {</a>
 <a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">          4 :         size = sizeof(secured_message_general_opaque_data_table_header_t);</span></a>
-<a name="202"><span class="lineNum">     202 </span>                :<span class="lineCov">         28 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
+<a name="202"><span class="lineNum">     202 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">         28 :         for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
 <a name="203"><span class="lineNum">     203 </span>                :<span class="lineCov">         24 :             size += sizeof(secured_message_opaque_element_table_header_t) +</span></a>
 <a name="204"><span class="lineNum">     204 </span>                :            :                     sizeof(secured_message_opaque_element_version_selection_t);</a>
 <a name="205"><span class="lineNum">     205 </span>                :            :             /* Add Padding*/</a>
@@ -314,7 +314,7 @@
 <a name="243"><span class="lineNum">     243 </span>                :            :     size_t current_element_len;</a>
 <a name="244"><span class="lineNum">     244 </span>                :            : </a>
 <a name="245"><span class="lineNum">     245 </span>                :<span class="lineCov">          4 :     if (spdm_context-&gt;local_context.secured_message_version</span></a>
-<a name="246"><span class="lineNum">     246 </span>                :<span class="lineCov">          4 :         .spdm_version_count == 0) {</span></a>
+<a name="246"><span class="lineNum">     246 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :         .spdm_version_count == 0) {</span></a>
 <a name="247"><span class="lineNum">     247 </span>                :<span class="lineNoCov">          0 :         *data_out_size = 0;</span></a>
 <a name="248"><span class="lineNum">     248 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="249"><span class="lineNum">     249 </span>                :            :     }</a>
@@ -322,12 +322,12 @@
 <a name="251"><span class="lineNum">     251 </span>                :            :     final_data_size =</a>
 <a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">          4 :         libspdm_get_multi_element_opaque_data_version_selection_data_size(spdm_context,</span></a>
 <a name="253"><span class="lineNum">     253 </span>                :            :                                                                           element_num);</a>
-<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">          4 :     if (*data_out_size &lt; final_data_size) {</span></a>
+<a name="254"><span class="lineNum">     254 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     if (*data_out_size &lt; final_data_size) {</span></a>
 <a name="255"><span class="lineNum">     255 </span>                :<span class="lineNoCov">          0 :         *data_out_size = final_data_size;</span></a>
 <a name="256"><span class="lineNum">     256 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="257"><span class="lineNum">     257 </span>                :            :     }</a>
 <a name="258"><span class="lineNum">     258 </span>                :            : </a>
-<a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">          4 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="259"><span class="lineNum">     259 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          4 :     if (libspdm_get_connection_version (spdm_context) &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
 <a name="260"><span class="lineNum">     260 </span>                :<span class="lineCov">          2 :         spdm_general_opaque_data_table_header = data_out;</span></a>
 <a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">          2 :         spdm_general_opaque_data_table_header-&gt;total_elements = element_num;</span></a>
 <a name="262"><span class="lineNum">     262 </span>                :<span class="lineCov">          2 :         libspdm_write_uint24(spdm_general_opaque_data_table_header-&gt;reserved, 0);</span></a>
@@ -347,7 +347,7 @@
 <a name="276"><span class="lineNum">     276 </span>                :            :             (void *)(general_opaque_data_table_header + 1);</a>
 <a name="277"><span class="lineNum">     277 </span>                :            :     }</a>
 <a name="278"><span class="lineNum">     278 </span>                :            : </a>
-<a name="279"><span class="lineNum">     279 </span>                :<span class="lineCov">         28 :     for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
+<a name="279"><span class="lineNum">     279 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">         28 :     for (element_index = 0; element_index &lt; element_num; element_index++) {</span></a>
 <a name="280"><span class="lineNum">     280 </span>                :            :         /*id is changed with element_index*/</a>
 <a name="281"><span class="lineNum">     281 </span>                :<span class="lineCov">         24 :         opaque_element_table_header-&gt;id = element_index;</span></a>
 <a name="282"><span class="lineNum">     282 </span>                :<span class="lineCov">         24 :         opaque_element_table_header-&gt;vendor_len = 0;</span></a>
@@ -599,7 +599,7 @@
 <a name="528"><span class="lineNum">     528 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo= m_libspdm_use_asym_algo;</span></a>
 <a name="529"><span class="lineNum">     529 </span>                :            : </a>
 <a name="530"><span class="lineNum">     530 </span>                :            :     /*clear root cert array*/</a>
-<a name="531"><span class="lineNum">     531 </span>                :<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
+<a name="531"><span class="lineNum">     531 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
 <a name="532"><span class="lineNum">     532 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] = 0;</span></a>
 <a name="533"><span class="lineNum">     533 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = NULL;</span></a>
 <a name="534"><span class="lineNum">     534 </span>                :            :     }</a>
@@ -669,7 +669,7 @@
 <a name="598"><span class="lineNum">     598 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo= m_libspdm_use_asym_algo;</span></a>
 <a name="599"><span class="lineNum">     599 </span>                :            : </a>
 <a name="600"><span class="lineNum">     600 </span>                :            :     /*clear root cert array*/</a>
-<a name="601"><span class="lineNum">     601 </span>                :<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
+<a name="601"><span class="lineNum">     601 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
 <a name="602"><span class="lineNum">     602 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] = 0;</span></a>
 <a name="603"><span class="lineNum">     603 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = NULL;</span></a>
 <a name="604"><span class="lineNum">     604 </span>                :            :     }</a>
@@ -753,13 +753,13 @@
 <a name="682"><span class="lineNum">     682 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo= m_libspdm_use_asym_algo;</span></a>
 <a name="683"><span class="lineNum">     683 </span>                :            : </a>
 <a name="684"><span class="lineNum">     684 </span>                :            :     /*clear root cert array*/</a>
-<a name="685"><span class="lineNum">     685 </span>                :<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
+<a name="685"><span class="lineNum">     685 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
 <a name="686"><span class="lineNum">     686 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] = 0;</span></a>
 <a name="687"><span class="lineNum">     687 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = NULL;</span></a>
 <a name="688"><span class="lineNum">     688 </span>                :            :     }</a>
 <a name="689"><span class="lineNum">     689 </span>                :            : </a>
 <a name="690"><span class="lineNum">     690 </span>                :            :     /*case: there is no match root cert*/</a>
-<a name="691"><span class="lineNum">     691 </span>                :<span class="lineCov">          6 :     for (root_cert_index = 0; root_cert_index &lt; (LIBSPDM_MAX_ROOT_CERT_SUPPORT / 2);</span></a>
+<a name="691"><span class="lineNum">     691 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :     for (root_cert_index = 0; root_cert_index &lt; (LIBSPDM_MAX_ROOT_CERT_SUPPORT / 2);</span></a>
 <a name="692"><span class="lineNum">     692 </span>                :<span class="lineCov">          5 :          root_cert_index++) {</span></a>
 <a name="693"><span class="lineNum">     693 </span>                :<span class="lineCov">          5 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] =</span></a>
 <a name="694"><span class="lineNum">     694 </span>                :            :             root_cert_size_test;</a>
@@ -854,7 +854,7 @@
 <a name="783"><span class="lineNum">     783 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo= m_libspdm_use_asym_algo;</span></a>
 <a name="784"><span class="lineNum">     784 </span>                :            : </a>
 <a name="785"><span class="lineNum">     785 </span>                :            :     /*case: there is no match root cert*/</a>
-<a name="786"><span class="lineNum">     786 </span>                :<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
+<a name="786"><span class="lineNum">     786 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
 <a name="787"><span class="lineNum">     787 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] =</span></a>
 <a name="788"><span class="lineNum">     788 </span>                :            :             root_cert_size_test;</a>
 <a name="789"><span class="lineNum">     789 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = root_cert_test;</span></a>
@@ -874,7 +874,7 @@
 <a name="803"><span class="lineNum">     803 </span>                :<span class="lineCov">          1 :     assert_ptr_equal (trust_anchor, root_cert);</span></a>
 <a name="804"><span class="lineNum">     804 </span>                :            : </a>
 <a name="805"><span class="lineNum">     805 </span>                :            :     /*case: there is no match root cert in the middle*/</a>
-<a name="806"><span class="lineNum">     806 </span>                :<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
+<a name="806"><span class="lineNum">     806 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
 <a name="807"><span class="lineNum">     807 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] =</span></a>
 <a name="808"><span class="lineNum">     808 </span>                :            :             root_cert_size_test;</a>
 <a name="809"><span class="lineNum">     809 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = root_cert_test;</span></a>
@@ -929,7 +929,7 @@
 <a name="858"><span class="lineNum">     858 </span>                :<span class="lineCov">          1 :     memcpy(root_cert_buffer, root_cert, root_cert_size);</span></a>
 <a name="859"><span class="lineNum">     859 </span>                :            : </a>
 <a name="860"><span class="lineNum">     860 </span>                :            :     /*case: there is null root cert*/</a>
-<a name="861"><span class="lineNum">     861 </span>                :<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
+<a name="861"><span class="lineNum">     861 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
 <a name="862"><span class="lineNum">     862 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] = 0;</span></a>
 <a name="863"><span class="lineNum">     863 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = NULL;</span></a>
 <a name="864"><span class="lineNum">     864 </span>                :            :     }</a>
@@ -940,7 +940,7 @@
 <a name="869"><span class="lineNum">     869 </span>                :<span class="lineCov">          1 :     assert_ptr_equal (spdm_context-&gt;local_context.peer_root_cert_provision[0], root_cert_buffer);</span></a>
 <a name="870"><span class="lineNum">     870 </span>                :            : </a>
 <a name="871"><span class="lineNum">     871 </span>                :            :     /*case: there is full root cert*/</a>
-<a name="872"><span class="lineNum">     872 </span>                :<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
+<a name="872"><span class="lineNum">     872 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         11 :     for (root_cert_index = 0; root_cert_index &lt; LIBSPDM_MAX_ROOT_CERT_SUPPORT; root_cert_index++) {</span></a>
 <a name="873"><span class="lineNum">     873 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision_size[root_cert_index] = root_cert_size;</span></a>
 <a name="874"><span class="lineNum">     874 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = root_cert_buffer;</span></a>
 <a name="875"><span class="lineNum">     875 </span>                :            :     }</a>
@@ -1300,7 +1300,7 @@
 <a name="1229"><span class="lineNum">    1229 </span>                :            : </a>
 <a name="1230"><span class="lineNum">    1230 </span>                :<span class="lineCov">          1 :     spdm_context = (libspdm_context_t *)malloc(libspdm_get_context_size_without_secured_context());</span></a>
 <a name="1231"><span class="lineNum">    1231 </span>                :            : </a>
-<a name="1232"><span class="lineNum">    1232 </span>                :<span class="lineCov">          5 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
+<a name="1232"><span class="lineNum">    1232 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          5 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
 <a name="1233"><span class="lineNum">    1233 </span>                :            :     {</a>
 <a name="1234"><span class="lineNum">    1234 </span>                :<span class="lineCov">          4 :         secured_message_contexts[index] =</span></a>
 <a name="1235"><span class="lineNum">    1235 </span>                :<span class="lineCov">          4 :             (void *)malloc(libspdm_secured_message_get_context_size());</span></a>
@@ -1310,7 +1310,7 @@
 <a name="1239"><span class="lineNum">    1239 </span>                :            :                                                        LIBSPDM_MAX_SESSION_COUNT);</a>
 <a name="1240"><span class="lineNum">    1240 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
 <a name="1241"><span class="lineNum">    1241 </span>                :            : </a>
-<a name="1242"><span class="lineNum">    1242 </span>                :<span class="lineCov">          5 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
+<a name="1242"><span class="lineNum">    1242 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          5 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
 <a name="1243"><span class="lineNum">    1243 </span>                :            :     {</a>
 <a name="1244"><span class="lineNum">    1244 </span>                :            :         /* Ensure the SPDM context points to the specified memory. */</a>
 <a name="1245"><span class="lineNum">    1245 </span>                :<span class="lineCov">          4 :         assert_int_equal(spdm_context-&gt;session_info[index].secured_message_context,</span></a>
@@ -1318,7 +1318,7 @@
 <a name="1247"><span class="lineNum">    1247 </span>                :            :     }</a>
 <a name="1248"><span class="lineNum">    1248 </span>                :            : </a>
 <a name="1249"><span class="lineNum">    1249 </span>                :<span class="lineCov">          1 :     free(spdm_context);</span></a>
-<a name="1250"><span class="lineNum">    1250 </span>                :<span class="lineCov">          5 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
+<a name="1250"><span class="lineNum">    1250 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          5 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
 <a name="1251"><span class="lineNum">    1251 </span>                :            :     {</a>
 <a name="1252"><span class="lineNum">    1252 </span>                :<span class="lineCov">          4 :         free(secured_message_contexts[index]);</span></a>
 <a name="1253"><span class="lineNum">    1253 </span>                :            :     }</a>
@@ -1333,7 +1333,7 @@
 <a name="1262"><span class="lineNum">    1262 </span>                :            : </a>
 <a name="1263"><span class="lineNum">    1263 </span>                :            :     /* Get the entire EMS when the reported size of the target buffer is larger than the size of the</a>
 <a name="1264"><span class="lineNum">    1264 </span>                :            :      * EMS. */</a>
-<a name="1265"><span class="lineNum">    1265 </span>                :<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
+<a name="1265"><span class="lineNum">    1265 </span>        [<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
 <a name="1266"><span class="lineNum">    1266 </span>                :<span class="lineCov">         64 :         secured_message_context.export_master_secret[index] = (uint8_t)index;</span></a>
 <a name="1267"><span class="lineNum">    1267 </span>                :<span class="lineCov">         64 :         target_buffer[index] = 0x00;</span></a>
 <a name="1268"><span class="lineNum">    1268 </span>                :            :     }</a>
@@ -1348,14 +1348,14 @@
 <a name="1277"><span class="lineNum">    1277 </span>                :            : </a>
 <a name="1278"><span class="lineNum">    1278 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_clear_export_master_secret(&amp;secured_message_context);</span></a>
 <a name="1279"><span class="lineNum">    1279 </span>                :            : </a>
-<a name="1280"><span class="lineNum">    1280 </span>                :<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
+<a name="1280"><span class="lineNum">    1280 </span>        [<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
 <a name="1281"><span class="lineNum">    1281 </span>                :<span class="lineCov">         64 :         assert_int_equal(target_buffer[index], index);</span></a>
 <a name="1282"><span class="lineNum">    1282 </span>                :<span class="lineCov">         64 :         assert_int_equal(secured_message_context.export_master_secret[index], 0x00);</span></a>
 <a name="1283"><span class="lineNum">    1283 </span>                :            :     }</a>
 <a name="1284"><span class="lineNum">    1284 </span>                :<span class="lineCov">          1 :     assert_int_equal(export_master_secret_size, LIBSPDM_MAX_HASH_SIZE);</span></a>
 <a name="1285"><span class="lineNum">    1285 </span>                :            : </a>
 <a name="1286"><span class="lineNum">    1286 </span>                :            :     /* Get the entire EMS when the size of the target buffer is the same size as the EMS. */</a>
-<a name="1287"><span class="lineNum">    1287 </span>                :<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
+<a name="1287"><span class="lineNum">    1287 </span>        [<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
 <a name="1288"><span class="lineNum">    1288 </span>                :<span class="lineCov">         64 :         secured_message_context.export_master_secret[index] = (uint8_t)index;</span></a>
 <a name="1289"><span class="lineNum">    1289 </span>                :<span class="lineCov">         64 :         target_buffer[index] = 0x00;</span></a>
 <a name="1290"><span class="lineNum">    1290 </span>                :            :     }</a>
@@ -1368,13 +1368,13 @@
 <a name="1297"><span class="lineNum">    1297 </span>                :            :                                                           &amp;export_master_secret_size);</a>
 <a name="1298"><span class="lineNum">    1298 </span>                :<span class="lineCov">          1 :     assert_int_equal(result, true);</span></a>
 <a name="1299"><span class="lineNum">    1299 </span>                :            : </a>
-<a name="1300"><span class="lineNum">    1300 </span>                :<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
+<a name="1300"><span class="lineNum">    1300 </span>        [<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
 <a name="1301"><span class="lineNum">    1301 </span>                :<span class="lineCov">         64 :         assert_int_equal(target_buffer[index], index);</span></a>
 <a name="1302"><span class="lineNum">    1302 </span>                :            :     }</a>
 <a name="1303"><span class="lineNum">    1303 </span>                :<span class="lineCov">          1 :     assert_int_equal(export_master_secret_size, LIBSPDM_MAX_HASH_SIZE);</span></a>
 <a name="1304"><span class="lineNum">    1304 </span>                :            : </a>
 <a name="1305"><span class="lineNum">    1305 </span>                :            :     /* Get the truncated EMS when the size of the target buffer is less than the size of the EMS. */</a>
-<a name="1306"><span class="lineNum">    1306 </span>                :<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
+<a name="1306"><span class="lineNum">    1306 </span>        [<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
 <a name="1307"><span class="lineNum">    1307 </span>                :<span class="lineCov">         64 :         secured_message_context.export_master_secret[index] = (uint8_t)index;</span></a>
 <a name="1308"><span class="lineNum">    1308 </span>                :<span class="lineCov">         64 :         target_buffer[index] = 0x00;</span></a>
 <a name="1309"><span class="lineNum">    1309 </span>                :            :     }</a>
@@ -1387,8 +1387,8 @@
 <a name="1316"><span class="lineNum">    1316 </span>                :            :                                                           &amp;export_master_secret_size);</a>
 <a name="1317"><span class="lineNum">    1317 </span>                :<span class="lineCov">          1 :     assert_int_equal(result, true);</span></a>
 <a name="1318"><span class="lineNum">    1318 </span>                :            : </a>
-<a name="1319"><span class="lineNum">    1319 </span>                :<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
-<a name="1320"><span class="lineNum">    1320 </span>                :<span class="lineCov">         64 :         if (index &lt; LIBSPDM_MAX_HASH_SIZE - 4) {</span></a>
+<a name="1319"><span class="lineNum">    1319 </span>        [<span class="branchCov" title="Branch 0 was taken 64 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         65 :     for (int index = 0; index &lt; LIBSPDM_MAX_HASH_SIZE; index++) {</span></a>
+<a name="1320"><span class="lineNum">    1320 </span>        [<span class="branchCov" title="Branch 0 was taken 60 times"> + </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">         64 :         if (index &lt; LIBSPDM_MAX_HASH_SIZE - 4) {</span></a>
 <a name="1321"><span class="lineNum">    1321 </span>                :<span class="lineCov">         60 :             assert_int_equal(target_buffer[index], index);</span></a>
 <a name="1322"><span class="lineNum">    1322 </span>                :            :         }</a>
 <a name="1323"><span class="lineNum">    1323 </span>                :            :         else {</a>

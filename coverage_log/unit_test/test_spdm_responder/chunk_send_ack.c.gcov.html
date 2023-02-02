@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-02 20:12:18</td>
+            <td class="headerValue">2023-02-02 20:25:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">23</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntryMed">83.3 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -227,7 +227,7 @@
 <a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">          2 :         chunk_send_request-&gt;header.param2 = (uint8_t) spdm_test_context-&gt;case_id; /* chunk_handle */</span></a>
 <a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">          2 :         chunk_send_request-&gt;chunk_seq_no = chunk_num;</span></a>
 <a name="158"><span class="lineNum">     158 </span>                :            : </a>
-<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">          2 :         if (chunk_num == 0) {</span></a>
+<a name="159"><span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :         if (chunk_num == 0) {</span></a>
 <a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">          1 :             *((uint32_t*) (chunk_send_request + 1)) = bytes_total;</span></a>
 <a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">          1 :             chunk_send_request-&gt;chunk_size =</span></a>
 <a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          1 :                 spdm_context-&gt;local_context.capability.data_transfer_size</span></a>
@@ -251,7 +251,7 @@
 <a name="180"><span class="lineNum">     180 </span>                :<span class="lineCov">          1 :             request_size = sizeof(spdm_chunk_send_request_t)</span></a>
 <a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">          1 :                            + chunk_send_request-&gt;chunk_size;</span></a>
 <a name="182"><span class="lineNum">     182 </span>                :            : </a>
-<a name="183"><span class="lineNum">     183 </span>                :<span class="lineCov">          1 :             if (bytes_total - bytes_sent == chunk_send_request-&gt;chunk_size) {</span></a>
+<a name="183"><span class="lineNum">     183 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :             if (bytes_total - bytes_sent == chunk_send_request-&gt;chunk_size) {</span></a>
 <a name="184"><span class="lineNum">     184 </span>                :<span class="lineCov">          1 :                 chunk_send_request-&gt;header.param1 = SPDM_CHUNK_SEND_REQUEST_ATTRIBUTE_LAST_CHUNK;</span></a>
 <a name="185"><span class="lineNum">     185 </span>                :            :             }</a>
 <a name="186"><span class="lineNum">     186 </span>                :            :         }</a>
@@ -280,7 +280,7 @@
 <a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">          2 :         assert_int_equal(chunk_send_ack_response-&gt;header.param2, spdm_test_context-&gt;case_id);</span></a>
 <a name="210"><span class="lineNum">     210 </span>                :<span class="lineCov">          2 :         assert_int_equal(chunk_send_ack_response-&gt;chunk_seq_no, chunk_send_request-&gt;chunk_seq_no);</span></a>
 <a name="211"><span class="lineNum">     211 </span>                :            : </a>
-<a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">          2 :     } while (bytes_sent &lt; bytes_total);</span></a>
+<a name="212"><span class="lineNum">     212 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     } while (bytes_sent &lt; bytes_total);</span></a>
 <a name="213"><span class="lineNum">     213 </span>                :            : </a>
 <a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">          1 :     algorithms_response = (spdm_algorithms_response_t*) (chunk_send_ack_response + 1);</span></a>
 <a name="215"><span class="lineNum">     215 </span>                :<span class="lineCov">          1 :     algorithms_response_size = response_size - sizeof(spdm_chunk_send_ack_response_t);</span></a>

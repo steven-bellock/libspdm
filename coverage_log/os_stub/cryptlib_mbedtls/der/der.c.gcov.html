@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-02 20:12:18</td>
+            <td class="headerValue">2023-02-02 20:25:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">28</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
           </tr>
           <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -114,29 +114,30 @@
 <a name="43"><span class="lineNum">      43 </span>                :            :     mbedtls_pk_context pk;</a>
 <a name="44"><span class="lineNum">      44 </span>                :            :     mbedtls_rsa_context *rsa;</a>
 <a name="45"><span class="lineNum">      45 </span>                :            : </a>
-<a name="46"><span class="lineNum">      46 </span>                :<span class="lineCov">          2 :     if (der_data == NULL || rsa_context == NULL || der_size &gt; INT_MAX) {</span></a>
+<a name="46"><span class="lineNum">      46 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          2 :     if (der_data == NULL || rsa_context == NULL || der_size &gt; INT_MAX) {</span></a>
+<span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 2 times"> + </span>]
 <a name="47"><span class="lineNum">      47 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="48"><span class="lineNum">      48 </span>                :            :     }</a>
 <a name="49"><span class="lineNum">      49 </span>                :            : </a>
 <a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">          2 :     mbedtls_pk_init(&amp;pk);</span></a>
 <a name="51"><span class="lineNum">      51 </span>                :            : </a>
 <a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">          2 :     ret = mbedtls_pk_parse_public_key(&amp;pk, der_data, der_size);</span></a>
-<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">          2 :     if (ret != 0) {</span></a>
+<a name="53"><span class="lineNum">      53 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (ret != 0) {</span></a>
 <a name="54"><span class="lineNum">      54 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="55"><span class="lineNum">      55 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="56"><span class="lineNum">      56 </span>                :            :     }</a>
 <a name="57"><span class="lineNum">      57 </span>                :            : </a>
-<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">          2 :     if (mbedtls_pk_get_type(&amp;pk) != MBEDTLS_PK_RSA) {</span></a>
+<a name="58"><span class="lineNum">      58 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (mbedtls_pk_get_type(&amp;pk) != MBEDTLS_PK_RSA) {</span></a>
 <a name="59"><span class="lineNum">      59 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="60"><span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="61"><span class="lineNum">      61 </span>                :            :     }</a>
 <a name="62"><span class="lineNum">      62 </span>                :            : </a>
 <a name="63"><span class="lineNum">      63 </span>                :<span class="lineCov">          2 :     rsa = libspdm_rsa_new();</span></a>
-<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">          2 :     if (rsa == NULL) {</span></a>
+<a name="64"><span class="lineNum">      64 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (rsa == NULL) {</span></a>
 <a name="65"><span class="lineNum">      65 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="66"><span class="lineNum">      66 </span>                :            :     }</a>
 <a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">          2 :     ret = mbedtls_rsa_copy(rsa, mbedtls_pk_rsa(pk));</span></a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">          2 :     if (ret != 0) {</span></a>
+<a name="68"><span class="lineNum">      68 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (ret != 0) {</span></a>
 <a name="69"><span class="lineNum">      69 </span>                :<span class="lineNoCov">          0 :         libspdm_rsa_free(rsa);</span></a>
 <a name="70"><span class="lineNum">      70 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="71"><span class="lineNum">      71 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
@@ -176,25 +177,26 @@
 <a name="105"><span class="lineNum">     105 </span>                :            :     mbedtls_pk_context pk;</a>
 <a name="106"><span class="lineNum">     106 </span>                :            :     mbedtls_ecdh_context *ecdh;</a>
 <a name="107"><span class="lineNum">     107 </span>                :            : </a>
-<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">          3 :     if (der_data == NULL || ec_context == NULL || der_size &gt; INT_MAX) {</span></a>
+<a name="108"><span class="lineNum">     108 </span>  [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          3 :     if (der_data == NULL || ec_context == NULL || der_size &gt; INT_MAX) {</span></a>
+<span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchCov" title="Branch 5 was taken 3 times"> + </span>]
 <a name="109"><span class="lineNum">     109 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="110"><span class="lineNum">     110 </span>                :            :     }</a>
 <a name="111"><span class="lineNum">     111 </span>                :            : </a>
 <a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">          3 :     mbedtls_pk_init(&amp;pk);</span></a>
 <a name="113"><span class="lineNum">     113 </span>                :            : </a>
 <a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">          3 :     ret = mbedtls_pk_parse_public_key(&amp;pk, der_data, der_size);</span></a>
-<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">          3 :     if (ret != 0) {</span></a>
+<a name="115"><span class="lineNum">     115 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     if (ret != 0) {</span></a>
 <a name="116"><span class="lineNum">     116 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="117"><span class="lineNum">     117 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="118"><span class="lineNum">     118 </span>                :            :     }</a>
 <a name="119"><span class="lineNum">     119 </span>                :            : </a>
-<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">          3 :     if (mbedtls_pk_get_type(&amp;pk) != MBEDTLS_PK_ECKEY) {</span></a>
+<a name="120"><span class="lineNum">     120 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     if (mbedtls_pk_get_type(&amp;pk) != MBEDTLS_PK_ECKEY) {</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="122"><span class="lineNum">     122 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="123"><span class="lineNum">     123 </span>                :            :     }</a>
 <a name="124"><span class="lineNum">     124 </span>                :            : </a>
 <a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">          3 :     ecdh = allocate_zero_pool(sizeof(mbedtls_ecdh_context));</span></a>
-<a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">          3 :     if (ecdh == NULL) {</span></a>
+<a name="126"><span class="lineNum">     126 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     if (ecdh == NULL) {</span></a>
 <a name="127"><span class="lineNum">     127 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>
 <a name="128"><span class="lineNum">     128 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="129"><span class="lineNum">     129 </span>                :            :     }</a>
@@ -202,7 +204,7 @@
 <a name="131"><span class="lineNum">     131 </span>                :            : </a>
 <a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">          3 :     ret = mbedtls_ecdh_get_params(ecdh, mbedtls_pk_ec(pk),</span></a>
 <a name="133"><span class="lineNum">     133 </span>                :            :                                   MBEDTLS_ECDH_OURS);</a>
-<a name="134"><span class="lineNum">     134 </span>                :<span class="lineCov">          3 :     if (ret != 0) {</span></a>
+<a name="134"><span class="lineNum">     134 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     if (ret != 0) {</span></a>
 <a name="135"><span class="lineNum">     135 </span>                :<span class="lineNoCov">          0 :         mbedtls_ecdh_free(ecdh);</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :<span class="lineNoCov">          0 :         free_pool(ecdh);</span></a>
 <a name="137"><span class="lineNum">     137 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free(&amp;pk);</span></a>

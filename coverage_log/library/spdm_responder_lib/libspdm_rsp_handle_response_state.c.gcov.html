@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-02 20:12:18</td>
+            <td class="headerValue">2023-02-02 20:25:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryLo">66.7 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -84,7 +84,8 @@
 <a name="13"><span class="lineNum">      13 </span>                :            : {</a>
 <a name="14"><span class="lineNum">      14 </span>                :            :     libspdm_return_t status;</a>
 <a name="15"><span class="lineNum">      15 </span>                :            : </a>
-<a name="16"><span class="lineNum">      16 </span>                :<span class="lineCov">         47 :     switch (spdm_context-&gt;response_state) {</span></a>
+<a name="16"><span class="lineNum">      16 </span>  [<span class="branchCov" title="Branch 0 was taken 18 times"> + </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">         47 :     switch (spdm_context-&gt;response_state) {</span></a>
+<span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 4 was not taken"> - </span>]
 <a name="17"><span class="lineNum">      17 </span>                :<span class="lineCov">         18 :     case LIBSPDM_RESPONSE_STATE_BUSY:</span></a>
 <a name="18"><span class="lineNum">      18 </span>                :<span class="lineCov">         18 :         return libspdm_generate_error_response(spdm_context, SPDM_ERROR_CODE_BUSY,</span></a>
 <a name="19"><span class="lineNum">      19 </span>                :            :                                                0, response_size, response);</a>
@@ -93,7 +94,7 @@
 <a name="22"><span class="lineNum">      22 </span>                :<span class="lineCov">         17 :         status = libspdm_generate_error_response(spdm_context,</span></a>
 <a name="23"><span class="lineNum">      23 </span>                :            :                                                  SPDM_ERROR_CODE_REQUEST_RESYNCH, 0,</a>
 <a name="24"><span class="lineNum">      24 </span>                :            :                                                  response_size, response);</a>
-<a name="25"><span class="lineNum">      25 </span>                :<span class="lineCov">         17 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="25"><span class="lineNum">      25 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         17 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="26"><span class="lineNum">      26 </span>                :<span class="lineNoCov">          0 :             return status;</span></a>
 <a name="27"><span class="lineNum">      27 </span>                :            :         }</a>
 <a name="28"><span class="lineNum">      28 </span>                :            :         /* NOTE: Need to let SPDM_VERSION reset the State*/</a>
@@ -103,7 +104,7 @@
 <a name="32"><span class="lineNum">      32 </span>                :            :     #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
 <a name="33"><span class="lineNum">      33 </span>                :<span class="lineCov">         12 :     case LIBSPDM_RESPONSE_STATE_NOT_READY:</span></a>
 <a name="34"><span class="lineNum">      34 </span>                :            :         /*do not update ErrorData if a previous request has not been completed*/</a>
-<a name="35"><span class="lineNum">      35 </span>                :<span class="lineCov">         12 :         if(request_code != SPDM_RESPOND_IF_READY) {</span></a>
+<a name="35"><span class="lineNum">      35 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         12 :         if(request_code != SPDM_RESPOND_IF_READY) {</span></a>
 <a name="36"><span class="lineNum">      36 </span>                :<span class="lineCov">         11 :             spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
 <a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">         11 :             libspdm_copy_mem(spdm_context-&gt;cache_spdm_request,</span></a>
 <a name="38"><span class="lineNum">      38 </span>                :            :                              sizeof(spdm_context-&gt;cache_spdm_request),</a>

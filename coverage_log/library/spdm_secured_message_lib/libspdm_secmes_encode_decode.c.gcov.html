@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-02 20:12:18</td>
+            <td class="headerValue">2023-02-02 20:25:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">63</td>
+            <td class="headerCovTableEntry">124</td>
+            <td class="headerCovTableEntryLo">50.8 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -133,19 +133,19 @@
 <a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">        452 :     secured_message_context = spdm_secured_message_context;</span></a>
 <a name="63"><span class="lineNum">      63 </span>                :            : </a>
 <a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">        452 :     session_type = secured_message_context-&gt;session_type;</span></a>
-<a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">        452 :     LIBSPDM_ASSERT((session_type == LIBSPDM_SESSION_TYPE_MAC_ONLY) ||</span></a>
+<a name="65"><span class="lineNum">      65 </span>  [<span class="branchCov" title="Branch 0 was taken 452 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 452 times"> + </span>]:<span class="lineCov">        452 :     LIBSPDM_ASSERT((session_type == LIBSPDM_SESSION_TYPE_MAC_ONLY) ||</span></a>
 <a name="66"><span class="lineNum">      66 </span>                :            :                    (session_type == LIBSPDM_SESSION_TYPE_ENC_MAC));</a>
 <a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">        452 :     session_state = secured_message_context-&gt;session_state;</span></a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">        452 :     LIBSPDM_ASSERT((session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) ||</span></a>
+<a name="68"><span class="lineNum">      68 </span>  [<span class="branchCov" title="Branch 0 was taken 387 times"> + </span><span class="branchCov" title="Branch 1 was taken 65 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 387 times"> + </span>]:<span class="lineCov">        452 :     LIBSPDM_ASSERT((session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) ||</span></a>
 <a name="69"><span class="lineNum">      69 </span>                :            :                    (session_state == LIBSPDM_SESSION_STATE_ESTABLISHED));</a>
 <a name="70"><span class="lineNum">      70 </span>                :            : </a>
 <a name="71"><span class="lineNum">      71 </span>                :<span class="lineCov">        452 :     aead_tag_size = secured_message_context-&gt;aead_tag_size;</span></a>
 <a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">        452 :     aead_key_size = secured_message_context-&gt;aead_key_size;</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :<span class="lineCov">        452 :     aead_iv_size = secured_message_context-&gt;aead_iv_size;</span></a>
 <a name="74"><span class="lineNum">      74 </span>                :            : </a>
-<a name="75"><span class="lineNum">      75 </span>                :<span class="lineCov">        452 :     switch (session_state) {</span></a>
+<a name="75"><span class="lineNum">      75 </span>     [<span class="branchCov" title="Branch 0 was taken 65 times"> + </span><span class="branchCov" title="Branch 1 was taken 387 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        452 :     switch (session_state) {</span></a>
 <a name="76"><span class="lineNum">      76 </span>                :<span class="lineCov">         65 :     case LIBSPDM_SESSION_STATE_HANDSHAKING:</span></a>
-<a name="77"><span class="lineNum">      77 </span>                :<span class="lineCov">         65 :         if (is_requester) {</span></a>
+<a name="77"><span class="lineNum">      77 </span>        [<span class="branchCov" title="Branch 0 was taken 33 times"> + </span><span class="branchCov" title="Branch 1 was taken 32 times"> + </span>]:<span class="lineCov">         65 :         if (is_requester) {</span></a>
 <a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">         33 :             key = (const uint8_t *)secured_message_context-&gt;handshake_secret.</span></a>
 <a name="79"><span class="lineNum">      79 </span>                :            :                   request_handshake_encryption_key;</a>
 <a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">         33 :             salt = (uint8_t *)secured_message_context-&gt;handshake_secret.</span></a>
@@ -162,7 +162,7 @@
 <a name="91"><span class="lineNum">      91 </span>                :            :         }</a>
 <a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">         65 :         break;</span></a>
 <a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">        387 :     case LIBSPDM_SESSION_STATE_ESTABLISHED:</span></a>
-<a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">        387 :         if (is_requester) {</span></a>
+<a name="94"><span class="lineNum">      94 </span>        [<span class="branchCov" title="Branch 0 was taken 195 times"> + </span><span class="branchCov" title="Branch 1 was taken 192 times"> + </span>]:<span class="lineCov">        387 :         if (is_requester) {</span></a>
 <a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">        195 :             key = (const uint8_t *)secured_message_context-&gt;application_secret.</span></a>
 <a name="96"><span class="lineNum">      96 </span>                :            :                   request_data_encryption_key;</a>
 <a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">        195 :             salt = (uint8_t *)secured_message_context-&gt;application_secret.</span></a>
@@ -184,22 +184,22 @@
 <a name="113"><span class="lineNum">     113 </span>                :            :         break;</a>
 <a name="114"><span class="lineNum">     114 </span>                :            :     }</a>
 <a name="115"><span class="lineNum">     115 </span>                :            : </a>
-<a name="116"><span class="lineNum">     116 </span>                :<span class="lineCov">        452 :     if (sequence_number == (uint64_t)-1) {</span></a>
+<a name="116"><span class="lineNum">     116 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 452 times"> + </span>]:<span class="lineCov">        452 :     if (sequence_number == (uint64_t)-1) {</span></a>
 <a name="117"><span class="lineNum">     117 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SEQUENCE_NUMBER_OVERFLOW;</span></a>
 <a name="118"><span class="lineNum">     118 </span>                :            :     }</a>
 <a name="119"><span class="lineNum">     119 </span>                :            : </a>
-<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">        452 :     if (sequence_number &gt; 0) {</span></a>
+<a name="120"><span class="lineNum">     120 </span>        [<span class="branchCov" title="Branch 0 was taken 82 times"> + </span><span class="branchCov" title="Branch 1 was taken 370 times"> + </span>]:<span class="lineCov">        452 :     if (sequence_number &gt; 0) {</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :<span class="lineCov">         82 :         *(uint64_t *)salt = *(uint64_t *)salt ^ (sequence_number - 1) ^ sequence_number;</span></a>
 <a name="122"><span class="lineNum">     122 </span>                :            :     }</a>
 <a name="123"><span class="lineNum">     123 </span>                :            : </a>
 <a name="124"><span class="lineNum">     124 </span>                :<span class="lineCov">        452 :     sequence_num_in_header = 0;</span></a>
 <a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">        452 :     sequence_num_in_header_size = spdm_secured_message_callbacks-&gt;get_sequence_number(</span></a>
 <a name="126"><span class="lineNum">     126 </span>                :            :         sequence_number, (uint8_t *)&amp;sequence_num_in_header);</a>
-<a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">        452 :     LIBSPDM_ASSERT(sequence_num_in_header_size &lt;= sizeof(sequence_num_in_header));</span></a>
+<a name="127"><span class="lineNum">     127 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 452 times"> + </span>]:<span class="lineCov">        452 :     LIBSPDM_ASSERT(sequence_num_in_header_size &lt;= sizeof(sequence_num_in_header));</span></a>
 <a name="128"><span class="lineNum">     128 </span>                :            : </a>
 <a name="129"><span class="lineNum">     129 </span>                :<span class="lineCov">        452 :     sequence_number++;</span></a>
-<a name="130"><span class="lineNum">     130 </span>                :<span class="lineCov">        452 :     if (session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) {</span></a>
-<a name="131"><span class="lineNum">     131 </span>                :<span class="lineCov">         65 :         if (is_requester) {</span></a>
+<a name="130"><span class="lineNum">     130 </span>        [<span class="branchCov" title="Branch 0 was taken 65 times"> + </span><span class="branchCov" title="Branch 1 was taken 387 times"> + </span>]:<span class="lineCov">        452 :     if (session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) {</span></a>
+<a name="131"><span class="lineNum">     131 </span>        [<span class="branchCov" title="Branch 0 was taken 33 times"> + </span><span class="branchCov" title="Branch 1 was taken 32 times"> + </span>]:<span class="lineCov">         65 :         if (is_requester) {</span></a>
 <a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">         33 :             secured_message_context-&gt;handshake_secret.request_handshake_sequence_number =</span></a>
 <a name="133"><span class="lineNum">     133 </span>                :            :                 sequence_number;</a>
 <a name="134"><span class="lineNum">     134 </span>                :            :         } else {</a>
@@ -208,7 +208,7 @@
 <a name="137"><span class="lineNum">     137 </span>                :            :         }</a>
 <a name="138"><span class="lineNum">     138 </span>                :            :     }</a>
 <a name="139"><span class="lineNum">     139 </span>                :            :     else {</a>
-<a name="140"><span class="lineNum">     140 </span>                :<span class="lineCov">        387 :         if (is_requester) {</span></a>
+<a name="140"><span class="lineNum">     140 </span>        [<span class="branchCov" title="Branch 0 was taken 195 times"> + </span><span class="branchCov" title="Branch 1 was taken 192 times"> + </span>]:<span class="lineCov">        387 :         if (is_requester) {</span></a>
 <a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">        195 :             secured_message_context-&gt;application_secret.request_data_sequence_number =</span></a>
 <a name="142"><span class="lineNum">     142 </span>                :            :                 sequence_number;</a>
 <a name="143"><span class="lineNum">     143 </span>                :            :         } else {</a>
@@ -221,13 +221,13 @@
 <a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">        452 :                          sequence_num_in_header_size +</span></a>
 <a name="151"><span class="lineNum">     151 </span>                :            :                          sizeof(spdm_secured_message_a_data_header2_t);</a>
 <a name="152"><span class="lineNum">     152 </span>                :            : </a>
-<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">        452 :     switch (session_type) {</span></a>
+<a name="153"><span class="lineNum">     153 </span>     [<span class="branchCov" title="Branch 0 was taken 452 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        452 :     switch (session_type) {</span></a>
 <a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">        452 :     case LIBSPDM_SESSION_TYPE_ENC_MAC:</span></a>
 <a name="155"><span class="lineNum">     155 </span>                :<span class="lineCov">        452 :         max_rand_count = spdm_secured_message_callbacks-&gt;get_max_random_number_count();</span></a>
-<a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">        452 :         if (max_rand_count != 0) {</span></a>
+<a name="156"><span class="lineNum">     156 </span>        [<span class="branchCov" title="Branch 0 was taken 452 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        452 :         if (max_rand_count != 0) {</span></a>
 <a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">        452 :             rand_count = 0;</span></a>
 <a name="158"><span class="lineNum">     158 </span>                :<span class="lineCov">        452 :             result = libspdm_get_random_number(sizeof(rand_count), (uint8_t *)&amp;rand_count);</span></a>
-<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">        452 :             if (!result) {</span></a>
+<a name="159"><span class="lineNum">     159 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 452 times"> + </span>]:<span class="lineCov">        452 :             if (!result) {</span></a>
 <a name="160"><span class="lineNum">     160 </span>                :<span class="lineNoCov">          0 :                 return LIBSPDM_STATUS_LOW_ENTROPY;</span></a>
 <a name="161"><span class="lineNum">     161 </span>                :            :             }</a>
 <a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">        452 :             rand_count = (uint8_t)((rand_count % max_rand_count) + 1);</span></a>
@@ -241,8 +241,8 @@
 <a name="170"><span class="lineNum">     170 </span>                :<span class="lineCov">        452 :         aead_pad_size = cipher_text_size - plain_text_size;</span></a>
 <a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">        452 :         total_secured_message_size = record_header_size + cipher_text_size + aead_tag_size;</span></a>
 <a name="172"><span class="lineNum">     172 </span>                :            : </a>
-<a name="173"><span class="lineNum">     173 </span>                :<span class="lineCov">        452 :         LIBSPDM_ASSERT(*secured_message_size &gt;= total_secured_message_size);</span></a>
-<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">        452 :         if (*secured_message_size &lt; total_secured_message_size) {</span></a>
+<a name="173"><span class="lineNum">     173 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 452 times"> + </span>]:<span class="lineCov">        452 :         LIBSPDM_ASSERT(*secured_message_size &gt;= total_secured_message_size);</span></a>
+<a name="174"><span class="lineNum">     174 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 452 times"> + </span>]:<span class="lineCov">        452 :         if (*secured_message_size &lt; total_secured_message_size) {</span></a>
 <a name="175"><span class="lineNum">     175 </span>                :<span class="lineNoCov">          0 :             *secured_message_size = total_secured_message_size;</span></a>
 <a name="176"><span class="lineNum">     176 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="177"><span class="lineNum">     177 </span>                :            :         }</a>
@@ -266,7 +266,7 @@
 <a name="195"><span class="lineNum">     195 </span>                :            :                                            (uint8_t *)enc_msg_header +</a>
 <a name="196"><span class="lineNum">     196 </span>                :<span class="lineCov">        452 :                                            sizeof(spdm_secured_message_cipher_header_t) +</span></a>
 <a name="197"><span class="lineNum">     197 </span>                :            :                                            app_message_size);</a>
-<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">        452 :         if (!result) {</span></a>
+<a name="198"><span class="lineNum">     198 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 452 times"> + </span>]:<span class="lineCov">        452 :         if (!result) {</span></a>
 <a name="199"><span class="lineNum">     199 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_LOW_ENTROPY;</span></a>
 <a name="200"><span class="lineNum">     200 </span>                :            :         }</a>
 <a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">        452 :         libspdm_zero_mem((uint8_t *)enc_msg_header + plain_text_size, aead_pad_size);</span></a>
@@ -289,8 +289,8 @@
 <a name="218"><span class="lineNum">     218 </span>                :<span class="lineNoCov">          0 :         total_secured_message_size =</span></a>
 <a name="219"><span class="lineNum">     219 </span>                :<span class="lineNoCov">          0 :             record_header_size + app_message_size + aead_tag_size;</span></a>
 <a name="220"><span class="lineNum">     220 </span>                :            : </a>
-<a name="221"><span class="lineNum">     221 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_ASSERT(*secured_message_size &gt;= total_secured_message_size);</span></a>
-<a name="222"><span class="lineNum">     222 </span>                :<span class="lineNoCov">          0 :         if (*secured_message_size &lt; total_secured_message_size) {</span></a>
+<a name="221"><span class="lineNum">     221 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         LIBSPDM_ASSERT(*secured_message_size &gt;= total_secured_message_size);</span></a>
+<a name="222"><span class="lineNum">     222 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (*secured_message_size &lt; total_secured_message_size) {</span></a>
 <a name="223"><span class="lineNum">     223 </span>                :<span class="lineNoCov">          0 :             *secured_message_size = total_secured_message_size;</span></a>
 <a name="224"><span class="lineNum">     224 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="225"><span class="lineNum">     225 </span>                :            :         }</a>
@@ -327,7 +327,7 @@
 <a name="256"><span class="lineNum">     256 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_ASSERT(false);</span></a>
 <a name="257"><span class="lineNum">     257 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
 <a name="258"><span class="lineNum">     258 </span>                :            :     }</a>
-<a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">        452 :     if (!result) {</span></a>
+<a name="259"><span class="lineNum">     259 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 452 times"> + </span>]:<span class="lineCov">        452 :     if (!result) {</span></a>
 <a name="260"><span class="lineNum">     260 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
 <a name="261"><span class="lineNum">     261 </span>                :            :     }</a>
 <a name="262"><span class="lineNum">     262 </span>                :<span class="lineCov">        452 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
@@ -394,19 +394,19 @@
 <a name="323"><span class="lineNum">     323 </span>                :<span class="lineCov">        314 :     secured_message_context = spdm_secured_message_context;</span></a>
 <a name="324"><span class="lineNum">     324 </span>                :            : </a>
 <a name="325"><span class="lineNum">     325 </span>                :<span class="lineCov">        314 :     session_type = secured_message_context-&gt;session_type;</span></a>
-<a name="326"><span class="lineNum">     326 </span>                :<span class="lineCov">        314 :     LIBSPDM_ASSERT((session_type == LIBSPDM_SESSION_TYPE_MAC_ONLY) ||</span></a>
+<a name="326"><span class="lineNum">     326 </span>  [<span class="branchCov" title="Branch 0 was taken 314 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 314 times"> + </span>]:<span class="lineCov">        314 :     LIBSPDM_ASSERT((session_type == LIBSPDM_SESSION_TYPE_MAC_ONLY) ||</span></a>
 <a name="327"><span class="lineNum">     327 </span>                :            :                    (session_type == LIBSPDM_SESSION_TYPE_ENC_MAC));</a>
 <a name="328"><span class="lineNum">     328 </span>                :<span class="lineCov">        314 :     session_state = secured_message_context-&gt;session_state;</span></a>
-<a name="329"><span class="lineNum">     329 </span>                :<span class="lineCov">        314 :     LIBSPDM_ASSERT((session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) ||</span></a>
+<a name="329"><span class="lineNum">     329 </span>  [<span class="branchCov" title="Branch 0 was taken 281 times"> + </span><span class="branchCov" title="Branch 1 was taken 33 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 281 times"> + </span>]:<span class="lineCov">        314 :     LIBSPDM_ASSERT((session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) ||</span></a>
 <a name="330"><span class="lineNum">     330 </span>                :            :                    (session_state == LIBSPDM_SESSION_STATE_ESTABLISHED));</a>
 <a name="331"><span class="lineNum">     331 </span>                :            : </a>
 <a name="332"><span class="lineNum">     332 </span>                :<span class="lineCov">        314 :     aead_tag_size = secured_message_context-&gt;aead_tag_size;</span></a>
 <a name="333"><span class="lineNum">     333 </span>                :<span class="lineCov">        314 :     aead_key_size = secured_message_context-&gt;aead_key_size;</span></a>
 <a name="334"><span class="lineNum">     334 </span>                :<span class="lineCov">        314 :     aead_iv_size = secured_message_context-&gt;aead_iv_size;</span></a>
 <a name="335"><span class="lineNum">     335 </span>                :            : </a>
-<a name="336"><span class="lineNum">     336 </span>                :<span class="lineCov">        314 :     switch (session_state) {</span></a>
+<a name="336"><span class="lineNum">     336 </span>     [<span class="branchCov" title="Branch 0 was taken 33 times"> + </span><span class="branchCov" title="Branch 1 was taken 281 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        314 :     switch (session_state) {</span></a>
 <a name="337"><span class="lineNum">     337 </span>                :<span class="lineCov">         33 :     case LIBSPDM_SESSION_STATE_HANDSHAKING:</span></a>
-<a name="338"><span class="lineNum">     338 </span>                :<span class="lineCov">         33 :         if (is_requester) {</span></a>
+<a name="338"><span class="lineNum">     338 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 32 times"> + </span>]:<span class="lineCov">         33 :         if (is_requester) {</span></a>
 <a name="339"><span class="lineNum">     339 </span>                :<span class="lineCov">          1 :             key = (const uint8_t *)secured_message_context-&gt;handshake_secret.</span></a>
 <a name="340"><span class="lineNum">     340 </span>                :            :                   request_handshake_encryption_key;</a>
 <a name="341"><span class="lineNum">     341 </span>                :<span class="lineCov">          1 :             salt = (uint8_t *)secured_message_context-&gt;handshake_secret.</span></a>
@@ -423,7 +423,7 @@
 <a name="352"><span class="lineNum">     352 </span>                :            :         }</a>
 <a name="353"><span class="lineNum">     353 </span>                :<span class="lineCov">         33 :         break;</span></a>
 <a name="354"><span class="lineNum">     354 </span>                :<span class="lineCov">        281 :     case LIBSPDM_SESSION_STATE_ESTABLISHED:</span></a>
-<a name="355"><span class="lineNum">     355 </span>                :<span class="lineCov">        281 :         if (is_requester) {</span></a>
+<a name="355"><span class="lineNum">     355 </span>        [<span class="branchCov" title="Branch 0 was taken 60 times"> + </span><span class="branchCov" title="Branch 1 was taken 221 times"> + </span>]:<span class="lineCov">        281 :         if (is_requester) {</span></a>
 <a name="356"><span class="lineNum">     356 </span>                :<span class="lineCov">         60 :             key = (const uint8_t *)secured_message_context-&gt;application_secret.</span></a>
 <a name="357"><span class="lineNum">     357 </span>                :            :                   request_data_encryption_key;</a>
 <a name="358"><span class="lineNum">     358 </span>                :<span class="lineCov">         60 :             salt = (uint8_t *)secured_message_context-&gt;application_secret.</span></a>
@@ -444,13 +444,13 @@
 <a name="373"><span class="lineNum">     373 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_INVALID_STATE_LOCAL;</span></a>
 <a name="374"><span class="lineNum">     374 </span>                :            :     }</a>
 <a name="375"><span class="lineNum">     375 </span>                :            : </a>
-<a name="376"><span class="lineNum">     376 </span>                :<span class="lineCov">        314 :     if (sequence_number == (uint64_t)-1) {</span></a>
+<a name="376"><span class="lineNum">     376 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :     if (sequence_number == (uint64_t)-1) {</span></a>
 <a name="377"><span class="lineNum">     377 </span>                :<span class="lineNoCov">          0 :         libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="378"><span class="lineNum">     378 </span>                :            :             spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="379"><span class="lineNum">     379 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_SEQUENCE_NUMBER_OVERFLOW;</span></a>
 <a name="380"><span class="lineNum">     380 </span>                :            :     }</a>
 <a name="381"><span class="lineNum">     381 </span>                :            : </a>
-<a name="382"><span class="lineNum">     382 </span>                :<span class="lineCov">        314 :     if (sequence_number &gt; 0) {</span></a>
+<a name="382"><span class="lineNum">     382 </span>        [<span class="branchCov" title="Branch 0 was taken 71 times"> + </span><span class="branchCov" title="Branch 1 was taken 243 times"> + </span>]:<span class="lineCov">        314 :     if (sequence_number &gt; 0) {</span></a>
 <a name="383"><span class="lineNum">     383 </span>                :<span class="lineCov">         71 :         *(uint64_t *)salt = *(uint64_t *)salt ^ (sequence_number - 1) ^ sequence_number;</span></a>
 <a name="384"><span class="lineNum">     384 </span>                :            :     }</a>
 <a name="385"><span class="lineNum">     385 </span>                :            : </a>
@@ -458,11 +458,11 @@
 <a name="387"><span class="lineNum">     387 </span>                :            :     sequence_num_in_header_size =</a>
 <a name="388"><span class="lineNum">     388 </span>                :<span class="lineCov">        314 :         spdm_secured_message_callbacks-&gt;get_sequence_number(</span></a>
 <a name="389"><span class="lineNum">     389 </span>                :            :             sequence_number, (uint8_t *)&amp;sequence_num_in_header);</a>
-<a name="390"><span class="lineNum">     390 </span>                :<span class="lineCov">        314 :     LIBSPDM_ASSERT(sequence_num_in_header_size &lt;= sizeof(sequence_num_in_header));</span></a>
+<a name="390"><span class="lineNum">     390 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :     LIBSPDM_ASSERT(sequence_num_in_header_size &lt;= sizeof(sequence_num_in_header));</span></a>
 <a name="391"><span class="lineNum">     391 </span>                :            : </a>
 <a name="392"><span class="lineNum">     392 </span>                :<span class="lineCov">        314 :     sequence_number++;</span></a>
-<a name="393"><span class="lineNum">     393 </span>                :<span class="lineCov">        314 :     if (session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) {</span></a>
-<a name="394"><span class="lineNum">     394 </span>                :<span class="lineCov">         33 :         if (is_requester) {</span></a>
+<a name="393"><span class="lineNum">     393 </span>        [<span class="branchCov" title="Branch 0 was taken 33 times"> + </span><span class="branchCov" title="Branch 1 was taken 281 times"> + </span>]:<span class="lineCov">        314 :     if (session_state == LIBSPDM_SESSION_STATE_HANDSHAKING) {</span></a>
+<a name="394"><span class="lineNum">     394 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 32 times"> + </span>]:<span class="lineCov">         33 :         if (is_requester) {</span></a>
 <a name="395"><span class="lineNum">     395 </span>                :<span class="lineCov">          1 :             secured_message_context-&gt;handshake_secret.request_handshake_sequence_number =</span></a>
 <a name="396"><span class="lineNum">     396 </span>                :            :                 sequence_number;</a>
 <a name="397"><span class="lineNum">     397 </span>                :            :         } else {</a>
@@ -471,7 +471,7 @@
 <a name="400"><span class="lineNum">     400 </span>                :            :         }</a>
 <a name="401"><span class="lineNum">     401 </span>                :            :     }</a>
 <a name="402"><span class="lineNum">     402 </span>                :            :     else {</a>
-<a name="403"><span class="lineNum">     403 </span>                :<span class="lineCov">        281 :         if (is_requester) {</span></a>
+<a name="403"><span class="lineNum">     403 </span>        [<span class="branchCov" title="Branch 0 was taken 60 times"> + </span><span class="branchCov" title="Branch 1 was taken 221 times"> + </span>]:<span class="lineCov">        281 :         if (is_requester) {</span></a>
 <a name="404"><span class="lineNum">     404 </span>                :<span class="lineCov">         60 :             secured_message_context-&gt;application_secret.request_data_sequence_number =</span></a>
 <a name="405"><span class="lineNum">     405 </span>                :            :                 sequence_number;</a>
 <a name="406"><span class="lineNum">     406 </span>                :            :         } else {</a>
@@ -484,9 +484,9 @@
 <a name="413"><span class="lineNum">     413 </span>                :<span class="lineCov">        314 :                          sequence_num_in_header_size +</span></a>
 <a name="414"><span class="lineNum">     414 </span>                :            :                          sizeof(spdm_secured_message_a_data_header2_t);</a>
 <a name="415"><span class="lineNum">     415 </span>                :            : </a>
-<a name="416"><span class="lineNum">     416 </span>                :<span class="lineCov">        314 :     switch (session_type) {</span></a>
+<a name="416"><span class="lineNum">     416 </span>     [<span class="branchCov" title="Branch 0 was taken 314 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span>]:<span class="lineCov">        314 :     switch (session_type) {</span></a>
 <a name="417"><span class="lineNum">     417 </span>                :<span class="lineCov">        314 :     case LIBSPDM_SESSION_TYPE_ENC_MAC:</span></a>
-<a name="418"><span class="lineNum">     418 </span>                :<span class="lineCov">        314 :         if (secured_message_size &lt; record_header_size + aead_tag_size) {</span></a>
+<a name="418"><span class="lineNum">     418 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :         if (secured_message_size &lt; record_header_size + aead_tag_size) {</span></a>
 <a name="419"><span class="lineNum">     419 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="420"><span class="lineNum">     420 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="421"><span class="lineNum">     421 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
@@ -496,29 +496,29 @@
 <a name="425"><span class="lineNum">     425 </span>                :            :             (void *)((uint8_t *)record_header1 +</a>
 <a name="426"><span class="lineNum">     426 </span>                :<span class="lineCov">        314 :                      sizeof(spdm_secured_message_a_data_header1_t) +</span></a>
 <a name="427"><span class="lineNum">     427 </span>                :            :                      sequence_num_in_header_size);</a>
-<a name="428"><span class="lineNum">     428 </span>                :<span class="lineCov">        314 :         if (record_header1-&gt;session_id != session_id) {</span></a>
+<a name="428"><span class="lineNum">     428 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :         if (record_header1-&gt;session_id != session_id) {</span></a>
 <a name="429"><span class="lineNum">     429 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="430"><span class="lineNum">     430 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="431"><span class="lineNum">     431 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="432"><span class="lineNum">     432 </span>                :            :         }</a>
-<a name="433"><span class="lineNum">     433 </span>                :<span class="lineCov">        314 :         if (libspdm_const_compare_mem(record_header1 + 1, &amp;sequence_num_in_header,</span></a>
+<a name="433"><span class="lineNum">     433 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :         if (libspdm_const_compare_mem(record_header1 + 1, &amp;sequence_num_in_header,</span></a>
 <a name="434"><span class="lineNum">     434 </span>                :            :                                       sequence_num_in_header_size) != 0) {</a>
 <a name="435"><span class="lineNum">     435 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="436"><span class="lineNum">     436 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="437"><span class="lineNum">     437 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="438"><span class="lineNum">     438 </span>                :            :         }</a>
-<a name="439"><span class="lineNum">     439 </span>                :<span class="lineCov">        314 :         if (record_header2-&gt;length &gt; secured_message_size - record_header_size) {</span></a>
+<a name="439"><span class="lineNum">     439 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :         if (record_header2-&gt;length &gt; secured_message_size - record_header_size) {</span></a>
 <a name="440"><span class="lineNum">     440 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="441"><span class="lineNum">     441 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="442"><span class="lineNum">     442 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="443"><span class="lineNum">     443 </span>                :            :         }</a>
-<a name="444"><span class="lineNum">     444 </span>                :<span class="lineCov">        314 :         if (record_header2-&gt;length &lt; aead_tag_size) {</span></a>
+<a name="444"><span class="lineNum">     444 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :         if (record_header2-&gt;length &lt; aead_tag_size) {</span></a>
 <a name="445"><span class="lineNum">     445 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="446"><span class="lineNum">     446 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="447"><span class="lineNum">     447 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="448"><span class="lineNum">     448 </span>                :            :         }</a>
 <a name="449"><span class="lineNum">     449 </span>                :<span class="lineCov">        314 :         cipher_text_size = (record_header2-&gt;length - aead_tag_size);</span></a>
-<a name="450"><span class="lineNum">     450 </span>                :<span class="lineCov">        314 :         if (cipher_text_size &gt; *app_message_size) {</span></a>
+<a name="450"><span class="lineNum">     450 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :         if (cipher_text_size &gt; *app_message_size) {</span></a>
 <a name="451"><span class="lineNum">     451 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="452"><span class="lineNum">     452 </span>                :            :         }</a>
 <a name="453"><span class="lineNum">     453 </span>                :<span class="lineCov">        314 :         libspdm_zero_mem(*app_message, *app_message_size);</span></a>
@@ -534,10 +534,10 @@
 <a name="463"><span class="lineNum">     463 </span>                :            :             aead_key_size, salt, aead_iv_size, a_data,</a>
 <a name="464"><span class="lineNum">     464 </span>                :            :             record_header_size, enc_msg, cipher_text_size, tag,</a>
 <a name="465"><span class="lineNum">     465 </span>                :            :             aead_tag_size, dec_msg, &amp;cipher_text_size);</a>
-<a name="466"><span class="lineNum">     466 </span>                :<span class="lineCov">        314 :         if (!result) {</span></a>
+<a name="466"><span class="lineNum">     466 </span>        [<span class="branchCov" title="Branch 0 was taken 27 times"> + </span><span class="branchCov" title="Branch 1 was taken 287 times"> + </span>]:<span class="lineCov">        314 :         if (!result) {</span></a>
 <a name="467"><span class="lineNum">     467 </span>                :            :             /* Backup keys are valid, fail and alert rollback and retry is possible. */</a>
-<a name="468"><span class="lineNum">     468 </span>                :<span class="lineCov">         27 :             if ((is_requester &amp;&amp; secured_message_context-&gt;requester_backup_valid) ||</span></a>
-<a name="469"><span class="lineNum">     469 </span>                :<span class="lineCov">         27 :                 ((!is_requester) &amp;&amp; secured_message_context-&gt;responder_backup_valid)) {</span></a>
+<a name="468"><span class="lineNum">     468 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 27 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         27 :             if ((is_requester &amp;&amp; secured_message_context-&gt;requester_backup_valid) ||</span></a>
+<a name="469"><span class="lineNum">     469 </span>  [<span class="branchCov" title="Branch 0 was taken 27 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 27 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         27 :                 ((!is_requester) &amp;&amp; secured_message_context-&gt;responder_backup_valid)) {</span></a>
 <a name="470"><span class="lineNum">     470 </span>                :<span class="lineCov">         27 :                 return LIBSPDM_STATUS_SESSION_TRY_DISCARD_KEY_UPDATE;</span></a>
 <a name="471"><span class="lineNum">     471 </span>                :            :             }</a>
 <a name="472"><span class="lineNum">     472 </span>                :            : </a>
@@ -546,19 +546,19 @@
 <a name="475"><span class="lineNum">     475 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
 <a name="476"><span class="lineNum">     476 </span>                :            :         }</a>
 <a name="477"><span class="lineNum">     477 </span>                :<span class="lineCov">        287 :         plain_text_size = enc_msg_header-&gt;application_data_length;</span></a>
-<a name="478"><span class="lineNum">     478 </span>                :<span class="lineCov">        287 :         if (plain_text_size &gt; cipher_text_size) {</span></a>
+<a name="478"><span class="lineNum">     478 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 287 times"> + </span>]:<span class="lineCov">        287 :         if (plain_text_size &gt; cipher_text_size) {</span></a>
 <a name="479"><span class="lineNum">     479 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="480"><span class="lineNum">     480 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="481"><span class="lineNum">     481 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="482"><span class="lineNum">     482 </span>                :            :         }</a>
 <a name="483"><span class="lineNum">     483 </span>                :            : </a>
-<a name="484"><span class="lineNum">     484 </span>                :<span class="lineCov">        287 :         LIBSPDM_ASSERT(*app_message_size &gt;= plain_text_size);</span></a>
+<a name="484"><span class="lineNum">     484 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 287 times"> + </span>]:<span class="lineCov">        287 :         LIBSPDM_ASSERT(*app_message_size &gt;= plain_text_size);</span></a>
 <a name="485"><span class="lineNum">     485 </span>                :<span class="lineCov">        287 :         *app_message = enc_msg_header + 1;</span></a>
 <a name="486"><span class="lineNum">     486 </span>                :<span class="lineCov">        287 :         *app_message_size = plain_text_size;</span></a>
 <a name="487"><span class="lineNum">     487 </span>                :<span class="lineCov">        287 :         break;</span></a>
 <a name="488"><span class="lineNum">     488 </span>                :            : </a>
 <a name="489"><span class="lineNum">     489 </span>                :<span class="lineNoCov">          0 :     case LIBSPDM_SESSION_TYPE_MAC_ONLY:</span></a>
-<a name="490"><span class="lineNum">     490 </span>                :<span class="lineNoCov">          0 :         if (secured_message_size &lt; record_header_size + aead_tag_size) {</span></a>
+<a name="490"><span class="lineNum">     490 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (secured_message_size &lt; record_header_size + aead_tag_size) {</span></a>
 <a name="491"><span class="lineNum">     491 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="492"><span class="lineNum">     492 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="493"><span class="lineNum">     493 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
@@ -568,24 +568,24 @@
 <a name="497"><span class="lineNum">     497 </span>                :            :             (void *)((uint8_t *)record_header1 +</a>
 <a name="498"><span class="lineNum">     498 </span>                :<span class="lineNoCov">          0 :                      sizeof(spdm_secured_message_a_data_header1_t) +</span></a>
 <a name="499"><span class="lineNum">     499 </span>                :            :                      sequence_num_in_header_size);</a>
-<a name="500"><span class="lineNum">     500 </span>                :<span class="lineNoCov">          0 :         if (record_header1-&gt;session_id != session_id) {</span></a>
+<a name="500"><span class="lineNum">     500 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (record_header1-&gt;session_id != session_id) {</span></a>
 <a name="501"><span class="lineNum">     501 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="502"><span class="lineNum">     502 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="503"><span class="lineNum">     503 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="504"><span class="lineNum">     504 </span>                :            :         }</a>
-<a name="505"><span class="lineNum">     505 </span>                :<span class="lineNoCov">          0 :         if (libspdm_const_compare_mem(record_header1 + 1, &amp;sequence_num_in_header,</span></a>
+<a name="505"><span class="lineNum">     505 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (libspdm_const_compare_mem(record_header1 + 1, &amp;sequence_num_in_header,</span></a>
 <a name="506"><span class="lineNum">     506 </span>                :            :                                       sequence_num_in_header_size) != 0) {</a>
 <a name="507"><span class="lineNum">     507 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="508"><span class="lineNum">     508 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="509"><span class="lineNum">     509 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="510"><span class="lineNum">     510 </span>                :            :         }</a>
 <a name="511"><span class="lineNum">     511 </span>                :<span class="lineNoCov">          0 :         if (record_header2-&gt;length &gt;</span></a>
-<a name="512"><span class="lineNum">     512 </span>                :<span class="lineNoCov">          0 :             secured_message_size - record_header_size) {</span></a>
+<a name="512"><span class="lineNum">     512 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :             secured_message_size - record_header_size) {</span></a>
 <a name="513"><span class="lineNum">     513 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="514"><span class="lineNum">     514 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="515"><span class="lineNum">     515 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="516"><span class="lineNum">     516 </span>                :            :         }</a>
-<a name="517"><span class="lineNum">     517 </span>                :<span class="lineNoCov">          0 :         if (record_header2-&gt;length &lt; aead_tag_size) {</span></a>
+<a name="517"><span class="lineNum">     517 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (record_header2-&gt;length &lt; aead_tag_size) {</span></a>
 <a name="518"><span class="lineNum">     518 </span>                :<span class="lineNoCov">          0 :             libspdm_secured_message_set_last_spdm_error_struct(</span></a>
 <a name="519"><span class="lineNum">     519 </span>                :            :                 spdm_secured_message_context, &amp;spdm_error);</a>
 <a name="520"><span class="lineNum">     520 </span>                :<span class="lineNoCov">          0 :             return LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
@@ -600,10 +600,10 @@
 <a name="529"><span class="lineNum">     529 </span>                :<span class="lineNoCov">          0 :             record_header_size + record_header2-&gt;length -</span></a>
 <a name="530"><span class="lineNum">     530 </span>                :            :             aead_tag_size,</a>
 <a name="531"><span class="lineNum">     531 </span>                :            :             NULL, 0, tag, aead_tag_size, NULL, NULL);</a>
-<a name="532"><span class="lineNum">     532 </span>                :<span class="lineNoCov">          0 :         if (!result) {</span></a>
+<a name="532"><span class="lineNum">     532 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (!result) {</span></a>
 <a name="533"><span class="lineNum">     533 </span>                :            :             /* Backup keys are valid, fail and alert rollback and retry is possible. */</a>
-<a name="534"><span class="lineNum">     534 </span>                :<span class="lineNoCov">          0 :             if ((is_requester &amp;&amp; secured_message_context-&gt;requester_backup_valid) ||</span></a>
-<a name="535"><span class="lineNum">     535 </span>                :<span class="lineNoCov">          0 :                 ((!is_requester) &amp;&amp; secured_message_context-&gt;responder_backup_valid)) {</span></a>
+<a name="534"><span class="lineNum">     534 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :             if ((is_requester &amp;&amp; secured_message_context-&gt;requester_backup_valid) ||</span></a>
+<a name="535"><span class="lineNum">     535 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :                 ((!is_requester) &amp;&amp; secured_message_context-&gt;responder_backup_valid)) {</span></a>
 <a name="536"><span class="lineNum">     536 </span>                :<span class="lineNoCov">          0 :                 return LIBSPDM_STATUS_SESSION_TRY_DISCARD_KEY_UPDATE;</span></a>
 <a name="537"><span class="lineNum">     537 </span>                :            :             }</a>
 <a name="538"><span class="lineNum">     538 </span>                :            : </a>
@@ -613,7 +613,7 @@
 <a name="542"><span class="lineNum">     542 </span>                :            :         }</a>
 <a name="543"><span class="lineNum">     543 </span>                :            : </a>
 <a name="544"><span class="lineNum">     544 </span>                :<span class="lineNoCov">          0 :         plain_text_size = record_header2-&gt;length - aead_tag_size;</span></a>
-<a name="545"><span class="lineNum">     545 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_ASSERT(*app_message_size &gt;= plain_text_size);</span></a>
+<a name="545"><span class="lineNum">     545 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         LIBSPDM_ASSERT(*app_message_size &gt;= plain_text_size);</span></a>
 <a name="546"><span class="lineNum">     546 </span>                :<span class="lineNoCov">          0 :         *app_message = record_header2 + 1;</span></a>
 <a name="547"><span class="lineNum">     547 </span>                :<span class="lineNoCov">          0 :         *app_message_size = plain_text_size;</span></a>
 <a name="548"><span class="lineNum">     548 </span>                :<span class="lineNoCov">          0 :         break;</span></a>
