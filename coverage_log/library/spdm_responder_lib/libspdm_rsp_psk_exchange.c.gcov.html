@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">123</td>
-            <td class="headerCovTableEntry">165</td>
-            <td class="headerCovTableEntryLo">74.5 %</td>
+            <td class="headerCovTableEntry">122</td>
+            <td class="headerCovTableEntry">164</td>
+            <td class="headerCovTableEntryLo">74.4 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-05 08:14:32</td>
+            <td class="headerValue">2023-02-06 08:16:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">51</td>
-            <td class="headerCovTableEntry">88</td>
-            <td class="headerCovTableEntryLo">58.0 %</td>
+            <td class="headerCovTableEntry">50</td>
+            <td class="headerCovTableEntry">86</td>
+            <td class="headerCovTableEntryLo">58.1 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -395,108 +395,107 @@
 <a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">         10 :         ptr += context_length;</span></a>
 <a name="325"><span class="lineNum">     325 </span>                :            :     }</a>
 <a name="326"><span class="lineNum">     326 </span>                :            : </a>
-<a name="327"><span class="lineNum">     327 </span>                :<span class="lineCov">         10 :     status = libspdm_build_opaque_data_version_selection_data(</span></a>
+<a name="327"><span class="lineNum">     327 </span>                :<span class="lineCov">         10 :     libspdm_build_opaque_data_version_selection_data(</span></a>
 <a name="328"><span class="lineNum">     328 </span>                :            :         spdm_context, &amp;opaque_psk_exchange_rsp_size, ptr);</a>
-<a name="329"><span class="lineNum">     329 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     LIBSPDM_ASSERT(status == LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="329"><span class="lineNum">     329 </span>                :            : </a>
 <a name="330"><span class="lineNum">     330 </span>                :<span class="lineCov">         10 :     ptr += opaque_psk_exchange_rsp_size;</span></a>
 <a name="331"><span class="lineNum">     331 </span>                :            : </a>
-<a name="332"><span class="lineNum">     332 </span>                :            : </a>
-<a name="333"><span class="lineNum">     333 </span>                :<span class="lineCov">         10 :     status = libspdm_append_message_k(spdm_context, session_info, false, request, request_size);</span></a>
-<a name="334"><span class="lineNum">     334 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="335"><span class="lineNum">     335 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
-<a name="336"><span class="lineNum">     336 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="337"><span class="lineNum">     337 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="338"><span class="lineNum">     338 </span>                :            :                                                response_size, response);</a>
-<a name="339"><span class="lineNum">     339 </span>                :            :     }</a>
-<a name="340"><span class="lineNum">     340 </span>                :            : </a>
-<a name="341"><span class="lineNum">     341 </span>                :<span class="lineCov">         10 :     status = libspdm_append_message_k(spdm_context, session_info, false, spdm_response,</span></a>
-<a name="342"><span class="lineNum">     342 </span>                :<span class="lineCov">         10 :                                       (size_t)ptr - (size_t)spdm_response);</span></a>
-<a name="343"><span class="lineNum">     343 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="344"><span class="lineNum">     344 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
-<a name="345"><span class="lineNum">     345 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="346"><span class="lineNum">     346 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="347"><span class="lineNum">     347 </span>                :            :                                                response_size, response);</a>
-<a name="348"><span class="lineNum">     348 </span>                :            :     }</a>
-<a name="349"><span class="lineNum">     349 </span>                :            : </a>
-<a name="350"><span class="lineNum">     350 </span>                :<span class="lineCov">         10 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_handshake_key[%x]\n&quot;,</span></a>
-<a name="351"><span class="lineNum">     351 </span>                :            :                    session_id));</a>
-<a name="352"><span class="lineNum">     352 </span>                :<span class="lineCov">         10 :     result = libspdm_calculate_th1_hash(spdm_context, session_info, false,</span></a>
-<a name="353"><span class="lineNum">     353 </span>                :            :                                         th1_hash_data);</a>
-<a name="354"><span class="lineNum">     354 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!result) {</span></a>
-<a name="355"><span class="lineNum">     355 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
-<a name="356"><span class="lineNum">     356 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="357"><span class="lineNum">     357 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="358"><span class="lineNum">     358 </span>                :            :                                                response_size, response);</a>
-<a name="359"><span class="lineNum">     359 </span>                :            :     }</a>
-<a name="360"><span class="lineNum">     360 </span>                :<span class="lineCov">         10 :     result = libspdm_generate_session_handshake_key(</span></a>
-<a name="361"><span class="lineNum">     361 </span>                :            :         session_info-&gt;secured_message_context, th1_hash_data);</a>
-<a name="362"><span class="lineNum">     362 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!result) {</span></a>
-<a name="363"><span class="lineNum">     363 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
-<a name="364"><span class="lineNum">     364 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="365"><span class="lineNum">     365 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="366"><span class="lineNum">     366 </span>                :            :                                                response_size, response);</a>
-<a name="367"><span class="lineNum">     367 </span>                :            :     }</a>
-<a name="368"><span class="lineNum">     368 </span>                :            : </a>
-<a name="369"><span class="lineNum">     369 </span>                :<span class="lineCov">         10 :     result = libspdm_generate_psk_exchange_rsp_hmac(spdm_context, session_info,</span></a>
-<a name="370"><span class="lineNum">     370 </span>                :            :                                                     ptr);</a>
-<a name="371"><span class="lineNum">     371 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!result) {</span></a>
-<a name="372"><span class="lineNum">     372 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
-<a name="373"><span class="lineNum">     373 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="374"><span class="lineNum">     374 </span>                :            :             spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
-<a name="375"><span class="lineNum">     375 </span>                :            :             0, response_size, response);</a>
-<a name="376"><span class="lineNum">     376 </span>                :            :     }</a>
-<a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">         10 :     status = libspdm_append_message_k(spdm_context, session_info, false, ptr, hmac_size);</span></a>
-<a name="378"><span class="lineNum">     378 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="379"><span class="lineNum">     379 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
-<a name="380"><span class="lineNum">     380 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="381"><span class="lineNum">     381 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
-<a name="382"><span class="lineNum">     382 </span>                :            :                                                response_size, response);</a>
-<a name="383"><span class="lineNum">     383 </span>                :            :     }</a>
-<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">         10 :     ptr += hmac_size;</span></a>
-<a name="385"><span class="lineNum">     385 </span>                :            : </a>
-<a name="386"><span class="lineNum">     386 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 9 times"> + </span>]:<span class="lineCov">         10 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="387"><span class="lineNum">     387 </span>                :<span class="lineCov">          1 :         session_info-&gt;session_policy = spdm_request-&gt;header.param2;</span></a>
-<a name="388"><span class="lineNum">     388 </span>                :            :     }</a>
-<a name="389"><span class="lineNum">     389 </span>                :<span class="lineCov">         10 :     libspdm_set_session_state(spdm_context, session_id, LIBSPDM_SESSION_STATE_HANDSHAKING);</span></a>
-<a name="390"><span class="lineNum">     390 </span>                :            : </a>
-<a name="391"><span class="lineNum">     391 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
-<a name="392"><span class="lineNum">     392 </span>                :            :             spdm_context, false, 0,</a>
-<a name="393"><span class="lineNum">     393 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PSK_CAP_RESPONDER_WITH_CONTEXT)) {</a>
-<a name="394"><span class="lineNum">     394 </span>                :            :         /* No need to receive PSK_FINISH, enter application phase directly.*/</a>
-<a name="395"><span class="lineNum">     395 </span>                :            : </a>
-<a name="396"><span class="lineNum">     396 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_data_key[%x]\n&quot;,</span></a>
-<a name="397"><span class="lineNum">     397 </span>                :            :                        session_id));</a>
-<a name="398"><span class="lineNum">     398 </span>                :<span class="lineNoCov">          0 :         result = libspdm_calculate_th2_hash(spdm_context, session_info,</span></a>
-<a name="399"><span class="lineNum">     399 </span>                :            :                                             false, th2_hash_data);</a>
-<a name="400"><span class="lineNum">     400 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (!result) {</span></a>
-<a name="401"><span class="lineNum">     401 </span>                :<span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
-<a name="402"><span class="lineNum">     402 </span>                :            :                 spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
-<a name="403"><span class="lineNum">     403 </span>                :            :                 0, response_size, response);</a>
-<a name="404"><span class="lineNum">     404 </span>                :            :         }</a>
-<a name="405"><span class="lineNum">     405 </span>                :<span class="lineNoCov">          0 :         result = libspdm_generate_session_data_key(</span></a>
-<a name="406"><span class="lineNum">     406 </span>                :            :             session_info-&gt;secured_message_context, th2_hash_data);</a>
-<a name="407"><span class="lineNum">     407 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (!result) {</span></a>
-<a name="408"><span class="lineNum">     408 </span>                :<span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
-<a name="409"><span class="lineNum">     409 </span>                :            :                 spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
-<a name="410"><span class="lineNum">     410 </span>                :            :                 0, response_size, response);</a>
-<a name="411"><span class="lineNum">     411 </span>                :            :         }</a>
-<a name="412"><span class="lineNum">     412 </span>                :            : </a>
-<a name="413"><span class="lineNum">     413 </span>                :<span class="lineNoCov">          0 :         libspdm_set_session_state(spdm_context, session_id, LIBSPDM_SESSION_STATE_ESTABLISHED);</span></a>
-<a name="414"><span class="lineNum">     414 </span>                :            :     }</a>
-<a name="415"><span class="lineNum">     415 </span>                :            : </a>
-<a name="416"><span class="lineNum">     416 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (libspdm_is_capabilities_flag_supported(</span></a>
-<a name="417"><span class="lineNum">     417 </span>                :            :             spdm_context, false,</a>
-<a name="418"><span class="lineNum">     418 </span>                :            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HBEAT_CAP,</a>
-<a name="419"><span class="lineNum">     419 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HBEAT_CAP)) {</a>
-<a name="420"><span class="lineNum">     420 </span>                :<span class="lineNoCov">          0 :         session_info-&gt;heartbeat_period = spdm_context-&gt;local_context.heartbeat_period;</span></a>
-<a name="421"><span class="lineNum">     421 </span>                :            :     } else {</a>
-<a name="422"><span class="lineNum">     422 </span>                :<span class="lineCov">         10 :         session_info-&gt;heartbeat_period = 0x00;</span></a>
-<a name="423"><span class="lineNum">     423 </span>                :            :     }</a>
-<a name="424"><span class="lineNum">     424 </span>                :            : </a>
-<a name="425"><span class="lineNum">     425 </span>                :<span class="lineCov">         10 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="426"><span class="lineNum">     426 </span>                :            : }</a>
-<a name="427"><span class="lineNum">     427 </span>                :            : </a>
-<a name="428"><span class="lineNum">     428 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
+<a name="332"><span class="lineNum">     332 </span>                :<span class="lineCov">         10 :     status = libspdm_append_message_k(spdm_context, session_info, false, request, request_size);</span></a>
+<a name="333"><span class="lineNum">     333 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="334"><span class="lineNum">     334 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
+<a name="335"><span class="lineNum">     335 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="336"><span class="lineNum">     336 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="337"><span class="lineNum">     337 </span>                :            :                                                response_size, response);</a>
+<a name="338"><span class="lineNum">     338 </span>                :            :     }</a>
+<a name="339"><span class="lineNum">     339 </span>                :            : </a>
+<a name="340"><span class="lineNum">     340 </span>                :<span class="lineCov">         10 :     status = libspdm_append_message_k(spdm_context, session_info, false, spdm_response,</span></a>
+<a name="341"><span class="lineNum">     341 </span>                :<span class="lineCov">         10 :                                       (size_t)ptr - (size_t)spdm_response);</span></a>
+<a name="342"><span class="lineNum">     342 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="343"><span class="lineNum">     343 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
+<a name="344"><span class="lineNum">     344 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="345"><span class="lineNum">     345 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="346"><span class="lineNum">     346 </span>                :            :                                                response_size, response);</a>
+<a name="347"><span class="lineNum">     347 </span>                :            :     }</a>
+<a name="348"><span class="lineNum">     348 </span>                :            : </a>
+<a name="349"><span class="lineNum">     349 </span>                :<span class="lineCov">         10 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_handshake_key[%x]\n&quot;,</span></a>
+<a name="350"><span class="lineNum">     350 </span>                :            :                    session_id));</a>
+<a name="351"><span class="lineNum">     351 </span>                :<span class="lineCov">         10 :     result = libspdm_calculate_th1_hash(spdm_context, session_info, false,</span></a>
+<a name="352"><span class="lineNum">     352 </span>                :            :                                         th1_hash_data);</a>
+<a name="353"><span class="lineNum">     353 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!result) {</span></a>
+<a name="354"><span class="lineNum">     354 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
+<a name="355"><span class="lineNum">     355 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="356"><span class="lineNum">     356 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="357"><span class="lineNum">     357 </span>                :            :                                                response_size, response);</a>
+<a name="358"><span class="lineNum">     358 </span>                :            :     }</a>
+<a name="359"><span class="lineNum">     359 </span>                :<span class="lineCov">         10 :     result = libspdm_generate_session_handshake_key(</span></a>
+<a name="360"><span class="lineNum">     360 </span>                :            :         session_info-&gt;secured_message_context, th1_hash_data);</a>
+<a name="361"><span class="lineNum">     361 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!result) {</span></a>
+<a name="362"><span class="lineNum">     362 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
+<a name="363"><span class="lineNum">     363 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="364"><span class="lineNum">     364 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="365"><span class="lineNum">     365 </span>                :            :                                                response_size, response);</a>
+<a name="366"><span class="lineNum">     366 </span>                :            :     }</a>
+<a name="367"><span class="lineNum">     367 </span>                :            : </a>
+<a name="368"><span class="lineNum">     368 </span>                :<span class="lineCov">         10 :     result = libspdm_generate_psk_exchange_rsp_hmac(spdm_context, session_info,</span></a>
+<a name="369"><span class="lineNum">     369 </span>                :            :                                                     ptr);</a>
+<a name="370"><span class="lineNum">     370 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!result) {</span></a>
+<a name="371"><span class="lineNum">     371 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
+<a name="372"><span class="lineNum">     372 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="373"><span class="lineNum">     373 </span>                :            :             spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
+<a name="374"><span class="lineNum">     374 </span>                :            :             0, response_size, response);</a>
+<a name="375"><span class="lineNum">     375 </span>                :            :     }</a>
+<a name="376"><span class="lineNum">     376 </span>                :<span class="lineCov">         10 :     status = libspdm_append_message_k(spdm_context, session_info, false, ptr, hmac_size);</span></a>
+<a name="377"><span class="lineNum">     377 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="378"><span class="lineNum">     378 </span>                :<span class="lineNoCov">          0 :         libspdm_free_session_id(spdm_context, session_id);</span></a>
+<a name="379"><span class="lineNum">     379 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="380"><span class="lineNum">     380 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
+<a name="381"><span class="lineNum">     381 </span>                :            :                                                response_size, response);</a>
+<a name="382"><span class="lineNum">     382 </span>                :            :     }</a>
+<a name="383"><span class="lineNum">     383 </span>                :<span class="lineCov">         10 :     ptr += hmac_size;</span></a>
+<a name="384"><span class="lineNum">     384 </span>                :            : </a>
+<a name="385"><span class="lineNum">     385 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 9 times"> + </span>]:<span class="lineCov">         10 :     if (spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="386"><span class="lineNum">     386 </span>                :<span class="lineCov">          1 :         session_info-&gt;session_policy = spdm_request-&gt;header.param2;</span></a>
+<a name="387"><span class="lineNum">     387 </span>                :            :     }</a>
+<a name="388"><span class="lineNum">     388 </span>                :<span class="lineCov">         10 :     libspdm_set_session_state(spdm_context, session_id, LIBSPDM_SESSION_STATE_HANDSHAKING);</span></a>
+<a name="389"><span class="lineNum">     389 </span>                :            : </a>
+<a name="390"><span class="lineNum">     390 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (!libspdm_is_capabilities_flag_supported(</span></a>
+<a name="391"><span class="lineNum">     391 </span>                :            :             spdm_context, false, 0,</a>
+<a name="392"><span class="lineNum">     392 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PSK_CAP_RESPONDER_WITH_CONTEXT)) {</a>
+<a name="393"><span class="lineNum">     393 </span>                :            :         /* No need to receive PSK_FINISH, enter application phase directly.*/</a>
+<a name="394"><span class="lineNum">     394 </span>                :            : </a>
+<a name="395"><span class="lineNum">     395 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;libspdm_generate_session_data_key[%x]\n&quot;,</span></a>
+<a name="396"><span class="lineNum">     396 </span>                :            :                        session_id));</a>
+<a name="397"><span class="lineNum">     397 </span>                :<span class="lineNoCov">          0 :         result = libspdm_calculate_th2_hash(spdm_context, session_info,</span></a>
+<a name="398"><span class="lineNum">     398 </span>                :            :                                             false, th2_hash_data);</a>
+<a name="399"><span class="lineNum">     399 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (!result) {</span></a>
+<a name="400"><span class="lineNum">     400 </span>                :<span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
+<a name="401"><span class="lineNum">     401 </span>                :            :                 spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
+<a name="402"><span class="lineNum">     402 </span>                :            :                 0, response_size, response);</a>
+<a name="403"><span class="lineNum">     403 </span>                :            :         }</a>
+<a name="404"><span class="lineNum">     404 </span>                :<span class="lineNoCov">          0 :         result = libspdm_generate_session_data_key(</span></a>
+<a name="405"><span class="lineNum">     405 </span>                :            :             session_info-&gt;secured_message_context, th2_hash_data);</a>
+<a name="406"><span class="lineNum">     406 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (!result) {</span></a>
+<a name="407"><span class="lineNum">     407 </span>                :<span class="lineNoCov">          0 :             return libspdm_generate_error_response(</span></a>
+<a name="408"><span class="lineNum">     408 </span>                :            :                 spdm_context, SPDM_ERROR_CODE_UNSPECIFIED,</a>
+<a name="409"><span class="lineNum">     409 </span>                :            :                 0, response_size, response);</a>
+<a name="410"><span class="lineNum">     410 </span>                :            :         }</a>
+<a name="411"><span class="lineNum">     411 </span>                :            : </a>
+<a name="412"><span class="lineNum">     412 </span>                :<span class="lineNoCov">          0 :         libspdm_set_session_state(spdm_context, session_id, LIBSPDM_SESSION_STATE_ESTABLISHED);</span></a>
+<a name="413"><span class="lineNum">     413 </span>                :            :     }</a>
+<a name="414"><span class="lineNum">     414 </span>                :            : </a>
+<a name="415"><span class="lineNum">     415 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if (libspdm_is_capabilities_flag_supported(</span></a>
+<a name="416"><span class="lineNum">     416 </span>                :            :             spdm_context, false,</a>
+<a name="417"><span class="lineNum">     417 </span>                :            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HBEAT_CAP,</a>
+<a name="418"><span class="lineNum">     418 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HBEAT_CAP)) {</a>
+<a name="419"><span class="lineNum">     419 </span>                :<span class="lineNoCov">          0 :         session_info-&gt;heartbeat_period = spdm_context-&gt;local_context.heartbeat_period;</span></a>
+<a name="420"><span class="lineNum">     420 </span>                :            :     } else {</a>
+<a name="421"><span class="lineNum">     421 </span>                :<span class="lineCov">         10 :         session_info-&gt;heartbeat_period = 0x00;</span></a>
+<a name="422"><span class="lineNum">     422 </span>                :            :     }</a>
+<a name="423"><span class="lineNum">     423 </span>                :            : </a>
+<a name="424"><span class="lineNum">     424 </span>                :<span class="lineCov">         10 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="425"><span class="lineNum">     425 </span>                :            : }</a>
+<a name="426"><span class="lineNum">     426 </span>                :            : </a>
+<a name="427"><span class="lineNum">     427 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
 </pre>
       </td>
     </tr>
