@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-06 08:16:22</td>
+            <td class="headerValue">2023-02-07 08:16:06</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -452,7 +452,7 @@
 <a name="381"><span class="lineNum">     381 </span>                :            : </a>
 <a name="382"><span class="lineNum">     382 </span>                :<span class="lineCov">         87 :     opaque_key_exchange_req_size =</span></a>
 <a name="383"><span class="lineNum">     383 </span>                :<span class="lineCov">         87 :         libspdm_get_opaque_data_supported_version_data_size(spdm_context);</span></a>
-<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">         87 :     *(uint16_t *)ptr = (uint16_t)opaque_key_exchange_req_size;</span></a>
+<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">         87 :     libspdm_write_uint16(ptr, (uint16_t)opaque_key_exchange_req_size);</span></a>
 <a name="385"><span class="lineNum">     385 </span>                :<span class="lineCov">         87 :     ptr += sizeof(uint16_t);</span></a>
 <a name="386"><span class="lineNum">     386 </span>                :<span class="lineCov">         87 :     libspdm_build_opaque_data_supported_version_data(</span></a>
 <a name="387"><span class="lineNum">     387 </span>                :            :         spdm_context, &amp;opaque_key_exchange_req_size, ptr);</a>
@@ -629,7 +629,7 @@
 <a name="558"><span class="lineNum">     558 </span>                :            : </a>
 <a name="559"><span class="lineNum">     559 </span>                :<span class="lineCov">         23 :     ptr += measurement_summary_hash_size;</span></a>
 <a name="560"><span class="lineNum">     560 </span>                :            : </a>
-<a name="561"><span class="lineNum">     561 </span>                :<span class="lineCov">         23 :     opaque_length = *(uint16_t *)ptr;</span></a>
+<a name="561"><span class="lineNum">     561 </span>                :<span class="lineCov">         23 :     opaque_length = libspdm_read_uint16((const uint8_t *)ptr);</span></a>
 <a name="562"><span class="lineNum">     562 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 22 times"> + </span>]:<span class="lineCov">         23 :     if (opaque_length &gt; SPDM_MAX_OPAQUE_DATA_SIZE) {</span></a>
 <a name="563"><span class="lineNum">     563 </span>                :<span class="lineCov">          1 :         libspdm_secured_message_dhe_free(</span></a>
 <a name="564"><span class="lineNum">     564 </span>                :<span class="lineCov">          1 :             spdm_context-&gt;connection_info.algorithm.dhe_named_group, dhe_context);</span></a>
