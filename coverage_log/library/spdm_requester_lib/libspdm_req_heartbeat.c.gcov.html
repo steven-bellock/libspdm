@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">58</td>
-            <td class="headerCovTableEntry">72</td>
-            <td class="headerCovTableEntryMed">80.6 %</td>
+            <td class="headerCovTableEntry">60</td>
+            <td class="headerCovTableEntry">74</td>
+            <td class="headerCovTableEntryMed">81.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-27 08:16:56</td>
+            <td class="headerValue">2023-02-28 08:16:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -213,21 +213,25 @@
 <a name="142"><span class="lineNum">     142 </span>                :<span class="lineCov">         30 : libspdm_return_t libspdm_heartbeat(void *spdm_context, uint32_t session_id)</span></a>
 <a name="143"><span class="lineNum">     143 </span>                :            : {</a>
 <a name="144"><span class="lineNum">     144 </span>                :            :     size_t retry;</a>
-<a name="145"><span class="lineNum">     145 </span>                :            :     libspdm_return_t status;</a>
-<a name="146"><span class="lineNum">     146 </span>                :            :     libspdm_context_t *context;</a>
-<a name="147"><span class="lineNum">     147 </span>                :            : </a>
-<a name="148"><span class="lineNum">     148 </span>                :<span class="lineCov">         30 :     context = spdm_context;</span></a>
-<a name="149"><span class="lineNum">     149 </span>                :<span class="lineCov">         30 :     context-&gt;crypto_request = true;</span></a>
-<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">         30 :     retry = context-&gt;retry_times;</span></a>
-<a name="151"><span class="lineNum">     151 </span>                :            :     do {</a>
-<a name="152"><span class="lineNum">     152 </span>                :<span class="lineCov">         31 :         status = libspdm_try_heartbeat(context, session_id);</span></a>
-<a name="153"><span class="lineNum">     153 </span>        [<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         31 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">         29 :             return status;</span></a>
-<a name="155"><span class="lineNum">     155 </span>                :            :         }</a>
-<a name="156"><span class="lineNum">     156 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
-<a name="157"><span class="lineNum">     157 </span>                :            : </a>
-<a name="158"><span class="lineNum">     158 </span>                :<span class="lineCov">          1 :     return status;</span></a>
-<a name="159"><span class="lineNum">     159 </span>                :            : }</a>
+<a name="145"><span class="lineNum">     145 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="146"><span class="lineNum">     146 </span>                :            :     libspdm_return_t status;</a>
+<a name="147"><span class="lineNum">     147 </span>                :            :     libspdm_context_t *context;</a>
+<a name="148"><span class="lineNum">     148 </span>                :            : </a>
+<a name="149"><span class="lineNum">     149 </span>                :<span class="lineCov">         30 :     context = spdm_context;</span></a>
+<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">         30 :     context-&gt;crypto_request = true;</span></a>
+<a name="151"><span class="lineNum">     151 </span>                :<span class="lineCov">         30 :     retry = context-&gt;retry_times;</span></a>
+<a name="152"><span class="lineNum">     152 </span>                :<span class="lineCov">         30 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
+<a name="153"><span class="lineNum">     153 </span>                :            :     do {</a>
+<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">         31 :         status = libspdm_try_heartbeat(context, session_id);</span></a>
+<a name="155"><span class="lineNum">     155 </span>        [<span class="branchCov" title="Branch 0 was taken 29 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         31 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">         29 :             return status;</span></a>
+<a name="157"><span class="lineNum">     157 </span>                :            :         }</a>
+<a name="158"><span class="lineNum">     158 </span>                :            : </a>
+<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">          2 :         libspdm_sleep_in_us(retry_delay_time);</span></a>
+<a name="160"><span class="lineNum">     160 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
+<a name="161"><span class="lineNum">     161 </span>                :            : </a>
+<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          1 :     return status;</span></a>
+<a name="163"><span class="lineNum">     163 </span>                :            : }</a>
 </pre>
       </td>
     </tr>

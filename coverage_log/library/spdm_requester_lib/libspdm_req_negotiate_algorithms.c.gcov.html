@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">278</td>
-            <td class="headerCovTableEntry">300</td>
+            <td class="headerCovTableEntry">280</td>
+            <td class="headerCovTableEntry">302</td>
             <td class="headerCovTableEntryHi">92.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-27 08:16:56</td>
+            <td class="headerValue">2023-02-28 08:16:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -588,19 +588,23 @@
 <a name="516"><span class="lineNum">     516 </span>                :<span class="lineCov">         64 : libspdm_return_t libspdm_negotiate_algorithms(libspdm_context_t *spdm_context)</span></a>
 <a name="517"><span class="lineNum">     517 </span>                :            : {</a>
 <a name="518"><span class="lineNum">     518 </span>                :            :     size_t retry;</a>
-<a name="519"><span class="lineNum">     519 </span>                :            :     libspdm_return_t status;</a>
-<a name="520"><span class="lineNum">     520 </span>                :            : </a>
-<a name="521"><span class="lineNum">     521 </span>                :<span class="lineCov">         64 :     spdm_context-&gt;crypto_request = false;</span></a>
-<a name="522"><span class="lineNum">     522 </span>                :<span class="lineCov">         64 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="523"><span class="lineNum">     523 </span>                :            :     do {</a>
-<a name="524"><span class="lineNum">     524 </span>                :<span class="lineCov">         65 :         status = libspdm_try_negotiate_algorithms(spdm_context);</span></a>
-<a name="525"><span class="lineNum">     525 </span>        [<span class="branchCov" title="Branch 0 was taken 63 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         65 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
-<a name="526"><span class="lineNum">     526 </span>                :<span class="lineCov">         63 :             return status;</span></a>
-<a name="527"><span class="lineNum">     527 </span>                :            :         }</a>
-<a name="528"><span class="lineNum">     528 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
-<a name="529"><span class="lineNum">     529 </span>                :            : </a>
-<a name="530"><span class="lineNum">     530 </span>                :<span class="lineCov">          1 :     return status;</span></a>
-<a name="531"><span class="lineNum">     531 </span>                :            : }</a>
+<a name="519"><span class="lineNum">     519 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="520"><span class="lineNum">     520 </span>                :            :     libspdm_return_t status;</a>
+<a name="521"><span class="lineNum">     521 </span>                :            : </a>
+<a name="522"><span class="lineNum">     522 </span>                :<span class="lineCov">         64 :     spdm_context-&gt;crypto_request = false;</span></a>
+<a name="523"><span class="lineNum">     523 </span>                :<span class="lineCov">         64 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="524"><span class="lineNum">     524 </span>                :<span class="lineCov">         64 :     retry_delay_time = spdm_context-&gt;retry_delay_time;</span></a>
+<a name="525"><span class="lineNum">     525 </span>                :            :     do {</a>
+<a name="526"><span class="lineNum">     526 </span>                :<span class="lineCov">         65 :         status = libspdm_try_negotiate_algorithms(spdm_context);</span></a>
+<a name="527"><span class="lineNum">     527 </span>        [<span class="branchCov" title="Branch 0 was taken 63 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         65 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
+<a name="528"><span class="lineNum">     528 </span>                :<span class="lineCov">         63 :             return status;</span></a>
+<a name="529"><span class="lineNum">     529 </span>                :            :         }</a>
+<a name="530"><span class="lineNum">     530 </span>                :            : </a>
+<a name="531"><span class="lineNum">     531 </span>                :<span class="lineCov">          2 :         libspdm_sleep_in_us(retry_delay_time);</span></a>
+<a name="532"><span class="lineNum">     532 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :     } while (retry-- != 0);</span></a>
+<a name="533"><span class="lineNum">     533 </span>                :            : </a>
+<a name="534"><span class="lineNum">     534 </span>                :<span class="lineCov">          1 :     return status;</span></a>
+<a name="535"><span class="lineNum">     535 </span>                :            : }</a>
 </pre>
       </td>
     </tr>

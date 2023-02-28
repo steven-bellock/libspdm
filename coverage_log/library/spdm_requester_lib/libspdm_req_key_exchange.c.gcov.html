@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">282</td>
-            <td class="headerCovTableEntry">351</td>
+            <td class="headerCovTableEntry">285</td>
+            <td class="headerCovTableEntry">355</td>
             <td class="headerCovTableEntryMed">80.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-02-27 08:16:56</td>
+            <td class="headerValue">2023-02-28 08:16:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -805,52 +805,60 @@
 <a name="733"><span class="lineNum">     733 </span>                :            :     uint8_t *req_slot_id_param, void *measurement_hash)</a>
 <a name="734"><span class="lineNum">     734 </span>                :            : {</a>
 <a name="735"><span class="lineNum">     735 </span>                :            :     size_t retry;</a>
-<a name="736"><span class="lineNum">     736 </span>                :            :     libspdm_return_t status;</a>
-<a name="737"><span class="lineNum">     737 </span>                :            : </a>
-<a name="738"><span class="lineNum">     738 </span>                :<span class="lineCov">         90 :     spdm_context-&gt;crypto_request = true;</span></a>
-<a name="739"><span class="lineNum">     739 </span>                :<span class="lineCov">         90 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="740"><span class="lineNum">     740 </span>                :            :     do {</a>
-<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">         91 :         status = libspdm_try_send_receive_key_exchange(</span></a>
-<a name="742"><span class="lineNum">     742 </span>                :            :             spdm_context, measurement_hash_type, slot_id, session_policy,</a>
-<a name="743"><span class="lineNum">     743 </span>                :            :             session_id, heartbeat_period, req_slot_id_param,</a>
-<a name="744"><span class="lineNum">     744 </span>                :            :             measurement_hash, NULL, NULL, NULL);</a>
-<a name="745"><span class="lineNum">     745 </span>        [<span class="branchCov" title="Branch 0 was taken 88 times"> + </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">         91 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
-<a name="746"><span class="lineNum">     746 </span>                :<span class="lineCov">         88 :             return status;</span></a>
-<a name="747"><span class="lineNum">     747 </span>                :            :         }</a>
-<a name="748"><span class="lineNum">     748 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          3 :     } while (retry-- != 0);</span></a>
-<a name="749"><span class="lineNum">     749 </span>                :            : </a>
-<a name="750"><span class="lineNum">     750 </span>                :<span class="lineCov">          2 :     return status;</span></a>
-<a name="751"><span class="lineNum">     751 </span>                :            : }</a>
-<a name="752"><span class="lineNum">     752 </span>                :            : </a>
-<a name="753"><span class="lineNum">     753 </span>                :<span class="lineCov">          1 : libspdm_return_t libspdm_send_receive_key_exchange_ex(</span></a>
-<a name="754"><span class="lineNum">     754 </span>                :            :     libspdm_context_t *spdm_context, uint8_t measurement_hash_type,</a>
-<a name="755"><span class="lineNum">     755 </span>                :            :     uint8_t slot_id, uint8_t session_policy, uint32_t *session_id,</a>
-<a name="756"><span class="lineNum">     756 </span>                :            :     uint8_t *heartbeat_period,</a>
-<a name="757"><span class="lineNum">     757 </span>                :            :     uint8_t *req_slot_id_param, void *measurement_hash,</a>
-<a name="758"><span class="lineNum">     758 </span>                :            :     const void *requester_random_in,</a>
-<a name="759"><span class="lineNum">     759 </span>                :            :     void *requester_random,</a>
-<a name="760"><span class="lineNum">     760 </span>                :            :     void *responder_random)</a>
-<a name="761"><span class="lineNum">     761 </span>                :            : {</a>
-<a name="762"><span class="lineNum">     762 </span>                :            :     size_t retry;</a>
-<a name="763"><span class="lineNum">     763 </span>                :            :     libspdm_return_t status;</a>
-<a name="764"><span class="lineNum">     764 </span>                :            : </a>
-<a name="765"><span class="lineNum">     765 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;crypto_request = true;</span></a>
-<a name="766"><span class="lineNum">     766 </span>                :<span class="lineCov">          1 :     retry = spdm_context-&gt;retry_times;</span></a>
-<a name="767"><span class="lineNum">     767 </span>                :            :     do {</a>
-<a name="768"><span class="lineNum">     768 </span>                :<span class="lineCov">          1 :         status = libspdm_try_send_receive_key_exchange(</span></a>
-<a name="769"><span class="lineNum">     769 </span>                :            :             spdm_context, measurement_hash_type, slot_id, session_policy,</a>
-<a name="770"><span class="lineNum">     770 </span>                :            :             session_id, heartbeat_period, req_slot_id_param,</a>
-<a name="771"><span class="lineNum">     771 </span>                :            :             measurement_hash, requester_random_in,</a>
-<a name="772"><span class="lineNum">     772 </span>                :            :             requester_random, responder_random);</a>
-<a name="773"><span class="lineNum">     773 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
-<a name="774"><span class="lineNum">     774 </span>                :<span class="lineCov">          1 :             return status;</span></a>
-<a name="775"><span class="lineNum">     775 </span>                :            :         }</a>
-<a name="776"><span class="lineNum">     776 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
-<a name="777"><span class="lineNum">     777 </span>                :            : </a>
-<a name="778"><span class="lineNum">     778 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
-<a name="779"><span class="lineNum">     779 </span>                :            : }</a>
-<a name="780"><span class="lineNum">     780 </span>                :            : </a>
-<a name="781"><span class="lineNum">     781 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP */</a>
+<a name="736"><span class="lineNum">     736 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="737"><span class="lineNum">     737 </span>                :            :     libspdm_return_t status;</a>
+<a name="738"><span class="lineNum">     738 </span>                :            : </a>
+<a name="739"><span class="lineNum">     739 </span>                :<span class="lineCov">         90 :     spdm_context-&gt;crypto_request = true;</span></a>
+<a name="740"><span class="lineNum">     740 </span>                :<span class="lineCov">         90 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">         90 :     retry_delay_time = spdm_context-&gt;retry_delay_time;</span></a>
+<a name="742"><span class="lineNum">     742 </span>                :            :     do {</a>
+<a name="743"><span class="lineNum">     743 </span>                :<span class="lineCov">         91 :         status = libspdm_try_send_receive_key_exchange(</span></a>
+<a name="744"><span class="lineNum">     744 </span>                :            :             spdm_context, measurement_hash_type, slot_id, session_policy,</a>
+<a name="745"><span class="lineNum">     745 </span>                :            :             session_id, heartbeat_period, req_slot_id_param,</a>
+<a name="746"><span class="lineNum">     746 </span>                :            :             measurement_hash, NULL, NULL, NULL);</a>
+<a name="747"><span class="lineNum">     747 </span>        [<span class="branchCov" title="Branch 0 was taken 88 times"> + </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">         91 :         if (status != LIBSPDM_STATUS_BUSY_PEER) {</span></a>
+<a name="748"><span class="lineNum">     748 </span>                :<span class="lineCov">         88 :             return status;</span></a>
+<a name="749"><span class="lineNum">     749 </span>                :            :         }</a>
+<a name="750"><span class="lineNum">     750 </span>                :            : </a>
+<a name="751"><span class="lineNum">     751 </span>                :<span class="lineCov">          3 :         libspdm_sleep_in_us(retry_delay_time);</span></a>
+<a name="752"><span class="lineNum">     752 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          3 :     } while (retry-- != 0);</span></a>
+<a name="753"><span class="lineNum">     753 </span>                :            : </a>
+<a name="754"><span class="lineNum">     754 </span>                :<span class="lineCov">          2 :     return status;</span></a>
+<a name="755"><span class="lineNum">     755 </span>                :            : }</a>
+<a name="756"><span class="lineNum">     756 </span>                :            : </a>
+<a name="757"><span class="lineNum">     757 </span>                :<span class="lineCov">          1 : libspdm_return_t libspdm_send_receive_key_exchange_ex(</span></a>
+<a name="758"><span class="lineNum">     758 </span>                :            :     libspdm_context_t *spdm_context, uint8_t measurement_hash_type,</a>
+<a name="759"><span class="lineNum">     759 </span>                :            :     uint8_t slot_id, uint8_t session_policy, uint32_t *session_id,</a>
+<a name="760"><span class="lineNum">     760 </span>                :            :     uint8_t *heartbeat_period,</a>
+<a name="761"><span class="lineNum">     761 </span>                :            :     uint8_t *req_slot_id_param, void *measurement_hash,</a>
+<a name="762"><span class="lineNum">     762 </span>                :            :     const void *requester_random_in,</a>
+<a name="763"><span class="lineNum">     763 </span>                :            :     void *requester_random,</a>
+<a name="764"><span class="lineNum">     764 </span>                :            :     void *responder_random)</a>
+<a name="765"><span class="lineNum">     765 </span>                :            : {</a>
+<a name="766"><span class="lineNum">     766 </span>                :            :     size_t retry;</a>
+<a name="767"><span class="lineNum">     767 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="768"><span class="lineNum">     768 </span>                :            :     libspdm_return_t status;</a>
+<a name="769"><span class="lineNum">     769 </span>                :            : </a>
+<a name="770"><span class="lineNum">     770 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;crypto_request = true;</span></a>
+<a name="771"><span class="lineNum">     771 </span>                :<span class="lineCov">          1 :     retry = spdm_context-&gt;retry_times;</span></a>
+<a name="772"><span class="lineNum">     772 </span>                :<span class="lineCov">          1 :     retry_delay_time = spdm_context-&gt;retry_delay_time;</span></a>
+<a name="773"><span class="lineNum">     773 </span>                :            :     do {</a>
+<a name="774"><span class="lineNum">     774 </span>                :<span class="lineCov">          1 :         status = libspdm_try_send_receive_key_exchange(</span></a>
+<a name="775"><span class="lineNum">     775 </span>                :            :             spdm_context, measurement_hash_type, slot_id, session_policy,</a>
+<a name="776"><span class="lineNum">     776 </span>                :            :             session_id, heartbeat_period, req_slot_id_param,</a>
+<a name="777"><span class="lineNum">     777 </span>                :            :             measurement_hash, requester_random_in,</a>
+<a name="778"><span class="lineNum">     778 </span>                :            :             requester_random, responder_random);</a>
+<a name="779"><span class="lineNum">     779 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :         if (LIBSPDM_STATUS_BUSY_PEER != status) {</span></a>
+<a name="780"><span class="lineNum">     780 </span>                :<span class="lineCov">          1 :             return status;</span></a>
+<a name="781"><span class="lineNum">     781 </span>                :            :         }</a>
+<a name="782"><span class="lineNum">     782 </span>                :            : </a>
+<a name="783"><span class="lineNum">     783 </span>                :<span class="lineNoCov">          0 :         libspdm_sleep_in_us(retry_delay_time);</span></a>
+<a name="784"><span class="lineNum">     784 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="785"><span class="lineNum">     785 </span>                :            : </a>
+<a name="786"><span class="lineNum">     786 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
+<a name="787"><span class="lineNum">     787 </span>                :            : }</a>
+<a name="788"><span class="lineNum">     788 </span>                :            : </a>
+<a name="789"><span class="lineNum">     789 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP */</a>
 </pre>
       </td>
     </tr>
