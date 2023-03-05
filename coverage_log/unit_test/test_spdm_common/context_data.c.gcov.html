@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-04 08:16:06</td>
+            <td class="headerValue">2023-03-05 08:14:44</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">25</td>
@@ -604,7 +604,7 @@
 <a name="533"><span class="lineNum">     533 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = NULL;</span></a>
 <a name="534"><span class="lineNum">     534 </span>                :            :     }</a>
 <a name="535"><span class="lineNum">     535 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="536"><span class="lineNum">     536 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="536"><span class="lineNum">     536 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="537"><span class="lineNum">     537 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, true);</span></a>
 <a name="538"><span class="lineNum">     538 </span>                :            : </a>
 <a name="539"><span class="lineNum">     539 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
@@ -678,14 +678,14 @@
 <a name="607"><span class="lineNum">     607 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision_size[0] =root_cert_size_test;</span></a>
 <a name="608"><span class="lineNum">     608 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision[0] = root_cert_test;</span></a>
 <a name="609"><span class="lineNum">     609 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="610"><span class="lineNum">     610 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="610"><span class="lineNum">     610 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="611"><span class="lineNum">     611 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, false);</span></a>
 <a name="612"><span class="lineNum">     612 </span>                :            : </a>
 <a name="613"><span class="lineNum">     613 </span>                :            :     /*case: mismatch root cert case*/</a>
 <a name="614"><span class="lineNum">     614 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision_size[0] =root_cert_size;</span></a>
 <a name="615"><span class="lineNum">     615 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision[0] = root_cert;</span></a>
 <a name="616"><span class="lineNum">     616 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="617"><span class="lineNum">     617 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="617"><span class="lineNum">     617 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="618"><span class="lineNum">     618 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, true);</span></a>
 <a name="619"><span class="lineNum">     619 </span>                :<span class="lineCov">          1 :     assert_ptr_equal (trust_anchor, root_cert);</span></a>
 <a name="620"><span class="lineNum">     620 </span>                :            : </a>
@@ -766,7 +766,7 @@
 <a name="695"><span class="lineNum">     695 </span>                :<span class="lineCov">          5 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = root_cert_test;</span></a>
 <a name="696"><span class="lineNum">     696 </span>                :            :     }</a>
 <a name="697"><span class="lineNum">     697 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="698"><span class="lineNum">     698 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="698"><span class="lineNum">     698 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="699"><span class="lineNum">     699 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, false);</span></a>
 <a name="700"><span class="lineNum">     700 </span>                :            : </a>
 <a name="701"><span class="lineNum">     701 </span>                :            :     /*case: there is no match root cert in the end*/</a>
@@ -775,7 +775,7 @@
 <a name="704"><span class="lineNum">     704 </span>                :            :     spdm_context-&gt;local_context.peer_root_cert_provision[LIBSPDM_MAX_ROOT_CERT_SUPPORT / 2 -</a>
 <a name="705"><span class="lineNum">     705 </span>                :<span class="lineCov">          1 :                                                          1] = root_cert;</span></a>
 <a name="706"><span class="lineNum">     706 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="707"><span class="lineNum">     707 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="707"><span class="lineNum">     707 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="708"><span class="lineNum">     708 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, true);</span></a>
 <a name="709"><span class="lineNum">     709 </span>                :<span class="lineCov">          1 :     assert_ptr_equal (trust_anchor, root_cert);</span></a>
 <a name="710"><span class="lineNum">     710 </span>                :            : </a>
@@ -785,7 +785,7 @@
 <a name="714"><span class="lineNum">     714 </span>                :            :     spdm_context-&gt;local_context.peer_root_cert_provision[LIBSPDM_MAX_ROOT_CERT_SUPPORT /</a>
 <a name="715"><span class="lineNum">     715 </span>                :<span class="lineCov">          1 :                                                          4] = root_cert;</span></a>
 <a name="716"><span class="lineNum">     716 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="717"><span class="lineNum">     717 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="717"><span class="lineNum">     717 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="718"><span class="lineNum">     718 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, true);</span></a>
 <a name="719"><span class="lineNum">     719 </span>                :<span class="lineCov">          1 :     assert_ptr_equal (trust_anchor, root_cert);</span></a>
 <a name="720"><span class="lineNum">     720 </span>                :            : </a>
@@ -860,7 +860,7 @@
 <a name="789"><span class="lineNum">     789 </span>                :<span class="lineCov">         10 :         spdm_context-&gt;local_context.peer_root_cert_provision[root_cert_index] = root_cert_test;</span></a>
 <a name="790"><span class="lineNum">     790 </span>                :            :     }</a>
 <a name="791"><span class="lineNum">     791 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="792"><span class="lineNum">     792 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="792"><span class="lineNum">     792 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="793"><span class="lineNum">     793 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, false);</span></a>
 <a name="794"><span class="lineNum">     794 </span>                :            : </a>
 <a name="795"><span class="lineNum">     795 </span>                :            :     /*case: there is no match root cert in the end*/</a>
@@ -869,7 +869,7 @@
 <a name="798"><span class="lineNum">     798 </span>                :            :     spdm_context-&gt;local_context.peer_root_cert_provision[LIBSPDM_MAX_ROOT_CERT_SUPPORT -</a>
 <a name="799"><span class="lineNum">     799 </span>                :<span class="lineCov">          1 :                                                          1] = root_cert;</span></a>
 <a name="800"><span class="lineNum">     800 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="801"><span class="lineNum">     801 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="801"><span class="lineNum">     801 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="802"><span class="lineNum">     802 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, true);</span></a>
 <a name="803"><span class="lineNum">     803 </span>                :<span class="lineCov">          1 :     assert_ptr_equal (trust_anchor, root_cert);</span></a>
 <a name="804"><span class="lineNum">     804 </span>                :            : </a>
@@ -884,7 +884,7 @@
 <a name="813"><span class="lineNum">     813 </span>                :            :     spdm_context-&gt;local_context.peer_root_cert_provision[LIBSPDM_MAX_ROOT_CERT_SUPPORT /</a>
 <a name="814"><span class="lineNum">     814 </span>                :<span class="lineCov">          1 :                                                          2] = root_cert;</span></a>
 <a name="815"><span class="lineNum">     815 </span>                :<span class="lineCov">          1 :     result = libspdm_verify_peer_cert_chain_buffer(spdm_context, data, data_size, &amp;trust_anchor,</span></a>
-<a name="816"><span class="lineNum">     816 </span>                :            :                                                    &amp;trust_anchor_size, true);</a>
+<a name="816"><span class="lineNum">     816 </span>                :            :                                                    &amp;trust_anchor_size);</a>
 <a name="817"><span class="lineNum">     817 </span>                :<span class="lineCov">          1 :     assert_int_equal (result, true);</span></a>
 <a name="818"><span class="lineNum">     818 </span>                :<span class="lineCov">          1 :     assert_ptr_equal (trust_anchor, root_cert);</span></a>
 <a name="819"><span class="lineNum">     819 </span>                :            : </a>
