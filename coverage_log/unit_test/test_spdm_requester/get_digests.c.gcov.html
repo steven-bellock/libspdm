@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">330</td>
-            <td class="headerCovTableEntry">664</td>
-            <td class="headerCovTableEntryLo">49.7 %</td>
+            <td class="headerCovTableEntry">331</td>
+            <td class="headerCovTableEntry">665</td>
+            <td class="headerCovTableEntryLo">49.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-08 08:16:22</td>
+            <td class="headerValue">2023-03-09 08:16:38</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">28</td>
@@ -1337,257 +1337,258 @@
 <a name="1256"><span class="lineNum">    1256 </span>                :            :         m_libspdm_use_asym_algo;</a>
 <a name="1257"><span class="lineNum">    1257 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
 <a name="1258"><span class="lineNum">    1258 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
-<a name="1259"><span class="lineNum">    1259 </span>                :            : </a>
-<a name="1260"><span class="lineNum">    1260 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
-<a name="1261"><span class="lineNum">    1261 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data,</a>
-<a name="1262"><span class="lineNum">    1262 </span>                :            :                                                     &amp;data_size, &amp;hash, &amp;hash_size);</a>
-<a name="1263"><span class="lineNum">    1263 </span>                :<span class="lineCov">          1 :     libspdm_x509_get_cert_from_cert_chain(</span></a>
-<a name="1264"><span class="lineNum">    1264 </span>                :<span class="lineCov">          1 :         (uint8_t *)data + sizeof(spdm_cert_chain_t) + hash_size,</span></a>
-<a name="1265"><span class="lineNum">    1265 </span>                :<span class="lineCov">          1 :         data_size - sizeof(spdm_cert_chain_t) - hash_size, 0,</span></a>
-<a name="1266"><span class="lineNum">    1266 </span>                :            :         &amp;root_cert, &amp;root_cert_size);</a>
-<a name="1267"><span class="lineNum">    1267 </span>                :<span class="lineCov">          1 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;root cert data :\n&quot;));</span></a>
-<a name="1268"><span class="lineNum">    1268 </span>                :<span class="lineCov">          1 :     libspdm_dump_hex(root_cert, root_cert_size);</span></a>
-<a name="1269"><span class="lineNum">    1269 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision_size[0] =</span></a>
-<a name="1270"><span class="lineNum">    1270 </span>                :            :         root_cert_size;</a>
-<a name="1271"><span class="lineNum">    1271 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision[0] = root_cert;</span></a>
-<a name="1272"><span class="lineNum">    1272 </span>                :            : </a>
-<a name="1273"><span class="lineNum">    1273 </span>                :<span class="lineCov">          1 :     m_get_digest = true;</span></a>
-<a name="1274"><span class="lineNum">    1274 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1275"><span class="lineNum">    1275 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
-<a name="1276"><span class="lineNum">    1276 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
-<a name="1277"><span class="lineNum">    1277 </span>                :            : #endif</a>
-<a name="1278"><span class="lineNum">    1278 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
-<a name="1279"><span class="lineNum">    1279 </span>                :            :     /* first GetDigest */</a>
-<a name="1280"><span class="lineNum">    1280 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, NULL, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
-<a name="1281"><span class="lineNum">    1281 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1282"><span class="lineNum">    1282 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
-<a name="1283"><span class="lineNum">    1283 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
-<a name="1284"><span class="lineNum">    1284 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
-<a name="1285"><span class="lineNum">    1285 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (m_libspdm_local_certificate_chain_test_cert == NULL) {</span></a>
-<a name="1286"><span class="lineNum">    1286 </span>                :<span class="lineNoCov">          0 :         libspdm_read_responder_public_certificate_chain(</span></a>
-<a name="1287"><span class="lineNum">    1287 </span>                :            :             m_libspdm_use_hash_algo, m_libspdm_use_asym_algo,</a>
-<a name="1288"><span class="lineNum">    1288 </span>                :            :             &amp;m_libspdm_local_certificate_chain_test_cert,</a>
-<a name="1289"><span class="lineNum">    1289 </span>                :            :             &amp;m_libspdm_local_certificate_chain_size, NULL, NULL);</a>
-<a name="1290"><span class="lineNum">    1290 </span>                :            :     }</a>
-<a name="1291"><span class="lineNum">    1291 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, m_libspdm_local_certificate_chain_test_cert,</span></a>
-<a name="1292"><span class="lineNum">    1292 </span>                :            :                      m_libspdm_local_certificate_chain_size, digest);</a>
-<a name="1293"><span class="lineNum">    1293 </span>                :<span class="lineCov">          1 :     assert_memory_equal(total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="1294"><span class="lineNum">    1294 </span>                :            :                         sizeof(my_total_digest_buffer));</a>
-<a name="1295"><span class="lineNum">    1295 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
-<a name="1296"><span class="lineNum">    1296 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
-<a name="1297"><span class="lineNum">    1297 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
-<a name="1298"><span class="lineNum">    1298 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1299"><span class="lineNum">    1299 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
-<a name="1300"><span class="lineNum">    1300 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
-<a name="1301"><span class="lineNum">    1301 </span>                :            : </a>
-<a name="1302"><span class="lineNum">    1302 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
-<a name="1303"><span class="lineNum">    1303 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
-<a name="1304"><span class="lineNum">    1304 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
-<a name="1305"><span class="lineNum">    1305 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1306"><span class="lineNum">    1306 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(m_libspdm_use_hash_algo));</span></a>
-<a name="1307"><span class="lineNum">    1307 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="1308"><span class="lineNum">    1308 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
-<a name="1309"><span class="lineNum">    1309 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1310"><span class="lineNum">    1310 </span>                :            :     assert_int_equal(</a>
-<a name="1311"><span class="lineNum">    1311 </span>                :            :         spdm_context-&gt;transcript.message_b.buffer_size,</a>
-<a name="1312"><span class="lineNum">    1312 </span>                :            :         sizeof(spdm_get_digest_request_t) +</a>
-<a name="1313"><span class="lineNum">    1313 </span>                :            :         sizeof(spdm_digest_response_t) +</a>
-<a name="1314"><span class="lineNum">    1314 </span>                :            :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo));</a>
-<a name="1315"><span class="lineNum">    1315 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
-<a name="1316"><span class="lineNum">    1316 </span>                :            : #endif</a>
-<a name="1317"><span class="lineNum">    1317 </span>                :            : </a>
-<a name="1318"><span class="lineNum">    1318 </span>                :<span class="lineCov">          1 :     m_get_digest = false;</span></a>
-<a name="1319"><span class="lineNum">    1319 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1320"><span class="lineNum">    1320 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
-<a name="1321"><span class="lineNum">    1321 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
-<a name="1322"><span class="lineNum">    1322 </span>                :            : #endif</a>
-<a name="1323"><span class="lineNum">    1323 </span>                :<span class="lineCov">          1 :     cert_chain_size = sizeof(cert_chain);</span></a>
-<a name="1324"><span class="lineNum">    1324 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(cert_chain, sizeof(cert_chain));</span></a>
-<a name="1325"><span class="lineNum">    1325 </span>                :<span class="lineCov">          1 :     status = libspdm_get_certificate(spdm_context, NULL, 0, &amp;cert_chain_size,</span></a>
-<a name="1326"><span class="lineNum">    1326 </span>                :            :                                      cert_chain);</a>
-<a name="1327"><span class="lineNum">    1327 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1328"><span class="lineNum">    1328 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1329"><span class="lineNum">    1329 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
-<a name="1330"><span class="lineNum">    1330 </span>                :            : #endif</a>
-<a name="1331"><span class="lineNum">    1331 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
-<a name="1332"><span class="lineNum">    1332 </span>                :            : </a>
-<a name="1333"><span class="lineNum">    1333 </span>                :<span class="lineCov">          1 :     m_get_digest = true;</span></a>
-<a name="1334"><span class="lineNum">    1334 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1335"><span class="lineNum">    1335 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
-<a name="1336"><span class="lineNum">    1336 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
-<a name="1337"><span class="lineNum">    1337 </span>                :            : #endif</a>
-<a name="1338"><span class="lineNum">    1338 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
-<a name="1339"><span class="lineNum">    1339 </span>                :            :     /* second GetDigest */</a>
-<a name="1340"><span class="lineNum">    1340 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, NULL, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
-<a name="1341"><span class="lineNum">    1341 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1342"><span class="lineNum">    1342 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
-<a name="1343"><span class="lineNum">    1343 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
-<a name="1344"><span class="lineNum">    1344 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
-<a name="1345"><span class="lineNum">    1345 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, m_libspdm_local_certificate_chain_test_cert,</span></a>
-<a name="1346"><span class="lineNum">    1346 </span>                :            :                      m_libspdm_local_certificate_chain_size, digest);</a>
-<a name="1347"><span class="lineNum">    1347 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="1348"><span class="lineNum">    1348 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
-<a name="1349"><span class="lineNum">    1349 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
-<a name="1350"><span class="lineNum">    1350 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
-<a name="1351"><span class="lineNum">    1351 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
-<a name="1352"><span class="lineNum">    1352 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1353"><span class="lineNum">    1353 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
-<a name="1354"><span class="lineNum">    1354 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
-<a name="1355"><span class="lineNum">    1355 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
-<a name="1356"><span class="lineNum">    1356 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
-<a name="1357"><span class="lineNum">    1357 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
-<a name="1358"><span class="lineNum">    1358 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1359"><span class="lineNum">    1359 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(m_libspdm_use_hash_algo));</span></a>
-<a name="1360"><span class="lineNum">    1360 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="1361"><span class="lineNum">    1361 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
-<a name="1362"><span class="lineNum">    1362 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1363"><span class="lineNum">    1363 </span>                :            :     assert_int_equal(</a>
-<a name="1364"><span class="lineNum">    1364 </span>                :            :         spdm_context-&gt;transcript.message_b.buffer_size,</a>
-<a name="1365"><span class="lineNum">    1365 </span>                :            :         sizeof(spdm_get_digest_request_t) +</a>
-<a name="1366"><span class="lineNum">    1366 </span>                :            :         sizeof(spdm_digest_response_t) +</a>
-<a name="1367"><span class="lineNum">    1367 </span>                :            :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo));</a>
-<a name="1368"><span class="lineNum">    1368 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
-<a name="1369"><span class="lineNum">    1369 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
-<a name="1370"><span class="lineNum">    1370 </span>                :            : #else</a>
-<a name="1371"><span class="lineNum">    1371 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
-<a name="1372"><span class="lineNum">    1372 </span>                :            : #endif</a>
-<a name="1373"><span class="lineNum">    1373 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1374"><span class="lineNum">    1374 </span>                :            : </a>
-<a name="1375"><span class="lineNum">    1375 </span>                :            : /**</a>
-<a name="1376"><span class="lineNum">    1376 </span>                :            :  * Test 25: a request message is successfully sent and a response message is successfully received</a>
-<a name="1377"><span class="lineNum">    1377 </span>                :            :  * in a session.</a>
-<a name="1378"><span class="lineNum">    1378 </span>                :            :  * Expected Behavior: requester returns the status LIBSPDM_STATUS_SUCCESS and a DIGESTS message is received</a>
-<a name="1379"><span class="lineNum">    1379 </span>                :            :  **/</a>
-<a name="1380"><span class="lineNum">    1380 </span>                :<span class="lineCov">          1 : static void libspdm_test_requester_get_digests_case25(void **state)</span></a>
-<a name="1381"><span class="lineNum">    1381 </span>                :            : {</a>
-<a name="1382"><span class="lineNum">    1382 </span>                :            :     libspdm_return_t status;</a>
-<a name="1383"><span class="lineNum">    1383 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
-<a name="1384"><span class="lineNum">    1384 </span>                :            :     libspdm_context_t *spdm_context;</a>
-<a name="1385"><span class="lineNum">    1385 </span>                :            :     uint8_t slot_mask;</a>
-<a name="1386"><span class="lineNum">    1386 </span>                :            :     uint8_t total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
-<a name="1387"><span class="lineNum">    1387 </span>                :            :     uint8_t my_total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
-<a name="1388"><span class="lineNum">    1388 </span>                :            :     uint8_t *digest;</a>
-<a name="1389"><span class="lineNum">    1389 </span>                :            :     size_t data_return_size;</a>
-<a name="1390"><span class="lineNum">    1390 </span>                :            :     uint32_t session_id;</a>
-<a name="1391"><span class="lineNum">    1391 </span>                :            :     libspdm_session_info_t *session_info;</a>
-<a name="1392"><span class="lineNum">    1392 </span>                :            : </a>
-<a name="1393"><span class="lineNum">    1393 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="1394"><span class="lineNum">    1394 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="1395"><span class="lineNum">    1395 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x19;</span></a>
-<a name="1396"><span class="lineNum">    1396 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_10 &lt;&lt;</span></a>
-<a name="1397"><span class="lineNum">    1397 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
-<a name="1398"><span class="lineNum">    1398 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="1399"><span class="lineNum">    1399 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
-<a name="1400"><span class="lineNum">    1400 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
-<a name="1401"><span class="lineNum">    1401 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PSK_CAP;</a>
-<a name="1402"><span class="lineNum">    1402 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
-<a name="1403"><span class="lineNum">    1403 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCRYPT_CAP;</a>
-<a name="1404"><span class="lineNum">    1404 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
-<a name="1405"><span class="lineNum">    1405 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MAC_CAP;</a>
-<a name="1406"><span class="lineNum">    1406 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
-<a name="1407"><span class="lineNum">    1407 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PSK_CAP;</a>
-<a name="1408"><span class="lineNum">    1408 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
-<a name="1409"><span class="lineNum">    1409 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCRYPT_CAP;</a>
-<a name="1410"><span class="lineNum">    1410 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
-<a name="1411"><span class="lineNum">    1411 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_MAC_CAP;</a>
-<a name="1412"><span class="lineNum">    1412 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
-<a name="1413"><span class="lineNum">    1413 </span>                :            :         m_libspdm_use_dhe_algo;</a>
-<a name="1414"><span class="lineNum">    1414 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
-<a name="1415"><span class="lineNum">    1415 </span>                :            :         m_libspdm_use_aead_algo;</a>
-<a name="1416"><span class="lineNum">    1416 </span>                :            : </a>
-<a name="1417"><span class="lineNum">    1417 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="1418"><span class="lineNum">    1418 </span>                :            : </a>
-<a name="1419"><span class="lineNum">    1419 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
-<a name="1420"><span class="lineNum">    1420 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
-<a name="1421"><span class="lineNum">    1421 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, true);</span></a>
-<a name="1422"><span class="lineNum">    1422 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(session_info-&gt;secured_message_context,</span></a>
-<a name="1423"><span class="lineNum">    1423 </span>                :            :                                               LIBSPDM_SESSION_STATE_ESTABLISHED);</a>
-<a name="1424"><span class="lineNum">    1424 </span>                :            : </a>
-<a name="1425"><span class="lineNum">    1425 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
-<a name="1426"><span class="lineNum">    1426 </span>                :            :                     (uint8_t)(0xFF));</a>
-<a name="1427"><span class="lineNum">    1427 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
-<a name="1428"><span class="lineNum">    1428 </span>                :            : </a>
-<a name="1429"><span class="lineNum">    1429 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1430"><span class="lineNum">    1430 </span>                :            :     session_info-&gt;session_transcript.message_m.buffer_size =</a>
-<a name="1431"><span class="lineNum">    1431 </span>                :            :         session_info-&gt;session_transcript.message_m.max_buffer_size;</a>
-<a name="1432"><span class="lineNum">    1432 </span>                :            : #endif</a>
-<a name="1433"><span class="lineNum">    1433 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
-<a name="1434"><span class="lineNum">    1434 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, &amp;session_id, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
-<a name="1435"><span class="lineNum">    1435 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1436"><span class="lineNum">    1436 </span>                :            : </a>
-<a name="1437"><span class="lineNum">    1437 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x80);</span></a>
-<a name="1438"><span class="lineNum">    1438 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
-<a name="1439"><span class="lineNum">    1439 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
-<a name="1440"><span class="lineNum">    1440 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, m_libspdm_local_certificate_chain,</span></a>
-<a name="1441"><span class="lineNum">    1441 </span>                :            :                      LIBSPDM_MAX_MESSAGE_BUFFER_SIZE, digest);</a>
-<a name="1442"><span class="lineNum">    1442 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="1443"><span class="lineNum">    1443 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
-<a name="1444"><span class="lineNum">    1444 </span>                :            : </a>
-<a name="1445"><span class="lineNum">    1445 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
-<a name="1446"><span class="lineNum">    1446 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
-<a name="1447"><span class="lineNum">    1447 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
-<a name="1448"><span class="lineNum">    1448 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1449"><span class="lineNum">    1449 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
-<a name="1450"><span class="lineNum">    1450 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x80);</span></a>
-<a name="1451"><span class="lineNum">    1451 </span>                :            : </a>
-<a name="1452"><span class="lineNum">    1452 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
-<a name="1453"><span class="lineNum">    1453 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
-<a name="1454"><span class="lineNum">    1454 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
-<a name="1455"><span class="lineNum">    1455 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1456"><span class="lineNum">    1456 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(m_libspdm_use_hash_algo));</span></a>
-<a name="1457"><span class="lineNum">    1457 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="1458"><span class="lineNum">    1458 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
-<a name="1459"><span class="lineNum">    1459 </span>                :            : </a>
-<a name="1460"><span class="lineNum">    1460 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="1461"><span class="lineNum">    1461 </span>                :            :     assert_int_equal(session_info-&gt;session_transcript.message_m.buffer_size, 0);</a>
-<a name="1462"><span class="lineNum">    1462 </span>                :            : #endif</a>
-<a name="1463"><span class="lineNum">    1463 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1464"><span class="lineNum">    1464 </span>                :            : </a>
-<a name="1465"><span class="lineNum">    1465 </span>                :            : static libspdm_test_context_t m_libspdm_requester_get_digests_test_context = {</a>
-<a name="1466"><span class="lineNum">    1466 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="1467"><span class="lineNum">    1467 </span>                :            :     true,</a>
-<a name="1468"><span class="lineNum">    1468 </span>                :            :     libspdm_requester_get_digests_test_send_message,</a>
-<a name="1469"><span class="lineNum">    1469 </span>                :            :     libspdm_requester_get_digests_test_receive_message,</a>
-<a name="1470"><span class="lineNum">    1470 </span>                :            : };</a>
-<a name="1471"><span class="lineNum">    1471 </span>                :            : </a>
-<a name="1472"><span class="lineNum">    1472 </span>                :<span class="lineCov">          1 : int libspdm_requester_get_digests_test_main(void)</span></a>
-<a name="1473"><span class="lineNum">    1473 </span>                :            : {</a>
-<a name="1474"><span class="lineNum">    1474 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_get_digests_tests[] = {</span></a>
-<a name="1475"><span class="lineNum">    1475 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case1),</a>
-<a name="1476"><span class="lineNum">    1476 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case2),</a>
-<a name="1477"><span class="lineNum">    1477 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case3),</a>
-<a name="1478"><span class="lineNum">    1478 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case4),</a>
-<a name="1479"><span class="lineNum">    1479 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case5),</a>
-<a name="1480"><span class="lineNum">    1480 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case6),</a>
-<a name="1481"><span class="lineNum">    1481 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case7),</a>
-<a name="1482"><span class="lineNum">    1482 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case8),</a>
-<a name="1483"><span class="lineNum">    1483 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case9),</a>
-<a name="1484"><span class="lineNum">    1484 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case10),</a>
-<a name="1485"><span class="lineNum">    1485 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case11),</a>
-<a name="1486"><span class="lineNum">    1486 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case12),</a>
-<a name="1487"><span class="lineNum">    1487 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case13),</a>
-<a name="1488"><span class="lineNum">    1488 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case14),</a>
-<a name="1489"><span class="lineNum">    1489 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case15),</a>
-<a name="1490"><span class="lineNum">    1490 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case16),</a>
-<a name="1491"><span class="lineNum">    1491 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case17),</a>
-<a name="1492"><span class="lineNum">    1492 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case18),</a>
-<a name="1493"><span class="lineNum">    1493 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case19),</a>
-<a name="1494"><span class="lineNum">    1494 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case20),</a>
-<a name="1495"><span class="lineNum">    1495 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case21),</a>
-<a name="1496"><span class="lineNum">    1496 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case22),</a>
-<a name="1497"><span class="lineNum">    1497 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case23),</a>
-<a name="1498"><span class="lineNum">    1498 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case24),</a>
-<a name="1499"><span class="lineNum">    1499 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case25),</a>
-<a name="1500"><span class="lineNum">    1500 </span>                :            :     };</a>
-<a name="1501"><span class="lineNum">    1501 </span>                :            : </a>
-<a name="1502"><span class="lineNum">    1502 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_requester_get_digests_test_context);</span></a>
-<a name="1503"><span class="lineNum">    1503 </span>                :            : </a>
-<a name="1504"><span class="lineNum">    1504 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_get_digests_tests,</span></a>
-<a name="1505"><span class="lineNum">    1505 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="1506"><span class="lineNum">    1506 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="1507"><span class="lineNum">    1507 </span>                :            : }</a>
-<a name="1508"><span class="lineNum">    1508 </span>                :            : </a>
-<a name="1509"><span class="lineNum">    1509 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */</a>
+<a name="1259"><span class="lineNum">    1259 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.is_requester = true;</span></a>
+<a name="1260"><span class="lineNum">    1260 </span>                :            : </a>
+<a name="1261"><span class="lineNum">    1261 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="1262"><span class="lineNum">    1262 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data,</a>
+<a name="1263"><span class="lineNum">    1263 </span>                :            :                                                     &amp;data_size, &amp;hash, &amp;hash_size);</a>
+<a name="1264"><span class="lineNum">    1264 </span>                :<span class="lineCov">          1 :     libspdm_x509_get_cert_from_cert_chain(</span></a>
+<a name="1265"><span class="lineNum">    1265 </span>                :<span class="lineCov">          1 :         (uint8_t *)data + sizeof(spdm_cert_chain_t) + hash_size,</span></a>
+<a name="1266"><span class="lineNum">    1266 </span>                :<span class="lineCov">          1 :         data_size - sizeof(spdm_cert_chain_t) - hash_size, 0,</span></a>
+<a name="1267"><span class="lineNum">    1267 </span>                :            :         &amp;root_cert, &amp;root_cert_size);</a>
+<a name="1268"><span class="lineNum">    1268 </span>                :<span class="lineCov">          1 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;root cert data :\n&quot;));</span></a>
+<a name="1269"><span class="lineNum">    1269 </span>                :<span class="lineCov">          1 :     libspdm_dump_hex(root_cert, root_cert_size);</span></a>
+<a name="1270"><span class="lineNum">    1270 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision_size[0] =</span></a>
+<a name="1271"><span class="lineNum">    1271 </span>                :            :         root_cert_size;</a>
+<a name="1272"><span class="lineNum">    1272 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision[0] = root_cert;</span></a>
+<a name="1273"><span class="lineNum">    1273 </span>                :            : </a>
+<a name="1274"><span class="lineNum">    1274 </span>                :<span class="lineCov">          1 :     m_get_digest = true;</span></a>
+<a name="1275"><span class="lineNum">    1275 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1276"><span class="lineNum">    1276 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="1277"><span class="lineNum">    1277 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="1278"><span class="lineNum">    1278 </span>                :            : #endif</a>
+<a name="1279"><span class="lineNum">    1279 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
+<a name="1280"><span class="lineNum">    1280 </span>                :            :     /* first GetDigest */</a>
+<a name="1281"><span class="lineNum">    1281 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, NULL, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
+<a name="1282"><span class="lineNum">    1282 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1283"><span class="lineNum">    1283 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
+<a name="1284"><span class="lineNum">    1284 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
+<a name="1285"><span class="lineNum">    1285 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
+<a name="1286"><span class="lineNum">    1286 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (m_libspdm_local_certificate_chain_test_cert == NULL) {</span></a>
+<a name="1287"><span class="lineNum">    1287 </span>                :<span class="lineNoCov">          0 :         libspdm_read_responder_public_certificate_chain(</span></a>
+<a name="1288"><span class="lineNum">    1288 </span>                :            :             m_libspdm_use_hash_algo, m_libspdm_use_asym_algo,</a>
+<a name="1289"><span class="lineNum">    1289 </span>                :            :             &amp;m_libspdm_local_certificate_chain_test_cert,</a>
+<a name="1290"><span class="lineNum">    1290 </span>                :            :             &amp;m_libspdm_local_certificate_chain_size, NULL, NULL);</a>
+<a name="1291"><span class="lineNum">    1291 </span>                :            :     }</a>
+<a name="1292"><span class="lineNum">    1292 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, m_libspdm_local_certificate_chain_test_cert,</span></a>
+<a name="1293"><span class="lineNum">    1293 </span>                :            :                      m_libspdm_local_certificate_chain_size, digest);</a>
+<a name="1294"><span class="lineNum">    1294 </span>                :<span class="lineCov">          1 :     assert_memory_equal(total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="1295"><span class="lineNum">    1295 </span>                :            :                         sizeof(my_total_digest_buffer));</a>
+<a name="1296"><span class="lineNum">    1296 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
+<a name="1297"><span class="lineNum">    1297 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
+<a name="1298"><span class="lineNum">    1298 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
+<a name="1299"><span class="lineNum">    1299 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1300"><span class="lineNum">    1300 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
+<a name="1301"><span class="lineNum">    1301 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
+<a name="1302"><span class="lineNum">    1302 </span>                :            : </a>
+<a name="1303"><span class="lineNum">    1303 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
+<a name="1304"><span class="lineNum">    1304 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
+<a name="1305"><span class="lineNum">    1305 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
+<a name="1306"><span class="lineNum">    1306 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1307"><span class="lineNum">    1307 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(m_libspdm_use_hash_algo));</span></a>
+<a name="1308"><span class="lineNum">    1308 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="1309"><span class="lineNum">    1309 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
+<a name="1310"><span class="lineNum">    1310 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1311"><span class="lineNum">    1311 </span>                :            :     assert_int_equal(</a>
+<a name="1312"><span class="lineNum">    1312 </span>                :            :         spdm_context-&gt;transcript.message_b.buffer_size,</a>
+<a name="1313"><span class="lineNum">    1313 </span>                :            :         sizeof(spdm_get_digest_request_t) +</a>
+<a name="1314"><span class="lineNum">    1314 </span>                :            :         sizeof(spdm_digest_response_t) +</a>
+<a name="1315"><span class="lineNum">    1315 </span>                :            :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo));</a>
+<a name="1316"><span class="lineNum">    1316 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
+<a name="1317"><span class="lineNum">    1317 </span>                :            : #endif</a>
+<a name="1318"><span class="lineNum">    1318 </span>                :            : </a>
+<a name="1319"><span class="lineNum">    1319 </span>                :<span class="lineCov">          1 :     m_get_digest = false;</span></a>
+<a name="1320"><span class="lineNum">    1320 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1321"><span class="lineNum">    1321 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="1322"><span class="lineNum">    1322 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="1323"><span class="lineNum">    1323 </span>                :            : #endif</a>
+<a name="1324"><span class="lineNum">    1324 </span>                :<span class="lineCov">          1 :     cert_chain_size = sizeof(cert_chain);</span></a>
+<a name="1325"><span class="lineNum">    1325 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(cert_chain, sizeof(cert_chain));</span></a>
+<a name="1326"><span class="lineNum">    1326 </span>                :<span class="lineCov">          1 :     status = libspdm_get_certificate(spdm_context, NULL, 0, &amp;cert_chain_size,</span></a>
+<a name="1327"><span class="lineNum">    1327 </span>                :            :                                      cert_chain);</a>
+<a name="1328"><span class="lineNum">    1328 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1329"><span class="lineNum">    1329 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1330"><span class="lineNum">    1330 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
+<a name="1331"><span class="lineNum">    1331 </span>                :            : #endif</a>
+<a name="1332"><span class="lineNum">    1332 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
+<a name="1333"><span class="lineNum">    1333 </span>                :            : </a>
+<a name="1334"><span class="lineNum">    1334 </span>                :<span class="lineCov">          1 :     m_get_digest = true;</span></a>
+<a name="1335"><span class="lineNum">    1335 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1336"><span class="lineNum">    1336 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="1337"><span class="lineNum">    1337 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="1338"><span class="lineNum">    1338 </span>                :            : #endif</a>
+<a name="1339"><span class="lineNum">    1339 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
+<a name="1340"><span class="lineNum">    1340 </span>                :            :     /* second GetDigest */</a>
+<a name="1341"><span class="lineNum">    1341 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, NULL, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
+<a name="1342"><span class="lineNum">    1342 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1343"><span class="lineNum">    1343 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
+<a name="1344"><span class="lineNum">    1344 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
+<a name="1345"><span class="lineNum">    1345 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
+<a name="1346"><span class="lineNum">    1346 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, m_libspdm_local_certificate_chain_test_cert,</span></a>
+<a name="1347"><span class="lineNum">    1347 </span>                :            :                      m_libspdm_local_certificate_chain_size, digest);</a>
+<a name="1348"><span class="lineNum">    1348 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="1349"><span class="lineNum">    1349 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
+<a name="1350"><span class="lineNum">    1350 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
+<a name="1351"><span class="lineNum">    1351 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
+<a name="1352"><span class="lineNum">    1352 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
+<a name="1353"><span class="lineNum">    1353 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1354"><span class="lineNum">    1354 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
+<a name="1355"><span class="lineNum">    1355 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x01);</span></a>
+<a name="1356"><span class="lineNum">    1356 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
+<a name="1357"><span class="lineNum">    1357 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
+<a name="1358"><span class="lineNum">    1358 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
+<a name="1359"><span class="lineNum">    1359 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1360"><span class="lineNum">    1360 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(m_libspdm_use_hash_algo));</span></a>
+<a name="1361"><span class="lineNum">    1361 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="1362"><span class="lineNum">    1362 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
+<a name="1363"><span class="lineNum">    1363 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1364"><span class="lineNum">    1364 </span>                :            :     assert_int_equal(</a>
+<a name="1365"><span class="lineNum">    1365 </span>                :            :         spdm_context-&gt;transcript.message_b.buffer_size,</a>
+<a name="1366"><span class="lineNum">    1366 </span>                :            :         sizeof(spdm_get_digest_request_t) +</a>
+<a name="1367"><span class="lineNum">    1367 </span>                :            :         sizeof(spdm_digest_response_t) +</a>
+<a name="1368"><span class="lineNum">    1368 </span>                :            :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo));</a>
+<a name="1369"><span class="lineNum">    1369 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
+<a name="1370"><span class="lineNum">    1370 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
+<a name="1371"><span class="lineNum">    1371 </span>                :            : #else</a>
+<a name="1372"><span class="lineNum">    1372 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
+<a name="1373"><span class="lineNum">    1373 </span>                :            : #endif</a>
+<a name="1374"><span class="lineNum">    1374 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1375"><span class="lineNum">    1375 </span>                :            : </a>
+<a name="1376"><span class="lineNum">    1376 </span>                :            : /**</a>
+<a name="1377"><span class="lineNum">    1377 </span>                :            :  * Test 25: a request message is successfully sent and a response message is successfully received</a>
+<a name="1378"><span class="lineNum">    1378 </span>                :            :  * in a session.</a>
+<a name="1379"><span class="lineNum">    1379 </span>                :            :  * Expected Behavior: requester returns the status LIBSPDM_STATUS_SUCCESS and a DIGESTS message is received</a>
+<a name="1380"><span class="lineNum">    1380 </span>                :            :  **/</a>
+<a name="1381"><span class="lineNum">    1381 </span>                :<span class="lineCov">          1 : static void libspdm_test_requester_get_digests_case25(void **state)</span></a>
+<a name="1382"><span class="lineNum">    1382 </span>                :            : {</a>
+<a name="1383"><span class="lineNum">    1383 </span>                :            :     libspdm_return_t status;</a>
+<a name="1384"><span class="lineNum">    1384 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="1385"><span class="lineNum">    1385 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="1386"><span class="lineNum">    1386 </span>                :            :     uint8_t slot_mask;</a>
+<a name="1387"><span class="lineNum">    1387 </span>                :            :     uint8_t total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
+<a name="1388"><span class="lineNum">    1388 </span>                :            :     uint8_t my_total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
+<a name="1389"><span class="lineNum">    1389 </span>                :            :     uint8_t *digest;</a>
+<a name="1390"><span class="lineNum">    1390 </span>                :            :     size_t data_return_size;</a>
+<a name="1391"><span class="lineNum">    1391 </span>                :            :     uint32_t session_id;</a>
+<a name="1392"><span class="lineNum">    1392 </span>                :            :     libspdm_session_info_t *session_info;</a>
+<a name="1393"><span class="lineNum">    1393 </span>                :            : </a>
+<a name="1394"><span class="lineNum">    1394 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1395"><span class="lineNum">    1395 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1396"><span class="lineNum">    1396 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x19;</span></a>
+<a name="1397"><span class="lineNum">    1397 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_10 &lt;&lt;</span></a>
+<a name="1398"><span class="lineNum">    1398 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="1399"><span class="lineNum">    1399 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="1400"><span class="lineNum">    1400 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
+<a name="1401"><span class="lineNum">    1401 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="1402"><span class="lineNum">    1402 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PSK_CAP;</a>
+<a name="1403"><span class="lineNum">    1403 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="1404"><span class="lineNum">    1404 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCRYPT_CAP;</a>
+<a name="1405"><span class="lineNum">    1405 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="1406"><span class="lineNum">    1406 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MAC_CAP;</a>
+<a name="1407"><span class="lineNum">    1407 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="1408"><span class="lineNum">    1408 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PSK_CAP;</a>
+<a name="1409"><span class="lineNum">    1409 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="1410"><span class="lineNum">    1410 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCRYPT_CAP;</a>
+<a name="1411"><span class="lineNum">    1411 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="1412"><span class="lineNum">    1412 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_MAC_CAP;</a>
+<a name="1413"><span class="lineNum">    1413 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="1414"><span class="lineNum">    1414 </span>                :            :         m_libspdm_use_dhe_algo;</a>
+<a name="1415"><span class="lineNum">    1415 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="1416"><span class="lineNum">    1416 </span>                :            :         m_libspdm_use_aead_algo;</a>
+<a name="1417"><span class="lineNum">    1417 </span>                :            : </a>
+<a name="1418"><span class="lineNum">    1418 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1419"><span class="lineNum">    1419 </span>                :            : </a>
+<a name="1420"><span class="lineNum">    1420 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
+<a name="1421"><span class="lineNum">    1421 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
+<a name="1422"><span class="lineNum">    1422 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, true);</span></a>
+<a name="1423"><span class="lineNum">    1423 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(session_info-&gt;secured_message_context,</span></a>
+<a name="1424"><span class="lineNum">    1424 </span>                :            :                                               LIBSPDM_SESSION_STATE_ESTABLISHED);</a>
+<a name="1425"><span class="lineNum">    1425 </span>                :            : </a>
+<a name="1426"><span class="lineNum">    1426 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
+<a name="1427"><span class="lineNum">    1427 </span>                :            :                     (uint8_t)(0xFF));</a>
+<a name="1428"><span class="lineNum">    1428 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
+<a name="1429"><span class="lineNum">    1429 </span>                :            : </a>
+<a name="1430"><span class="lineNum">    1430 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1431"><span class="lineNum">    1431 </span>                :            :     session_info-&gt;session_transcript.message_m.buffer_size =</a>
+<a name="1432"><span class="lineNum">    1432 </span>                :            :         session_info-&gt;session_transcript.message_m.max_buffer_size;</a>
+<a name="1433"><span class="lineNum">    1433 </span>                :            : #endif</a>
+<a name="1434"><span class="lineNum">    1434 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
+<a name="1435"><span class="lineNum">    1435 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, &amp;session_id, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
+<a name="1436"><span class="lineNum">    1436 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1437"><span class="lineNum">    1437 </span>                :            : </a>
+<a name="1438"><span class="lineNum">    1438 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x80);</span></a>
+<a name="1439"><span class="lineNum">    1439 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
+<a name="1440"><span class="lineNum">    1440 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
+<a name="1441"><span class="lineNum">    1441 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, m_libspdm_local_certificate_chain,</span></a>
+<a name="1442"><span class="lineNum">    1442 </span>                :            :                      LIBSPDM_MAX_MESSAGE_BUFFER_SIZE, digest);</a>
+<a name="1443"><span class="lineNum">    1443 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="1444"><span class="lineNum">    1444 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
+<a name="1445"><span class="lineNum">    1445 </span>                :            : </a>
+<a name="1446"><span class="lineNum">    1446 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
+<a name="1447"><span class="lineNum">    1447 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
+<a name="1448"><span class="lineNum">    1448 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
+<a name="1449"><span class="lineNum">    1449 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1450"><span class="lineNum">    1450 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
+<a name="1451"><span class="lineNum">    1451 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0x80);</span></a>
+<a name="1452"><span class="lineNum">    1452 </span>                :            : </a>
+<a name="1453"><span class="lineNum">    1453 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
+<a name="1454"><span class="lineNum">    1454 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
+<a name="1455"><span class="lineNum">    1455 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
+<a name="1456"><span class="lineNum">    1456 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1457"><span class="lineNum">    1457 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(m_libspdm_use_hash_algo));</span></a>
+<a name="1458"><span class="lineNum">    1458 </span>                :<span class="lineCov">          1 :     assert_memory_equal (total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="1459"><span class="lineNum">    1459 </span>                :            :                          sizeof(my_total_digest_buffer));</a>
+<a name="1460"><span class="lineNum">    1460 </span>                :            : </a>
+<a name="1461"><span class="lineNum">    1461 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1462"><span class="lineNum">    1462 </span>                :            :     assert_int_equal(session_info-&gt;session_transcript.message_m.buffer_size, 0);</a>
+<a name="1463"><span class="lineNum">    1463 </span>                :            : #endif</a>
+<a name="1464"><span class="lineNum">    1464 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1465"><span class="lineNum">    1465 </span>                :            : </a>
+<a name="1466"><span class="lineNum">    1466 </span>                :            : static libspdm_test_context_t m_libspdm_requester_get_digests_test_context = {</a>
+<a name="1467"><span class="lineNum">    1467 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="1468"><span class="lineNum">    1468 </span>                :            :     true,</a>
+<a name="1469"><span class="lineNum">    1469 </span>                :            :     libspdm_requester_get_digests_test_send_message,</a>
+<a name="1470"><span class="lineNum">    1470 </span>                :            :     libspdm_requester_get_digests_test_receive_message,</a>
+<a name="1471"><span class="lineNum">    1471 </span>                :            : };</a>
+<a name="1472"><span class="lineNum">    1472 </span>                :            : </a>
+<a name="1473"><span class="lineNum">    1473 </span>                :<span class="lineCov">          1 : int libspdm_requester_get_digests_test_main(void)</span></a>
+<a name="1474"><span class="lineNum">    1474 </span>                :            : {</a>
+<a name="1475"><span class="lineNum">    1475 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_get_digests_tests[] = {</span></a>
+<a name="1476"><span class="lineNum">    1476 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case1),</a>
+<a name="1477"><span class="lineNum">    1477 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case2),</a>
+<a name="1478"><span class="lineNum">    1478 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case3),</a>
+<a name="1479"><span class="lineNum">    1479 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case4),</a>
+<a name="1480"><span class="lineNum">    1480 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case5),</a>
+<a name="1481"><span class="lineNum">    1481 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case6),</a>
+<a name="1482"><span class="lineNum">    1482 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case7),</a>
+<a name="1483"><span class="lineNum">    1483 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case8),</a>
+<a name="1484"><span class="lineNum">    1484 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case9),</a>
+<a name="1485"><span class="lineNum">    1485 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case10),</a>
+<a name="1486"><span class="lineNum">    1486 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case11),</a>
+<a name="1487"><span class="lineNum">    1487 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case12),</a>
+<a name="1488"><span class="lineNum">    1488 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case13),</a>
+<a name="1489"><span class="lineNum">    1489 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case14),</a>
+<a name="1490"><span class="lineNum">    1490 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case15),</a>
+<a name="1491"><span class="lineNum">    1491 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case16),</a>
+<a name="1492"><span class="lineNum">    1492 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case17),</a>
+<a name="1493"><span class="lineNum">    1493 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case18),</a>
+<a name="1494"><span class="lineNum">    1494 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case19),</a>
+<a name="1495"><span class="lineNum">    1495 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case20),</a>
+<a name="1496"><span class="lineNum">    1496 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case21),</a>
+<a name="1497"><span class="lineNum">    1497 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case22),</a>
+<a name="1498"><span class="lineNum">    1498 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case23),</a>
+<a name="1499"><span class="lineNum">    1499 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case24),</a>
+<a name="1500"><span class="lineNum">    1500 </span>                :            :         cmocka_unit_test(libspdm_test_requester_get_digests_case25),</a>
+<a name="1501"><span class="lineNum">    1501 </span>                :            :     };</a>
+<a name="1502"><span class="lineNum">    1502 </span>                :            : </a>
+<a name="1503"><span class="lineNum">    1503 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_requester_get_digests_test_context);</span></a>
+<a name="1504"><span class="lineNum">    1504 </span>                :            : </a>
+<a name="1505"><span class="lineNum">    1505 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_get_digests_tests,</span></a>
+<a name="1506"><span class="lineNum">    1506 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="1507"><span class="lineNum">    1507 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="1508"><span class="lineNum">    1508 </span>                :            : }</a>
+<a name="1509"><span class="lineNum">    1509 </span>                :            : </a>
+<a name="1510"><span class="lineNum">    1510 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */</a>
 </pre>
       </td>
     </tr>

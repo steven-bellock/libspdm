@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">396</td>
-            <td class="headerCovTableEntry">404</td>
+            <td class="headerCovTableEntry">397</td>
+            <td class="headerCovTableEntry">405</td>
             <td class="headerCovTableEntryHi">98.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-08 08:16:22</td>
+            <td class="headerValue">2023-03-09 08:16:38</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">13</td>
@@ -628,376 +628,377 @@
 <a name="557"><span class="lineNum">     557 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=  SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</span></a>
 <a name="558"><span class="lineNum">     558 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
 <a name="559"><span class="lineNum">     559 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
-<a name="560"><span class="lineNum">     560 </span>                :            : </a>
-<a name="561"><span class="lineNum">     561 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(</span></a>
-<a name="562"><span class="lineNum">     562 </span>                :            :         m_libspdm_use_hash_algo,</a>
-<a name="563"><span class="lineNum">     563 </span>                :            :         m_libspdm_use_asym_algo, &amp;data,</a>
-<a name="564"><span class="lineNum">     564 </span>                :            :         &amp;data_size, &amp;hash, &amp;hash_size);</a>
-<a name="565"><span class="lineNum">     565 </span>                :<span class="lineCov">          1 :     libspdm_x509_get_cert_from_cert_chain(</span></a>
-<a name="566"><span class="lineNum">     566 </span>                :<span class="lineCov">          1 :         (uint8_t*) data + sizeof(spdm_cert_chain_t) + hash_size,</span></a>
-<a name="567"><span class="lineNum">     567 </span>                :<span class="lineCov">          1 :         data_size - sizeof(spdm_cert_chain_t) - hash_size, 0,</span></a>
-<a name="568"><span class="lineNum">     568 </span>                :            :         &amp;root_cert, &amp;root_cert_size);</a>
-<a name="569"><span class="lineNum">     569 </span>                :<span class="lineCov">          1 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;root cert data :\n&quot;));</span></a>
-<a name="570"><span class="lineNum">     570 </span>                :<span class="lineCov">          1 :     libspdm_dump_hex(root_cert, root_cert_size);</span></a>
-<a name="571"><span class="lineNum">     571 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision_size[0] = root_cert_size;</span></a>
-<a name="572"><span class="lineNum">     572 </span>                :            : </a>
-<a name="573"><span class="lineNum">     573 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision[0] = root_cert;</span></a>
-<a name="574"><span class="lineNum">     574 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
-<a name="575"><span class="lineNum">     575 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="576"><span class="lineNum">     576 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
-<a name="577"><span class="lineNum">     577 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;</span></a>
-<a name="578"><span class="lineNum">     578 </span>                :            : </a>
-<a name="579"><span class="lineNum">     579 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="580"><span class="lineNum">     580 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
-<a name="581"><span class="lineNum">     581 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
-<a name="582"><span class="lineNum">     582 </span>                :            :     #endif</a>
-<a name="583"><span class="lineNum">     583 </span>                :<span class="lineCov">          1 :     cert_chain_size = sizeof(cert_chain);</span></a>
-<a name="584"><span class="lineNum">     584 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(cert_chain, sizeof(cert_chain));</span></a>
-<a name="585"><span class="lineNum">     585 </span>                :<span class="lineCov">          1 :     status = libspdm_get_certificate(spdm_context, NULL, 0, &amp;cert_chain_size, cert_chain);</span></a>
-<a name="586"><span class="lineNum">     586 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="587"><span class="lineNum">     587 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="588"><span class="lineNum">     588 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_b.buffer_size,</a>
-<a name="589"><span class="lineNum">     589 </span>                :            :                      sizeof(spdm_get_certificate_request_t) + sizeof(spdm_certificate_response_t) +</a>
-<a name="590"><span class="lineNum">     590 </span>                :            :                      data_size);</a>
-<a name="591"><span class="lineNum">     591 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
-<a name="592"><span class="lineNum">     592 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
-<a name="593"><span class="lineNum">     593 </span>                :            :     #else</a>
-<a name="594"><span class="lineNum">     594 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
-<a name="595"><span class="lineNum">     595 </span>                :            :     #endif</a>
-<a name="596"><span class="lineNum">     596 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
-<a name="597"><span class="lineNum">     597 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="598"><span class="lineNum">     598 </span>                :            : #endif</a>
-<a name="599"><span class="lineNum">     599 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
-<a name="600"><span class="lineNum">     600 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case2(void** state)</span></a>
-<a name="601"><span class="lineNum">     601 </span>                :            : {</a>
-<a name="602"><span class="lineNum">     602 </span>                :            :     /* Copied from Get Measurements Test Case 0x20 */</a>
-<a name="603"><span class="lineNum">     603 </span>                :            :     libspdm_return_t status;</a>
-<a name="604"><span class="lineNum">     604 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
-<a name="605"><span class="lineNum">     605 </span>                :            :     libspdm_context_t* spdm_context;</a>
-<a name="606"><span class="lineNum">     606 </span>                :            :     uint8_t number_of_block;</a>
-<a name="607"><span class="lineNum">     607 </span>                :            :     uint32_t measurement_record_length;</a>
-<a name="608"><span class="lineNum">     608 </span>                :            :     uint8_t measurement_record[LIBSPDM_MAX_MEASUREMENT_RECORD_SIZE];</a>
-<a name="609"><span class="lineNum">     609 </span>                :            :     uint8_t request_attribute;</a>
-<a name="610"><span class="lineNum">     610 </span>                :            :     void* data;</a>
-<a name="611"><span class="lineNum">     611 </span>                :            :     size_t data_size;</a>
-<a name="612"><span class="lineNum">     612 </span>                :            :     void* hash;</a>
-<a name="613"><span class="lineNum">     613 </span>                :            :     size_t hash_size;</a>
-<a name="614"><span class="lineNum">     614 </span>                :            : </a>
-<a name="615"><span class="lineNum">     615 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="616"><span class="lineNum">     616 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="617"><span class="lineNum">     617 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x02;</span></a>
-<a name="618"><span class="lineNum">     618 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
-<a name="619"><span class="lineNum">     619 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
-<a name="620"><span class="lineNum">     620 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
-<a name="621"><span class="lineNum">     621 </span>                :            :         LIBSPDM_CONNECTION_STATE_AUTHENTICATED;</a>
-<a name="622"><span class="lineNum">     622 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
-<a name="623"><span class="lineNum">     623 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MEAS_CAP_SIG</a>
-<a name="624"><span class="lineNum">     624 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
-<a name="625"><span class="lineNum">     625 </span>                :            : </a>
-<a name="626"><span class="lineNum">     626 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
-<a name="627"><span class="lineNum">     627 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
-<a name="628"><span class="lineNum">     628 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
-<a name="629"><span class="lineNum">     629 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
-<a name="630"><span class="lineNum">     630 </span>                :            : </a>
-<a name="631"><span class="lineNum">     631 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(</span></a>
-<a name="632"><span class="lineNum">     632 </span>                :            :         m_libspdm_use_hash_algo, m_libspdm_use_asym_algo,</a>
-<a name="633"><span class="lineNum">     633 </span>                :            :         &amp;data, &amp;data_size, &amp;hash, &amp;hash_size);</a>
-<a name="634"><span class="lineNum">     634 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_m(spdm_context, NULL);</span></a>
-<a name="635"><span class="lineNum">     635 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
-<a name="636"><span class="lineNum">     636 </span>                :            :         m_libspdm_use_measurement_spec;</a>
-<a name="637"><span class="lineNum">     637 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
-<a name="638"><span class="lineNum">     638 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
-<a name="639"><span class="lineNum">     639 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
-<a name="640"><span class="lineNum">     640 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="641"><span class="lineNum">     641 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
-<a name="642"><span class="lineNum">     642 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="643"><span class="lineNum">     643 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_spec =</span></a>
-<a name="644"><span class="lineNum">     644 </span>                :            :         SPDM_MEASUREMENT_BLOCK_HEADER_SPECIFICATION_DMTF;</a>
-<a name="645"><span class="lineNum">     645 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="646"><span class="lineNum">     646 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = data_size;</a>
-<a name="647"><span class="lineNum">     647 </span>                :            :     libspdm_copy_mem(</a>
-<a name="648"><span class="lineNum">     648 </span>                :            :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
-<a name="649"><span class="lineNum">     649 </span>                :            :         sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
-<a name="650"><span class="lineNum">     650 </span>                :            :         data, data_size);</a>
-<a name="651"><span class="lineNum">     651 </span>                :            :     #else</a>
-<a name="652"><span class="lineNum">     652 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
-<a name="653"><span class="lineNum">     653 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
-<a name="654"><span class="lineNum">     654 </span>                :            :         data, data_size,</a>
-<a name="655"><span class="lineNum">     655 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
-<a name="656"><span class="lineNum">     656 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
-<a name="657"><span class="lineNum">     657 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
-<a name="658"><span class="lineNum">     658 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
-<a name="659"><span class="lineNum">     659 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
-<a name="660"><span class="lineNum">     660 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
-<a name="661"><span class="lineNum">     661 </span>                :            :         data, data_size,</a>
-<a name="662"><span class="lineNum">     662 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
-<a name="663"><span class="lineNum">     663 </span>                :            :     #endif</a>
-<a name="664"><span class="lineNum">     664 </span>                :<span class="lineCov">          1 :     request_attribute = 0;</span></a>
-<a name="665"><span class="lineNum">     665 </span>                :            : </a>
-<a name="666"><span class="lineNum">     666 </span>                :<span class="lineCov">          1 :     measurement_record_length = sizeof(measurement_record);</span></a>
-<a name="667"><span class="lineNum">     667 </span>                :<span class="lineCov">          1 :     status = libspdm_get_measurement(</span></a>
-<a name="668"><span class="lineNum">     668 </span>                :            :         spdm_context, NULL, request_attribute,</a>
-<a name="669"><span class="lineNum">     669 </span>                :            :         SPDM_GET_MEASUREMENTS_REQUEST_MEASUREMENT_OPERATION_ALL_MEASUREMENTS,</a>
-<a name="670"><span class="lineNum">     670 </span>                :            :         0, NULL, &amp;number_of_block, &amp;measurement_record_length,</a>
-<a name="671"><span class="lineNum">     671 </span>                :            :         measurement_record);</a>
-<a name="672"><span class="lineNum">     672 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="673"><span class="lineNum">     673 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="674"><span class="lineNum">     674 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size,</a>
-<a name="675"><span class="lineNum">     675 </span>                :            :                      sizeof(spdm_message_header_t) +</a>
-<a name="676"><span class="lineNum">     676 </span>                :            :                      sizeof(spdm_measurements_response_t) +</a>
-<a name="677"><span class="lineNum">     677 </span>                :            :                      2 * (sizeof(spdm_measurement_block_dmtf_t) +</a>
-<a name="678"><span class="lineNum">     678 </span>                :            :                           libspdm_get_measurement_hash_size(</a>
-<a name="679"><span class="lineNum">     679 </span>                :            :                               m_libspdm_use_measurement_hash_algo)) +</a>
-<a name="680"><span class="lineNum">     680 </span>                :            :                      sizeof(uint16_t) + SPDM_NONCE_SIZE);</a>
-<a name="681"><span class="lineNum">     681 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
-<a name="682"><span class="lineNum">     682 </span>                :            :     #else</a>
-<a name="683"><span class="lineNum">     683 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
-<a name="684"><span class="lineNum">     684 </span>                :            :     #endif</a>
-<a name="685"><span class="lineNum">     685 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
-<a name="686"><span class="lineNum">     686 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="687"><span class="lineNum">     687 </span>                :            : #endif</a>
-<a name="688"><span class="lineNum">     688 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
-<a name="689"><span class="lineNum">     689 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case3(void** state)</span></a>
-<a name="690"><span class="lineNum">     690 </span>                :            : {</a>
-<a name="691"><span class="lineNum">     691 </span>                :            :     /* Copied from Challenge Test Case 2*/</a>
-<a name="692"><span class="lineNum">     692 </span>                :            :     libspdm_return_t status;</a>
-<a name="693"><span class="lineNum">     693 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
-<a name="694"><span class="lineNum">     694 </span>                :            :     libspdm_context_t* spdm_context;</a>
-<a name="695"><span class="lineNum">     695 </span>                :            :     uint8_t measurement_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="696"><span class="lineNum">     696 </span>                :            :     void* data;</a>
-<a name="697"><span class="lineNum">     697 </span>                :            :     size_t data_size;</a>
-<a name="698"><span class="lineNum">     698 </span>                :            :     void* hash;</a>
-<a name="699"><span class="lineNum">     699 </span>                :            :     size_t hash_size;</a>
-<a name="700"><span class="lineNum">     700 </span>                :            : </a>
-<a name="701"><span class="lineNum">     701 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="702"><span class="lineNum">     702 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="703"><span class="lineNum">     703 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x3;</span></a>
-<a name="704"><span class="lineNum">     704 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
-<a name="705"><span class="lineNum">     705 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
-<a name="706"><span class="lineNum">     706 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags = 0;</span></a>
-<a name="707"><span class="lineNum">     707 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
-<a name="708"><span class="lineNum">     708 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHAL_CAP</a>
-<a name="709"><span class="lineNum">     709 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
-<a name="710"><span class="lineNum">     710 </span>                :            : </a>
-<a name="711"><span class="lineNum">     711 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
-<a name="712"><span class="lineNum">     712 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
-<a name="713"><span class="lineNum">     713 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
-<a name="714"><span class="lineNum">     714 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
-<a name="715"><span class="lineNum">     715 </span>                :            : </a>
-<a name="716"><span class="lineNum">     716 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(</span></a>
-<a name="717"><span class="lineNum">     717 </span>                :            :         m_libspdm_use_hash_algo, m_libspdm_use_asym_algo,</a>
-<a name="718"><span class="lineNum">     718 </span>                :            :         &amp;data, &amp;data_size, &amp;hash, &amp;hash_size);</a>
-<a name="719"><span class="lineNum">     719 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
-<a name="720"><span class="lineNum">     720 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
-<a name="721"><span class="lineNum">     721 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_c(spdm_context);</span></a>
-<a name="722"><span class="lineNum">     722 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
-<a name="723"><span class="lineNum">     723 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="724"><span class="lineNum">     724 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
-<a name="725"><span class="lineNum">     725 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="726"><span class="lineNum">     726 </span>                :            : </a>
-<a name="727"><span class="lineNum">     727 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
-<a name="728"><span class="lineNum">     728 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
-<a name="729"><span class="lineNum">     729 </span>                :            : </a>
-<a name="730"><span class="lineNum">     730 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="731"><span class="lineNum">     731 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = data_size;</a>
-<a name="732"><span class="lineNum">     732 </span>                :            :     libspdm_copy_mem(</a>
-<a name="733"><span class="lineNum">     733 </span>                :            :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
-<a name="734"><span class="lineNum">     734 </span>                :            :         sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
-<a name="735"><span class="lineNum">     735 </span>                :            :         data, data_size);</a>
-<a name="736"><span class="lineNum">     736 </span>                :            :     #else</a>
-<a name="737"><span class="lineNum">     737 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
-<a name="738"><span class="lineNum">     738 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
-<a name="739"><span class="lineNum">     739 </span>                :            :         data, data_size,</a>
-<a name="740"><span class="lineNum">     740 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
-<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
-<a name="742"><span class="lineNum">     742 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
-<a name="743"><span class="lineNum">     743 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
-<a name="744"><span class="lineNum">     744 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
-<a name="745"><span class="lineNum">     745 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
-<a name="746"><span class="lineNum">     746 </span>                :            :         data, data_size,</a>
-<a name="747"><span class="lineNum">     747 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
-<a name="748"><span class="lineNum">     748 </span>                :            :     #endif</a>
-<a name="749"><span class="lineNum">     749 </span>                :            : </a>
-<a name="750"><span class="lineNum">     750 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
-<a name="751"><span class="lineNum">     751 </span>                :<span class="lineCov">          1 :     status = libspdm_challenge(</span></a>
-<a name="752"><span class="lineNum">     752 </span>                :            :         spdm_context, NULL, 0,</a>
-<a name="753"><span class="lineNum">     753 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH,</a>
-<a name="754"><span class="lineNum">     754 </span>                :            :         measurement_hash, NULL);</a>
-<a name="755"><span class="lineNum">     755 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="756"><span class="lineNum">     756 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
-<a name="757"><span class="lineNum">     757 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="758"><span class="lineNum">     758 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
-<a name="759"><span class="lineNum">     759 </span>                :            :     #else</a>
-<a name="760"><span class="lineNum">     760 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
-<a name="761"><span class="lineNum">     761 </span>                :            :     #endif</a>
-<a name="762"><span class="lineNum">     762 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="763"><span class="lineNum">     763 </span>                :            : #endif</a>
-<a name="764"><span class="lineNum">     764 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="765"><span class="lineNum">     765 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case4(void** state)</span></a>
-<a name="766"><span class="lineNum">     766 </span>                :            : {</a>
-<a name="767"><span class="lineNum">     767 </span>                :            :     /* Copied from Get Digests Test Case 2*/</a>
-<a name="768"><span class="lineNum">     768 </span>                :            :     libspdm_return_t status;</a>
-<a name="769"><span class="lineNum">     769 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
-<a name="770"><span class="lineNum">     770 </span>                :            :     libspdm_context_t* spdm_context;</a>
-<a name="771"><span class="lineNum">     771 </span>                :            :     uint8_t slot_mask;</a>
-<a name="772"><span class="lineNum">     772 </span>                :            :     uint8_t slot_id;</a>
-<a name="773"><span class="lineNum">     773 </span>                :            :     uint8_t total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
-<a name="774"><span class="lineNum">     774 </span>                :            :     uint8_t my_total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
-<a name="775"><span class="lineNum">     775 </span>                :            :     uint8_t* digest;</a>
-<a name="776"><span class="lineNum">     776 </span>                :            :     size_t data_return_size;</a>
-<a name="777"><span class="lineNum">     777 </span>                :            : </a>
-<a name="778"><span class="lineNum">     778 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="779"><span class="lineNum">     779 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="780"><span class="lineNum">     780 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x4;</span></a>
-<a name="781"><span class="lineNum">     781 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
-<a name="782"><span class="lineNum">     782 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
-<a name="783"><span class="lineNum">     783 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="784"><span class="lineNum">     784 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
-<a name="785"><span class="lineNum">     785 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP</a>
-<a name="786"><span class="lineNum">     786 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
-<a name="787"><span class="lineNum">     787 </span>                :            : </a>
-<a name="788"><span class="lineNum">     788 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
-<a name="789"><span class="lineNum">     789 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
-<a name="790"><span class="lineNum">     790 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
-<a name="791"><span class="lineNum">     791 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
-<a name="792"><span class="lineNum">     792 </span>                :            : </a>
-<a name="793"><span class="lineNum">     793 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="794"><span class="lineNum">     794 </span>                :            : </a>
-<a name="795"><span class="lineNum">     795 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(</span></a>
-<a name="796"><span class="lineNum">     796 </span>                :            :         m_libspdm_local_certificate_chain_test_case_4,</a>
-<a name="797"><span class="lineNum">     797 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</a>
-<a name="798"><span class="lineNum">     798 </span>                :            :         (uint8_t) (0xFF));</a>
-<a name="799"><span class="lineNum">     799 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
-<a name="800"><span class="lineNum">     800 </span>                :            : </a>
-<a name="801"><span class="lineNum">     801 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="802"><span class="lineNum">     802 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
-<a name="803"><span class="lineNum">     803 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
-<a name="804"><span class="lineNum">     804 </span>                :            :     #endif</a>
-<a name="805"><span class="lineNum">     805 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
-<a name="806"><span class="lineNum">     806 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, NULL, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
-<a name="807"><span class="lineNum">     807 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="808"><span class="lineNum">     808 </span>                :            : </a>
-<a name="809"><span class="lineNum">     809 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0xFF);</span></a>
-<a name="810"><span class="lineNum">     810 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
-<a name="811"><span class="lineNum">     811 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
-<a name="812"><span class="lineNum">     812 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          9 :     for (slot_id = 0; slot_id &lt; SPDM_MAX_SLOT_COUNT; slot_id++) {</span></a>
-<a name="813"><span class="lineNum">     813 </span>                :<span class="lineCov">          8 :         libspdm_hash_all(m_libspdm_use_hash_algo,</span></a>
-<a name="814"><span class="lineNum">     814 </span>                :            :                          m_libspdm_local_certificate_chain_test_case_4,</a>
-<a name="815"><span class="lineNum">     815 </span>                :            :                          LIBSPDM_MAX_MESSAGE_BUFFER_SIZE, digest);</a>
-<a name="816"><span class="lineNum">     816 </span>                :<span class="lineCov">          8 :         digest += libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
-<a name="817"><span class="lineNum">     817 </span>                :            :     }</a>
-<a name="818"><span class="lineNum">     818 </span>                :<span class="lineCov">          1 :     assert_memory_equal(total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="819"><span class="lineNum">     819 </span>                :            :                         sizeof(my_total_digest_buffer));</a>
-<a name="820"><span class="lineNum">     820 </span>                :            : </a>
-<a name="821"><span class="lineNum">     821 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
-<a name="822"><span class="lineNum">     822 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
-<a name="823"><span class="lineNum">     823 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
-<a name="824"><span class="lineNum">     824 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="825"><span class="lineNum">     825 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
-<a name="826"><span class="lineNum">     826 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0xFF);</span></a>
-<a name="827"><span class="lineNum">     827 </span>                :            : </a>
-<a name="828"><span class="lineNum">     828 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
-<a name="829"><span class="lineNum">     829 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
-<a name="830"><span class="lineNum">     830 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
-<a name="831"><span class="lineNum">     831 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="832"><span class="lineNum">     832 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(</span></a>
-<a name="833"><span class="lineNum">     833 </span>                :            :                          m_libspdm_use_hash_algo) * SPDM_MAX_SLOT_COUNT);</a>
-<a name="834"><span class="lineNum">     834 </span>                :<span class="lineCov">          1 :     assert_memory_equal(total_digest_buffer, my_total_digest_buffer,</span></a>
-<a name="835"><span class="lineNum">     835 </span>                :            :                         sizeof(my_total_digest_buffer));</a>
-<a name="836"><span class="lineNum">     836 </span>                :            : </a>
-<a name="837"><span class="lineNum">     837 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="838"><span class="lineNum">     838 </span>                :            :     assert_int_equal(</a>
-<a name="839"><span class="lineNum">     839 </span>                :            :         spdm_context-&gt;transcript.message_b.buffer_size,</a>
-<a name="840"><span class="lineNum">     840 </span>                :            :         sizeof(spdm_get_digest_request_t) +</a>
-<a name="841"><span class="lineNum">     841 </span>                :            :         sizeof(spdm_digest_response_t) +</a>
-<a name="842"><span class="lineNum">     842 </span>                :            :         libspdm_get_hash_size(spdm_context-&gt;connection_info</a>
-<a name="843"><span class="lineNum">     843 </span>                :            :                               .algorithm.base_hash_algo) * SPDM_MAX_SLOT_COUNT);</a>
-<a name="844"><span class="lineNum">     844 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
-<a name="845"><span class="lineNum">     845 </span>                :            :     #endif</a>
-<a name="846"><span class="lineNum">     846 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="847"><span class="lineNum">     847 </span>                :            : #endif</a>
-<a name="848"><span class="lineNum">     848 </span>                :            : </a>
-<a name="849"><span class="lineNum">     849 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case5(void** state)</span></a>
-<a name="850"><span class="lineNum">     850 </span>                :            : {</a>
-<a name="851"><span class="lineNum">     851 </span>                :            :     /* Copied from Neg. Algorithms test case 2 */</a>
-<a name="852"><span class="lineNum">     852 </span>                :            :     libspdm_return_t status;</a>
-<a name="853"><span class="lineNum">     853 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
-<a name="854"><span class="lineNum">     854 </span>                :            :     libspdm_context_t* spdm_context;</a>
-<a name="855"><span class="lineNum">     855 </span>                :            : </a>
-<a name="856"><span class="lineNum">     856 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="857"><span class="lineNum">     857 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="858"><span class="lineNum">     858 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x5;</span></a>
-<a name="859"><span class="lineNum">     859 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
-<a name="860"><span class="lineNum">     860 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
-<a name="861"><span class="lineNum">     861 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
-<a name="862"><span class="lineNum">     862 </span>                :            :         LIBSPDM_CONNECTION_STATE_AFTER_CAPABILITIES;</a>
-<a name="863"><span class="lineNum">     863 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
-<a name="864"><span class="lineNum">     864 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP</a>
-<a name="865"><span class="lineNum">     865 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
-<a name="866"><span class="lineNum">     866 </span>                :            : </a>
-<a name="867"><span class="lineNum">     867 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
-<a name="868"><span class="lineNum">     868 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
-<a name="869"><span class="lineNum">     869 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
-<a name="870"><span class="lineNum">     870 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
-<a name="871"><span class="lineNum">     871 </span>                :            : </a>
-<a name="872"><span class="lineNum">     872 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_hash_algo =</span></a>
-<a name="873"><span class="lineNum">     873 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
-<a name="874"><span class="lineNum">     874 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
-<a name="875"><span class="lineNum">     875 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="876"><span class="lineNum">     876 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
-<a name="877"><span class="lineNum">     877 </span>                :            : </a>
-<a name="878"><span class="lineNum">     878 </span>                :<span class="lineCov">          1 :     status = libspdm_negotiate_algorithms(spdm_context);</span></a>
-<a name="879"><span class="lineNum">     879 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="880"><span class="lineNum">     880 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="881"><span class="lineNum">     881 </span>                :            :     assert_int_equal(</a>
-<a name="882"><span class="lineNum">     882 </span>                :            :         spdm_context-&gt;transcript.message_a.buffer_size,</a>
-<a name="883"><span class="lineNum">     883 </span>                :            :         sizeof(spdm_negotiate_algorithms_request_t) +</a>
-<a name="884"><span class="lineNum">     884 </span>                :            :         4 * sizeof(spdm_negotiate_algorithms_common_struct_table_t) +</a>
-<a name="885"><span class="lineNum">     885 </span>                :            :         sizeof(spdm_algorithms_response_t));</a>
-<a name="886"><span class="lineNum">     886 </span>                :            :     #endif</a>
-<a name="887"><span class="lineNum">     887 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="888"><span class="lineNum">     888 </span>                :            : </a>
-<a name="889"><span class="lineNum">     889 </span>                :            : libspdm_test_context_t m_libspdm_requester_chunk_get_test_context = {</a>
-<a name="890"><span class="lineNum">     890 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="891"><span class="lineNum">     891 </span>                :            :     true,</a>
-<a name="892"><span class="lineNum">     892 </span>                :            :     libspdm_requester_chunk_get_test_send_message,</a>
-<a name="893"><span class="lineNum">     893 </span>                :            :     libspdm_requester_chunk_get_test_receive_message,</a>
-<a name="894"><span class="lineNum">     894 </span>                :            : };</a>
-<a name="895"><span class="lineNum">     895 </span>                :            : </a>
-<a name="896"><span class="lineNum">     896 </span>                :<span class="lineCov">          1 : int libspdm_requester_chunk_get_test_main(void)</span></a>
-<a name="897"><span class="lineNum">     897 </span>                :            : {</a>
-<a name="898"><span class="lineNum">     898 </span>                :            :     /* Test the CHUNK_GET handlers in various requester handlers */</a>
-<a name="899"><span class="lineNum">     899 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_chunk_get_tests[] = {</span></a>
-<a name="900"><span class="lineNum">     900 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="901"><span class="lineNum">     901 </span>                :            :         /* Request a certificate in portions */</a>
-<a name="902"><span class="lineNum">     902 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case1),</a>
-<a name="903"><span class="lineNum">     903 </span>                :            : #endif</a>
-<a name="904"><span class="lineNum">     904 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
-<a name="905"><span class="lineNum">     905 </span>                :            :         /* Request all measurements */</a>
-<a name="906"><span class="lineNum">     906 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case2),</a>
-<a name="907"><span class="lineNum">     907 </span>                :            : #endif</a>
-<a name="908"><span class="lineNum">     908 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
-<a name="909"><span class="lineNum">     909 </span>                :            :         /* Request Challenge */</a>
-<a name="910"><span class="lineNum">     910 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case3),</a>
-<a name="911"><span class="lineNum">     911 </span>                :            : #endif</a>
-<a name="912"><span class="lineNum">     912 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="913"><span class="lineNum">     913 </span>                :            :         /* Request Digests */</a>
-<a name="914"><span class="lineNum">     914 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case4),</a>
-<a name="915"><span class="lineNum">     915 </span>                :            : #endif</a>
-<a name="916"><span class="lineNum">     916 </span>                :            : </a>
-<a name="917"><span class="lineNum">     917 </span>                :            :         /* Request Algorithms */</a>
-<a name="918"><span class="lineNum">     918 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case5),</a>
-<a name="919"><span class="lineNum">     919 </span>                :            :     };</a>
-<a name="920"><span class="lineNum">     920 </span>                :            : </a>
-<a name="921"><span class="lineNum">     921 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(</span></a>
-<a name="922"><span class="lineNum">     922 </span>                :            :         &amp;m_libspdm_requester_chunk_get_test_context);</a>
-<a name="923"><span class="lineNum">     923 </span>                :            : </a>
-<a name="924"><span class="lineNum">     924 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_chunk_get_tests,</span></a>
-<a name="925"><span class="lineNum">     925 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="926"><span class="lineNum">     926 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="927"><span class="lineNum">     927 </span>                :            : }</a>
-<a name="928"><span class="lineNum">     928 </span>                :            : </a>
-<a name="929"><span class="lineNum">     929 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP*/</a>
+<a name="560"><span class="lineNum">     560 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.is_requester = true;</span></a>
+<a name="561"><span class="lineNum">     561 </span>                :            : </a>
+<a name="562"><span class="lineNum">     562 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(</span></a>
+<a name="563"><span class="lineNum">     563 </span>                :            :         m_libspdm_use_hash_algo,</a>
+<a name="564"><span class="lineNum">     564 </span>                :            :         m_libspdm_use_asym_algo, &amp;data,</a>
+<a name="565"><span class="lineNum">     565 </span>                :            :         &amp;data_size, &amp;hash, &amp;hash_size);</a>
+<a name="566"><span class="lineNum">     566 </span>                :<span class="lineCov">          1 :     libspdm_x509_get_cert_from_cert_chain(</span></a>
+<a name="567"><span class="lineNum">     567 </span>                :<span class="lineCov">          1 :         (uint8_t*) data + sizeof(spdm_cert_chain_t) + hash_size,</span></a>
+<a name="568"><span class="lineNum">     568 </span>                :<span class="lineCov">          1 :         data_size - sizeof(spdm_cert_chain_t) - hash_size, 0,</span></a>
+<a name="569"><span class="lineNum">     569 </span>                :            :         &amp;root_cert, &amp;root_cert_size);</a>
+<a name="570"><span class="lineNum">     570 </span>                :<span class="lineCov">          1 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;root cert data :\n&quot;));</span></a>
+<a name="571"><span class="lineNum">     571 </span>                :<span class="lineCov">          1 :     libspdm_dump_hex(root_cert, root_cert_size);</span></a>
+<a name="572"><span class="lineNum">     572 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision_size[0] = root_cert_size;</span></a>
+<a name="573"><span class="lineNum">     573 </span>                :            : </a>
+<a name="574"><span class="lineNum">     574 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.peer_root_cert_provision[0] = root_cert;</span></a>
+<a name="575"><span class="lineNum">     575 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
+<a name="576"><span class="lineNum">     576 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="577"><span class="lineNum">     577 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="578"><span class="lineNum">     578 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;</span></a>
+<a name="579"><span class="lineNum">     579 </span>                :            : </a>
+<a name="580"><span class="lineNum">     580 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="581"><span class="lineNum">     581 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="582"><span class="lineNum">     582 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="583"><span class="lineNum">     583 </span>                :            :     #endif</a>
+<a name="584"><span class="lineNum">     584 </span>                :<span class="lineCov">          1 :     cert_chain_size = sizeof(cert_chain);</span></a>
+<a name="585"><span class="lineNum">     585 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(cert_chain, sizeof(cert_chain));</span></a>
+<a name="586"><span class="lineNum">     586 </span>                :<span class="lineCov">          1 :     status = libspdm_get_certificate(spdm_context, NULL, 0, &amp;cert_chain_size, cert_chain);</span></a>
+<a name="587"><span class="lineNum">     587 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="588"><span class="lineNum">     588 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="589"><span class="lineNum">     589 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_b.buffer_size,</a>
+<a name="590"><span class="lineNum">     590 </span>                :            :                      sizeof(spdm_get_certificate_request_t) + sizeof(spdm_certificate_response_t) +</a>
+<a name="591"><span class="lineNum">     591 </span>                :            :                      data_size);</a>
+<a name="592"><span class="lineNum">     592 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
+<a name="593"><span class="lineNum">     593 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
+<a name="594"><span class="lineNum">     594 </span>                :            :     #else</a>
+<a name="595"><span class="lineNum">     595 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
+<a name="596"><span class="lineNum">     596 </span>                :            :     #endif</a>
+<a name="597"><span class="lineNum">     597 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
+<a name="598"><span class="lineNum">     598 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="599"><span class="lineNum">     599 </span>                :            : #endif</a>
+<a name="600"><span class="lineNum">     600 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
+<a name="601"><span class="lineNum">     601 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case2(void** state)</span></a>
+<a name="602"><span class="lineNum">     602 </span>                :            : {</a>
+<a name="603"><span class="lineNum">     603 </span>                :            :     /* Copied from Get Measurements Test Case 0x20 */</a>
+<a name="604"><span class="lineNum">     604 </span>                :            :     libspdm_return_t status;</a>
+<a name="605"><span class="lineNum">     605 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="606"><span class="lineNum">     606 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="607"><span class="lineNum">     607 </span>                :            :     uint8_t number_of_block;</a>
+<a name="608"><span class="lineNum">     608 </span>                :            :     uint32_t measurement_record_length;</a>
+<a name="609"><span class="lineNum">     609 </span>                :            :     uint8_t measurement_record[LIBSPDM_MAX_MEASUREMENT_RECORD_SIZE];</a>
+<a name="610"><span class="lineNum">     610 </span>                :            :     uint8_t request_attribute;</a>
+<a name="611"><span class="lineNum">     611 </span>                :            :     void* data;</a>
+<a name="612"><span class="lineNum">     612 </span>                :            :     size_t data_size;</a>
+<a name="613"><span class="lineNum">     613 </span>                :            :     void* hash;</a>
+<a name="614"><span class="lineNum">     614 </span>                :            :     size_t hash_size;</a>
+<a name="615"><span class="lineNum">     615 </span>                :            : </a>
+<a name="616"><span class="lineNum">     616 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="617"><span class="lineNum">     617 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="618"><span class="lineNum">     618 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x02;</span></a>
+<a name="619"><span class="lineNum">     619 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
+<a name="620"><span class="lineNum">     620 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="621"><span class="lineNum">     621 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="622"><span class="lineNum">     622 </span>                :            :         LIBSPDM_CONNECTION_STATE_AUTHENTICATED;</a>
+<a name="623"><span class="lineNum">     623 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="624"><span class="lineNum">     624 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MEAS_CAP_SIG</a>
+<a name="625"><span class="lineNum">     625 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
+<a name="626"><span class="lineNum">     626 </span>                :            : </a>
+<a name="627"><span class="lineNum">     627 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="628"><span class="lineNum">     628 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
+<a name="629"><span class="lineNum">     629 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
+<a name="630"><span class="lineNum">     630 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
+<a name="631"><span class="lineNum">     631 </span>                :            : </a>
+<a name="632"><span class="lineNum">     632 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(</span></a>
+<a name="633"><span class="lineNum">     633 </span>                :            :         m_libspdm_use_hash_algo, m_libspdm_use_asym_algo,</a>
+<a name="634"><span class="lineNum">     634 </span>                :            :         &amp;data, &amp;data_size, &amp;hash, &amp;hash_size);</a>
+<a name="635"><span class="lineNum">     635 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_m(spdm_context, NULL);</span></a>
+<a name="636"><span class="lineNum">     636 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="637"><span class="lineNum">     637 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="638"><span class="lineNum">     638 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="639"><span class="lineNum">     639 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="640"><span class="lineNum">     640 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="641"><span class="lineNum">     641 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="642"><span class="lineNum">     642 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="643"><span class="lineNum">     643 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="644"><span class="lineNum">     644 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_spec =</span></a>
+<a name="645"><span class="lineNum">     645 </span>                :            :         SPDM_MEASUREMENT_BLOCK_HEADER_SPECIFICATION_DMTF;</a>
+<a name="646"><span class="lineNum">     646 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="647"><span class="lineNum">     647 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = data_size;</a>
+<a name="648"><span class="lineNum">     648 </span>                :            :     libspdm_copy_mem(</a>
+<a name="649"><span class="lineNum">     649 </span>                :            :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="650"><span class="lineNum">     650 </span>                :            :         sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="651"><span class="lineNum">     651 </span>                :            :         data, data_size);</a>
+<a name="652"><span class="lineNum">     652 </span>                :            :     #else</a>
+<a name="653"><span class="lineNum">     653 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="654"><span class="lineNum">     654 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="655"><span class="lineNum">     655 </span>                :            :         data, data_size,</a>
+<a name="656"><span class="lineNum">     656 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="657"><span class="lineNum">     657 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="658"><span class="lineNum">     658 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="659"><span class="lineNum">     659 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="660"><span class="lineNum">     660 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="661"><span class="lineNum">     661 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
+<a name="662"><span class="lineNum">     662 </span>                :            :         data, data_size,</a>
+<a name="663"><span class="lineNum">     663 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="664"><span class="lineNum">     664 </span>                :            :     #endif</a>
+<a name="665"><span class="lineNum">     665 </span>                :<span class="lineCov">          1 :     request_attribute = 0;</span></a>
+<a name="666"><span class="lineNum">     666 </span>                :            : </a>
+<a name="667"><span class="lineNum">     667 </span>                :<span class="lineCov">          1 :     measurement_record_length = sizeof(measurement_record);</span></a>
+<a name="668"><span class="lineNum">     668 </span>                :<span class="lineCov">          1 :     status = libspdm_get_measurement(</span></a>
+<a name="669"><span class="lineNum">     669 </span>                :            :         spdm_context, NULL, request_attribute,</a>
+<a name="670"><span class="lineNum">     670 </span>                :            :         SPDM_GET_MEASUREMENTS_REQUEST_MEASUREMENT_OPERATION_ALL_MEASUREMENTS,</a>
+<a name="671"><span class="lineNum">     671 </span>                :            :         0, NULL, &amp;number_of_block, &amp;measurement_record_length,</a>
+<a name="672"><span class="lineNum">     672 </span>                :            :         measurement_record);</a>
+<a name="673"><span class="lineNum">     673 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="674"><span class="lineNum">     674 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="675"><span class="lineNum">     675 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size,</a>
+<a name="676"><span class="lineNum">     676 </span>                :            :                      sizeof(spdm_message_header_t) +</a>
+<a name="677"><span class="lineNum">     677 </span>                :            :                      sizeof(spdm_measurements_response_t) +</a>
+<a name="678"><span class="lineNum">     678 </span>                :            :                      2 * (sizeof(spdm_measurement_block_dmtf_t) +</a>
+<a name="679"><span class="lineNum">     679 </span>                :            :                           libspdm_get_measurement_hash_size(</a>
+<a name="680"><span class="lineNum">     680 </span>                :            :                               m_libspdm_use_measurement_hash_algo)) +</a>
+<a name="681"><span class="lineNum">     681 </span>                :            :                      sizeof(uint16_t) + SPDM_NONCE_SIZE);</a>
+<a name="682"><span class="lineNum">     682 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
+<a name="683"><span class="lineNum">     683 </span>                :            :     #else</a>
+<a name="684"><span class="lineNum">     684 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
+<a name="685"><span class="lineNum">     685 </span>                :            :     #endif</a>
+<a name="686"><span class="lineNum">     686 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
+<a name="687"><span class="lineNum">     687 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="688"><span class="lineNum">     688 </span>                :            : #endif</a>
+<a name="689"><span class="lineNum">     689 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
+<a name="690"><span class="lineNum">     690 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case3(void** state)</span></a>
+<a name="691"><span class="lineNum">     691 </span>                :            : {</a>
+<a name="692"><span class="lineNum">     692 </span>                :            :     /* Copied from Challenge Test Case 2*/</a>
+<a name="693"><span class="lineNum">     693 </span>                :            :     libspdm_return_t status;</a>
+<a name="694"><span class="lineNum">     694 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="695"><span class="lineNum">     695 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="696"><span class="lineNum">     696 </span>                :            :     uint8_t measurement_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="697"><span class="lineNum">     697 </span>                :            :     void* data;</a>
+<a name="698"><span class="lineNum">     698 </span>                :            :     size_t data_size;</a>
+<a name="699"><span class="lineNum">     699 </span>                :            :     void* hash;</a>
+<a name="700"><span class="lineNum">     700 </span>                :            :     size_t hash_size;</a>
+<a name="701"><span class="lineNum">     701 </span>                :            : </a>
+<a name="702"><span class="lineNum">     702 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="703"><span class="lineNum">     703 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="704"><span class="lineNum">     704 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x3;</span></a>
+<a name="705"><span class="lineNum">     705 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="706"><span class="lineNum">     706 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="707"><span class="lineNum">     707 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags = 0;</span></a>
+<a name="708"><span class="lineNum">     708 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="709"><span class="lineNum">     709 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHAL_CAP</a>
+<a name="710"><span class="lineNum">     710 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
+<a name="711"><span class="lineNum">     711 </span>                :            : </a>
+<a name="712"><span class="lineNum">     712 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="713"><span class="lineNum">     713 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
+<a name="714"><span class="lineNum">     714 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
+<a name="715"><span class="lineNum">     715 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
+<a name="716"><span class="lineNum">     716 </span>                :            : </a>
+<a name="717"><span class="lineNum">     717 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(</span></a>
+<a name="718"><span class="lineNum">     718 </span>                :            :         m_libspdm_use_hash_algo, m_libspdm_use_asym_algo,</a>
+<a name="719"><span class="lineNum">     719 </span>                :            :         &amp;data, &amp;data_size, &amp;hash, &amp;hash_size);</a>
+<a name="720"><span class="lineNum">     720 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="721"><span class="lineNum">     721 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
+<a name="722"><span class="lineNum">     722 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_c(spdm_context);</span></a>
+<a name="723"><span class="lineNum">     723 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="724"><span class="lineNum">     724 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="725"><span class="lineNum">     725 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="726"><span class="lineNum">     726 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="727"><span class="lineNum">     727 </span>                :            : </a>
+<a name="728"><span class="lineNum">     728 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
+<a name="729"><span class="lineNum">     729 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="730"><span class="lineNum">     730 </span>                :            : </a>
+<a name="731"><span class="lineNum">     731 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="732"><span class="lineNum">     732 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = data_size;</a>
+<a name="733"><span class="lineNum">     733 </span>                :            :     libspdm_copy_mem(</a>
+<a name="734"><span class="lineNum">     734 </span>                :            :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="735"><span class="lineNum">     735 </span>                :            :         sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="736"><span class="lineNum">     736 </span>                :            :         data, data_size);</a>
+<a name="737"><span class="lineNum">     737 </span>                :            :     #else</a>
+<a name="738"><span class="lineNum">     738 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="739"><span class="lineNum">     739 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="740"><span class="lineNum">     740 </span>                :            :         data, data_size,</a>
+<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="742"><span class="lineNum">     742 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="743"><span class="lineNum">     743 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="744"><span class="lineNum">     744 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="745"><span class="lineNum">     745 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="746"><span class="lineNum">     746 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
+<a name="747"><span class="lineNum">     747 </span>                :            :         data, data_size,</a>
+<a name="748"><span class="lineNum">     748 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="749"><span class="lineNum">     749 </span>                :            :     #endif</a>
+<a name="750"><span class="lineNum">     750 </span>                :            : </a>
+<a name="751"><span class="lineNum">     751 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
+<a name="752"><span class="lineNum">     752 </span>                :<span class="lineCov">          1 :     status = libspdm_challenge(</span></a>
+<a name="753"><span class="lineNum">     753 </span>                :            :         spdm_context, NULL, 0,</a>
+<a name="754"><span class="lineNum">     754 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH,</a>
+<a name="755"><span class="lineNum">     755 </span>                :            :         measurement_hash, NULL);</a>
+<a name="756"><span class="lineNum">     756 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="757"><span class="lineNum">     757 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
+<a name="758"><span class="lineNum">     758 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="759"><span class="lineNum">     759 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size = 0;</a>
+<a name="760"><span class="lineNum">     760 </span>                :            :     #else</a>
+<a name="761"><span class="lineNum">     761 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size = 0;</span></a>
+<a name="762"><span class="lineNum">     762 </span>                :            :     #endif</a>
+<a name="763"><span class="lineNum">     763 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="764"><span class="lineNum">     764 </span>                :            : #endif</a>
+<a name="765"><span class="lineNum">     765 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="766"><span class="lineNum">     766 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case4(void** state)</span></a>
+<a name="767"><span class="lineNum">     767 </span>                :            : {</a>
+<a name="768"><span class="lineNum">     768 </span>                :            :     /* Copied from Get Digests Test Case 2*/</a>
+<a name="769"><span class="lineNum">     769 </span>                :            :     libspdm_return_t status;</a>
+<a name="770"><span class="lineNum">     770 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="771"><span class="lineNum">     771 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="772"><span class="lineNum">     772 </span>                :            :     uint8_t slot_mask;</a>
+<a name="773"><span class="lineNum">     773 </span>                :            :     uint8_t slot_id;</a>
+<a name="774"><span class="lineNum">     774 </span>                :            :     uint8_t total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
+<a name="775"><span class="lineNum">     775 </span>                :            :     uint8_t my_total_digest_buffer[LIBSPDM_MAX_HASH_SIZE * SPDM_MAX_SLOT_COUNT];</a>
+<a name="776"><span class="lineNum">     776 </span>                :            :     uint8_t* digest;</a>
+<a name="777"><span class="lineNum">     777 </span>                :            :     size_t data_return_size;</a>
+<a name="778"><span class="lineNum">     778 </span>                :            : </a>
+<a name="779"><span class="lineNum">     779 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="780"><span class="lineNum">     780 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="781"><span class="lineNum">     781 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x4;</span></a>
+<a name="782"><span class="lineNum">     782 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
+<a name="783"><span class="lineNum">     783 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="784"><span class="lineNum">     784 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="785"><span class="lineNum">     785 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="786"><span class="lineNum">     786 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP</a>
+<a name="787"><span class="lineNum">     787 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
+<a name="788"><span class="lineNum">     788 </span>                :            : </a>
+<a name="789"><span class="lineNum">     789 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="790"><span class="lineNum">     790 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
+<a name="791"><span class="lineNum">     791 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
+<a name="792"><span class="lineNum">     792 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
+<a name="793"><span class="lineNum">     793 </span>                :            : </a>
+<a name="794"><span class="lineNum">     794 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="795"><span class="lineNum">     795 </span>                :            : </a>
+<a name="796"><span class="lineNum">     796 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(</span></a>
+<a name="797"><span class="lineNum">     797 </span>                :            :         m_libspdm_local_certificate_chain_test_case_4,</a>
+<a name="798"><span class="lineNum">     798 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</a>
+<a name="799"><span class="lineNum">     799 </span>                :            :         (uint8_t) (0xFF));</a>
+<a name="800"><span class="lineNum">     800 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
+<a name="801"><span class="lineNum">     801 </span>                :            : </a>
+<a name="802"><span class="lineNum">     802 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="803"><span class="lineNum">     803 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="804"><span class="lineNum">     804 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="805"><span class="lineNum">     805 </span>                :            :     #endif</a>
+<a name="806"><span class="lineNum">     806 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(total_digest_buffer, sizeof(total_digest_buffer));</span></a>
+<a name="807"><span class="lineNum">     807 </span>                :<span class="lineCov">          1 :     status = libspdm_get_digest(spdm_context, NULL, &amp;slot_mask, &amp;total_digest_buffer);</span></a>
+<a name="808"><span class="lineNum">     808 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="809"><span class="lineNum">     809 </span>                :            : </a>
+<a name="810"><span class="lineNum">     810 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0xFF);</span></a>
+<a name="811"><span class="lineNum">     811 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(my_total_digest_buffer, sizeof(my_total_digest_buffer));</span></a>
+<a name="812"><span class="lineNum">     812 </span>                :<span class="lineCov">          1 :     digest = my_total_digest_buffer;</span></a>
+<a name="813"><span class="lineNum">     813 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          9 :     for (slot_id = 0; slot_id &lt; SPDM_MAX_SLOT_COUNT; slot_id++) {</span></a>
+<a name="814"><span class="lineNum">     814 </span>                :<span class="lineCov">          8 :         libspdm_hash_all(m_libspdm_use_hash_algo,</span></a>
+<a name="815"><span class="lineNum">     815 </span>                :            :                          m_libspdm_local_certificate_chain_test_case_4,</a>
+<a name="816"><span class="lineNum">     816 </span>                :            :                          LIBSPDM_MAX_MESSAGE_BUFFER_SIZE, digest);</a>
+<a name="817"><span class="lineNum">     817 </span>                :<span class="lineCov">          8 :         digest += libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="818"><span class="lineNum">     818 </span>                :            :     }</a>
+<a name="819"><span class="lineNum">     819 </span>                :<span class="lineCov">          1 :     assert_memory_equal(total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="820"><span class="lineNum">     820 </span>                :            :                         sizeof(my_total_digest_buffer));</a>
+<a name="821"><span class="lineNum">     821 </span>                :            : </a>
+<a name="822"><span class="lineNum">     822 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(uint8_t);</span></a>
+<a name="823"><span class="lineNum">     823 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_SLOT_MASK,</span></a>
+<a name="824"><span class="lineNum">     824 </span>                :            :                               NULL, &amp;slot_mask, &amp;data_return_size);</a>
+<a name="825"><span class="lineNum">     825 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="826"><span class="lineNum">     826 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, sizeof(uint8_t));</span></a>
+<a name="827"><span class="lineNum">     827 </span>                :<span class="lineCov">          1 :     assert_int_equal(slot_mask, 0xFF);</span></a>
+<a name="828"><span class="lineNum">     828 </span>                :            : </a>
+<a name="829"><span class="lineNum">     829 </span>                :<span class="lineCov">          1 :     data_return_size = sizeof(total_digest_buffer);</span></a>
+<a name="830"><span class="lineNum">     830 </span>                :<span class="lineCov">          1 :     status = libspdm_get_data(spdm_context, LIBSPDM_DATA_PEER_TOTAL_DIGEST_BUFFER,</span></a>
+<a name="831"><span class="lineNum">     831 </span>                :            :                               NULL, total_digest_buffer, &amp;data_return_size);</a>
+<a name="832"><span class="lineNum">     832 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="833"><span class="lineNum">     833 </span>                :<span class="lineCov">          1 :     assert_int_equal(data_return_size, libspdm_get_hash_size(</span></a>
+<a name="834"><span class="lineNum">     834 </span>                :            :                          m_libspdm_use_hash_algo) * SPDM_MAX_SLOT_COUNT);</a>
+<a name="835"><span class="lineNum">     835 </span>                :<span class="lineCov">          1 :     assert_memory_equal(total_digest_buffer, my_total_digest_buffer,</span></a>
+<a name="836"><span class="lineNum">     836 </span>                :            :                         sizeof(my_total_digest_buffer));</a>
+<a name="837"><span class="lineNum">     837 </span>                :            : </a>
+<a name="838"><span class="lineNum">     838 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="839"><span class="lineNum">     839 </span>                :            :     assert_int_equal(</a>
+<a name="840"><span class="lineNum">     840 </span>                :            :         spdm_context-&gt;transcript.message_b.buffer_size,</a>
+<a name="841"><span class="lineNum">     841 </span>                :            :         sizeof(spdm_get_digest_request_t) +</a>
+<a name="842"><span class="lineNum">     842 </span>                :            :         sizeof(spdm_digest_response_t) +</a>
+<a name="843"><span class="lineNum">     843 </span>                :            :         libspdm_get_hash_size(spdm_context-&gt;connection_info</a>
+<a name="844"><span class="lineNum">     844 </span>                :            :                               .algorithm.base_hash_algo) * SPDM_MAX_SLOT_COUNT);</a>
+<a name="845"><span class="lineNum">     845 </span>                :            :     assert_int_equal(spdm_context-&gt;transcript.message_m.buffer_size, 0);</a>
+<a name="846"><span class="lineNum">     846 </span>                :            :     #endif</a>
+<a name="847"><span class="lineNum">     847 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="848"><span class="lineNum">     848 </span>                :            : #endif</a>
+<a name="849"><span class="lineNum">     849 </span>                :            : </a>
+<a name="850"><span class="lineNum">     850 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_chunk_get_case5(void** state)</span></a>
+<a name="851"><span class="lineNum">     851 </span>                :            : {</a>
+<a name="852"><span class="lineNum">     852 </span>                :            :     /* Copied from Neg. Algorithms test case 2 */</a>
+<a name="853"><span class="lineNum">     853 </span>                :            :     libspdm_return_t status;</a>
+<a name="854"><span class="lineNum">     854 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="855"><span class="lineNum">     855 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="856"><span class="lineNum">     856 </span>                :            : </a>
+<a name="857"><span class="lineNum">     857 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="858"><span class="lineNum">     858 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="859"><span class="lineNum">     859 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x5;</span></a>
+<a name="860"><span class="lineNum">     860 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
+<a name="861"><span class="lineNum">     861 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="862"><span class="lineNum">     862 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="863"><span class="lineNum">     863 </span>                :            :         LIBSPDM_CONNECTION_STATE_AFTER_CAPABILITIES;</a>
+<a name="864"><span class="lineNum">     864 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="865"><span class="lineNum">     865 </span>                :            :         (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP</a>
+<a name="866"><span class="lineNum">     866 </span>                :            :          | SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP);</a>
+<a name="867"><span class="lineNum">     867 </span>                :            : </a>
+<a name="868"><span class="lineNum">     868 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="869"><span class="lineNum">     869 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
+<a name="870"><span class="lineNum">     870 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
+<a name="871"><span class="lineNum">     871 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
+<a name="872"><span class="lineNum">     872 </span>                :            : </a>
+<a name="873"><span class="lineNum">     873 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_hash_algo =</span></a>
+<a name="874"><span class="lineNum">     874 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="875"><span class="lineNum">     875 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="876"><span class="lineNum">     876 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="877"><span class="lineNum">     877 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="878"><span class="lineNum">     878 </span>                :            : </a>
+<a name="879"><span class="lineNum">     879 </span>                :<span class="lineCov">          1 :     status = libspdm_negotiate_algorithms(spdm_context);</span></a>
+<a name="880"><span class="lineNum">     880 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="881"><span class="lineNum">     881 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="882"><span class="lineNum">     882 </span>                :            :     assert_int_equal(</a>
+<a name="883"><span class="lineNum">     883 </span>                :            :         spdm_context-&gt;transcript.message_a.buffer_size,</a>
+<a name="884"><span class="lineNum">     884 </span>                :            :         sizeof(spdm_negotiate_algorithms_request_t) +</a>
+<a name="885"><span class="lineNum">     885 </span>                :            :         4 * sizeof(spdm_negotiate_algorithms_common_struct_table_t) +</a>
+<a name="886"><span class="lineNum">     886 </span>                :            :         sizeof(spdm_algorithms_response_t));</a>
+<a name="887"><span class="lineNum">     887 </span>                :            :     #endif</a>
+<a name="888"><span class="lineNum">     888 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="889"><span class="lineNum">     889 </span>                :            : </a>
+<a name="890"><span class="lineNum">     890 </span>                :            : libspdm_test_context_t m_libspdm_requester_chunk_get_test_context = {</a>
+<a name="891"><span class="lineNum">     891 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="892"><span class="lineNum">     892 </span>                :            :     true,</a>
+<a name="893"><span class="lineNum">     893 </span>                :            :     libspdm_requester_chunk_get_test_send_message,</a>
+<a name="894"><span class="lineNum">     894 </span>                :            :     libspdm_requester_chunk_get_test_receive_message,</a>
+<a name="895"><span class="lineNum">     895 </span>                :            : };</a>
+<a name="896"><span class="lineNum">     896 </span>                :            : </a>
+<a name="897"><span class="lineNum">     897 </span>                :<span class="lineCov">          1 : int libspdm_requester_chunk_get_test_main(void)</span></a>
+<a name="898"><span class="lineNum">     898 </span>                :            : {</a>
+<a name="899"><span class="lineNum">     899 </span>                :            :     /* Test the CHUNK_GET handlers in various requester handlers */</a>
+<a name="900"><span class="lineNum">     900 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_chunk_get_tests[] = {</span></a>
+<a name="901"><span class="lineNum">     901 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="902"><span class="lineNum">     902 </span>                :            :         /* Request a certificate in portions */</a>
+<a name="903"><span class="lineNum">     903 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case1),</a>
+<a name="904"><span class="lineNum">     904 </span>                :            : #endif</a>
+<a name="905"><span class="lineNum">     905 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
+<a name="906"><span class="lineNum">     906 </span>                :            :         /* Request all measurements */</a>
+<a name="907"><span class="lineNum">     907 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case2),</a>
+<a name="908"><span class="lineNum">     908 </span>                :            : #endif</a>
+<a name="909"><span class="lineNum">     909 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
+<a name="910"><span class="lineNum">     910 </span>                :            :         /* Request Challenge */</a>
+<a name="911"><span class="lineNum">     911 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case3),</a>
+<a name="912"><span class="lineNum">     912 </span>                :            : #endif</a>
+<a name="913"><span class="lineNum">     913 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="914"><span class="lineNum">     914 </span>                :            :         /* Request Digests */</a>
+<a name="915"><span class="lineNum">     915 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case4),</a>
+<a name="916"><span class="lineNum">     916 </span>                :            : #endif</a>
+<a name="917"><span class="lineNum">     917 </span>                :            : </a>
+<a name="918"><span class="lineNum">     918 </span>                :            :         /* Request Algorithms */</a>
+<a name="919"><span class="lineNum">     919 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case5),</a>
+<a name="920"><span class="lineNum">     920 </span>                :            :     };</a>
+<a name="921"><span class="lineNum">     921 </span>                :            : </a>
+<a name="922"><span class="lineNum">     922 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(</span></a>
+<a name="923"><span class="lineNum">     923 </span>                :            :         &amp;m_libspdm_requester_chunk_get_test_context);</a>
+<a name="924"><span class="lineNum">     924 </span>                :            : </a>
+<a name="925"><span class="lineNum">     925 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_chunk_get_tests,</span></a>
+<a name="926"><span class="lineNum">     926 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="927"><span class="lineNum">     927 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="928"><span class="lineNum">     928 </span>                :            : }</a>
+<a name="929"><span class="lineNum">     929 </span>                :            : </a>
+<a name="930"><span class="lineNum">     930 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP*/</a>
 </pre>
       </td>
     </tr>
