@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">566</td>
-            <td class="headerCovTableEntry">566</td>
+            <td class="headerCovTableEntry">539</td>
+            <td class="headerCovTableEntry">539</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-14 08:17:52</td>
+            <td class="headerValue">2023-03-15 08:16:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">16</td>
@@ -1104,422 +1104,372 @@
 <a name="1033"><span class="lineNum">    1033 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
 <a name="1034"><span class="lineNum">    1034 </span>                :            : </a>
 <a name="1035"><span class="lineNum">    1035 </span>                :            : /**</a>
-<a name="1036"><span class="lineNum">    1036 </span>                :            :  * Test 9: receiving a RESPOND_IF_READY message larger than specified (more parameters</a>
-<a name="1037"><span class="lineNum">    1037 </span>                :            :  * than the header), after a GET_DIGESTS could not be processed.</a>
-<a name="1038"><span class="lineNum">    1038 </span>                :            :  * Expected behavior: the responder refuses the RESPOND_IF_READY message and produces an</a>
-<a name="1039"><span class="lineNum">    1039 </span>                :            :  * ERROR message indicating the InvalidRequest.</a>
-<a name="1040"><span class="lineNum">    1040 </span>                :            :  **/</a>
-<a name="1041"><span class="lineNum">    1041 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case9(void **state) {</span></a>
-<a name="1042"><span class="lineNum">    1042 </span>                :            :     libspdm_return_t status;</a>
-<a name="1043"><span class="lineNum">    1043 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
-<a name="1044"><span class="lineNum">    1044 </span>                :            :     libspdm_context_t  *spdm_context;</a>
-<a name="1045"><span class="lineNum">    1045 </span>                :            :     size_t response_size;</a>
-<a name="1046"><span class="lineNum">    1046 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
-<a name="1047"><span class="lineNum">    1047 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
-<a name="1048"><span class="lineNum">    1048 </span>                :            : </a>
-<a name="1049"><span class="lineNum">    1049 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="1050"><span class="lineNum">    1050 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="1051"><span class="lineNum">    1051 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x9;</span></a>
-<a name="1052"><span class="lineNum">    1052 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="1053"><span class="lineNum">    1053 </span>                :            : </a>
-<a name="1054"><span class="lineNum">    1054 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
-<a name="1055"><span class="lineNum">    1055 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="1056"><span class="lineNum">    1056 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
-<a name="1057"><span class="lineNum">    1057 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="1058"><span class="lineNum">    1058 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
-<a name="1059"><span class="lineNum">    1059 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
-<a name="1060"><span class="lineNum">    1060 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
-<a name="1061"><span class="lineNum">    1061 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
-<a name="1062"><span class="lineNum">    1062 </span>                :            :                      (uint8_t)(0xFF));</a>
+<a name="1036"><span class="lineNum">    1036 </span>                :            :  * Test 9:</a>
+<a name="1037"><span class="lineNum">    1037 </span>                :            :  * Expected behavior:</a>
+<a name="1038"><span class="lineNum">    1038 </span>                :            :  **/</a>
+<a name="1039"><span class="lineNum">    1039 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case9(void **state) {</span></a>
+<a name="1040"><span class="lineNum">    1040 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1041"><span class="lineNum">    1041 </span>                :            : </a>
+<a name="1042"><span class="lineNum">    1042 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1043"><span class="lineNum">    1043 </span>                :            : </a>
+<a name="1044"><span class="lineNum">    1044 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1045"><span class="lineNum">    1045 </span>                :            : /**</a>
+<a name="1046"><span class="lineNum">    1046 </span>                :            :  * Test 10: receiving a correct RESPOND_IF_READY from the requester, but the responder is in</a>
+<a name="1047"><span class="lineNum">    1047 </span>                :            :  * a Busy state.</a>
+<a name="1048"><span class="lineNum">    1048 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
+<a name="1049"><span class="lineNum">    1049 </span>                :            :  * indicating the Busy state.</a>
+<a name="1050"><span class="lineNum">    1050 </span>                :            :  **/</a>
+<a name="1051"><span class="lineNum">    1051 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case10(void **state) {</span></a>
+<a name="1052"><span class="lineNum">    1052 </span>                :            :     libspdm_return_t status;</a>
+<a name="1053"><span class="lineNum">    1053 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
+<a name="1054"><span class="lineNum">    1054 </span>                :            :     libspdm_context_t  *spdm_context;</a>
+<a name="1055"><span class="lineNum">    1055 </span>                :            :     size_t response_size;</a>
+<a name="1056"><span class="lineNum">    1056 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1057"><span class="lineNum">    1057 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
+<a name="1058"><span class="lineNum">    1058 </span>                :            : </a>
+<a name="1059"><span class="lineNum">    1059 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1060"><span class="lineNum">    1060 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1061"><span class="lineNum">    1061 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xA;</span></a>
+<a name="1062"><span class="lineNum">    1062 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_BUSY;</span></a>
 <a name="1063"><span class="lineNum">    1063 </span>                :            : </a>
-<a name="1064"><span class="lineNum">    1064 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
-<a name="1065"><span class="lineNum">    1065 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
-<a name="1066"><span class="lineNum">    1066 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
-<a name="1067"><span class="lineNum">    1067 </span>                :            : </a>
-<a name="1068"><span class="lineNum">    1068 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
-<a name="1069"><span class="lineNum">    1069 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
-<a name="1070"><span class="lineNum">    1070 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
-<a name="1071"><span class="lineNum">    1071 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
-<a name="1072"><span class="lineNum">    1072 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
-<a name="1073"><span class="lineNum">    1073 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
-<a name="1074"><span class="lineNum">    1074 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
-<a name="1075"><span class="lineNum">    1075 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
-<a name="1076"><span class="lineNum">    1076 </span>                :            : </a>
-<a name="1077"><span class="lineNum">    1077 </span>                :            :     /*check ERROR response*/</a>
-<a name="1078"><span class="lineNum">    1078 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
-<a name="1079"><span class="lineNum">    1079 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
-<a name="1080"><span class="lineNum">    1080 </span>                :            :                                                    m_libspdm_respond_if_ready_request9_size,</a>
-<a name="1081"><span class="lineNum">    1081 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request9,</a>
-<a name="1082"><span class="lineNum">    1082 </span>                :            :                                                    &amp;response_size,</a>
-<a name="1083"><span class="lineNum">    1083 </span>                :            :                                                    response);</a>
-<a name="1084"><span class="lineNum">    1084 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1085"><span class="lineNum">    1085 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
-<a name="1086"><span class="lineNum">    1086 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
-<a name="1087"><span class="lineNum">    1087 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
-<a name="1088"><span class="lineNum">    1088 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
-<a name="1089"><span class="lineNum">    1089 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
-<a name="1090"><span class="lineNum">    1090 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1091"><span class="lineNum">    1091 </span>                :            : </a>
-<a name="1092"><span class="lineNum">    1092 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1093"><span class="lineNum">    1093 </span>                :            : </a>
-<a name="1094"><span class="lineNum">    1094 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="1095"><span class="lineNum">    1095 </span>                :            : /**</a>
-<a name="1096"><span class="lineNum">    1096 </span>                :            :  * Test 10: receiving a correct RESPOND_IF_READY from the requester, but the responder is in</a>
-<a name="1097"><span class="lineNum">    1097 </span>                :            :  * a Busy state.</a>
-<a name="1098"><span class="lineNum">    1098 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
-<a name="1099"><span class="lineNum">    1099 </span>                :            :  * indicating the Busy state.</a>
-<a name="1100"><span class="lineNum">    1100 </span>                :            :  **/</a>
-<a name="1101"><span class="lineNum">    1101 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case10(void **state) {</span></a>
-<a name="1102"><span class="lineNum">    1102 </span>                :            :     libspdm_return_t status;</a>
-<a name="1103"><span class="lineNum">    1103 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
-<a name="1104"><span class="lineNum">    1104 </span>                :            :     libspdm_context_t  *spdm_context;</a>
-<a name="1105"><span class="lineNum">    1105 </span>                :            :     size_t response_size;</a>
-<a name="1106"><span class="lineNum">    1106 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
-<a name="1107"><span class="lineNum">    1107 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
-<a name="1108"><span class="lineNum">    1108 </span>                :            : </a>
-<a name="1109"><span class="lineNum">    1109 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="1110"><span class="lineNum">    1110 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="1111"><span class="lineNum">    1111 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xA;</span></a>
-<a name="1112"><span class="lineNum">    1112 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_BUSY;</span></a>
-<a name="1113"><span class="lineNum">    1113 </span>                :            : </a>
-<a name="1114"><span class="lineNum">    1114 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
-<a name="1115"><span class="lineNum">    1115 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="1116"><span class="lineNum">    1116 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
-<a name="1117"><span class="lineNum">    1117 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="1118"><span class="lineNum">    1118 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
-<a name="1119"><span class="lineNum">    1119 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
-<a name="1120"><span class="lineNum">    1120 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
-<a name="1121"><span class="lineNum">    1121 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
-<a name="1122"><span class="lineNum">    1122 </span>                :            :                      (uint8_t)(0xFF));</a>
-<a name="1123"><span class="lineNum">    1123 </span>                :            : </a>
-<a name="1124"><span class="lineNum">    1124 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
-<a name="1125"><span class="lineNum">    1125 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
-<a name="1126"><span class="lineNum">    1126 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
-<a name="1127"><span class="lineNum">    1127 </span>                :            : </a>
-<a name="1128"><span class="lineNum">    1128 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
-<a name="1129"><span class="lineNum">    1129 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
-<a name="1130"><span class="lineNum">    1130 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
-<a name="1131"><span class="lineNum">    1131 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
-<a name="1132"><span class="lineNum">    1132 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
-<a name="1133"><span class="lineNum">    1133 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
-<a name="1134"><span class="lineNum">    1134 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
-<a name="1135"><span class="lineNum">    1135 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
-<a name="1136"><span class="lineNum">    1136 </span>                :            : </a>
-<a name="1137"><span class="lineNum">    1137 </span>                :            :     /*check ERROR response*/</a>
-<a name="1138"><span class="lineNum">    1138 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
-<a name="1139"><span class="lineNum">    1139 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
-<a name="1140"><span class="lineNum">    1140 </span>                :            :                                                    m_libspdm_respond_if_ready_request1_size,</a>
-<a name="1141"><span class="lineNum">    1141 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request1,</a>
-<a name="1142"><span class="lineNum">    1142 </span>                :            :                                                    &amp;response_size,</a>
-<a name="1143"><span class="lineNum">    1143 </span>                :            :                                                    response);</a>
-<a name="1144"><span class="lineNum">    1144 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1145"><span class="lineNum">    1145 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
-<a name="1146"><span class="lineNum">    1146 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
-<a name="1147"><span class="lineNum">    1147 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
-<a name="1148"><span class="lineNum">    1148 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_BUSY);</span></a>
-<a name="1149"><span class="lineNum">    1149 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
-<a name="1150"><span class="lineNum">    1150 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_context-&gt;response_state, LIBSPDM_RESPONSE_STATE_BUSY);</span></a>
-<a name="1151"><span class="lineNum">    1151 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1152"><span class="lineNum">    1152 </span>                :            : </a>
-<a name="1153"><span class="lineNum">    1153 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1154"><span class="lineNum">    1154 </span>                :            : </a>
-<a name="1155"><span class="lineNum">    1155 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="1156"><span class="lineNum">    1156 </span>                :            : /**</a>
-<a name="1157"><span class="lineNum">    1157 </span>                :            :  * Test 11: receiving a correct RESPOND_IF_READY from the requester, but the responder requires</a>
-<a name="1158"><span class="lineNum">    1158 </span>                :            :  * resynchronization with the requester.</a>
-<a name="1159"><span class="lineNum">    1159 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
-<a name="1160"><span class="lineNum">    1160 </span>                :            :  * indicating the NeedResynch state.</a>
-<a name="1161"><span class="lineNum">    1161 </span>                :            :  **/</a>
-<a name="1162"><span class="lineNum">    1162 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case11(void **state) {</span></a>
-<a name="1163"><span class="lineNum">    1163 </span>                :            :     libspdm_return_t status;</a>
-<a name="1164"><span class="lineNum">    1164 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
-<a name="1165"><span class="lineNum">    1165 </span>                :            :     libspdm_context_t  *spdm_context;</a>
-<a name="1166"><span class="lineNum">    1166 </span>                :            :     size_t response_size;</a>
-<a name="1167"><span class="lineNum">    1167 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
-<a name="1168"><span class="lineNum">    1168 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
-<a name="1169"><span class="lineNum">    1169 </span>                :            : </a>
-<a name="1170"><span class="lineNum">    1170 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="1171"><span class="lineNum">    1171 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="1172"><span class="lineNum">    1172 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xB;</span></a>
-<a name="1173"><span class="lineNum">    1173 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NEED_RESYNC;</span></a>
-<a name="1174"><span class="lineNum">    1174 </span>                :            : </a>
-<a name="1175"><span class="lineNum">    1175 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
-<a name="1176"><span class="lineNum">    1176 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="1177"><span class="lineNum">    1177 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
-<a name="1178"><span class="lineNum">    1178 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="1179"><span class="lineNum">    1179 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
-<a name="1180"><span class="lineNum">    1180 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
-<a name="1181"><span class="lineNum">    1181 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
-<a name="1182"><span class="lineNum">    1182 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
-<a name="1183"><span class="lineNum">    1183 </span>                :            :                      (uint8_t)(0xFF));</a>
-<a name="1184"><span class="lineNum">    1184 </span>                :            : </a>
-<a name="1185"><span class="lineNum">    1185 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
-<a name="1186"><span class="lineNum">    1186 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
-<a name="1187"><span class="lineNum">    1187 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
-<a name="1188"><span class="lineNum">    1188 </span>                :            : </a>
-<a name="1189"><span class="lineNum">    1189 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
-<a name="1190"><span class="lineNum">    1190 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
-<a name="1191"><span class="lineNum">    1191 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
-<a name="1192"><span class="lineNum">    1192 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
-<a name="1193"><span class="lineNum">    1193 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
-<a name="1194"><span class="lineNum">    1194 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
-<a name="1195"><span class="lineNum">    1195 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
-<a name="1196"><span class="lineNum">    1196 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
+<a name="1064"><span class="lineNum">    1064 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
+<a name="1065"><span class="lineNum">    1065 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="1066"><span class="lineNum">    1066 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
+<a name="1067"><span class="lineNum">    1067 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1068"><span class="lineNum">    1068 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
+<a name="1069"><span class="lineNum">    1069 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="1070"><span class="lineNum">    1070 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
+<a name="1071"><span class="lineNum">    1071 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
+<a name="1072"><span class="lineNum">    1072 </span>                :            :                      (uint8_t)(0xFF));</a>
+<a name="1073"><span class="lineNum">    1073 </span>                :            : </a>
+<a name="1074"><span class="lineNum">    1074 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
+<a name="1075"><span class="lineNum">    1075 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
+<a name="1076"><span class="lineNum">    1076 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
+<a name="1077"><span class="lineNum">    1077 </span>                :            : </a>
+<a name="1078"><span class="lineNum">    1078 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
+<a name="1079"><span class="lineNum">    1079 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
+<a name="1080"><span class="lineNum">    1080 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
+<a name="1081"><span class="lineNum">    1081 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
+<a name="1082"><span class="lineNum">    1082 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
+<a name="1083"><span class="lineNum">    1083 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
+<a name="1084"><span class="lineNum">    1084 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
+<a name="1085"><span class="lineNum">    1085 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
+<a name="1086"><span class="lineNum">    1086 </span>                :            : </a>
+<a name="1087"><span class="lineNum">    1087 </span>                :            :     /*check ERROR response*/</a>
+<a name="1088"><span class="lineNum">    1088 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1089"><span class="lineNum">    1089 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
+<a name="1090"><span class="lineNum">    1090 </span>                :            :                                                    m_libspdm_respond_if_ready_request1_size,</a>
+<a name="1091"><span class="lineNum">    1091 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request1,</a>
+<a name="1092"><span class="lineNum">    1092 </span>                :            :                                                    &amp;response_size,</a>
+<a name="1093"><span class="lineNum">    1093 </span>                :            :                                                    response);</a>
+<a name="1094"><span class="lineNum">    1094 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1095"><span class="lineNum">    1095 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="1096"><span class="lineNum">    1096 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1097"><span class="lineNum">    1097 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="1098"><span class="lineNum">    1098 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_BUSY);</span></a>
+<a name="1099"><span class="lineNum">    1099 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
+<a name="1100"><span class="lineNum">    1100 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_context-&gt;response_state, LIBSPDM_RESPONSE_STATE_BUSY);</span></a>
+<a name="1101"><span class="lineNum">    1101 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1102"><span class="lineNum">    1102 </span>                :            : </a>
+<a name="1103"><span class="lineNum">    1103 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1104"><span class="lineNum">    1104 </span>                :            : </a>
+<a name="1105"><span class="lineNum">    1105 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1106"><span class="lineNum">    1106 </span>                :            : /**</a>
+<a name="1107"><span class="lineNum">    1107 </span>                :            :  * Test 11: receiving a correct RESPOND_IF_READY from the requester, but the responder requires</a>
+<a name="1108"><span class="lineNum">    1108 </span>                :            :  * resynchronization with the requester.</a>
+<a name="1109"><span class="lineNum">    1109 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
+<a name="1110"><span class="lineNum">    1110 </span>                :            :  * indicating the NeedResynch state.</a>
+<a name="1111"><span class="lineNum">    1111 </span>                :            :  **/</a>
+<a name="1112"><span class="lineNum">    1112 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case11(void **state) {</span></a>
+<a name="1113"><span class="lineNum">    1113 </span>                :            :     libspdm_return_t status;</a>
+<a name="1114"><span class="lineNum">    1114 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
+<a name="1115"><span class="lineNum">    1115 </span>                :            :     libspdm_context_t  *spdm_context;</a>
+<a name="1116"><span class="lineNum">    1116 </span>                :            :     size_t response_size;</a>
+<a name="1117"><span class="lineNum">    1117 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1118"><span class="lineNum">    1118 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
+<a name="1119"><span class="lineNum">    1119 </span>                :            : </a>
+<a name="1120"><span class="lineNum">    1120 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1121"><span class="lineNum">    1121 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1122"><span class="lineNum">    1122 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xB;</span></a>
+<a name="1123"><span class="lineNum">    1123 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NEED_RESYNC;</span></a>
+<a name="1124"><span class="lineNum">    1124 </span>                :            : </a>
+<a name="1125"><span class="lineNum">    1125 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
+<a name="1126"><span class="lineNum">    1126 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="1127"><span class="lineNum">    1127 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
+<a name="1128"><span class="lineNum">    1128 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1129"><span class="lineNum">    1129 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
+<a name="1130"><span class="lineNum">    1130 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="1131"><span class="lineNum">    1131 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
+<a name="1132"><span class="lineNum">    1132 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
+<a name="1133"><span class="lineNum">    1133 </span>                :            :                      (uint8_t)(0xFF));</a>
+<a name="1134"><span class="lineNum">    1134 </span>                :            : </a>
+<a name="1135"><span class="lineNum">    1135 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
+<a name="1136"><span class="lineNum">    1136 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
+<a name="1137"><span class="lineNum">    1137 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
+<a name="1138"><span class="lineNum">    1138 </span>                :            : </a>
+<a name="1139"><span class="lineNum">    1139 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
+<a name="1140"><span class="lineNum">    1140 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
+<a name="1141"><span class="lineNum">    1141 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
+<a name="1142"><span class="lineNum">    1142 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
+<a name="1143"><span class="lineNum">    1143 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
+<a name="1144"><span class="lineNum">    1144 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
+<a name="1145"><span class="lineNum">    1145 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
+<a name="1146"><span class="lineNum">    1146 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
+<a name="1147"><span class="lineNum">    1147 </span>                :            : </a>
+<a name="1148"><span class="lineNum">    1148 </span>                :            :     /*check ERROR response*/</a>
+<a name="1149"><span class="lineNum">    1149 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1150"><span class="lineNum">    1150 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
+<a name="1151"><span class="lineNum">    1151 </span>                :            :                                                    m_libspdm_respond_if_ready_request1_size,</a>
+<a name="1152"><span class="lineNum">    1152 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request1,</a>
+<a name="1153"><span class="lineNum">    1153 </span>                :            :                                                    &amp;response_size,</a>
+<a name="1154"><span class="lineNum">    1154 </span>                :            :                                                    response);</a>
+<a name="1155"><span class="lineNum">    1155 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1156"><span class="lineNum">    1156 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="1157"><span class="lineNum">    1157 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1158"><span class="lineNum">    1158 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="1159"><span class="lineNum">    1159 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_REQUEST_RESYNCH);</span></a>
+<a name="1160"><span class="lineNum">    1160 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
+<a name="1161"><span class="lineNum">    1161 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_context-&gt;response_state, LIBSPDM_RESPONSE_STATE_NEED_RESYNC);</span></a>
+<a name="1162"><span class="lineNum">    1162 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1163"><span class="lineNum">    1163 </span>                :            : </a>
+<a name="1164"><span class="lineNum">    1164 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1165"><span class="lineNum">    1165 </span>                :            : </a>
+<a name="1166"><span class="lineNum">    1166 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1167"><span class="lineNum">    1167 </span>                :            : </a>
+<a name="1168"><span class="lineNum">    1168 </span>                :            : /**</a>
+<a name="1169"><span class="lineNum">    1169 </span>                :            :  * Test 12: receiving a correct RESPOND_IF_READY from the requester, but the responder could not</a>
+<a name="1170"><span class="lineNum">    1170 </span>                :            :  * produce the response in time.</a>
+<a name="1171"><span class="lineNum">    1171 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
+<a name="1172"><span class="lineNum">    1172 </span>                :            :  * indicating the ResponseNotReady state, with the same token as the request.</a>
+<a name="1173"><span class="lineNum">    1173 </span>                :            :  **/</a>
+<a name="1174"><span class="lineNum">    1174 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case12(void **state) {</span></a>
+<a name="1175"><span class="lineNum">    1175 </span>                :            :     libspdm_return_t status;</a>
+<a name="1176"><span class="lineNum">    1176 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
+<a name="1177"><span class="lineNum">    1177 </span>                :            :     libspdm_context_t  *spdm_context;</a>
+<a name="1178"><span class="lineNum">    1178 </span>                :            :     size_t response_size;</a>
+<a name="1179"><span class="lineNum">    1179 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1180"><span class="lineNum">    1180 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
+<a name="1181"><span class="lineNum">    1181 </span>                :            :     spdm_error_data_response_not_ready_t *error_data;</a>
+<a name="1182"><span class="lineNum">    1182 </span>                :            : </a>
+<a name="1183"><span class="lineNum">    1183 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1184"><span class="lineNum">    1184 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1185"><span class="lineNum">    1185 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xC;</span></a>
+<a name="1186"><span class="lineNum">    1186 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NOT_READY;</span></a>
+<a name="1187"><span class="lineNum">    1187 </span>                :            : </a>
+<a name="1188"><span class="lineNum">    1188 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
+<a name="1189"><span class="lineNum">    1189 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="1190"><span class="lineNum">    1190 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
+<a name="1191"><span class="lineNum">    1191 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1192"><span class="lineNum">    1192 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
+<a name="1193"><span class="lineNum">    1193 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="1194"><span class="lineNum">    1194 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
+<a name="1195"><span class="lineNum">    1195 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
+<a name="1196"><span class="lineNum">    1196 </span>                :            :                      (uint8_t)(0xFF));</a>
 <a name="1197"><span class="lineNum">    1197 </span>                :            : </a>
-<a name="1198"><span class="lineNum">    1198 </span>                :            :     /*check ERROR response*/</a>
-<a name="1199"><span class="lineNum">    1199 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
-<a name="1200"><span class="lineNum">    1200 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
-<a name="1201"><span class="lineNum">    1201 </span>                :            :                                                    m_libspdm_respond_if_ready_request1_size,</a>
-<a name="1202"><span class="lineNum">    1202 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request1,</a>
-<a name="1203"><span class="lineNum">    1203 </span>                :            :                                                    &amp;response_size,</a>
-<a name="1204"><span class="lineNum">    1204 </span>                :            :                                                    response);</a>
-<a name="1205"><span class="lineNum">    1205 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1206"><span class="lineNum">    1206 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
-<a name="1207"><span class="lineNum">    1207 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
-<a name="1208"><span class="lineNum">    1208 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
-<a name="1209"><span class="lineNum">    1209 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_REQUEST_RESYNCH);</span></a>
-<a name="1210"><span class="lineNum">    1210 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
-<a name="1211"><span class="lineNum">    1211 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_context-&gt;response_state, LIBSPDM_RESPONSE_STATE_NEED_RESYNC);</span></a>
-<a name="1212"><span class="lineNum">    1212 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1213"><span class="lineNum">    1213 </span>                :            : </a>
-<a name="1214"><span class="lineNum">    1214 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1215"><span class="lineNum">    1215 </span>                :            : </a>
-<a name="1216"><span class="lineNum">    1216 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="1217"><span class="lineNum">    1217 </span>                :            : </a>
-<a name="1218"><span class="lineNum">    1218 </span>                :            : /**</a>
-<a name="1219"><span class="lineNum">    1219 </span>                :            :  * Test 12: receiving a correct RESPOND_IF_READY from the requester, but the responder could not</a>
-<a name="1220"><span class="lineNum">    1220 </span>                :            :  * produce the response in time.</a>
-<a name="1221"><span class="lineNum">    1221 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
-<a name="1222"><span class="lineNum">    1222 </span>                :            :  * indicating the ResponseNotReady state, with the same token as the request.</a>
-<a name="1223"><span class="lineNum">    1223 </span>                :            :  **/</a>
-<a name="1224"><span class="lineNum">    1224 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case12(void **state) {</span></a>
-<a name="1225"><span class="lineNum">    1225 </span>                :            :     libspdm_return_t status;</a>
-<a name="1226"><span class="lineNum">    1226 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
-<a name="1227"><span class="lineNum">    1227 </span>                :            :     libspdm_context_t  *spdm_context;</a>
-<a name="1228"><span class="lineNum">    1228 </span>                :            :     size_t response_size;</a>
-<a name="1229"><span class="lineNum">    1229 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
-<a name="1230"><span class="lineNum">    1230 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
-<a name="1231"><span class="lineNum">    1231 </span>                :            :     spdm_error_data_response_not_ready_t *error_data;</a>
+<a name="1198"><span class="lineNum">    1198 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
+<a name="1199"><span class="lineNum">    1199 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
+<a name="1200"><span class="lineNum">    1200 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
+<a name="1201"><span class="lineNum">    1201 </span>                :            : </a>
+<a name="1202"><span class="lineNum">    1202 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
+<a name="1203"><span class="lineNum">    1203 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
+<a name="1204"><span class="lineNum">    1204 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
+<a name="1205"><span class="lineNum">    1205 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
+<a name="1206"><span class="lineNum">    1206 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
+<a name="1207"><span class="lineNum">    1207 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
+<a name="1208"><span class="lineNum">    1208 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
+<a name="1209"><span class="lineNum">    1209 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
+<a name="1210"><span class="lineNum">    1210 </span>                :            : </a>
+<a name="1211"><span class="lineNum">    1211 </span>                :            :     /*check ERROR response*/</a>
+<a name="1212"><span class="lineNum">    1212 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1213"><span class="lineNum">    1213 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
+<a name="1214"><span class="lineNum">    1214 </span>                :            :                                                    m_libspdm_respond_if_ready_request1_size,</a>
+<a name="1215"><span class="lineNum">    1215 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request1,</a>
+<a name="1216"><span class="lineNum">    1216 </span>                :            :                                                    &amp;response_size,</a>
+<a name="1217"><span class="lineNum">    1217 </span>                :            :                                                    response);</a>
+<a name="1218"><span class="lineNum">    1218 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1219"><span class="lineNum">    1219 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size,</span></a>
+<a name="1220"><span class="lineNum">    1220 </span>                :            :                       sizeof(spdm_error_response_t) + sizeof(spdm_error_data_response_not_ready_t));</a>
+<a name="1221"><span class="lineNum">    1221 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1222"><span class="lineNum">    1222 </span>                :<span class="lineCov">          1 :     error_data = (spdm_error_data_response_not_ready_t*)(spdm_response + 1);</span></a>
+<a name="1223"><span class="lineNum">    1223 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="1224"><span class="lineNum">    1224 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_RESPONSE_NOT_READY);</span></a>
+<a name="1225"><span class="lineNum">    1225 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
+<a name="1226"><span class="lineNum">    1226 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_context-&gt;response_state, LIBSPDM_RESPONSE_STATE_NOT_READY);</span></a>
+<a name="1227"><span class="lineNum">    1227 </span>                :<span class="lineCov">          1 :     assert_int_equal (error_data-&gt;request_code, SPDM_GET_DIGESTS);</span></a>
+<a name="1228"><span class="lineNum">    1228 </span>                :<span class="lineCov">          1 :     assert_int_equal (error_data-&gt;token, LIBSPDM_MY_TEST_TOKEN);</span></a>
+<a name="1229"><span class="lineNum">    1229 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1230"><span class="lineNum">    1230 </span>                :            : </a>
+<a name="1231"><span class="lineNum">    1231 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
 <a name="1232"><span class="lineNum">    1232 </span>                :            : </a>
-<a name="1233"><span class="lineNum">    1233 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="1234"><span class="lineNum">    1234 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="1235"><span class="lineNum">    1235 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xC;</span></a>
-<a name="1236"><span class="lineNum">    1236 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NOT_READY;</span></a>
-<a name="1237"><span class="lineNum">    1237 </span>                :            : </a>
-<a name="1238"><span class="lineNum">    1238 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
-<a name="1239"><span class="lineNum">    1239 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="1240"><span class="lineNum">    1240 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
-<a name="1241"><span class="lineNum">    1241 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="1242"><span class="lineNum">    1242 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
-<a name="1243"><span class="lineNum">    1243 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
-<a name="1244"><span class="lineNum">    1244 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
-<a name="1245"><span class="lineNum">    1245 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
-<a name="1246"><span class="lineNum">    1246 </span>                :            :                      (uint8_t)(0xFF));</a>
-<a name="1247"><span class="lineNum">    1247 </span>                :            : </a>
-<a name="1248"><span class="lineNum">    1248 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
-<a name="1249"><span class="lineNum">    1249 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
-<a name="1250"><span class="lineNum">    1250 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
-<a name="1251"><span class="lineNum">    1251 </span>                :            : </a>
-<a name="1252"><span class="lineNum">    1252 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
-<a name="1253"><span class="lineNum">    1253 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
-<a name="1254"><span class="lineNum">    1254 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
-<a name="1255"><span class="lineNum">    1255 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
-<a name="1256"><span class="lineNum">    1256 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
-<a name="1257"><span class="lineNum">    1257 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
-<a name="1258"><span class="lineNum">    1258 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
-<a name="1259"><span class="lineNum">    1259 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
-<a name="1260"><span class="lineNum">    1260 </span>                :            : </a>
-<a name="1261"><span class="lineNum">    1261 </span>                :            :     /*check ERROR response*/</a>
-<a name="1262"><span class="lineNum">    1262 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
-<a name="1263"><span class="lineNum">    1263 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
-<a name="1264"><span class="lineNum">    1264 </span>                :            :                                                    m_libspdm_respond_if_ready_request1_size,</a>
-<a name="1265"><span class="lineNum">    1265 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request1,</a>
-<a name="1266"><span class="lineNum">    1266 </span>                :            :                                                    &amp;response_size,</a>
-<a name="1267"><span class="lineNum">    1267 </span>                :            :                                                    response);</a>
-<a name="1268"><span class="lineNum">    1268 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1269"><span class="lineNum">    1269 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size,</span></a>
-<a name="1270"><span class="lineNum">    1270 </span>                :            :                       sizeof(spdm_error_response_t) + sizeof(spdm_error_data_response_not_ready_t));</a>
-<a name="1271"><span class="lineNum">    1271 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
-<a name="1272"><span class="lineNum">    1272 </span>                :<span class="lineCov">          1 :     error_data = (spdm_error_data_response_not_ready_t*)(spdm_response + 1);</span></a>
-<a name="1273"><span class="lineNum">    1273 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
-<a name="1274"><span class="lineNum">    1274 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_RESPONSE_NOT_READY);</span></a>
-<a name="1275"><span class="lineNum">    1275 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
-<a name="1276"><span class="lineNum">    1276 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_context-&gt;response_state, LIBSPDM_RESPONSE_STATE_NOT_READY);</span></a>
-<a name="1277"><span class="lineNum">    1277 </span>                :<span class="lineCov">          1 :     assert_int_equal (error_data-&gt;request_code, SPDM_GET_DIGESTS);</span></a>
-<a name="1278"><span class="lineNum">    1278 </span>                :<span class="lineCov">          1 :     assert_int_equal (error_data-&gt;token, LIBSPDM_MY_TEST_TOKEN);</span></a>
-<a name="1279"><span class="lineNum">    1279 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1280"><span class="lineNum">    1280 </span>                :            : </a>
-<a name="1281"><span class="lineNum">    1281 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1282"><span class="lineNum">    1282 </span>                :            : </a>
-<a name="1283"><span class="lineNum">    1283 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="1284"><span class="lineNum">    1284 </span>                :            : </a>
-<a name="1285"><span class="lineNum">    1285 </span>                :            : /**</a>
-<a name="1286"><span class="lineNum">    1286 </span>                :            :  * Test 13: receiving a correct RESPOND_IF_READY from the requester, with the correct original</a>
-<a name="1287"><span class="lineNum">    1287 </span>                :            :  * request code, but with a token different from the expected.</a>
-<a name="1288"><span class="lineNum">    1288 </span>                :            :  * Expected behavior: the responder refuses the RESPOND_IF_READY message and produces an</a>
-<a name="1289"><span class="lineNum">    1289 </span>                :            :  * ERROR message indicating the InvalidRequest.</a>
-<a name="1290"><span class="lineNum">    1290 </span>                :            :  **/</a>
-<a name="1291"><span class="lineNum">    1291 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case13(void **state) {</span></a>
-<a name="1292"><span class="lineNum">    1292 </span>                :            :     libspdm_return_t status;</a>
-<a name="1293"><span class="lineNum">    1293 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
-<a name="1294"><span class="lineNum">    1294 </span>                :            :     libspdm_context_t  *spdm_context;</a>
-<a name="1295"><span class="lineNum">    1295 </span>                :            :     size_t response_size;</a>
-<a name="1296"><span class="lineNum">    1296 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
-<a name="1297"><span class="lineNum">    1297 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
-<a name="1298"><span class="lineNum">    1298 </span>                :            : </a>
-<a name="1299"><span class="lineNum">    1299 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="1300"><span class="lineNum">    1300 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="1301"><span class="lineNum">    1301 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xD;</span></a>
-<a name="1302"><span class="lineNum">    1302 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="1303"><span class="lineNum">    1303 </span>                :            : </a>
-<a name="1304"><span class="lineNum">    1304 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
-<a name="1305"><span class="lineNum">    1305 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="1306"><span class="lineNum">    1306 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
-<a name="1307"><span class="lineNum">    1307 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="1308"><span class="lineNum">    1308 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
-<a name="1309"><span class="lineNum">    1309 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
-<a name="1310"><span class="lineNum">    1310 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
-<a name="1311"><span class="lineNum">    1311 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
-<a name="1312"><span class="lineNum">    1312 </span>                :            :                      (uint8_t)(0xFF));</a>
-<a name="1313"><span class="lineNum">    1313 </span>                :            : </a>
-<a name="1314"><span class="lineNum">    1314 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
-<a name="1315"><span class="lineNum">    1315 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
-<a name="1316"><span class="lineNum">    1316 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
-<a name="1317"><span class="lineNum">    1317 </span>                :            : </a>
-<a name="1318"><span class="lineNum">    1318 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
-<a name="1319"><span class="lineNum">    1319 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
-<a name="1320"><span class="lineNum">    1320 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
-<a name="1321"><span class="lineNum">    1321 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
-<a name="1322"><span class="lineNum">    1322 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
-<a name="1323"><span class="lineNum">    1323 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
-<a name="1324"><span class="lineNum">    1324 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
-<a name="1325"><span class="lineNum">    1325 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
+<a name="1233"><span class="lineNum">    1233 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1234"><span class="lineNum">    1234 </span>                :            : </a>
+<a name="1235"><span class="lineNum">    1235 </span>                :            : /**</a>
+<a name="1236"><span class="lineNum">    1236 </span>                :            :  * Test 13: receiving a correct RESPOND_IF_READY from the requester, with the correct original</a>
+<a name="1237"><span class="lineNum">    1237 </span>                :            :  * request code, but with a token different from the expected.</a>
+<a name="1238"><span class="lineNum">    1238 </span>                :            :  * Expected behavior: the responder refuses the RESPOND_IF_READY message and produces an</a>
+<a name="1239"><span class="lineNum">    1239 </span>                :            :  * ERROR message indicating the InvalidRequest.</a>
+<a name="1240"><span class="lineNum">    1240 </span>                :            :  **/</a>
+<a name="1241"><span class="lineNum">    1241 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case13(void **state) {</span></a>
+<a name="1242"><span class="lineNum">    1242 </span>                :            :     libspdm_return_t status;</a>
+<a name="1243"><span class="lineNum">    1243 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
+<a name="1244"><span class="lineNum">    1244 </span>                :            :     libspdm_context_t  *spdm_context;</a>
+<a name="1245"><span class="lineNum">    1245 </span>                :            :     size_t response_size;</a>
+<a name="1246"><span class="lineNum">    1246 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1247"><span class="lineNum">    1247 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
+<a name="1248"><span class="lineNum">    1248 </span>                :            : </a>
+<a name="1249"><span class="lineNum">    1249 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1250"><span class="lineNum">    1250 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1251"><span class="lineNum">    1251 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xD;</span></a>
+<a name="1252"><span class="lineNum">    1252 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
+<a name="1253"><span class="lineNum">    1253 </span>                :            : </a>
+<a name="1254"><span class="lineNum">    1254 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
+<a name="1255"><span class="lineNum">    1255 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="1256"><span class="lineNum">    1256 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
+<a name="1257"><span class="lineNum">    1257 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1258"><span class="lineNum">    1258 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
+<a name="1259"><span class="lineNum">    1259 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="1260"><span class="lineNum">    1260 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
+<a name="1261"><span class="lineNum">    1261 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
+<a name="1262"><span class="lineNum">    1262 </span>                :            :                      (uint8_t)(0xFF));</a>
+<a name="1263"><span class="lineNum">    1263 </span>                :            : </a>
+<a name="1264"><span class="lineNum">    1264 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
+<a name="1265"><span class="lineNum">    1265 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
+<a name="1266"><span class="lineNum">    1266 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
+<a name="1267"><span class="lineNum">    1267 </span>                :            : </a>
+<a name="1268"><span class="lineNum">    1268 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
+<a name="1269"><span class="lineNum">    1269 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
+<a name="1270"><span class="lineNum">    1270 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
+<a name="1271"><span class="lineNum">    1271 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
+<a name="1272"><span class="lineNum">    1272 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
+<a name="1273"><span class="lineNum">    1273 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
+<a name="1274"><span class="lineNum">    1274 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
+<a name="1275"><span class="lineNum">    1275 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
+<a name="1276"><span class="lineNum">    1276 </span>                :            : </a>
+<a name="1277"><span class="lineNum">    1277 </span>                :            :     /*check ERROR response*/</a>
+<a name="1278"><span class="lineNum">    1278 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1279"><span class="lineNum">    1279 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
+<a name="1280"><span class="lineNum">    1280 </span>                :            :                                                    m_libspdm_respond_if_ready_request10_size,</a>
+<a name="1281"><span class="lineNum">    1281 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request10,</a>
+<a name="1282"><span class="lineNum">    1282 </span>                :            :                                                    &amp;response_size,</a>
+<a name="1283"><span class="lineNum">    1283 </span>                :            :                                                    response);</a>
+<a name="1284"><span class="lineNum">    1284 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1285"><span class="lineNum">    1285 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="1286"><span class="lineNum">    1286 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1287"><span class="lineNum">    1287 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="1288"><span class="lineNum">    1288 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
+<a name="1289"><span class="lineNum">    1289 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
+<a name="1290"><span class="lineNum">    1290 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1291"><span class="lineNum">    1291 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1292"><span class="lineNum">    1292 </span>                :            : </a>
+<a name="1293"><span class="lineNum">    1293 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1294"><span class="lineNum">    1294 </span>                :            : /**</a>
+<a name="1295"><span class="lineNum">    1295 </span>                :            :  * Test 14: receiving a correct RESPOND_IF_READY from the requester, with the correct token,</a>
+<a name="1296"><span class="lineNum">    1296 </span>                :            :  * but with a request code different from the expected.</a>
+<a name="1297"><span class="lineNum">    1297 </span>                :            :  * Expected behavior: the responder refuses the RESPOND_IF_READY message and produces an</a>
+<a name="1298"><span class="lineNum">    1298 </span>                :            :  * ERROR message indicating the InvalidRequest.</a>
+<a name="1299"><span class="lineNum">    1299 </span>                :            :  **/</a>
+<a name="1300"><span class="lineNum">    1300 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case14(void **state) {</span></a>
+<a name="1301"><span class="lineNum">    1301 </span>                :            :     libspdm_return_t status;</a>
+<a name="1302"><span class="lineNum">    1302 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
+<a name="1303"><span class="lineNum">    1303 </span>                :            :     libspdm_context_t  *spdm_context;</a>
+<a name="1304"><span class="lineNum">    1304 </span>                :            :     size_t response_size;</a>
+<a name="1305"><span class="lineNum">    1305 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1306"><span class="lineNum">    1306 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
+<a name="1307"><span class="lineNum">    1307 </span>                :            : </a>
+<a name="1308"><span class="lineNum">    1308 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1309"><span class="lineNum">    1309 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1310"><span class="lineNum">    1310 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xE;</span></a>
+<a name="1311"><span class="lineNum">    1311 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
+<a name="1312"><span class="lineNum">    1312 </span>                :            : </a>
+<a name="1313"><span class="lineNum">    1313 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
+<a name="1314"><span class="lineNum">    1314 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="1315"><span class="lineNum">    1315 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
+<a name="1316"><span class="lineNum">    1316 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1317"><span class="lineNum">    1317 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
+<a name="1318"><span class="lineNum">    1318 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="1319"><span class="lineNum">    1319 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
+<a name="1320"><span class="lineNum">    1320 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
+<a name="1321"><span class="lineNum">    1321 </span>                :            :                      (uint8_t)(0xFF));</a>
+<a name="1322"><span class="lineNum">    1322 </span>                :            : </a>
+<a name="1323"><span class="lineNum">    1323 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
+<a name="1324"><span class="lineNum">    1324 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
+<a name="1325"><span class="lineNum">    1325 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
 <a name="1326"><span class="lineNum">    1326 </span>                :            : </a>
-<a name="1327"><span class="lineNum">    1327 </span>                :            :     /*check ERROR response*/</a>
-<a name="1328"><span class="lineNum">    1328 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
-<a name="1329"><span class="lineNum">    1329 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
-<a name="1330"><span class="lineNum">    1330 </span>                :            :                                                    m_libspdm_respond_if_ready_request10_size,</a>
-<a name="1331"><span class="lineNum">    1331 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request10,</a>
-<a name="1332"><span class="lineNum">    1332 </span>                :            :                                                    &amp;response_size,</a>
-<a name="1333"><span class="lineNum">    1333 </span>                :            :                                                    response);</a>
-<a name="1334"><span class="lineNum">    1334 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1335"><span class="lineNum">    1335 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
-<a name="1336"><span class="lineNum">    1336 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
-<a name="1337"><span class="lineNum">    1337 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
-<a name="1338"><span class="lineNum">    1338 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
-<a name="1339"><span class="lineNum">    1339 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
-<a name="1340"><span class="lineNum">    1340 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1341"><span class="lineNum">    1341 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1342"><span class="lineNum">    1342 </span>                :            : </a>
-<a name="1343"><span class="lineNum">    1343 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="1344"><span class="lineNum">    1344 </span>                :            : /**</a>
-<a name="1345"><span class="lineNum">    1345 </span>                :            :  * Test 14: receiving a correct RESPOND_IF_READY from the requester, with the correct token,</a>
-<a name="1346"><span class="lineNum">    1346 </span>                :            :  * but with a request code different from the expected.</a>
-<a name="1347"><span class="lineNum">    1347 </span>                :            :  * Expected behavior: the responder refuses the RESPOND_IF_READY message and produces an</a>
-<a name="1348"><span class="lineNum">    1348 </span>                :            :  * ERROR message indicating the InvalidRequest.</a>
-<a name="1349"><span class="lineNum">    1349 </span>                :            :  **/</a>
-<a name="1350"><span class="lineNum">    1350 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_respond_if_ready_case14(void **state) {</span></a>
-<a name="1351"><span class="lineNum">    1351 </span>                :            :     libspdm_return_t status;</a>
-<a name="1352"><span class="lineNum">    1352 </span>                :            :     libspdm_test_context_t    *spdm_test_context;</a>
-<a name="1353"><span class="lineNum">    1353 </span>                :            :     libspdm_context_t  *spdm_context;</a>
-<a name="1354"><span class="lineNum">    1354 </span>                :            :     size_t response_size;</a>
-<a name="1355"><span class="lineNum">    1355 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
-<a name="1356"><span class="lineNum">    1356 </span>                :            :     spdm_digest_response_t *spdm_response; /*response to the original request (DIGESTS)*/</a>
-<a name="1357"><span class="lineNum">    1357 </span>                :            : </a>
-<a name="1358"><span class="lineNum">    1358 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
-<a name="1359"><span class="lineNum">    1359 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
-<a name="1360"><span class="lineNum">    1360 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0xE;</span></a>
-<a name="1361"><span class="lineNum">    1361 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="1362"><span class="lineNum">    1362 </span>                :            : </a>
-<a name="1363"><span class="lineNum">    1363 </span>                :            :     /*state for the the original request (GET_DIGESTS)*/</a>
-<a name="1364"><span class="lineNum">    1364 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
-<a name="1365"><span class="lineNum">    1365 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</span></a>
-<a name="1366"><span class="lineNum">    1366 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="1367"><span class="lineNum">    1367 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = m_libspdm_local_certificate_chain;</span></a>
-<a name="1368"><span class="lineNum">    1368 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
-<a name="1369"><span class="lineNum">    1369 </span>                :            :         LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
-<a name="1370"><span class="lineNum">    1370 </span>                :<span class="lineCov">          1 :     libspdm_set_mem (m_libspdm_local_certificate_chain, LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</span></a>
-<a name="1371"><span class="lineNum">    1371 </span>                :            :                      (uint8_t)(0xFF));</a>
+<a name="1327"><span class="lineNum">    1327 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
+<a name="1328"><span class="lineNum">    1328 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
+<a name="1329"><span class="lineNum">    1329 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
+<a name="1330"><span class="lineNum">    1330 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
+<a name="1331"><span class="lineNum">    1331 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
+<a name="1332"><span class="lineNum">    1332 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
+<a name="1333"><span class="lineNum">    1333 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
+<a name="1334"><span class="lineNum">    1334 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
+<a name="1335"><span class="lineNum">    1335 </span>                :            : </a>
+<a name="1336"><span class="lineNum">    1336 </span>                :            :     /*check ERROR response*/</a>
+<a name="1337"><span class="lineNum">    1337 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1338"><span class="lineNum">    1338 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
+<a name="1339"><span class="lineNum">    1339 </span>                :            :                                                    m_libspdm_respond_if_ready_request11_size,</a>
+<a name="1340"><span class="lineNum">    1340 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request11,</a>
+<a name="1341"><span class="lineNum">    1341 </span>                :            :                                                    &amp;response_size,</a>
+<a name="1342"><span class="lineNum">    1342 </span>                :            :                                                    response);</a>
+<a name="1343"><span class="lineNum">    1343 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1344"><span class="lineNum">    1344 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="1345"><span class="lineNum">    1345 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1346"><span class="lineNum">    1346 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="1347"><span class="lineNum">    1347 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
+<a name="1348"><span class="lineNum">    1348 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
+<a name="1349"><span class="lineNum">    1349 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1350"><span class="lineNum">    1350 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1351"><span class="lineNum">    1351 </span>                :            : </a>
+<a name="1352"><span class="lineNum">    1352 </span>                :            : libspdm_test_context_t m_libspdm_responder_respond_if_ready_test_context = {</a>
+<a name="1353"><span class="lineNum">    1353 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="1354"><span class="lineNum">    1354 </span>                :            :     false,</a>
+<a name="1355"><span class="lineNum">    1355 </span>                :            : };</a>
+<a name="1356"><span class="lineNum">    1356 </span>                :            : </a>
+<a name="1357"><span class="lineNum">    1357 </span>                :<span class="lineCov">          1 : int libspdm_responder_respond_if_ready_test_main(void) {</span></a>
+<a name="1358"><span class="lineNum">    1358 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_respond_if_ready_tests[] = {</span></a>
+<a name="1359"><span class="lineNum">    1359 </span>                :            :         /* Success Case*/</a>
+<a name="1360"><span class="lineNum">    1360 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1361"><span class="lineNum">    1361 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case1),</a>
+<a name="1362"><span class="lineNum">    1362 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case2),</a>
+<a name="1363"><span class="lineNum">    1363 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1364"><span class="lineNum">    1364 </span>                :            : </a>
+<a name="1365"><span class="lineNum">    1365 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
+<a name="1366"><span class="lineNum">    1366 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case3),</a>
+<a name="1367"><span class="lineNum">    1367 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP*/</a>
+<a name="1368"><span class="lineNum">    1368 </span>                :            : </a>
+<a name="1369"><span class="lineNum">    1369 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
+<a name="1370"><span class="lineNum">    1370 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case4),</a>
+<a name="1371"><span class="lineNum">    1371 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP*/</a>
 <a name="1372"><span class="lineNum">    1372 </span>                :            : </a>
-<a name="1373"><span class="lineNum">    1373 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_size = m_libspdm_get_digest_request_size;</span></a>
-<a name="1374"><span class="lineNum">    1374 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;last_spdm_request, sizeof(spdm_context-&gt;last_spdm_request),</span></a>
-<a name="1375"><span class="lineNum">    1375 </span>                :            :                      &amp;m_libspdm_get_digest_request, m_libspdm_get_digest_request_size);</a>
-<a name="1376"><span class="lineNum">    1376 </span>                :            : </a>
-<a name="1377"><span class="lineNum">    1377 </span>                :            :     /*RESPOND_IF_READY specific data*/</a>
-<a name="1378"><span class="lineNum">    1378 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;cache_spdm_request_size = spdm_context-&gt;last_spdm_request_size;</span></a>
-<a name="1379"><span class="lineNum">    1379 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_context-&gt;cache_spdm_request, sizeof(spdm_context-&gt;cache_spdm_request),</span></a>
-<a name="1380"><span class="lineNum">    1380 </span>                :<span class="lineCov">          1 :                      spdm_context-&gt;last_spdm_request, spdm_context-&gt;last_spdm_request_size);</span></a>
-<a name="1381"><span class="lineNum">    1381 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_exponent = 1;</span></a>
-<a name="1382"><span class="lineNum">    1382 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.rd_tm        = 1;</span></a>
-<a name="1383"><span class="lineNum">    1383 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.request_code = SPDM_GET_DIGESTS;</span></a>
-<a name="1384"><span class="lineNum">    1384 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;error_data.token       = LIBSPDM_MY_TEST_TOKEN;</span></a>
-<a name="1385"><span class="lineNum">    1385 </span>                :            : </a>
-<a name="1386"><span class="lineNum">    1386 </span>                :            :     /*check ERROR response*/</a>
-<a name="1387"><span class="lineNum">    1387 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
-<a name="1388"><span class="lineNum">    1388 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_respond_if_ready(spdm_context,</span></a>
-<a name="1389"><span class="lineNum">    1389 </span>                :            :                                                    m_libspdm_respond_if_ready_request11_size,</a>
-<a name="1390"><span class="lineNum">    1390 </span>                :            :                                                    &amp;m_libspdm_respond_if_ready_request11,</a>
-<a name="1391"><span class="lineNum">    1391 </span>                :            :                                                    &amp;response_size,</a>
-<a name="1392"><span class="lineNum">    1392 </span>                :            :                                                    response);</a>
-<a name="1393"><span class="lineNum">    1393 </span>                :<span class="lineCov">          1 :     assert_int_equal (status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="1394"><span class="lineNum">    1394 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
-<a name="1395"><span class="lineNum">    1395 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
-<a name="1396"><span class="lineNum">    1396 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
-<a name="1397"><span class="lineNum">    1397 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
-<a name="1398"><span class="lineNum">    1398 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
-<a name="1399"><span class="lineNum">    1399 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1400"><span class="lineNum">    1400 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1401"><span class="lineNum">    1401 </span>                :            : </a>
-<a name="1402"><span class="lineNum">    1402 </span>                :            : libspdm_test_context_t m_libspdm_responder_respond_if_ready_test_context = {</a>
-<a name="1403"><span class="lineNum">    1403 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="1404"><span class="lineNum">    1404 </span>                :            :     false,</a>
-<a name="1405"><span class="lineNum">    1405 </span>                :            : };</a>
-<a name="1406"><span class="lineNum">    1406 </span>                :            : </a>
-<a name="1407"><span class="lineNum">    1407 </span>                :<span class="lineCov">          1 : int libspdm_responder_respond_if_ready_test_main(void) {</span></a>
-<a name="1408"><span class="lineNum">    1408 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_respond_if_ready_tests[] = {</span></a>
-<a name="1409"><span class="lineNum">    1409 </span>                :            :         /* Success Case*/</a>
-<a name="1410"><span class="lineNum">    1410 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="1411"><span class="lineNum">    1411 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case1),</a>
-<a name="1412"><span class="lineNum">    1412 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case2),</a>
-<a name="1413"><span class="lineNum">    1413 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1414"><span class="lineNum">    1414 </span>                :            : </a>
-<a name="1415"><span class="lineNum">    1415 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
-<a name="1416"><span class="lineNum">    1416 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case3),</a>
-<a name="1417"><span class="lineNum">    1417 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP*/</a>
-<a name="1418"><span class="lineNum">    1418 </span>                :            : </a>
-<a name="1419"><span class="lineNum">    1419 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
-<a name="1420"><span class="lineNum">    1420 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case4),</a>
-<a name="1421"><span class="lineNum">    1421 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP*/</a>
-<a name="1422"><span class="lineNum">    1422 </span>                :            : </a>
-<a name="1423"><span class="lineNum">    1423 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP</a>
-<a name="1424"><span class="lineNum">    1424 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case5),</a>
-<a name="1425"><span class="lineNum">    1425 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case6),</a>
-<a name="1426"><span class="lineNum">    1426 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP*/</a>
-<a name="1427"><span class="lineNum">    1427 </span>                :            : </a>
-<a name="1428"><span class="lineNum">    1428 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP</a>
-<a name="1429"><span class="lineNum">    1429 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case7),</a>
-<a name="1430"><span class="lineNum">    1430 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case8),</a>
-<a name="1431"><span class="lineNum">    1431 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
-<a name="1432"><span class="lineNum">    1432 </span>                :            : </a>
-<a name="1433"><span class="lineNum">    1433 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="1434"><span class="lineNum">    1434 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case9),</a>
-<a name="1435"><span class="lineNum">    1435 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case10),</a>
-<a name="1436"><span class="lineNum">    1436 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case11),</a>
-<a name="1437"><span class="lineNum">    1437 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case12),</a>
-<a name="1438"><span class="lineNum">    1438 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case13),</a>
-<a name="1439"><span class="lineNum">    1439 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case14),</a>
-<a name="1440"><span class="lineNum">    1440 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
-<a name="1441"><span class="lineNum">    1441 </span>                :            : </a>
-<a name="1442"><span class="lineNum">    1442 </span>                :            :     };</a>
-<a name="1443"><span class="lineNum">    1443 </span>                :            : </a>
-<a name="1444"><span class="lineNum">    1444 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context (&amp;m_libspdm_responder_respond_if_ready_test_context);</span></a>
-<a name="1445"><span class="lineNum">    1445 </span>                :            : </a>
-<a name="1446"><span class="lineNum">    1446 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_respond_if_ready_tests,</span></a>
-<a name="1447"><span class="lineNum">    1447 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="1448"><span class="lineNum">    1448 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="1449"><span class="lineNum">    1449 </span>                :            : }</a>
-<a name="1450"><span class="lineNum">    1450 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_*_CAP */</a>
-<a name="1451"><span class="lineNum">    1451 </span>                :            : #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
+<a name="1373"><span class="lineNum">    1373 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP</a>
+<a name="1374"><span class="lineNum">    1374 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case5),</a>
+<a name="1375"><span class="lineNum">    1375 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case6),</a>
+<a name="1376"><span class="lineNum">    1376 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP*/</a>
+<a name="1377"><span class="lineNum">    1377 </span>                :            : </a>
+<a name="1378"><span class="lineNum">    1378 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP</a>
+<a name="1379"><span class="lineNum">    1379 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case7),</a>
+<a name="1380"><span class="lineNum">    1380 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case8),</a>
+<a name="1381"><span class="lineNum">    1381 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_PSK_EX_CAP*/</a>
+<a name="1382"><span class="lineNum">    1382 </span>                :            : </a>
+<a name="1383"><span class="lineNum">    1383 </span>                :            :     #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1384"><span class="lineNum">    1384 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case9),</a>
+<a name="1385"><span class="lineNum">    1385 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case10),</a>
+<a name="1386"><span class="lineNum">    1386 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case11),</a>
+<a name="1387"><span class="lineNum">    1387 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case12),</a>
+<a name="1388"><span class="lineNum">    1388 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case13),</a>
+<a name="1389"><span class="lineNum">    1389 </span>                :            :         cmocka_unit_test(libspdm_test_responder_respond_if_ready_case14),</a>
+<a name="1390"><span class="lineNum">    1390 </span>                :            :     #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="1391"><span class="lineNum">    1391 </span>                :            : </a>
+<a name="1392"><span class="lineNum">    1392 </span>                :            :     };</a>
+<a name="1393"><span class="lineNum">    1393 </span>                :            : </a>
+<a name="1394"><span class="lineNum">    1394 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context (&amp;m_libspdm_responder_respond_if_ready_test_context);</span></a>
+<a name="1395"><span class="lineNum">    1395 </span>                :            : </a>
+<a name="1396"><span class="lineNum">    1396 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_respond_if_ready_tests,</span></a>
+<a name="1397"><span class="lineNum">    1397 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="1398"><span class="lineNum">    1398 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="1399"><span class="lineNum">    1399 </span>                :            : }</a>
+<a name="1400"><span class="lineNum">    1400 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_*_CAP */</a>
+<a name="1401"><span class="lineNum">    1401 </span>                :            : #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
 </pre>
       </td>
     </tr>

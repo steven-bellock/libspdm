@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-14 08:17:52</td>
+            <td class="headerValue">2023-03-15 08:16:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -207,68 +207,67 @@
 <a name="136"><span class="lineNum">     136 </span>                :<span class="lineNoCov">          0 :         status = libspdm_handle_error_response_main(</span></a>
 <a name="137"><span class="lineNum">     137 </span>                :            :             spdm_context, session_id,</a>
 <a name="138"><span class="lineNum">     138 </span>                :            :             &amp;spdm_response_size,</a>
-<a name="139"><span class="lineNum">     139 </span>                :            :             (void **)&amp;spdm_response, SPDM_GET_CSR, SPDM_CSR,</a>
-<a name="140"><span class="lineNum">     140 </span>                :            :             sizeof(spdm_csr_response_t));</a>
-<a name="141"><span class="lineNum">     141 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="142"><span class="lineNum">     142 </span>                :<span class="lineNoCov">          0 :             goto receive_done;</span></a>
-<a name="143"><span class="lineNum">     143 </span>                :            :         }</a>
-<a name="144"><span class="lineNum">     144 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     } else if (spdm_response-&gt;header.request_response_code != SPDM_CSR) {</span></a>
-<a name="145"><span class="lineNum">     145 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
-<a name="146"><span class="lineNum">     146 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="147"><span class="lineNum">     147 </span>                :            :     }</a>
-<a name="148"><span class="lineNum">     148 </span>                :            : </a>
-<a name="149"><span class="lineNum">     149 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (spdm_response-&gt;csr_length &lt;= 0) {</span></a>
-<a name="150"><span class="lineNum">     150 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
-<a name="151"><span class="lineNum">     151 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="152"><span class="lineNum">     152 </span>                :            :     }</a>
-<a name="153"><span class="lineNum">     153 </span>                :            : </a>
-<a name="154"><span class="lineNum">     154 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (*csr_len &lt; spdm_response-&gt;csr_length) {</span></a>
-<a name="155"><span class="lineNum">     155 </span>                :<span class="lineNoCov">          0 :         *csr_len = spdm_response-&gt;csr_length;</span></a>
-<a name="156"><span class="lineNum">     156 </span>                :<span class="lineNoCov">          0 :         status =  LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
-<a name="157"><span class="lineNum">     157 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="158"><span class="lineNum">     158 </span>                :            :     }</a>
-<a name="159"><span class="lineNum">     159 </span>                :            : </a>
-<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(csr, *csr_len, spdm_response + 1, spdm_response-&gt;csr_length);</span></a>
-<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">          1 :     *csr_len = spdm_response-&gt;csr_length;</span></a>
-<a name="162"><span class="lineNum">     162 </span>                :            : </a>
-<a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">          1 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="164"><span class="lineNum">     164 </span>                :            : </a>
-<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          1 : receive_done:</span></a>
-<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">          1 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">          1 :     return status;</span></a>
-<a name="168"><span class="lineNum">     168 </span>                :            : }</a>
-<a name="169"><span class="lineNum">     169 </span>                :            : </a>
-<a name="170"><span class="lineNum">     170 </span>                :<span class="lineCov">          2 : libspdm_return_t libspdm_get_csr(void * spdm_context,</span></a>
-<a name="171"><span class="lineNum">     171 </span>                :            :                                  const uint32_t *session_id,</a>
-<a name="172"><span class="lineNum">     172 </span>                :            :                                  void * requester_info, uint16_t requester_info_length,</a>
-<a name="173"><span class="lineNum">     173 </span>                :            :                                  void * opaque_data, uint16_t opaque_data_length,</a>
-<a name="174"><span class="lineNum">     174 </span>                :            :                                  void *csr, size_t *csr_len)</a>
-<a name="175"><span class="lineNum">     175 </span>                :            : {</a>
-<a name="176"><span class="lineNum">     176 </span>                :            :     libspdm_context_t *context;</a>
-<a name="177"><span class="lineNum">     177 </span>                :            :     size_t retry;</a>
-<a name="178"><span class="lineNum">     178 </span>                :            :     uint64_t retry_delay_time;</a>
-<a name="179"><span class="lineNum">     179 </span>                :            :     libspdm_return_t status;</a>
-<a name="180"><span class="lineNum">     180 </span>                :            : </a>
-<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">          2 :     context = spdm_context;</span></a>
-<a name="182"><span class="lineNum">     182 </span>                :<span class="lineCov">          2 :     context-&gt;crypto_request = true;</span></a>
-<a name="183"><span class="lineNum">     183 </span>                :<span class="lineCov">          2 :     retry = context-&gt;retry_times;</span></a>
-<a name="184"><span class="lineNum">     184 </span>                :<span class="lineCov">          2 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
-<a name="185"><span class="lineNum">     185 </span>                :            :     do {</a>
-<a name="186"><span class="lineNum">     186 </span>                :<span class="lineCov">          2 :         status = libspdm_try_get_csr(context, session_id,</span></a>
-<a name="187"><span class="lineNum">     187 </span>                :            :                                      requester_info, requester_info_length,</a>
-<a name="188"><span class="lineNum">     188 </span>                :            :                                      opaque_data, opaque_data_length,</a>
-<a name="189"><span class="lineNum">     189 </span>                :            :                                      csr, csr_len);</a>
-<a name="190"><span class="lineNum">     190 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
-<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">          2 :             return status;</span></a>
-<a name="192"><span class="lineNum">     192 </span>                :            :         }</a>
-<a name="193"><span class="lineNum">     193 </span>                :            : </a>
-<a name="194"><span class="lineNum">     194 </span>                :<span class="lineNoCov">          0 :         libspdm_sleep(retry_delay_time);</span></a>
-<a name="195"><span class="lineNum">     195 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
-<a name="196"><span class="lineNum">     196 </span>                :            : </a>
-<a name="197"><span class="lineNum">     197 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
-<a name="198"><span class="lineNum">     198 </span>                :            : }</a>
-<a name="199"><span class="lineNum">     199 </span>                :            : </a>
-<a name="200"><span class="lineNum">     200 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_GET_CSR_CAP*/</a>
+<a name="139"><span class="lineNum">     139 </span>                :            :             (void **)&amp;spdm_response, SPDM_GET_CSR, SPDM_CSR);</a>
+<a name="140"><span class="lineNum">     140 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="141"><span class="lineNum">     141 </span>                :<span class="lineNoCov">          0 :             goto receive_done;</span></a>
+<a name="142"><span class="lineNum">     142 </span>                :            :         }</a>
+<a name="143"><span class="lineNum">     143 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     } else if (spdm_response-&gt;header.request_response_code != SPDM_CSR) {</span></a>
+<a name="144"><span class="lineNum">     144 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
+<a name="145"><span class="lineNum">     145 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="146"><span class="lineNum">     146 </span>                :            :     }</a>
+<a name="147"><span class="lineNum">     147 </span>                :            : </a>
+<a name="148"><span class="lineNum">     148 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (spdm_response-&gt;csr_length &lt;= 0) {</span></a>
+<a name="149"><span class="lineNum">     149 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
+<a name="150"><span class="lineNum">     150 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="151"><span class="lineNum">     151 </span>                :            :     }</a>
+<a name="152"><span class="lineNum">     152 </span>                :            : </a>
+<a name="153"><span class="lineNum">     153 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (*csr_len &lt; spdm_response-&gt;csr_length) {</span></a>
+<a name="154"><span class="lineNum">     154 </span>                :<span class="lineNoCov">          0 :         *csr_len = spdm_response-&gt;csr_length;</span></a>
+<a name="155"><span class="lineNum">     155 </span>                :<span class="lineNoCov">          0 :         status =  LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
+<a name="156"><span class="lineNum">     156 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="157"><span class="lineNum">     157 </span>                :            :     }</a>
+<a name="158"><span class="lineNum">     158 </span>                :            : </a>
+<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(csr, *csr_len, spdm_response + 1, spdm_response-&gt;csr_length);</span></a>
+<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">          1 :     *csr_len = spdm_response-&gt;csr_length;</span></a>
+<a name="161"><span class="lineNum">     161 </span>                :            : </a>
+<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          1 :     status = LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="163"><span class="lineNum">     163 </span>                :            : </a>
+<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">          1 : receive_done:</span></a>
+<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          1 :     libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">          1 :     return status;</span></a>
+<a name="167"><span class="lineNum">     167 </span>                :            : }</a>
+<a name="168"><span class="lineNum">     168 </span>                :            : </a>
+<a name="169"><span class="lineNum">     169 </span>                :<span class="lineCov">          2 : libspdm_return_t libspdm_get_csr(void * spdm_context,</span></a>
+<a name="170"><span class="lineNum">     170 </span>                :            :                                  const uint32_t *session_id,</a>
+<a name="171"><span class="lineNum">     171 </span>                :            :                                  void * requester_info, uint16_t requester_info_length,</a>
+<a name="172"><span class="lineNum">     172 </span>                :            :                                  void * opaque_data, uint16_t opaque_data_length,</a>
+<a name="173"><span class="lineNum">     173 </span>                :            :                                  void *csr, size_t *csr_len)</a>
+<a name="174"><span class="lineNum">     174 </span>                :            : {</a>
+<a name="175"><span class="lineNum">     175 </span>                :            :     libspdm_context_t *context;</a>
+<a name="176"><span class="lineNum">     176 </span>                :            :     size_t retry;</a>
+<a name="177"><span class="lineNum">     177 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="178"><span class="lineNum">     178 </span>                :            :     libspdm_return_t status;</a>
+<a name="179"><span class="lineNum">     179 </span>                :            : </a>
+<a name="180"><span class="lineNum">     180 </span>                :<span class="lineCov">          2 :     context = spdm_context;</span></a>
+<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">          2 :     context-&gt;crypto_request = true;</span></a>
+<a name="182"><span class="lineNum">     182 </span>                :<span class="lineCov">          2 :     retry = context-&gt;retry_times;</span></a>
+<a name="183"><span class="lineNum">     183 </span>                :<span class="lineCov">          2 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
+<a name="184"><span class="lineNum">     184 </span>                :            :     do {</a>
+<a name="185"><span class="lineNum">     185 </span>                :<span class="lineCov">          2 :         status = libspdm_try_get_csr(context, session_id,</span></a>
+<a name="186"><span class="lineNum">     186 </span>                :            :                                      requester_info, requester_info_length,</a>
+<a name="187"><span class="lineNum">     187 </span>                :            :                                      opaque_data, opaque_data_length,</a>
+<a name="188"><span class="lineNum">     188 </span>                :            :                                      csr, csr_len);</a>
+<a name="189"><span class="lineNum">     189 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
+<a name="190"><span class="lineNum">     190 </span>                :<span class="lineCov">          2 :             return status;</span></a>
+<a name="191"><span class="lineNum">     191 </span>                :            :         }</a>
+<a name="192"><span class="lineNum">     192 </span>                :            : </a>
+<a name="193"><span class="lineNum">     193 </span>                :<span class="lineNoCov">          0 :         libspdm_sleep(retry_delay_time);</span></a>
+<a name="194"><span class="lineNum">     194 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="195"><span class="lineNum">     195 </span>                :            : </a>
+<a name="196"><span class="lineNum">     196 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
+<a name="197"><span class="lineNum">     197 </span>                :            : }</a>
+<a name="198"><span class="lineNum">     198 </span>                :            : </a>
+<a name="199"><span class="lineNum">     199 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_GET_CSR_CAP*/</a>
 </pre>
       </td>
     </tr>
