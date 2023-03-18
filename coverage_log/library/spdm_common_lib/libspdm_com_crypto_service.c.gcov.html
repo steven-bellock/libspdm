@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-17 08:15:45</td>
+            <td class="headerValue">2023-03-18 08:15:05</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -734,9 +734,9 @@
 <a name="663"><span class="lineNum">     663 </span>                :<span class="lineNoCov">          0 :                 return false;</span></a>
 <a name="664"><span class="lineNum">     664 </span>                :            :             }</a>
 <a name="665"><span class="lineNum">     665 </span>                :            : </a>
-<a name="666"><span class="lineNum">     666 </span>        [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchCov" title="Branch 1 was taken 39 times"> + </span>]:<span class="lineCov">         56 :             if (libspdm_const_compare_mem((const uint8_t *)cert_chain_buffer +</span></a>
-<a name="667"><span class="lineNum">     667 </span>                :            :                                           sizeof(spdm_cert_chain_t),</a>
-<a name="668"><span class="lineNum">     668 </span>                :            :                                           root_cert_hash, root_cert_hash_size) == 0) {</a>
+<a name="666"><span class="lineNum">     666 </span>        [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchCov" title="Branch 1 was taken 39 times"> + </span>]:<span class="lineCov">         56 :             if (libspdm_consttime_is_mem_equal((const uint8_t *)cert_chain_buffer +</span></a>
+<a name="667"><span class="lineNum">     667 </span>                :            :                                                sizeof(spdm_cert_chain_t),</a>
+<a name="668"><span class="lineNum">     668 </span>                :            :                                                root_cert_hash, root_cert_hash_size)) {</a>
 <a name="669"><span class="lineNum">     669 </span>                :<span class="lineCov">         17 :                 break;</span></a>
 <a name="670"><span class="lineNum">     670 </span>                :            :             }</a>
 <a name="671"><span class="lineNum">     671 </span>                :            : </a>
@@ -768,8 +768,8 @@
 <a name="697"><span class="lineNum">     697 </span>                :<span class="lineNoCov">          0 :             return false;</span></a>
 <a name="698"><span class="lineNum">     698 </span>                :            :         }</a>
 <a name="699"><span class="lineNum">     699 </span>        [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         17 :         if (libspdm_is_root_certificate(received_root_cert, received_root_cert_size)) {</span></a>
-<a name="700"><span class="lineNum">     700 </span>  [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 16 times"> + </span>]:<span class="lineCov">         32 :             if ((root_cert != NULL) &amp;&amp;</span></a>
-<a name="701"><span class="lineNum">     701 </span>                :<span class="lineCov">         16 :                 (libspdm_const_compare_mem(received_root_cert, root_cert, root_cert_size) != 0)) {</span></a>
+<a name="700"><span class="lineNum">     700 </span>        [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         16 :             if ((root_cert != NULL) &amp;&amp;</span></a>
+<a name="701"><span class="lineNum">     701 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         16 :                 !libspdm_consttime_is_mem_equal(received_root_cert, root_cert, root_cert_size)) {</span></a>
 <a name="702"><span class="lineNum">     702 </span>                :<span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
 <a name="703"><span class="lineNum">     703 </span>                :            :                                &quot;!!! verify_peer_cert_chain_buffer - &quot;</a>
 <a name="704"><span class="lineNum">     704 </span>                :            :                                &quot;FAIL (root cert mismatch) !!!\n&quot;));</a>
@@ -972,8 +972,8 @@
 <a name="901"><span class="lineNum">     901 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</a>
 <a name="902"><span class="lineNum">     902 </span>                :            :         return false;</a>
 <a name="903"><span class="lineNum">     903 </span>                :            :     }</a>
-<a name="904"><span class="lineNum">     904 </span>                :            :     if (libspdm_const_compare_mem(certificate_chain_hash, cert_chain_buffer_hash,</a>
-<a name="905"><span class="lineNum">     905 </span>                :            :                                   certificate_chain_hash_size) != 0) {</a>
+<a name="904"><span class="lineNum">     904 </span>                :            :     if (!libspdm_consttime_is_mem_equal(certificate_chain_hash, cert_chain_buffer_hash,</a>
+<a name="905"><span class="lineNum">     905 </span>                :            :                                         certificate_chain_hash_size)) {</a>
 <a name="906"><span class="lineNum">     906 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</a>
 <a name="907"><span class="lineNum">     907 </span>                :            :         return false;</a>
 <a name="908"><span class="lineNum">     908 </span>                :            :     }</a>
@@ -990,9 +990,9 @@
 <a name="919"><span class="lineNum">     919 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="920"><span class="lineNum">     920 </span>                :            :     }</a>
 <a name="921"><span class="lineNum">     921 </span>                :            : </a>
-<a name="922"><span class="lineNum">     922 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (libspdm_const_compare_mem(certificate_chain_hash,</span></a>
-<a name="923"><span class="lineNum">     923 </span>                :<span class="lineCov">         15 :                                   spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].</span></a>
-<a name="924"><span class="lineNum">     924 </span>                :            :                                   buffer_hash, certificate_chain_hash_size) != 0) {</a>
+<a name="922"><span class="lineNum">     922 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (!libspdm_consttime_is_mem_equal(certificate_chain_hash,</span></a>
+<a name="923"><span class="lineNum">     923 </span>                :<span class="lineCov">         15 :                                         spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].</span></a>
+<a name="924"><span class="lineNum">     924 </span>                :            :                                         buffer_hash, certificate_chain_hash_size)) {</a>
 <a name="925"><span class="lineNum">     925 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</span></a>
 <a name="926"><span class="lineNum">     926 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="927"><span class="lineNum">     927 </span>                :            :     }</a>
@@ -1035,8 +1035,8 @@
 <a name="964"><span class="lineNum">     964 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_public_key_hash - FAIL !!!\n&quot;));</span></a>
 <a name="965"><span class="lineNum">     965 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="966"><span class="lineNum">     966 </span>                :            :     }</a>
-<a name="967"><span class="lineNum">     967 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (libspdm_const_compare_mem(public_key_hash, public_key_buffer_hash,</span></a>
-<a name="968"><span class="lineNum">     968 </span>                :            :                                   public_key_hash_size) != 0) {</a>
+<a name="967"><span class="lineNum">     967 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (!libspdm_consttime_is_mem_equal(public_key_hash, public_key_buffer_hash,</span></a>
+<a name="968"><span class="lineNum">     968 </span>                :            :                                         public_key_hash_size)) {</a>
 <a name="969"><span class="lineNum">     969 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_public_key_hash - FAIL !!!\n&quot;));</span></a>
 <a name="970"><span class="lineNum">     970 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="971"><span class="lineNum">     971 </span>                :            :     }</a>
