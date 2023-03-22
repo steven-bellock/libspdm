@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-21 08:15:56</td>
+            <td class="headerValue">2023-03-22 08:15:04</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -729,7 +729,7 @@
 <a name="658"><span class="lineNum">     658 </span>                :            :                 spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
 <a name="659"><span class="lineNum">     659 </span>                :            :                 root_cert, root_cert_size, root_cert_hash);</a>
 <a name="660"><span class="lineNum">     660 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 56 times"> + </span>]:<span class="lineCov">         56 :             if (!result) {</span></a>
-<a name="661"><span class="lineNum">     661 </span>                :<span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="661"><span class="lineNum">     661 </span>                :<span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="662"><span class="lineNum">     662 </span>                :            :                                &quot;!!! verify_peer_cert_chain_buffer - FAIL (hash calculation) !!!\n&quot;));</a>
 <a name="663"><span class="lineNum">     663 </span>                :<span class="lineNoCov">          0 :                 return false;</span></a>
 <a name="664"><span class="lineNum">     664 </span>                :            :             }</a>
@@ -751,7 +751,7 @@
 <a name="680"><span class="lineNum">     680 </span>                :            :             } else</a>
 <a name="681"><span class="lineNum">     681 </span>                :            :             #endif /* LIBSPDM_MAX_ROOT_CERT_SUPPORT */</a>
 <a name="682"><span class="lineNum">     682 </span>                :            :             {</a>
-<a name="683"><span class="lineNum">     683 </span>                :<span class="lineCov">          5 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="683"><span class="lineNum">     683 </span>                :<span class="lineCov">          5 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="684"><span class="lineNum">     684 </span>                :            :                                &quot;!!! verify_peer_cert_chain_buffer - &quot;</a>
 <a name="685"><span class="lineNum">     685 </span>                :            :                                &quot;FAIL (all root cert hash mismatch) !!!\n&quot;));</a>
 <a name="686"><span class="lineNum">     686 </span>                :<span class="lineCov">          5 :                 return false;</span></a>
@@ -763,14 +763,14 @@
 <a name="692"><span class="lineNum">     692 </span>                :<span class="lineCov">         17 :             cert_chain_buffer_size - sizeof(spdm_cert_chain_t) - root_cert_hash_size,</span></a>
 <a name="693"><span class="lineNum">     693 </span>                :            :             0, &amp;received_root_cert, &amp;received_root_cert_size);</a>
 <a name="694"><span class="lineNum">     694 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         17 :         if (!result) {</span></a>
-<a name="695"><span class="lineNum">     695 </span>                :<span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="695"><span class="lineNum">     695 </span>                :<span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="696"><span class="lineNum">     696 </span>                :            :                            &quot;!!! verify_peer_cert_chain_buffer - FAIL (cert retrieval fail) !!!\n&quot;));</a>
 <a name="697"><span class="lineNum">     697 </span>                :<span class="lineNoCov">          0 :             return false;</span></a>
 <a name="698"><span class="lineNum">     698 </span>                :            :         }</a>
 <a name="699"><span class="lineNum">     699 </span>        [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         17 :         if (libspdm_is_root_certificate(received_root_cert, received_root_cert_size)) {</span></a>
 <a name="700"><span class="lineNum">     700 </span>        [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         16 :             if ((root_cert != NULL) &amp;&amp;</span></a>
 <a name="701"><span class="lineNum">     701 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         16 :                 !libspdm_consttime_is_mem_equal(received_root_cert, root_cert, root_cert_size)) {</span></a>
-<a name="702"><span class="lineNum">     702 </span>                :<span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="702"><span class="lineNum">     702 </span>                :<span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="703"><span class="lineNum">     703 </span>                :            :                                &quot;!!! verify_peer_cert_chain_buffer - &quot;</a>
 <a name="704"><span class="lineNum">     704 </span>                :            :                                &quot;FAIL (root cert mismatch) !!!\n&quot;));</a>
 <a name="705"><span class="lineNum">     705 </span>                :<span class="lineNoCov">          0 :                 return false;</span></a>
@@ -778,7 +778,7 @@
 <a name="707"><span class="lineNum">     707 </span>                :            :         } else {</a>
 <a name="708"><span class="lineNum">     708 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :             if (!libspdm_x509_verify_cert(received_root_cert, received_root_cert_size,</span></a>
 <a name="709"><span class="lineNum">     709 </span>                :            :                                           root_cert, root_cert_size)) {</a>
-<a name="710"><span class="lineNum">     710 </span>                :<span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="710"><span class="lineNum">     710 </span>                :<span class="lineNoCov">          0 :                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="711"><span class="lineNum">     711 </span>                :            :                                &quot;!!! verify_peer_cert_chain_buffer - &quot;</a>
 <a name="712"><span class="lineNum">     712 </span>                :            :                                &quot;FAIL (received root cert verify failed)!!!\n&quot;));</a>
 <a name="713"><span class="lineNum">     713 </span>                :<span class="lineNoCov">          0 :                 return false;</span></a>
@@ -963,18 +963,18 @@
 <a name="892"><span class="lineNum">     892 </span>                :            :                               cert_chain_buffer, cert_chain_buffer_size,</a>
 <a name="893"><span class="lineNum">     893 </span>                :            :                               cert_chain_buffer_hash);</a>
 <a name="894"><span class="lineNum">     894 </span>                :            :     if (!result) {</a>
-<a name="895"><span class="lineNum">     895 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</a>
+<a name="895"><span class="lineNum">     895 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</a>
 <a name="896"><span class="lineNum">     896 </span>                :            :                        &quot;!!! verify_certificate_chain_hash - FAIL (hash calculation) !!!\n&quot;));</a>
 <a name="897"><span class="lineNum">     897 </span>                :            :         return false;</a>
 <a name="898"><span class="lineNum">     898 </span>                :            :     }</a>
 <a name="899"><span class="lineNum">     899 </span>                :            : </a>
 <a name="900"><span class="lineNum">     900 </span>                :            :     if (hash_size != certificate_chain_hash_size) {</a>
-<a name="901"><span class="lineNum">     901 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</a>
+<a name="901"><span class="lineNum">     901 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</a>
 <a name="902"><span class="lineNum">     902 </span>                :            :         return false;</a>
 <a name="903"><span class="lineNum">     903 </span>                :            :     }</a>
 <a name="904"><span class="lineNum">     904 </span>                :            :     if (!libspdm_consttime_is_mem_equal(certificate_chain_hash, cert_chain_buffer_hash,</a>
 <a name="905"><span class="lineNum">     905 </span>                :            :                                         certificate_chain_hash_size)) {</a>
-<a name="906"><span class="lineNum">     906 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</a>
+<a name="906"><span class="lineNum">     906 </span>                :            :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</a>
 <a name="907"><span class="lineNum">     907 </span>                :            :         return false;</a>
 <a name="908"><span class="lineNum">     908 </span>                :            :     }</a>
 <a name="909"><span class="lineNum">     909 </span>                :            : #else</a>
@@ -986,14 +986,14 @@
 <a name="915"><span class="lineNum">     915 </span>                :            : </a>
 <a name="916"><span class="lineNum">     916 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer_hash_size !=</span></a>
 <a name="917"><span class="lineNum">     917 </span>                :            :         certificate_chain_hash_size) {</a>
-<a name="918"><span class="lineNum">     918 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</span></a>
+<a name="918"><span class="lineNum">     918 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</span></a>
 <a name="919"><span class="lineNum">     919 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="920"><span class="lineNum">     920 </span>                :            :     }</a>
 <a name="921"><span class="lineNum">     921 </span>                :            : </a>
 <a name="922"><span class="lineNum">     922 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (!libspdm_consttime_is_mem_equal(certificate_chain_hash,</span></a>
 <a name="923"><span class="lineNum">     923 </span>                :<span class="lineCov">         15 :                                         spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].</span></a>
 <a name="924"><span class="lineNum">     924 </span>                :            :                                         buffer_hash, certificate_chain_hash_size)) {</a>
-<a name="925"><span class="lineNum">     925 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</span></a>
+<a name="925"><span class="lineNum">     925 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;!!! verify_certificate_chain_hash - FAIL !!!\n&quot;));</span></a>
 <a name="926"><span class="lineNum">     926 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="927"><span class="lineNum">     927 </span>                :            :     }</a>
 <a name="928"><span class="lineNum">     928 </span>                :            : #endif</a>
@@ -1026,18 +1026,18 @@
 <a name="955"><span class="lineNum">     955 </span>                :            :                               spdm_context-&gt;local_context.peer_public_key_provision_size,</a>
 <a name="956"><span class="lineNum">     956 </span>                :            :                               public_key_buffer_hash);</a>
 <a name="957"><span class="lineNum">     957 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (!result) {</span></a>
-<a name="958"><span class="lineNum">     958 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="958"><span class="lineNum">     958 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="959"><span class="lineNum">     959 </span>                :            :                        &quot;!!! verify_public_key_hash - FAIL (hash calculation) !!!\n&quot;));</a>
 <a name="960"><span class="lineNum">     960 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="961"><span class="lineNum">     961 </span>                :            :     }</a>
 <a name="962"><span class="lineNum">     962 </span>                :            : </a>
 <a name="963"><span class="lineNum">     963 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (hash_size != public_key_hash_size) {</span></a>
-<a name="964"><span class="lineNum">     964 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_public_key_hash - FAIL !!!\n&quot;));</span></a>
+<a name="964"><span class="lineNum">     964 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;!!! verify_public_key_hash - FAIL !!!\n&quot;));</span></a>
 <a name="965"><span class="lineNum">     965 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="966"><span class="lineNum">     966 </span>                :            :     }</a>
 <a name="967"><span class="lineNum">     967 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          2 :     if (!libspdm_consttime_is_mem_equal(public_key_hash, public_key_buffer_hash,</span></a>
 <a name="968"><span class="lineNum">     968 </span>                :            :                                         public_key_hash_size)) {</a>
-<a name="969"><span class="lineNum">     969 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;!!! verify_public_key_hash - FAIL !!!\n&quot;));</span></a>
+<a name="969"><span class="lineNum">     969 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR, &quot;!!! verify_public_key_hash - FAIL !!!\n&quot;));</span></a>
 <a name="970"><span class="lineNum">     970 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="971"><span class="lineNum">     971 </span>                :            :     }</a>
 <a name="972"><span class="lineNum">     972 </span>                :            : </a>
@@ -1191,7 +1191,7 @@
 <a name="1120"><span class="lineNum">    1120 </span>                :            : #endif</a>
 <a name="1121"><span class="lineNum">    1121 </span>                :            :     }</a>
 <a name="1122"><span class="lineNum">    1122 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         16 :     if (!result) {</span></a>
-<a name="1123"><span class="lineNum">    1123 </span>                :<span class="lineCov">          1 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
+<a name="1123"><span class="lineNum">    1123 </span>                :<span class="lineCov">          1 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,</span></a>
 <a name="1124"><span class="lineNum">    1124 </span>                :            :                        &quot;!!! verify_challenge_signature - FAIL !!!\n&quot;));</a>
 <a name="1125"><span class="lineNum">    1125 </span>                :<span class="lineCov">          1 :         return false;</span></a>
 <a name="1126"><span class="lineNum">    1126 </span>                :            :     }</a>
