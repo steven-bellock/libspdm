@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-23 08:15:11</td>
+            <td class="headerValue">2023-03-24 08:13:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">20</td>
@@ -551,43 +551,43 @@
 <a name="479"><span class="lineNum">     479 </span>                :            :  * @retval  false  Fail to retrieve EC public key from X509 certificate.</a>
 <a name="480"><span class="lineNum">     480 </span>                :            :  *</a>
 <a name="481"><span class="lineNum">     481 </span>                :            :  **/</a>
-<a name="482"><span class="lineNum">     482 </span>                :<span class="lineCov">        750 : bool libspdm_ec_get_public_key_from_x509(const uint8_t *cert, size_t cert_size,</span></a>
+<a name="482"><span class="lineNum">     482 </span>                :<span class="lineCov">        752 : bool libspdm_ec_get_public_key_from_x509(const uint8_t *cert, size_t cert_size,</span></a>
 <a name="483"><span class="lineNum">     483 </span>                :            :                                          void **ec_context)</a>
 <a name="484"><span class="lineNum">     484 </span>                :            : {</a>
 <a name="485"><span class="lineNum">     485 </span>                :            :     mbedtls_x509_crt crt;</a>
 <a name="486"><span class="lineNum">     486 </span>                :            :     mbedtls_ecdh_context *ecdh;</a>
 <a name="487"><span class="lineNum">     487 </span>                :            :     int32_t ret;</a>
 <a name="488"><span class="lineNum">     488 </span>                :            : </a>
-<a name="489"><span class="lineNum">     489 </span>                :<span class="lineCov">        750 :     mbedtls_x509_crt_init(&amp;crt);</span></a>
+<a name="489"><span class="lineNum">     489 </span>                :<span class="lineCov">        752 :     mbedtls_x509_crt_init(&amp;crt);</span></a>
 <a name="490"><span class="lineNum">     490 </span>                :            : </a>
-<a name="491"><span class="lineNum">     491 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 750 times"> + </span>]:<span class="lineCov">        750 :     if (mbedtls_x509_crt_parse_der(&amp;crt, cert, cert_size) != 0) {</span></a>
+<a name="491"><span class="lineNum">     491 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 752 times"> + </span>]:<span class="lineCov">        752 :     if (mbedtls_x509_crt_parse_der(&amp;crt, cert, cert_size) != 0) {</span></a>
 <a name="492"><span class="lineNum">     492 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="493"><span class="lineNum">     493 </span>                :            :     }</a>
 <a name="494"><span class="lineNum">     494 </span>                :            : </a>
-<a name="495"><span class="lineNum">     495 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 750 times"> + </span>]:<span class="lineCov">        750 :     if (mbedtls_pk_get_type(&amp;crt.pk) != MBEDTLS_PK_ECKEY) {</span></a>
+<a name="495"><span class="lineNum">     495 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 752 times"> + </span>]:<span class="lineCov">        752 :     if (mbedtls_pk_get_type(&amp;crt.pk) != MBEDTLS_PK_ECKEY) {</span></a>
 <a name="496"><span class="lineNum">     496 </span>                :<span class="lineNoCov">          0 :         mbedtls_x509_crt_free(&amp;crt);</span></a>
 <a name="497"><span class="lineNum">     497 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="498"><span class="lineNum">     498 </span>                :            :     }</a>
 <a name="499"><span class="lineNum">     499 </span>                :            : </a>
-<a name="500"><span class="lineNum">     500 </span>                :<span class="lineCov">        750 :     ecdh = allocate_zero_pool(sizeof(mbedtls_ecdh_context));</span></a>
-<a name="501"><span class="lineNum">     501 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 750 times"> + </span>]:<span class="lineCov">        750 :     if (ecdh == NULL) {</span></a>
+<a name="500"><span class="lineNum">     500 </span>                :<span class="lineCov">        752 :     ecdh = allocate_zero_pool(sizeof(mbedtls_ecdh_context));</span></a>
+<a name="501"><span class="lineNum">     501 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 752 times"> + </span>]:<span class="lineCov">        752 :     if (ecdh == NULL) {</span></a>
 <a name="502"><span class="lineNum">     502 </span>                :<span class="lineNoCov">          0 :         mbedtls_x509_crt_free(&amp;crt);</span></a>
 <a name="503"><span class="lineNum">     503 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="504"><span class="lineNum">     504 </span>                :            :     }</a>
-<a name="505"><span class="lineNum">     505 </span>                :<span class="lineCov">        750 :     mbedtls_ecdh_init(ecdh);</span></a>
+<a name="505"><span class="lineNum">     505 </span>                :<span class="lineCov">        752 :     mbedtls_ecdh_init(ecdh);</span></a>
 <a name="506"><span class="lineNum">     506 </span>                :            : </a>
-<a name="507"><span class="lineNum">     507 </span>                :<span class="lineCov">        750 :     ret = mbedtls_ecdh_get_params(ecdh, mbedtls_pk_ec(crt.pk),</span></a>
+<a name="507"><span class="lineNum">     507 </span>                :<span class="lineCov">        752 :     ret = mbedtls_ecdh_get_params(ecdh, mbedtls_pk_ec(crt.pk),</span></a>
 <a name="508"><span class="lineNum">     508 </span>                :            :                                   MBEDTLS_ECDH_OURS);</a>
-<a name="509"><span class="lineNum">     509 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 750 times"> + </span>]:<span class="lineCov">        750 :     if (ret != 0) {</span></a>
+<a name="509"><span class="lineNum">     509 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 752 times"> + </span>]:<span class="lineCov">        752 :     if (ret != 0) {</span></a>
 <a name="510"><span class="lineNum">     510 </span>                :<span class="lineNoCov">          0 :         mbedtls_ecdh_free(ecdh);</span></a>
 <a name="511"><span class="lineNum">     511 </span>                :<span class="lineNoCov">          0 :         free_pool(ecdh);</span></a>
 <a name="512"><span class="lineNum">     512 </span>                :<span class="lineNoCov">          0 :         mbedtls_x509_crt_free(&amp;crt);</span></a>
 <a name="513"><span class="lineNum">     513 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="514"><span class="lineNum">     514 </span>                :            :     }</a>
-<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">        750 :     mbedtls_x509_crt_free(&amp;crt);</span></a>
+<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">        752 :     mbedtls_x509_crt_free(&amp;crt);</span></a>
 <a name="516"><span class="lineNum">     516 </span>                :            : </a>
-<a name="517"><span class="lineNum">     517 </span>                :<span class="lineCov">        750 :     *ec_context = ecdh;</span></a>
-<a name="518"><span class="lineNum">     518 </span>                :<span class="lineCov">        750 :     return true;</span></a>
+<a name="517"><span class="lineNum">     517 </span>                :<span class="lineCov">        752 :     *ec_context = ecdh;</span></a>
+<a name="518"><span class="lineNum">     518 </span>                :<span class="lineCov">        752 :     return true;</span></a>
 <a name="519"><span class="lineNum">     519 </span>                :            : }</a>
 <a name="520"><span class="lineNum">     520 </span>                :            : </a>
 <a name="521"><span class="lineNum">     521 </span>                :            : /**</a>
@@ -778,7 +778,7 @@
 <a name="706"><span class="lineNum">     706 </span>                :            :  * @retval  true   Success.</a>
 <a name="707"><span class="lineNum">     707 </span>                :            :  * @retval  false  Failed to get certificate from certificate chain.</a>
 <a name="708"><span class="lineNum">     708 </span>                :            :  **/</a>
-<a name="709"><span class="lineNum">     709 </span>                :<span class="lineCov">       2019 : bool libspdm_x509_get_cert_from_cert_chain(const uint8_t *cert_chain,</span></a>
+<a name="709"><span class="lineNum">     709 </span>                :<span class="lineCov">       2021 : bool libspdm_x509_get_cert_from_cert_chain(const uint8_t *cert_chain,</span></a>
 <a name="710"><span class="lineNum">     710 </span>                :            :                                            size_t cert_chain_length,</a>
 <a name="711"><span class="lineNum">     711 </span>                :            :                                            const int32_t cert_index, const uint8_t **cert,</a>
 <a name="712"><span class="lineNum">     712 </span>                :            :                                            size_t *cert_length)</a>
@@ -790,18 +790,18 @@
 <a name="718"><span class="lineNum">     718 </span>                :            :     const uint8_t *tmp_ptr;</a>
 <a name="719"><span class="lineNum">     719 </span>                :            :     int32_t ret;</a>
 <a name="720"><span class="lineNum">     720 </span>                :            : </a>
-<a name="721"><span class="lineNum">     721 </span>                :<span class="lineCov">       2019 :     current_cert_len = 0;</span></a>
+<a name="721"><span class="lineNum">     721 </span>                :<span class="lineCov">       2021 :     current_cert_len = 0;</span></a>
 <a name="722"><span class="lineNum">     722 </span>                :            : </a>
 <a name="723"><span class="lineNum">     723 </span>                :            :     /* Check input parameters.*/</a>
 <a name="724"><span class="lineNum">     724 </span>                :            : </a>
-<a name="725"><span class="lineNum">     725 </span>  [<span class="branchCov" title="Branch 0 was taken 2019 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2019 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">       2019 :     if ((cert_chain == NULL) || (cert == NULL) || (cert_index &lt; -1) ||</span></a>
-<span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 2019 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 2019 times"> + </span>]
+<a name="725"><span class="lineNum">     725 </span>  [<span class="branchCov" title="Branch 0 was taken 2021 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2021 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">       2021 :     if ((cert_chain == NULL) || (cert == NULL) || (cert_index &lt; -1) ||</span></a>
+<span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 2021 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 2021 times"> + </span>]
 <a name="726"><span class="lineNum">     726 </span>                :            :         (cert_length == NULL)) {</a>
 <a name="727"><span class="lineNum">     727 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="728"><span class="lineNum">     728 </span>                :            :     }</a>
 <a name="729"><span class="lineNum">     729 </span>                :            : </a>
-<a name="730"><span class="lineNum">     730 </span>                :<span class="lineCov">       2019 :     current_cert = cert_chain;</span></a>
-<a name="731"><span class="lineNum">     731 </span>                :<span class="lineCov">       2019 :     current_index = -1;</span></a>
+<a name="730"><span class="lineNum">     730 </span>                :<span class="lineCov">       2021 :     current_cert = cert_chain;</span></a>
+<a name="731"><span class="lineNum">     731 </span>                :<span class="lineCov">       2021 :     current_index = -1;</span></a>
 <a name="732"><span class="lineNum">     732 </span>                :            : </a>
 <a name="733"><span class="lineNum">     733 </span>                :            : </a>
 <a name="734"><span class="lineNum">     734 </span>                :            :     /* Traverse the certificate chain*/</a>
@@ -810,18 +810,18 @@
 <a name="737"><span class="lineNum">     737 </span>                :            : </a>
 <a name="738"><span class="lineNum">     738 </span>                :            :         /* Get asn1 tag len*/</a>
 <a name="739"><span class="lineNum">     739 </span>                :            : </a>
-<a name="740"><span class="lineNum">     740 </span>                :<span class="lineCov">       4521 :         tmp_ptr = current_cert;</span></a>
-<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">       4521 :         ret = mbedtls_asn1_get_tag(</span></a>
-<a name="742"><span class="lineNum">     742 </span>                :<span class="lineCov">       4521 :             &amp;tmp_ptr, cert_chain + cert_chain_length, &amp;asn1_len,</span></a>
+<a name="740"><span class="lineNum">     740 </span>                :<span class="lineCov">       4529 :         tmp_ptr = current_cert;</span></a>
+<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">       4529 :         ret = mbedtls_asn1_get_tag(</span></a>
+<a name="742"><span class="lineNum">     742 </span>                :<span class="lineCov">       4529 :             &amp;tmp_ptr, cert_chain + cert_chain_length, &amp;asn1_len,</span></a>
 <a name="743"><span class="lineNum">     743 </span>                :            :             MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE);</a>
-<a name="744"><span class="lineNum">     744 </span>        [<span class="branchCov" title="Branch 0 was taken 777 times"> + </span><span class="branchCov" title="Branch 1 was taken 3744 times"> + </span>]:<span class="lineCov">       4521 :         if (ret != 0) {</span></a>
-<a name="745"><span class="lineNum">     745 </span>                :<span class="lineCov">        777 :             break;</span></a>
+<a name="744"><span class="lineNum">     744 </span>        [<span class="branchCov" title="Branch 0 was taken 779 times"> + </span><span class="branchCov" title="Branch 1 was taken 3750 times"> + </span>]:<span class="lineCov">       4529 :         if (ret != 0) {</span></a>
+<a name="745"><span class="lineNum">     745 </span>                :<span class="lineCov">        779 :             break;</span></a>
 <a name="746"><span class="lineNum">     746 </span>                :            :         }</a>
 <a name="747"><span class="lineNum">     747 </span>                :            : </a>
-<a name="748"><span class="lineNum">     748 </span>                :<span class="lineCov">       3744 :         current_cert_len = asn1_len + (tmp_ptr - current_cert);</span></a>
-<a name="749"><span class="lineNum">     749 </span>                :<span class="lineCov">       3744 :         current_index++;</span></a>
+<a name="748"><span class="lineNum">     748 </span>                :<span class="lineCov">       3750 :         current_cert_len = asn1_len + (tmp_ptr - current_cert);</span></a>
+<a name="749"><span class="lineNum">     749 </span>                :<span class="lineCov">       3750 :         current_index++;</span></a>
 <a name="750"><span class="lineNum">     750 </span>                :            : </a>
-<a name="751"><span class="lineNum">     751 </span>        [<span class="branchCov" title="Branch 0 was taken 1242 times"> + </span><span class="branchCov" title="Branch 1 was taken 2502 times"> + </span>]:<span class="lineCov">       3744 :         if (current_index == cert_index) {</span></a>
+<a name="751"><span class="lineNum">     751 </span>        [<span class="branchCov" title="Branch 0 was taken 1242 times"> + </span><span class="branchCov" title="Branch 1 was taken 2508 times"> + </span>]:<span class="lineCov">       3750 :         if (current_index == cert_index) {</span></a>
 <a name="752"><span class="lineNum">     752 </span>                :<span class="lineCov">       1242 :             *cert = current_cert;</span></a>
 <a name="753"><span class="lineNum">     753 </span>                :<span class="lineCov">       1242 :             *cert_length = current_cert_len;</span></a>
 <a name="754"><span class="lineNum">     754 </span>                :<span class="lineCov">       1242 :             return true;</span></a>
@@ -830,16 +830,16 @@
 <a name="757"><span class="lineNum">     757 </span>                :            : </a>
 <a name="758"><span class="lineNum">     758 </span>                :            :         /* Move to next*/</a>
 <a name="759"><span class="lineNum">     759 </span>                :            : </a>
-<a name="760"><span class="lineNum">     760 </span>                :<span class="lineCov">       2502 :         current_cert = current_cert + current_cert_len;</span></a>
+<a name="760"><span class="lineNum">     760 </span>                :<span class="lineCov">       2508 :         current_cert = current_cert + current_cert_len;</span></a>
 <a name="761"><span class="lineNum">     761 </span>                :            :     }</a>
 <a name="762"><span class="lineNum">     762 </span>                :            : </a>
 <a name="763"><span class="lineNum">     763 </span>                :            : </a>
 <a name="764"><span class="lineNum">     764 </span>                :            :     /* If cert_index is -1, Return the last certificate*/</a>
 <a name="765"><span class="lineNum">     765 </span>                :            : </a>
-<a name="766"><span class="lineNum">     766 </span>  [<span class="branchCov" title="Branch 0 was taken 777 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 777 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        777 :     if (cert_index == -1 &amp;&amp; current_index &gt;= 0) {</span></a>
-<a name="767"><span class="lineNum">     767 </span>                :<span class="lineCov">        777 :         *cert = current_cert - current_cert_len;</span></a>
-<a name="768"><span class="lineNum">     768 </span>                :<span class="lineCov">        777 :         *cert_length = current_cert_len;</span></a>
-<a name="769"><span class="lineNum">     769 </span>                :<span class="lineCov">        777 :         return true;</span></a>
+<a name="766"><span class="lineNum">     766 </span>  [<span class="branchCov" title="Branch 0 was taken 779 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 779 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        779 :     if (cert_index == -1 &amp;&amp; current_index &gt;= 0) {</span></a>
+<a name="767"><span class="lineNum">     767 </span>                :<span class="lineCov">        779 :         *cert = current_cert - current_cert_len;</span></a>
+<a name="768"><span class="lineNum">     768 </span>                :<span class="lineCov">        779 :         *cert_length = current_cert_len;</span></a>
+<a name="769"><span class="lineNum">     769 </span>                :<span class="lineCov">        779 :         return true;</span></a>
 <a name="770"><span class="lineNum">     770 </span>                :            :     }</a>
 <a name="771"><span class="lineNum">     771 </span>                :            : </a>
 <a name="772"><span class="lineNum">     772 </span>                :<span class="lineNoCov">          0 :     return false;</span></a>

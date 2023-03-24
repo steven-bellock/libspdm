@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">464</td>
-            <td class="headerCovTableEntry">464</td>
+            <td class="headerCovTableEntry">503</td>
+            <td class="headerCovTableEntry">503</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-23 08:15:11</td>
+            <td class="headerValue">2023-03-24 08:13:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntry">16</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -1022,61 +1022,149 @@
 <a name="951"><span class="lineNum">     951 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
 <a name="952"><span class="lineNum">     952 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="953"><span class="lineNum">     953 </span>                :            : </a>
-<a name="954"><span class="lineNum">     954 </span>                :            : libspdm_test_context_t m_libspdm_response_encapsulated_request_test_context = {</a>
-<a name="955"><span class="lineNum">     955 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="956"><span class="lineNum">     956 </span>                :            :     false,</a>
-<a name="957"><span class="lineNum">     957 </span>                :            : };</a>
-<a name="958"><span class="lineNum">     958 </span>                :            : </a>
-<a name="959"><span class="lineNum">     959 </span>                :<span class="lineCov">          1 : int libspdm_responder_encapsulated_response_test_main(void)</span></a>
-<a name="960"><span class="lineNum">     960 </span>                :            : {</a>
-<a name="961"><span class="lineNum">     961 </span>                :            : </a>
-<a name="962"><span class="lineNum">     962 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_encapsulated_response_tests[] = {</span></a>
-<a name="963"><span class="lineNum">     963 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="964"><span class="lineNum">     964 </span>                :            :         /*Success Case request_op_code_sequence: SPDM_GET_DIGESTS*/</a>
-<a name="965"><span class="lineNum">     965 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case1),</a>
-<a name="966"><span class="lineNum">     966 </span>                :            :         /*Success Case current_request_op_code: SPDM_GET_CERTIFICATE */</a>
-<a name="967"><span class="lineNum">     967 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case2),</a>
-<a name="968"><span class="lineNum">     968 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NORMAL */</a>
-<a name="969"><span class="lineNum">     969 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case3),</a>
-<a name="970"><span class="lineNum">     970 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NEED_RESYNC */</a>
-<a name="971"><span class="lineNum">     971 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case4),</a>
-<a name="972"><span class="lineNum">     972 </span>                :            : #endif</a>
-<a name="973"><span class="lineNum">     973 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
-<a name="974"><span class="lineNum">     974 </span>                :            :         /*Success Case current_request_op_code: SPDM_CHALLENGE */</a>
-<a name="975"><span class="lineNum">     975 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case5),</a>
-<a name="976"><span class="lineNum">     976 </span>                :            : #endif</a>
-<a name="977"><span class="lineNum">     977 </span>                :            :         /*Success Case current_request_op_code: SPDM_KEY_UPDATE */</a>
-<a name="978"><span class="lineNum">     978 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case6),</a>
-<a name="979"><span class="lineNum">     979 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="980"><span class="lineNum">     980 </span>                :            :         /*Success Case current_request_op_code: SPDM_GET_DIGESTS*/</a>
-<a name="981"><span class="lineNum">     981 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case1),</a>
-<a name="982"><span class="lineNum">     982 </span>                :            :         /*Success Case current_request_op_code: SPDM_GET_CERTIFICATE*/</a>
-<a name="983"><span class="lineNum">     983 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case2),</a>
-<a name="984"><span class="lineNum">     984 </span>                :            : #endif</a>
-<a name="985"><span class="lineNum">     985 </span>                :            :         /*Success Case current_request_op_code: SPDM_KEY_UPDATE */</a>
-<a name="986"><span class="lineNum">     986 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case3),</a>
-<a name="987"><span class="lineNum">     987 </span>                :            :         /* current_request_op_code: NULL */</a>
-<a name="988"><span class="lineNum">     988 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case4),</a>
-<a name="989"><span class="lineNum">     989 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NORMAL */</a>
-<a name="990"><span class="lineNum">     990 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case5),</a>
-<a name="991"><span class="lineNum">     991 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NEED_RESYNC */</a>
-<a name="992"><span class="lineNum">     992 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case6),</a>
-<a name="993"><span class="lineNum">     993 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
-<a name="994"><span class="lineNum">     994 </span>                :            :         /*spdm_request-&gt;header.param1 != spdm_context-&gt;encap_context.request_id */</a>
-<a name="995"><span class="lineNum">     995 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case7),</a>
-<a name="996"><span class="lineNum">     996 </span>                :            :         /*Success Case  When version is greater than V1.2 */</a>
-<a name="997"><span class="lineNum">     997 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case8),</a>
-<a name="998"><span class="lineNum">     998 </span>                :            : #endif</a>
-<a name="999"><span class="lineNum">     999 </span>                :            :     };</a>
-<a name="1000"><span class="lineNum">    1000 </span>                :            : </a>
-<a name="1001"><span class="lineNum">    1001 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_response_encapsulated_request_test_context);</span></a>
-<a name="1002"><span class="lineNum">    1002 </span>                :            : </a>
-<a name="1003"><span class="lineNum">    1003 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_encapsulated_response_tests,</span></a>
-<a name="1004"><span class="lineNum">    1004 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="1005"><span class="lineNum">    1005 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="1006"><span class="lineNum">    1006 </span>                :            : }</a>
-<a name="1007"><span class="lineNum">    1007 </span>                :            : </a>
-<a name="1008"><span class="lineNum">    1008 </span>                :            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) || (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)*/</a>
+<a name="954"><span class="lineNum">     954 </span>                :            : /**</a>
+<a name="955"><span class="lineNum">     955 </span>                :            :  * Test 9: In an encapsulated request flow, a Responder issue an encapsulated request that can take up to CT time to</a>
+<a name="956"><span class="lineNum">     956 </span>                :            :  * fulfill, then the Requester deliver an encapsulated ERROR message with a ResponseNotReady error code.</a>
+<a name="957"><span class="lineNum">     957 </span>                :            :  * Expected behavior: the Responder shall not encapsulate another request by setting Param2 in ENCAPSULATED_RESPONSE_ACK</a>
+<a name="958"><span class="lineNum">     958 </span>                :            :  * to a value of zero.</a>
+<a name="959"><span class="lineNum">     959 </span>                :            :  **/</a>
+<a name="960"><span class="lineNum">     960 </span>                :<span class="lineCov">          1 : void libspdm_test_get_response_encapsulated_response_ack_case9(void **State)</span></a>
+<a name="961"><span class="lineNum">     961 </span>                :            : {</a>
+<a name="962"><span class="lineNum">     962 </span>                :            :     libspdm_return_t status;</a>
+<a name="963"><span class="lineNum">     963 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="964"><span class="lineNum">     964 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="965"><span class="lineNum">     965 </span>                :            :     spdm_encapsulated_response_ack_response_t *spdm_response;</a>
+<a name="966"><span class="lineNum">     966 </span>                :            :     spdm_deliver_encapsulated_response_request_t *spdm_request;</a>
+<a name="967"><span class="lineNum">     967 </span>                :            :     spdm_error_response_data_response_not_ready_t *EncapsulatedResponse;</a>
+<a name="968"><span class="lineNum">     968 </span>                :            :     uint8_t temp_buf[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="969"><span class="lineNum">     969 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="970"><span class="lineNum">     970 </span>                :            :     size_t spdm_request_size;</a>
+<a name="971"><span class="lineNum">     971 </span>                :            :     size_t EncapsulatedResponse_size;</a>
+<a name="972"><span class="lineNum">     972 </span>                :            :     size_t response_size;</a>
+<a name="973"><span class="lineNum">     973 </span>                :            : </a>
+<a name="974"><span class="lineNum">     974 </span>                :<span class="lineCov">          1 :     spdm_test_context = *State;</span></a>
+<a name="975"><span class="lineNum">     975 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="976"><span class="lineNum">     976 </span>                :            : </a>
+<a name="977"><span class="lineNum">     977 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;encap_context.request_id = 0xFF;</span></a>
+<a name="978"><span class="lineNum">     978 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;</span></a>
+<a name="979"><span class="lineNum">     979 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;</span></a>
+<a name="980"><span class="lineNum">     980 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;</span></a>
+<a name="981"><span class="lineNum">     981 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;encap_context.request_op_code_count =</span></a>
+<a name="982"><span class="lineNum">     982 </span>                :            :         LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;</a>
+<a name="983"><span class="lineNum">     983 </span>                :            : </a>
+<a name="984"><span class="lineNum">     984 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;encap_context.current_request_op_code = SPDM_GET_DIGESTS;</span></a>
+<a name="985"><span class="lineNum">     985 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;encap_context.request_op_code_sequence[0] = SPDM_GET_DIGESTS;</span></a>
+<a name="986"><span class="lineNum">     986 </span>                :            : </a>
+<a name="987"><span class="lineNum">     987 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="988"><span class="lineNum">     988 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;</span></a>
+<a name="989"><span class="lineNum">     989 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
+<a name="990"><span class="lineNum">     990 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="991"><span class="lineNum">     991 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
+<a name="992"><span class="lineNum">     992 </span>                :            : </a>
+<a name="993"><span class="lineNum">     993 </span>                :<span class="lineCov">          1 :     spdm_request_size = sizeof(spdm_deliver_encapsulated_response_request_t) +</span></a>
+<a name="994"><span class="lineNum">     994 </span>                :            :                         sizeof(spdm_error_response_data_response_not_ready_t);</a>
+<a name="995"><span class="lineNum">     995 </span>                :            : </a>
+<a name="996"><span class="lineNum">     996 </span>                :<span class="lineCov">          1 :     spdm_request = (void *)temp_buf;</span></a>
+<a name="997"><span class="lineNum">     997 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_request,</span></a>
+<a name="998"><span class="lineNum">     998 </span>                :            :                      m_libspdm_m_deliver_encapsulated_response_request_t2_size,</a>
+<a name="999"><span class="lineNum">     999 </span>                :            :                      &amp;m_libspdm_m_deliver_encapsulated_response_request_t2,</a>
+<a name="1000"><span class="lineNum">    1000 </span>                :            :                      m_libspdm_m_deliver_encapsulated_response_request_t2_size);</a>
+<a name="1001"><span class="lineNum">    1001 </span>                :            : </a>
+<a name="1002"><span class="lineNum">    1002 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse_size = sizeof(spdm_error_response_data_response_not_ready_t);</span></a>
+<a name="1003"><span class="lineNum">    1003 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse =</span></a>
+<a name="1004"><span class="lineNum">    1004 </span>                :            :         (void *)(temp_buf + sizeof(spdm_deliver_encapsulated_response_request_t));</a>
+<a name="1005"><span class="lineNum">    1005 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;header.spdm_version = SPDM_MESSAGE_VERSION_12;</span></a>
+<a name="1006"><span class="lineNum">    1006 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;header.request_response_code = SPDM_ERROR;</span></a>
+<a name="1007"><span class="lineNum">    1007 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;header.param1 =</span></a>
+<a name="1008"><span class="lineNum">    1008 </span>                :            :         SPDM_ERROR_CODE_RESPONSE_NOT_READY;</a>
+<a name="1009"><span class="lineNum">    1009 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;header.param2 = 0;</span></a>
+<a name="1010"><span class="lineNum">    1010 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;extend_error_data.rd_exponent = 1;</span></a>
+<a name="1011"><span class="lineNum">    1011 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;extend_error_data.rd_tm = 1;</span></a>
+<a name="1012"><span class="lineNum">    1012 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;extend_error_data.request_code =</span></a>
+<a name="1013"><span class="lineNum">    1013 </span>                :            :         SPDM_GET_DIGESTS;</a>
+<a name="1014"><span class="lineNum">    1014 </span>                :<span class="lineCov">          1 :     EncapsulatedResponse-&gt;extend_error_data.token = 0;</span></a>
+<a name="1015"><span class="lineNum">    1015 </span>                :            : </a>
+<a name="1016"><span class="lineNum">    1016 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(spdm_request + 1,</span></a>
+<a name="1017"><span class="lineNum">    1017 </span>                :            :                      EncapsulatedResponse_size,</a>
+<a name="1018"><span class="lineNum">    1018 </span>                :            :                      EncapsulatedResponse,</a>
+<a name="1019"><span class="lineNum">    1019 </span>                :            :                      EncapsulatedResponse_size);</a>
+<a name="1020"><span class="lineNum">    1020 </span>                :            : </a>
+<a name="1021"><span class="lineNum">    1021 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1022"><span class="lineNum">    1022 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_encapsulated_response_ack(spdm_context,</span></a>
+<a name="1023"><span class="lineNum">    1023 </span>                :            :                                                             spdm_request_size,</a>
+<a name="1024"><span class="lineNum">    1024 </span>                :            :                                                             spdm_request, &amp;response_size,</a>
+<a name="1025"><span class="lineNum">    1025 </span>                :            :                                                             response);</a>
+<a name="1026"><span class="lineNum">    1026 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1027"><span class="lineNum">    1027 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_encapsulated_response_ack_response_t));</span></a>
+<a name="1028"><span class="lineNum">    1028 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1029"><span class="lineNum">    1029 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.spdm_version,</span></a>
+<a name="1030"><span class="lineNum">    1030 </span>                :            :                      SPDM_MESSAGE_VERSION_12);</a>
+<a name="1031"><span class="lineNum">    1031 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code,</span></a>
+<a name="1032"><span class="lineNum">    1032 </span>                :            :                      SPDM_ENCAPSULATED_RESPONSE_ACK);</a>
+<a name="1033"><span class="lineNum">    1033 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.param1, 0);</span></a>
+<a name="1034"><span class="lineNum">    1034 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.param2,</span></a>
+<a name="1035"><span class="lineNum">    1035 </span>                :            :                      SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_ABSENT);</a>
+<a name="1036"><span class="lineNum">    1036 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;ack_request_id,</span></a>
+<a name="1037"><span class="lineNum">    1037 </span>                :            :                      m_libspdm_m_deliver_encapsulated_response_request_t2.header.param1);</a>
+<a name="1038"><span class="lineNum">    1038 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1039"><span class="lineNum">    1039 </span>                :            : </a>
+<a name="1040"><span class="lineNum">    1040 </span>                :            : libspdm_test_context_t m_libspdm_response_encapsulated_request_test_context = {</a>
+<a name="1041"><span class="lineNum">    1041 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="1042"><span class="lineNum">    1042 </span>                :            :     false,</a>
+<a name="1043"><span class="lineNum">    1043 </span>                :            : };</a>
+<a name="1044"><span class="lineNum">    1044 </span>                :            : </a>
+<a name="1045"><span class="lineNum">    1045 </span>                :<span class="lineCov">          1 : int libspdm_responder_encapsulated_response_test_main(void)</span></a>
+<a name="1046"><span class="lineNum">    1046 </span>                :            : {</a>
+<a name="1047"><span class="lineNum">    1047 </span>                :            : </a>
+<a name="1048"><span class="lineNum">    1048 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_encapsulated_response_tests[] = {</span></a>
+<a name="1049"><span class="lineNum">    1049 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1050"><span class="lineNum">    1050 </span>                :            :         /*Success Case request_op_code_sequence: SPDM_GET_DIGESTS*/</a>
+<a name="1051"><span class="lineNum">    1051 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case1),</a>
+<a name="1052"><span class="lineNum">    1052 </span>                :            :         /*Success Case current_request_op_code: SPDM_GET_CERTIFICATE */</a>
+<a name="1053"><span class="lineNum">    1053 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case2),</a>
+<a name="1054"><span class="lineNum">    1054 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NORMAL */</a>
+<a name="1055"><span class="lineNum">    1055 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case3),</a>
+<a name="1056"><span class="lineNum">    1056 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NEED_RESYNC */</a>
+<a name="1057"><span class="lineNum">    1057 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case4),</a>
+<a name="1058"><span class="lineNum">    1058 </span>                :            : #endif</a>
+<a name="1059"><span class="lineNum">    1059 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
+<a name="1060"><span class="lineNum">    1060 </span>                :            :         /*Success Case current_request_op_code: SPDM_CHALLENGE */</a>
+<a name="1061"><span class="lineNum">    1061 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case5),</a>
+<a name="1062"><span class="lineNum">    1062 </span>                :            : #endif</a>
+<a name="1063"><span class="lineNum">    1063 </span>                :            :         /*Success Case current_request_op_code: SPDM_KEY_UPDATE */</a>
+<a name="1064"><span class="lineNum">    1064 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_request_case6),</a>
+<a name="1065"><span class="lineNum">    1065 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1066"><span class="lineNum">    1066 </span>                :            :         /*Success Case current_request_op_code: SPDM_GET_DIGESTS*/</a>
+<a name="1067"><span class="lineNum">    1067 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case1),</a>
+<a name="1068"><span class="lineNum">    1068 </span>                :            :         /*Success Case current_request_op_code: SPDM_GET_CERTIFICATE*/</a>
+<a name="1069"><span class="lineNum">    1069 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case2),</a>
+<a name="1070"><span class="lineNum">    1070 </span>                :            : #endif</a>
+<a name="1071"><span class="lineNum">    1071 </span>                :            :         /*Success Case current_request_op_code: SPDM_KEY_UPDATE */</a>
+<a name="1072"><span class="lineNum">    1072 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case3),</a>
+<a name="1073"><span class="lineNum">    1073 </span>                :            :         /* current_request_op_code: NULL */</a>
+<a name="1074"><span class="lineNum">    1074 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case4),</a>
+<a name="1075"><span class="lineNum">    1075 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NORMAL */</a>
+<a name="1076"><span class="lineNum">    1076 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case5),</a>
+<a name="1077"><span class="lineNum">    1077 </span>                :            :         /*response_state : LIBSPDM_RESPONSE_STATE_NEED_RESYNC */</a>
+<a name="1078"><span class="lineNum">    1078 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case6),</a>
+<a name="1079"><span class="lineNum">    1079 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1080"><span class="lineNum">    1080 </span>                :            :         /*spdm_request-&gt;header.param1 != spdm_context-&gt;encap_context.request_id */</a>
+<a name="1081"><span class="lineNum">    1081 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case7),</a>
+<a name="1082"><span class="lineNum">    1082 </span>                :            :         /*Success Case  When version is greater than V1.2 */</a>
+<a name="1083"><span class="lineNum">    1083 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case8),</a>
+<a name="1084"><span class="lineNum">    1084 </span>                :            : #endif</a>
+<a name="1085"><span class="lineNum">    1085 </span>                :            :         /*When the Requester delivers an encapsulated ERROR message with a ResponseNotReady error code */</a>
+<a name="1086"><span class="lineNum">    1086 </span>                :            :         cmocka_unit_test(libspdm_test_get_response_encapsulated_response_ack_case9),</a>
+<a name="1087"><span class="lineNum">    1087 </span>                :            :     };</a>
+<a name="1088"><span class="lineNum">    1088 </span>                :            : </a>
+<a name="1089"><span class="lineNum">    1089 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_response_encapsulated_request_test_context);</span></a>
+<a name="1090"><span class="lineNum">    1090 </span>                :            : </a>
+<a name="1091"><span class="lineNum">    1091 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_encapsulated_response_tests,</span></a>
+<a name="1092"><span class="lineNum">    1092 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="1093"><span class="lineNum">    1093 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="1094"><span class="lineNum">    1094 </span>                :            : }</a>
+<a name="1095"><span class="lineNum">    1095 </span>                :            : </a>
+<a name="1096"><span class="lineNum">    1096 </span>                :            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) || (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)*/</a>
 </pre>
       </td>
     </tr>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-03-23 08:15:11</td>
+            <td class="headerValue">2023-03-24 08:13:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -159,9 +159,9 @@
 <a name="88"><span class="lineNum">      88 </span>                :            :  * @return asymmetric GET_PUBLIC_KEY_FROM_X509 function</a>
 <a name="89"><span class="lineNum">      89 </span>                :            :  **/</a>
 <a name="90"><span class="lineNum">      90 </span>                :            : libspdm_asym_get_public_key_from_x509_func</a>
-<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">        786 : static libspdm_get_asym_get_public_key_from_x509(uint32_t base_asym_algo)</span></a>
+<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">        788 : static libspdm_get_asym_get_public_key_from_x509(uint32_t base_asym_algo)</span></a>
 <a name="92"><span class="lineNum">      92 </span>                :            : {</a>
-<a name="93"><span class="lineNum">      93 </span>  [<span class="branchCov" title="Branch 0 was taken 36 times"> + </span><span class="branchCov" title="Branch 1 was taken 750 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        786 :     switch (base_asym_algo) {</span></a>
+<a name="93"><span class="lineNum">      93 </span>  [<span class="branchCov" title="Branch 0 was taken 36 times"> + </span><span class="branchCov" title="Branch 1 was taken 752 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        788 :     switch (base_asym_algo) {</span></a>
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 4 was not taken"> - </span>]
 <a name="94"><span class="lineNum">      94 </span>                :<span class="lineCov">         36 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="95"><span class="lineNum">      95 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
@@ -175,11 +175,11 @@
 <a name="103"><span class="lineNum">     103 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="104"><span class="lineNum">     104 </span>                :            :         break;</a>
 <a name="105"><span class="lineNum">     105 </span>                :            : #endif</a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">        750 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">        752 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="107"><span class="lineNum">     107 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="108"><span class="lineNum">     108 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="109"><span class="lineNum">     109 </span>                :            : #if LIBSPDM_ECDSA_SUPPORT</a>
-<a name="110"><span class="lineNum">     110 </span>                :<span class="lineCov">        750 :         return libspdm_ec_get_public_key_from_x509;</span></a>
+<a name="110"><span class="lineNum">     110 </span>                :<span class="lineCov">        752 :         return libspdm_ec_get_public_key_from_x509;</span></a>
 <a name="111"><span class="lineNum">     111 </span>                :            : #else</a>
 <a name="112"><span class="lineNum">     112 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="113"><span class="lineNum">     113 </span>                :            :         break;</a>
@@ -220,17 +220,17 @@
 <a name="148"><span class="lineNum">     148 </span>                :            :  * @retval  true   public key was retrieved successfully.</a>
 <a name="149"><span class="lineNum">     149 </span>                :            :  * @retval  false  Fail to retrieve public key from X509 certificate.</a>
 <a name="150"><span class="lineNum">     150 </span>                :            :  **/</a>
-<a name="151"><span class="lineNum">     151 </span>                :<span class="lineCov">        786 : bool libspdm_asym_get_public_key_from_x509(uint32_t base_asym_algo,</span></a>
+<a name="151"><span class="lineNum">     151 </span>                :<span class="lineCov">        788 : bool libspdm_asym_get_public_key_from_x509(uint32_t base_asym_algo,</span></a>
 <a name="152"><span class="lineNum">     152 </span>                :            :                                            const uint8_t *cert,</a>
 <a name="153"><span class="lineNum">     153 </span>                :            :                                            size_t cert_size,</a>
 <a name="154"><span class="lineNum">     154 </span>                :            :                                            void **context)</a>
 <a name="155"><span class="lineNum">     155 </span>                :            : {</a>
 <a name="156"><span class="lineNum">     156 </span>                :            :     libspdm_asym_get_public_key_from_x509_func get_public_key_from_x509_function;</a>
-<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">        786 :     get_public_key_from_x509_function = libspdm_get_asym_get_public_key_from_x509(base_asym_algo);</span></a>
-<a name="158"><span class="lineNum">     158 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 786 times"> + </span>]:<span class="lineCov">        786 :     if (get_public_key_from_x509_function == NULL) {</span></a>
+<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">        788 :     get_public_key_from_x509_function = libspdm_get_asym_get_public_key_from_x509(base_asym_algo);</span></a>
+<a name="158"><span class="lineNum">     158 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 788 times"> + </span>]:<span class="lineCov">        788 :     if (get_public_key_from_x509_function == NULL) {</span></a>
 <a name="159"><span class="lineNum">     159 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="160"><span class="lineNum">     160 </span>                :            :     }</a>
-<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">        786 :     return get_public_key_from_x509_function(cert, cert_size, context);</span></a>
+<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">        788 :     return get_public_key_from_x509_function(cert, cert_size, context);</span></a>
 <a name="162"><span class="lineNum">     162 </span>                :            : }</a>
 <a name="163"><span class="lineNum">     163 </span>                :            : </a>
 <a name="164"><span class="lineNum">     164 </span>                :            : /**</a>
@@ -1272,7 +1272,7 @@
 <a name="1197"><span class="lineNum">    1197 </span>                :<span class="lineCov">         24 :     return true;</span></a>
 <a name="1198"><span class="lineNum">    1198 </span>                :            : }</a>
 <a name="1199"><span class="lineNum">    1199 </span>                :            : </a>
-<a name="1200"><span class="lineNum">    1200 </span>                :<span class="lineCov">        174 : bool libspdm_get_leaf_cert_public_key_from_cert_chain(uint32_t base_hash_algo,</span></a>
+<a name="1200"><span class="lineNum">    1200 </span>                :<span class="lineCov">        176 : bool libspdm_get_leaf_cert_public_key_from_cert_chain(uint32_t base_hash_algo,</span></a>
 <a name="1201"><span class="lineNum">    1201 </span>                :            :                                                       uint32_t base_asym_alg,</a>
 <a name="1202"><span class="lineNum">    1202 </span>                :            :                                                       uint8_t *cert_chain_data,</a>
 <a name="1203"><span class="lineNum">    1203 </span>                :            :                                                       size_t cert_chain_data_size,</a>
@@ -1283,27 +1283,27 @@
 <a name="1208"><span class="lineNum">    1208 </span>                :            :     size_t cert_buffer_size;</a>
 <a name="1209"><span class="lineNum">    1209 </span>                :            :     bool result;</a>
 <a name="1210"><span class="lineNum">    1210 </span>                :            : </a>
-<a name="1211"><span class="lineNum">    1211 </span>                :<span class="lineCov">        174 :     hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
+<a name="1211"><span class="lineNum">    1211 </span>                :<span class="lineCov">        176 :     hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
 <a name="1212"><span class="lineNum">    1212 </span>                :            : </a>
-<a name="1213"><span class="lineNum">    1213 </span>                :<span class="lineCov">        174 :     cert_chain_data = cert_chain_data + sizeof(spdm_cert_chain_t) + hash_size;</span></a>
-<a name="1214"><span class="lineNum">    1214 </span>                :<span class="lineCov">        174 :     cert_chain_data_size = cert_chain_data_size - (sizeof(spdm_cert_chain_t) + hash_size);</span></a>
+<a name="1213"><span class="lineNum">    1213 </span>                :<span class="lineCov">        176 :     cert_chain_data = cert_chain_data + sizeof(spdm_cert_chain_t) + hash_size;</span></a>
+<a name="1214"><span class="lineNum">    1214 </span>                :<span class="lineCov">        176 :     cert_chain_data_size = cert_chain_data_size - (sizeof(spdm_cert_chain_t) + hash_size);</span></a>
 <a name="1215"><span class="lineNum">    1215 </span>                :            : </a>
 <a name="1216"><span class="lineNum">    1216 </span>                :            :     /* Get leaf cert from cert chain */</a>
-<a name="1217"><span class="lineNum">    1217 </span>                :<span class="lineCov">        174 :     result = libspdm_x509_get_cert_from_cert_chain(cert_chain_data,</span></a>
+<a name="1217"><span class="lineNum">    1217 </span>                :<span class="lineCov">        176 :     result = libspdm_x509_get_cert_from_cert_chain(cert_chain_data,</span></a>
 <a name="1218"><span class="lineNum">    1218 </span>                :            :                                                    cert_chain_data_size, -1,</a>
 <a name="1219"><span class="lineNum">    1219 </span>                :            :                                                    &amp;cert_buffer, &amp;cert_buffer_size);</a>
-<a name="1220"><span class="lineNum">    1220 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 174 times"> + </span>]:<span class="lineCov">        174 :     if (!result) {</span></a>
+<a name="1220"><span class="lineNum">    1220 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 176 times"> + </span>]:<span class="lineCov">        176 :     if (!result) {</span></a>
 <a name="1221"><span class="lineNum">    1221 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="1222"><span class="lineNum">    1222 </span>                :            :     }</a>
 <a name="1223"><span class="lineNum">    1223 </span>                :            : </a>
-<a name="1224"><span class="lineNum">    1224 </span>                :<span class="lineCov">        174 :     result = libspdm_asym_get_public_key_from_x509(</span></a>
+<a name="1224"><span class="lineNum">    1224 </span>                :<span class="lineCov">        176 :     result = libspdm_asym_get_public_key_from_x509(</span></a>
 <a name="1225"><span class="lineNum">    1225 </span>                :            :         base_asym_alg,</a>
 <a name="1226"><span class="lineNum">    1226 </span>                :            :         cert_buffer, cert_buffer_size, public_key);</a>
-<a name="1227"><span class="lineNum">    1227 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchCov" title="Branch 1 was taken 171 times"> + </span>]:<span class="lineCov">        174 :     if (!result) {</span></a>
+<a name="1227"><span class="lineNum">    1227 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchCov" title="Branch 1 was taken 173 times"> + </span>]:<span class="lineCov">        176 :     if (!result) {</span></a>
 <a name="1228"><span class="lineNum">    1228 </span>                :<span class="lineCov">          3 :         return false;</span></a>
 <a name="1229"><span class="lineNum">    1229 </span>                :            :     }</a>
 <a name="1230"><span class="lineNum">    1230 </span>                :            : </a>
-<a name="1231"><span class="lineNum">    1231 </span>                :<span class="lineCov">        171 :     return true;</span></a>
+<a name="1231"><span class="lineNum">    1231 </span>                :<span class="lineCov">        173 :     return true;</span></a>
 <a name="1232"><span class="lineNum">    1232 </span>                :            : }</a>
 <a name="1233"><span class="lineNum">    1233 </span>                :            : </a>
 <a name="1234"><span class="lineNum">    1234 </span>                :<span class="lineCov">          6 : bool libspdm_verify_req_info(uint8_t *req_info, uint16_t req_info_len)</span></a>
