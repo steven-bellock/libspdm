@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-04-05 08:16:32</td>
+            <td class="headerValue">2023-04-06 08:14:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -120,7 +120,7 @@
 <a name="49"><span class="lineNum">      49 </span>                :            :      SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHAL_CAP)</a>
 <a name="50"><span class="lineNum">      50 </span>                :            : </a>
 <a name="51"><span class="lineNum">      51 </span>                :            : static size_t m_libspdm_local_buffer_size;</a>
-<a name="52"><span class="lineNum">      52 </span>                :            : static uint8_t m_libspdm_local_buffer[LIBSPDM_MAX_MESSAGE_SMALL_BUFFER_SIZE];</a>
+<a name="52"><span class="lineNum">      52 </span>                :            : static uint8_t m_libspdm_local_buffer[LIBSPDM_MAX_MESSAGE_VCA_BUFFER_SIZE];</a>
 <a name="53"><span class="lineNum">      53 </span>                :            : </a>
 <a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">          9 : static libspdm_return_t libspdm_requester_get_capabilities_test_send_message(</span></a>
 <a name="55"><span class="lineNum">      55 </span>                :            :     void *spdm_context, size_t request_size, const void *request,</a>
@@ -1031,8 +1031,8 @@
 <a name="946"><span class="lineNum">     946 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param2 = 0;</span></a>
 <a name="947"><span class="lineNum">     947 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;ct_exponent = 0;</span></a>
 <a name="948"><span class="lineNum">     948 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;flags = LIBSPDM_DEFAULT_CAPABILITY_RESPONSE_FLAG_VERSION_12;</span></a>
-<a name="949"><span class="lineNum">     949 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;data_transfer_size = LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</span></a>
-<a name="950"><span class="lineNum">     950 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;max_spdm_msg_size = LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</span></a>
+<a name="949"><span class="lineNum">     949 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;data_transfer_size = LIBSPDM_DATA_TRANSFER_SIZE;</span></a>
+<a name="950"><span class="lineNum">     950 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;max_spdm_msg_size = LIBSPDM_MAX_SPDM_MSG_SIZE;</span></a>
 <a name="951"><span class="lineNum">     951 </span>                :<span class="lineCov">          1 :         libspdm_transport_test_encode_message(spdm_context, NULL, false,</span></a>
 <a name="952"><span class="lineNum">     952 </span>                :            :                                               false, spdm_response_size,</a>
 <a name="953"><span class="lineNum">     953 </span>                :            :                                               spdm_response,</a>
@@ -1055,8 +1055,8 @@
 <a name="970"><span class="lineNum">     970 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param2 = 0;</span></a>
 <a name="971"><span class="lineNum">     971 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;ct_exponent = 0;</span></a>
 <a name="972"><span class="lineNum">     972 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;flags = LIBSPDM_DEFAULT_CAPABILITY_FLAG;</span></a>
-<a name="973"><span class="lineNum">     973 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;data_transfer_size = LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</span></a>
-<a name="974"><span class="lineNum">     974 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;max_spdm_msg_size = LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</span></a>
+<a name="973"><span class="lineNum">     973 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;data_transfer_size = LIBSPDM_DATA_TRANSFER_SIZE;</span></a>
+<a name="974"><span class="lineNum">     974 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;max_spdm_msg_size = LIBSPDM_MAX_SPDM_MSG_SIZE;</span></a>
 <a name="975"><span class="lineNum">     975 </span>                :            : </a>
 <a name="976"><span class="lineNum">     976 </span>                :<span class="lineNoCov">          0 :         libspdm_transport_test_encode_message(spdm_context, NULL, false,</span></a>
 <a name="977"><span class="lineNum">     977 </span>                :            :                                               false, spdm_response_size,</a>
@@ -1427,9 +1427,9 @@
 <a name="1342"><span class="lineNum">    1342 </span>                :<span class="lineCov">          1 :     status = libspdm_get_capabilities(spdm_context);</span></a>
 <a name="1343"><span class="lineNum">    1343 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
 <a name="1344"><span class="lineNum">    1344 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;connection_info.capability.max_spdm_msg_size,</span></a>
-<a name="1345"><span class="lineNum">    1345 </span>                :            :                      LIBSPDM_MAX_MESSAGE_BUFFER_SIZE);</a>
+<a name="1345"><span class="lineNum">    1345 </span>                :            :                      LIBSPDM_MAX_SPDM_MSG_SIZE);</a>
 <a name="1346"><span class="lineNum">    1346 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;connection_info.capability.data_transfer_size,</span></a>
-<a name="1347"><span class="lineNum">    1347 </span>                :            :                      LIBSPDM_MAX_MESSAGE_BUFFER_SIZE);</a>
+<a name="1347"><span class="lineNum">    1347 </span>                :            :                      LIBSPDM_DATA_TRANSFER_SIZE);</a>
 <a name="1348"><span class="lineNum">    1348 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;connection_info.capability.ct_exponent, 0);</span></a>
 <a name="1349"><span class="lineNum">    1349 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;connection_info.capability.flags,</span></a>
 <a name="1350"><span class="lineNum">    1350 </span>                :            :                      LIBSPDM_DEFAULT_CAPABILITY_RESPONSE_FLAG_VERSION_12);</a>

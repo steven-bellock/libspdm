@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-04-05 08:16:32</td>
+            <td class="headerValue">2023-04-06 08:14:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">26</td>
@@ -96,7 +96,7 @@
 <a name="25"><span class="lineNum">      25 </span>                :            :         SPDM_GET_CAPABILITIES,</a>
 <a name="26"><span class="lineNum">      26 </span>                :            :     },</a>
 <a name="27"><span class="lineNum">      27 </span>                :            : };</a>
-<a name="28"><span class="lineNum">      28 </span>                :            : size_t m_libspdm_get_capabilities_request2_size = LIBSPDM_MAX_MESSAGE_BUFFER_SIZE;</a>
+<a name="28"><span class="lineNum">      28 </span>                :            : size_t m_libspdm_get_capabilities_request2_size = LIBSPDM_MAX_SPDM_MSG_SIZE;</a>
 <a name="29"><span class="lineNum">      29 </span>                :            : </a>
 <a name="30"><span class="lineNum">      30 </span>                :            : spdm_get_capabilities_request_t m_libspdm_get_capabilities_request4 = {</a>
 <a name="31"><span class="lineNum">      31 </span>                :            :     {</a>
@@ -490,8 +490,8 @@
 <a name="419"><span class="lineNum">     419 </span>                :            :     0x0000, /*reserved, 2 bytes*/</a>
 <a name="420"><span class="lineNum">     420 </span>                :            :     (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP|</a>
 <a name="421"><span class="lineNum">     421 </span>                :            :      SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ALIAS_CERT_CAP),</a>
-<a name="422"><span class="lineNum">     422 </span>                :            :     LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</a>
-<a name="423"><span class="lineNum">     423 </span>                :            :     LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</a>
+<a name="422"><span class="lineNum">     422 </span>                :            :     LIBSPDM_DATA_TRANSFER_SIZE,</a>
+<a name="423"><span class="lineNum">     423 </span>                :            :     LIBSPDM_MAX_SPDM_MSG_SIZE,</a>
 <a name="424"><span class="lineNum">     424 </span>                :            : };</a>
 <a name="425"><span class="lineNum">     425 </span>                :            : size_t m_libspdm_get_capabilities_request19_size = sizeof(m_libspdm_get_capabilities_request19);</a>
 <a name="426"><span class="lineNum">     426 </span>                :            : </a>
@@ -504,8 +504,8 @@
 <a name="433"><span class="lineNum">     433 </span>                :            :     0x01, /*ct_exponent*/</a>
 <a name="434"><span class="lineNum">     434 </span>                :            :     0x0000, /*reserved, 2 bytes*/</a>
 <a name="435"><span class="lineNum">     435 </span>                :            :     0,</a>
-<a name="436"><span class="lineNum">     436 </span>                :            :     LIBSPDM_MAX_MESSAGE_BUFFER_SIZE - 1,</a>
-<a name="437"><span class="lineNum">     437 </span>                :            :     LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</a>
+<a name="436"><span class="lineNum">     436 </span>                :            :     LIBSPDM_DATA_TRANSFER_SIZE - 1,</a>
+<a name="437"><span class="lineNum">     437 </span>                :            :     LIBSPDM_MAX_SPDM_MSG_SIZE,</a>
 <a name="438"><span class="lineNum">     438 </span>                :            : };</a>
 <a name="439"><span class="lineNum">     439 </span>                :            : size_t m_libspdm_get_capabilities_request25_size = sizeof(m_libspdm_get_capabilities_request25);</a>
 <a name="440"><span class="lineNum">     440 </span>                :            : </a>
@@ -519,8 +519,8 @@
 <a name="448"><span class="lineNum">     448 </span>                :            :     0x0000, /*reserved, 2 bytes*/</a>
 <a name="449"><span class="lineNum">     449 </span>                :            :     (SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHUNK_CAP|</a>
 <a name="450"><span class="lineNum">     450 </span>                :            :      SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ALIAS_CERT_CAP),</a>
-<a name="451"><span class="lineNum">     451 </span>                :            :     LIBSPDM_MAX_MESSAGE_BUFFER_SIZE,</a>
-<a name="452"><span class="lineNum">     452 </span>                :            :     LIBSPDM_MAX_MESSAGE_BUFFER_SIZE - 1,</a>
+<a name="451"><span class="lineNum">     451 </span>                :            :     LIBSPDM_DATA_TRANSFER_SIZE,</a>
+<a name="452"><span class="lineNum">     452 </span>                :            :     LIBSPDM_MAX_SPDM_MSG_SIZE - 1,</a>
 <a name="453"><span class="lineNum">     453 </span>                :            : };</a>
 <a name="454"><span class="lineNum">     454 </span>                :            : size_t m_libspdm_get_capabilities_request26_size = sizeof(m_libspdm_get_capabilities_request26);</a>
 <a name="455"><span class="lineNum">     455 </span>                :            : </a>
@@ -530,7 +530,7 @@
 <a name="459"><span class="lineNum">     459 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="460"><span class="lineNum">     460 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="461"><span class="lineNum">     461 </span>                :            :     size_t response_size;</a>
-<a name="462"><span class="lineNum">     462 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="462"><span class="lineNum">     462 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="463"><span class="lineNum">     463 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="464"><span class="lineNum">     464 </span>                :            : </a>
 <a name="465"><span class="lineNum">     465 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -566,7 +566,7 @@
 <a name="495"><span class="lineNum">     495 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="496"><span class="lineNum">     496 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="497"><span class="lineNum">     497 </span>                :            :     size_t response_size;</a>
-<a name="498"><span class="lineNum">     498 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="498"><span class="lineNum">     498 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="499"><span class="lineNum">     499 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="500"><span class="lineNum">     500 </span>                :            : </a>
 <a name="501"><span class="lineNum">     501 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -601,7 +601,7 @@
 <a name="530"><span class="lineNum">     530 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="531"><span class="lineNum">     531 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="532"><span class="lineNum">     532 </span>                :            :     size_t response_size;</a>
-<a name="533"><span class="lineNum">     533 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="533"><span class="lineNum">     533 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="534"><span class="lineNum">     534 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="535"><span class="lineNum">     535 </span>                :            : </a>
 <a name="536"><span class="lineNum">     536 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -634,7 +634,7 @@
 <a name="563"><span class="lineNum">     563 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="564"><span class="lineNum">     564 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="565"><span class="lineNum">     565 </span>                :            :     size_t response_size;</a>
-<a name="566"><span class="lineNum">     566 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="566"><span class="lineNum">     566 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="567"><span class="lineNum">     567 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="568"><span class="lineNum">     568 </span>                :            : </a>
 <a name="569"><span class="lineNum">     569 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -668,7 +668,7 @@
 <a name="597"><span class="lineNum">     597 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="598"><span class="lineNum">     598 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="599"><span class="lineNum">     599 </span>                :            :     size_t response_size;</a>
-<a name="600"><span class="lineNum">     600 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="600"><span class="lineNum">     600 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="601"><span class="lineNum">     601 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="602"><span class="lineNum">     602 </span>                :            : </a>
 <a name="603"><span class="lineNum">     603 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -704,7 +704,7 @@
 <a name="633"><span class="lineNum">     633 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="634"><span class="lineNum">     634 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="635"><span class="lineNum">     635 </span>                :            :     size_t response_size;</a>
-<a name="636"><span class="lineNum">     636 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="636"><span class="lineNum">     636 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="637"><span class="lineNum">     637 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="638"><span class="lineNum">     638 </span>                :            : </a>
 <a name="639"><span class="lineNum">     639 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -734,7 +734,7 @@
 <a name="663"><span class="lineNum">     663 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="664"><span class="lineNum">     664 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="665"><span class="lineNum">     665 </span>                :            :     size_t response_size;</a>
-<a name="666"><span class="lineNum">     666 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="666"><span class="lineNum">     666 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="667"><span class="lineNum">     667 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="668"><span class="lineNum">     668 </span>                :            : </a>
 <a name="669"><span class="lineNum">     669 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -776,7 +776,7 @@
 <a name="705"><span class="lineNum">     705 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="706"><span class="lineNum">     706 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="707"><span class="lineNum">     707 </span>                :            :     size_t response_size;</a>
-<a name="708"><span class="lineNum">     708 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="708"><span class="lineNum">     708 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="709"><span class="lineNum">     709 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="710"><span class="lineNum">     710 </span>                :            : </a>
 <a name="711"><span class="lineNum">     711 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -807,7 +807,7 @@
 <a name="736"><span class="lineNum">     736 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="737"><span class="lineNum">     737 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="738"><span class="lineNum">     738 </span>                :            :     size_t response_size;</a>
-<a name="739"><span class="lineNum">     739 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="739"><span class="lineNum">     739 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="740"><span class="lineNum">     740 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="741"><span class="lineNum">     741 </span>                :            : </a>
 <a name="742"><span class="lineNum">     742 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -838,7 +838,7 @@
 <a name="767"><span class="lineNum">     767 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="768"><span class="lineNum">     768 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="769"><span class="lineNum">     769 </span>                :            :     size_t response_size;</a>
-<a name="770"><span class="lineNum">     770 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="770"><span class="lineNum">     770 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="771"><span class="lineNum">     771 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="772"><span class="lineNum">     772 </span>                :            : </a>
 <a name="773"><span class="lineNum">     773 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -869,7 +869,7 @@
 <a name="798"><span class="lineNum">     798 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="799"><span class="lineNum">     799 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="800"><span class="lineNum">     800 </span>                :            :     size_t response_size;</a>
-<a name="801"><span class="lineNum">     801 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="801"><span class="lineNum">     801 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="802"><span class="lineNum">     802 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="803"><span class="lineNum">     803 </span>                :            : </a>
 <a name="804"><span class="lineNum">     804 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -900,7 +900,7 @@
 <a name="829"><span class="lineNum">     829 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="830"><span class="lineNum">     830 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="831"><span class="lineNum">     831 </span>                :            :     size_t response_size;</a>
-<a name="832"><span class="lineNum">     832 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="832"><span class="lineNum">     832 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="833"><span class="lineNum">     833 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="834"><span class="lineNum">     834 </span>                :            : </a>
 <a name="835"><span class="lineNum">     835 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -931,7 +931,7 @@
 <a name="860"><span class="lineNum">     860 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="861"><span class="lineNum">     861 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="862"><span class="lineNum">     862 </span>                :            :     size_t response_size;</a>
-<a name="863"><span class="lineNum">     863 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="863"><span class="lineNum">     863 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="864"><span class="lineNum">     864 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="865"><span class="lineNum">     865 </span>                :            : </a>
 <a name="866"><span class="lineNum">     866 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -964,7 +964,7 @@
 <a name="893"><span class="lineNum">     893 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="894"><span class="lineNum">     894 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="895"><span class="lineNum">     895 </span>                :            :     size_t response_size;</a>
-<a name="896"><span class="lineNum">     896 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="896"><span class="lineNum">     896 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="897"><span class="lineNum">     897 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="898"><span class="lineNum">     898 </span>                :            : </a>
 <a name="899"><span class="lineNum">     899 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -995,7 +995,7 @@
 <a name="924"><span class="lineNum">     924 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="925"><span class="lineNum">     925 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="926"><span class="lineNum">     926 </span>                :            :     size_t response_size;</a>
-<a name="927"><span class="lineNum">     927 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="927"><span class="lineNum">     927 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="928"><span class="lineNum">     928 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="929"><span class="lineNum">     929 </span>                :            : </a>
 <a name="930"><span class="lineNum">     930 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -1026,7 +1026,7 @@
 <a name="955"><span class="lineNum">     955 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="956"><span class="lineNum">     956 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="957"><span class="lineNum">     957 </span>                :            :     size_t response_size;</a>
-<a name="958"><span class="lineNum">     958 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="958"><span class="lineNum">     958 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="959"><span class="lineNum">     959 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="960"><span class="lineNum">     960 </span>                :            : </a>
 <a name="961"><span class="lineNum">     961 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -1057,7 +1057,7 @@
 <a name="986"><span class="lineNum">     986 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="987"><span class="lineNum">     987 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="988"><span class="lineNum">     988 </span>                :            :     size_t response_size;</a>
-<a name="989"><span class="lineNum">     989 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="989"><span class="lineNum">     989 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="990"><span class="lineNum">     990 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="991"><span class="lineNum">     991 </span>                :            : </a>
 <a name="992"><span class="lineNum">     992 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -1087,7 +1087,7 @@
 <a name="1016"><span class="lineNum">    1016 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="1017"><span class="lineNum">    1017 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="1018"><span class="lineNum">    1018 </span>                :            :     size_t response_size;</a>
-<a name="1019"><span class="lineNum">    1019 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1019"><span class="lineNum">    1019 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="1020"><span class="lineNum">    1020 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="1021"><span class="lineNum">    1021 </span>                :            :     size_t arbitrary_size;</a>
 <a name="1022"><span class="lineNum">    1022 </span>                :            : </a>
@@ -1131,7 +1131,7 @@
 <a name="1060"><span class="lineNum">    1060 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="1061"><span class="lineNum">    1061 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="1062"><span class="lineNum">    1062 </span>                :            :     size_t response_size;</a>
-<a name="1063"><span class="lineNum">    1063 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1063"><span class="lineNum">    1063 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="1064"><span class="lineNum">    1064 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="1065"><span class="lineNum">    1065 </span>                :            : </a>
 <a name="1066"><span class="lineNum">    1066 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -1164,7 +1164,7 @@
 <a name="1093"><span class="lineNum">    1093 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="1094"><span class="lineNum">    1094 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="1095"><span class="lineNum">    1095 </span>                :            :     size_t response_size;</a>
-<a name="1096"><span class="lineNum">    1096 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1096"><span class="lineNum">    1096 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="1097"><span class="lineNum">    1097 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="1098"><span class="lineNum">    1098 </span>                :            : </a>
 <a name="1099"><span class="lineNum">    1099 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
@@ -1195,7 +1195,7 @@
 <a name="1124"><span class="lineNum">    1124 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="1125"><span class="lineNum">    1125 </span>                :            :     libspdm_context_t *spdm_context;</a>
 <a name="1126"><span class="lineNum">    1126 </span>                :            :     size_t response_size;</a>
-<a name="1127"><span class="lineNum">    1127 </span>                :            :     uint8_t response[LIBSPDM_MAX_MESSAGE_BUFFER_SIZE];</a>
+<a name="1127"><span class="lineNum">    1127 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
 <a name="1128"><span class="lineNum">    1128 </span>                :            :     spdm_capabilities_response_t *spdm_response;</a>
 <a name="1129"><span class="lineNum">    1129 </span>                :            : </a>
 <a name="1130"><span class="lineNum">    1130 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
