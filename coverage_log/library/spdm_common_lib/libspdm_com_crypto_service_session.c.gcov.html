@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-04-11 08:15:40</td>
+            <td class="headerValue">2023-04-12 08:14:55</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -375,7 +375,7 @@
 <a name="304"><span class="lineNum">     304 </span>                :            :  *</a>
 <a name="305"><span class="lineNum">     305 </span>                :            :  * @retval RETURN_SUCCESS  current TH hash is calculated.</a>
 <a name="306"><span class="lineNum">     306 </span>                :            :  */</a>
-<a name="307"><span class="lineNum">     307 </span>                :<span class="lineCov">         34 : bool libspdm_calculate_th_hash_for_finish(libspdm_context_t *spdm_context,</span></a>
+<a name="307"><span class="lineNum">     307 </span>                :<span class="lineCov">         36 : bool libspdm_calculate_th_hash_for_finish(libspdm_context_t *spdm_context,</span></a>
 <a name="308"><span class="lineNum">     308 </span>                :            :                                           void *spdm_session_info,</a>
 <a name="309"><span class="lineNum">     309 </span>                :            :                                           size_t *th_hash_buffer_size,</a>
 <a name="310"><span class="lineNum">     310 </span>                :            :                                           void *th_hash_buffer)</a>
@@ -385,35 +385,35 @@
 <a name="314"><span class="lineNum">     314 </span>                :            :     void *digest_context_th;</a>
 <a name="315"><span class="lineNum">     315 </span>                :            :     bool result;</a>
 <a name="316"><span class="lineNum">     316 </span>                :            : </a>
-<a name="317"><span class="lineNum">     317 </span>                :<span class="lineCov">         34 :     session_info = spdm_session_info;</span></a>
+<a name="317"><span class="lineNum">     317 </span>                :<span class="lineCov">         36 :     session_info = spdm_session_info;</span></a>
 <a name="318"><span class="lineNum">     318 </span>                :            : </a>
-<a name="319"><span class="lineNum">     319 </span>                :<span class="lineCov">         34 :     hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="319"><span class="lineNum">     319 </span>                :<span class="lineCov">         36 :     hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
 <a name="320"><span class="lineNum">     320 </span>                :            : </a>
-<a name="321"><span class="lineNum">     321 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">         34 :     LIBSPDM_ASSERT(*th_hash_buffer_size &gt;= hash_size);</span></a>
+<a name="321"><span class="lineNum">     321 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 36 times"> + </span>]:<span class="lineCov">         36 :     LIBSPDM_ASSERT(*th_hash_buffer_size &gt;= hash_size);</span></a>
 <a name="322"><span class="lineNum">     322 </span>                :            : </a>
 <a name="323"><span class="lineNum">     323 </span>                :            :     /* duplicate the th context, because we still need use original context to continue.*/</a>
-<a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">         34 :     digest_context_th = libspdm_hash_new (spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
-<a name="325"><span class="lineNum">     325 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">         34 :     if (digest_context_th == NULL) {</span></a>
+<a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">         36 :     digest_context_th = libspdm_hash_new (spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="325"><span class="lineNum">     325 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 36 times"> + </span>]:<span class="lineCov">         36 :     if (digest_context_th == NULL) {</span></a>
 <a name="326"><span class="lineNum">     326 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="327"><span class="lineNum">     327 </span>                :            :     }</a>
-<a name="328"><span class="lineNum">     328 </span>                :<span class="lineCov">         34 :     result = libspdm_hash_duplicate (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
-<a name="329"><span class="lineNum">     329 </span>                :<span class="lineCov">         34 :                                      session_info-&gt;session_transcript.digest_context_th,</span></a>
+<a name="328"><span class="lineNum">     328 </span>                :<span class="lineCov">         36 :     result = libspdm_hash_duplicate (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
+<a name="329"><span class="lineNum">     329 </span>                :<span class="lineCov">         36 :                                      session_info-&gt;session_transcript.digest_context_th,</span></a>
 <a name="330"><span class="lineNum">     330 </span>                :            :                                      digest_context_th);</a>
-<a name="331"><span class="lineNum">     331 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">         34 :     if (!result) {</span></a>
+<a name="331"><span class="lineNum">     331 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 36 times"> + </span>]:<span class="lineCov">         36 :     if (!result) {</span></a>
 <a name="332"><span class="lineNum">     332 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_free (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
 <a name="333"><span class="lineNum">     333 </span>                :            :                            digest_context_th);</a>
 <a name="334"><span class="lineNum">     334 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="335"><span class="lineNum">     335 </span>                :            :     }</a>
-<a name="336"><span class="lineNum">     336 </span>                :<span class="lineCov">         34 :     result = libspdm_hash_final (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
+<a name="336"><span class="lineNum">     336 </span>                :<span class="lineCov">         36 :     result = libspdm_hash_final (spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
 <a name="337"><span class="lineNum">     337 </span>                :            :                                  digest_context_th, th_hash_buffer);</a>
-<a name="338"><span class="lineNum">     338 </span>                :<span class="lineCov">         34 :     libspdm_hash_free (spdm_context-&gt;connection_info.algorithm.base_hash_algo, digest_context_th);</span></a>
-<a name="339"><span class="lineNum">     339 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">         34 :     if (!result) {</span></a>
+<a name="338"><span class="lineNum">     338 </span>                :<span class="lineCov">         36 :     libspdm_hash_free (spdm_context-&gt;connection_info.algorithm.base_hash_algo, digest_context_th);</span></a>
+<a name="339"><span class="lineNum">     339 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 36 times"> + </span>]:<span class="lineCov">         36 :     if (!result) {</span></a>
 <a name="340"><span class="lineNum">     340 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="341"><span class="lineNum">     341 </span>                :            :     }</a>
 <a name="342"><span class="lineNum">     342 </span>                :            : </a>
-<a name="343"><span class="lineNum">     343 </span>                :<span class="lineCov">         34 :     *th_hash_buffer_size = hash_size;</span></a>
+<a name="343"><span class="lineNum">     343 </span>                :<span class="lineCov">         36 :     *th_hash_buffer_size = hash_size;</span></a>
 <a name="344"><span class="lineNum">     344 </span>                :            : </a>
-<a name="345"><span class="lineNum">     345 </span>                :<span class="lineCov">         34 :     return true;</span></a>
+<a name="345"><span class="lineNum">     345 </span>                :<span class="lineCov">         36 :     return true;</span></a>
 <a name="346"><span class="lineNum">     346 </span>                :            : }</a>
 <a name="347"><span class="lineNum">     347 </span>                :            : </a>
 <a name="348"><span class="lineNum">     348 </span>                :            : /*</a>
@@ -644,7 +644,7 @@
 <a name="573"><span class="lineNum">     573 </span>                :            :  *</a>
 <a name="574"><span class="lineNum">     574 </span>                :            :  * @retval RETURN_SUCCESS  th2 hash is calculated.</a>
 <a name="575"><span class="lineNum">     575 </span>                :            :  */</a>
-<a name="576"><span class="lineNum">     576 </span>                :<span class="lineCov">         24 : bool libspdm_calculate_th2_hash(libspdm_context_t *spdm_context,</span></a>
+<a name="576"><span class="lineNum">     576 </span>                :<span class="lineCov">         26 : bool libspdm_calculate_th2_hash(libspdm_context_t *spdm_context,</span></a>
 <a name="577"><span class="lineNum">     577 </span>                :            :                                 void *spdm_session_info,</a>
 <a name="578"><span class="lineNum">     578 </span>                :            :                                 bool is_requester,</a>
 <a name="579"><span class="lineNum">     579 </span>                :            :                                 uint8_t *th2_hash_data)</a>
@@ -665,12 +665,12 @@
 <a name="594"><span class="lineNum">     594 </span>                :            :     size_t hash_size;</a>
 <a name="595"><span class="lineNum">     595 </span>                :            : #endif</a>
 <a name="596"><span class="lineNum">     596 </span>                :            : </a>
-<a name="597"><span class="lineNum">     597 </span>                :<span class="lineCov">         24 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;Calc th2 hash ...\n&quot;));</span></a>
+<a name="597"><span class="lineNum">     597 </span>                :<span class="lineCov">         26 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;Calc th2 hash ...\n&quot;));</span></a>
 <a name="598"><span class="lineNum">     598 </span>                :            : </a>
-<a name="599"><span class="lineNum">     599 </span>                :<span class="lineCov">         24 :     session_info = spdm_session_info;</span></a>
+<a name="599"><span class="lineNum">     599 </span>                :<span class="lineCov">         26 :     session_info = spdm_session_info;</span></a>
 <a name="600"><span class="lineNum">     600 </span>                :            : </a>
 <a name="601"><span class="lineNum">     601 </span>                :            : #if !(LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT) || (LIBSPDM_DEBUG_PRINT_ENABLE)</a>
-<a name="602"><span class="lineNum">     602 </span>                :<span class="lineCov">         24 :     hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="602"><span class="lineNum">     602 </span>                :<span class="lineCov">         26 :     hash_size = libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
 <a name="603"><span class="lineNum">     603 </span>                :            : #endif</a>
 <a name="604"><span class="lineNum">     604 </span>                :            : </a>
 <a name="605"><span class="lineNum">     605 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
@@ -759,17 +759,17 @@
 <a name="688"><span class="lineNum">     688 </span>                :            :         return false;</a>
 <a name="689"><span class="lineNum">     689 </span>                :            :     }</a>
 <a name="690"><span class="lineNum">     690 </span>                :            : #else</a>
-<a name="691"><span class="lineNum">     691 </span>                :<span class="lineCov">         24 :     result = libspdm_calculate_th_hash_for_finish(</span></a>
+<a name="691"><span class="lineNum">     691 </span>                :<span class="lineCov">         26 :     result = libspdm_calculate_th_hash_for_finish(</span></a>
 <a name="692"><span class="lineNum">     692 </span>                :            :         spdm_context, session_info, &amp;hash_size, th2_hash_data);</a>
-<a name="693"><span class="lineNum">     693 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span>]:<span class="lineCov">         24 :     if (!result) {</span></a>
+<a name="693"><span class="lineNum">     693 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 26 times"> + </span>]:<span class="lineCov">         26 :     if (!result) {</span></a>
 <a name="694"><span class="lineNum">     694 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="695"><span class="lineNum">     695 </span>                :            :     }</a>
 <a name="696"><span class="lineNum">     696 </span>                :            : #endif</a>
-<a name="697"><span class="lineNum">     697 </span>                :<span class="lineCov">         24 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;th2 hash - &quot;));</span></a>
-<a name="698"><span class="lineNum">     698 </span>                :<span class="lineCov">         24 :     LIBSPDM_INTERNAL_DUMP_DATA(th2_hash_data, hash_size);</span></a>
-<a name="699"><span class="lineNum">     699 </span>                :<span class="lineCov">         24 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
+<a name="697"><span class="lineNum">     697 </span>                :<span class="lineCov">         26 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;th2 hash - &quot;));</span></a>
+<a name="698"><span class="lineNum">     698 </span>                :<span class="lineCov">         26 :     LIBSPDM_INTERNAL_DUMP_DATA(th2_hash_data, hash_size);</span></a>
+<a name="699"><span class="lineNum">     699 </span>                :<span class="lineCov">         26 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
 <a name="700"><span class="lineNum">     700 </span>                :            : </a>
-<a name="701"><span class="lineNum">     701 </span>                :<span class="lineCov">         24 :     return true;</span></a>
+<a name="701"><span class="lineNum">     701 </span>                :<span class="lineCov">         26 :     return true;</span></a>
 <a name="702"><span class="lineNum">     702 </span>                :            : }</a>
 </pre>
       </td>

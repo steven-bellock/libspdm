@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-04-11 08:15:40</td>
+            <td class="headerValue">2023-04-12 08:14:55</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">35</td>
@@ -83,7 +83,7 @@
 <a name="12"><span class="lineNum">      12 </span>                :            : </a>
 <a name="13"><span class="lineNum">      13 </span>                :            : static size_t m_libspdm_local_buffer_size;</a>
 <a name="14"><span class="lineNum">      14 </span>                :            : static uint8_t m_libspdm_local_buffer[LIBSPDM_MAX_MESSAGE_TH_BUFFER_SIZE];</a>
-<a name="15"><span class="lineNum">      15 </span>                :            : static uint8_t m_libspdm_zero_filled_buffer[64];</a>
+<a name="15"><span class="lineNum">      15 </span>                :            : static uint8_t m_libspdm_zero_filled_buffer[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="16"><span class="lineNum">      16 </span>                :            : </a>
 <a name="17"><span class="lineNum">      17 </span>                :            : static libspdm_th_managed_buffer_t th_curr;</a>
 <a name="18"><span class="lineNum">      18 </span>                :            : </a>
@@ -462,7 +462,7 @@
 <a name="379"><span class="lineNum">     379 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="380"><span class="lineNum">     380 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="381"><span class="lineNum">     381 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="382"><span class="lineNum">     382 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="382"><span class="lineNum">     382 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="383"><span class="lineNum">     383 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="384"><span class="lineNum">     384 </span>                :            :         size_t bin_str0_size;</a>
 <a name="385"><span class="lineNum">     385 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -508,7 +508,7 @@
 <a name="425"><span class="lineNum">     425 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="426"><span class="lineNum">     426 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="427"><span class="lineNum">     427 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="428"><span class="lineNum">     428 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="428"><span class="lineNum">     428 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="429"><span class="lineNum">     429 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="430"><span class="lineNum">     430 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="431"><span class="lineNum">     431 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -576,7 +576,7 @@
 <a name="493"><span class="lineNum">     493 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="494"><span class="lineNum">     494 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="495"><span class="lineNum">     495 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="496"><span class="lineNum">     496 </span>                :            :                          THCurrHashData);</a>
+<a name="496"><span class="lineNum">     496 </span>                :            :                          th_curr_hash_data);</a>
 <a name="497"><span class="lineNum">     497 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="498"><span class="lineNum">     498 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="499"><span class="lineNum">     499 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -587,7 +587,7 @@
 <a name="504"><span class="lineNum">     504 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="505"><span class="lineNum">     505 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="506"><span class="lineNum">     506 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="507"><span class="lineNum">     507 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="507"><span class="lineNum">     507 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="508"><span class="lineNum">     508 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="509"><span class="lineNum">     509 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="510"><span class="lineNum">     510 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -630,7 +630,7 @@
 <a name="547"><span class="lineNum">     547 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="548"><span class="lineNum">     548 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="549"><span class="lineNum">     549 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="550"><span class="lineNum">     550 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="550"><span class="lineNum">     550 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="551"><span class="lineNum">     551 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="552"><span class="lineNum">     552 </span>                :            :         size_t bin_str0_size;</a>
 <a name="553"><span class="lineNum">     553 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -674,7 +674,7 @@
 <a name="591"><span class="lineNum">     591 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="592"><span class="lineNum">     592 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="593"><span class="lineNum">     593 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="594"><span class="lineNum">     594 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="594"><span class="lineNum">     594 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="595"><span class="lineNum">     595 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="596"><span class="lineNum">     596 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="597"><span class="lineNum">     597 </span>                :<span class="lineNoCov">          0 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -742,7 +742,7 @@
 <a name="659"><span class="lineNum">     659 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="660"><span class="lineNum">     660 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="661"><span class="lineNum">     661 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="662"><span class="lineNum">     662 </span>                :            :                          THCurrHashData);</a>
+<a name="662"><span class="lineNum">     662 </span>                :            :                          th_curr_hash_data);</a>
 <a name="663"><span class="lineNum">     663 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="664"><span class="lineNum">     664 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="665"><span class="lineNum">     665 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -753,7 +753,7 @@
 <a name="670"><span class="lineNum">     670 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="671"><span class="lineNum">     671 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="672"><span class="lineNum">     672 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="673"><span class="lineNum">     673 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="673"><span class="lineNum">     673 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="674"><span class="lineNum">     674 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="675"><span class="lineNum">     675 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="676"><span class="lineNum">     676 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -860,7 +860,7 @@
 <a name="777"><span class="lineNum">     777 </span>                :            :             uint8_t *cert_buffer;</a>
 <a name="778"><span class="lineNum">     778 </span>                :            :             size_t cert_buffer_size;</a>
 <a name="779"><span class="lineNum">     779 </span>                :            :             uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="780"><span class="lineNum">     780 </span>                :            :             uint8_t THCurrHashData[64];</a>
+<a name="780"><span class="lineNum">     780 </span>                :            :             uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="781"><span class="lineNum">     781 </span>                :            :             uint8_t bin_str0[128];</a>
 <a name="782"><span class="lineNum">     782 </span>                :            :             size_t bin_str0_size;</a>
 <a name="783"><span class="lineNum">     783 </span>                :            :             uint8_t bin_str2[128];</a>
@@ -908,7 +908,7 @@
 <a name="825"><span class="lineNum">     825 </span>                :            :                 SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="826"><span class="lineNum">     826 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="827"><span class="lineNum">     827 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;rsp_session_id =</span></a>
-<a name="828"><span class="lineNum">     828 </span>                :<span class="lineNoCov">          0 :                 libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="828"><span class="lineNum">     828 </span>                :<span class="lineNoCov">          0 :                 libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="829"><span class="lineNum">     829 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="830"><span class="lineNum">     830 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="831"><span class="lineNum">     831 </span>                :<span class="lineNoCov">          0 :             libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -981,7 +981,7 @@
 <a name="898"><span class="lineNum">     898 </span>                :<span class="lineNoCov">          0 :             libspdm_hash_all(m_libspdm_use_hash_algo,</span></a>
 <a name="899"><span class="lineNum">     899 </span>                :<span class="lineNoCov">          0 :                              libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="900"><span class="lineNum">     900 </span>                :            :                              libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="901"><span class="lineNum">     901 </span>                :            :                              THCurrHashData);</a>
+<a name="901"><span class="lineNum">     901 </span>                :            :                              th_curr_hash_data);</a>
 <a name="902"><span class="lineNum">     902 </span>                :<span class="lineNoCov">          0 :             bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="903"><span class="lineNum">     903 </span>                :<span class="lineNoCov">          0 :             libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="904"><span class="lineNum">     904 </span>                :            :                                SPDM_BIN_STR_0_LABEL,</a>
@@ -994,7 +994,7 @@
 <a name="911"><span class="lineNum">     911 </span>                :<span class="lineNoCov">          0 :             libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="912"><span class="lineNum">     912 </span>                :            :                                SPDM_BIN_STR_2_LABEL,</a>
 <a name="913"><span class="lineNum">     913 </span>                :            :                                sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="914"><span class="lineNum">     914 </span>                :<span class="lineNoCov">          0 :                                THCurrHashData, (uint16_t)hash_size,</span></a>
+<a name="914"><span class="lineNum">     914 </span>                :<span class="lineNoCov">          0 :                                th_curr_hash_data, (uint16_t)hash_size,</span></a>
 <a name="915"><span class="lineNum">     915 </span>                :            :                                hash_size, bin_str2, &amp;bin_str2_size);</a>
 <a name="916"><span class="lineNum">     916 </span>                :<span class="lineNoCov">          0 :             libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret,</span></a>
 <a name="917"><span class="lineNum">     917 </span>                :            :                                 hash_size, bin_str2, bin_str2_size,</a>
@@ -1116,7 +1116,7 @@
 <a name="1033"><span class="lineNum">    1033 </span>                :            :             uint8_t *cert_buffer;</a>
 <a name="1034"><span class="lineNum">    1034 </span>                :            :             size_t cert_buffer_size;</a>
 <a name="1035"><span class="lineNum">    1035 </span>                :            :             uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="1036"><span class="lineNum">    1036 </span>                :            :             uint8_t THCurrHashData[64];</a>
+<a name="1036"><span class="lineNum">    1036 </span>                :            :             uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="1037"><span class="lineNum">    1037 </span>                :            :             uint8_t bin_str0[128];</a>
 <a name="1038"><span class="lineNum">    1038 </span>                :            :             size_t bin_str0_size;</a>
 <a name="1039"><span class="lineNum">    1039 </span>                :            :             uint8_t bin_str2[128];</a>
@@ -1164,7 +1164,7 @@
 <a name="1081"><span class="lineNum">    1081 </span>                :            :                 SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="1082"><span class="lineNum">    1082 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="1083"><span class="lineNum">    1083 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;rsp_session_id =</span></a>
-<a name="1084"><span class="lineNum">    1084 </span>                :<span class="lineNoCov">          0 :                 libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="1084"><span class="lineNum">    1084 </span>                :<span class="lineNoCov">          0 :                 libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="1085"><span class="lineNum">    1085 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="1086"><span class="lineNum">    1086 </span>                :<span class="lineNoCov">          0 :             spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="1087"><span class="lineNum">    1087 </span>                :<span class="lineNoCov">          0 :             libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -1237,7 +1237,7 @@
 <a name="1154"><span class="lineNum">    1154 </span>                :<span class="lineNoCov">          0 :             libspdm_hash_all(m_libspdm_use_hash_algo,</span></a>
 <a name="1155"><span class="lineNum">    1155 </span>                :<span class="lineNoCov">          0 :                              libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="1156"><span class="lineNum">    1156 </span>                :            :                              libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="1157"><span class="lineNum">    1157 </span>                :            :                              THCurrHashData);</a>
+<a name="1157"><span class="lineNum">    1157 </span>                :            :                              th_curr_hash_data);</a>
 <a name="1158"><span class="lineNum">    1158 </span>                :<span class="lineNoCov">          0 :             bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="1159"><span class="lineNum">    1159 </span>                :<span class="lineNoCov">          0 :             libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1160"><span class="lineNum">    1160 </span>                :            :                                SPDM_BIN_STR_0_LABEL,</a>
@@ -1250,7 +1250,7 @@
 <a name="1167"><span class="lineNum">    1167 </span>                :<span class="lineNoCov">          0 :             libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1168"><span class="lineNum">    1168 </span>                :            :                                SPDM_BIN_STR_2_LABEL,</a>
 <a name="1169"><span class="lineNum">    1169 </span>                :            :                                sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="1170"><span class="lineNum">    1170 </span>                :<span class="lineNoCov">          0 :                                THCurrHashData, (uint16_t)hash_size,</span></a>
+<a name="1170"><span class="lineNum">    1170 </span>                :<span class="lineNoCov">          0 :                                th_curr_hash_data, (uint16_t)hash_size,</span></a>
 <a name="1171"><span class="lineNum">    1171 </span>                :            :                                hash_size, bin_str2, &amp;bin_str2_size);</a>
 <a name="1172"><span class="lineNum">    1172 </span>                :<span class="lineNoCov">          0 :             libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret,</span></a>
 <a name="1173"><span class="lineNum">    1173 </span>                :            :                                 hash_size, bin_str2, bin_str2_size,</a>
@@ -1331,7 +1331,7 @@
 <a name="1248"><span class="lineNum">    1248 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="1249"><span class="lineNum">    1249 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="1250"><span class="lineNum">    1250 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="1251"><span class="lineNum">    1251 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="1251"><span class="lineNum">    1251 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="1252"><span class="lineNum">    1252 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="1253"><span class="lineNum">    1253 </span>                :            :         size_t bin_str0_size;</a>
 <a name="1254"><span class="lineNum">    1254 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -1375,7 +1375,7 @@
 <a name="1292"><span class="lineNum">    1292 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="1293"><span class="lineNum">    1293 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="1294"><span class="lineNum">    1294 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="1295"><span class="lineNum">    1295 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="1295"><span class="lineNum">    1295 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="1296"><span class="lineNum">    1296 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="1297"><span class="lineNum">    1297 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="1298"><span class="lineNum">    1298 </span>                :<span class="lineNoCov">          0 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -1443,7 +1443,7 @@
 <a name="1360"><span class="lineNum">    1360 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="1361"><span class="lineNum">    1361 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="1362"><span class="lineNum">    1362 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="1363"><span class="lineNum">    1363 </span>                :            :                          THCurrHashData);</a>
+<a name="1363"><span class="lineNum">    1363 </span>                :            :                          th_curr_hash_data);</a>
 <a name="1364"><span class="lineNum">    1364 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="1365"><span class="lineNum">    1365 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1366"><span class="lineNum">    1366 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -1454,7 +1454,7 @@
 <a name="1371"><span class="lineNum">    1371 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="1372"><span class="lineNum">    1372 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1373"><span class="lineNum">    1373 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="1374"><span class="lineNum">    1374 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="1374"><span class="lineNum">    1374 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="1375"><span class="lineNum">    1375 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="1376"><span class="lineNum">    1376 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="1377"><span class="lineNum">    1377 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -1498,7 +1498,7 @@
 <a name="1415"><span class="lineNum">    1415 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="1416"><span class="lineNum">    1416 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="1417"><span class="lineNum">    1417 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="1418"><span class="lineNum">    1418 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="1418"><span class="lineNum">    1418 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="1419"><span class="lineNum">    1419 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="1420"><span class="lineNum">    1420 </span>                :            :         size_t bin_str0_size;</a>
 <a name="1421"><span class="lineNum">    1421 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -1545,7 +1545,7 @@
 <a name="1462"><span class="lineNum">    1462 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.request_response_code = SPDM_KEY_EXCHANGE_RSP;</span></a>
 <a name="1463"><span class="lineNum">    1463 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="1464"><span class="lineNum">    1464 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="1465"><span class="lineNum">    1465 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="1465"><span class="lineNum">    1465 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="1466"><span class="lineNum">    1466 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="1467"><span class="lineNum">    1467 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="1468"><span class="lineNum">    1468 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -1618,7 +1618,7 @@
 <a name="1535"><span class="lineNum">    1535 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="1536"><span class="lineNum">    1536 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="1537"><span class="lineNum">    1537 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="1538"><span class="lineNum">    1538 </span>                :            :                          THCurrHashData);</a>
+<a name="1538"><span class="lineNum">    1538 </span>                :            :                          th_curr_hash_data);</a>
 <a name="1539"><span class="lineNum">    1539 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="1540"><span class="lineNum">    1540 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1541"><span class="lineNum">    1541 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -1629,7 +1629,7 @@
 <a name="1546"><span class="lineNum">    1546 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="1547"><span class="lineNum">    1547 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1548"><span class="lineNum">    1548 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="1549"><span class="lineNum">    1549 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="1549"><span class="lineNum">    1549 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="1550"><span class="lineNum">    1550 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="1551"><span class="lineNum">    1551 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="1552"><span class="lineNum">    1552 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -1674,7 +1674,7 @@
 <a name="1591"><span class="lineNum">    1591 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="1592"><span class="lineNum">    1592 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="1593"><span class="lineNum">    1593 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="1594"><span class="lineNum">    1594 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="1594"><span class="lineNum">    1594 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="1595"><span class="lineNum">    1595 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="1596"><span class="lineNum">    1596 </span>                :            :         size_t bin_str0_size;</a>
 <a name="1597"><span class="lineNum">    1597 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -1720,7 +1720,7 @@
 <a name="1637"><span class="lineNum">    1637 </span>                :            :         /* Incorrect response code. */</a>
 <a name="1638"><span class="lineNum">    1638 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.request_response_code = SPDM_DIGESTS;</span></a>
 <a name="1639"><span class="lineNum">    1639 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="1640"><span class="lineNum">    1640 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="1640"><span class="lineNum">    1640 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="1641"><span class="lineNum">    1641 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="1642"><span class="lineNum">    1642 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="1643"><span class="lineNum">    1643 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE, spdm_response-&gt;random_data);</span></a>
@@ -1789,7 +1789,7 @@
 <a name="1706"><span class="lineNum">    1706 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="1707"><span class="lineNum">    1707 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="1708"><span class="lineNum">    1708 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="1709"><span class="lineNum">    1709 </span>                :            :                          THCurrHashData);</a>
+<a name="1709"><span class="lineNum">    1709 </span>                :            :                          th_curr_hash_data);</a>
 <a name="1710"><span class="lineNum">    1710 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="1711"><span class="lineNum">    1711 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1712"><span class="lineNum">    1712 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -1800,7 +1800,7 @@
 <a name="1717"><span class="lineNum">    1717 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="1718"><span class="lineNum">    1718 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1719"><span class="lineNum">    1719 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="1720"><span class="lineNum">    1720 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="1720"><span class="lineNum">    1720 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="1721"><span class="lineNum">    1721 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="1722"><span class="lineNum">    1722 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="1723"><span class="lineNum">    1723 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -1845,7 +1845,7 @@
 <a name="1762"><span class="lineNum">    1762 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="1763"><span class="lineNum">    1763 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="1764"><span class="lineNum">    1764 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="1765"><span class="lineNum">    1765 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="1765"><span class="lineNum">    1765 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="1766"><span class="lineNum">    1766 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="1767"><span class="lineNum">    1767 </span>                :            :         size_t bin_str0_size;</a>
 <a name="1768"><span class="lineNum">    1768 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -1890,7 +1890,7 @@
 <a name="1807"><span class="lineNum">    1807 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.spdm_version = SPDM_MESSAGE_VERSION_11;</span></a>
 <a name="1808"><span class="lineNum">    1808 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.request_response_code = SPDM_KEY_EXCHANGE_RSP;</span></a>
 <a name="1809"><span class="lineNum">    1809 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="1810"><span class="lineNum">    1810 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="1810"><span class="lineNum">    1810 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="1811"><span class="lineNum">    1811 </span>                :            :         /* Mutual authentication is requested even though it is not supported. */</a>
 <a name="1812"><span class="lineNum">    1812 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 1;</span></a>
 <a name="1813"><span class="lineNum">    1813 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
@@ -1963,7 +1963,7 @@
 <a name="1880"><span class="lineNum">    1880 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="1881"><span class="lineNum">    1881 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="1882"><span class="lineNum">    1882 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="1883"><span class="lineNum">    1883 </span>                :            :                          THCurrHashData);</a>
+<a name="1883"><span class="lineNum">    1883 </span>                :            :                          th_curr_hash_data);</a>
 <a name="1884"><span class="lineNum">    1884 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="1885"><span class="lineNum">    1885 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1886"><span class="lineNum">    1886 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -1974,7 +1974,7 @@
 <a name="1891"><span class="lineNum">    1891 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="1892"><span class="lineNum">    1892 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="1893"><span class="lineNum">    1893 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="1894"><span class="lineNum">    1894 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="1894"><span class="lineNum">    1894 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="1895"><span class="lineNum">    1895 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="1896"><span class="lineNum">    1896 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="1897"><span class="lineNum">    1897 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -2017,7 +2017,7 @@
 <a name="1934"><span class="lineNum">    1934 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="1935"><span class="lineNum">    1935 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="1936"><span class="lineNum">    1936 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="1937"><span class="lineNum">    1937 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="1937"><span class="lineNum">    1937 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="1938"><span class="lineNum">    1938 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="1939"><span class="lineNum">    1939 </span>                :            :         size_t bin_str0_size;</a>
 <a name="1940"><span class="lineNum">    1940 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -2062,7 +2062,7 @@
 <a name="1979"><span class="lineNum">    1979 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="1980"><span class="lineNum">    1980 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="1981"><span class="lineNum">    1981 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="1982"><span class="lineNum">    1982 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="1982"><span class="lineNum">    1982 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="1983"><span class="lineNum">    1983 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="1984"><span class="lineNum">    1984 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="1985"><span class="lineNum">    1985 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -2130,7 +2130,7 @@
 <a name="2047"><span class="lineNum">    2047 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="2048"><span class="lineNum">    2048 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="2049"><span class="lineNum">    2049 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="2050"><span class="lineNum">    2050 </span>                :            :                          THCurrHashData);</a>
+<a name="2050"><span class="lineNum">    2050 </span>                :            :                          th_curr_hash_data);</a>
 <a name="2051"><span class="lineNum">    2051 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="2052"><span class="lineNum">    2052 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2053"><span class="lineNum">    2053 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -2141,7 +2141,7 @@
 <a name="2058"><span class="lineNum">    2058 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="2059"><span class="lineNum">    2059 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2060"><span class="lineNum">    2060 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="2061"><span class="lineNum">    2061 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="2061"><span class="lineNum">    2061 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="2062"><span class="lineNum">    2062 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="2063"><span class="lineNum">    2063 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="2064"><span class="lineNum">    2064 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -2184,7 +2184,7 @@
 <a name="2101"><span class="lineNum">    2101 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="2102"><span class="lineNum">    2102 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="2103"><span class="lineNum">    2103 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="2104"><span class="lineNum">    2104 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="2104"><span class="lineNum">    2104 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="2105"><span class="lineNum">    2105 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="2106"><span class="lineNum">    2106 </span>                :            :         size_t bin_str0_size;</a>
 <a name="2107"><span class="lineNum">    2107 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -2229,7 +2229,7 @@
 <a name="2146"><span class="lineNum">    2146 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="2147"><span class="lineNum">    2147 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="2148"><span class="lineNum">    2148 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="2149"><span class="lineNum">    2149 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="2149"><span class="lineNum">    2149 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="2150"><span class="lineNum">    2150 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="2151"><span class="lineNum">    2151 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="2152"><span class="lineNum">    2152 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -2297,7 +2297,7 @@
 <a name="2214"><span class="lineNum">    2214 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="2215"><span class="lineNum">    2215 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="2216"><span class="lineNum">    2216 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="2217"><span class="lineNum">    2217 </span>                :            :                          THCurrHashData);</a>
+<a name="2217"><span class="lineNum">    2217 </span>                :            :                          th_curr_hash_data);</a>
 <a name="2218"><span class="lineNum">    2218 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="2219"><span class="lineNum">    2219 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2220"><span class="lineNum">    2220 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -2308,7 +2308,7 @@
 <a name="2225"><span class="lineNum">    2225 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="2226"><span class="lineNum">    2226 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2227"><span class="lineNum">    2227 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="2228"><span class="lineNum">    2228 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="2228"><span class="lineNum">    2228 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="2229"><span class="lineNum">    2229 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="2230"><span class="lineNum">    2230 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="2231"><span class="lineNum">    2231 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -2353,7 +2353,7 @@
 <a name="2270"><span class="lineNum">    2270 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="2271"><span class="lineNum">    2271 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="2272"><span class="lineNum">    2272 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="2273"><span class="lineNum">    2273 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="2273"><span class="lineNum">    2273 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="2274"><span class="lineNum">    2274 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="2275"><span class="lineNum">    2275 </span>                :            :         size_t bin_str0_size;</a>
 <a name="2276"><span class="lineNum">    2276 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -2400,7 +2400,7 @@
 <a name="2317"><span class="lineNum">    2317 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="2318"><span class="lineNum">    2318 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="2319"><span class="lineNum">    2319 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="2320"><span class="lineNum">    2320 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="2320"><span class="lineNum">    2320 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="2321"><span class="lineNum">    2321 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="2322"><span class="lineNum">    2322 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="2323"><span class="lineNum">    2323 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -2473,7 +2473,7 @@
 <a name="2390"><span class="lineNum">    2390 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="2391"><span class="lineNum">    2391 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="2392"><span class="lineNum">    2392 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="2393"><span class="lineNum">    2393 </span>                :            :                          THCurrHashData);</a>
+<a name="2393"><span class="lineNum">    2393 </span>                :            :                          th_curr_hash_data);</a>
 <a name="2394"><span class="lineNum">    2394 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="2395"><span class="lineNum">    2395 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2396"><span class="lineNum">    2396 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -2484,7 +2484,7 @@
 <a name="2401"><span class="lineNum">    2401 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="2402"><span class="lineNum">    2402 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2403"><span class="lineNum">    2403 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="2404"><span class="lineNum">    2404 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="2404"><span class="lineNum">    2404 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="2405"><span class="lineNum">    2405 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="2406"><span class="lineNum">    2406 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="2407"><span class="lineNum">    2407 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -2528,7 +2528,7 @@
 <a name="2445"><span class="lineNum">    2445 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="2446"><span class="lineNum">    2446 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="2447"><span class="lineNum">    2447 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="2448"><span class="lineNum">    2448 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="2448"><span class="lineNum">    2448 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="2449"><span class="lineNum">    2449 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="2450"><span class="lineNum">    2450 </span>                :            :         size_t bin_str0_size;</a>
 <a name="2451"><span class="lineNum">    2451 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -2574,7 +2574,7 @@
 <a name="2491"><span class="lineNum">    2491 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="2492"><span class="lineNum">    2492 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="2493"><span class="lineNum">    2493 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="2494"><span class="lineNum">    2494 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="2494"><span class="lineNum">    2494 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="2495"><span class="lineNum">    2495 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="2496"><span class="lineNum">    2496 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="2497"><span class="lineNum">    2497 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -2643,7 +2643,7 @@
 <a name="2560"><span class="lineNum">    2560 </span>                :<span class="lineCov">          1 :         ptr++;</span></a>
 <a name="2561"><span class="lineNum">    2561 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="2562"><span class="lineNum">    2562 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="2563"><span class="lineNum">    2563 </span>                :            :                          THCurrHashData);</a>
+<a name="2563"><span class="lineNum">    2563 </span>                :            :                          th_curr_hash_data);</a>
 <a name="2564"><span class="lineNum">    2564 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="2565"><span class="lineNum">    2565 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2566"><span class="lineNum">    2566 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -2654,7 +2654,7 @@
 <a name="2571"><span class="lineNum">    2571 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="2572"><span class="lineNum">    2572 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2573"><span class="lineNum">    2573 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="2574"><span class="lineNum">    2574 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="2574"><span class="lineNum">    2574 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="2575"><span class="lineNum">    2575 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="2576"><span class="lineNum">    2576 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="2577"><span class="lineNum">    2577 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -2701,7 +2701,7 @@
 <a name="2618"><span class="lineNum">    2618 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="2619"><span class="lineNum">    2619 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="2620"><span class="lineNum">    2620 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="2621"><span class="lineNum">    2621 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="2621"><span class="lineNum">    2621 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="2622"><span class="lineNum">    2622 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="2623"><span class="lineNum">    2623 </span>                :            :         size_t bin_str0_size;</a>
 <a name="2624"><span class="lineNum">    2624 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -2746,7 +2746,7 @@
 <a name="2663"><span class="lineNum">    2663 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="2664"><span class="lineNum">    2664 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 5;</span></a>
 <a name="2665"><span class="lineNum">    2665 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="2666"><span class="lineNum">    2666 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="2666"><span class="lineNum">    2666 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="2667"><span class="lineNum">    2667 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="2668"><span class="lineNum">    2668 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="2669"><span class="lineNum">    2669 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -2814,7 +2814,7 @@
 <a name="2731"><span class="lineNum">    2731 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="2732"><span class="lineNum">    2732 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="2733"><span class="lineNum">    2733 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="2734"><span class="lineNum">    2734 </span>                :            :                          THCurrHashData);</a>
+<a name="2734"><span class="lineNum">    2734 </span>                :            :                          th_curr_hash_data);</a>
 <a name="2735"><span class="lineNum">    2735 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="2736"><span class="lineNum">    2736 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2737"><span class="lineNum">    2737 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -2825,7 +2825,7 @@
 <a name="2742"><span class="lineNum">    2742 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="2743"><span class="lineNum">    2743 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2744"><span class="lineNum">    2744 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="2745"><span class="lineNum">    2745 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="2745"><span class="lineNum">    2745 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="2746"><span class="lineNum">    2746 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="2747"><span class="lineNum">    2747 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="2748"><span class="lineNum">    2748 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -2868,7 +2868,7 @@
 <a name="2785"><span class="lineNum">    2785 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="2786"><span class="lineNum">    2786 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="2787"><span class="lineNum">    2787 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="2788"><span class="lineNum">    2788 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="2788"><span class="lineNum">    2788 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="2789"><span class="lineNum">    2789 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="2790"><span class="lineNum">    2790 </span>                :            :         size_t bin_str0_size;</a>
 <a name="2791"><span class="lineNum">    2791 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -2906,7 +2906,7 @@
 <a name="2823"><span class="lineNum">    2823 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.spdm_version = SPDM_MESSAGE_VERSION_11;</span></a>
 <a name="2824"><span class="lineNum">    2824 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.request_response_code = SPDM_KEY_EXCHANGE_RSP;</span></a>
 <a name="2825"><span class="lineNum">    2825 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="2826"><span class="lineNum">    2826 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="2826"><span class="lineNum">    2826 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="2827"><span class="lineNum">    2827 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="2828"><span class="lineNum">    2828 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="2829"><span class="lineNum">    2829 </span>                :<span class="lineCov">          1 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE, spdm_response-&gt;random_data);</span></a>
@@ -2970,7 +2970,7 @@
 <a name="2887"><span class="lineNum">    2887 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="2888"><span class="lineNum">    2888 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="2889"><span class="lineNum">    2889 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="2890"><span class="lineNum">    2890 </span>                :            :                          THCurrHashData);</a>
+<a name="2890"><span class="lineNum">    2890 </span>                :            :                          th_curr_hash_data);</a>
 <a name="2891"><span class="lineNum">    2891 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="2892"><span class="lineNum">    2892 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2893"><span class="lineNum">    2893 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -2981,7 +2981,7 @@
 <a name="2898"><span class="lineNum">    2898 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="2899"><span class="lineNum">    2899 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="2900"><span class="lineNum">    2900 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="2901"><span class="lineNum">    2901 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="2901"><span class="lineNum">    2901 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="2902"><span class="lineNum">    2902 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="2903"><span class="lineNum">    2903 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="2904"><span class="lineNum">    2904 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -3024,7 +3024,7 @@
 <a name="2941"><span class="lineNum">    2941 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="2942"><span class="lineNum">    2942 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="2943"><span class="lineNum">    2943 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="2944"><span class="lineNum">    2944 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="2944"><span class="lineNum">    2944 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="2945"><span class="lineNum">    2945 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="2946"><span class="lineNum">    2946 </span>                :            :         size_t bin_str0_size;</a>
 <a name="2947"><span class="lineNum">    2947 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -3069,7 +3069,7 @@
 <a name="2986"><span class="lineNum">    2986 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="2987"><span class="lineNum">    2987 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="2988"><span class="lineNum">    2988 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="2989"><span class="lineNum">    2989 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="2989"><span class="lineNum">    2989 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="2990"><span class="lineNum">    2990 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="2991"><span class="lineNum">    2991 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="2992"><span class="lineNum">    2992 </span>                :<span class="lineNoCov">          0 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -3137,7 +3137,7 @@
 <a name="3054"><span class="lineNum">    3054 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="3055"><span class="lineNum">    3055 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="3056"><span class="lineNum">    3056 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="3057"><span class="lineNum">    3057 </span>                :            :                          THCurrHashData);</a>
+<a name="3057"><span class="lineNum">    3057 </span>                :            :                          th_curr_hash_data);</a>
 <a name="3058"><span class="lineNum">    3058 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="3059"><span class="lineNum">    3059 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3060"><span class="lineNum">    3060 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -3148,7 +3148,7 @@
 <a name="3065"><span class="lineNum">    3065 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="3066"><span class="lineNum">    3066 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3067"><span class="lineNum">    3067 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="3068"><span class="lineNum">    3068 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="3068"><span class="lineNum">    3068 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="3069"><span class="lineNum">    3069 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="3070"><span class="lineNum">    3070 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="3071"><span class="lineNum">    3071 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -3191,7 +3191,7 @@
 <a name="3108"><span class="lineNum">    3108 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="3109"><span class="lineNum">    3109 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="3110"><span class="lineNum">    3110 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="3111"><span class="lineNum">    3111 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="3111"><span class="lineNum">    3111 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="3112"><span class="lineNum">    3112 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="3113"><span class="lineNum">    3113 </span>                :            :         size_t bin_str0_size;</a>
 <a name="3114"><span class="lineNum">    3114 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -3236,7 +3236,7 @@
 <a name="3153"><span class="lineNum">    3153 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="3154"><span class="lineNum">    3154 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="3155"><span class="lineNum">    3155 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="3156"><span class="lineNum">    3156 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="3156"><span class="lineNum">    3156 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="3157"><span class="lineNum">    3157 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested =</span></a>
 <a name="3158"><span class="lineNum">    3158 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</a>
 <a name="3159"><span class="lineNum">    3159 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0xF;</span></a>
@@ -3305,7 +3305,7 @@
 <a name="3222"><span class="lineNum">    3222 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="3223"><span class="lineNum">    3223 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="3224"><span class="lineNum">    3224 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="3225"><span class="lineNum">    3225 </span>                :            :                          THCurrHashData);</a>
+<a name="3225"><span class="lineNum">    3225 </span>                :            :                          th_curr_hash_data);</a>
 <a name="3226"><span class="lineNum">    3226 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="3227"><span class="lineNum">    3227 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3228"><span class="lineNum">    3228 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -3316,7 +3316,7 @@
 <a name="3233"><span class="lineNum">    3233 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="3234"><span class="lineNum">    3234 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3235"><span class="lineNum">    3235 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="3236"><span class="lineNum">    3236 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="3236"><span class="lineNum">    3236 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="3237"><span class="lineNum">    3237 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="3238"><span class="lineNum">    3238 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="3239"><span class="lineNum">    3239 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -3359,7 +3359,7 @@
 <a name="3276"><span class="lineNum">    3276 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="3277"><span class="lineNum">    3277 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="3278"><span class="lineNum">    3278 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="3279"><span class="lineNum">    3279 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="3279"><span class="lineNum">    3279 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="3280"><span class="lineNum">    3280 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="3281"><span class="lineNum">    3281 </span>                :            :         size_t bin_str0_size;</a>
 <a name="3282"><span class="lineNum">    3282 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -3404,7 +3404,7 @@
 <a name="3321"><span class="lineNum">    3321 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="3322"><span class="lineNum">    3322 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="3323"><span class="lineNum">    3323 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="3324"><span class="lineNum">    3324 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="3324"><span class="lineNum">    3324 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="3325"><span class="lineNum">    3325 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested =</span></a>
 <a name="3326"><span class="lineNum">    3326 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST;</a>
 <a name="3327"><span class="lineNum">    3327 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0xF;</span></a>
@@ -3473,7 +3473,7 @@
 <a name="3390"><span class="lineNum">    3390 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="3391"><span class="lineNum">    3391 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="3392"><span class="lineNum">    3392 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="3393"><span class="lineNum">    3393 </span>                :            :                          THCurrHashData);</a>
+<a name="3393"><span class="lineNum">    3393 </span>                :            :                          th_curr_hash_data);</a>
 <a name="3394"><span class="lineNum">    3394 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="3395"><span class="lineNum">    3395 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3396"><span class="lineNum">    3396 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -3484,7 +3484,7 @@
 <a name="3401"><span class="lineNum">    3401 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="3402"><span class="lineNum">    3402 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3403"><span class="lineNum">    3403 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="3404"><span class="lineNum">    3404 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="3404"><span class="lineNum">    3404 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="3405"><span class="lineNum">    3405 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="3406"><span class="lineNum">    3406 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="3407"><span class="lineNum">    3407 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -3527,7 +3527,7 @@
 <a name="3444"><span class="lineNum">    3444 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="3445"><span class="lineNum">    3445 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="3446"><span class="lineNum">    3446 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="3447"><span class="lineNum">    3447 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="3447"><span class="lineNum">    3447 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="3448"><span class="lineNum">    3448 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="3449"><span class="lineNum">    3449 </span>                :            :         size_t bin_str0_size;</a>
 <a name="3450"><span class="lineNum">    3450 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -3572,7 +3572,7 @@
 <a name="3489"><span class="lineNum">    3489 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="3490"><span class="lineNum">    3490 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="3491"><span class="lineNum">    3491 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="3492"><span class="lineNum">    3492 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="3492"><span class="lineNum">    3492 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="3493"><span class="lineNum">    3493 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested =</span></a>
 <a name="3494"><span class="lineNum">    3494 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS;</a>
 <a name="3495"><span class="lineNum">    3495 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0xF;</span></a>
@@ -3641,7 +3641,7 @@
 <a name="3558"><span class="lineNum">    3558 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="3559"><span class="lineNum">    3559 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="3560"><span class="lineNum">    3560 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="3561"><span class="lineNum">    3561 </span>                :            :                          THCurrHashData);</a>
+<a name="3561"><span class="lineNum">    3561 </span>                :            :                          th_curr_hash_data);</a>
 <a name="3562"><span class="lineNum">    3562 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="3563"><span class="lineNum">    3563 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3564"><span class="lineNum">    3564 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -3652,7 +3652,7 @@
 <a name="3569"><span class="lineNum">    3569 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="3570"><span class="lineNum">    3570 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3571"><span class="lineNum">    3571 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="3572"><span class="lineNum">    3572 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="3572"><span class="lineNum">    3572 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="3573"><span class="lineNum">    3573 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="3574"><span class="lineNum">    3574 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="3575"><span class="lineNum">    3575 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -3695,7 +3695,7 @@
 <a name="3612"><span class="lineNum">    3612 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="3613"><span class="lineNum">    3613 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="3614"><span class="lineNum">    3614 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="3615"><span class="lineNum">    3615 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="3615"><span class="lineNum">    3615 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="3616"><span class="lineNum">    3616 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="3617"><span class="lineNum">    3617 </span>                :            :         size_t bin_str0_size;</a>
 <a name="3618"><span class="lineNum">    3618 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -3740,7 +3740,7 @@
 <a name="3657"><span class="lineNum">    3657 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="3658"><span class="lineNum">    3658 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="3659"><span class="lineNum">    3659 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="3660"><span class="lineNum">    3660 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="3660"><span class="lineNum">    3660 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="3661"><span class="lineNum">    3661 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested =</span></a>
 <a name="3662"><span class="lineNum">    3662 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED |</a>
 <a name="3663"><span class="lineNum">    3663 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST;</a>
@@ -3810,7 +3810,7 @@
 <a name="3727"><span class="lineNum">    3727 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="3728"><span class="lineNum">    3728 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="3729"><span class="lineNum">    3729 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="3730"><span class="lineNum">    3730 </span>                :            :                          THCurrHashData);</a>
+<a name="3730"><span class="lineNum">    3730 </span>                :            :                          th_curr_hash_data);</a>
 <a name="3731"><span class="lineNum">    3731 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="3732"><span class="lineNum">    3732 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3733"><span class="lineNum">    3733 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -3821,7 +3821,7 @@
 <a name="3738"><span class="lineNum">    3738 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="3739"><span class="lineNum">    3739 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3740"><span class="lineNum">    3740 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="3741"><span class="lineNum">    3741 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="3741"><span class="lineNum">    3741 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="3742"><span class="lineNum">    3742 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="3743"><span class="lineNum">    3743 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="3744"><span class="lineNum">    3744 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -3864,7 +3864,7 @@
 <a name="3781"><span class="lineNum">    3781 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="3782"><span class="lineNum">    3782 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="3783"><span class="lineNum">    3783 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="3784"><span class="lineNum">    3784 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="3784"><span class="lineNum">    3784 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="3785"><span class="lineNum">    3785 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="3786"><span class="lineNum">    3786 </span>                :            :         size_t bin_str0_size;</a>
 <a name="3787"><span class="lineNum">    3787 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -3909,7 +3909,7 @@
 <a name="3826"><span class="lineNum">    3826 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="3827"><span class="lineNum">    3827 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="3828"><span class="lineNum">    3828 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="3829"><span class="lineNum">    3829 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="3829"><span class="lineNum">    3829 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="3830"><span class="lineNum">    3830 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested =</span></a>
 <a name="3831"><span class="lineNum">    3831 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED |</a>
 <a name="3832"><span class="lineNum">    3832 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS;</a>
@@ -3979,7 +3979,7 @@
 <a name="3896"><span class="lineNum">    3896 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="3897"><span class="lineNum">    3897 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="3898"><span class="lineNum">    3898 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="3899"><span class="lineNum">    3899 </span>                :            :                          THCurrHashData);</a>
+<a name="3899"><span class="lineNum">    3899 </span>                :            :                          th_curr_hash_data);</a>
 <a name="3900"><span class="lineNum">    3900 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="3901"><span class="lineNum">    3901 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3902"><span class="lineNum">    3902 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -3990,7 +3990,7 @@
 <a name="3907"><span class="lineNum">    3907 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="3908"><span class="lineNum">    3908 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="3909"><span class="lineNum">    3909 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="3910"><span class="lineNum">    3910 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="3910"><span class="lineNum">    3910 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="3911"><span class="lineNum">    3911 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="3912"><span class="lineNum">    3912 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="3913"><span class="lineNum">    3913 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -4033,7 +4033,7 @@
 <a name="3950"><span class="lineNum">    3950 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="3951"><span class="lineNum">    3951 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="3952"><span class="lineNum">    3952 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="3953"><span class="lineNum">    3953 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="3953"><span class="lineNum">    3953 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="3954"><span class="lineNum">    3954 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="3955"><span class="lineNum">    3955 </span>                :            :         size_t bin_str0_size;</a>
 <a name="3956"><span class="lineNum">    3956 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -4078,7 +4078,7 @@
 <a name="3995"><span class="lineNum">    3995 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="3996"><span class="lineNum">    3996 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="3997"><span class="lineNum">    3997 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="3998"><span class="lineNum">    3998 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="3998"><span class="lineNum">    3998 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="3999"><span class="lineNum">    3999 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested =</span></a>
 <a name="4000"><span class="lineNum">    4000 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST |</a>
 <a name="4001"><span class="lineNum">    4001 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS;</a>
@@ -4148,7 +4148,7 @@
 <a name="4065"><span class="lineNum">    4065 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="4066"><span class="lineNum">    4066 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="4067"><span class="lineNum">    4067 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="4068"><span class="lineNum">    4068 </span>                :            :                          THCurrHashData);</a>
+<a name="4068"><span class="lineNum">    4068 </span>                :            :                          th_curr_hash_data);</a>
 <a name="4069"><span class="lineNum">    4069 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="4070"><span class="lineNum">    4070 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4071"><span class="lineNum">    4071 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -4159,7 +4159,7 @@
 <a name="4076"><span class="lineNum">    4076 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="4077"><span class="lineNum">    4077 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4078"><span class="lineNum">    4078 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="4079"><span class="lineNum">    4079 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="4079"><span class="lineNum">    4079 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="4080"><span class="lineNum">    4080 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="4081"><span class="lineNum">    4081 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="4082"><span class="lineNum">    4082 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -4202,7 +4202,7 @@
 <a name="4119"><span class="lineNum">    4119 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="4120"><span class="lineNum">    4120 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="4121"><span class="lineNum">    4121 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="4122"><span class="lineNum">    4122 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="4122"><span class="lineNum">    4122 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="4123"><span class="lineNum">    4123 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="4124"><span class="lineNum">    4124 </span>                :            :         size_t bin_str0_size;</a>
 <a name="4125"><span class="lineNum">    4125 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -4239,7 +4239,7 @@
 <a name="4156"><span class="lineNum">    4156 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.spdm_version = SPDM_MESSAGE_VERSION_11;</span></a>
 <a name="4157"><span class="lineNum">    4157 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.request_response_code = SPDM_KEY_EXCHANGE_RSP;</span></a>
 <a name="4158"><span class="lineNum">    4158 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="4159"><span class="lineNum">    4159 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="4159"><span class="lineNum">    4159 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id = libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="4160"><span class="lineNum">    4160 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="4161"><span class="lineNum">    4161 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="4162"><span class="lineNum">    4162 </span>                :<span class="lineNoCov">          0 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE, spdm_response-&gt;random_data);</span></a>
@@ -4296,7 +4296,7 @@
 <a name="4213"><span class="lineNum">    4213 </span>                :<span class="lineNoCov">          0 :         libspdm_append_managed_buffer(&amp;th_curr, ptr, signature_size);</span></a>
 <a name="4214"><span class="lineNum">    4214 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="4215"><span class="lineNum">    4215 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
-<a name="4216"><span class="lineNum">    4216 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr), THCurrHashData);</a>
+<a name="4216"><span class="lineNum">    4216 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr), th_curr_hash_data);</a>
 <a name="4217"><span class="lineNum">    4217 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="4218"><span class="lineNum">    4218 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4219"><span class="lineNum">    4219 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -4306,7 +4306,7 @@
 <a name="4223"><span class="lineNum">    4223 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="4224"><span class="lineNum">    4224 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4225"><span class="lineNum">    4225 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="4226"><span class="lineNum">    4226 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="4226"><span class="lineNum">    4226 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="4227"><span class="lineNum">    4227 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="4228"><span class="lineNum">    4228 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="4229"><span class="lineNum">    4229 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -4352,7 +4352,7 @@
 <a name="4269"><span class="lineNum">    4269 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="4270"><span class="lineNum">    4270 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="4271"><span class="lineNum">    4271 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="4272"><span class="lineNum">    4272 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="4272"><span class="lineNum">    4272 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="4273"><span class="lineNum">    4273 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="4274"><span class="lineNum">    4274 </span>                :            :         size_t bin_str0_size;</a>
 <a name="4275"><span class="lineNum">    4275 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -4398,7 +4398,7 @@
 <a name="4315"><span class="lineNum">    4315 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="4316"><span class="lineNum">    4316 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="4317"><span class="lineNum">    4317 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="4318"><span class="lineNum">    4318 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="4318"><span class="lineNum">    4318 </span>                :<span class="lineNoCov">          0 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="4319"><span class="lineNum">    4319 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;mut_auth_requested = 0;</span></a>
 <a name="4320"><span class="lineNum">    4320 </span>                :<span class="lineNoCov">          0 :         spdm_response-&gt;req_slot_id_param = 0;</span></a>
 <a name="4321"><span class="lineNum">    4321 </span>                :<span class="lineNoCov">          0 :         libspdm_get_random_number(SPDM_RANDOM_DATA_SIZE,</span></a>
@@ -4466,7 +4466,7 @@
 <a name="4383"><span class="lineNum">    4383 </span>                :<span class="lineNoCov">          0 :         ptr += signature_size;</span></a>
 <a name="4384"><span class="lineNum">    4384 </span>                :<span class="lineNoCov">          0 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="4385"><span class="lineNum">    4385 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="4386"><span class="lineNum">    4386 </span>                :            :                          THCurrHashData);</a>
+<a name="4386"><span class="lineNum">    4386 </span>                :            :                          th_curr_hash_data);</a>
 <a name="4387"><span class="lineNum">    4387 </span>                :<span class="lineNoCov">          0 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="4388"><span class="lineNum">    4388 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4389"><span class="lineNum">    4389 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -4477,7 +4477,7 @@
 <a name="4394"><span class="lineNum">    4394 </span>                :<span class="lineNoCov">          0 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="4395"><span class="lineNum">    4395 </span>                :<span class="lineNoCov">          0 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4396"><span class="lineNum">    4396 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="4397"><span class="lineNum">    4397 </span>                :<span class="lineNoCov">          0 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="4397"><span class="lineNum">    4397 </span>                :<span class="lineNoCov">          0 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="4398"><span class="lineNum">    4398 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="4399"><span class="lineNum">    4399 </span>                :<span class="lineNoCov">          0 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="4400"><span class="lineNum">    4400 </span>                :            :                             bin_str2, bin_str2_size,</a>
@@ -4520,7 +4520,7 @@
 <a name="4437"><span class="lineNum">    4437 </span>                :            :         uint8_t *cert_buffer;</a>
 <a name="4438"><span class="lineNum">    4438 </span>                :            :         size_t cert_buffer_size;</a>
 <a name="4439"><span class="lineNum">    4439 </span>                :            :         uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
-<a name="4440"><span class="lineNum">    4440 </span>                :            :         uint8_t THCurrHashData[64];</a>
+<a name="4440"><span class="lineNum">    4440 </span>                :            :         uint8_t th_curr_hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="4441"><span class="lineNum">    4441 </span>                :            :         uint8_t bin_str0[128];</a>
 <a name="4442"><span class="lineNum">    4442 </span>                :            :         size_t bin_str0_size;</a>
 <a name="4443"><span class="lineNum">    4443 </span>                :            :         uint8_t bin_str2[128];</a>
@@ -4565,7 +4565,7 @@
 <a name="4482"><span class="lineNum">    4482 </span>                :            :             SPDM_KEY_EXCHANGE_RSP;</a>
 <a name="4483"><span class="lineNum">    4483 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;header.param1 = 0;</span></a>
 <a name="4484"><span class="lineNum">    4484 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;rsp_session_id =</span></a>
-<a name="4485"><span class="lineNum">    4485 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context);</span></a>
+<a name="4485"><span class="lineNum">    4485 </span>                :<span class="lineCov">          1 :             libspdm_allocate_rsp_session_id(spdm_context, false);</span></a>
 <a name="4486"><span class="lineNum">    4486 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;mut_auth_requested =</span></a>
 <a name="4487"><span class="lineNum">    4487 </span>                :            :             SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</a>
 <a name="4488"><span class="lineNum">    4488 </span>                :<span class="lineCov">          1 :         spdm_response-&gt;req_slot_id_param = 9;  /* Invalid SlotID */</span></a>
@@ -4634,7 +4634,7 @@
 <a name="4551"><span class="lineNum">    4551 </span>                :<span class="lineCov">          1 :         ptr += signature_size;</span></a>
 <a name="4552"><span class="lineNum">    4552 </span>                :<span class="lineCov">          1 :         libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
 <a name="4553"><span class="lineNum">    4553 </span>                :            :                          libspdm_get_managed_buffer_size(&amp;th_curr),</a>
-<a name="4554"><span class="lineNum">    4554 </span>                :            :                          THCurrHashData);</a>
+<a name="4554"><span class="lineNum">    4554 </span>                :            :                          th_curr_hash_data);</a>
 <a name="4555"><span class="lineNum">    4555 </span>                :<span class="lineCov">          1 :         bin_str0_size = sizeof(bin_str0);</span></a>
 <a name="4556"><span class="lineNum">    4556 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4557"><span class="lineNum">    4557 </span>                :            :                            SPDM_BIN_STR_0_LABEL, sizeof(SPDM_BIN_STR_0_LABEL) - 1,</a>
@@ -4645,7 +4645,7 @@
 <a name="4562"><span class="lineNum">    4562 </span>                :<span class="lineCov">          1 :         bin_str2_size = sizeof(bin_str2);</span></a>
 <a name="4563"><span class="lineNum">    4563 </span>                :<span class="lineCov">          1 :         libspdm_bin_concat(((libspdm_context_t *)spdm_context)-&gt;connection_info.version,</span></a>
 <a name="4564"><span class="lineNum">    4564 </span>                :            :                            SPDM_BIN_STR_2_LABEL, sizeof(SPDM_BIN_STR_2_LABEL) - 1,</a>
-<a name="4565"><span class="lineNum">    4565 </span>                :<span class="lineCov">          1 :                            THCurrHashData, (uint16_t)hash_size, hash_size,</span></a>
+<a name="4565"><span class="lineNum">    4565 </span>                :<span class="lineCov">          1 :                            th_curr_hash_data, (uint16_t)hash_size, hash_size,</span></a>
 <a name="4566"><span class="lineNum">    4566 </span>                :            :                            bin_str2, &amp;bin_str2_size);</a>
 <a name="4567"><span class="lineNum">    4567 </span>                :<span class="lineCov">          1 :         libspdm_hkdf_expand(m_libspdm_use_hash_algo, handshake_secret, hash_size,</span></a>
 <a name="4568"><span class="lineNum">    4568 </span>                :            :                             bin_str2, bin_str2_size,</a>
