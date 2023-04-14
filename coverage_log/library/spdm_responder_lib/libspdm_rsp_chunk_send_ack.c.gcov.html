@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">101</td>
-            <td class="headerCovTableEntry">109</td>
+            <td class="headerCovTableEntry">102</td>
+            <td class="headerCovTableEntry">110</td>
             <td class="headerCovTableEntryHi">92.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-04-13 08:14:27</td>
+            <td class="headerValue">2023-04-14 08:14:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">45</td>
-            <td class="headerCovTableEntry">58</td>
-            <td class="headerCovTableEntryMed">77.6 %</td>
+            <td class="headerCovTableEntry">44</td>
+            <td class="headerCovTableEntry">56</td>
+            <td class="headerCovTableEntryMed">78.6 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -163,7 +163,7 @@
 <a name="92"><span class="lineNum">      92 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (spdm_request-&gt;chunk_seq_no != 0</span></a>
 <a name="93"><span class="lineNum">      93 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          5 :             || spdm_request-&gt;chunk_size &gt; calc_max_chunk_size</span></a>
 <a name="94"><span class="lineNum">      94 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          4 :             || (uint32_t)request_size != spdm_context-&gt;local_context.capability.data_transfer_size</span></a>
-<a name="95"><span class="lineNum">      95 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          3 :             || large_message_size &gt;= LIBSPDM_MAX_SPDM_MSG_SIZE</span></a>
+<a name="95"><span class="lineNum">      95 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          3 :             || large_message_size &gt;= spdm_context-&gt;local_context.capability.max_spdm_msg_size</span></a>
 <a name="96"><span class="lineNum">      96 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :             || (spdm_request-&gt;header.param1 &amp; SPDM_CHUNK_SEND_REQUEST_ATTRIBUTE_LAST_CHUNK)</span></a>
 <a name="97"><span class="lineNum">      97 </span>                :            :             ) {</a>
 <a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">          5 :             status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
@@ -171,15 +171,15 @@
 <a name="100"><span class="lineNum">     100 </span>                :            :         else {</a>
 <a name="101"><span class="lineNum">     101 </span>                :<span class="lineCov">          1 :             libspdm_get_scratch_buffer(spdm_context, (void**) &amp;scratch_buffer,</span></a>
 <a name="102"><span class="lineNum">     102 </span>                :            :                                        &amp;scratch_buffer_size);</a>
-<a name="103"><span class="lineNum">     103 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :             LIBSPDM_ASSERT(scratch_buffer_size &gt;= LIBSPDM_SCRATCH_BUFFER_SIZE);</span></a>
-<a name="104"><span class="lineNum">     104 </span>                :            : </a>
-<a name="105"><span class="lineNum">     105 </span>                :<span class="lineCov">          1 :             send_info-&gt;chunk_in_use = true;</span></a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">          1 :             send_info-&gt;chunk_handle = spdm_request-&gt;header.param2;</span></a>
-<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">          1 :             send_info-&gt;chunk_seq_no = spdm_request-&gt;chunk_seq_no;</span></a>
-<a name="108"><span class="lineNum">     108 </span>                :            : </a>
-<a name="109"><span class="lineNum">     109 </span>                :<span class="lineCov">          1 :             send_info-&gt;large_message = scratch_buffer +</span></a>
-<a name="110"><span class="lineNum">     110 </span>                :            :                                        LIBSPDM_SCRATCH_BUFFER_LARGE_MESSAGE_OFFSET;</a>
-<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">          1 :             send_info-&gt;large_message_capacity = LIBSPDM_SCRATCH_BUFFER_LARGE_MESSAGE_CAPACITY;</span></a>
+<a name="103"><span class="lineNum">     103 </span>                :            : </a>
+<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">          1 :             send_info-&gt;chunk_in_use = true;</span></a>
+<a name="105"><span class="lineNum">     105 </span>                :<span class="lineCov">          1 :             send_info-&gt;chunk_handle = spdm_request-&gt;header.param2;</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">          1 :             send_info-&gt;chunk_seq_no = spdm_request-&gt;chunk_seq_no;</span></a>
+<a name="107"><span class="lineNum">     107 </span>                :            : </a>
+<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">          2 :             send_info-&gt;large_message = scratch_buffer +</span></a>
+<a name="109"><span class="lineNum">     109 </span>                :<span class="lineCov">          1 :                                        libspdm_get_scratch_buffer_large_message_offset(spdm_context);</span></a>
+<a name="110"><span class="lineNum">     110 </span>                :<span class="lineCov">          1 :             send_info-&gt;large_message_capacity =</span></a>
+<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">          1 :                 libspdm_get_scratch_buffer_large_message_capacity(spdm_context);</span></a>
 <a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">          1 :             send_info-&gt;large_message_size = large_message_size;</span></a>
 <a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">          1 :             send_info-&gt;chunk_bytes_transferred = spdm_request-&gt;chunk_size;</span></a>
 <a name="114"><span class="lineNum">     114 </span>                :            : </a>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-04-13 08:14:27</td>
+            <td class="headerValue">2023-04-14 08:14:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">26</td>
@@ -81,12 +81,12 @@
 <a name="10"><span class="lineNum">      10 </span>                :            : #include &quot;internal/libspdm_secured_message_lib.h&quot;</a>
 <a name="11"><span class="lineNum">      11 </span>                :            : </a>
 <a name="12"><span class="lineNum">      12 </span>                :            : libspdm_return_t spdm_device_acquire_sender_buffer (</a>
-<a name="13"><span class="lineNum">      13 </span>                :            :     void *context, size_t *max_msg_size, void **msg_buf_ptr);</a>
+<a name="13"><span class="lineNum">      13 </span>                :            :     void *context, void **msg_buf_ptr);</a>
 <a name="14"><span class="lineNum">      14 </span>                :            : </a>
 <a name="15"><span class="lineNum">      15 </span>                :            : void spdm_device_release_sender_buffer (void *context, const void *msg_buf_ptr);</a>
 <a name="16"><span class="lineNum">      16 </span>                :            : </a>
 <a name="17"><span class="lineNum">      17 </span>                :            : libspdm_return_t spdm_device_acquire_receiver_buffer (</a>
-<a name="18"><span class="lineNum">      18 </span>                :            :     void *context, size_t *max_msg_size, void **msg_buf_ptr);</a>
+<a name="18"><span class="lineNum">      18 </span>                :            :     void *context, void **msg_buf_ptr);</a>
 <a name="19"><span class="lineNum">      19 </span>                :            : </a>
 <a name="20"><span class="lineNum">      20 </span>                :            : void spdm_device_release_receiver_buffer (void *context, const void *msg_buf_ptr);</a>
 <a name="21"><span class="lineNum">      21 </span>                :            : </a>
@@ -1328,7 +1328,7 @@
 <a name="1257"><span class="lineNum">    1257 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          5 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
 <a name="1258"><span class="lineNum">    1258 </span>                :            :     {</a>
 <a name="1259"><span class="lineNum">    1259 </span>                :            :         /* Ensure the SPDM context points to the specified memory. */</a>
-<a name="1260"><span class="lineNum">    1260 </span>                :<span class="lineCov">          4 :         assert_int_equal(spdm_context-&gt;session_info[index].secured_message_context,</span></a>
+<a name="1260"><span class="lineNum">    1260 </span>                :<span class="lineCov">          4 :         assert_ptr_equal(spdm_context-&gt;session_info[index].secured_message_context,</span></a>
 <a name="1261"><span class="lineNum">    1261 </span>                :            :                          secured_message_contexts[index]);</a>
 <a name="1262"><span class="lineNum">    1262 </span>                :            :     }</a>
 <a name="1263"><span class="lineNum">    1263 </span>                :            : </a>
@@ -1428,199 +1428,201 @@
 <a name="1357"><span class="lineNum">    1357 </span>                :<span class="lineCov">          1 :     assert_int_equal(false, result);</span></a>
 <a name="1358"><span class="lineNum">    1358 </span>                :            : </a>
 <a name="1359"><span class="lineNum">    1359 </span>                :<span class="lineCov">          1 :     libspdm_register_device_buffer_func(context,</span></a>
-<a name="1360"><span class="lineNum">    1360 </span>                :            :                                         spdm_device_acquire_sender_buffer,</a>
-<a name="1361"><span class="lineNum">    1361 </span>                :            :                                         spdm_device_release_sender_buffer,</a>
-<a name="1362"><span class="lineNum">    1362 </span>                :            :                                         spdm_device_acquire_receiver_buffer,</a>
-<a name="1363"><span class="lineNum">    1363 </span>                :            :                                         spdm_device_release_receiver_buffer);</a>
-<a name="1364"><span class="lineNum">    1364 </span>                :            : </a>
-<a name="1365"><span class="lineNum">    1365 </span>                :<span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
-<a name="1366"><span class="lineNum">    1366 </span>                :<span class="lineCov">          1 :     assert_int_equal(true, result);</span></a>
-<a name="1367"><span class="lineNum">    1367 </span>                :            : </a>
-<a name="1368"><span class="lineNum">    1368 </span>                :<span class="lineCov">          1 :     parameter.location = LIBSPDM_DATA_LOCATION_LOCAL;</span></a>
+<a name="1360"><span class="lineNum">    1360 </span>                :            :                                         LIBSPDM_MAX_SENDER_RECEIVER_BUFFER_SIZE,</a>
+<a name="1361"><span class="lineNum">    1361 </span>                :            :                                         LIBSPDM_MAX_SENDER_RECEIVER_BUFFER_SIZE,</a>
+<a name="1362"><span class="lineNum">    1362 </span>                :            :                                         spdm_device_acquire_sender_buffer,</a>
+<a name="1363"><span class="lineNum">    1363 </span>                :            :                                         spdm_device_release_sender_buffer,</a>
+<a name="1364"><span class="lineNum">    1364 </span>                :            :                                         spdm_device_acquire_receiver_buffer,</a>
+<a name="1365"><span class="lineNum">    1365 </span>                :            :                                         spdm_device_release_receiver_buffer);</a>
+<a name="1366"><span class="lineNum">    1366 </span>                :            : </a>
+<a name="1367"><span class="lineNum">    1367 </span>                :<span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
+<a name="1368"><span class="lineNum">    1368 </span>                :<span class="lineCov">          1 :     assert_int_equal(true, result);</span></a>
 <a name="1369"><span class="lineNum">    1369 </span>                :            : </a>
-<a name="1370"><span class="lineNum">    1370 </span>                :<span class="lineCov">          1 :     data32 = SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12;</span></a>
-<a name="1371"><span class="lineNum">    1371 </span>                :<span class="lineCov">          1 :     libspdm_set_data (context, LIBSPDM_DATA_CAPABILITY_MAX_SPDM_MSG_SIZE, &amp;parameter, &amp;data32,</span></a>
-<a name="1372"><span class="lineNum">    1372 </span>                :            :                       sizeof(data32));</a>
-<a name="1373"><span class="lineNum">    1373 </span>                :<span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
-<a name="1374"><span class="lineNum">    1374 </span>                :<span class="lineCov">          1 :     assert_int_equal(false, result);</span></a>
-<a name="1375"><span class="lineNum">    1375 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1376"><span class="lineNum">    1376 </span>                :            : </a>
-<a name="1377"><span class="lineNum">    1377 </span>                :<span class="lineCov">          1 : static void libspdm_test_max_session_count_case21(void **state)</span></a>
-<a name="1378"><span class="lineNum">    1378 </span>                :            : {</a>
-<a name="1379"><span class="lineNum">    1379 </span>                :            :     libspdm_context_t *spdm_context;</a>
-<a name="1380"><span class="lineNum">    1380 </span>                :            :     libspdm_data_parameter_t parameter;</a>
-<a name="1381"><span class="lineNum">    1381 </span>                :            :     size_t index;</a>
-<a name="1382"><span class="lineNum">    1382 </span>                :            :     size_t round;</a>
-<a name="1383"><span class="lineNum">    1383 </span>                :            :     uint16_t req_id;</a>
-<a name="1384"><span class="lineNum">    1384 </span>                :            :     uint16_t rsp_id;</a>
-<a name="1385"><span class="lineNum">    1385 </span>                :            :     uint32_t session_id;</a>
-<a name="1386"><span class="lineNum">    1386 </span>                :            :     void *session_info;</a>
-<a name="1387"><span class="lineNum">    1387 </span>                :            :     uint32_t dhe_session_count;</a>
-<a name="1388"><span class="lineNum">    1388 </span>                :            :     uint32_t psk_session_count;</a>
-<a name="1389"><span class="lineNum">    1389 </span>                :            : </a>
-<a name="1390"><span class="lineNum">    1390 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          7 :     for (round = 0; round &lt;= 5; round++) {</span></a>
-<a name="1391"><span class="lineNum">    1391 </span>                :            :         /* prepare parameter */</a>
-<a name="1392"><span class="lineNum">    1392 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          6 :         switch (round) {</span></a>
+<a name="1370"><span class="lineNum">    1370 </span>                :<span class="lineCov">          1 :     parameter.location = LIBSPDM_DATA_LOCATION_LOCAL;</span></a>
+<a name="1371"><span class="lineNum">    1371 </span>                :            : </a>
+<a name="1372"><span class="lineNum">    1372 </span>                :<span class="lineCov">          1 :     data32 = SPDM_MIN_DATA_TRANSFER_SIZE_VERSION_12;</span></a>
+<a name="1373"><span class="lineNum">    1373 </span>                :<span class="lineCov">          1 :     libspdm_set_data (context, LIBSPDM_DATA_CAPABILITY_MAX_SPDM_MSG_SIZE, &amp;parameter, &amp;data32,</span></a>
+<a name="1374"><span class="lineNum">    1374 </span>                :            :                       sizeof(data32));</a>
+<a name="1375"><span class="lineNum">    1375 </span>                :<span class="lineCov">          1 :     result = libspdm_check_context (context);</span></a>
+<a name="1376"><span class="lineNum">    1376 </span>                :<span class="lineCov">          1 :     assert_int_equal(false, result);</span></a>
+<a name="1377"><span class="lineNum">    1377 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1378"><span class="lineNum">    1378 </span>                :            : </a>
+<a name="1379"><span class="lineNum">    1379 </span>                :<span class="lineCov">          1 : static void libspdm_test_max_session_count_case21(void **state)</span></a>
+<a name="1380"><span class="lineNum">    1380 </span>                :            : {</a>
+<a name="1381"><span class="lineNum">    1381 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="1382"><span class="lineNum">    1382 </span>                :            :     libspdm_data_parameter_t parameter;</a>
+<a name="1383"><span class="lineNum">    1383 </span>                :            :     size_t index;</a>
+<a name="1384"><span class="lineNum">    1384 </span>                :            :     size_t round;</a>
+<a name="1385"><span class="lineNum">    1385 </span>                :            :     uint16_t req_id;</a>
+<a name="1386"><span class="lineNum">    1386 </span>                :            :     uint16_t rsp_id;</a>
+<a name="1387"><span class="lineNum">    1387 </span>                :            :     uint32_t session_id;</a>
+<a name="1388"><span class="lineNum">    1388 </span>                :            :     void *session_info;</a>
+<a name="1389"><span class="lineNum">    1389 </span>                :            :     uint32_t dhe_session_count;</a>
+<a name="1390"><span class="lineNum">    1390 </span>                :            :     uint32_t psk_session_count;</a>
+<a name="1391"><span class="lineNum">    1391 </span>                :            : </a>
+<a name="1392"><span class="lineNum">    1392 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          7 :     for (round = 0; round &lt;= 5; round++) {</span></a>
+<a name="1393"><span class="lineNum">    1393 </span>                :            :         /* prepare parameter */</a>
+<a name="1394"><span class="lineNum">    1394 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">          6 :         switch (round) {</span></a>
 <span class="lineNum">         </span>      <span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchCov" title="Branch 5 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span>]
-<a name="1393"><span class="lineNum">    1393 </span>                :<span class="lineCov">          1 :         case 0:</span></a>
-<a name="1394"><span class="lineNum">    1394 </span>                :<span class="lineCov">          1 :             dhe_session_count = 1;</span></a>
-<a name="1395"><span class="lineNum">    1395 </span>                :<span class="lineCov">          1 :             psk_session_count = 1;</span></a>
-<a name="1396"><span class="lineNum">    1396 </span>                :<span class="lineCov">          1 :             break;</span></a>
-<a name="1397"><span class="lineNum">    1397 </span>                :<span class="lineCov">          1 :         case 1:</span></a>
-<a name="1398"><span class="lineNum">    1398 </span>                :<span class="lineCov">          1 :             dhe_session_count = LIBSPDM_MAX_SESSION_COUNT / 2;</span></a>
-<a name="1399"><span class="lineNum">    1399 </span>                :<span class="lineCov">          1 :             psk_session_count = LIBSPDM_MAX_SESSION_COUNT - dhe_session_count;</span></a>
-<a name="1400"><span class="lineNum">    1400 </span>                :<span class="lineCov">          1 :             break;</span></a>
-<a name="1401"><span class="lineNum">    1401 </span>                :<span class="lineCov">          1 :         case 2:</span></a>
-<a name="1402"><span class="lineNum">    1402 </span>                :<span class="lineCov">          1 :             dhe_session_count = 1;</span></a>
-<a name="1403"><span class="lineNum">    1403 </span>                :<span class="lineCov">          1 :             psk_session_count = LIBSPDM_MAX_SESSION_COUNT - 1;</span></a>
-<a name="1404"><span class="lineNum">    1404 </span>                :<span class="lineCov">          1 :             break;</span></a>
-<a name="1405"><span class="lineNum">    1405 </span>                :<span class="lineCov">          1 :         case 3:</span></a>
-<a name="1406"><span class="lineNum">    1406 </span>                :<span class="lineCov">          1 :             dhe_session_count = LIBSPDM_MAX_SESSION_COUNT - 1;</span></a>
-<a name="1407"><span class="lineNum">    1407 </span>                :<span class="lineCov">          1 :             psk_session_count = 1;</span></a>
-<a name="1408"><span class="lineNum">    1408 </span>                :<span class="lineCov">          1 :             break;</span></a>
-<a name="1409"><span class="lineNum">    1409 </span>                :<span class="lineCov">          1 :         case 4:</span></a>
-<a name="1410"><span class="lineNum">    1410 </span>                :<span class="lineCov">          1 :             dhe_session_count = 0;</span></a>
-<a name="1411"><span class="lineNum">    1411 </span>                :<span class="lineCov">          1 :             psk_session_count = LIBSPDM_MAX_SESSION_COUNT;</span></a>
-<a name="1412"><span class="lineNum">    1412 </span>                :<span class="lineCov">          1 :             break;</span></a>
-<a name="1413"><span class="lineNum">    1413 </span>                :<span class="lineCov">          1 :         case 5:</span></a>
-<a name="1414"><span class="lineNum">    1414 </span>                :<span class="lineCov">          1 :             dhe_session_count = LIBSPDM_MAX_SESSION_COUNT;</span></a>
-<a name="1415"><span class="lineNum">    1415 </span>                :<span class="lineCov">          1 :             psk_session_count = 0;</span></a>
-<a name="1416"><span class="lineNum">    1416 </span>                :<span class="lineCov">          1 :             break;</span></a>
-<a name="1417"><span class="lineNum">    1417 </span>                :<span class="lineNoCov">          0 :         default:</span></a>
-<a name="1418"><span class="lineNum">    1418 </span>                :<span class="lineNoCov">          0 :             dhe_session_count = 0;</span></a>
-<a name="1419"><span class="lineNum">    1419 </span>                :<span class="lineNoCov">          0 :             psk_session_count = 0;</span></a>
-<a name="1420"><span class="lineNum">    1420 </span>                :<span class="lineNoCov">          0 :             break;</span></a>
-<a name="1421"><span class="lineNum">    1421 </span>                :            :         }</a>
-<a name="1422"><span class="lineNum">    1422 </span>                :            : </a>
-<a name="1423"><span class="lineNum">    1423 </span>                :            :         /* test */</a>
-<a name="1424"><span class="lineNum">    1424 </span>                :<span class="lineCov">          6 :         spdm_context = (libspdm_context_t *)malloc(libspdm_get_context_size());</span></a>
-<a name="1425"><span class="lineNum">    1425 </span>                :<span class="lineCov">          6 :         libspdm_init_context (spdm_context);</span></a>
-<a name="1426"><span class="lineNum">    1426 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.flags =</span></a>
-<a name="1427"><span class="lineNum">    1427 </span>                :            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCRYPT_CAP |</a>
-<a name="1428"><span class="lineNum">    1428 </span>                :            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_MAC_CAP;</a>
-<a name="1429"><span class="lineNum">    1429 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;local_context.capability.flags =</span></a>
-<a name="1430"><span class="lineNum">    1430 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCRYPT_CAP |</a>
-<a name="1431"><span class="lineNum">    1431 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MAC_CAP;</a>
-<a name="1432"><span class="lineNum">    1432 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
-<a name="1433"><span class="lineNum">    1433 </span>                :            :             SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_256;</a>
-<a name="1434"><span class="lineNum">    1434 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
-<a name="1435"><span class="lineNum">    1435 </span>                :            :             SPDM_ALGORITHMS_DHE_NAMED_GROUP_SECP_256_R1;</a>
-<a name="1436"><span class="lineNum">    1436 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
-<a name="1437"><span class="lineNum">    1437 </span>                :            :             SPDM_ALGORITHMS_AEAD_CIPHER_SUITE_AES_256_GCM;</a>
-<a name="1438"><span class="lineNum">    1438 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.key_schedule =</span></a>
-<a name="1439"><span class="lineNum">    1439 </span>                :            :             SPDM_ALGORITHMS_KEY_SCHEDULE_HMAC_HASH;</a>
-<a name="1440"><span class="lineNum">    1440 </span>                :            : </a>
-<a name="1441"><span class="lineNum">    1441 </span>                :<span class="lineCov">          6 :         libspdm_zero_mem(&amp;parameter, sizeof(parameter));</span></a>
-<a name="1442"><span class="lineNum">    1442 </span>                :<span class="lineCov">          6 :         parameter.location = LIBSPDM_DATA_LOCATION_LOCAL;</span></a>
-<a name="1443"><span class="lineNum">    1443 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (dhe_session_count != 0) {</span></a>
-<a name="1444"><span class="lineNum">    1444 </span>                :<span class="lineCov">          5 :             libspdm_set_data (spdm_context, LIBSPDM_DATA_MAX_DHE_SESSION_COUNT, &amp;parameter,</span></a>
-<a name="1445"><span class="lineNum">    1445 </span>                :            :                               &amp;dhe_session_count, sizeof(dhe_session_count));</a>
-<a name="1446"><span class="lineNum">    1446 </span>                :            :         }</a>
-<a name="1447"><span class="lineNum">    1447 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (psk_session_count != 0) {</span></a>
-<a name="1448"><span class="lineNum">    1448 </span>                :<span class="lineCov">          5 :             libspdm_set_data (spdm_context, LIBSPDM_DATA_MAX_PSK_SESSION_COUNT, &amp;parameter,</span></a>
-<a name="1449"><span class="lineNum">    1449 </span>                :            :                               &amp;psk_session_count, sizeof(psk_session_count));</a>
-<a name="1450"><span class="lineNum">    1450 </span>                :            :         }</a>
-<a name="1451"><span class="lineNum">    1451 </span>                :            : </a>
-<a name="1452"><span class="lineNum">    1452 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (dhe_session_count != 0) {</span></a>
-<a name="1453"><span class="lineNum">    1453 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         16 :             for (index = 0; index &lt; dhe_session_count; index++)</span></a>
-<a name="1454"><span class="lineNum">    1454 </span>                :            :             {</a>
-<a name="1455"><span class="lineNum">    1455 </span>                :<span class="lineCov">         11 :                 req_id = libspdm_allocate_req_session_id (spdm_context, false);</span></a>
-<a name="1456"><span class="lineNum">    1456 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
-<a name="1457"><span class="lineNum">    1457 </span>                :            : </a>
-<a name="1458"><span class="lineNum">    1458 </span>                :<span class="lineCov">         11 :                 rsp_id = libspdm_allocate_rsp_session_id (spdm_context, false);</span></a>
-<a name="1459"><span class="lineNum">    1459 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
-<a name="1460"><span class="lineNum">    1460 </span>                :            : </a>
-<a name="1461"><span class="lineNum">    1461 </span>                :<span class="lineCov">         11 :                 session_id = libspdm_generate_session_id (req_id, rsp_id);</span></a>
-<a name="1462"><span class="lineNum">    1462 </span>                :<span class="lineCov">         11 :                 session_info = libspdm_assign_session_id (spdm_context, session_id, false);</span></a>
-<a name="1463"><span class="lineNum">    1463 </span>                :<span class="lineCov">         11 :                 assert_ptr_not_equal (session_info, NULL);</span></a>
-<a name="1464"><span class="lineNum">    1464 </span>                :            :             }</a>
-<a name="1465"><span class="lineNum">    1465 </span>                :<span class="lineCov">          5 :             req_id = libspdm_allocate_req_session_id (spdm_context, false);</span></a>
-<a name="1466"><span class="lineNum">    1466 </span>                :<span class="lineCov">          5 :             assert_int_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
-<a name="1467"><span class="lineNum">    1467 </span>                :            : </a>
-<a name="1468"><span class="lineNum">    1468 </span>                :<span class="lineCov">          5 :             rsp_id = libspdm_allocate_rsp_session_id (spdm_context, false);</span></a>
-<a name="1469"><span class="lineNum">    1469 </span>                :<span class="lineCov">          5 :             assert_int_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
-<a name="1470"><span class="lineNum">    1470 </span>                :            :         }</a>
-<a name="1471"><span class="lineNum">    1471 </span>                :            : </a>
-<a name="1472"><span class="lineNum">    1472 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (psk_session_count != 0) {</span></a>
-<a name="1473"><span class="lineNum">    1473 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         16 :             for (index = 0; index &lt; psk_session_count; index++)</span></a>
-<a name="1474"><span class="lineNum">    1474 </span>                :            :             {</a>
-<a name="1475"><span class="lineNum">    1475 </span>                :<span class="lineCov">         11 :                 req_id = libspdm_allocate_req_session_id (spdm_context, true);</span></a>
-<a name="1476"><span class="lineNum">    1476 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
-<a name="1477"><span class="lineNum">    1477 </span>                :            : </a>
-<a name="1478"><span class="lineNum">    1478 </span>                :<span class="lineCov">         11 :                 rsp_id = libspdm_allocate_rsp_session_id (spdm_context, true);</span></a>
-<a name="1479"><span class="lineNum">    1479 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
-<a name="1480"><span class="lineNum">    1480 </span>                :            : </a>
-<a name="1481"><span class="lineNum">    1481 </span>                :<span class="lineCov">         11 :                 session_id = libspdm_generate_session_id (req_id, rsp_id);</span></a>
-<a name="1482"><span class="lineNum">    1482 </span>                :<span class="lineCov">         11 :                 session_info = libspdm_assign_session_id (spdm_context, session_id, true);</span></a>
-<a name="1483"><span class="lineNum">    1483 </span>                :<span class="lineCov">         11 :                 assert_ptr_not_equal (session_info, NULL);</span></a>
-<a name="1484"><span class="lineNum">    1484 </span>                :            :             }</a>
-<a name="1485"><span class="lineNum">    1485 </span>                :<span class="lineCov">          5 :             req_id = libspdm_allocate_req_session_id (spdm_context, true);</span></a>
-<a name="1486"><span class="lineNum">    1486 </span>                :<span class="lineCov">          5 :             assert_int_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
-<a name="1487"><span class="lineNum">    1487 </span>                :            : </a>
-<a name="1488"><span class="lineNum">    1488 </span>                :<span class="lineCov">          5 :             rsp_id = libspdm_allocate_rsp_session_id (spdm_context, true);</span></a>
-<a name="1489"><span class="lineNum">    1489 </span>                :<span class="lineCov">          5 :             assert_int_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
-<a name="1490"><span class="lineNum">    1490 </span>                :            :         }</a>
-<a name="1491"><span class="lineNum">    1491 </span>                :            : </a>
-<a name="1492"><span class="lineNum">    1492 </span>                :<span class="lineCov">          6 :         free(spdm_context);</span></a>
-<a name="1493"><span class="lineNum">    1493 </span>                :            :     }</a>
-<a name="1494"><span class="lineNum">    1494 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1495"><span class="lineNum">    1495 </span>                :            : </a>
-<a name="1496"><span class="lineNum">    1496 </span>                :            : static libspdm_test_context_t m_libspdm_common_context_data_test_context = {</a>
-<a name="1497"><span class="lineNum">    1497 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="1498"><span class="lineNum">    1498 </span>                :            :     true,</a>
-<a name="1499"><span class="lineNum">    1499 </span>                :            :     NULL,</a>
-<a name="1500"><span class="lineNum">    1500 </span>                :            :     NULL,</a>
-<a name="1501"><span class="lineNum">    1501 </span>                :            : };</a>
-<a name="1502"><span class="lineNum">    1502 </span>                :            : </a>
-<a name="1503"><span class="lineNum">    1503 </span>                :<span class="lineCov">          1 : int libspdm_common_context_data_test_main(void)</span></a>
-<a name="1504"><span class="lineNum">    1504 </span>                :            : {</a>
-<a name="1505"><span class="lineNum">    1505 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_common_context_data_tests[] = {</span></a>
-<a name="1506"><span class="lineNum">    1506 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case1),</a>
-<a name="1507"><span class="lineNum">    1507 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case2),</a>
-<a name="1508"><span class="lineNum">    1508 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case3),</a>
-<a name="1509"><span class="lineNum">    1509 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case4),</a>
-<a name="1510"><span class="lineNum">    1510 </span>                :            : </a>
-<a name="1511"><span class="lineNum">    1511 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case5),</a>
-<a name="1512"><span class="lineNum">    1512 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case6),</a>
-<a name="1513"><span class="lineNum">    1513 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case7),</a>
-<a name="1514"><span class="lineNum">    1514 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case8),</a>
-<a name="1515"><span class="lineNum">    1515 </span>                :            : </a>
-<a name="1516"><span class="lineNum">    1516 </span>                :            :         cmocka_unit_test(libspdm_test_set_data_case9),</a>
+<a name="1395"><span class="lineNum">    1395 </span>                :<span class="lineCov">          1 :         case 0:</span></a>
+<a name="1396"><span class="lineNum">    1396 </span>                :<span class="lineCov">          1 :             dhe_session_count = 1;</span></a>
+<a name="1397"><span class="lineNum">    1397 </span>                :<span class="lineCov">          1 :             psk_session_count = 1;</span></a>
+<a name="1398"><span class="lineNum">    1398 </span>                :<span class="lineCov">          1 :             break;</span></a>
+<a name="1399"><span class="lineNum">    1399 </span>                :<span class="lineCov">          1 :         case 1:</span></a>
+<a name="1400"><span class="lineNum">    1400 </span>                :<span class="lineCov">          1 :             dhe_session_count = LIBSPDM_MAX_SESSION_COUNT / 2;</span></a>
+<a name="1401"><span class="lineNum">    1401 </span>                :<span class="lineCov">          1 :             psk_session_count = LIBSPDM_MAX_SESSION_COUNT - dhe_session_count;</span></a>
+<a name="1402"><span class="lineNum">    1402 </span>                :<span class="lineCov">          1 :             break;</span></a>
+<a name="1403"><span class="lineNum">    1403 </span>                :<span class="lineCov">          1 :         case 2:</span></a>
+<a name="1404"><span class="lineNum">    1404 </span>                :<span class="lineCov">          1 :             dhe_session_count = 1;</span></a>
+<a name="1405"><span class="lineNum">    1405 </span>                :<span class="lineCov">          1 :             psk_session_count = LIBSPDM_MAX_SESSION_COUNT - 1;</span></a>
+<a name="1406"><span class="lineNum">    1406 </span>                :<span class="lineCov">          1 :             break;</span></a>
+<a name="1407"><span class="lineNum">    1407 </span>                :<span class="lineCov">          1 :         case 3:</span></a>
+<a name="1408"><span class="lineNum">    1408 </span>                :<span class="lineCov">          1 :             dhe_session_count = LIBSPDM_MAX_SESSION_COUNT - 1;</span></a>
+<a name="1409"><span class="lineNum">    1409 </span>                :<span class="lineCov">          1 :             psk_session_count = 1;</span></a>
+<a name="1410"><span class="lineNum">    1410 </span>                :<span class="lineCov">          1 :             break;</span></a>
+<a name="1411"><span class="lineNum">    1411 </span>                :<span class="lineCov">          1 :         case 4:</span></a>
+<a name="1412"><span class="lineNum">    1412 </span>                :<span class="lineCov">          1 :             dhe_session_count = 0;</span></a>
+<a name="1413"><span class="lineNum">    1413 </span>                :<span class="lineCov">          1 :             psk_session_count = LIBSPDM_MAX_SESSION_COUNT;</span></a>
+<a name="1414"><span class="lineNum">    1414 </span>                :<span class="lineCov">          1 :             break;</span></a>
+<a name="1415"><span class="lineNum">    1415 </span>                :<span class="lineCov">          1 :         case 5:</span></a>
+<a name="1416"><span class="lineNum">    1416 </span>                :<span class="lineCov">          1 :             dhe_session_count = LIBSPDM_MAX_SESSION_COUNT;</span></a>
+<a name="1417"><span class="lineNum">    1417 </span>                :<span class="lineCov">          1 :             psk_session_count = 0;</span></a>
+<a name="1418"><span class="lineNum">    1418 </span>                :<span class="lineCov">          1 :             break;</span></a>
+<a name="1419"><span class="lineNum">    1419 </span>                :<span class="lineNoCov">          0 :         default:</span></a>
+<a name="1420"><span class="lineNum">    1420 </span>                :<span class="lineNoCov">          0 :             dhe_session_count = 0;</span></a>
+<a name="1421"><span class="lineNum">    1421 </span>                :<span class="lineNoCov">          0 :             psk_session_count = 0;</span></a>
+<a name="1422"><span class="lineNum">    1422 </span>                :<span class="lineNoCov">          0 :             break;</span></a>
+<a name="1423"><span class="lineNum">    1423 </span>                :            :         }</a>
+<a name="1424"><span class="lineNum">    1424 </span>                :            : </a>
+<a name="1425"><span class="lineNum">    1425 </span>                :            :         /* test */</a>
+<a name="1426"><span class="lineNum">    1426 </span>                :<span class="lineCov">          6 :         spdm_context = (libspdm_context_t *)malloc(libspdm_get_context_size());</span></a>
+<a name="1427"><span class="lineNum">    1427 </span>                :<span class="lineCov">          6 :         libspdm_init_context (spdm_context);</span></a>
+<a name="1428"><span class="lineNum">    1428 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.flags =</span></a>
+<a name="1429"><span class="lineNum">    1429 </span>                :            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCRYPT_CAP |</a>
+<a name="1430"><span class="lineNum">    1430 </span>                :            :             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_MAC_CAP;</a>
+<a name="1431"><span class="lineNum">    1431 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;local_context.capability.flags =</span></a>
+<a name="1432"><span class="lineNum">    1432 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCRYPT_CAP |</a>
+<a name="1433"><span class="lineNum">    1433 </span>                :            :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MAC_CAP;</a>
+<a name="1434"><span class="lineNum">    1434 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="1435"><span class="lineNum">    1435 </span>                :            :             SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_256;</a>
+<a name="1436"><span class="lineNum">    1436 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="1437"><span class="lineNum">    1437 </span>                :            :             SPDM_ALGORITHMS_DHE_NAMED_GROUP_SECP_256_R1;</a>
+<a name="1438"><span class="lineNum">    1438 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="1439"><span class="lineNum">    1439 </span>                :            :             SPDM_ALGORITHMS_AEAD_CIPHER_SUITE_AES_256_GCM;</a>
+<a name="1440"><span class="lineNum">    1440 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.algorithm.key_schedule =</span></a>
+<a name="1441"><span class="lineNum">    1441 </span>                :            :             SPDM_ALGORITHMS_KEY_SCHEDULE_HMAC_HASH;</a>
+<a name="1442"><span class="lineNum">    1442 </span>                :            : </a>
+<a name="1443"><span class="lineNum">    1443 </span>                :<span class="lineCov">          6 :         libspdm_zero_mem(&amp;parameter, sizeof(parameter));</span></a>
+<a name="1444"><span class="lineNum">    1444 </span>                :<span class="lineCov">          6 :         parameter.location = LIBSPDM_DATA_LOCATION_LOCAL;</span></a>
+<a name="1445"><span class="lineNum">    1445 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (dhe_session_count != 0) {</span></a>
+<a name="1446"><span class="lineNum">    1446 </span>                :<span class="lineCov">          5 :             libspdm_set_data (spdm_context, LIBSPDM_DATA_MAX_DHE_SESSION_COUNT, &amp;parameter,</span></a>
+<a name="1447"><span class="lineNum">    1447 </span>                :            :                               &amp;dhe_session_count, sizeof(dhe_session_count));</a>
+<a name="1448"><span class="lineNum">    1448 </span>                :            :         }</a>
+<a name="1449"><span class="lineNum">    1449 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (psk_session_count != 0) {</span></a>
+<a name="1450"><span class="lineNum">    1450 </span>                :<span class="lineCov">          5 :             libspdm_set_data (spdm_context, LIBSPDM_DATA_MAX_PSK_SESSION_COUNT, &amp;parameter,</span></a>
+<a name="1451"><span class="lineNum">    1451 </span>                :            :                               &amp;psk_session_count, sizeof(psk_session_count));</a>
+<a name="1452"><span class="lineNum">    1452 </span>                :            :         }</a>
+<a name="1453"><span class="lineNum">    1453 </span>                :            : </a>
+<a name="1454"><span class="lineNum">    1454 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (dhe_session_count != 0) {</span></a>
+<a name="1455"><span class="lineNum">    1455 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         16 :             for (index = 0; index &lt; dhe_session_count; index++)</span></a>
+<a name="1456"><span class="lineNum">    1456 </span>                :            :             {</a>
+<a name="1457"><span class="lineNum">    1457 </span>                :<span class="lineCov">         11 :                 req_id = libspdm_allocate_req_session_id (spdm_context, false);</span></a>
+<a name="1458"><span class="lineNum">    1458 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
+<a name="1459"><span class="lineNum">    1459 </span>                :            : </a>
+<a name="1460"><span class="lineNum">    1460 </span>                :<span class="lineCov">         11 :                 rsp_id = libspdm_allocate_rsp_session_id (spdm_context, false);</span></a>
+<a name="1461"><span class="lineNum">    1461 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
+<a name="1462"><span class="lineNum">    1462 </span>                :            : </a>
+<a name="1463"><span class="lineNum">    1463 </span>                :<span class="lineCov">         11 :                 session_id = libspdm_generate_session_id (req_id, rsp_id);</span></a>
+<a name="1464"><span class="lineNum">    1464 </span>                :<span class="lineCov">         11 :                 session_info = libspdm_assign_session_id (spdm_context, session_id, false);</span></a>
+<a name="1465"><span class="lineNum">    1465 </span>                :<span class="lineCov">         11 :                 assert_ptr_not_equal (session_info, NULL);</span></a>
+<a name="1466"><span class="lineNum">    1466 </span>                :            :             }</a>
+<a name="1467"><span class="lineNum">    1467 </span>                :<span class="lineCov">          5 :             req_id = libspdm_allocate_req_session_id (spdm_context, false);</span></a>
+<a name="1468"><span class="lineNum">    1468 </span>                :<span class="lineCov">          5 :             assert_int_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
+<a name="1469"><span class="lineNum">    1469 </span>                :            : </a>
+<a name="1470"><span class="lineNum">    1470 </span>                :<span class="lineCov">          5 :             rsp_id = libspdm_allocate_rsp_session_id (spdm_context, false);</span></a>
+<a name="1471"><span class="lineNum">    1471 </span>                :<span class="lineCov">          5 :             assert_int_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
+<a name="1472"><span class="lineNum">    1472 </span>                :            :         }</a>
+<a name="1473"><span class="lineNum">    1473 </span>                :            : </a>
+<a name="1474"><span class="lineNum">    1474 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         if (psk_session_count != 0) {</span></a>
+<a name="1475"><span class="lineNum">    1475 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         16 :             for (index = 0; index &lt; psk_session_count; index++)</span></a>
+<a name="1476"><span class="lineNum">    1476 </span>                :            :             {</a>
+<a name="1477"><span class="lineNum">    1477 </span>                :<span class="lineCov">         11 :                 req_id = libspdm_allocate_req_session_id (spdm_context, true);</span></a>
+<a name="1478"><span class="lineNum">    1478 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
+<a name="1479"><span class="lineNum">    1479 </span>                :            : </a>
+<a name="1480"><span class="lineNum">    1480 </span>                :<span class="lineCov">         11 :                 rsp_id = libspdm_allocate_rsp_session_id (spdm_context, true);</span></a>
+<a name="1481"><span class="lineNum">    1481 </span>                :<span class="lineCov">         11 :                 assert_int_not_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
+<a name="1482"><span class="lineNum">    1482 </span>                :            : </a>
+<a name="1483"><span class="lineNum">    1483 </span>                :<span class="lineCov">         11 :                 session_id = libspdm_generate_session_id (req_id, rsp_id);</span></a>
+<a name="1484"><span class="lineNum">    1484 </span>                :<span class="lineCov">         11 :                 session_info = libspdm_assign_session_id (spdm_context, session_id, true);</span></a>
+<a name="1485"><span class="lineNum">    1485 </span>                :<span class="lineCov">         11 :                 assert_ptr_not_equal (session_info, NULL);</span></a>
+<a name="1486"><span class="lineNum">    1486 </span>                :            :             }</a>
+<a name="1487"><span class="lineNum">    1487 </span>                :<span class="lineCov">          5 :             req_id = libspdm_allocate_req_session_id (spdm_context, true);</span></a>
+<a name="1488"><span class="lineNum">    1488 </span>                :<span class="lineCov">          5 :             assert_int_equal (req_id, INVALID_SESSION_ID &amp; 0xFFFF);</span></a>
+<a name="1489"><span class="lineNum">    1489 </span>                :            : </a>
+<a name="1490"><span class="lineNum">    1490 </span>                :<span class="lineCov">          5 :             rsp_id = libspdm_allocate_rsp_session_id (spdm_context, true);</span></a>
+<a name="1491"><span class="lineNum">    1491 </span>                :<span class="lineCov">          5 :             assert_int_equal (rsp_id, (INVALID_SESSION_ID &amp; 0xFFFF0000) &gt;&gt; 16);</span></a>
+<a name="1492"><span class="lineNum">    1492 </span>                :            :         }</a>
+<a name="1493"><span class="lineNum">    1493 </span>                :            : </a>
+<a name="1494"><span class="lineNum">    1494 </span>                :<span class="lineCov">          6 :         free(spdm_context);</span></a>
+<a name="1495"><span class="lineNum">    1495 </span>                :            :     }</a>
+<a name="1496"><span class="lineNum">    1496 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1497"><span class="lineNum">    1497 </span>                :            : </a>
+<a name="1498"><span class="lineNum">    1498 </span>                :            : static libspdm_test_context_t m_libspdm_common_context_data_test_context = {</a>
+<a name="1499"><span class="lineNum">    1499 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="1500"><span class="lineNum">    1500 </span>                :            :     true,</a>
+<a name="1501"><span class="lineNum">    1501 </span>                :            :     NULL,</a>
+<a name="1502"><span class="lineNum">    1502 </span>                :            :     NULL,</a>
+<a name="1503"><span class="lineNum">    1503 </span>                :            : };</a>
+<a name="1504"><span class="lineNum">    1504 </span>                :            : </a>
+<a name="1505"><span class="lineNum">    1505 </span>                :<span class="lineCov">          1 : int libspdm_common_context_data_test_main(void)</span></a>
+<a name="1506"><span class="lineNum">    1506 </span>                :            : {</a>
+<a name="1507"><span class="lineNum">    1507 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_common_context_data_tests[] = {</span></a>
+<a name="1508"><span class="lineNum">    1508 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case1),</a>
+<a name="1509"><span class="lineNum">    1509 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case2),</a>
+<a name="1510"><span class="lineNum">    1510 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case3),</a>
+<a name="1511"><span class="lineNum">    1511 </span>                :            :         cmocka_unit_test(libspdm_test_common_context_data_case4),</a>
+<a name="1512"><span class="lineNum">    1512 </span>                :            : </a>
+<a name="1513"><span class="lineNum">    1513 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case5),</a>
+<a name="1514"><span class="lineNum">    1514 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case6),</a>
+<a name="1515"><span class="lineNum">    1515 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case7),</a>
+<a name="1516"><span class="lineNum">    1516 </span>                :            :         cmocka_unit_test(libspdm_test_verify_peer_cert_chain_buffer_case8),</a>
 <a name="1517"><span class="lineNum">    1517 </span>                :            : </a>
-<a name="1518"><span class="lineNum">    1518 </span>                :            :         /* Successful response V1.1 for multi element opaque data supported vesion, element number is 2*/</a>
-<a name="1519"><span class="lineNum">    1519 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case10),</a>
-<a name="1520"><span class="lineNum">    1520 </span>                :            :         /* Failed response V1.1 for multi element opaque data supported vesion, element id is wrong*/</a>
-<a name="1521"><span class="lineNum">    1521 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case11),</a>
-<a name="1522"><span class="lineNum">    1522 </span>                :            :         /* Successful response V1.2 for multi element opaque data supported vesion, element number is 2*/</a>
-<a name="1523"><span class="lineNum">    1523 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case12),</a>
-<a name="1524"><span class="lineNum">    1524 </span>                :            :         /* Failed response V1.2 for multi element opaque data supported vesion, element id is wrong*/</a>
-<a name="1525"><span class="lineNum">    1525 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case13),</a>
-<a name="1526"><span class="lineNum">    1526 </span>                :            :         /* Successful response V1.1 for multi element opaque data selecetion vesion, element number is 2*/</a>
-<a name="1527"><span class="lineNum">    1527 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case14),</a>
-<a name="1528"><span class="lineNum">    1528 </span>                :            :         /* Failed response V1.1 for multi element opaque data selecetion vesion, element number is wrong*/</a>
-<a name="1529"><span class="lineNum">    1529 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case15),</a>
-<a name="1530"><span class="lineNum">    1530 </span>                :            :         /* Successful response V1.2 for multi element opaque data selecetion vesion, element number is 2*/</a>
-<a name="1531"><span class="lineNum">    1531 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case16),</a>
-<a name="1532"><span class="lineNum">    1532 </span>                :            :         /* Failed response V1.2 for multi element opaque data selecetion vesion, element number is wrong*/</a>
-<a name="1533"><span class="lineNum">    1533 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case17),</a>
-<a name="1534"><span class="lineNum">    1534 </span>                :            : </a>
-<a name="1535"><span class="lineNum">    1535 </span>                :            :         /* Successful initialization and setting of secured message context location. */</a>
-<a name="1536"><span class="lineNum">    1536 </span>                :            :         cmocka_unit_test(libspdm_test_secured_message_context_location_selection_case18),</a>
-<a name="1537"><span class="lineNum">    1537 </span>                :            : </a>
-<a name="1538"><span class="lineNum">    1538 </span>                :            :         /* Test that the Export Master Secret can be exported and cleared. */</a>
-<a name="1539"><span class="lineNum">    1539 </span>                :            :         cmocka_unit_test(libspdm_test_export_master_secret_case19),</a>
-<a name="1540"><span class="lineNum">    1540 </span>                :            :         cmocka_unit_test(libspdm_test_check_context_case20),</a>
-<a name="1541"><span class="lineNum">    1541 </span>                :            : </a>
-<a name="1542"><span class="lineNum">    1542 </span>                :            :         /* Test the max DHE/PSK session count */</a>
-<a name="1543"><span class="lineNum">    1543 </span>                :            :         cmocka_unit_test(libspdm_test_max_session_count_case21),</a>
-<a name="1544"><span class="lineNum">    1544 </span>                :            :     };</a>
-<a name="1545"><span class="lineNum">    1545 </span>                :            : </a>
-<a name="1546"><span class="lineNum">    1546 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_common_context_data_test_context);</span></a>
+<a name="1518"><span class="lineNum">    1518 </span>                :            :         cmocka_unit_test(libspdm_test_set_data_case9),</a>
+<a name="1519"><span class="lineNum">    1519 </span>                :            : </a>
+<a name="1520"><span class="lineNum">    1520 </span>                :            :         /* Successful response V1.1 for multi element opaque data supported vesion, element number is 2*/</a>
+<a name="1521"><span class="lineNum">    1521 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case10),</a>
+<a name="1522"><span class="lineNum">    1522 </span>                :            :         /* Failed response V1.1 for multi element opaque data supported vesion, element id is wrong*/</a>
+<a name="1523"><span class="lineNum">    1523 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case11),</a>
+<a name="1524"><span class="lineNum">    1524 </span>                :            :         /* Successful response V1.2 for multi element opaque data supported vesion, element number is 2*/</a>
+<a name="1525"><span class="lineNum">    1525 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case12),</a>
+<a name="1526"><span class="lineNum">    1526 </span>                :            :         /* Failed response V1.2 for multi element opaque data supported vesion, element id is wrong*/</a>
+<a name="1527"><span class="lineNum">    1527 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_supported_version_data_case13),</a>
+<a name="1528"><span class="lineNum">    1528 </span>                :            :         /* Successful response V1.1 for multi element opaque data selecetion vesion, element number is 2*/</a>
+<a name="1529"><span class="lineNum">    1529 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case14),</a>
+<a name="1530"><span class="lineNum">    1530 </span>                :            :         /* Failed response V1.1 for multi element opaque data selecetion vesion, element number is wrong*/</a>
+<a name="1531"><span class="lineNum">    1531 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case15),</a>
+<a name="1532"><span class="lineNum">    1532 </span>                :            :         /* Successful response V1.2 for multi element opaque data selecetion vesion, element number is 2*/</a>
+<a name="1533"><span class="lineNum">    1533 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case16),</a>
+<a name="1534"><span class="lineNum">    1534 </span>                :            :         /* Failed response V1.2 for multi element opaque data selecetion vesion, element number is wrong*/</a>
+<a name="1535"><span class="lineNum">    1535 </span>                :            :         cmocka_unit_test(libspdm_test_process_opaque_data_selection_version_data_case17),</a>
+<a name="1536"><span class="lineNum">    1536 </span>                :            : </a>
+<a name="1537"><span class="lineNum">    1537 </span>                :            :         /* Successful initialization and setting of secured message context location. */</a>
+<a name="1538"><span class="lineNum">    1538 </span>                :            :         cmocka_unit_test(libspdm_test_secured_message_context_location_selection_case18),</a>
+<a name="1539"><span class="lineNum">    1539 </span>                :            : </a>
+<a name="1540"><span class="lineNum">    1540 </span>                :            :         /* Test that the Export Master Secret can be exported and cleared. */</a>
+<a name="1541"><span class="lineNum">    1541 </span>                :            :         cmocka_unit_test(libspdm_test_export_master_secret_case19),</a>
+<a name="1542"><span class="lineNum">    1542 </span>                :            :         cmocka_unit_test(libspdm_test_check_context_case20),</a>
+<a name="1543"><span class="lineNum">    1543 </span>                :            : </a>
+<a name="1544"><span class="lineNum">    1544 </span>                :            :         /* Test the max DHE/PSK session count */</a>
+<a name="1545"><span class="lineNum">    1545 </span>                :            :         cmocka_unit_test(libspdm_test_max_session_count_case21),</a>
+<a name="1546"><span class="lineNum">    1546 </span>                :            :     };</a>
 <a name="1547"><span class="lineNum">    1547 </span>                :            : </a>
-<a name="1548"><span class="lineNum">    1548 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_common_context_data_tests,</span></a>
-<a name="1549"><span class="lineNum">    1549 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="1550"><span class="lineNum">    1550 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="1551"><span class="lineNum">    1551 </span>                :            : }</a>
+<a name="1548"><span class="lineNum">    1548 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_common_context_data_test_context);</span></a>
+<a name="1549"><span class="lineNum">    1549 </span>                :            : </a>
+<a name="1550"><span class="lineNum">    1550 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_common_context_data_tests,</span></a>
+<a name="1551"><span class="lineNum">    1551 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="1552"><span class="lineNum">    1552 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="1553"><span class="lineNum">    1553 </span>                :            : }</a>
 </pre>
       </td>
     </tr>
