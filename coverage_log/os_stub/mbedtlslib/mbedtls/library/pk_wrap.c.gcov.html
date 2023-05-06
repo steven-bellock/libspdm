@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-05-05 08:14:43</td>
+            <td class="headerValue">2023-05-06 08:13:41</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -287,10 +287,10 @@
 <a name="216"><span class="lineNum">     216 </span>                :            : /*</a>
 <a name="217"><span class="lineNum">     217 </span>                :            :  * Generic EC key</a>
 <a name="218"><span class="lineNum">     218 </span>                :            :  */</a>
-<a name="219"><span class="lineNum">     219 </span>                :<span class="lineCov">       2336 : static int eckey_can_do( mbedtls_pk_type_t type )</span></a>
+<a name="219"><span class="lineNum">     219 </span>                :<span class="lineCov">       2340 : static int eckey_can_do( mbedtls_pk_type_t type )</span></a>
 <a name="220"><span class="lineNum">     220 </span>                :            : {</a>
-<a name="221"><span class="lineNum">     221 </span>        [<span class="branchCov" title="Branch 0 was taken 2336 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2336 :     return( type == MBEDTLS_PK_ECKEY ||</span></a>
-<a name="222"><span class="lineNum">     222 </span>  [<span class="branchCov" title="Branch 0 was taken 2336 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2333 times"> + </span><span class="branchCov" title="Branch 3 was taken 3 times"> + </span>]:<span class="lineCov">       4672 :             type == MBEDTLS_PK_ECKEY_DH ||</span></a>
+<a name="221"><span class="lineNum">     221 </span>        [<span class="branchCov" title="Branch 0 was taken 2340 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       2340 :     return( type == MBEDTLS_PK_ECKEY ||</span></a>
+<a name="222"><span class="lineNum">     222 </span>  [<span class="branchCov" title="Branch 0 was taken 2340 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 2337 times"> + </span><span class="branchCov" title="Branch 3 was taken 3 times"> + </span>]:<span class="lineCov">       4680 :             type == MBEDTLS_PK_ECKEY_DH ||</span></a>
 <a name="223"><span class="lineNum">     223 </span>                :            :             type == MBEDTLS_PK_ECDSA );</a>
 <a name="224"><span class="lineNum">     224 </span>                :            : }</a>
 <a name="225"><span class="lineNum">     225 </span>                :            : </a>
@@ -310,21 +310,21 @@
 <a name="239"><span class="lineNum">     239 </span>                :            :                    unsigned char *sig, size_t *sig_len,</a>
 <a name="240"><span class="lineNum">     240 </span>                :            :                    int (*f_rng)(void *, unsigned char *, size_t), void *p_rng );</a>
 <a name="241"><span class="lineNum">     241 </span>                :            : </a>
-<a name="242"><span class="lineNum">     242 </span>                :<span class="lineCov">       1165 : static int eckey_verify_wrap( void *ctx, mbedtls_md_type_t md_alg,</span></a>
+<a name="242"><span class="lineNum">     242 </span>                :<span class="lineCov">       1167 : static int eckey_verify_wrap( void *ctx, mbedtls_md_type_t md_alg,</span></a>
 <a name="243"><span class="lineNum">     243 </span>                :            :                        const unsigned char *hash, size_t hash_len,</a>
 <a name="244"><span class="lineNum">     244 </span>                :            :                        const unsigned char *sig, size_t sig_len )</a>
 <a name="245"><span class="lineNum">     245 </span>                :            : {</a>
-<a name="246"><span class="lineNum">     246 </span>                :<span class="lineCov">       1165 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="246"><span class="lineNum">     246 </span>                :<span class="lineCov">       1167 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="247"><span class="lineNum">     247 </span>                :            :     mbedtls_ecdsa_context ecdsa;</a>
 <a name="248"><span class="lineNum">     248 </span>                :            : </a>
-<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">       1165 :     mbedtls_ecdsa_init( &amp;ecdsa );</span></a>
+<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">       1167 :     mbedtls_ecdsa_init( &amp;ecdsa );</span></a>
 <a name="250"><span class="lineNum">     250 </span>                :            : </a>
-<a name="251"><span class="lineNum">     251 </span>        [<span class="branchCov" title="Branch 0 was taken 1165 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1165 :     if( ( ret = mbedtls_ecdsa_from_keypair( &amp;ecdsa, ctx ) ) == 0 )</span></a>
-<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">       1165 :         ret = ecdsa_verify_wrap( &amp;ecdsa, md_alg, hash, hash_len, sig, sig_len );</span></a>
+<a name="251"><span class="lineNum">     251 </span>        [<span class="branchCov" title="Branch 0 was taken 1167 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1167 :     if( ( ret = mbedtls_ecdsa_from_keypair( &amp;ecdsa, ctx ) ) == 0 )</span></a>
+<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">       1167 :         ret = ecdsa_verify_wrap( &amp;ecdsa, md_alg, hash, hash_len, sig, sig_len );</span></a>
 <a name="253"><span class="lineNum">     253 </span>                :            : </a>
-<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">       1165 :     mbedtls_ecdsa_free( &amp;ecdsa );</span></a>
+<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">       1167 :     mbedtls_ecdsa_free( &amp;ecdsa );</span></a>
 <a name="255"><span class="lineNum">     255 </span>                :            : </a>
-<a name="256"><span class="lineNum">     256 </span>                :<span class="lineCov">       1165 :     return( ret );</span></a>
+<a name="256"><span class="lineNum">     256 </span>                :<span class="lineCov">       1167 :     return( ret );</span></a>
 <a name="257"><span class="lineNum">     257 </span>                :            : }</a>
 <a name="258"><span class="lineNum">     258 </span>                :            : </a>
 <a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">          3 : static int eckey_sign_wrap( void *ctx, mbedtls_md_type_t md_alg,</span></a>
@@ -458,21 +458,21 @@
 <a name="387"><span class="lineNum">     387 </span>                :            :                                 (const mbedtls_ecp_keypair *) prv ) );</a>
 <a name="388"><span class="lineNum">     388 </span>                :            : }</a>
 <a name="389"><span class="lineNum">     389 </span>                :            : </a>
-<a name="390"><span class="lineNum">     390 </span>                :<span class="lineCov">       9706 : static void *eckey_alloc_wrap( void )</span></a>
+<a name="390"><span class="lineNum">     390 </span>                :<span class="lineCov">       9724 : static void *eckey_alloc_wrap( void )</span></a>
 <a name="391"><span class="lineNum">     391 </span>                :            : {</a>
-<a name="392"><span class="lineNum">     392 </span>                :<span class="lineCov">       9706 :     void *ctx = mbedtls_calloc( 1, sizeof( mbedtls_ecp_keypair ) );</span></a>
+<a name="392"><span class="lineNum">     392 </span>                :<span class="lineCov">       9724 :     void *ctx = mbedtls_calloc( 1, sizeof( mbedtls_ecp_keypair ) );</span></a>
 <a name="393"><span class="lineNum">     393 </span>                :            : </a>
-<a name="394"><span class="lineNum">     394 </span>        [<span class="branchCov" title="Branch 0 was taken 9706 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       9706 :     if( ctx != NULL )</span></a>
-<a name="395"><span class="lineNum">     395 </span>                :<span class="lineCov">       9706 :         mbedtls_ecp_keypair_init( ctx );</span></a>
+<a name="394"><span class="lineNum">     394 </span>        [<span class="branchCov" title="Branch 0 was taken 9724 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       9724 :     if( ctx != NULL )</span></a>
+<a name="395"><span class="lineNum">     395 </span>                :<span class="lineCov">       9724 :         mbedtls_ecp_keypair_init( ctx );</span></a>
 <a name="396"><span class="lineNum">     396 </span>                :            : </a>
-<a name="397"><span class="lineNum">     397 </span>                :<span class="lineCov">       9706 :     return( ctx );</span></a>
+<a name="397"><span class="lineNum">     397 </span>                :<span class="lineCov">       9724 :     return( ctx );</span></a>
 <a name="398"><span class="lineNum">     398 </span>                :            : }</a>
 <a name="399"><span class="lineNum">     399 </span>                :            : </a>
-<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">       9706 : static void eckey_free_wrap( void *ctx )</span></a>
+<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">       9724 : static void eckey_free_wrap( void *ctx )</span></a>
 <a name="401"><span class="lineNum">     401 </span>                :            : {</a>
-<a name="402"><span class="lineNum">     402 </span>                :<span class="lineCov">       9706 :     mbedtls_ecp_keypair_free( (mbedtls_ecp_keypair *) ctx );</span></a>
-<a name="403"><span class="lineNum">     403 </span>                :<span class="lineCov">       9706 :     mbedtls_free( ctx );</span></a>
-<a name="404"><span class="lineNum">     404 </span>                :<span class="lineCov">       9706 : }</span></a>
+<a name="402"><span class="lineNum">     402 </span>                :<span class="lineCov">       9724 :     mbedtls_ecp_keypair_free( (mbedtls_ecp_keypair *) ctx );</span></a>
+<a name="403"><span class="lineNum">     403 </span>                :<span class="lineCov">       9724 :     mbedtls_free( ctx );</span></a>
+<a name="404"><span class="lineNum">     404 </span>                :<span class="lineCov">       9724 : }</span></a>
 <a name="405"><span class="lineNum">     405 </span>                :            : </a>
 <a name="406"><span class="lineNum">     406 </span>                :<span class="lineNoCov">          0 : static void eckey_debug( const void *ctx, mbedtls_pk_debug_item *items )</span></a>
 <a name="407"><span class="lineNum">     407 </span>                :            : {</a>
@@ -690,20 +690,20 @@
 <a name="619"><span class="lineNum">     619 </span>                :            :     return( ret );</a>
 <a name="620"><span class="lineNum">     620 </span>                :            : }</a>
 <a name="621"><span class="lineNum">     621 </span>                :            : #else /* MBEDTLS_USE_PSA_CRYPTO */</a>
-<a name="622"><span class="lineNum">     622 </span>                :<span class="lineCov">       1165 : static int ecdsa_verify_wrap( void *ctx, mbedtls_md_type_t md_alg,</span></a>
+<a name="622"><span class="lineNum">     622 </span>                :<span class="lineCov">       1167 : static int ecdsa_verify_wrap( void *ctx, mbedtls_md_type_t md_alg,</span></a>
 <a name="623"><span class="lineNum">     623 </span>                :            :                        const unsigned char *hash, size_t hash_len,</a>
 <a name="624"><span class="lineNum">     624 </span>                :            :                        const unsigned char *sig, size_t sig_len )</a>
 <a name="625"><span class="lineNum">     625 </span>                :            : {</a>
-<a name="626"><span class="lineNum">     626 </span>                :<span class="lineCov">       1165 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="626"><span class="lineNum">     626 </span>                :<span class="lineCov">       1167 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="627"><span class="lineNum">     627 </span>                :            :     ((void) md_alg);</a>
 <a name="628"><span class="lineNum">     628 </span>                :            : </a>
-<a name="629"><span class="lineNum">     629 </span>                :<span class="lineCov">       1165 :     ret = mbedtls_ecdsa_read_signature( (mbedtls_ecdsa_context *) ctx,</span></a>
+<a name="629"><span class="lineNum">     629 </span>                :<span class="lineCov">       1167 :     ret = mbedtls_ecdsa_read_signature( (mbedtls_ecdsa_context *) ctx,</span></a>
 <a name="630"><span class="lineNum">     630 </span>                :            :                                 hash, hash_len, sig, sig_len );</a>
 <a name="631"><span class="lineNum">     631 </span>                :            : </a>
-<a name="632"><span class="lineNum">     632 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1165 times"> + </span>]:<span class="lineCov">       1165 :     if( ret == MBEDTLS_ERR_ECP_SIG_LEN_MISMATCH )</span></a>
+<a name="632"><span class="lineNum">     632 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1167 times"> + </span>]:<span class="lineCov">       1167 :     if( ret == MBEDTLS_ERR_ECP_SIG_LEN_MISMATCH )</span></a>
 <a name="633"><span class="lineNum">     633 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_PK_SIG_LEN_MISMATCH );</span></a>
 <a name="634"><span class="lineNum">     634 </span>                :            : </a>
-<a name="635"><span class="lineNum">     635 </span>                :<span class="lineCov">       1165 :     return( ret );</span></a>
+<a name="635"><span class="lineNum">     635 </span>                :<span class="lineCov">       1167 :     return( ret );</span></a>
 <a name="636"><span class="lineNum">     636 </span>                :            : }</a>
 <a name="637"><span class="lineNum">     637 </span>                :            : #endif /* MBEDTLS_USE_PSA_CRYPTO */</a>
 <a name="638"><span class="lineNum">     638 </span>                :            : </a>
