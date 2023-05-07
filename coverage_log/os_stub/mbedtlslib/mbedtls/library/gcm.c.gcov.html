@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-05-07 08:13:52</td>
+            <td class="headerValue">2023-05-07 23:15:58</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -132,11 +132,11 @@
 <a name="61"><span class="lineNum">      61 </span>                :            : /*</a>
 <a name="62"><span class="lineNum">      62 </span>                :            :  * Initialize a context</a>
 <a name="63"><span class="lineNum">      63 </span>                :            :  */</a>
-<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">        766 : void mbedtls_gcm_init( mbedtls_gcm_context *ctx )</span></a>
+<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">        768 : void mbedtls_gcm_init( mbedtls_gcm_context *ctx )</span></a>
 <a name="65"><span class="lineNum">      65 </span>                :            : {</a>
 <a name="66"><span class="lineNum">      66 </span>                :            :     GCM_VALIDATE( ctx != NULL );</a>
-<a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">        766 :     memset( ctx, 0, sizeof( mbedtls_gcm_context ) );</span></a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">        766 : }</span></a>
+<a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">        768 :     memset( ctx, 0, sizeof( mbedtls_gcm_context ) );</span></a>
+<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">        768 : }</span></a>
 <a name="69"><span class="lineNum">      69 </span>                :            : </a>
 <a name="70"><span class="lineNum">      70 </span>                :            : /*</a>
 <a name="71"><span class="lineNum">      71 </span>                :            :  * Precompute small multiples of H, that is set</a>
@@ -146,35 +146,35 @@
 <a name="75"><span class="lineNum">      75 </span>                :            :  * is the high-order bit of HH corresponds to P^0 and the low-order bit of HL</a>
 <a name="76"><span class="lineNum">      76 </span>                :            :  * corresponds to P^127.</a>
 <a name="77"><span class="lineNum">      77 </span>                :            :  */</a>
-<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">        766 : static int gcm_gen_table( mbedtls_gcm_context *ctx )</span></a>
+<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">        768 : static int gcm_gen_table( mbedtls_gcm_context *ctx )</span></a>
 <a name="79"><span class="lineNum">      79 </span>                :            : {</a>
 <a name="80"><span class="lineNum">      80 </span>                :            :     int ret, i, j;</a>
 <a name="81"><span class="lineNum">      81 </span>                :            :     uint64_t hi, lo;</a>
 <a name="82"><span class="lineNum">      82 </span>                :            :     uint64_t vl, vh;</a>
 <a name="83"><span class="lineNum">      83 </span>                :            :     unsigned char h[16];</a>
-<a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">        766 :     size_t olen = 0;</span></a>
+<a name="84"><span class="lineNum">      84 </span>                :<span class="lineCov">        768 :     size_t olen = 0;</span></a>
 <a name="85"><span class="lineNum">      85 </span>                :            : </a>
-<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">        766 :     memset( h, 0, 16 );</span></a>
-<a name="87"><span class="lineNum">      87 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, h, 16, h, &amp;olen ) ) != 0 )</span></a>
+<a name="86"><span class="lineNum">      86 </span>                :<span class="lineCov">        768 :     memset( h, 0, 16 );</span></a>
+<a name="87"><span class="lineNum">      87 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, h, 16, h, &amp;olen ) ) != 0 )</span></a>
 <a name="88"><span class="lineNum">      88 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="89"><span class="lineNum">      89 </span>                :            : </a>
 <a name="90"><span class="lineNum">      90 </span>                :            :     /* pack h as two 64-bits ints, big-endian */</a>
-<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">        766 :     hi = MBEDTLS_GET_UINT32_BE( h,  0  );</span></a>
-<a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">        766 :     lo = MBEDTLS_GET_UINT32_BE( h,  4  );</span></a>
-<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">        766 :     vh = (uint64_t) hi &lt;&lt; 32 | lo;</span></a>
+<a name="91"><span class="lineNum">      91 </span>                :<span class="lineCov">        768 :     hi = MBEDTLS_GET_UINT32_BE( h,  0  );</span></a>
+<a name="92"><span class="lineNum">      92 </span>                :<span class="lineCov">        768 :     lo = MBEDTLS_GET_UINT32_BE( h,  4  );</span></a>
+<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">        768 :     vh = (uint64_t) hi &lt;&lt; 32 | lo;</span></a>
 <a name="94"><span class="lineNum">      94 </span>                :            : </a>
-<a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">        766 :     hi = MBEDTLS_GET_UINT32_BE( h,  8  );</span></a>
-<a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">        766 :     lo = MBEDTLS_GET_UINT32_BE( h,  12 );</span></a>
-<a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">        766 :     vl = (uint64_t) hi &lt;&lt; 32 | lo;</span></a>
+<a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">        768 :     hi = MBEDTLS_GET_UINT32_BE( h,  8  );</span></a>
+<a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">        768 :     lo = MBEDTLS_GET_UINT32_BE( h,  12 );</span></a>
+<a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">        768 :     vl = (uint64_t) hi &lt;&lt; 32 | lo;</span></a>
 <a name="98"><span class="lineNum">      98 </span>                :            : </a>
 <a name="99"><span class="lineNum">      99 </span>                :            :     /* 8 = 1000 corresponds to 1 in GF(2^128) */</a>
-<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">        766 :     ctx-&gt;HL[8] = vl;</span></a>
-<a name="101"><span class="lineNum">     101 </span>                :<span class="lineCov">        766 :     ctx-&gt;HH[8] = vh;</span></a>
+<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">        768 :     ctx-&gt;HL[8] = vl;</span></a>
+<a name="101"><span class="lineNum">     101 </span>                :<span class="lineCov">        768 :     ctx-&gt;HH[8] = vh;</span></a>
 <a name="102"><span class="lineNum">     102 </span>                :            : </a>
 <a name="103"><span class="lineNum">     103 </span>                :            : #if defined(MBEDTLS_AESNI_C) &amp;&amp; defined(MBEDTLS_HAVE_X86_64)</a>
 <a name="104"><span class="lineNum">     104 </span>                :            :     /* With CLMUL support, we need only h, not the rest of the table */</a>
-<a name="105"><span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 0 was taken 766 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        766 :     if( mbedtls_aesni_has_support( MBEDTLS_AESNI_CLMUL ) )</span></a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">        766 :         return( 0 );</span></a>
+<a name="105"><span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 0 was taken 768 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        768 :     if( mbedtls_aesni_has_support( MBEDTLS_AESNI_CLMUL ) )</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">        768 :         return( 0 );</span></a>
 <a name="107"><span class="lineNum">     107 </span>                :            : #endif</a>
 <a name="108"><span class="lineNum">     108 </span>                :            : </a>
 <a name="109"><span class="lineNum">     109 </span>                :            :     /* 0 corresponds to 0 in GF(2^128) */</a>
@@ -206,41 +206,41 @@
 <a name="135"><span class="lineNum">     135 </span>                :<span class="lineNoCov">          0 :     return( 0 );</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :            : }</a>
 <a name="137"><span class="lineNum">     137 </span>                :            : </a>
-<a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">        766 : int mbedtls_gcm_setkey( mbedtls_gcm_context *ctx,</span></a>
+<a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">        768 : int mbedtls_gcm_setkey( mbedtls_gcm_context *ctx,</span></a>
 <a name="139"><span class="lineNum">     139 </span>                :            :                         mbedtls_cipher_id_t cipher,</a>
 <a name="140"><span class="lineNum">     140 </span>                :            :                         const unsigned char *key,</a>
 <a name="141"><span class="lineNum">     141 </span>                :            :                         unsigned int keybits )</a>
 <a name="142"><span class="lineNum">     142 </span>                :            : {</a>
-<a name="143"><span class="lineNum">     143 </span>                :<span class="lineCov">        766 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="143"><span class="lineNum">     143 </span>                :<span class="lineCov">        768 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="144"><span class="lineNum">     144 </span>                :            :     const mbedtls_cipher_info_t *cipher_info;</a>
 <a name="145"><span class="lineNum">     145 </span>                :            : </a>
 <a name="146"><span class="lineNum">     146 </span>                :            :     GCM_VALIDATE_RET( ctx != NULL );</a>
 <a name="147"><span class="lineNum">     147 </span>                :            :     GCM_VALIDATE_RET( key != NULL );</a>
 <a name="148"><span class="lineNum">     148 </span>                :            :     GCM_VALIDATE_RET( keybits == 128 || keybits == 192 || keybits == 256 );</a>
 <a name="149"><span class="lineNum">     149 </span>                :            : </a>
-<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">        766 :     cipher_info = mbedtls_cipher_info_from_values( cipher, keybits,</span></a>
+<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">        768 :     cipher_info = mbedtls_cipher_info_from_values( cipher, keybits,</span></a>
 <a name="151"><span class="lineNum">     151 </span>                :            :                                                    MBEDTLS_MODE_ECB );</a>
-<a name="152"><span class="lineNum">     152 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( cipher_info == NULL )</span></a>
+<a name="152"><span class="lineNum">     152 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( cipher_info == NULL )</span></a>
 <a name="153"><span class="lineNum">     153 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_GCM_BAD_INPUT );</span></a>
 <a name="154"><span class="lineNum">     154 </span>                :            : </a>
-<a name="155"><span class="lineNum">     155 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( cipher_info-&gt;block_size != 16 )</span></a>
+<a name="155"><span class="lineNum">     155 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( cipher_info-&gt;block_size != 16 )</span></a>
 <a name="156"><span class="lineNum">     156 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_GCM_BAD_INPUT );</span></a>
 <a name="157"><span class="lineNum">     157 </span>                :            : </a>
-<a name="158"><span class="lineNum">     158 </span>                :<span class="lineCov">        766 :     mbedtls_cipher_free( &amp;ctx-&gt;cipher_ctx );</span></a>
+<a name="158"><span class="lineNum">     158 </span>                :<span class="lineCov">        768 :     mbedtls_cipher_free( &amp;ctx-&gt;cipher_ctx );</span></a>
 <a name="159"><span class="lineNum">     159 </span>                :            : </a>
-<a name="160"><span class="lineNum">     160 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = mbedtls_cipher_setup( &amp;ctx-&gt;cipher_ctx, cipher_info ) ) != 0 )</span></a>
+<a name="160"><span class="lineNum">     160 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = mbedtls_cipher_setup( &amp;ctx-&gt;cipher_ctx, cipher_info ) ) != 0 )</span></a>
 <a name="161"><span class="lineNum">     161 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="162"><span class="lineNum">     162 </span>                :            : </a>
-<a name="163"><span class="lineNum">     163 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = mbedtls_cipher_setkey( &amp;ctx-&gt;cipher_ctx, key, keybits,</span></a>
+<a name="163"><span class="lineNum">     163 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = mbedtls_cipher_setkey( &amp;ctx-&gt;cipher_ctx, key, keybits,</span></a>
 <a name="164"><span class="lineNum">     164 </span>                :            :                                MBEDTLS_ENCRYPT ) ) != 0 )</a>
 <a name="165"><span class="lineNum">     165 </span>                :            :     {</a>
 <a name="166"><span class="lineNum">     166 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="167"><span class="lineNum">     167 </span>                :            :     }</a>
 <a name="168"><span class="lineNum">     168 </span>                :            : </a>
-<a name="169"><span class="lineNum">     169 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = gcm_gen_table( ctx ) ) != 0 )</span></a>
+<a name="169"><span class="lineNum">     169 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = gcm_gen_table( ctx ) ) != 0 )</span></a>
 <a name="170"><span class="lineNum">     170 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="171"><span class="lineNum">     171 </span>                :            : </a>
-<a name="172"><span class="lineNum">     172 </span>                :<span class="lineCov">        766 :     return( 0 );</span></a>
+<a name="172"><span class="lineNum">     172 </span>                :<span class="lineCov">        768 :     return( 0 );</span></a>
 <a name="173"><span class="lineNum">     173 </span>                :            : }</a>
 <a name="174"><span class="lineNum">     174 </span>                :            : </a>
 <a name="175"><span class="lineNum">     175 </span>                :            : /*</a>
@@ -260,24 +260,24 @@
 <a name="189"><span class="lineNum">     189 </span>                :            :  * Sets output to x times H using the precomputed tables.</a>
 <a name="190"><span class="lineNum">     190 </span>                :            :  * x and output are seen as elements of GF(2^128) as in [MGV].</a>
 <a name="191"><span class="lineNum">     191 </span>                :            :  */</a>
-<a name="192"><span class="lineNum">     192 </span>                :<span class="lineCov">       3419 : static void gcm_mult( mbedtls_gcm_context *ctx, const unsigned char x[16],</span></a>
+<a name="192"><span class="lineNum">     192 </span>                :<span class="lineCov">       3506 : static void gcm_mult( mbedtls_gcm_context *ctx, const unsigned char x[16],</span></a>
 <a name="193"><span class="lineNum">     193 </span>                :            :                       unsigned char output[16] )</a>
 <a name="194"><span class="lineNum">     194 </span>                :            : {</a>
-<a name="195"><span class="lineNum">     195 </span>                :<span class="lineCov">       3419 :     int i = 0;</span></a>
+<a name="195"><span class="lineNum">     195 </span>                :<span class="lineCov">       3506 :     int i = 0;</span></a>
 <a name="196"><span class="lineNum">     196 </span>                :            :     unsigned char lo, hi, rem;</a>
 <a name="197"><span class="lineNum">     197 </span>                :            :     uint64_t zh, zl;</a>
 <a name="198"><span class="lineNum">     198 </span>                :            : </a>
 <a name="199"><span class="lineNum">     199 </span>                :            : #if defined(MBEDTLS_AESNI_C) &amp;&amp; defined(MBEDTLS_HAVE_X86_64)</a>
-<a name="200"><span class="lineNum">     200 </span>        [<span class="branchCov" title="Branch 0 was taken 3419 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       3419 :     if( mbedtls_aesni_has_support( MBEDTLS_AESNI_CLMUL ) ) {</span></a>
+<a name="200"><span class="lineNum">     200 </span>        [<span class="branchCov" title="Branch 0 was taken 3506 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       3506 :     if( mbedtls_aesni_has_support( MBEDTLS_AESNI_CLMUL ) ) {</span></a>
 <a name="201"><span class="lineNum">     201 </span>                :            :         unsigned char h[16];</a>
 <a name="202"><span class="lineNum">     202 </span>                :            : </a>
-<a name="203"><span class="lineNum">     203 </span>                :<span class="lineCov">       3419 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8] &gt;&gt; 32, h,  0 );</span></a>
-<a name="204"><span class="lineNum">     204 </span>                :<span class="lineCov">       3419 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8],       h,  4 );</span></a>
-<a name="205"><span class="lineNum">     205 </span>                :<span class="lineCov">       3419 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8] &gt;&gt; 32, h,  8 );</span></a>
-<a name="206"><span class="lineNum">     206 </span>                :<span class="lineCov">       3419 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8],       h, 12 );</span></a>
+<a name="203"><span class="lineNum">     203 </span>                :<span class="lineCov">       3506 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8] &gt;&gt; 32, h,  0 );</span></a>
+<a name="204"><span class="lineNum">     204 </span>                :<span class="lineCov">       3506 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HH[8],       h,  4 );</span></a>
+<a name="205"><span class="lineNum">     205 </span>                :<span class="lineCov">       3506 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8] &gt;&gt; 32, h,  8 );</span></a>
+<a name="206"><span class="lineNum">     206 </span>                :<span class="lineCov">       3506 :         MBEDTLS_PUT_UINT32_BE( ctx-&gt;HL[8],       h, 12 );</span></a>
 <a name="207"><span class="lineNum">     207 </span>                :            : </a>
-<a name="208"><span class="lineNum">     208 </span>                :<span class="lineCov">       3419 :         mbedtls_aesni_gcm_mult( output, x, h );</span></a>
-<a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">       3419 :         return;</span></a>
+<a name="208"><span class="lineNum">     208 </span>                :<span class="lineCov">       3506 :         mbedtls_aesni_gcm_mult( output, x, h );</span></a>
+<a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">       3506 :         return;</span></a>
 <a name="210"><span class="lineNum">     210 </span>                :            :     }</a>
 <a name="211"><span class="lineNum">     211 </span>                :            : #endif /* MBEDTLS_AESNI_C &amp;&amp; MBEDTLS_HAVE_X86_64 */</a>
 <a name="212"><span class="lineNum">     212 </span>                :            : </a>
@@ -316,18 +316,18 @@
 <a name="245"><span class="lineNum">     245 </span>                :<span class="lineNoCov">          0 :     MBEDTLS_PUT_UINT32_BE( zl, output, 12 );</span></a>
 <a name="246"><span class="lineNum">     246 </span>                :            : }</a>
 <a name="247"><span class="lineNum">     247 </span>                :            : </a>
-<a name="248"><span class="lineNum">     248 </span>                :<span class="lineCov">        766 : int mbedtls_gcm_starts( mbedtls_gcm_context *ctx,</span></a>
+<a name="248"><span class="lineNum">     248 </span>                :<span class="lineCov">        768 : int mbedtls_gcm_starts( mbedtls_gcm_context *ctx,</span></a>
 <a name="249"><span class="lineNum">     249 </span>                :            :                 int mode,</a>
 <a name="250"><span class="lineNum">     250 </span>                :            :                 const unsigned char *iv,</a>
 <a name="251"><span class="lineNum">     251 </span>                :            :                 size_t iv_len,</a>
 <a name="252"><span class="lineNum">     252 </span>                :            :                 const unsigned char *add,</a>
 <a name="253"><span class="lineNum">     253 </span>                :            :                 size_t add_len )</a>
 <a name="254"><span class="lineNum">     254 </span>                :            : {</a>
-<a name="255"><span class="lineNum">     255 </span>                :<span class="lineCov">        766 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="255"><span class="lineNum">     255 </span>                :<span class="lineCov">        768 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="256"><span class="lineNum">     256 </span>                :            :     unsigned char work_buf[16];</a>
 <a name="257"><span class="lineNum">     257 </span>                :            :     size_t i;</a>
 <a name="258"><span class="lineNum">     258 </span>                :            :     const unsigned char *p;</a>
-<a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">        766 :     size_t use_len, olen = 0;</span></a>
+<a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">        768 :     size_t use_len, olen = 0;</span></a>
 <a name="260"><span class="lineNum">     260 </span>                :            :     uint64_t iv_bits;</a>
 <a name="261"><span class="lineNum">     261 </span>                :            : </a>
 <a name="262"><span class="lineNum">     262 </span>                :            :     GCM_VALIDATE_RET( ctx != NULL );</a>
@@ -336,24 +336,24 @@
 <a name="265"><span class="lineNum">     265 </span>                :            : </a>
 <a name="266"><span class="lineNum">     266 </span>                :            :     /* IV and AD are limited to 2^64 bits, so 2^61 bytes */</a>
 <a name="267"><span class="lineNum">     267 </span>                :            :     /* IV is not allowed to be zero length */</a>
-<a name="268"><span class="lineNum">     268 </span>        [<span class="branchCov" title="Branch 0 was taken 766 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        766 :     if( iv_len == 0 ||</span></a>
-<a name="269"><span class="lineNum">     269 </span>        [<span class="branchCov" title="Branch 0 was taken 766 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        766 :       ( (uint64_t) iv_len  ) &gt;&gt; 61 != 0 ||</span></a>
-<a name="270"><span class="lineNum">     270 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :       ( (uint64_t) add_len ) &gt;&gt; 61 != 0 )</span></a>
+<a name="268"><span class="lineNum">     268 </span>        [<span class="branchCov" title="Branch 0 was taken 768 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        768 :     if( iv_len == 0 ||</span></a>
+<a name="269"><span class="lineNum">     269 </span>        [<span class="branchCov" title="Branch 0 was taken 768 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        768 :       ( (uint64_t) iv_len  ) &gt;&gt; 61 != 0 ||</span></a>
+<a name="270"><span class="lineNum">     270 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :       ( (uint64_t) add_len ) &gt;&gt; 61 != 0 )</span></a>
 <a name="271"><span class="lineNum">     271 </span>                :            :     {</a>
 <a name="272"><span class="lineNum">     272 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_GCM_BAD_INPUT );</span></a>
 <a name="273"><span class="lineNum">     273 </span>                :            :     }</a>
 <a name="274"><span class="lineNum">     274 </span>                :            : </a>
-<a name="275"><span class="lineNum">     275 </span>                :<span class="lineCov">        766 :     memset( ctx-&gt;y, 0x00, sizeof(ctx-&gt;y) );</span></a>
-<a name="276"><span class="lineNum">     276 </span>                :<span class="lineCov">        766 :     memset( ctx-&gt;buf, 0x00, sizeof(ctx-&gt;buf) );</span></a>
+<a name="275"><span class="lineNum">     275 </span>                :<span class="lineCov">        768 :     memset( ctx-&gt;y, 0x00, sizeof(ctx-&gt;y) );</span></a>
+<a name="276"><span class="lineNum">     276 </span>                :<span class="lineCov">        768 :     memset( ctx-&gt;buf, 0x00, sizeof(ctx-&gt;buf) );</span></a>
 <a name="277"><span class="lineNum">     277 </span>                :            : </a>
-<a name="278"><span class="lineNum">     278 </span>                :<span class="lineCov">        766 :     ctx-&gt;mode = mode;</span></a>
-<a name="279"><span class="lineNum">     279 </span>                :<span class="lineCov">        766 :     ctx-&gt;len = 0;</span></a>
-<a name="280"><span class="lineNum">     280 </span>                :<span class="lineCov">        766 :     ctx-&gt;add_len = 0;</span></a>
+<a name="278"><span class="lineNum">     278 </span>                :<span class="lineCov">        768 :     ctx-&gt;mode = mode;</span></a>
+<a name="279"><span class="lineNum">     279 </span>                :<span class="lineCov">        768 :     ctx-&gt;len = 0;</span></a>
+<a name="280"><span class="lineNum">     280 </span>                :<span class="lineCov">        768 :     ctx-&gt;add_len = 0;</span></a>
 <a name="281"><span class="lineNum">     281 </span>                :            : </a>
-<a name="282"><span class="lineNum">     282 </span>        [<span class="branchCov" title="Branch 0 was taken 766 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        766 :     if( iv_len == 12 )</span></a>
+<a name="282"><span class="lineNum">     282 </span>        [<span class="branchCov" title="Branch 0 was taken 768 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        768 :     if( iv_len == 12 )</span></a>
 <a name="283"><span class="lineNum">     283 </span>                :            :     {</a>
-<a name="284"><span class="lineNum">     284 </span>                :<span class="lineCov">        766 :         memcpy( ctx-&gt;y, iv, iv_len );</span></a>
-<a name="285"><span class="lineNum">     285 </span>                :<span class="lineCov">        766 :         ctx-&gt;y[15] = 1;</span></a>
+<a name="284"><span class="lineNum">     284 </span>                :<span class="lineCov">        768 :         memcpy( ctx-&gt;y, iv, iv_len );</span></a>
+<a name="285"><span class="lineNum">     285 </span>                :<span class="lineCov">        768 :         ctx-&gt;y[15] = 1;</span></a>
 <a name="286"><span class="lineNum">     286 </span>                :            :     }</a>
 <a name="287"><span class="lineNum">     287 </span>                :            :     else</a>
 <a name="288"><span class="lineNum">     288 </span>                :            :     {</a>
@@ -381,94 +381,94 @@
 <a name="310"><span class="lineNum">     310 </span>                :<span class="lineNoCov">          0 :         gcm_mult( ctx, ctx-&gt;y, ctx-&gt;y );</span></a>
 <a name="311"><span class="lineNum">     311 </span>                :            :     }</a>
 <a name="312"><span class="lineNum">     312 </span>                :            : </a>
-<a name="313"><span class="lineNum">     313 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, ctx-&gt;y, 16,</span></a>
-<a name="314"><span class="lineNum">     314 </span>                :<span class="lineCov">        766 :                                        ctx-&gt;base_ectr, &amp;olen ) ) != 0 )</span></a>
+<a name="313"><span class="lineNum">     313 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, ctx-&gt;y, 16,</span></a>
+<a name="314"><span class="lineNum">     314 </span>                :<span class="lineCov">        768 :                                        ctx-&gt;base_ectr, &amp;olen ) ) != 0 )</span></a>
 <a name="315"><span class="lineNum">     315 </span>                :            :     {</a>
 <a name="316"><span class="lineNum">     316 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="317"><span class="lineNum">     317 </span>                :            :     }</a>
 <a name="318"><span class="lineNum">     318 </span>                :            : </a>
-<a name="319"><span class="lineNum">     319 </span>                :<span class="lineCov">        766 :     ctx-&gt;add_len = add_len;</span></a>
-<a name="320"><span class="lineNum">     320 </span>                :<span class="lineCov">        766 :     p = add;</span></a>
-<a name="321"><span class="lineNum">     321 </span>        [<span class="branchCov" title="Branch 0 was taken 766 times"> + </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">       1532 :     while( add_len &gt; 0 )</span></a>
+<a name="319"><span class="lineNum">     319 </span>                :<span class="lineCov">        768 :     ctx-&gt;add_len = add_len;</span></a>
+<a name="320"><span class="lineNum">     320 </span>                :<span class="lineCov">        768 :     p = add;</span></a>
+<a name="321"><span class="lineNum">     321 </span>        [<span class="branchCov" title="Branch 0 was taken 772 times"> + </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">       1540 :     while( add_len &gt; 0 )</span></a>
 <a name="322"><span class="lineNum">     322 </span>                :            :     {</a>
-<a name="323"><span class="lineNum">     323 </span>                :<span class="lineCov">        766 :         use_len = ( add_len &lt; 16 ) ? add_len : 16;</span></a>
+<a name="323"><span class="lineNum">     323 </span>                :<span class="lineCov">        772 :         use_len = ( add_len &lt; 16 ) ? add_len : 16;</span></a>
 <a name="324"><span class="lineNum">     324 </span>                :            : </a>
-<a name="325"><span class="lineNum">     325 </span>        [<span class="branchCov" title="Branch 0 was taken 6128 times"> + </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">       6894 :         for( i = 0; i &lt; use_len; i++ )</span></a>
-<a name="326"><span class="lineNum">     326 </span>                :<span class="lineCov">       6128 :             ctx-&gt;buf[i] ^= p[i];</span></a>
+<a name="325"><span class="lineNum">     325 </span>        [<span class="branchCov" title="Branch 0 was taken 6216 times"> + </span><span class="branchCov" title="Branch 1 was taken 772 times"> + </span>]:<span class="lineCov">       6988 :         for( i = 0; i &lt; use_len; i++ )</span></a>
+<a name="326"><span class="lineNum">     326 </span>                :<span class="lineCov">       6216 :             ctx-&gt;buf[i] ^= p[i];</span></a>
 <a name="327"><span class="lineNum">     327 </span>                :            : </a>
-<a name="328"><span class="lineNum">     328 </span>                :<span class="lineCov">        766 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
+<a name="328"><span class="lineNum">     328 </span>                :<span class="lineCov">        772 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
 <a name="329"><span class="lineNum">     329 </span>                :            : </a>
-<a name="330"><span class="lineNum">     330 </span>                :<span class="lineCov">        766 :         add_len -= use_len;</span></a>
-<a name="331"><span class="lineNum">     331 </span>                :<span class="lineCov">        766 :         p += use_len;</span></a>
+<a name="330"><span class="lineNum">     330 </span>                :<span class="lineCov">        772 :         add_len -= use_len;</span></a>
+<a name="331"><span class="lineNum">     331 </span>                :<span class="lineCov">        772 :         p += use_len;</span></a>
 <a name="332"><span class="lineNum">     332 </span>                :            :     }</a>
 <a name="333"><span class="lineNum">     333 </span>                :            : </a>
-<a name="334"><span class="lineNum">     334 </span>                :<span class="lineCov">        766 :     return( 0 );</span></a>
+<a name="334"><span class="lineNum">     334 </span>                :<span class="lineCov">        768 :     return( 0 );</span></a>
 <a name="335"><span class="lineNum">     335 </span>                :            : }</a>
 <a name="336"><span class="lineNum">     336 </span>                :            : </a>
-<a name="337"><span class="lineNum">     337 </span>                :<span class="lineCov">        766 : int mbedtls_gcm_update( mbedtls_gcm_context *ctx,</span></a>
+<a name="337"><span class="lineNum">     337 </span>                :<span class="lineCov">        768 : int mbedtls_gcm_update( mbedtls_gcm_context *ctx,</span></a>
 <a name="338"><span class="lineNum">     338 </span>                :            :                 size_t length,</a>
 <a name="339"><span class="lineNum">     339 </span>                :            :                 const unsigned char *input,</a>
 <a name="340"><span class="lineNum">     340 </span>                :            :                 unsigned char *output )</a>
 <a name="341"><span class="lineNum">     341 </span>                :            : {</a>
-<a name="342"><span class="lineNum">     342 </span>                :<span class="lineCov">        766 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="342"><span class="lineNum">     342 </span>                :<span class="lineCov">        768 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="343"><span class="lineNum">     343 </span>                :            :     unsigned char ectr[16];</a>
 <a name="344"><span class="lineNum">     344 </span>                :            :     size_t i;</a>
 <a name="345"><span class="lineNum">     345 </span>                :            :     const unsigned char *p;</a>
-<a name="346"><span class="lineNum">     346 </span>                :<span class="lineCov">        766 :     unsigned char *out_p = output;</span></a>
-<a name="347"><span class="lineNum">     347 </span>                :<span class="lineCov">        766 :     size_t use_len, olen = 0;</span></a>
+<a name="346"><span class="lineNum">     346 </span>                :<span class="lineCov">        768 :     unsigned char *out_p = output;</span></a>
+<a name="347"><span class="lineNum">     347 </span>                :<span class="lineCov">        768 :     size_t use_len, olen = 0;</span></a>
 <a name="348"><span class="lineNum">     348 </span>                :            : </a>
 <a name="349"><span class="lineNum">     349 </span>                :            :     GCM_VALIDATE_RET( ctx != NULL );</a>
 <a name="350"><span class="lineNum">     350 </span>                :            :     GCM_VALIDATE_RET( length == 0 || input != NULL );</a>
 <a name="351"><span class="lineNum">     351 </span>                :            :     GCM_VALIDATE_RET( length == 0 || output != NULL );</a>
 <a name="352"><span class="lineNum">     352 </span>                :            : </a>
-<a name="353"><span class="lineNum">     353 </span>  [<span class="branchCov" title="Branch 0 was taken 452 times"> + </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 452 times"> + </span>]:<span class="lineCov">        766 :     if( output &gt; input &amp;&amp; (size_t) ( output - input ) &lt; length )</span></a>
+<a name="353"><span class="lineNum">     353 </span>  [<span class="branchCov" title="Branch 0 was taken 454 times"> + </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 454 times"> + </span>]:<span class="lineCov">        768 :     if( output &gt; input &amp;&amp; (size_t) ( output - input ) &lt; length )</span></a>
 <a name="354"><span class="lineNum">     354 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_GCM_BAD_INPUT );</span></a>
 <a name="355"><span class="lineNum">     355 </span>                :            : </a>
 <a name="356"><span class="lineNum">     356 </span>                :            :     /* Total length is restricted to 2^39 - 256 bits, ie 2^36 - 2^5 bytes</a>
 <a name="357"><span class="lineNum">     357 </span>                :            :      * Also check for possible overflow */</a>
-<a name="358"><span class="lineNum">     358 </span>        [<span class="branchCov" title="Branch 0 was taken 766 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        766 :     if( ctx-&gt;len + length &lt; ctx-&gt;len ||</span></a>
-<a name="359"><span class="lineNum">     359 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :         (uint64_t) ctx-&gt;len + length &gt; 0xFFFFFFFE0ull )</span></a>
+<a name="358"><span class="lineNum">     358 </span>        [<span class="branchCov" title="Branch 0 was taken 768 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        768 :     if( ctx-&gt;len + length &lt; ctx-&gt;len ||</span></a>
+<a name="359"><span class="lineNum">     359 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :         (uint64_t) ctx-&gt;len + length &gt; 0xFFFFFFFE0ull )</span></a>
 <a name="360"><span class="lineNum">     360 </span>                :            :     {</a>
 <a name="361"><span class="lineNum">     361 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_GCM_BAD_INPUT );</span></a>
 <a name="362"><span class="lineNum">     362 </span>                :            :     }</a>
 <a name="363"><span class="lineNum">     363 </span>                :            : </a>
-<a name="364"><span class="lineNum">     364 </span>                :<span class="lineCov">        766 :     ctx-&gt;len += length;</span></a>
+<a name="364"><span class="lineNum">     364 </span>                :<span class="lineCov">        768 :     ctx-&gt;len += length;</span></a>
 <a name="365"><span class="lineNum">     365 </span>                :            : </a>
-<a name="366"><span class="lineNum">     366 </span>                :<span class="lineCov">        766 :     p = input;</span></a>
-<a name="367"><span class="lineNum">     367 </span>        [<span class="branchCov" title="Branch 0 was taken 1887 times"> + </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">       2653 :     while( length &gt; 0 )</span></a>
+<a name="366"><span class="lineNum">     366 </span>                :<span class="lineCov">        768 :     p = input;</span></a>
+<a name="367"><span class="lineNum">     367 </span>        [<span class="branchCov" title="Branch 0 was taken 1966 times"> + </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">       2734 :     while( length &gt; 0 )</span></a>
 <a name="368"><span class="lineNum">     368 </span>                :            :     {</a>
-<a name="369"><span class="lineNum">     369 </span>                :<span class="lineCov">       1887 :         use_len = ( length &lt; 16 ) ? length : 16;</span></a>
+<a name="369"><span class="lineNum">     369 </span>                :<span class="lineCov">       1966 :         use_len = ( length &lt; 16 ) ? length : 16;</span></a>
 <a name="370"><span class="lineNum">     370 </span>                :            : </a>
-<a name="371"><span class="lineNum">     371 </span>        [<span class="branchCov" title="Branch 0 was taken 1887 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1887 :         for( i = 16; i &gt; 12; i-- )</span></a>
-<a name="372"><span class="lineNum">     372 </span>        [<span class="branchCov" title="Branch 0 was taken 1887 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1887 :             if( ++ctx-&gt;y[i - 1] != 0 )</span></a>
-<a name="373"><span class="lineNum">     373 </span>                :<span class="lineCov">       1887 :                 break;</span></a>
+<a name="371"><span class="lineNum">     371 </span>        [<span class="branchCov" title="Branch 0 was taken 1966 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1966 :         for( i = 16; i &gt; 12; i-- )</span></a>
+<a name="372"><span class="lineNum">     372 </span>        [<span class="branchCov" title="Branch 0 was taken 1966 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1966 :             if( ++ctx-&gt;y[i - 1] != 0 )</span></a>
+<a name="373"><span class="lineNum">     373 </span>                :<span class="lineCov">       1966 :                 break;</span></a>
 <a name="374"><span class="lineNum">     374 </span>                :            : </a>
-<a name="375"><span class="lineNum">     375 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1887 times"> + </span>]:<span class="lineCov">       1887 :         if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, ctx-&gt;y, 16, ectr,</span></a>
+<a name="375"><span class="lineNum">     375 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1966 times"> + </span>]:<span class="lineCov">       1966 :         if( ( ret = mbedtls_cipher_update( &amp;ctx-&gt;cipher_ctx, ctx-&gt;y, 16, ectr,</span></a>
 <a name="376"><span class="lineNum">     376 </span>                :            :                                    &amp;olen ) ) != 0 )</a>
 <a name="377"><span class="lineNum">     377 </span>                :            :         {</a>
 <a name="378"><span class="lineNum">     378 </span>                :<span class="lineNoCov">          0 :             return( ret );</span></a>
 <a name="379"><span class="lineNum">     379 </span>                :            :         }</a>
 <a name="380"><span class="lineNum">     380 </span>                :            : </a>
-<a name="381"><span class="lineNum">     381 </span>        [<span class="branchCov" title="Branch 0 was taken 24767 times"> + </span><span class="branchCov" title="Branch 1 was taken 1887 times"> + </span>]:<span class="lineCov">      26654 :         for( i = 0; i &lt; use_len; i++ )</span></a>
+<a name="381"><span class="lineNum">     381 </span>        [<span class="branchCov" title="Branch 0 was taken 25527 times"> + </span><span class="branchCov" title="Branch 1 was taken 1966 times"> + </span>]:<span class="lineCov">      27493 :         for( i = 0; i &lt; use_len; i++ )</span></a>
 <a name="382"><span class="lineNum">     382 </span>                :            :         {</a>
-<a name="383"><span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 0 was taken 10327 times"> + </span><span class="branchCov" title="Branch 1 was taken 14440 times"> + </span>]:<span class="lineCov">      24767 :             if( ctx-&gt;mode == MBEDTLS_GCM_DECRYPT )</span></a>
-<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">      10327 :                 ctx-&gt;buf[i] ^= p[i];</span></a>
-<a name="385"><span class="lineNum">     385 </span>                :<span class="lineCov">      24767 :             out_p[i] = ectr[i] ^ p[i];</span></a>
-<a name="386"><span class="lineNum">     386 </span>        [<span class="branchCov" title="Branch 0 was taken 14440 times"> + </span><span class="branchCov" title="Branch 1 was taken 10327 times"> + </span>]:<span class="lineCov">      24767 :             if( ctx-&gt;mode == MBEDTLS_GCM_ENCRYPT )</span></a>
-<a name="387"><span class="lineNum">     387 </span>                :<span class="lineCov">      14440 :                 ctx-&gt;buf[i] ^= out_p[i];</span></a>
+<a name="383"><span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 0 was taken 10757 times"> + </span><span class="branchCov" title="Branch 1 was taken 14770 times"> + </span>]:<span class="lineCov">      25527 :             if( ctx-&gt;mode == MBEDTLS_GCM_DECRYPT )</span></a>
+<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">      10757 :                 ctx-&gt;buf[i] ^= p[i];</span></a>
+<a name="385"><span class="lineNum">     385 </span>                :<span class="lineCov">      25527 :             out_p[i] = ectr[i] ^ p[i];</span></a>
+<a name="386"><span class="lineNum">     386 </span>        [<span class="branchCov" title="Branch 0 was taken 14770 times"> + </span><span class="branchCov" title="Branch 1 was taken 10757 times"> + </span>]:<span class="lineCov">      25527 :             if( ctx-&gt;mode == MBEDTLS_GCM_ENCRYPT )</span></a>
+<a name="387"><span class="lineNum">     387 </span>                :<span class="lineCov">      14770 :                 ctx-&gt;buf[i] ^= out_p[i];</span></a>
 <a name="388"><span class="lineNum">     388 </span>                :            :         }</a>
 <a name="389"><span class="lineNum">     389 </span>                :            : </a>
-<a name="390"><span class="lineNum">     390 </span>                :<span class="lineCov">       1887 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
+<a name="390"><span class="lineNum">     390 </span>                :<span class="lineCov">       1966 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
 <a name="391"><span class="lineNum">     391 </span>                :            : </a>
-<a name="392"><span class="lineNum">     392 </span>                :<span class="lineCov">       1887 :         length -= use_len;</span></a>
-<a name="393"><span class="lineNum">     393 </span>                :<span class="lineCov">       1887 :         p += use_len;</span></a>
-<a name="394"><span class="lineNum">     394 </span>                :<span class="lineCov">       1887 :         out_p += use_len;</span></a>
+<a name="392"><span class="lineNum">     392 </span>                :<span class="lineCov">       1966 :         length -= use_len;</span></a>
+<a name="393"><span class="lineNum">     393 </span>                :<span class="lineCov">       1966 :         p += use_len;</span></a>
+<a name="394"><span class="lineNum">     394 </span>                :<span class="lineCov">       1966 :         out_p += use_len;</span></a>
 <a name="395"><span class="lineNum">     395 </span>                :            :     }</a>
 <a name="396"><span class="lineNum">     396 </span>                :            : </a>
-<a name="397"><span class="lineNum">     397 </span>                :<span class="lineCov">        766 :     return( 0 );</span></a>
+<a name="397"><span class="lineNum">     397 </span>                :<span class="lineCov">        768 :     return( 0 );</span></a>
 <a name="398"><span class="lineNum">     398 </span>                :            : }</a>
 <a name="399"><span class="lineNum">     399 </span>                :            : </a>
-<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">        766 : int mbedtls_gcm_finish( mbedtls_gcm_context *ctx,</span></a>
+<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">        768 : int mbedtls_gcm_finish( mbedtls_gcm_context *ctx,</span></a>
 <a name="401"><span class="lineNum">     401 </span>                :            :                 unsigned char *tag,</a>
 <a name="402"><span class="lineNum">     402 </span>                :            :                 size_t tag_len )</a>
 <a name="403"><span class="lineNum">     403 </span>                :            : {</a>
@@ -480,36 +480,36 @@
 <a name="409"><span class="lineNum">     409 </span>                :            :     GCM_VALIDATE_RET( ctx != NULL );</a>
 <a name="410"><span class="lineNum">     410 </span>                :            :     GCM_VALIDATE_RET( tag != NULL );</a>
 <a name="411"><span class="lineNum">     411 </span>                :            : </a>
-<a name="412"><span class="lineNum">     412 </span>                :<span class="lineCov">        766 :     orig_len = ctx-&gt;len * 8;</span></a>
-<a name="413"><span class="lineNum">     413 </span>                :<span class="lineCov">        766 :     orig_add_len = ctx-&gt;add_len * 8;</span></a>
+<a name="412"><span class="lineNum">     412 </span>                :<span class="lineCov">        768 :     orig_len = ctx-&gt;len * 8;</span></a>
+<a name="413"><span class="lineNum">     413 </span>                :<span class="lineCov">        768 :     orig_add_len = ctx-&gt;add_len * 8;</span></a>
 <a name="414"><span class="lineNum">     414 </span>                :            : </a>
-<a name="415"><span class="lineNum">     415 </span>  [<span class="branchCov" title="Branch 0 was taken 766 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( tag_len &gt; 16 || tag_len &lt; 4 )</span></a>
+<a name="415"><span class="lineNum">     415 </span>  [<span class="branchCov" title="Branch 0 was taken 768 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( tag_len &gt; 16 || tag_len &lt; 4 )</span></a>
 <a name="416"><span class="lineNum">     416 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_GCM_BAD_INPUT );</span></a>
 <a name="417"><span class="lineNum">     417 </span>                :            : </a>
-<a name="418"><span class="lineNum">     418 </span>                :<span class="lineCov">        766 :     memcpy( tag, ctx-&gt;base_ectr, tag_len );</span></a>
+<a name="418"><span class="lineNum">     418 </span>                :<span class="lineCov">        768 :     memcpy( tag, ctx-&gt;base_ectr, tag_len );</span></a>
 <a name="419"><span class="lineNum">     419 </span>                :            : </a>
-<a name="420"><span class="lineNum">     420 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        766 :     if( orig_len || orig_add_len )</span></a>
+<a name="420"><span class="lineNum">     420 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        768 :     if( orig_len || orig_add_len )</span></a>
 <a name="421"><span class="lineNum">     421 </span>                :            :     {</a>
-<a name="422"><span class="lineNum">     422 </span>                :<span class="lineCov">        766 :         memset( work_buf, 0x00, 16 );</span></a>
+<a name="422"><span class="lineNum">     422 </span>                :<span class="lineCov">        768 :         memset( work_buf, 0x00, 16 );</span></a>
 <a name="423"><span class="lineNum">     423 </span>                :            : </a>
-<a name="424"><span class="lineNum">     424 </span>                :<span class="lineCov">        766 :         MBEDTLS_PUT_UINT32_BE( ( orig_add_len &gt;&gt; 32 ), work_buf, 0  );</span></a>
-<a name="425"><span class="lineNum">     425 </span>                :<span class="lineCov">        766 :         MBEDTLS_PUT_UINT32_BE( ( orig_add_len       ), work_buf, 4  );</span></a>
-<a name="426"><span class="lineNum">     426 </span>                :<span class="lineCov">        766 :         MBEDTLS_PUT_UINT32_BE( ( orig_len     &gt;&gt; 32 ), work_buf, 8  );</span></a>
-<a name="427"><span class="lineNum">     427 </span>                :<span class="lineCov">        766 :         MBEDTLS_PUT_UINT32_BE( ( orig_len           ), work_buf, 12 );</span></a>
+<a name="424"><span class="lineNum">     424 </span>                :<span class="lineCov">        768 :         MBEDTLS_PUT_UINT32_BE( ( orig_add_len &gt;&gt; 32 ), work_buf, 0  );</span></a>
+<a name="425"><span class="lineNum">     425 </span>                :<span class="lineCov">        768 :         MBEDTLS_PUT_UINT32_BE( ( orig_add_len       ), work_buf, 4  );</span></a>
+<a name="426"><span class="lineNum">     426 </span>                :<span class="lineCov">        768 :         MBEDTLS_PUT_UINT32_BE( ( orig_len     &gt;&gt; 32 ), work_buf, 8  );</span></a>
+<a name="427"><span class="lineNum">     427 </span>                :<span class="lineCov">        768 :         MBEDTLS_PUT_UINT32_BE( ( orig_len           ), work_buf, 12 );</span></a>
 <a name="428"><span class="lineNum">     428 </span>                :            : </a>
-<a name="429"><span class="lineNum">     429 </span>        [<span class="branchCov" title="Branch 0 was taken 12256 times"> + </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">      13022 :         for( i = 0; i &lt; 16; i++ )</span></a>
-<a name="430"><span class="lineNum">     430 </span>                :<span class="lineCov">      12256 :             ctx-&gt;buf[i] ^= work_buf[i];</span></a>
+<a name="429"><span class="lineNum">     429 </span>        [<span class="branchCov" title="Branch 0 was taken 12288 times"> + </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">      13056 :         for( i = 0; i &lt; 16; i++ )</span></a>
+<a name="430"><span class="lineNum">     430 </span>                :<span class="lineCov">      12288 :             ctx-&gt;buf[i] ^= work_buf[i];</span></a>
 <a name="431"><span class="lineNum">     431 </span>                :            : </a>
-<a name="432"><span class="lineNum">     432 </span>                :<span class="lineCov">        766 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
+<a name="432"><span class="lineNum">     432 </span>                :<span class="lineCov">        768 :         gcm_mult( ctx, ctx-&gt;buf, ctx-&gt;buf );</span></a>
 <a name="433"><span class="lineNum">     433 </span>                :            : </a>
-<a name="434"><span class="lineNum">     434 </span>        [<span class="branchCov" title="Branch 0 was taken 12256 times"> + </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">      13022 :         for( i = 0; i &lt; tag_len; i++ )</span></a>
-<a name="435"><span class="lineNum">     435 </span>                :<span class="lineCov">      12256 :             tag[i] ^= ctx-&gt;buf[i];</span></a>
+<a name="434"><span class="lineNum">     434 </span>        [<span class="branchCov" title="Branch 0 was taken 12288 times"> + </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">      13056 :         for( i = 0; i &lt; tag_len; i++ )</span></a>
+<a name="435"><span class="lineNum">     435 </span>                :<span class="lineCov">      12288 :             tag[i] ^= ctx-&gt;buf[i];</span></a>
 <a name="436"><span class="lineNum">     436 </span>                :            :     }</a>
 <a name="437"><span class="lineNum">     437 </span>                :            : </a>
-<a name="438"><span class="lineNum">     438 </span>                :<span class="lineCov">        766 :     return( 0 );</span></a>
+<a name="438"><span class="lineNum">     438 </span>                :<span class="lineCov">        768 :     return( 0 );</span></a>
 <a name="439"><span class="lineNum">     439 </span>                :            : }</a>
 <a name="440"><span class="lineNum">     440 </span>                :            : </a>
-<a name="441"><span class="lineNum">     441 </span>                :<span class="lineCov">        766 : int mbedtls_gcm_crypt_and_tag( mbedtls_gcm_context *ctx,</span></a>
+<a name="441"><span class="lineNum">     441 </span>                :<span class="lineCov">        768 : int mbedtls_gcm_crypt_and_tag( mbedtls_gcm_context *ctx,</span></a>
 <a name="442"><span class="lineNum">     442 </span>                :            :                        int mode,</a>
 <a name="443"><span class="lineNum">     443 </span>                :            :                        size_t length,</a>
 <a name="444"><span class="lineNum">     444 </span>                :            :                        const unsigned char *iv,</a>
@@ -521,7 +521,7 @@
 <a name="450"><span class="lineNum">     450 </span>                :            :                        size_t tag_len,</a>
 <a name="451"><span class="lineNum">     451 </span>                :            :                        unsigned char *tag )</a>
 <a name="452"><span class="lineNum">     452 </span>                :            : {</a>
-<a name="453"><span class="lineNum">     453 </span>                :<span class="lineCov">        766 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="453"><span class="lineNum">     453 </span>                :<span class="lineCov">        768 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="454"><span class="lineNum">     454 </span>                :            : </a>
 <a name="455"><span class="lineNum">     455 </span>                :            :     GCM_VALIDATE_RET( ctx != NULL );</a>
 <a name="456"><span class="lineNum">     456 </span>                :            :     GCM_VALIDATE_RET( iv != NULL );</a>
@@ -530,19 +530,19 @@
 <a name="459"><span class="lineNum">     459 </span>                :            :     GCM_VALIDATE_RET( length == 0 || output != NULL );</a>
 <a name="460"><span class="lineNum">     460 </span>                :            :     GCM_VALIDATE_RET( tag != NULL );</a>
 <a name="461"><span class="lineNum">     461 </span>                :            : </a>
-<a name="462"><span class="lineNum">     462 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = mbedtls_gcm_starts( ctx, mode, iv, iv_len, add, add_len ) ) != 0 )</span></a>
+<a name="462"><span class="lineNum">     462 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = mbedtls_gcm_starts( ctx, mode, iv, iv_len, add, add_len ) ) != 0 )</span></a>
 <a name="463"><span class="lineNum">     463 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="464"><span class="lineNum">     464 </span>                :            : </a>
-<a name="465"><span class="lineNum">     465 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = mbedtls_gcm_update( ctx, length, input, output ) ) != 0 )</span></a>
+<a name="465"><span class="lineNum">     465 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = mbedtls_gcm_update( ctx, length, input, output ) ) != 0 )</span></a>
 <a name="466"><span class="lineNum">     466 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="467"><span class="lineNum">     467 </span>                :            : </a>
-<a name="468"><span class="lineNum">     468 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ( ret = mbedtls_gcm_finish( ctx, tag, tag_len ) ) != 0 )</span></a>
+<a name="468"><span class="lineNum">     468 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ( ret = mbedtls_gcm_finish( ctx, tag, tag_len ) ) != 0 )</span></a>
 <a name="469"><span class="lineNum">     469 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="470"><span class="lineNum">     470 </span>                :            : </a>
-<a name="471"><span class="lineNum">     471 </span>                :<span class="lineCov">        766 :     return( 0 );</span></a>
+<a name="471"><span class="lineNum">     471 </span>                :<span class="lineCov">        768 :     return( 0 );</span></a>
 <a name="472"><span class="lineNum">     472 </span>                :            : }</a>
 <a name="473"><span class="lineNum">     473 </span>                :            : </a>
-<a name="474"><span class="lineNum">     474 </span>                :<span class="lineCov">        314 : int mbedtls_gcm_auth_decrypt( mbedtls_gcm_context *ctx,</span></a>
+<a name="474"><span class="lineNum">     474 </span>                :<span class="lineCov">        315 : int mbedtls_gcm_auth_decrypt( mbedtls_gcm_context *ctx,</span></a>
 <a name="475"><span class="lineNum">     475 </span>                :            :                       size_t length,</a>
 <a name="476"><span class="lineNum">     476 </span>                :            :                       const unsigned char *iv,</a>
 <a name="477"><span class="lineNum">     477 </span>                :            :                       size_t iv_len,</a>
@@ -553,7 +553,7 @@
 <a name="482"><span class="lineNum">     482 </span>                :            :                       const unsigned char *input,</a>
 <a name="483"><span class="lineNum">     483 </span>                :            :                       unsigned char *output )</a>
 <a name="484"><span class="lineNum">     484 </span>                :            : {</a>
-<a name="485"><span class="lineNum">     485 </span>                :<span class="lineCov">        314 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="485"><span class="lineNum">     485 </span>                :<span class="lineCov">        315 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="486"><span class="lineNum">     486 </span>                :            :     unsigned char check_tag[16];</a>
 <a name="487"><span class="lineNum">     487 </span>                :            :     size_t i;</a>
 <a name="488"><span class="lineNum">     488 </span>                :            :     int diff;</a>
@@ -565,7 +565,7 @@
 <a name="494"><span class="lineNum">     494 </span>                :            :     GCM_VALIDATE_RET( length == 0 || input != NULL );</a>
 <a name="495"><span class="lineNum">     495 </span>                :            :     GCM_VALIDATE_RET( length == 0 || output != NULL );</a>
 <a name="496"><span class="lineNum">     496 </span>                :            : </a>
-<a name="497"><span class="lineNum">     497 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">        314 :     if( ( ret = mbedtls_gcm_crypt_and_tag( ctx, MBEDTLS_GCM_DECRYPT, length,</span></a>
+<a name="497"><span class="lineNum">     497 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 315 times"> + </span>]:<span class="lineCov">        315 :     if( ( ret = mbedtls_gcm_crypt_and_tag( ctx, MBEDTLS_GCM_DECRYPT, length,</span></a>
 <a name="498"><span class="lineNum">     498 </span>                :            :                                    iv, iv_len, add, add_len,</a>
 <a name="499"><span class="lineNum">     499 </span>                :            :                                    input, output, tag_len, check_tag ) ) != 0 )</a>
 <a name="500"><span class="lineNum">     500 </span>                :            :     {</a>
@@ -573,24 +573,24 @@
 <a name="502"><span class="lineNum">     502 </span>                :            :     }</a>
 <a name="503"><span class="lineNum">     503 </span>                :            : </a>
 <a name="504"><span class="lineNum">     504 </span>                :            :     /* Check tag in &quot;constant-time&quot; */</a>
-<a name="505"><span class="lineNum">     505 </span>        [<span class="branchCov" title="Branch 0 was taken 5024 times"> + </span><span class="branchCov" title="Branch 1 was taken 314 times"> + </span>]:<span class="lineCov">       5338 :     for( diff = 0, i = 0; i &lt; tag_len; i++ )</span></a>
-<a name="506"><span class="lineNum">     506 </span>                :<span class="lineCov">       5024 :         diff |= tag[i] ^ check_tag[i];</span></a>
+<a name="505"><span class="lineNum">     505 </span>        [<span class="branchCov" title="Branch 0 was taken 5040 times"> + </span><span class="branchCov" title="Branch 1 was taken 315 times"> + </span>]:<span class="lineCov">       5355 :     for( diff = 0, i = 0; i &lt; tag_len; i++ )</span></a>
+<a name="506"><span class="lineNum">     506 </span>                :<span class="lineCov">       5040 :         diff |= tag[i] ^ check_tag[i];</span></a>
 <a name="507"><span class="lineNum">     507 </span>                :            : </a>
-<a name="508"><span class="lineNum">     508 </span>        [<span class="branchCov" title="Branch 0 was taken 27 times"> + </span><span class="branchCov" title="Branch 1 was taken 287 times"> + </span>]:<span class="lineCov">        314 :     if( diff != 0 )</span></a>
+<a name="508"><span class="lineNum">     508 </span>        [<span class="branchCov" title="Branch 0 was taken 27 times"> + </span><span class="branchCov" title="Branch 1 was taken 288 times"> + </span>]:<span class="lineCov">        315 :     if( diff != 0 )</span></a>
 <a name="509"><span class="lineNum">     509 </span>                :            :     {</a>
 <a name="510"><span class="lineNum">     510 </span>                :<span class="lineCov">         27 :         mbedtls_platform_zeroize( output, length );</span></a>
 <a name="511"><span class="lineNum">     511 </span>                :<span class="lineCov">         27 :         return( MBEDTLS_ERR_GCM_AUTH_FAILED );</span></a>
 <a name="512"><span class="lineNum">     512 </span>                :            :     }</a>
 <a name="513"><span class="lineNum">     513 </span>                :            : </a>
-<a name="514"><span class="lineNum">     514 </span>                :<span class="lineCov">        287 :     return( 0 );</span></a>
+<a name="514"><span class="lineNum">     514 </span>                :<span class="lineCov">        288 :     return( 0 );</span></a>
 <a name="515"><span class="lineNum">     515 </span>                :            : }</a>
 <a name="516"><span class="lineNum">     516 </span>                :            : </a>
-<a name="517"><span class="lineNum">     517 </span>                :<span class="lineCov">        766 : void mbedtls_gcm_free( mbedtls_gcm_context *ctx )</span></a>
+<a name="517"><span class="lineNum">     517 </span>                :<span class="lineCov">        768 : void mbedtls_gcm_free( mbedtls_gcm_context *ctx )</span></a>
 <a name="518"><span class="lineNum">     518 </span>                :            : {</a>
-<a name="519"><span class="lineNum">     519 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 766 times"> + </span>]:<span class="lineCov">        766 :     if( ctx == NULL )</span></a>
+<a name="519"><span class="lineNum">     519 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 768 times"> + </span>]:<span class="lineCov">        768 :     if( ctx == NULL )</span></a>
 <a name="520"><span class="lineNum">     520 </span>                :<span class="lineNoCov">          0 :         return;</span></a>
-<a name="521"><span class="lineNum">     521 </span>                :<span class="lineCov">        766 :     mbedtls_cipher_free( &amp;ctx-&gt;cipher_ctx );</span></a>
-<a name="522"><span class="lineNum">     522 </span>                :<span class="lineCov">        766 :     mbedtls_platform_zeroize( ctx, sizeof( mbedtls_gcm_context ) );</span></a>
+<a name="521"><span class="lineNum">     521 </span>                :<span class="lineCov">        768 :     mbedtls_cipher_free( &amp;ctx-&gt;cipher_ctx );</span></a>
+<a name="522"><span class="lineNum">     522 </span>                :<span class="lineCov">        768 :     mbedtls_platform_zeroize( ctx, sizeof( mbedtls_gcm_context ) );</span></a>
 <a name="523"><span class="lineNum">     523 </span>                :            : }</a>
 <a name="524"><span class="lineNum">     524 </span>                :            : </a>
 <a name="525"><span class="lineNum">     525 </span>                :            : #endif /* !MBEDTLS_GCM_ALT */</a>
