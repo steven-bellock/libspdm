@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-05-08 08:15:10</td>
+            <td class="headerValue">2023-05-09 08:15:06</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -331,7 +331,7 @@
 <a name="258"><span class="lineNum">     258 </span>                :            :  * @retval  false  This interface is not supported.</a>
 <a name="259"><span class="lineNum">     259 </span>                :            :  *</a>
 <a name="260"><span class="lineNum">     260 </span>                :            :  **/</a>
-<a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">         16 : bool libspdm_rsa_pkcs1_sign_with_nid(void *rsa_context, size_t hash_nid,</span></a>
+<a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">         17 : bool libspdm_rsa_pkcs1_sign_with_nid(void *rsa_context, size_t hash_nid,</span></a>
 <a name="262"><span class="lineNum">     262 </span>                :            :                                      const uint8_t *message_hash,</a>
 <a name="263"><span class="lineNum">     263 </span>                :            :                                      size_t hash_size, uint8_t *signature,</a>
 <a name="264"><span class="lineNum">     264 </span>                :            :                                      size_t *sig_size)</a>
@@ -340,22 +340,22 @@
 <a name="267"><span class="lineNum">     267 </span>                :            :     mbedtls_md_type_t md_alg;</a>
 <a name="268"><span class="lineNum">     268 </span>                :            :     mbedtls_rsa_context *rsa_key;</a>
 <a name="269"><span class="lineNum">     269 </span>                :            : </a>
-<a name="270"><span class="lineNum">     270 </span>  [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 16 times"> + </span>]:<span class="lineCov">         16 :     if (rsa_context == NULL || message_hash == NULL) {</span></a>
+<a name="270"><span class="lineNum">     270 </span>  [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 17 times"> + </span>]:<span class="lineCov">         17 :     if (rsa_context == NULL || message_hash == NULL) {</span></a>
 <a name="271"><span class="lineNum">     271 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="272"><span class="lineNum">     272 </span>                :            :     }</a>
 <a name="273"><span class="lineNum">     273 </span>                :            : </a>
-<a name="274"><span class="lineNum">     274 </span>                :<span class="lineCov">         16 :     rsa_key = (mbedtls_rsa_context *)rsa_context;</span></a>
-<a name="275"><span class="lineNum">     275 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         16 :     if (mbedtls_rsa_complete(rsa_key) != 0) {</span></a>
+<a name="274"><span class="lineNum">     274 </span>                :<span class="lineCov">         17 :     rsa_key = (mbedtls_rsa_context *)rsa_context;</span></a>
+<a name="275"><span class="lineNum">     275 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         17 :     if (mbedtls_rsa_complete(rsa_key) != 0) {</span></a>
 <a name="276"><span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="277"><span class="lineNum">     277 </span>                :            :     }</a>
 <a name="278"><span class="lineNum">     278 </span>                :            : </a>
-<a name="279"><span class="lineNum">     279 </span>  [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         16 :     switch (hash_nid) {</span></a>
-<a name="280"><span class="lineNum">     280 </span>                :<span class="lineCov">         16 :     case LIBSPDM_CRYPTO_NID_SHA256:</span></a>
-<a name="281"><span class="lineNum">     281 </span>                :<span class="lineCov">         16 :         md_alg = MBEDTLS_MD_SHA256;</span></a>
-<a name="282"><span class="lineNum">     282 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         16 :         if (hash_size != LIBSPDM_SHA256_DIGEST_SIZE) {</span></a>
+<a name="279"><span class="lineNum">     279 </span>  [<span class="branchCov" title="Branch 0 was taken 17 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">         17 :     switch (hash_nid) {</span></a>
+<a name="280"><span class="lineNum">     280 </span>                :<span class="lineCov">         17 :     case LIBSPDM_CRYPTO_NID_SHA256:</span></a>
+<a name="281"><span class="lineNum">     281 </span>                :<span class="lineCov">         17 :         md_alg = MBEDTLS_MD_SHA256;</span></a>
+<a name="282"><span class="lineNum">     282 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         17 :         if (hash_size != LIBSPDM_SHA256_DIGEST_SIZE) {</span></a>
 <a name="283"><span class="lineNum">     283 </span>                :<span class="lineNoCov">          0 :             return false;</span></a>
 <a name="284"><span class="lineNum">     284 </span>                :            :         }</a>
-<a name="285"><span class="lineNum">     285 </span>                :<span class="lineCov">         16 :         break;</span></a>
+<a name="285"><span class="lineNum">     285 </span>                :<span class="lineCov">         17 :         break;</span></a>
 <a name="286"><span class="lineNum">     286 </span>                :            : </a>
 <a name="287"><span class="lineNum">     287 </span>                :<span class="lineNoCov">          0 :     case LIBSPDM_CRYPTO_NID_SHA384:</span></a>
 <a name="288"><span class="lineNum">     288 </span>                :<span class="lineNoCov">          0 :         md_alg = MBEDTLS_MD_SHA384;</span></a>
@@ -375,22 +375,22 @@
 <a name="302"><span class="lineNum">     302 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="303"><span class="lineNum">     303 </span>                :            :     }</a>
 <a name="304"><span class="lineNum">     304 </span>                :            : </a>
-<a name="305"><span class="lineNum">     305 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         16 :     if (mbedtls_rsa_get_len(rsa_context) &gt; *sig_size) {</span></a>
+<a name="305"><span class="lineNum">     305 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         17 :     if (mbedtls_rsa_get_len(rsa_context) &gt; *sig_size) {</span></a>
 <a name="306"><span class="lineNum">     306 </span>                :<span class="lineNoCov">          0 :         *sig_size = mbedtls_rsa_get_len(rsa_context);</span></a>
 <a name="307"><span class="lineNum">     307 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="308"><span class="lineNum">     308 </span>                :            :     }</a>
 <a name="309"><span class="lineNum">     309 </span>                :            : </a>
-<a name="310"><span class="lineNum">     310 </span>                :<span class="lineCov">         16 :     mbedtls_rsa_set_padding(rsa_context, MBEDTLS_RSA_PKCS_V15, md_alg);</span></a>
+<a name="310"><span class="lineNum">     310 </span>                :<span class="lineCov">         17 :     mbedtls_rsa_set_padding(rsa_context, MBEDTLS_RSA_PKCS_V15, md_alg);</span></a>
 <a name="311"><span class="lineNum">     311 </span>                :            : </a>
-<a name="312"><span class="lineNum">     312 </span>                :<span class="lineCov">         16 :     ret = mbedtls_rsa_pkcs1_sign(rsa_context, libspdm_myrand, NULL,</span></a>
+<a name="312"><span class="lineNum">     312 </span>                :<span class="lineCov">         17 :     ret = mbedtls_rsa_pkcs1_sign(rsa_context, libspdm_myrand, NULL,</span></a>
 <a name="313"><span class="lineNum">     313 </span>                :            :                                  MBEDTLS_RSA_PRIVATE, md_alg,</a>
 <a name="314"><span class="lineNum">     314 </span>                :            :                                  (uint32_t)hash_size, message_hash,</a>
 <a name="315"><span class="lineNum">     315 </span>                :            :                                  signature);</a>
-<a name="316"><span class="lineNum">     316 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         16 :     if (ret != 0) {</span></a>
+<a name="316"><span class="lineNum">     316 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         17 :     if (ret != 0) {</span></a>
 <a name="317"><span class="lineNum">     317 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="318"><span class="lineNum">     318 </span>                :            :     }</a>
-<a name="319"><span class="lineNum">     319 </span>                :<span class="lineCov">         16 :     *sig_size = mbedtls_rsa_get_len(rsa_context);</span></a>
-<a name="320"><span class="lineNum">     320 </span>                :<span class="lineCov">         16 :     return true;</span></a>
+<a name="319"><span class="lineNum">     319 </span>                :<span class="lineCov">         17 :     *sig_size = mbedtls_rsa_get_len(rsa_context);</span></a>
+<a name="320"><span class="lineNum">     320 </span>                :<span class="lineCov">         17 :     return true;</span></a>
 <a name="321"><span class="lineNum">     321 </span>                :            : }</a>
 <a name="322"><span class="lineNum">     322 </span>                :            : #endif /* LIBSPDM_RSA_SSA_SUPPORT */</a>
 <a name="323"><span class="lineNum">     323 </span>                :            : </a>
