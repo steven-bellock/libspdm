@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-05-28 08:13:06</td>
+            <td class="headerValue">2023-05-29 08:15:17</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -295,23 +295,23 @@
 <a name="224"><span class="lineNum">     224 </span>                :            :  * Derive a suitable integer for group grp from a buffer of length len</a>
 <a name="225"><span class="lineNum">     225 </span>                :            :  * SEC1 4.1.3 step 5 aka SEC1 4.1.4 step 3</a>
 <a name="226"><span class="lineNum">     226 </span>                :            :  */</a>
-<a name="227"><span class="lineNum">     227 </span>                :<span class="lineCov">       1324 : static int derive_mpi( const mbedtls_ecp_group *grp, mbedtls_mpi *x,</span></a>
+<a name="227"><span class="lineNum">     227 </span>                :<span class="lineCov">       1325 : static int derive_mpi( const mbedtls_ecp_group *grp, mbedtls_mpi *x,</span></a>
 <a name="228"><span class="lineNum">     228 </span>                :            :                        const unsigned char *buf, size_t blen )</a>
 <a name="229"><span class="lineNum">     229 </span>                :            : {</a>
-<a name="230"><span class="lineNum">     230 </span>                :<span class="lineCov">       1324 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
-<a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">       1324 :     size_t n_size = ( grp-&gt;nbits + 7 ) / 8;</span></a>
-<a name="232"><span class="lineNum">     232 </span>                :<span class="lineCov">       1324 :     size_t use_size = blen &gt; n_size ? n_size : blen;</span></a>
+<a name="230"><span class="lineNum">     230 </span>                :<span class="lineCov">       1325 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">       1325 :     size_t n_size = ( grp-&gt;nbits + 7 ) / 8;</span></a>
+<a name="232"><span class="lineNum">     232 </span>                :<span class="lineCov">       1325 :     size_t use_size = blen &gt; n_size ? n_size : blen;</span></a>
 <a name="233"><span class="lineNum">     233 </span>                :            : </a>
-<a name="234"><span class="lineNum">     234 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1324 times"> + </span>]:<span class="lineCov">       1324 :     MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( x, buf, use_size ) );</span></a>
-<a name="235"><span class="lineNum">     235 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1324 times"> + </span>]:<span class="lineCov">       1324 :     if( use_size * 8 &gt; grp-&gt;nbits )</span></a>
+<a name="234"><span class="lineNum">     234 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1325 times"> + </span>]:<span class="lineCov">       1325 :     MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( x, buf, use_size ) );</span></a>
+<a name="235"><span class="lineNum">     235 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1325 times"> + </span>]:<span class="lineCov">       1325 :     if( use_size * 8 &gt; grp-&gt;nbits )</span></a>
 <a name="236"><span class="lineNum">     236 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         MBEDTLS_MPI_CHK( mbedtls_mpi_shift_r( x, use_size * 8 - grp-&gt;nbits ) );</span></a>
 <a name="237"><span class="lineNum">     237 </span>                :            : </a>
 <a name="238"><span class="lineNum">     238 </span>                :            :     /* While at it, reduce modulo N */</a>
-<a name="239"><span class="lineNum">     239 </span>        [<span class="branchCov" title="Branch 0 was taken 1324 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1324 :     if( mbedtls_mpi_cmp_mpi( x, &amp;grp-&gt;N ) &gt;= 0 )</span></a>
+<a name="239"><span class="lineNum">     239 </span>        [<span class="branchCov" title="Branch 0 was taken 1325 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1325 :     if( mbedtls_mpi_cmp_mpi( x, &amp;grp-&gt;N ) &gt;= 0 )</span></a>
 <a name="240"><span class="lineNum">     240 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( x, x, &amp;grp-&gt;N ) );</span></a>
 <a name="241"><span class="lineNum">     241 </span>                :            : </a>
-<a name="242"><span class="lineNum">     242 </span>                :<span class="lineCov">       1324 : cleanup:</span></a>
-<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">       1324 :     return( ret );</span></a>
+<a name="242"><span class="lineNum">     242 </span>                :<span class="lineCov">       1325 : cleanup:</span></a>
+<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">       1325 :     return( ret );</span></a>
 <a name="244"><span class="lineNum">     244 </span>                :            : }</a>
 <a name="245"><span class="lineNum">     245 </span>                :            : #endif /* ECDSA_DETERMINISTIC || !ECDSA_SIGN_ALT || !ECDSA_VERIFY_ALT */</a>
 <a name="246"><span class="lineNum">     246 </span>                :            : </a>
@@ -320,7 +320,7 @@
 <a name="249"><span class="lineNum">     249 </span>                :            :  * Compute ECDSA signature of a hashed message (SEC1 4.1.3)</a>
 <a name="250"><span class="lineNum">     250 </span>                :            :  * Obviously, compared to SEC1 4.1.3, we skip step 4 (hash message)</a>
 <a name="251"><span class="lineNum">     251 </span>                :            :  */</a>
-<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">        109 : static int ecdsa_sign_restartable( mbedtls_ecp_group *grp,</span></a>
+<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">        110 : static int ecdsa_sign_restartable( mbedtls_ecp_group *grp,</span></a>
 <a name="253"><span class="lineNum">     253 </span>                :            :                 mbedtls_mpi *r, mbedtls_mpi *s,</a>
 <a name="254"><span class="lineNum">     254 </span>                :            :                 const mbedtls_mpi *d, const unsigned char *buf, size_t blen,</a>
 <a name="255"><span class="lineNum">     255 </span>                :            :                 int (*f_rng)(void *, unsigned char *, size_t), void *p_rng,</a>
@@ -329,21 +329,21 @@
 <a name="258"><span class="lineNum">     258 </span>                :            :                 mbedtls_ecdsa_restart_ctx *rs_ctx )</a>
 <a name="259"><span class="lineNum">     259 </span>                :            : {</a>
 <a name="260"><span class="lineNum">     260 </span>                :            :     int ret, key_tries, sign_tries;</a>
-<a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">        109 :     int *p_sign_tries = &amp;sign_tries, *p_key_tries = &amp;key_tries;</span></a>
+<a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">        110 :     int *p_sign_tries = &amp;sign_tries, *p_key_tries = &amp;key_tries;</span></a>
 <a name="262"><span class="lineNum">     262 </span>                :            :     mbedtls_ecp_point R;</a>
 <a name="263"><span class="lineNum">     263 </span>                :            :     mbedtls_mpi k, e, t;</a>
-<a name="264"><span class="lineNum">     264 </span>                :<span class="lineCov">        109 :     mbedtls_mpi *pk = &amp;k, *pr = r;</span></a>
+<a name="264"><span class="lineNum">     264 </span>                :<span class="lineCov">        110 :     mbedtls_mpi *pk = &amp;k, *pr = r;</span></a>
 <a name="265"><span class="lineNum">     265 </span>                :            : </a>
 <a name="266"><span class="lineNum">     266 </span>                :            :     /* Fail cleanly on curves such as Curve25519 that can't be used for ECDSA */</a>
-<a name="267"><span class="lineNum">     267 </span>  [<span class="branchCov" title="Branch 0 was taken 109 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 109 times"> + </span>]:<span class="lineCov">        109 :     if( ! mbedtls_ecdsa_can_do( grp-&gt;id ) || grp-&gt;N.p == NULL )</span></a>
+<a name="267"><span class="lineNum">     267 </span>  [<span class="branchCov" title="Branch 0 was taken 110 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 110 times"> + </span>]:<span class="lineCov">        110 :     if( ! mbedtls_ecdsa_can_do( grp-&gt;id ) || grp-&gt;N.p == NULL )</span></a>
 <a name="268"><span class="lineNum">     268 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );</span></a>
 <a name="269"><span class="lineNum">     269 </span>                :            : </a>
 <a name="270"><span class="lineNum">     270 </span>                :            :     /* Make sure d is in range 1..n-1 */</a>
-<a name="271"><span class="lineNum">     271 </span>  [<span class="branchCov" title="Branch 0 was taken 109 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 109 times"> + </span>]:<span class="lineCov">        109 :     if( mbedtls_mpi_cmp_int( d, 1 ) &lt; 0 || mbedtls_mpi_cmp_mpi( d, &amp;grp-&gt;N ) &gt;= 0 )</span></a>
+<a name="271"><span class="lineNum">     271 </span>  [<span class="branchCov" title="Branch 0 was taken 110 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 110 times"> + </span>]:<span class="lineCov">        110 :     if( mbedtls_mpi_cmp_int( d, 1 ) &lt; 0 || mbedtls_mpi_cmp_mpi( d, &amp;grp-&gt;N ) &gt;= 0 )</span></a>
 <a name="272"><span class="lineNum">     272 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ECP_INVALID_KEY );</span></a>
 <a name="273"><span class="lineNum">     273 </span>                :            : </a>
-<a name="274"><span class="lineNum">     274 </span>                :<span class="lineCov">        109 :     mbedtls_ecp_point_init( &amp;R );</span></a>
-<a name="275"><span class="lineNum">     275 </span>                :<span class="lineCov">        109 :     mbedtls_mpi_init( &amp;k ); mbedtls_mpi_init( &amp;e ); mbedtls_mpi_init( &amp;t );</span></a>
+<a name="274"><span class="lineNum">     274 </span>                :<span class="lineCov">        110 :     mbedtls_ecp_point_init( &amp;R );</span></a>
+<a name="275"><span class="lineNum">     275 </span>                :<span class="lineCov">        110 :     mbedtls_mpi_init( &amp;k ); mbedtls_mpi_init( &amp;e ); mbedtls_mpi_init( &amp;t );</span></a>
 <a name="276"><span class="lineNum">     276 </span>                :            : </a>
 <a name="277"><span class="lineNum">     277 </span>                :            :     ECDSA_RS_ENTER( sig );</a>
 <a name="278"><span class="lineNum">     278 </span>                :            : </a>
@@ -364,10 +364,10 @@
 <a name="293"><span class="lineNum">     293 </span>                :            :     }</a>
 <a name="294"><span class="lineNum">     294 </span>                :            : #endif /* MBEDTLS_ECP_RESTARTABLE */</a>
 <a name="295"><span class="lineNum">     295 </span>                :            : </a>
-<a name="296"><span class="lineNum">     296 </span>                :<span class="lineCov">        109 :     *p_sign_tries = 0;</span></a>
+<a name="296"><span class="lineNum">     296 </span>                :<span class="lineCov">        110 :     *p_sign_tries = 0;</span></a>
 <a name="297"><span class="lineNum">     297 </span>                :            :     do</a>
 <a name="298"><span class="lineNum">     298 </span>                :            :     {</a>
-<a name="299"><span class="lineNum">     299 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         if( (*p_sign_tries)++ &gt; 10 )</span></a>
+<a name="299"><span class="lineNum">     299 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         if( (*p_sign_tries)++ &gt; 10 )</span></a>
 <a name="300"><span class="lineNum">     300 </span>                :            :         {</a>
 <a name="301"><span class="lineNum">     301 </span>                :<span class="lineNoCov">          0 :             ret = MBEDTLS_ERR_ECP_RANDOM_FAILED;</span></a>
 <a name="302"><span class="lineNum">     302 </span>                :<span class="lineNoCov">          0 :             goto cleanup;</span></a>
@@ -377,16 +377,16 @@
 <a name="306"><span class="lineNum">     306 </span>                :            :          * Steps 1-3: generate a suitable ephemeral keypair</a>
 <a name="307"><span class="lineNum">     307 </span>                :            :          * and set r = xR mod n</a>
 <a name="308"><span class="lineNum">     308 </span>                :            :          */</a>
-<a name="309"><span class="lineNum">     309 </span>                :<span class="lineCov">        109 :         *p_key_tries = 0;</span></a>
+<a name="309"><span class="lineNum">     309 </span>                :<span class="lineCov">        110 :         *p_key_tries = 0;</span></a>
 <a name="310"><span class="lineNum">     310 </span>                :            :         do</a>
 <a name="311"><span class="lineNum">     311 </span>                :            :         {</a>
-<a name="312"><span class="lineNum">     312 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :             if( (*p_key_tries)++ &gt; 10 )</span></a>
+<a name="312"><span class="lineNum">     312 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :             if( (*p_key_tries)++ &gt; 10 )</span></a>
 <a name="313"><span class="lineNum">     313 </span>                :            :             {</a>
 <a name="314"><span class="lineNum">     314 </span>                :<span class="lineNoCov">          0 :                 ret = MBEDTLS_ERR_ECP_RANDOM_FAILED;</span></a>
 <a name="315"><span class="lineNum">     315 </span>                :<span class="lineNoCov">          0 :                 goto cleanup;</span></a>
 <a name="316"><span class="lineNum">     316 </span>                :            :             }</a>
 <a name="317"><span class="lineNum">     317 </span>                :            : </a>
-<a name="318"><span class="lineNum">     318 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :             MBEDTLS_MPI_CHK( mbedtls_ecp_gen_privkey( grp, pk, f_rng, p_rng ) );</span></a>
+<a name="318"><span class="lineNum">     318 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :             MBEDTLS_MPI_CHK( mbedtls_ecp_gen_privkey( grp, pk, f_rng, p_rng ) );</span></a>
 <a name="319"><span class="lineNum">     319 </span>                :            : </a>
 <a name="320"><span class="lineNum">     320 </span>                :            : #if defined(MBEDTLS_ECP_RESTARTABLE)</a>
 <a name="321"><span class="lineNum">     321 </span>                :            :             if( rs_ctx != NULL &amp;&amp; rs_ctx-&gt;sig != NULL )</a>
@@ -394,13 +394,13 @@
 <a name="323"><span class="lineNum">     323 </span>                :            : </a>
 <a name="324"><span class="lineNum">     324 </span>                :            : mul:</a>
 <a name="325"><span class="lineNum">     325 </span>                :            : #endif</a>
-<a name="326"><span class="lineNum">     326 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :             MBEDTLS_MPI_CHK( mbedtls_ecp_mul_restartable( grp, &amp;R, pk, &amp;grp-&gt;G,</span></a>
+<a name="326"><span class="lineNum">     326 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :             MBEDTLS_MPI_CHK( mbedtls_ecp_mul_restartable( grp, &amp;R, pk, &amp;grp-&gt;G,</span></a>
 <a name="327"><span class="lineNum">     327 </span>                :            :                                                           f_rng_blind,</a>
 <a name="328"><span class="lineNum">     328 </span>                :            :                                                           p_rng_blind,</a>
 <a name="329"><span class="lineNum">     329 </span>                :            :                                                           ECDSA_RS_ECP ) );</a>
-<a name="330"><span class="lineNum">     330 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :             MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( pr, &amp;R.X, &amp;grp-&gt;N ) );</span></a>
+<a name="330"><span class="lineNum">     330 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :             MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( pr, &amp;R.X, &amp;grp-&gt;N ) );</span></a>
 <a name="331"><span class="lineNum">     331 </span>                :            :         }</a>
-<a name="332"><span class="lineNum">     332 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         while( mbedtls_mpi_cmp_int( pr, 0 ) == 0 );</span></a>
+<a name="332"><span class="lineNum">     332 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         while( mbedtls_mpi_cmp_int( pr, 0 ) == 0 );</span></a>
 <a name="333"><span class="lineNum">     333 </span>                :            : </a>
 <a name="334"><span class="lineNum">     334 </span>                :            : #if defined(MBEDTLS_ECP_RESTARTABLE)</a>
 <a name="335"><span class="lineNum">     335 </span>                :            :         if( rs_ctx != NULL &amp;&amp; rs_ctx-&gt;sig != NULL )</a>
@@ -417,46 +417,46 @@
 <a name="346"><span class="lineNum">     346 </span>                :            :         /*</a>
 <a name="347"><span class="lineNum">     347 </span>                :            :          * Step 5: derive MPI from hashed message</a>
 <a name="348"><span class="lineNum">     348 </span>                :            :          */</a>
-<a name="349"><span class="lineNum">     349 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( derive_mpi( grp, &amp;e, buf, blen ) );</span></a>
+<a name="349"><span class="lineNum">     349 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( derive_mpi( grp, &amp;e, buf, blen ) );</span></a>
 <a name="350"><span class="lineNum">     350 </span>                :            : </a>
 <a name="351"><span class="lineNum">     351 </span>                :            :         /*</a>
 <a name="352"><span class="lineNum">     352 </span>                :            :          * Generate a random value to blind inv_mod in next step,</a>
 <a name="353"><span class="lineNum">     353 </span>                :            :          * avoiding a potential timing leak.</a>
 <a name="354"><span class="lineNum">     354 </span>                :            :          */</a>
-<a name="355"><span class="lineNum">     355 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_ecp_gen_privkey( grp, &amp;t, f_rng_blind,</span></a>
+<a name="355"><span class="lineNum">     355 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_ecp_gen_privkey( grp, &amp;t, f_rng_blind,</span></a>
 <a name="356"><span class="lineNum">     356 </span>                :            :                                                   p_rng_blind ) );</a>
 <a name="357"><span class="lineNum">     357 </span>                :            : </a>
 <a name="358"><span class="lineNum">     358 </span>                :            :         /*</a>
 <a name="359"><span class="lineNum">     359 </span>                :            :          * Step 6: compute s = (e + r * d) / k = t (e + rd) / (kt) mod n</a>
 <a name="360"><span class="lineNum">     360 </span>                :            :          */</a>
-<a name="361"><span class="lineNum">     361 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( s, pr, d ) );</span></a>
-<a name="362"><span class="lineNum">     362 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( &amp;e, &amp;e, s ) );</span></a>
-<a name="363"><span class="lineNum">     363 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( &amp;e, &amp;e, &amp;t ) );</span></a>
-<a name="364"><span class="lineNum">     364 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( pk, pk, &amp;t ) );</span></a>
-<a name="365"><span class="lineNum">     365 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( pk, pk, &amp;grp-&gt;N ) );</span></a>
-<a name="366"><span class="lineNum">     366 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_inv_mod( s, pk, &amp;grp-&gt;N ) );</span></a>
-<a name="367"><span class="lineNum">     367 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( s, s, &amp;e ) );</span></a>
-<a name="368"><span class="lineNum">     368 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( s, s, &amp;grp-&gt;N ) );</span></a>
+<a name="361"><span class="lineNum">     361 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( s, pr, d ) );</span></a>
+<a name="362"><span class="lineNum">     362 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( &amp;e, &amp;e, s ) );</span></a>
+<a name="363"><span class="lineNum">     363 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( &amp;e, &amp;e, &amp;t ) );</span></a>
+<a name="364"><span class="lineNum">     364 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( pk, pk, &amp;t ) );</span></a>
+<a name="365"><span class="lineNum">     365 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( pk, pk, &amp;grp-&gt;N ) );</span></a>
+<a name="366"><span class="lineNum">     366 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_inv_mod( s, pk, &amp;grp-&gt;N ) );</span></a>
+<a name="367"><span class="lineNum">     367 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( s, s, &amp;e ) );</span></a>
+<a name="368"><span class="lineNum">     368 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :         MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( s, s, &amp;grp-&gt;N ) );</span></a>
 <a name="369"><span class="lineNum">     369 </span>                :            :     }</a>
-<a name="370"><span class="lineNum">     370 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :     while( mbedtls_mpi_cmp_int( s, 0 ) == 0 );</span></a>
+<a name="370"><span class="lineNum">     370 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :     while( mbedtls_mpi_cmp_int( s, 0 ) == 0 );</span></a>
 <a name="371"><span class="lineNum">     371 </span>                :            : </a>
 <a name="372"><span class="lineNum">     372 </span>                :            : #if defined(MBEDTLS_ECP_RESTARTABLE)</a>
 <a name="373"><span class="lineNum">     373 </span>                :            :     if( rs_ctx != NULL &amp;&amp; rs_ctx-&gt;sig != NULL )</a>
 <a name="374"><span class="lineNum">     374 </span>                :            :         mbedtls_mpi_copy( r, pr );</a>
 <a name="375"><span class="lineNum">     375 </span>                :            : #endif</a>
 <a name="376"><span class="lineNum">     376 </span>                :            : </a>
-<a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">        109 : cleanup:</span></a>
-<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">        109 :     mbedtls_ecp_point_free( &amp;R );</span></a>
-<a name="379"><span class="lineNum">     379 </span>                :<span class="lineCov">        109 :     mbedtls_mpi_free( &amp;k ); mbedtls_mpi_free( &amp;e ); mbedtls_mpi_free( &amp;t );</span></a>
+<a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">        110 : cleanup:</span></a>
+<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">        110 :     mbedtls_ecp_point_free( &amp;R );</span></a>
+<a name="379"><span class="lineNum">     379 </span>                :<span class="lineCov">        110 :     mbedtls_mpi_free( &amp;k ); mbedtls_mpi_free( &amp;e ); mbedtls_mpi_free( &amp;t );</span></a>
 <a name="380"><span class="lineNum">     380 </span>                :            : </a>
 <a name="381"><span class="lineNum">     381 </span>                :            :     ECDSA_RS_LEAVE( sig );</a>
 <a name="382"><span class="lineNum">     382 </span>                :            : </a>
-<a name="383"><span class="lineNum">     383 </span>                :<span class="lineCov">        109 :     return( ret );</span></a>
+<a name="383"><span class="lineNum">     383 </span>                :<span class="lineCov">        110 :     return( ret );</span></a>
 <a name="384"><span class="lineNum">     384 </span>                :            : }</a>
 <a name="385"><span class="lineNum">     385 </span>                :            : </a>
-<a name="386"><span class="lineNum">     386 </span>                :<span class="lineCov">       1326 : int mbedtls_ecdsa_can_do( mbedtls_ecp_group_id gid )</span></a>
+<a name="386"><span class="lineNum">     386 </span>                :<span class="lineCov">       1327 : int mbedtls_ecdsa_can_do( mbedtls_ecp_group_id gid )</span></a>
 <a name="387"><span class="lineNum">     387 </span>                :            : {</a>
-<a name="388"><span class="lineNum">     388 </span>     [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1326 times"> + </span>]:<span class="lineCov">       1326 :     switch( gid )</span></a>
+<a name="388"><span class="lineNum">     388 </span>     [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1327 times"> + </span>]:<span class="lineCov">       1327 :     switch( gid )</span></a>
 <a name="389"><span class="lineNum">     389 </span>                :            :     {</a>
 <a name="390"><span class="lineNum">     390 </span>                :            : #ifdef MBEDTLS_ECP_DP_CURVE25519_ENABLED</a>
 <a name="391"><span class="lineNum">     391 </span>                :<span class="lineNoCov">          0 :         case MBEDTLS_ECP_DP_CURVE25519: return 0;</span></a>
@@ -464,7 +464,7 @@
 <a name="393"><span class="lineNum">     393 </span>                :            : #ifdef MBEDTLS_ECP_DP_CURVE448_ENABLED</a>
 <a name="394"><span class="lineNum">     394 </span>                :<span class="lineNoCov">          0 :         case MBEDTLS_ECP_DP_CURVE448: return 0;</span></a>
 <a name="395"><span class="lineNum">     395 </span>                :            : #endif</a>
-<a name="396"><span class="lineNum">     396 </span>                :<span class="lineCov">       1326 :     default: return 1;</span></a>
+<a name="396"><span class="lineNum">     396 </span>                :<span class="lineCov">       1327 :     default: return 1;</span></a>
 <a name="397"><span class="lineNum">     397 </span>                :            :     }</a>
 <a name="398"><span class="lineNum">     398 </span>                :            : }</a>
 <a name="399"><span class="lineNum">     399 </span>                :            : </a>
@@ -794,31 +794,31 @@
 <a name="722"><span class="lineNum">     722 </span>                :            : /*</a>
 <a name="723"><span class="lineNum">     723 </span>                :            :  * Convert a signature (given by context) to ASN.1</a>
 <a name="724"><span class="lineNum">     724 </span>                :            :  */</a>
-<a name="725"><span class="lineNum">     725 </span>                :<span class="lineCov">          3 : static int ecdsa_signature_to_asn1( const mbedtls_mpi *r, const mbedtls_mpi *s,</span></a>
+<a name="725"><span class="lineNum">     725 </span>                :<span class="lineCov">          4 : static int ecdsa_signature_to_asn1( const mbedtls_mpi *r, const mbedtls_mpi *s,</span></a>
 <a name="726"><span class="lineNum">     726 </span>                :            :                                     unsigned char *sig, size_t *slen )</a>
 <a name="727"><span class="lineNum">     727 </span>                :            : {</a>
-<a name="728"><span class="lineNum">     728 </span>                :<span class="lineCov">          3 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
-<a name="729"><span class="lineNum">     729 </span>                :<span class="lineCov">          3 :     unsigned char buf[MBEDTLS_ECDSA_MAX_LEN] = {0};</span></a>
-<a name="730"><span class="lineNum">     730 </span>                :<span class="lineCov">          3 :     unsigned char *p = buf + sizeof( buf );</span></a>
-<a name="731"><span class="lineNum">     731 </span>                :<span class="lineCov">          3 :     size_t len = 0;</span></a>
+<a name="728"><span class="lineNum">     728 </span>                :<span class="lineCov">          4 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="729"><span class="lineNum">     729 </span>                :<span class="lineCov">          4 :     unsigned char buf[MBEDTLS_ECDSA_MAX_LEN] = {0};</span></a>
+<a name="730"><span class="lineNum">     730 </span>                :<span class="lineCov">          4 :     unsigned char *p = buf + sizeof( buf );</span></a>
+<a name="731"><span class="lineNum">     731 </span>                :<span class="lineCov">          4 :     size_t len = 0;</span></a>
 <a name="732"><span class="lineNum">     732 </span>                :            : </a>
-<a name="733"><span class="lineNum">     733 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_mpi( &amp;p, buf, s ) );</span></a>
-<a name="734"><span class="lineNum">     734 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_mpi( &amp;p, buf, r ) );</span></a>
+<a name="733"><span class="lineNum">     733 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_mpi( &amp;p, buf, s ) );</span></a>
+<a name="734"><span class="lineNum">     734 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_mpi( &amp;p, buf, r ) );</span></a>
 <a name="735"><span class="lineNum">     735 </span>                :            : </a>
-<a name="736"><span class="lineNum">     736 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_len( &amp;p, buf, len ) );</span></a>
-<a name="737"><span class="lineNum">     737 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_tag( &amp;p, buf,</span></a>
+<a name="736"><span class="lineNum">     736 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_len( &amp;p, buf, len ) );</span></a>
+<a name="737"><span class="lineNum">     737 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     MBEDTLS_ASN1_CHK_ADD( len, mbedtls_asn1_write_tag( &amp;p, buf,</span></a>
 <a name="738"><span class="lineNum">     738 </span>                :            :                                        MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE ) );</a>
 <a name="739"><span class="lineNum">     739 </span>                :            : </a>
-<a name="740"><span class="lineNum">     740 </span>                :<span class="lineCov">          3 :     memcpy( sig, p, len );</span></a>
-<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">          3 :     *slen = len;</span></a>
+<a name="740"><span class="lineNum">     740 </span>                :<span class="lineCov">          4 :     memcpy( sig, p, len );</span></a>
+<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">          4 :     *slen = len;</span></a>
 <a name="742"><span class="lineNum">     742 </span>                :            : </a>
-<a name="743"><span class="lineNum">     743 </span>                :<span class="lineCov">          3 :     return( 0 );</span></a>
+<a name="743"><span class="lineNum">     743 </span>                :<span class="lineCov">          4 :     return( 0 );</span></a>
 <a name="744"><span class="lineNum">     744 </span>                :            : }</a>
 <a name="745"><span class="lineNum">     745 </span>                :            : </a>
 <a name="746"><span class="lineNum">     746 </span>                :            : /*</a>
 <a name="747"><span class="lineNum">     747 </span>                :            :  * Compute and write signature</a>
 <a name="748"><span class="lineNum">     748 </span>                :            :  */</a>
-<a name="749"><span class="lineNum">     749 </span>                :<span class="lineCov">          3 : int mbedtls_ecdsa_write_signature_restartable( mbedtls_ecdsa_context *ctx,</span></a>
+<a name="749"><span class="lineNum">     749 </span>                :<span class="lineCov">          4 : int mbedtls_ecdsa_write_signature_restartable( mbedtls_ecdsa_context *ctx,</span></a>
 <a name="750"><span class="lineNum">     750 </span>                :            :                            mbedtls_md_type_t md_alg,</a>
 <a name="751"><span class="lineNum">     751 </span>                :            :                            const unsigned char *hash, size_t hlen,</a>
 <a name="752"><span class="lineNum">     752 </span>                :            :                            unsigned char *sig, size_t *slen,</a>
@@ -826,15 +826,15 @@
 <a name="754"><span class="lineNum">     754 </span>                :            :                            void *p_rng,</a>
 <a name="755"><span class="lineNum">     755 </span>                :            :                            mbedtls_ecdsa_restart_ctx *rs_ctx )</a>
 <a name="756"><span class="lineNum">     756 </span>                :            : {</a>
-<a name="757"><span class="lineNum">     757 </span>                :<span class="lineCov">          3 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="757"><span class="lineNum">     757 </span>                :<span class="lineCov">          4 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="758"><span class="lineNum">     758 </span>                :            :     mbedtls_mpi r, s;</a>
 <a name="759"><span class="lineNum">     759 </span>                :            :     ECDSA_VALIDATE_RET( ctx  != NULL );</a>
 <a name="760"><span class="lineNum">     760 </span>                :            :     ECDSA_VALIDATE_RET( hash != NULL );</a>
 <a name="761"><span class="lineNum">     761 </span>                :            :     ECDSA_VALIDATE_RET( sig  != NULL );</a>
 <a name="762"><span class="lineNum">     762 </span>                :            :     ECDSA_VALIDATE_RET( slen != NULL );</a>
 <a name="763"><span class="lineNum">     763 </span>                :            : </a>
-<a name="764"><span class="lineNum">     764 </span>                :<span class="lineCov">          3 :     mbedtls_mpi_init( &amp;r );</span></a>
-<a name="765"><span class="lineNum">     765 </span>                :<span class="lineCov">          3 :     mbedtls_mpi_init( &amp;s );</span></a>
+<a name="764"><span class="lineNum">     764 </span>                :<span class="lineCov">          4 :     mbedtls_mpi_init( &amp;r );</span></a>
+<a name="765"><span class="lineNum">     765 </span>                :<span class="lineCov">          4 :     mbedtls_mpi_init( &amp;s );</span></a>
 <a name="766"><span class="lineNum">     766 </span>                :            : </a>
 <a name="767"><span class="lineNum">     767 </span>                :            : #if defined(MBEDTLS_ECDSA_DETERMINISTIC)</a>
 <a name="768"><span class="lineNum">     768 </span>                :            :     MBEDTLS_MPI_CHK( ecdsa_sign_det_restartable( &amp;ctx-&gt;grp, &amp;r, &amp;s, &amp;ctx-&gt;d,</a>
@@ -850,25 +850,25 @@
 <a name="778"><span class="lineNum">     778 </span>                :            :                          hash, hlen, f_rng, p_rng ) );</a>
 <a name="779"><span class="lineNum">     779 </span>                :            : #else</a>
 <a name="780"><span class="lineNum">     780 </span>                :            :     /* Use the same RNG for both blinding and ephemeral key generation */</a>
-<a name="781"><span class="lineNum">     781 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 3 times"> + </span>]:<span class="lineCov">          3 :     MBEDTLS_MPI_CHK( ecdsa_sign_restartable( &amp;ctx-&gt;grp, &amp;r, &amp;s, &amp;ctx-&gt;d,</span></a>
+<a name="781"><span class="lineNum">     781 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     MBEDTLS_MPI_CHK( ecdsa_sign_restartable( &amp;ctx-&gt;grp, &amp;r, &amp;s, &amp;ctx-&gt;d,</span></a>
 <a name="782"><span class="lineNum">     782 </span>                :            :                                              hash, hlen, f_rng, p_rng, f_rng,</a>
 <a name="783"><span class="lineNum">     783 </span>                :            :                                              p_rng, rs_ctx ) );</a>
 <a name="784"><span class="lineNum">     784 </span>                :            : #endif /* MBEDTLS_ECDSA_SIGN_ALT */</a>
 <a name="785"><span class="lineNum">     785 </span>                :            : #endif /* MBEDTLS_ECDSA_DETERMINISTIC */</a>
 <a name="786"><span class="lineNum">     786 </span>                :            : </a>
-<a name="787"><span class="lineNum">     787 </span>        [<span class="branchCov" title="Branch 0 was taken 3 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          3 :     MBEDTLS_MPI_CHK( ecdsa_signature_to_asn1( &amp;r, &amp;s, sig, slen ) );</span></a>
+<a name="787"><span class="lineNum">     787 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          4 :     MBEDTLS_MPI_CHK( ecdsa_signature_to_asn1( &amp;r, &amp;s, sig, slen ) );</span></a>
 <a name="788"><span class="lineNum">     788 </span>                :            : </a>
-<a name="789"><span class="lineNum">     789 </span>                :<span class="lineCov">          3 : cleanup:</span></a>
-<a name="790"><span class="lineNum">     790 </span>                :<span class="lineCov">          3 :     mbedtls_mpi_free( &amp;r );</span></a>
-<a name="791"><span class="lineNum">     791 </span>                :<span class="lineCov">          3 :     mbedtls_mpi_free( &amp;s );</span></a>
+<a name="789"><span class="lineNum">     789 </span>                :<span class="lineCov">          4 : cleanup:</span></a>
+<a name="790"><span class="lineNum">     790 </span>                :<span class="lineCov">          4 :     mbedtls_mpi_free( &amp;r );</span></a>
+<a name="791"><span class="lineNum">     791 </span>                :<span class="lineCov">          4 :     mbedtls_mpi_free( &amp;s );</span></a>
 <a name="792"><span class="lineNum">     792 </span>                :            : </a>
-<a name="793"><span class="lineNum">     793 </span>                :<span class="lineCov">          3 :     return( ret );</span></a>
+<a name="793"><span class="lineNum">     793 </span>                :<span class="lineCov">          4 :     return( ret );</span></a>
 <a name="794"><span class="lineNum">     794 </span>                :            : }</a>
 <a name="795"><span class="lineNum">     795 </span>                :            : </a>
 <a name="796"><span class="lineNum">     796 </span>                :            : /*</a>
 <a name="797"><span class="lineNum">     797 </span>                :            :  * Compute and write signature</a>
 <a name="798"><span class="lineNum">     798 </span>                :            :  */</a>
-<a name="799"><span class="lineNum">     799 </span>                :<span class="lineCov">          3 : int mbedtls_ecdsa_write_signature( mbedtls_ecdsa_context *ctx,</span></a>
+<a name="799"><span class="lineNum">     799 </span>                :<span class="lineCov">          4 : int mbedtls_ecdsa_write_signature( mbedtls_ecdsa_context *ctx,</span></a>
 <a name="800"><span class="lineNum">     800 </span>                :            :                                  mbedtls_md_type_t md_alg,</a>
 <a name="801"><span class="lineNum">     801 </span>                :            :                                  const unsigned char *hash, size_t hlen,</a>
 <a name="802"><span class="lineNum">     802 </span>                :            :                                  unsigned char *sig, size_t *slen,</a>
@@ -879,7 +879,7 @@
 <a name="807"><span class="lineNum">     807 </span>                :            :     ECDSA_VALIDATE_RET( hash != NULL );</a>
 <a name="808"><span class="lineNum">     808 </span>                :            :     ECDSA_VALIDATE_RET( sig  != NULL );</a>
 <a name="809"><span class="lineNum">     809 </span>                :            :     ECDSA_VALIDATE_RET( slen != NULL );</a>
-<a name="810"><span class="lineNum">     810 </span>                :<span class="lineCov">          3 :     return( mbedtls_ecdsa_write_signature_restartable(</span></a>
+<a name="810"><span class="lineNum">     810 </span>                :<span class="lineCov">          4 :     return( mbedtls_ecdsa_write_signature_restartable(</span></a>
 <a name="811"><span class="lineNum">     811 </span>                :            :                 ctx, md_alg, hash, hlen, sig, slen, f_rng, p_rng, NULL ) );</a>
 <a name="812"><span class="lineNum">     812 </span>                :            : }</a>
 <a name="813"><span class="lineNum">     813 </span>                :            : </a>
@@ -1001,41 +1001,41 @@
 <a name="929"><span class="lineNum">     929 </span>                :            : /*</a>
 <a name="930"><span class="lineNum">     930 </span>                :            :  * Set context from an mbedtls_ecp_keypair</a>
 <a name="931"><span class="lineNum">     931 </span>                :            :  */</a>
-<a name="932"><span class="lineNum">     932 </span>                :<span class="lineCov">       1173 : int mbedtls_ecdsa_from_keypair( mbedtls_ecdsa_context *ctx, const mbedtls_ecp_keypair *key )</span></a>
+<a name="932"><span class="lineNum">     932 </span>                :<span class="lineCov">       1175 : int mbedtls_ecdsa_from_keypair( mbedtls_ecdsa_context *ctx, const mbedtls_ecp_keypair *key )</span></a>
 <a name="933"><span class="lineNum">     933 </span>                :            : {</a>
-<a name="934"><span class="lineNum">     934 </span>                :<span class="lineCov">       1173 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="934"><span class="lineNum">     934 </span>                :<span class="lineCov">       1175 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="935"><span class="lineNum">     935 </span>                :            :     ECDSA_VALIDATE_RET( ctx != NULL );</a>
 <a name="936"><span class="lineNum">     936 </span>                :            :     ECDSA_VALIDATE_RET( key != NULL );</a>
 <a name="937"><span class="lineNum">     937 </span>                :            : </a>
-<a name="938"><span class="lineNum">     938 </span>  [<span class="branchCov" title="Branch 0 was taken 1173 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1173 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       2346 :     if( ( ret = mbedtls_ecp_group_copy( &amp;ctx-&gt;grp, &amp;key-&gt;grp ) ) != 0 ||</span></a>
-<a name="939"><span class="lineNum">     939 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1173 times"> + </span>]:<span class="lineCov">       2346 :         ( ret = mbedtls_mpi_copy( &amp;ctx-&gt;d, &amp;key-&gt;d ) ) != 0 ||</span></a>
-<a name="940"><span class="lineNum">     940 </span>                :<span class="lineCov">       1173 :         ( ret = mbedtls_ecp_copy( &amp;ctx-&gt;Q, &amp;key-&gt;Q ) ) != 0 )</span></a>
+<a name="938"><span class="lineNum">     938 </span>  [<span class="branchCov" title="Branch 0 was taken 1175 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1175 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       2350 :     if( ( ret = mbedtls_ecp_group_copy( &amp;ctx-&gt;grp, &amp;key-&gt;grp ) ) != 0 ||</span></a>
+<a name="939"><span class="lineNum">     939 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1175 times"> + </span>]:<span class="lineCov">       2350 :         ( ret = mbedtls_mpi_copy( &amp;ctx-&gt;d, &amp;key-&gt;d ) ) != 0 ||</span></a>
+<a name="940"><span class="lineNum">     940 </span>                :<span class="lineCov">       1175 :         ( ret = mbedtls_ecp_copy( &amp;ctx-&gt;Q, &amp;key-&gt;Q ) ) != 0 )</span></a>
 <a name="941"><span class="lineNum">     941 </span>                :            :     {</a>
 <a name="942"><span class="lineNum">     942 </span>                :<span class="lineNoCov">          0 :         mbedtls_ecdsa_free( ctx );</span></a>
 <a name="943"><span class="lineNum">     943 </span>                :            :     }</a>
 <a name="944"><span class="lineNum">     944 </span>                :            : </a>
-<a name="945"><span class="lineNum">     945 </span>                :<span class="lineCov">       1173 :     return( ret );</span></a>
+<a name="945"><span class="lineNum">     945 </span>                :<span class="lineCov">       1175 :     return( ret );</span></a>
 <a name="946"><span class="lineNum">     946 </span>                :            : }</a>
 <a name="947"><span class="lineNum">     947 </span>                :            : </a>
 <a name="948"><span class="lineNum">     948 </span>                :            : /*</a>
 <a name="949"><span class="lineNum">     949 </span>                :            :  * Initialize context</a>
 <a name="950"><span class="lineNum">     950 </span>                :            :  */</a>
-<a name="951"><span class="lineNum">     951 </span>                :<span class="lineCov">       1170 : void mbedtls_ecdsa_init( mbedtls_ecdsa_context *ctx )</span></a>
+<a name="951"><span class="lineNum">     951 </span>                :<span class="lineCov">       1171 : void mbedtls_ecdsa_init( mbedtls_ecdsa_context *ctx )</span></a>
 <a name="952"><span class="lineNum">     952 </span>                :            : {</a>
 <a name="953"><span class="lineNum">     953 </span>                :            :     ECDSA_VALIDATE( ctx != NULL );</a>
 <a name="954"><span class="lineNum">     954 </span>                :            : </a>
-<a name="955"><span class="lineNum">     955 </span>                :<span class="lineCov">       1170 :     mbedtls_ecp_keypair_init( ctx );</span></a>
-<a name="956"><span class="lineNum">     956 </span>                :<span class="lineCov">       1170 : }</span></a>
+<a name="955"><span class="lineNum">     955 </span>                :<span class="lineCov">       1171 :     mbedtls_ecp_keypair_init( ctx );</span></a>
+<a name="956"><span class="lineNum">     956 </span>                :<span class="lineCov">       1171 : }</span></a>
 <a name="957"><span class="lineNum">     957 </span>                :            : </a>
 <a name="958"><span class="lineNum">     958 </span>                :            : /*</a>
 <a name="959"><span class="lineNum">     959 </span>                :            :  * Free context</a>
 <a name="960"><span class="lineNum">     960 </span>                :            :  */</a>
-<a name="961"><span class="lineNum">     961 </span>                :<span class="lineCov">       1170 : void mbedtls_ecdsa_free( mbedtls_ecdsa_context *ctx )</span></a>
+<a name="961"><span class="lineNum">     961 </span>                :<span class="lineCov">       1171 : void mbedtls_ecdsa_free( mbedtls_ecdsa_context *ctx )</span></a>
 <a name="962"><span class="lineNum">     962 </span>                :            : {</a>
-<a name="963"><span class="lineNum">     963 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1170 times"> + </span>]:<span class="lineCov">       1170 :     if( ctx == NULL )</span></a>
+<a name="963"><span class="lineNum">     963 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1171 times"> + </span>]:<span class="lineCov">       1171 :     if( ctx == NULL )</span></a>
 <a name="964"><span class="lineNum">     964 </span>                :<span class="lineNoCov">          0 :         return;</span></a>
 <a name="965"><span class="lineNum">     965 </span>                :            : </a>
-<a name="966"><span class="lineNum">     966 </span>                :<span class="lineCov">       1170 :     mbedtls_ecp_keypair_free( ctx );</span></a>
+<a name="966"><span class="lineNum">     966 </span>                :<span class="lineCov">       1171 :     mbedtls_ecp_keypair_free( ctx );</span></a>
 <a name="967"><span class="lineNum">     967 </span>                :            : }</a>
 <a name="968"><span class="lineNum">     968 </span>                :            : </a>
 <a name="969"><span class="lineNum">     969 </span>                :            : #if defined(MBEDTLS_ECP_RESTARTABLE)</a>

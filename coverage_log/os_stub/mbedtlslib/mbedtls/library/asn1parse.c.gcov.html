@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-05-28 08:13:06</td>
+            <td class="headerValue">2023-05-29 08:15:17</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -113,27 +113,27 @@
 <a name="42"><span class="lineNum">      42 </span>                :            : /*</a>
 <a name="43"><span class="lineNum">      43 </span>                :            :  * ASN.1 DER decoding routines</a>
 <a name="44"><span class="lineNum">      44 </span>                :            :  */</a>
-<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">     607701 : int mbedtls_asn1_get_len( unsigned char **p,</span></a>
+<a name="45"><span class="lineNum">      45 </span>                :<span class="lineCov">     607727 : int mbedtls_asn1_get_len( unsigned char **p,</span></a>
 <a name="46"><span class="lineNum">      46 </span>                :            :                   const unsigned char *end,</a>
 <a name="47"><span class="lineNum">      47 </span>                :            :                   size_t *len )</a>
 <a name="48"><span class="lineNum">      48 </span>                :            : {</a>
-<a name="49"><span class="lineNum">      49 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 607701 times"> + </span>]:<span class="lineCov">     607701 :     if( ( end - *p ) &lt; 1 )</span></a>
+<a name="49"><span class="lineNum">      49 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 607727 times"> + </span>]:<span class="lineCov">     607727 :     if( ( end - *p ) &lt; 1 )</span></a>
 <a name="50"><span class="lineNum">      50 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_OUT_OF_DATA );</span></a>
 <a name="51"><span class="lineNum">      51 </span>                :            : </a>
-<a name="52"><span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 0 was taken 559062 times"> + </span><span class="branchCov" title="Branch 1 was taken 48639 times"> + </span>]:<span class="lineCov">     607701 :     if( ( **p &amp; 0x80 ) == 0 )</span></a>
-<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">     559062 :         *len = *(*p)++;</span></a>
+<a name="52"><span class="lineNum">      52 </span>        [<span class="branchCov" title="Branch 0 was taken 559085 times"> + </span><span class="branchCov" title="Branch 1 was taken 48642 times"> + </span>]:<span class="lineCov">     607727 :     if( ( **p &amp; 0x80 ) == 0 )</span></a>
+<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">     559085 :         *len = *(*p)++;</span></a>
 <a name="54"><span class="lineNum">      54 </span>                :            :     else</a>
 <a name="55"><span class="lineNum">      55 </span>                :            :     {</a>
-<a name="56"><span class="lineNum">      56 </span>  [<span class="branchCov" title="Branch 0 was taken 16017 times"> + </span><span class="branchCov" title="Branch 1 was taken 32622 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      48639 :         switch( **p &amp; 0x7F )</span></a>
+<a name="56"><span class="lineNum">      56 </span>  [<span class="branchCov" title="Branch 0 was taken 16020 times"> + </span><span class="branchCov" title="Branch 1 was taken 32622 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">      48642 :         switch( **p &amp; 0x7F )</span></a>
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 4 was not taken"> - </span>]
 <a name="57"><span class="lineNum">      57 </span>                :            :         {</a>
-<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">      16017 :         case 1:</span></a>
-<a name="59"><span class="lineNum">      59 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16017 times"> + </span>]:<span class="lineCov">      16017 :             if( ( end - *p ) &lt; 2 )</span></a>
+<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">      16020 :         case 1:</span></a>
+<a name="59"><span class="lineNum">      59 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16020 times"> + </span>]:<span class="lineCov">      16020 :             if( ( end - *p ) &lt; 2 )</span></a>
 <a name="60"><span class="lineNum">      60 </span>                :<span class="lineNoCov">          0 :                 return( MBEDTLS_ERR_ASN1_OUT_OF_DATA );</span></a>
 <a name="61"><span class="lineNum">      61 </span>                :            : </a>
-<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">      16017 :             *len = (*p)[1];</span></a>
-<a name="63"><span class="lineNum">      63 </span>                :<span class="lineCov">      16017 :             (*p) += 2;</span></a>
-<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">      16017 :             break;</span></a>
+<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">      16020 :             *len = (*p)[1];</span></a>
+<a name="63"><span class="lineNum">      63 </span>                :<span class="lineCov">      16020 :             (*p) += 2;</span></a>
+<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">      16020 :             break;</span></a>
 <a name="65"><span class="lineNum">      65 </span>                :            : </a>
 <a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">      32622 :         case 2:</span></a>
 <a name="67"><span class="lineNum">      67 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 32622 times"> + </span>]:<span class="lineCov">      32622 :             if( ( end - *p ) &lt; 3 )</span></a>
@@ -166,25 +166,25 @@
 <a name="94"><span class="lineNum">      94 </span>                :            :         }</a>
 <a name="95"><span class="lineNum">      95 </span>                :            :     }</a>
 <a name="96"><span class="lineNum">      96 </span>                :            : </a>
-<a name="97"><span class="lineNum">      97 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 607700 times"> + </span>]:<span class="lineCov">     607701 :     if( *len &gt; (size_t) ( end - *p ) )</span></a>
+<a name="97"><span class="lineNum">      97 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 607726 times"> + </span>]:<span class="lineCov">     607727 :     if( *len &gt; (size_t) ( end - *p ) )</span></a>
 <a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">          1 :         return( MBEDTLS_ERR_ASN1_OUT_OF_DATA );</span></a>
 <a name="99"><span class="lineNum">      99 </span>                :            : </a>
-<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">     607700 :     return( 0 );</span></a>
+<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">     607726 :     return( 0 );</span></a>
 <a name="101"><span class="lineNum">     101 </span>                :            : }</a>
 <a name="102"><span class="lineNum">     102 </span>                :            : </a>
-<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">     569889 : int mbedtls_asn1_get_tag( unsigned char **p,</span></a>
+<a name="103"><span class="lineNum">     103 </span>                :<span class="lineCov">     569917 : int mbedtls_asn1_get_tag( unsigned char **p,</span></a>
 <a name="104"><span class="lineNum">     104 </span>                :            :                   const unsigned char *end,</a>
 <a name="105"><span class="lineNum">     105 </span>                :            :                   size_t *len, int tag )</a>
 <a name="106"><span class="lineNum">     106 </span>                :            : {</a>
-<a name="107"><span class="lineNum">     107 </span>        [<span class="branchCov" title="Branch 0 was taken 1405 times"> + </span><span class="branchCov" title="Branch 1 was taken 568484 times"> + </span>]:<span class="lineCov">     569889 :     if( ( end - *p ) &lt; 1 )</span></a>
-<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">       1405 :         return( MBEDTLS_ERR_ASN1_OUT_OF_DATA );</span></a>
+<a name="107"><span class="lineNum">     107 </span>        [<span class="branchCov" title="Branch 0 was taken 1406 times"> + </span><span class="branchCov" title="Branch 1 was taken 568511 times"> + </span>]:<span class="lineCov">     569917 :     if( ( end - *p ) &lt; 1 )</span></a>
+<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">       1406 :         return( MBEDTLS_ERR_ASN1_OUT_OF_DATA );</span></a>
 <a name="109"><span class="lineNum">     109 </span>                :            : </a>
-<a name="110"><span class="lineNum">     110 </span>        [<span class="branchCov" title="Branch 0 was taken 58278 times"> + </span><span class="branchCov" title="Branch 1 was taken 510206 times"> + </span>]:<span class="lineCov">     568484 :     if( **p != tag )</span></a>
-<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">      58278 :         return( MBEDTLS_ERR_ASN1_UNEXPECTED_TAG );</span></a>
+<a name="110"><span class="lineNum">     110 </span>        [<span class="branchCov" title="Branch 0 was taken 58280 times"> + </span><span class="branchCov" title="Branch 1 was taken 510231 times"> + </span>]:<span class="lineCov">     568511 :     if( **p != tag )</span></a>
+<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">      58280 :         return( MBEDTLS_ERR_ASN1_UNEXPECTED_TAG );</span></a>
 <a name="112"><span class="lineNum">     112 </span>                :            : </a>
-<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">     510206 :     (*p)++;</span></a>
+<a name="113"><span class="lineNum">     113 </span>                :<span class="lineCov">     510231 :     (*p)++;</span></a>
 <a name="114"><span class="lineNum">     114 </span>                :            : </a>
-<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">     510206 :     return( mbedtls_asn1_get_len( p, end, len ) );</span></a>
+<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">     510231 :     return( mbedtls_asn1_get_len( p, end, len ) );</span></a>
 <a name="116"><span class="lineNum">     116 </span>                :            : }</a>
 <a name="117"><span class="lineNum">     117 </span>                :            : </a>
 <a name="118"><span class="lineNum">     118 </span>                :<span class="lineCov">      57520 : int mbedtls_asn1_get_bool( unsigned char **p,</span></a>
@@ -206,55 +206,55 @@
 <a name="134"><span class="lineNum">     134 </span>                :<span class="lineCov">      20914 :     return( 0 );</span></a>
 <a name="135"><span class="lineNum">     135 </span>                :            : }</a>
 <a name="136"><span class="lineNum">     136 </span>                :            : </a>
-<a name="137"><span class="lineNum">     137 </span>                :<span class="lineCov">      10711 : static int asn1_get_tagged_int( unsigned char **p,</span></a>
+<a name="137"><span class="lineNum">     137 </span>                :<span class="lineCov">      10713 : static int asn1_get_tagged_int( unsigned char **p,</span></a>
 <a name="138"><span class="lineNum">     138 </span>                :            :                                 const unsigned char *end,</a>
 <a name="139"><span class="lineNum">     139 </span>                :            :                                 int tag, int *val )</a>
 <a name="140"><span class="lineNum">     140 </span>                :            : {</a>
-<a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">      10711 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">      10713 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="142"><span class="lineNum">     142 </span>                :            :     size_t len;</a>
 <a name="143"><span class="lineNum">     143 </span>                :            : </a>
-<a name="144"><span class="lineNum">     144 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10711 times"> + </span>]:<span class="lineCov">      10711 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;len, tag ) ) != 0 )</span></a>
+<a name="144"><span class="lineNum">     144 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10713 times"> + </span>]:<span class="lineCov">      10713 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;len, tag ) ) != 0 )</span></a>
 <a name="145"><span class="lineNum">     145 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="146"><span class="lineNum">     146 </span>                :            : </a>
 <a name="147"><span class="lineNum">     147 </span>                :            :     /*</a>
 <a name="148"><span class="lineNum">     148 </span>                :            :      * len==0 is malformed (0 must be represented as 020100 for INTEGER,</a>
 <a name="149"><span class="lineNum">     149 </span>                :            :      * or 0A0100 for ENUMERATED tags</a>
 <a name="150"><span class="lineNum">     150 </span>                :            :      */</a>
-<a name="151"><span class="lineNum">     151 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10711 times"> + </span>]:<span class="lineCov">      10711 :     if( len == 0 )</span></a>
+<a name="151"><span class="lineNum">     151 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10713 times"> + </span>]:<span class="lineCov">      10713 :     if( len == 0 )</span></a>
 <a name="152"><span class="lineNum">     152 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_INVALID_LENGTH );</span></a>
 <a name="153"><span class="lineNum">     153 </span>                :            :     /* This is a cryptography library. Reject negative integers. */</a>
-<a name="154"><span class="lineNum">     154 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10711 times"> + </span>]:<span class="lineCov">      10711 :     if( ( **p &amp; 0x80 ) != 0 )</span></a>
+<a name="154"><span class="lineNum">     154 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10713 times"> + </span>]:<span class="lineCov">      10713 :     if( ( **p &amp; 0x80 ) != 0 )</span></a>
 <a name="155"><span class="lineNum">     155 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_INVALID_LENGTH );</span></a>
 <a name="156"><span class="lineNum">     156 </span>                :            : </a>
 <a name="157"><span class="lineNum">     157 </span>                :            :     /* Skip leading zeros. */</a>
-<a name="158"><span class="lineNum">     158 </span>  [<span class="branchCov" title="Branch 0 was taken 10711 times"> + </span><span class="branchCov" title="Branch 1 was taken 140 times"> + </span><span class="branchCov" title="Branch 2 was taken 140 times"> + </span><span class="branchCov" title="Branch 3 was taken 10571 times"> + </span>]:<span class="lineCov">      10851 :     while( len &gt; 0 &amp;&amp; **p == 0 )</span></a>
+<a name="158"><span class="lineNum">     158 </span>  [<span class="branchCov" title="Branch 0 was taken 10713 times"> + </span><span class="branchCov" title="Branch 1 was taken 141 times"> + </span><span class="branchCov" title="Branch 2 was taken 141 times"> + </span><span class="branchCov" title="Branch 3 was taken 10572 times"> + </span>]:<span class="lineCov">      10854 :     while( len &gt; 0 &amp;&amp; **p == 0 )</span></a>
 <a name="159"><span class="lineNum">     159 </span>                :            :     {</a>
-<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">        140 :         ++( *p );</span></a>
-<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">        140 :         --len;</span></a>
+<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">        141 :         ++( *p );</span></a>
+<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">        141 :         --len;</span></a>
 <a name="162"><span class="lineNum">     162 </span>                :            :     }</a>
 <a name="163"><span class="lineNum">     163 </span>                :            : </a>
 <a name="164"><span class="lineNum">     164 </span>                :            :     /* Reject integers that don't fit in an int. This code assumes that</a>
 <a name="165"><span class="lineNum">     165 </span>                :            :      * the int type has no padding bit. */</a>
-<a name="166"><span class="lineNum">     166 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10711 times"> + </span>]:<span class="lineCov">      10711 :     if( len &gt; sizeof( int ) )</span></a>
+<a name="166"><span class="lineNum">     166 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10713 times"> + </span>]:<span class="lineCov">      10713 :     if( len &gt; sizeof( int ) )</span></a>
 <a name="167"><span class="lineNum">     167 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_INVALID_LENGTH );</span></a>
-<a name="168"><span class="lineNum">     168 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10711 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      10711 :     if( len == sizeof( int ) &amp;&amp; ( **p &amp; 0x80 ) != 0 )</span></a>
+<a name="168"><span class="lineNum">     168 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10713 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      10713 :     if( len == sizeof( int ) &amp;&amp; ( **p &amp; 0x80 ) != 0 )</span></a>
 <a name="169"><span class="lineNum">     169 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_INVALID_LENGTH );</span></a>
 <a name="170"><span class="lineNum">     170 </span>                :            : </a>
-<a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">      10711 :     *val = 0;</span></a>
-<a name="172"><span class="lineNum">     172 </span>        [<span class="branchCov" title="Branch 0 was taken 10571 times"> + </span><span class="branchCov" title="Branch 1 was taken 10711 times"> + </span>]:<span class="lineCov">      21282 :     while( len-- &gt; 0 )</span></a>
+<a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">      10713 :     *val = 0;</span></a>
+<a name="172"><span class="lineNum">     172 </span>        [<span class="branchCov" title="Branch 0 was taken 10572 times"> + </span><span class="branchCov" title="Branch 1 was taken 10713 times"> + </span>]:<span class="lineCov">      21285 :     while( len-- &gt; 0 )</span></a>
 <a name="173"><span class="lineNum">     173 </span>                :            :     {</a>
-<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">      10571 :         *val = ( *val &lt;&lt; 8 ) | **p;</span></a>
-<a name="175"><span class="lineNum">     175 </span>                :<span class="lineCov">      10571 :         (*p)++;</span></a>
+<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">      10572 :         *val = ( *val &lt;&lt; 8 ) | **p;</span></a>
+<a name="175"><span class="lineNum">     175 </span>                :<span class="lineCov">      10572 :         (*p)++;</span></a>
 <a name="176"><span class="lineNum">     176 </span>                :            :     }</a>
 <a name="177"><span class="lineNum">     177 </span>                :            : </a>
-<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">      10711 :     return( 0 );</span></a>
+<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">      10713 :     return( 0 );</span></a>
 <a name="179"><span class="lineNum">     179 </span>                :            : }</a>
 <a name="180"><span class="lineNum">     180 </span>                :            : </a>
-<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">      10711 : int mbedtls_asn1_get_int( unsigned char **p,</span></a>
+<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">      10713 : int mbedtls_asn1_get_int( unsigned char **p,</span></a>
 <a name="182"><span class="lineNum">     182 </span>                :            :                           const unsigned char *end,</a>
 <a name="183"><span class="lineNum">     183 </span>                :            :                           int *val )</a>
 <a name="184"><span class="lineNum">     184 </span>                :            : {</a>
-<a name="185"><span class="lineNum">     185 </span>                :<span class="lineCov">      10711 :     return( asn1_get_tagged_int( p, end, MBEDTLS_ASN1_INTEGER, val) );</span></a>
+<a name="185"><span class="lineNum">     185 </span>                :<span class="lineCov">      10713 :     return( asn1_get_tagged_int( p, end, MBEDTLS_ASN1_INTEGER, val) );</span></a>
 <a name="186"><span class="lineNum">     186 </span>                :            : }</a>
 <a name="187"><span class="lineNum">     187 </span>                :            : </a>
 <a name="188"><span class="lineNum">     188 </span>                :<span class="lineNoCov">          0 : int mbedtls_asn1_get_enum( unsigned char **p,</span></a>
@@ -368,23 +368,23 @@
 <a name="296"><span class="lineNum">     296 </span>                :            : /*</a>
 <a name="297"><span class="lineNum">     297 </span>                :            :  * Get a bit string without unused bits</a>
 <a name="298"><span class="lineNum">     298 </span>                :            :  */</a>
-<a name="299"><span class="lineNum">     299 </span>                :<span class="lineCov">      21039 : int mbedtls_asn1_get_bitstring_null( unsigned char **p, const unsigned char *end,</span></a>
+<a name="299"><span class="lineNum">     299 </span>                :<span class="lineCov">      21040 : int mbedtls_asn1_get_bitstring_null( unsigned char **p, const unsigned char *end,</span></a>
 <a name="300"><span class="lineNum">     300 </span>                :            :                              size_t *len )</a>
 <a name="301"><span class="lineNum">     301 </span>                :            : {</a>
-<a name="302"><span class="lineNum">     302 </span>                :<span class="lineCov">      21039 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="302"><span class="lineNum">     302 </span>                :<span class="lineCov">      21040 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="303"><span class="lineNum">     303 </span>                :            : </a>
-<a name="304"><span class="lineNum">     304 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21039 times"> + </span>]:<span class="lineCov">      21039 :     if( ( ret = mbedtls_asn1_get_tag( p, end, len, MBEDTLS_ASN1_BIT_STRING ) ) != 0 )</span></a>
+<a name="304"><span class="lineNum">     304 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21040 times"> + </span>]:<span class="lineCov">      21040 :     if( ( ret = mbedtls_asn1_get_tag( p, end, len, MBEDTLS_ASN1_BIT_STRING ) ) != 0 )</span></a>
 <a name="305"><span class="lineNum">     305 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="306"><span class="lineNum">     306 </span>                :            : </a>
-<a name="307"><span class="lineNum">     307 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21039 times"> + </span>]:<span class="lineCov">      21039 :     if( *len == 0 )</span></a>
+<a name="307"><span class="lineNum">     307 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21040 times"> + </span>]:<span class="lineCov">      21040 :     if( *len == 0 )</span></a>
 <a name="308"><span class="lineNum">     308 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_INVALID_DATA );</span></a>
-<a name="309"><span class="lineNum">     309 </span>                :<span class="lineCov">      21039 :     --( *len );</span></a>
+<a name="309"><span class="lineNum">     309 </span>                :<span class="lineCov">      21040 :     --( *len );</span></a>
 <a name="310"><span class="lineNum">     310 </span>                :            : </a>
-<a name="311"><span class="lineNum">     311 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21039 times"> + </span>]:<span class="lineCov">      21039 :     if( **p != 0 )</span></a>
+<a name="311"><span class="lineNum">     311 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21040 times"> + </span>]:<span class="lineCov">      21040 :     if( **p != 0 )</span></a>
 <a name="312"><span class="lineNum">     312 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_INVALID_DATA );</span></a>
-<a name="313"><span class="lineNum">     313 </span>                :<span class="lineCov">      21039 :     ++( *p );</span></a>
+<a name="313"><span class="lineNum">     313 </span>                :<span class="lineCov">      21040 :     ++( *p );</span></a>
 <a name="314"><span class="lineNum">     314 </span>                :            : </a>
-<a name="315"><span class="lineNum">     315 </span>                :<span class="lineCov">      21039 :     return( 0 );</span></a>
+<a name="315"><span class="lineNum">     315 </span>                :<span class="lineCov">      21040 :     return( 0 );</span></a>
 <a name="316"><span class="lineNum">     316 </span>                :            : }</a>
 <a name="317"><span class="lineNum">     317 </span>                :            : </a>
 <a name="318"><span class="lineNum">     318 </span>                :<span class="lineNoCov">          0 : void mbedtls_asn1_sequence_free( mbedtls_asn1_sequence *seq )</span></a>
@@ -448,48 +448,48 @@
 <a name="376"><span class="lineNum">     376 </span>                :            :                 asn1_get_sequence_of_cb, &amp;cb_ctx ) );</a>
 <a name="377"><span class="lineNum">     377 </span>                :            : }</a>
 <a name="378"><span class="lineNum">     378 </span>                :            : </a>
-<a name="379"><span class="lineNum">     379 </span>                :<span class="lineCov">      31518 : int mbedtls_asn1_get_alg( unsigned char **p,</span></a>
+<a name="379"><span class="lineNum">     379 </span>                :<span class="lineCov">      31519 : int mbedtls_asn1_get_alg( unsigned char **p,</span></a>
 <a name="380"><span class="lineNum">     380 </span>                :            :                   const unsigned char *end,</a>
 <a name="381"><span class="lineNum">     381 </span>                :            :                   mbedtls_asn1_buf *alg, mbedtls_asn1_buf *params )</a>
 <a name="382"><span class="lineNum">     382 </span>                :            : {</a>
-<a name="383"><span class="lineNum">     383 </span>                :<span class="lineCov">      31518 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="383"><span class="lineNum">     383 </span>                :<span class="lineCov">      31519 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="384"><span class="lineNum">     384 </span>                :            :     size_t len;</a>
 <a name="385"><span class="lineNum">     385 </span>                :            : </a>
-<a name="386"><span class="lineNum">     386 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 31518 times"> + </span>]:<span class="lineCov">      31518 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;len,</span></a>
+<a name="386"><span class="lineNum">     386 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 31519 times"> + </span>]:<span class="lineCov">      31519 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;len,</span></a>
 <a name="387"><span class="lineNum">     387 </span>                :            :             MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE ) ) != 0 )</a>
 <a name="388"><span class="lineNum">     388 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="389"><span class="lineNum">     389 </span>                :            : </a>
-<a name="390"><span class="lineNum">     390 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 31518 times"> + </span>]:<span class="lineCov">      31518 :     if( ( end - *p ) &lt; 1 )</span></a>
+<a name="390"><span class="lineNum">     390 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 31519 times"> + </span>]:<span class="lineCov">      31519 :     if( ( end - *p ) &lt; 1 )</span></a>
 <a name="391"><span class="lineNum">     391 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_OUT_OF_DATA );</span></a>
 <a name="392"><span class="lineNum">     392 </span>                :            : </a>
-<a name="393"><span class="lineNum">     393 </span>                :<span class="lineCov">      31518 :     alg-&gt;tag = **p;</span></a>
-<a name="394"><span class="lineNum">     394 </span>                :<span class="lineCov">      31518 :     end = *p + len;</span></a>
+<a name="393"><span class="lineNum">     393 </span>                :<span class="lineCov">      31519 :     alg-&gt;tag = **p;</span></a>
+<a name="394"><span class="lineNum">     394 </span>                :<span class="lineCov">      31519 :     end = *p + len;</span></a>
 <a name="395"><span class="lineNum">     395 </span>                :            : </a>
-<a name="396"><span class="lineNum">     396 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 31518 times"> + </span>]:<span class="lineCov">      31518 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;alg-&gt;len, MBEDTLS_ASN1_OID ) ) != 0 )</span></a>
+<a name="396"><span class="lineNum">     396 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 31519 times"> + </span>]:<span class="lineCov">      31519 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;alg-&gt;len, MBEDTLS_ASN1_OID ) ) != 0 )</span></a>
 <a name="397"><span class="lineNum">     397 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="398"><span class="lineNum">     398 </span>                :            : </a>
-<a name="399"><span class="lineNum">     399 </span>                :<span class="lineCov">      31518 :     alg-&gt;p = *p;</span></a>
-<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">      31518 :     *p += alg-&gt;len;</span></a>
+<a name="399"><span class="lineNum">     399 </span>                :<span class="lineCov">      31519 :     alg-&gt;p = *p;</span></a>
+<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">      31519 :     *p += alg-&gt;len;</span></a>
 <a name="401"><span class="lineNum">     401 </span>                :            : </a>
-<a name="402"><span class="lineNum">     402 </span>        [<span class="branchCov" title="Branch 0 was taken 19200 times"> + </span><span class="branchCov" title="Branch 1 was taken 12318 times"> + </span>]:<span class="lineCov">      31518 :     if( *p == end )</span></a>
+<a name="402"><span class="lineNum">     402 </span>        [<span class="branchCov" title="Branch 0 was taken 19200 times"> + </span><span class="branchCov" title="Branch 1 was taken 12319 times"> + </span>]:<span class="lineCov">      31519 :     if( *p == end )</span></a>
 <a name="403"><span class="lineNum">     403 </span>                :            :     {</a>
 <a name="404"><span class="lineNum">     404 </span>                :<span class="lineCov">      19200 :         mbedtls_platform_zeroize( params, sizeof(mbedtls_asn1_buf) );</span></a>
 <a name="405"><span class="lineNum">     405 </span>                :<span class="lineCov">      19200 :         return( 0 );</span></a>
 <a name="406"><span class="lineNum">     406 </span>                :            :     }</a>
 <a name="407"><span class="lineNum">     407 </span>                :            : </a>
-<a name="408"><span class="lineNum">     408 </span>                :<span class="lineCov">      12318 :     params-&gt;tag = **p;</span></a>
-<a name="409"><span class="lineNum">     409 </span>                :<span class="lineCov">      12318 :     (*p)++;</span></a>
+<a name="408"><span class="lineNum">     408 </span>                :<span class="lineCov">      12319 :     params-&gt;tag = **p;</span></a>
+<a name="409"><span class="lineNum">     409 </span>                :<span class="lineCov">      12319 :     (*p)++;</span></a>
 <a name="410"><span class="lineNum">     410 </span>                :            : </a>
-<a name="411"><span class="lineNum">     411 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 12318 times"> + </span>]:<span class="lineCov">      12318 :     if( ( ret = mbedtls_asn1_get_len( p, end, &amp;params-&gt;len ) ) != 0 )</span></a>
+<a name="411"><span class="lineNum">     411 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 12319 times"> + </span>]:<span class="lineCov">      12319 :     if( ( ret = mbedtls_asn1_get_len( p, end, &amp;params-&gt;len ) ) != 0 )</span></a>
 <a name="412"><span class="lineNum">     412 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="413"><span class="lineNum">     413 </span>                :            : </a>
-<a name="414"><span class="lineNum">     414 </span>                :<span class="lineCov">      12318 :     params-&gt;p = *p;</span></a>
-<a name="415"><span class="lineNum">     415 </span>                :<span class="lineCov">      12318 :     *p += params-&gt;len;</span></a>
+<a name="414"><span class="lineNum">     414 </span>                :<span class="lineCov">      12319 :     params-&gt;p = *p;</span></a>
+<a name="415"><span class="lineNum">     415 </span>                :<span class="lineCov">      12319 :     *p += params-&gt;len;</span></a>
 <a name="416"><span class="lineNum">     416 </span>                :            : </a>
-<a name="417"><span class="lineNum">     417 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 12318 times"> + </span>]:<span class="lineCov">      12318 :     if( *p != end )</span></a>
+<a name="417"><span class="lineNum">     417 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 12319 times"> + </span>]:<span class="lineCov">      12319 :     if( *p != end )</span></a>
 <a name="418"><span class="lineNum">     418 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_ASN1_LENGTH_MISMATCH );</span></a>
 <a name="419"><span class="lineNum">     419 </span>                :            : </a>
-<a name="420"><span class="lineNum">     420 </span>                :<span class="lineCov">      12318 :     return( 0 );</span></a>
+<a name="420"><span class="lineNum">     420 </span>                :<span class="lineCov">      12319 :     return( 0 );</span></a>
 <a name="421"><span class="lineNum">     421 </span>                :            : }</a>
 <a name="422"><span class="lineNum">     422 </span>                :            : </a>
 <a name="423"><span class="lineNum">     423 </span>                :<span class="lineNoCov">          0 : int mbedtls_asn1_get_alg_null( unsigned char **p,</span></a>
@@ -511,28 +511,28 @@
 <a name="438"><span class="lineNum">     438 </span>                :<span class="lineNoCov">          0 :     return( 0 );</span></a>
 <a name="439"><span class="lineNum">     439 </span>                :            : }</a>
 <a name="440"><span class="lineNum">     440 </span>                :            : </a>
-<a name="441"><span class="lineNum">     441 </span>                :<span class="lineCov">         10 : void mbedtls_asn1_free_named_data( mbedtls_asn1_named_data *cur )</span></a>
+<a name="441"><span class="lineNum">     441 </span>                :<span class="lineCov">         14 : void mbedtls_asn1_free_named_data( mbedtls_asn1_named_data *cur )</span></a>
 <a name="442"><span class="lineNum">     442 </span>                :            : {</a>
-<a name="443"><span class="lineNum">     443 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">         10 :     if( cur == NULL )</span></a>
+<a name="443"><span class="lineNum">     443 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 14 times"> + </span>]:<span class="lineCov">         14 :     if( cur == NULL )</span></a>
 <a name="444"><span class="lineNum">     444 </span>                :<span class="lineNoCov">          0 :         return;</span></a>
 <a name="445"><span class="lineNum">     445 </span>                :            : </a>
-<a name="446"><span class="lineNum">     446 </span>                :<span class="lineCov">         10 :     mbedtls_free( cur-&gt;oid.p );</span></a>
-<a name="447"><span class="lineNum">     447 </span>                :<span class="lineCov">         10 :     mbedtls_free( cur-&gt;val.p );</span></a>
+<a name="446"><span class="lineNum">     446 </span>                :<span class="lineCov">         14 :     mbedtls_free( cur-&gt;oid.p );</span></a>
+<a name="447"><span class="lineNum">     447 </span>                :<span class="lineCov">         14 :     mbedtls_free( cur-&gt;val.p );</span></a>
 <a name="448"><span class="lineNum">     448 </span>                :            : </a>
-<a name="449"><span class="lineNum">     449 </span>                :<span class="lineCov">         10 :     mbedtls_platform_zeroize( cur, sizeof( mbedtls_asn1_named_data ) );</span></a>
+<a name="449"><span class="lineNum">     449 </span>                :<span class="lineCov">         14 :     mbedtls_platform_zeroize( cur, sizeof( mbedtls_asn1_named_data ) );</span></a>
 <a name="450"><span class="lineNum">     450 </span>                :            : }</a>
 <a name="451"><span class="lineNum">     451 </span>                :            : </a>
-<a name="452"><span class="lineNum">     452 </span>                :<span class="lineCov">          9 : void mbedtls_asn1_free_named_data_list( mbedtls_asn1_named_data **head )</span></a>
+<a name="452"><span class="lineNum">     452 </span>                :<span class="lineCov">         12 : void mbedtls_asn1_free_named_data_list( mbedtls_asn1_named_data **head )</span></a>
 <a name="453"><span class="lineNum">     453 </span>                :            : {</a>
 <a name="454"><span class="lineNum">     454 </span>                :            :     mbedtls_asn1_named_data *cur;</a>
 <a name="455"><span class="lineNum">     455 </span>                :            : </a>
-<a name="456"><span class="lineNum">     456 </span>        [<span class="branchCov" title="Branch 0 was taken 10 times"> + </span><span class="branchCov" title="Branch 1 was taken 9 times"> + </span>]:<span class="lineCov">         19 :     while( ( cur = *head ) != NULL )</span></a>
+<a name="456"><span class="lineNum">     456 </span>        [<span class="branchCov" title="Branch 0 was taken 14 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span>]:<span class="lineCov">         26 :     while( ( cur = *head ) != NULL )</span></a>
 <a name="457"><span class="lineNum">     457 </span>                :            :     {</a>
-<a name="458"><span class="lineNum">     458 </span>                :<span class="lineCov">         10 :         *head = cur-&gt;next;</span></a>
-<a name="459"><span class="lineNum">     459 </span>                :<span class="lineCov">         10 :         mbedtls_asn1_free_named_data( cur );</span></a>
-<a name="460"><span class="lineNum">     460 </span>                :<span class="lineCov">         10 :         mbedtls_free( cur );</span></a>
+<a name="458"><span class="lineNum">     458 </span>                :<span class="lineCov">         14 :         *head = cur-&gt;next;</span></a>
+<a name="459"><span class="lineNum">     459 </span>                :<span class="lineCov">         14 :         mbedtls_asn1_free_named_data( cur );</span></a>
+<a name="460"><span class="lineNum">     460 </span>                :<span class="lineCov">         14 :         mbedtls_free( cur );</span></a>
 <a name="461"><span class="lineNum">     461 </span>                :            :     }</a>
-<a name="462"><span class="lineNum">     462 </span>                :<span class="lineCov">          9 : }</span></a>
+<a name="462"><span class="lineNum">     462 </span>                :<span class="lineCov">         12 : }</span></a>
 <a name="463"><span class="lineNum">     463 </span>                :            : </a>
 <a name="464"><span class="lineNum">     464 </span>                :<span class="lineNoCov">          0 : mbedtls_asn1_named_data *mbedtls_asn1_find_named_data( mbedtls_asn1_named_data *list,</span></a>
 <a name="465"><span class="lineNum">     465 </span>                :            :                                        const char *oid, size_t len )</a>
