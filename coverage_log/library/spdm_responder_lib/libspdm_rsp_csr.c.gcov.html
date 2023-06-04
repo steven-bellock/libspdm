@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-03 08:14:09</td>
+            <td class="headerValue">2023-06-04 08:13:12</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -217,39 +217,40 @@
 <a name="146"><span class="lineNum">     146 </span>                :<span class="lineCov">          7 :     csr_p = (uint8_t*)(spdm_response + 1);</span></a>
 <a name="147"><span class="lineNum">     147 </span>                :<span class="lineCov">          7 :     result = libspdm_gen_csr(spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
 <a name="148"><span class="lineNum">     148 </span>                :            :                              spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
-<a name="149"><span class="lineNum">     149 </span>                :            :                              &amp;need_reset, requester_info, requester_info_length,</a>
-<a name="150"><span class="lineNum">     150 </span>                :            :                              opaque_data, opaque_data_length,</a>
-<a name="151"><span class="lineNum">     151 </span>                :            :                              &amp;csr_len, csr_p);</a>
-<a name="152"><span class="lineNum">     152 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">          7 :     if (!result) {</span></a>
-<a name="153"><span class="lineNum">     153 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
-<a name="154"><span class="lineNum">     154 </span>                :            :             spdm_context,</a>
-<a name="155"><span class="lineNum">     155 </span>                :            :             SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
-<a name="156"><span class="lineNum">     156 </span>                :            :             response_size, response);</a>
-<a name="157"><span class="lineNum">     157 </span>                :            :     }</a>
-<a name="158"><span class="lineNum">     158 </span>                :            : </a>
-<a name="159"><span class="lineNum">     159 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">          7 :     LIBSPDM_ASSERT(*response_size &gt;= sizeof(spdm_csr_response_t) + csr_len);</span></a>
-<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">          7 :     *response_size = sizeof(spdm_csr_response_t) + csr_len;</span></a>
-<a name="161"><span class="lineNum">     161 </span>                :            : </a>
-<a name="162"><span class="lineNum">     162 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">          7 :     if (libspdm_is_capabilities_flag_supported(</span></a>
-<a name="163"><span class="lineNum">     163 </span>                :            :             spdm_context, false, 0,</a>
-<a name="164"><span class="lineNum">     164 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_INSTALL_RESET_CAP) &amp;&amp;</span></a>
-<a name="165"><span class="lineNum">     165 </span>                :            :         need_reset) {</a>
-<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="167"><span class="lineNum">     167 </span>                :            :                                                SPDM_ERROR_CODE_RESET_REQUIRED, 0,</a>
-<a name="168"><span class="lineNum">     168 </span>                :            :                                                response_size, response);</a>
-<a name="169"><span class="lineNum">     169 </span>                :            :     } else {</a>
-<a name="170"><span class="lineNum">     170 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
-<a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.request_response_code = SPDM_CSR;</span></a>
-<a name="172"><span class="lineNum">     172 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="173"><span class="lineNum">     173 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.param2 = 0;</span></a>
-<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;csr_length = (uint16_t)csr_len;</span></a>
-<a name="175"><span class="lineNum">     175 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;reserved = 0;</span></a>
-<a name="176"><span class="lineNum">     176 </span>                :            :     }</a>
-<a name="177"><span class="lineNum">     177 </span>                :            : </a>
-<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">          6 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="179"><span class="lineNum">     179 </span>                :            : }</a>
-<a name="180"><span class="lineNum">     180 </span>                :            : </a>
-<a name="181"><span class="lineNum">     181 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_GET_CSR_CAP*/</a>
+<a name="149"><span class="lineNum">     149 </span>                :            :                              &amp;need_reset, request, request_size,</a>
+<a name="150"><span class="lineNum">     150 </span>                :            :                              requester_info, requester_info_length,</a>
+<a name="151"><span class="lineNum">     151 </span>                :            :                              opaque_data, opaque_data_length,</a>
+<a name="152"><span class="lineNum">     152 </span>                :            :                              &amp;csr_len, csr_p);</a>
+<a name="153"><span class="lineNum">     153 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">          7 :     if (!result) {</span></a>
+<a name="154"><span class="lineNum">     154 </span>                :<span class="lineNoCov">          0 :         return libspdm_generate_error_response(</span></a>
+<a name="155"><span class="lineNum">     155 </span>                :            :             spdm_context,</a>
+<a name="156"><span class="lineNum">     156 </span>                :            :             SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
+<a name="157"><span class="lineNum">     157 </span>                :            :             response_size, response);</a>
+<a name="158"><span class="lineNum">     158 </span>                :            :     }</a>
+<a name="159"><span class="lineNum">     159 </span>                :            : </a>
+<a name="160"><span class="lineNum">     160 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">          7 :     LIBSPDM_ASSERT(*response_size &gt;= sizeof(spdm_csr_response_t) + csr_len);</span></a>
+<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">          7 :     *response_size = sizeof(spdm_csr_response_t) + csr_len;</span></a>
+<a name="162"><span class="lineNum">     162 </span>                :            : </a>
+<a name="163"><span class="lineNum">     163 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">          7 :     if (libspdm_is_capabilities_flag_supported(</span></a>
+<a name="164"><span class="lineNum">     164 </span>                :            :             spdm_context, false, 0,</a>
+<a name="165"><span class="lineNum">     165 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          2 :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_INSTALL_RESET_CAP) &amp;&amp;</span></a>
+<a name="166"><span class="lineNum">     166 </span>                :            :         need_reset) {</a>
+<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">          1 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="168"><span class="lineNum">     168 </span>                :            :                                                SPDM_ERROR_CODE_RESET_REQUIRED, 0,</a>
+<a name="169"><span class="lineNum">     169 </span>                :            :                                                response_size, response);</a>
+<a name="170"><span class="lineNum">     170 </span>                :            :     } else {</a>
+<a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
+<a name="172"><span class="lineNum">     172 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.request_response_code = SPDM_CSR;</span></a>
+<a name="173"><span class="lineNum">     173 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.param1 = 0;</span></a>
+<a name="174"><span class="lineNum">     174 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;header.param2 = 0;</span></a>
+<a name="175"><span class="lineNum">     175 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;csr_length = (uint16_t)csr_len;</span></a>
+<a name="176"><span class="lineNum">     176 </span>                :<span class="lineCov">          6 :         spdm_response-&gt;reserved = 0;</span></a>
+<a name="177"><span class="lineNum">     177 </span>                :            :     }</a>
+<a name="178"><span class="lineNum">     178 </span>                :            : </a>
+<a name="179"><span class="lineNum">     179 </span>                :<span class="lineCov">          6 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="180"><span class="lineNum">     180 </span>                :            : }</a>
+<a name="181"><span class="lineNum">     181 </span>                :            : </a>
+<a name="182"><span class="lineNum">     182 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_GET_CSR_CAP*/</a>
 </pre>
       </td>
     </tr>

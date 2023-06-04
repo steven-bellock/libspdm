@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">150</td>
-            <td class="headerCovTableEntry">150</td>
+            <td class="headerCovTableEntry">178</td>
+            <td class="headerCovTableEntry">178</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-03 08:14:09</td>
+            <td class="headerValue">2023-06-04 08:13:12</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">6</td>
-            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntry">7</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -430,34 +430,104 @@
 <a name="359"><span class="lineNum">     359 </span>                :<span class="lineCov">          1 :     free(m_libspdm_set_certificate_request);</span></a>
 <a name="360"><span class="lineNum">     360 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="361"><span class="lineNum">     361 </span>                :            : </a>
-<a name="362"><span class="lineNum">     362 </span>                :            : libspdm_test_context_t m_libspdm_responder_set_certificate_rsp_test_context = {</a>
-<a name="363"><span class="lineNum">     363 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="364"><span class="lineNum">     364 </span>                :            :     false,</a>
-<a name="365"><span class="lineNum">     365 </span>                :            : };</a>
-<a name="366"><span class="lineNum">     366 </span>                :            : </a>
-<a name="367"><span class="lineNum">     367 </span>                :<span class="lineCov">          1 : int libspdm_responder_set_certificate_rsp_test_main(void)</span></a>
-<a name="368"><span class="lineNum">     368 </span>                :            : {</a>
-<a name="369"><span class="lineNum">     369 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_set_cetificate_tests[] = {</span></a>
-<a name="370"><span class="lineNum">     370 </span>                :            :         /* Success Case for set_certificate to slot_id:0 */</a>
-<a name="371"><span class="lineNum">     371 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case1),</a>
-<a name="372"><span class="lineNum">     372 </span>                :            :         /* Bad request size*/</a>
-<a name="373"><span class="lineNum">     373 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case2),</a>
-<a name="374"><span class="lineNum">     374 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
-<a name="375"><span class="lineNum">     375 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case3),</a>
-<a name="376"><span class="lineNum">     376 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
-<a name="377"><span class="lineNum">     377 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case4),</a>
-<a name="378"><span class="lineNum">     378 </span>                :            :         /* Success Case for set_certificate to slot_id:1 */</a>
-<a name="379"><span class="lineNum">     379 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case5),</a>
-<a name="380"><span class="lineNum">     380 </span>                :            :     };</a>
-<a name="381"><span class="lineNum">     381 </span>                :            : </a>
-<a name="382"><span class="lineNum">     382 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_set_certificate_rsp_test_context);</span></a>
+<a name="362"><span class="lineNum">     362 </span>                :            : /**</a>
+<a name="363"><span class="lineNum">     363 </span>                :            :  * Test 6: receives a valid SET_CERTIFICATE request message from Requester with need_reset</a>
+<a name="364"><span class="lineNum">     364 </span>                :            :  * Expected Behavior: The Responder return need reset</a>
+<a name="365"><span class="lineNum">     365 </span>                :            :  **/</a>
+<a name="366"><span class="lineNum">     366 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_set_cetificate_rsp_case6(void **state)</span></a>
+<a name="367"><span class="lineNum">     367 </span>                :            : {</a>
+<a name="368"><span class="lineNum">     368 </span>                :            :     libspdm_return_t status;</a>
+<a name="369"><span class="lineNum">     369 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="370"><span class="lineNum">     370 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="371"><span class="lineNum">     371 </span>                :            :     size_t response_size;</a>
+<a name="372"><span class="lineNum">     372 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="373"><span class="lineNum">     373 </span>                :            :     spdm_set_certificate_response_t *spdm_response;</a>
+<a name="374"><span class="lineNum">     374 </span>                :            :     void *cert_chain;</a>
+<a name="375"><span class="lineNum">     375 </span>                :            :     size_t cert_chain_size;</a>
+<a name="376"><span class="lineNum">     376 </span>                :            :     spdm_set_certificate_request_t *m_libspdm_set_certificate_request;</a>
+<a name="377"><span class="lineNum">     377 </span>                :            : </a>
+<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="379"><span class="lineNum">     379 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="380"><span class="lineNum">     380 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x6;</span></a>
+<a name="381"><span class="lineNum">     381 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_12 &lt;&lt;</span></a>
+<a name="382"><span class="lineNum">     382 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
 <a name="383"><span class="lineNum">     383 </span>                :            : </a>
-<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_set_cetificate_tests,</span></a>
-<a name="385"><span class="lineNum">     385 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="386"><span class="lineNum">     386 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="387"><span class="lineNum">     387 </span>                :            : }</a>
-<a name="388"><span class="lineNum">     388 </span>                :            : </a>
-<a name="389"><span class="lineNum">     389 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_SET_CERT_CAP*/</a>
+<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="385"><span class="lineNum">     385 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="386"><span class="lineNum">     386 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="387"><span class="lineNum">     387 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_SET_CERT_CAP;</a>
+<a name="388"><span class="lineNum">     388 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="389"><span class="lineNum">     389 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_INSTALL_RESET_CAP;</a>
+<a name="390"><span class="lineNum">     390 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="391"><span class="lineNum">     391 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="392"><span class="lineNum">     392 </span>                :            : </a>
+<a name="393"><span class="lineNum">     393 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="394"><span class="lineNum">     394 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;cert_chain,</a>
+<a name="395"><span class="lineNum">     395 </span>                :            :                                                     &amp;cert_chain_size, NULL, NULL);</a>
+<a name="396"><span class="lineNum">     396 </span>                :            : </a>
+<a name="397"><span class="lineNum">     397 </span>                :<span class="lineCov">          1 :     m_libspdm_set_certificate_request = malloc(sizeof(spdm_set_certificate_request_t) +</span></a>
+<a name="398"><span class="lineNum">     398 </span>                :            :                                                cert_chain_size);</a>
+<a name="399"><span class="lineNum">     399 </span>                :            : </a>
+<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">          1 :     m_libspdm_set_certificate_request-&gt;header.spdm_version = SPDM_MESSAGE_VERSION_12;</span></a>
+<a name="401"><span class="lineNum">     401 </span>                :<span class="lineCov">          1 :     m_libspdm_set_certificate_request-&gt;header.request_response_code = SPDM_SET_CERTIFICATE;</span></a>
+<a name="402"><span class="lineNum">     402 </span>                :<span class="lineCov">          1 :     m_libspdm_set_certificate_request-&gt;header.param1 = 0;</span></a>
+<a name="403"><span class="lineNum">     403 </span>                :<span class="lineCov">          1 :     m_libspdm_set_certificate_request-&gt;header.param2 = 0;</span></a>
+<a name="404"><span class="lineNum">     404 </span>                :            : </a>
+<a name="405"><span class="lineNum">     405 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(m_libspdm_set_certificate_request + 1,</span></a>
+<a name="406"><span class="lineNum">     406 </span>                :            :                      LIBSPDM_MAX_CERT_CHAIN_SIZE,</a>
+<a name="407"><span class="lineNum">     407 </span>                :            :                      (uint8_t *)cert_chain, cert_chain_size);</a>
+<a name="408"><span class="lineNum">     408 </span>                :            : </a>
+<a name="409"><span class="lineNum">     409 </span>                :<span class="lineCov">          1 :     size_t m_libspdm_set_certificate_request_size = sizeof(spdm_set_certificate_request_t) +</span></a>
+<a name="410"><span class="lineNum">     410 </span>                :            :                                                     cert_chain_size;</a>
+<a name="411"><span class="lineNum">     411 </span>                :            : </a>
+<a name="412"><span class="lineNum">     412 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="413"><span class="lineNum">     413 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_set_certificate(spdm_context,</span></a>
+<a name="414"><span class="lineNum">     414 </span>                :            :                                                   m_libspdm_set_certificate_request_size,</a>
+<a name="415"><span class="lineNum">     415 </span>                :            :                                                   m_libspdm_set_certificate_request,</a>
+<a name="416"><span class="lineNum">     416 </span>                :            :                                                   &amp;response_size, response);</a>
+<a name="417"><span class="lineNum">     417 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="418"><span class="lineNum">     418 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="419"><span class="lineNum">     419 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="420"><span class="lineNum">     420 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code,</span></a>
+<a name="421"><span class="lineNum">     421 </span>                :            :                      SPDM_ERROR);</a>
+<a name="422"><span class="lineNum">     422 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.param1,</span></a>
+<a name="423"><span class="lineNum">     423 </span>                :            :                      SPDM_ERROR_CODE_RESET_REQUIRED);</a>
+<a name="424"><span class="lineNum">     424 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.param2, 0);</span></a>
+<a name="425"><span class="lineNum">     425 </span>                :            : </a>
+<a name="426"><span class="lineNum">     426 </span>                :<span class="lineCov">          1 :     free(cert_chain);</span></a>
+<a name="427"><span class="lineNum">     427 </span>                :<span class="lineCov">          1 :     free(m_libspdm_set_certificate_request);</span></a>
+<a name="428"><span class="lineNum">     428 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="429"><span class="lineNum">     429 </span>                :            : </a>
+<a name="430"><span class="lineNum">     430 </span>                :            : libspdm_test_context_t m_libspdm_responder_set_certificate_rsp_test_context = {</a>
+<a name="431"><span class="lineNum">     431 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="432"><span class="lineNum">     432 </span>                :            :     false,</a>
+<a name="433"><span class="lineNum">     433 </span>                :            : };</a>
+<a name="434"><span class="lineNum">     434 </span>                :            : </a>
+<a name="435"><span class="lineNum">     435 </span>                :<span class="lineCov">          1 : int libspdm_responder_set_certificate_rsp_test_main(void)</span></a>
+<a name="436"><span class="lineNum">     436 </span>                :            : {</a>
+<a name="437"><span class="lineNum">     437 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_set_cetificate_tests[] = {</span></a>
+<a name="438"><span class="lineNum">     438 </span>                :            :         /* Success Case for set_certificate to slot_id:0 */</a>
+<a name="439"><span class="lineNum">     439 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case1),</a>
+<a name="440"><span class="lineNum">     440 </span>                :            :         /* Bad request size*/</a>
+<a name="441"><span class="lineNum">     441 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case2),</a>
+<a name="442"><span class="lineNum">     442 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
+<a name="443"><span class="lineNum">     443 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case3),</a>
+<a name="444"><span class="lineNum">     444 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
+<a name="445"><span class="lineNum">     445 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case4),</a>
+<a name="446"><span class="lineNum">     446 </span>                :            :         /* Success Case for set_certificate to slot_id:1 */</a>
+<a name="447"><span class="lineNum">     447 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case5),</a>
+<a name="448"><span class="lineNum">     448 </span>                :            :         /* Responder requires a reset to complete the SET_CERTIFICATE request */</a>
+<a name="449"><span class="lineNum">     449 </span>                :            :         cmocka_unit_test(libspdm_test_responder_set_cetificate_rsp_case6),</a>
+<a name="450"><span class="lineNum">     450 </span>                :            :     };</a>
+<a name="451"><span class="lineNum">     451 </span>                :            : </a>
+<a name="452"><span class="lineNum">     452 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_set_certificate_rsp_test_context);</span></a>
+<a name="453"><span class="lineNum">     453 </span>                :            : </a>
+<a name="454"><span class="lineNum">     454 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_set_cetificate_tests,</span></a>
+<a name="455"><span class="lineNum">     455 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="456"><span class="lineNum">     456 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="457"><span class="lineNum">     457 </span>                :            : }</a>
+<a name="458"><span class="lineNum">     458 </span>                :            : </a>
+<a name="459"><span class="lineNum">     459 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_SET_CERT_CAP*/</a>
 </pre>
       </td>
     </tr>
