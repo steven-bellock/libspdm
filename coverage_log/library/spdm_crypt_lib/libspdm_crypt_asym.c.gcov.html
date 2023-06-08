@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-07 08:16:25</td>
+            <td class="headerValue">2023-06-08 08:14:49</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">22</td>
@@ -124,13 +124,13 @@
 <a name="53"><span class="lineNum">      53 </span>                :            : #endif</a>
 <a name="54"><span class="lineNum">      54 </span>                :            : </a>
 <a name="55"><span class="lineNum">      55 </span>                :            : #if LIBSPDM_ECDSA_SUPPORT</a>
-<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">        107 : static bool libspdm_ecdsa_sign_wrap (void *context, size_t hash_nid,</span></a>
+<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">        109 : static bool libspdm_ecdsa_sign_wrap (void *context, size_t hash_nid,</span></a>
 <a name="57"><span class="lineNum">      57 </span>                :            :                                      const uint8_t *param, size_t param_size,</a>
 <a name="58"><span class="lineNum">      58 </span>                :            :                                      const uint8_t *message,</a>
 <a name="59"><span class="lineNum">      59 </span>                :            :                                      size_t message_size, uint8_t *signature,</a>
 <a name="60"><span class="lineNum">      60 </span>                :            :                                      size_t *sig_size)</a>
 <a name="61"><span class="lineNum">      61 </span>                :            : {</a>
-<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">        107 :     return libspdm_ecdsa_sign (context, hash_nid,</span></a>
+<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">        109 :     return libspdm_ecdsa_sign (context, hash_nid,</span></a>
 <a name="63"><span class="lineNum">      63 </span>                :            :                                message, message_size, signature, sig_size);</a>
 <a name="64"><span class="lineNum">      64 </span>                :            : }</a>
 <a name="65"><span class="lineNum">      65 </span>                :            : #endif</a>
@@ -197,7 +197,7 @@
 <a name="126"><span class="lineNum">     126 </span>                :            :  * @param  is_requester                         indicate if the signing is from a requester</a>
 <a name="127"><span class="lineNum">     127 </span>                :            :  * @param  spdm_signing_context                 SPDM signing context</a>
 <a name="128"><span class="lineNum">     128 </span>                :            :  **/</a>
-<a name="129"><span class="lineNum">     129 </span>                :<span class="lineCov">         21 : static void libspdm_create_signing_context (</span></a>
+<a name="129"><span class="lineNum">     129 </span>                :<span class="lineCov">         24 : static void libspdm_create_signing_context (</span></a>
 <a name="130"><span class="lineNum">     130 </span>                :            :     spdm_version_number_t spdm_version,</a>
 <a name="131"><span class="lineNum">     131 </span>                :            :     uint8_t op_code,</a>
 <a name="132"><span class="lineNum">     132 </span>                :            :     bool is_requester,</a>
@@ -207,44 +207,44 @@
 <a name="136"><span class="lineNum">     136 </span>                :            :     char *context_str;</a>
 <a name="137"><span class="lineNum">     137 </span>                :            : </a>
 <a name="138"><span class="lineNum">     138 </span>                :            :     /* It is introduced in SPDM 1.2*/</a>
-<a name="139"><span class="lineNum">     139 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">         21 :     LIBSPDM_ASSERT((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11);</span></a>
+<a name="139"><span class="lineNum">     139 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span>]:<span class="lineCov">         24 :     LIBSPDM_ASSERT((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11);</span></a>
 <a name="140"><span class="lineNum">     140 </span>                :            : </a>
 <a name="141"><span class="lineNum">     141 </span>                :            :     /* So far, it only leaves 1 bytes for version*/</a>
-<a name="142"><span class="lineNum">     142 </span>  [<span class="branchCov" title="Branch 0 was taken 21 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 21 times"> + </span>]:<span class="lineCov">         21 :     LIBSPDM_ASSERT((((spdm_version &gt;&gt; 12) &amp; 0xF) &lt; 10) &amp;&amp;</span></a>
+<a name="142"><span class="lineNum">     142 </span>  [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 24 times"> + </span>]:<span class="lineCov">         24 :     LIBSPDM_ASSERT((((spdm_version &gt;&gt; 12) &amp; 0xF) &lt; 10) &amp;&amp;</span></a>
 <a name="143"><span class="lineNum">     143 </span>                :            :                    (((spdm_version &gt;&gt; 8) &amp; 0xF) &lt; 10));</a>
 <a name="144"><span class="lineNum">     144 </span>                :            : </a>
-<a name="145"><span class="lineNum">     145 </span>                :<span class="lineCov">         21 :     context_str = spdm_signing_context;</span></a>
-<a name="146"><span class="lineNum">     146 </span>        [<span class="branchCov" title="Branch 0 was taken 84 times"> + </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">        105 :     for (index = 0; index &lt; 4; index++) {</span></a>
-<a name="147"><span class="lineNum">     147 </span>                :<span class="lineCov">         84 :         libspdm_copy_mem(context_str,</span></a>
+<a name="145"><span class="lineNum">     145 </span>                :<span class="lineCov">         24 :     context_str = spdm_signing_context;</span></a>
+<a name="146"><span class="lineNum">     146 </span>        [<span class="branchCov" title="Branch 0 was taken 96 times"> + </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span>]:<span class="lineCov">        120 :     for (index = 0; index &lt; 4; index++) {</span></a>
+<a name="147"><span class="lineNum">     147 </span>                :<span class="lineCov">         96 :         libspdm_copy_mem(context_str,</span></a>
 <a name="148"><span class="lineNum">     148 </span>                :            :                          SPDM_VERSION_1_2_SIGNING_PREFIX_CONTEXT_SIZE,</a>
 <a name="149"><span class="lineNum">     149 </span>                :            :                          SPDM_VERSION_1_2_SIGNING_PREFIX_CONTEXT,</a>
 <a name="150"><span class="lineNum">     150 </span>                :            :                          SPDM_VERSION_1_2_SIGNING_PREFIX_CONTEXT_SIZE);</a>
 <a name="151"><span class="lineNum">     151 </span>                :            :         /* patch the version*/</a>
-<a name="152"><span class="lineNum">     152 </span>                :<span class="lineCov">         84 :         context_str[11] = (char)('0' + ((spdm_version &gt;&gt; 12) &amp; 0xF));</span></a>
-<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">         84 :         context_str[13] = (char)('0' + ((spdm_version &gt;&gt; 8) &amp; 0xF));</span></a>
-<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">         84 :         context_str[15] = (char)('*');</span></a>
-<a name="155"><span class="lineNum">     155 </span>                :<span class="lineCov">         84 :         context_str += SPDM_VERSION_1_2_SIGNING_PREFIX_CONTEXT_SIZE;</span></a>
+<a name="152"><span class="lineNum">     152 </span>                :<span class="lineCov">         96 :         context_str[11] = (char)('0' + ((spdm_version &gt;&gt; 12) &amp; 0xF));</span></a>
+<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">         96 :         context_str[13] = (char)('0' + ((spdm_version &gt;&gt; 8) &amp; 0xF));</span></a>
+<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">         96 :         context_str[15] = (char)('*');</span></a>
+<a name="155"><span class="lineNum">     155 </span>                :<span class="lineCov">         96 :         context_str += SPDM_VERSION_1_2_SIGNING_PREFIX_CONTEXT_SIZE;</span></a>
 <a name="156"><span class="lineNum">     156 </span>                :            :     }</a>
-<a name="157"><span class="lineNum">     157 </span>        [<span class="branchCov" title="Branch 0 was taken 60 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         60 :     for (index = 0; index &lt; LIBSPDM_ARRAY_SIZE(m_libspdm_signing_context_str_table); index++) {</span></a>
-<a name="158"><span class="lineNum">     158 </span>        [<span class="branchCov" title="Branch 0 was taken 43 times"> + </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         60 :         if (m_libspdm_signing_context_str_table[index].is_requester == is_requester &amp;&amp;</span></a>
-<a name="159"><span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 21 times"> + </span><span class="branchCov" title="Branch 1 was taken 22 times"> + </span>]:<span class="lineCov">         43 :             m_libspdm_signing_context_str_table[index].op_code == op_code) {</span></a>
-<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">         21 :             libspdm_zero_mem (</span></a>
+<a name="157"><span class="lineNum">     157 </span>        [<span class="branchCov" title="Branch 0 was taken 72 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         72 :     for (index = 0; index &lt; LIBSPDM_ARRAY_SIZE(m_libspdm_signing_context_str_table); index++) {</span></a>
+<a name="158"><span class="lineNum">     158 </span>        [<span class="branchCov" title="Branch 0 was taken 52 times"> + </span><span class="branchCov" title="Branch 1 was taken 20 times"> + </span>]:<span class="lineCov">         72 :         if (m_libspdm_signing_context_str_table[index].is_requester == is_requester &amp;&amp;</span></a>
+<a name="159"><span class="lineNum">     159 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 28 times"> + </span>]:<span class="lineCov">         52 :             m_libspdm_signing_context_str_table[index].op_code == op_code) {</span></a>
+<a name="160"><span class="lineNum">     160 </span>                :<span class="lineCov">         24 :             libspdm_zero_mem (</span></a>
 <a name="161"><span class="lineNum">     161 </span>                :            :                 context_str,</a>
-<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">         21 :                 m_libspdm_signing_context_str_table[index].zero_pad_size);</span></a>
-<a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">         21 :             libspdm_copy_mem(context_str + m_libspdm_signing_context_str_table[index].zero_pad_size,</span></a>
-<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">         21 :                              m_libspdm_signing_context_str_table[index].context_size,</span></a>
-<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">         21 :                              m_libspdm_signing_context_str_table[index].context,</span></a>
-<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">         21 :                              m_libspdm_signing_context_str_table[index].context_size);</span></a>
-<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">         21 :             return;</span></a>
+<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">         24 :                 m_libspdm_signing_context_str_table[index].zero_pad_size);</span></a>
+<a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">         24 :             libspdm_copy_mem(context_str + m_libspdm_signing_context_str_table[index].zero_pad_size,</span></a>
+<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">         24 :                              m_libspdm_signing_context_str_table[index].context_size,</span></a>
+<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">         24 :                              m_libspdm_signing_context_str_table[index].context,</span></a>
+<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">         24 :                              m_libspdm_signing_context_str_table[index].context_size);</span></a>
+<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">         24 :             return;</span></a>
 <a name="168"><span class="lineNum">     168 </span>                :            :         }</a>
 <a name="169"><span class="lineNum">     169 </span>                :            :     }</a>
 <a name="170"><span class="lineNum">     170 </span>                :<span class="lineNoCov">          0 :     LIBSPDM_ASSERT(false);</span></a>
 <a name="171"><span class="lineNum">     171 </span>                :            : }</a>
 <a name="172"><span class="lineNum">     172 </span>                :            : </a>
-<a name="173"><span class="lineNum">     173 </span>                :<span class="lineCov">        406 : uint32_t libspdm_get_asym_signature_size(uint32_t base_asym_algo)</span></a>
+<a name="173"><span class="lineNum">     173 </span>                :<span class="lineCov">        412 : uint32_t libspdm_get_asym_signature_size(uint32_t base_asym_algo)</span></a>
 <a name="174"><span class="lineNum">     174 </span>                :            : {</a>
-<a name="175"><span class="lineNum">     175 </span>  [<span class="branchCov" title="Branch 0 was taken 52 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">        406 :     switch (base_asym_algo) {</span></a>
-<span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 348 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 2 times"> + </span> 
+<a name="175"><span class="lineNum">     175 </span>  [<span class="branchCov" title="Branch 0 was taken 52 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span> :<span class="lineCov">        412 :     switch (base_asym_algo) {</span></a>
+<span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 354 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 2 times"> + </span> 
 <span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 3 times"> + </span>]
 <a name="176"><span class="lineNum">     176 </span>                :<span class="lineCov">         52 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="177"><span class="lineNum">     177 </span>                :            : #if LIBSPDM_RSA_SSA_2048_SUPPORT</a>
@@ -282,9 +282,9 @@
 <a name="209"><span class="lineNum">     209 </span>                :            : #else</a>
 <a name="210"><span class="lineNum">     210 </span>                :            :         return 0;</a>
 <a name="211"><span class="lineNum">     211 </span>                :            : #endif</a>
-<a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">        348 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">        354 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="213"><span class="lineNum">     213 </span>                :            : #if LIBSPDM_ECDSA_P256_SUPPORT</a>
-<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">        348 :         return 32 * 2;</span></a>
+<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">        354 :         return 32 * 2;</span></a>
 <a name="215"><span class="lineNum">     215 </span>                :            : #else</a>
 <a name="216"><span class="lineNum">     216 </span>                :            :         return 0;</a>
 <a name="217"><span class="lineNum">     217 </span>                :            : #endif</a>
@@ -323,12 +323,12 @@
 <a name="250"><span class="lineNum">     250 </span>                :            :     }</a>
 <a name="251"><span class="lineNum">     251 </span>                :            : }</a>
 <a name="252"><span class="lineNum">     252 </span>                :            : </a>
-<a name="253"><span class="lineNum">     253 </span>                :<span class="lineCov">        123 : static bool libspdm_asym_sign_wrap (void *context, size_t hash_nid, uint32_t base_asym_algo,</span></a>
+<a name="253"><span class="lineNum">     253 </span>                :<span class="lineCov">        125 : static bool libspdm_asym_sign_wrap (void *context, size_t hash_nid, uint32_t base_asym_algo,</span></a>
 <a name="254"><span class="lineNum">     254 </span>                :            :                                     const uint8_t *param, size_t param_size,</a>
 <a name="255"><span class="lineNum">     255 </span>                :            :                                     const uint8_t *message, size_t message_size,</a>
 <a name="256"><span class="lineNum">     256 </span>                :            :                                     uint8_t *signature, size_t *sig_size)</a>
 <a name="257"><span class="lineNum">     257 </span>                :            : {</a>
-<a name="258"><span class="lineNum">     258 </span>  [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 107 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        123 :     switch (base_asym_algo) {</span></a>
+<a name="258"><span class="lineNum">     258 </span>  [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 109 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        125 :     switch (base_asym_algo) {</span></a>
 <span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">         16 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="260"><span class="lineNum">     260 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
@@ -372,7 +372,7 @@
 <a name="298"><span class="lineNum">     298 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="299"><span class="lineNum">     299 </span>                :            :         return false;</a>
 <a name="300"><span class="lineNum">     300 </span>                :            : #endif</a>
-<a name="301"><span class="lineNum">     301 </span>                :<span class="lineCov">        107 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="301"><span class="lineNum">     301 </span>                :<span class="lineCov">        109 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="302"><span class="lineNum">     302 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="303"><span class="lineNum">     303 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="304"><span class="lineNum">     304 </span>                :            : #if LIBSPDM_ECDSA_SUPPORT</a>
@@ -385,7 +385,7 @@
 <a name="311"><span class="lineNum">     311 </span>                :            : #if !LIBSPDM_ECDSA_P521_SUPPORT</a>
 <a name="312"><span class="lineNum">     312 </span>                :            :         LIBSPDM_ASSERT(base_asym_algo!= SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521);</a>
 <a name="313"><span class="lineNum">     313 </span>                :            : #endif</a>
-<a name="314"><span class="lineNum">     314 </span>                :<span class="lineCov">        107 :         return libspdm_ecdsa_sign_wrap(context, hash_nid,</span></a>
+<a name="314"><span class="lineNum">     314 </span>                :<span class="lineCov">        109 :         return libspdm_ecdsa_sign_wrap(context, hash_nid,</span></a>
 <a name="315"><span class="lineNum">     315 </span>                :            :                                        param, param_size,</a>
 <a name="316"><span class="lineNum">     316 </span>                :            :                                        message, message_size,</a>
 <a name="317"><span class="lineNum">     317 </span>                :            :                                        signature, sig_size);</a>
@@ -426,12 +426,12 @@
 <a name="352"><span class="lineNum">     352 </span>                :            :     }</a>
 <a name="353"><span class="lineNum">     353 </span>                :            : }</a>
 <a name="354"><span class="lineNum">     354 </span>                :            : </a>
-<a name="355"><span class="lineNum">     355 </span>                :<span class="lineCov">        764 : void libspdm_asym_free(uint32_t base_asym_algo, void *context)</span></a>
+<a name="355"><span class="lineNum">     355 </span>                :<span class="lineCov">        775 : void libspdm_asym_free(uint32_t base_asym_algo, void *context)</span></a>
 <a name="356"><span class="lineNum">     356 </span>                :            : {</a>
-<a name="357"><span class="lineNum">     357 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 762 times"> + </span>]:<span class="lineCov">        764 :     if (context == NULL) {</span></a>
+<a name="357"><span class="lineNum">     357 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 773 times"> + </span>]:<span class="lineCov">        775 :     if (context == NULL) {</span></a>
 <a name="358"><span class="lineNum">     358 </span>                :<span class="lineCov">          2 :         return;</span></a>
 <a name="359"><span class="lineNum">     359 </span>                :            :     }</a>
-<a name="360"><span class="lineNum">     360 </span>  [<span class="branchCov" title="Branch 0 was taken 52 times"> + </span><span class="branchCov" title="Branch 1 was taken 710 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        762 :     switch (base_asym_algo) {</span></a>
+<a name="360"><span class="lineNum">     360 </span>  [<span class="branchCov" title="Branch 0 was taken 52 times"> + </span><span class="branchCov" title="Branch 1 was taken 721 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        773 :     switch (base_asym_algo) {</span></a>
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 4 was not taken"> - </span>]
 <a name="361"><span class="lineNum">     361 </span>                :<span class="lineCov">         52 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="362"><span class="lineNum">     362 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
@@ -445,15 +445,15 @@
 <a name="370"><span class="lineNum">     370 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="371"><span class="lineNum">     371 </span>                :            : #endif</a>
 <a name="372"><span class="lineNum">     372 </span>                :<span class="lineCov">         52 :         break;</span></a>
-<a name="373"><span class="lineNum">     373 </span>                :<span class="lineCov">        710 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="373"><span class="lineNum">     373 </span>                :<span class="lineCov">        721 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="374"><span class="lineNum">     374 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="375"><span class="lineNum">     375 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="376"><span class="lineNum">     376 </span>                :            : #if LIBSPDM_ECDSA_SUPPORT</a>
-<a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">        710 :         libspdm_ec_free(context);</span></a>
+<a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">        721 :         libspdm_ec_free(context);</span></a>
 <a name="378"><span class="lineNum">     378 </span>                :            : #else</a>
 <a name="379"><span class="lineNum">     379 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="380"><span class="lineNum">     380 </span>                :            : #endif</a>
-<a name="381"><span class="lineNum">     381 </span>                :<span class="lineCov">        710 :         break;</span></a>
+<a name="381"><span class="lineNum">     381 </span>                :<span class="lineCov">        721 :         break;</span></a>
 <a name="382"><span class="lineNum">     382 </span>                :<span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_EDDSA_ED25519:</span></a>
 <a name="383"><span class="lineNum">     383 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_EDDSA_ED448:</a>
 <a name="384"><span class="lineNum">     384 </span>                :            : #if (LIBSPDM_EDDSA_ED25519_SUPPORT) || (LIBSPDM_EDDSA_ED448_SUPPORT)</a>
@@ -576,9 +576,9 @@
 <a name="500"><span class="lineNum">     500 </span>                :            :  * @retval true  asymmetric function need message hash</a>
 <a name="501"><span class="lineNum">     501 </span>                :            :  * @retval false asymmetric function need raw message</a>
 <a name="502"><span class="lineNum">     502 </span>                :            :  **/</a>
-<a name="503"><span class="lineNum">     503 </span>                :<span class="lineCov">        181 : static bool libspdm_asym_func_need_hash(uint32_t base_asym_algo)</span></a>
+<a name="503"><span class="lineNum">     503 </span>                :<span class="lineCov">        185 : static bool libspdm_asym_func_need_hash(uint32_t base_asym_algo)</span></a>
 <a name="504"><span class="lineNum">     504 </span>                :            : {</a>
-<a name="505"><span class="lineNum">     505 </span>  [<span class="branchCov" title="Branch 0 was taken 23 times"> + </span><span class="branchCov" title="Branch 1 was taken 158 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        181 :     switch (base_asym_algo) {</span></a>
+<a name="505"><span class="lineNum">     505 </span>  [<span class="branchCov" title="Branch 0 was taken 23 times"> + </span><span class="branchCov" title="Branch 1 was taken 162 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        185 :     switch (base_asym_algo) {</span></a>
 <a name="506"><span class="lineNum">     506 </span>                :<span class="lineCov">         23 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="507"><span class="lineNum">     507 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
 <a name="508"><span class="lineNum">     508 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_4096:</a>
@@ -586,10 +586,10 @@
 <a name="510"><span class="lineNum">     510 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_3072:</a>
 <a name="511"><span class="lineNum">     511 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_4096:</a>
 <a name="512"><span class="lineNum">     512 </span>                :<span class="lineCov">         23 :         return true;</span></a>
-<a name="513"><span class="lineNum">     513 </span>                :<span class="lineCov">        158 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="513"><span class="lineNum">     513 </span>                :<span class="lineCov">        162 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="514"><span class="lineNum">     514 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="515"><span class="lineNum">     515 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
-<a name="516"><span class="lineNum">     516 </span>                :<span class="lineCov">        158 :         return true;</span></a>
+<a name="516"><span class="lineNum">     516 </span>                :<span class="lineCov">        162 :         return true;</span></a>
 <a name="517"><span class="lineNum">     517 </span>                :<span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_EDDSA_ED25519:</span></a>
 <a name="518"><span class="lineNum">     518 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_EDDSA_ED448:</a>
 <a name="519"><span class="lineNum">     519 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_SM2_ECC_SM2_P256:</a>
@@ -628,14 +628,14 @@
 <a name="552"><span class="lineNum">     552 </span>                :            : #endif</a>
 <a name="553"><span class="lineNum">     553 </span>                :            : </a>
 <a name="554"><span class="lineNum">     554 </span>                :            : #if LIBSPDM_ECDSA_SUPPORT</a>
-<a name="555"><span class="lineNum">     555 </span>                :<span class="lineCov">         51 : bool libspdm_ecdsa_verify_wrap (void *context, size_t hash_nid,</span></a>
+<a name="555"><span class="lineNum">     555 </span>                :<span class="lineCov">         53 : bool libspdm_ecdsa_verify_wrap (void *context, size_t hash_nid,</span></a>
 <a name="556"><span class="lineNum">     556 </span>                :            :                                 const uint8_t *param, size_t param_size,</a>
 <a name="557"><span class="lineNum">     557 </span>                :            :                                 const uint8_t *message,</a>
 <a name="558"><span class="lineNum">     558 </span>                :            :                                 size_t message_size,</a>
 <a name="559"><span class="lineNum">     559 </span>                :            :                                 const uint8_t *signature,</a>
 <a name="560"><span class="lineNum">     560 </span>                :            :                                 size_t sig_size)</a>
 <a name="561"><span class="lineNum">     561 </span>                :            : {</a>
-<a name="562"><span class="lineNum">     562 </span>                :<span class="lineCov">         51 :     return libspdm_ecdsa_verify (context, hash_nid, message, message_size, signature, sig_size);</span></a>
+<a name="562"><span class="lineNum">     562 </span>                :<span class="lineCov">         53 :     return libspdm_ecdsa_verify (context, hash_nid, message, message_size, signature, sig_size);</span></a>
 <a name="563"><span class="lineNum">     563 </span>                :            : }</a>
 <a name="564"><span class="lineNum">     564 </span>                :            : #endif</a>
 <a name="565"><span class="lineNum">     565 </span>                :            : </a>
@@ -665,13 +665,13 @@
 <a name="589"><span class="lineNum">     589 </span>                :            : }</a>
 <a name="590"><span class="lineNum">     590 </span>                :            : #endif</a>
 <a name="591"><span class="lineNum">     591 </span>                :            : </a>
-<a name="592"><span class="lineNum">     592 </span>                :<span class="lineCov">         58 : static bool libspdm_asym_verify_wrap(</span></a>
+<a name="592"><span class="lineNum">     592 </span>                :<span class="lineCov">         60 : static bool libspdm_asym_verify_wrap(</span></a>
 <a name="593"><span class="lineNum">     593 </span>                :            :     void *context, size_t hash_nid, uint32_t base_asym_algo,</a>
 <a name="594"><span class="lineNum">     594 </span>                :            :     const uint8_t *param, size_t param_size,</a>
 <a name="595"><span class="lineNum">     595 </span>                :            :     const uint8_t *message, size_t message_size,</a>
 <a name="596"><span class="lineNum">     596 </span>                :            :     const uint8_t *signature, size_t sig_size)</a>
 <a name="597"><span class="lineNum">     597 </span>                :            : {</a>
-<a name="598"><span class="lineNum">     598 </span>  [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 51 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">         58 :     switch (base_asym_algo) {</span></a>
+<a name="598"><span class="lineNum">     598 </span>  [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 53 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">         60 :     switch (base_asym_algo) {</span></a>
 <span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="599"><span class="lineNum">     599 </span>                :<span class="lineCov">          7 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="600"><span class="lineNum">     600 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
@@ -715,7 +715,7 @@
 <a name="638"><span class="lineNum">     638 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="639"><span class="lineNum">     639 </span>                :            :         return false;</a>
 <a name="640"><span class="lineNum">     640 </span>                :            : #endif</a>
-<a name="641"><span class="lineNum">     641 </span>                :<span class="lineCov">         51 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="641"><span class="lineNum">     641 </span>                :<span class="lineCov">         53 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="642"><span class="lineNum">     642 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="643"><span class="lineNum">     643 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="644"><span class="lineNum">     644 </span>                :            : #if LIBSPDM_ECDSA_SUPPORT</a>
@@ -728,7 +728,7 @@
 <a name="651"><span class="lineNum">     651 </span>                :            : #if !LIBSPDM_ECDSA_P521_SUPPORT</a>
 <a name="652"><span class="lineNum">     652 </span>                :            :         LIBSPDM_ASSERT(base_asym_algo!= SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521);</a>
 <a name="653"><span class="lineNum">     653 </span>                :            : #endif</a>
-<a name="654"><span class="lineNum">     654 </span>                :<span class="lineCov">         51 :         return libspdm_ecdsa_verify_wrap(context, hash_nid,</span></a>
+<a name="654"><span class="lineNum">     654 </span>                :<span class="lineCov">         53 :         return libspdm_ecdsa_verify_wrap(context, hash_nid,</span></a>
 <a name="655"><span class="lineNum">     655 </span>                :            :                                          param, param_size,</a>
 <a name="656"><span class="lineNum">     656 </span>                :            :                                          message, message_size,</a>
 <a name="657"><span class="lineNum">     657 </span>                :            :                                          signature, sig_size);</a>
@@ -846,7 +846,7 @@
 <a name="769"><span class="lineNum">     769 </span>                :            :     }</a>
 <a name="770"><span class="lineNum">     770 </span>                :            : }</a>
 <a name="771"><span class="lineNum">     771 </span>                :            : </a>
-<a name="772"><span class="lineNum">     772 </span>                :<span class="lineCov">         51 : bool libspdm_asym_verify_hash(</span></a>
+<a name="772"><span class="lineNum">     772 </span>                :<span class="lineCov">         53 : bool libspdm_asym_verify_hash(</span></a>
 <a name="773"><span class="lineNum">     773 </span>                :            :     spdm_version_number_t spdm_version, uint8_t op_code,</a>
 <a name="774"><span class="lineNum">     774 </span>                :            :     uint32_t base_asym_algo, uint32_t base_hash_algo,</a>
 <a name="775"><span class="lineNum">     775 </span>                :            :     void *context, const uint8_t *message_hash,</a>
@@ -864,16 +864,16 @@
 <a name="787"><span class="lineNum">     787 </span>                :            :     const void *param;</a>
 <a name="788"><span class="lineNum">     788 </span>                :            :     size_t param_size;</a>
 <a name="789"><span class="lineNum">     789 </span>                :            : </a>
-<a name="790"><span class="lineNum">     790 </span>                :<span class="lineCov">         51 :     hash_nid = libspdm_get_hash_nid(base_hash_algo);</span></a>
-<a name="791"><span class="lineNum">     791 </span>                :<span class="lineCov">         51 :     need_hash = libspdm_asym_func_need_hash(base_asym_algo);</span></a>
-<a name="792"><span class="lineNum">     792 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 51 times"> + </span>]:<span class="lineCov">         51 :     LIBSPDM_ASSERT (hash_size == libspdm_get_hash_size(base_hash_algo));</span></a>
+<a name="790"><span class="lineNum">     790 </span>                :<span class="lineCov">         53 :     hash_nid = libspdm_get_hash_nid(base_hash_algo);</span></a>
+<a name="791"><span class="lineNum">     791 </span>                :<span class="lineCov">         53 :     need_hash = libspdm_asym_func_need_hash(base_asym_algo);</span></a>
+<a name="792"><span class="lineNum">     792 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 53 times"> + </span>]:<span class="lineCov">         53 :     LIBSPDM_ASSERT (hash_size == libspdm_get_hash_size(base_hash_algo));</span></a>
 <a name="793"><span class="lineNum">     793 </span>                :            : </a>
-<a name="794"><span class="lineNum">     794 </span>                :<span class="lineCov">         51 :     param = NULL;</span></a>
-<a name="795"><span class="lineNum">     795 </span>                :<span class="lineCov">         51 :     param_size = 0;</span></a>
+<a name="794"><span class="lineNum">     794 </span>                :<span class="lineCov">         53 :     param = NULL;</span></a>
+<a name="795"><span class="lineNum">     795 </span>                :<span class="lineCov">         53 :     param_size = 0;</span></a>
 <a name="796"><span class="lineNum">     796 </span>                :            : </a>
-<a name="797"><span class="lineNum">     797 </span>        [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchCov" title="Branch 1 was taken 44 times"> + </span>]:<span class="lineCov">         51 :     if ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11) {</span></a>
+<a name="797"><span class="lineNum">     797 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 45 times"> + </span>]:<span class="lineCov">         53 :     if ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11) {</span></a>
 <a name="798"><span class="lineNum">     798 </span>                :            :         /* Need use SPDM 1.2 signing */</a>
-<a name="799"><span class="lineNum">     799 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 7 times"> + </span>]:<span class="lineCov">          7 :         switch (base_asym_algo) {</span></a>
+<a name="799"><span class="lineNum">     799 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 8 times"> + </span>]:<span class="lineCov">          8 :         switch (base_asym_algo) {</span></a>
 <a name="800"><span class="lineNum">     800 </span>                :<span class="lineNoCov">          0 :         case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_SM2_ECC_SM2_P256:</span></a>
 <a name="801"><span class="lineNum">     801 </span>                :<span class="lineNoCov">          0 :             param = &quot;&quot;;</span></a>
 <a name="802"><span class="lineNum">     802 </span>                :<span class="lineNoCov">          0 :             param_size = 0;</span></a>
@@ -885,29 +885,29 @@
 <a name="808"><span class="lineNum">     808 </span>                :<span class="lineNoCov">          0 :             hash_nid = LIBSPDM_CRYPTO_NID_NULL;</span></a>
 <a name="809"><span class="lineNum">     809 </span>                :<span class="lineNoCov">          0 :             param = libspdm_get_signing_context_string (spdm_version, op_code, false, &amp;param_size);</span></a>
 <a name="810"><span class="lineNum">     810 </span>                :<span class="lineNoCov">          0 :             break;</span></a>
-<a name="811"><span class="lineNum">     811 </span>                :<span class="lineCov">          7 :         default:</span></a>
+<a name="811"><span class="lineNum">     811 </span>                :<span class="lineCov">          8 :         default:</span></a>
 <a name="812"><span class="lineNum">     812 </span>                :            :             /* pass thru for rest algorithm */</a>
-<a name="813"><span class="lineNum">     813 </span>                :<span class="lineCov">          7 :             break;</span></a>
+<a name="813"><span class="lineNum">     813 </span>                :<span class="lineCov">          8 :             break;</span></a>
 <a name="814"><span class="lineNum">     814 </span>                :            :         }</a>
 <a name="815"><span class="lineNum">     815 </span>                :            : </a>
-<a name="816"><span class="lineNum">     816 </span>                :<span class="lineCov">          7 :         libspdm_create_signing_context (spdm_version, op_code, false,</span></a>
+<a name="816"><span class="lineNum">     816 </span>                :<span class="lineCov">          8 :         libspdm_create_signing_context (spdm_version, op_code, false,</span></a>
 <a name="817"><span class="lineNum">     817 </span>                :            :                                         spdm12_signing_context_with_hash);</a>
-<a name="818"><span class="lineNum">     818 </span>                :<span class="lineCov">          7 :         libspdm_copy_mem(&amp;spdm12_signing_context_with_hash[SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE],</span></a>
+<a name="818"><span class="lineNum">     818 </span>                :<span class="lineCov">          8 :         libspdm_copy_mem(&amp;spdm12_signing_context_with_hash[SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE],</span></a>
 <a name="819"><span class="lineNum">     819 </span>                :            :                          sizeof(spdm12_signing_context_with_hash)</a>
 <a name="820"><span class="lineNum">     820 </span>                :            :                          - (&amp;spdm12_signing_context_with_hash[SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE]</a>
 <a name="821"><span class="lineNum">     821 </span>                :            :                             - spdm12_signing_context_with_hash),</a>
 <a name="822"><span class="lineNum">     822 </span>                :            :                          message_hash, hash_size);</a>
 <a name="823"><span class="lineNum">     823 </span>                :            : </a>
 <a name="824"><span class="lineNum">     824 </span>                :            :         /* assign message and message_size for signing */</a>
-<a name="825"><span class="lineNum">     825 </span>                :<span class="lineCov">          7 :         message = spdm12_signing_context_with_hash;</span></a>
-<a name="826"><span class="lineNum">     826 </span>                :<span class="lineCov">          7 :         message_size = SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE + hash_size;</span></a>
+<a name="825"><span class="lineNum">     825 </span>                :<span class="lineCov">          8 :         message = spdm12_signing_context_with_hash;</span></a>
+<a name="826"><span class="lineNum">     826 </span>                :<span class="lineCov">          8 :         message_size = SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE + hash_size;</span></a>
 <a name="827"><span class="lineNum">     827 </span>                :            : </a>
-<a name="828"><span class="lineNum">     828 </span>        [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          7 :         if (need_hash) {</span></a>
-<a name="829"><span class="lineNum">     829 </span>                :<span class="lineCov">          7 :             result = libspdm_hash_all(base_hash_algo, message, message_size, full_message_hash);</span></a>
-<a name="830"><span class="lineNum">     830 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">          7 :             if (!result) {</span></a>
+<a name="828"><span class="lineNum">     828 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          8 :         if (need_hash) {</span></a>
+<a name="829"><span class="lineNum">     829 </span>                :<span class="lineCov">          8 :             result = libspdm_hash_all(base_hash_algo, message, message_size, full_message_hash);</span></a>
+<a name="830"><span class="lineNum">     830 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">          8 :             if (!result) {</span></a>
 <a name="831"><span class="lineNum">     831 </span>                :<span class="lineNoCov">          0 :                 return false;</span></a>
 <a name="832"><span class="lineNum">     832 </span>                :            :             }</a>
-<a name="833"><span class="lineNum">     833 </span>                :<span class="lineCov">          7 :             return libspdm_asym_verify_wrap(context, hash_nid, base_asym_algo,</span></a>
+<a name="833"><span class="lineNum">     833 </span>                :<span class="lineCov">          8 :             return libspdm_asym_verify_wrap(context, hash_nid, base_asym_algo,</span></a>
 <a name="834"><span class="lineNum">     834 </span>                :            :                                             param, param_size,</a>
 <a name="835"><span class="lineNum">     835 </span>                :            :                                             full_message_hash, hash_size,</a>
 <a name="836"><span class="lineNum">     836 </span>                :            :                                             signature, sig_size);</a>
@@ -921,8 +921,8 @@
 <a name="844"><span class="lineNum">     844 </span>                :            :         /* SPDM 1.2 signing done. */</a>
 <a name="845"><span class="lineNum">     845 </span>                :            :     }</a>
 <a name="846"><span class="lineNum">     846 </span>                :            : </a>
-<a name="847"><span class="lineNum">     847 </span>        [<span class="branchCov" title="Branch 0 was taken 44 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         44 :     if (need_hash) {</span></a>
-<a name="848"><span class="lineNum">     848 </span>                :<span class="lineCov">         44 :         return libspdm_asym_verify_wrap(context, hash_nid, base_asym_algo,</span></a>
+<a name="847"><span class="lineNum">     847 </span>        [<span class="branchCov" title="Branch 0 was taken 45 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         45 :     if (need_hash) {</span></a>
+<a name="848"><span class="lineNum">     848 </span>                :<span class="lineCov">         45 :         return libspdm_asym_verify_wrap(context, hash_nid, base_asym_algo,</span></a>
 <a name="849"><span class="lineNum">     849 </span>                :            :                                         param, param_size,</a>
 <a name="850"><span class="lineNum">     850 </span>                :            :                                         message_hash, hash_size,</a>
 <a name="851"><span class="lineNum">     851 </span>                :            :                                         signature, sig_size);</a>
@@ -932,7 +932,7 @@
 <a name="855"><span class="lineNum">     855 </span>                :            :     }</a>
 <a name="856"><span class="lineNum">     856 </span>                :            : }</a>
 <a name="857"><span class="lineNum">     857 </span>                :            : </a>
-<a name="858"><span class="lineNum">     858 </span>                :<span class="lineCov">         80 : bool libspdm_asym_sign(</span></a>
+<a name="858"><span class="lineNum">     858 </span>                :<span class="lineCov">         81 : bool libspdm_asym_sign(</span></a>
 <a name="859"><span class="lineNum">     859 </span>                :            :     spdm_version_number_t spdm_version, uint8_t op_code,</a>
 <a name="860"><span class="lineNum">     860 </span>                :            :     uint32_t base_asym_algo, uint32_t base_hash_algo,</a>
 <a name="861"><span class="lineNum">     861 </span>                :            :     void *context, const uint8_t *message,</a>
@@ -949,15 +949,15 @@
 <a name="872"><span class="lineNum">     872 </span>                :            :     const void *param;</a>
 <a name="873"><span class="lineNum">     873 </span>                :            :     size_t param_size;</a>
 <a name="874"><span class="lineNum">     874 </span>                :            : </a>
-<a name="875"><span class="lineNum">     875 </span>                :<span class="lineCov">         80 :     hash_nid = libspdm_get_hash_nid(base_hash_algo);</span></a>
-<a name="876"><span class="lineNum">     876 </span>                :<span class="lineCov">         80 :     need_hash = libspdm_asym_func_need_hash(base_asym_algo);</span></a>
+<a name="875"><span class="lineNum">     875 </span>                :<span class="lineCov">         81 :     hash_nid = libspdm_get_hash_nid(base_hash_algo);</span></a>
+<a name="876"><span class="lineNum">     876 </span>                :<span class="lineCov">         81 :     need_hash = libspdm_asym_func_need_hash(base_asym_algo);</span></a>
 <a name="877"><span class="lineNum">     877 </span>                :            : </a>
-<a name="878"><span class="lineNum">     878 </span>                :<span class="lineCov">         80 :     param = NULL;</span></a>
-<a name="879"><span class="lineNum">     879 </span>                :<span class="lineCov">         80 :     param_size = 0;</span></a>
+<a name="878"><span class="lineNum">     878 </span>                :<span class="lineCov">         81 :     param = NULL;</span></a>
+<a name="879"><span class="lineNum">     879 </span>                :<span class="lineCov">         81 :     param_size = 0;</span></a>
 <a name="880"><span class="lineNum">     880 </span>                :            : </a>
-<a name="881"><span class="lineNum">     881 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 72 times"> + </span>]:<span class="lineCov">         80 :     if ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11) {</span></a>
+<a name="881"><span class="lineNum">     881 </span>        [<span class="branchCov" title="Branch 0 was taken 9 times"> + </span><span class="branchCov" title="Branch 1 was taken 72 times"> + </span>]:<span class="lineCov">         81 :     if ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11) {</span></a>
 <a name="882"><span class="lineNum">     882 </span>                :            :         /* Need use SPDM 1.2 signing */</a>
-<a name="883"><span class="lineNum">     883 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 8 times"> + </span>]:<span class="lineCov">          8 :         switch (base_asym_algo) {</span></a>
+<a name="883"><span class="lineNum">     883 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 9 times"> + </span>]:<span class="lineCov">          9 :         switch (base_asym_algo) {</span></a>
 <a name="884"><span class="lineNum">     884 </span>                :<span class="lineNoCov">          0 :         case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_SM2_ECC_SM2_P256:</span></a>
 <a name="885"><span class="lineNum">     885 </span>                :<span class="lineNoCov">          0 :             param = &quot;&quot;;</span></a>
 <a name="886"><span class="lineNum">     886 </span>                :<span class="lineNoCov">          0 :             param_size = 0;</span></a>
@@ -969,35 +969,35 @@
 <a name="892"><span class="lineNum">     892 </span>                :<span class="lineNoCov">          0 :             hash_nid = LIBSPDM_CRYPTO_NID_NULL;</span></a>
 <a name="893"><span class="lineNum">     893 </span>                :<span class="lineNoCov">          0 :             param = libspdm_get_signing_context_string (spdm_version, op_code, false, &amp;param_size);</span></a>
 <a name="894"><span class="lineNum">     894 </span>                :<span class="lineNoCov">          0 :             break;</span></a>
-<a name="895"><span class="lineNum">     895 </span>                :<span class="lineCov">          8 :         default:</span></a>
+<a name="895"><span class="lineNum">     895 </span>                :<span class="lineCov">          9 :         default:</span></a>
 <a name="896"><span class="lineNum">     896 </span>                :            :             /* pass thru for rest algorithm */</a>
-<a name="897"><span class="lineNum">     897 </span>                :<span class="lineCov">          8 :             break;</span></a>
+<a name="897"><span class="lineNum">     897 </span>                :<span class="lineCov">          9 :             break;</span></a>
 <a name="898"><span class="lineNum">     898 </span>                :            :         }</a>
 <a name="899"><span class="lineNum">     899 </span>                :            : </a>
-<a name="900"><span class="lineNum">     900 </span>                :<span class="lineCov">          8 :         libspdm_create_signing_context (spdm_version, op_code, false,</span></a>
+<a name="900"><span class="lineNum">     900 </span>                :<span class="lineCov">          9 :         libspdm_create_signing_context (spdm_version, op_code, false,</span></a>
 <a name="901"><span class="lineNum">     901 </span>                :            :                                         spdm12_signing_context_with_hash);</a>
-<a name="902"><span class="lineNum">     902 </span>                :<span class="lineCov">          8 :         hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
-<a name="903"><span class="lineNum">     903 </span>                :<span class="lineCov">          8 :         result = libspdm_hash_all(base_hash_algo, message, message_size,</span></a>
+<a name="902"><span class="lineNum">     902 </span>                :<span class="lineCov">          9 :         hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
+<a name="903"><span class="lineNum">     903 </span>                :<span class="lineCov">          9 :         result = libspdm_hash_all(base_hash_algo, message, message_size,</span></a>
 <a name="904"><span class="lineNum">     904 </span>                :            :                                   &amp;spdm12_signing_context_with_hash[</a>
 <a name="905"><span class="lineNum">     905 </span>                :            :                                       SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE]);</a>
-<a name="906"><span class="lineNum">     906 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">          8 :         if (!result) {</span></a>
+<a name="906"><span class="lineNum">     906 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 9 times"> + </span>]:<span class="lineCov">          9 :         if (!result) {</span></a>
 <a name="907"><span class="lineNum">     907 </span>                :<span class="lineNoCov">          0 :             return false;</span></a>
 <a name="908"><span class="lineNum">     908 </span>                :            :         }</a>
 <a name="909"><span class="lineNum">     909 </span>                :            : </a>
 <a name="910"><span class="lineNum">     910 </span>                :            :         /* re-assign message and message_size for signing */</a>
-<a name="911"><span class="lineNum">     911 </span>                :<span class="lineCov">          8 :         message = spdm12_signing_context_with_hash;</span></a>
-<a name="912"><span class="lineNum">     912 </span>                :<span class="lineCov">          8 :         message_size = SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE + hash_size;</span></a>
+<a name="911"><span class="lineNum">     911 </span>                :<span class="lineCov">          9 :         message = spdm12_signing_context_with_hash;</span></a>
+<a name="912"><span class="lineNum">     912 </span>                :<span class="lineCov">          9 :         message_size = SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE + hash_size;</span></a>
 <a name="913"><span class="lineNum">     913 </span>                :            : </a>
 <a name="914"><span class="lineNum">     914 </span>                :            :         /* Passthru*/</a>
 <a name="915"><span class="lineNum">     915 </span>                :            :     }</a>
 <a name="916"><span class="lineNum">     916 </span>                :            : </a>
-<a name="917"><span class="lineNum">     917 </span>        [<span class="branchCov" title="Branch 0 was taken 80 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         80 :     if (need_hash) {</span></a>
-<a name="918"><span class="lineNum">     918 </span>                :<span class="lineCov">         80 :         hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
-<a name="919"><span class="lineNum">     919 </span>                :<span class="lineCov">         80 :         result = libspdm_hash_all(base_hash_algo, message, message_size, message_hash);</span></a>
-<a name="920"><span class="lineNum">     920 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 80 times"> + </span>]:<span class="lineCov">         80 :         if (!result) {</span></a>
+<a name="917"><span class="lineNum">     917 </span>        [<span class="branchCov" title="Branch 0 was taken 81 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         81 :     if (need_hash) {</span></a>
+<a name="918"><span class="lineNum">     918 </span>                :<span class="lineCov">         81 :         hash_size = libspdm_get_hash_size(base_hash_algo);</span></a>
+<a name="919"><span class="lineNum">     919 </span>                :<span class="lineCov">         81 :         result = libspdm_hash_all(base_hash_algo, message, message_size, message_hash);</span></a>
+<a name="920"><span class="lineNum">     920 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 81 times"> + </span>]:<span class="lineCov">         81 :         if (!result) {</span></a>
 <a name="921"><span class="lineNum">     921 </span>                :<span class="lineNoCov">          0 :             return false;</span></a>
 <a name="922"><span class="lineNum">     922 </span>                :            :         }</a>
-<a name="923"><span class="lineNum">     923 </span>                :<span class="lineCov">         80 :         return libspdm_asym_sign_wrap(context, hash_nid, base_asym_algo,</span></a>
+<a name="923"><span class="lineNum">     923 </span>                :<span class="lineCov">         81 :         return libspdm_asym_sign_wrap(context, hash_nid, base_asym_algo,</span></a>
 <a name="924"><span class="lineNum">     924 </span>                :            :                                       param, param_size,</a>
 <a name="925"><span class="lineNum">     925 </span>                :            :                                       message_hash, hash_size,</a>
 <a name="926"><span class="lineNum">     926 </span>                :            :                                       signature, sig_size);</a>
@@ -1009,7 +1009,7 @@
 <a name="932"><span class="lineNum">     932 </span>                :            :     }</a>
 <a name="933"><span class="lineNum">     933 </span>                :            : }</a>
 <a name="934"><span class="lineNum">     934 </span>                :            : </a>
-<a name="935"><span class="lineNum">     935 </span>                :<span class="lineCov">         27 : bool libspdm_asym_sign_hash(</span></a>
+<a name="935"><span class="lineNum">     935 </span>                :<span class="lineCov">         28 : bool libspdm_asym_sign_hash(</span></a>
 <a name="936"><span class="lineNum">     936 </span>                :            :     spdm_version_number_t spdm_version, uint8_t op_code,</a>
 <a name="937"><span class="lineNum">     937 </span>                :            :     uint32_t base_asym_algo, uint32_t base_hash_algo,</a>
 <a name="938"><span class="lineNum">     938 </span>                :            :     void *context, const uint8_t *message_hash,</a>
@@ -1027,16 +1027,16 @@
 <a name="950"><span class="lineNum">     950 </span>                :            :     const void *param;</a>
 <a name="951"><span class="lineNum">     951 </span>                :            :     size_t param_size;</a>
 <a name="952"><span class="lineNum">     952 </span>                :            : </a>
-<a name="953"><span class="lineNum">     953 </span>                :<span class="lineCov">         27 :     hash_nid = libspdm_get_hash_nid(base_hash_algo);</span></a>
-<a name="954"><span class="lineNum">     954 </span>                :<span class="lineCov">         27 :     need_hash = libspdm_asym_func_need_hash(base_asym_algo);</span></a>
-<a name="955"><span class="lineNum">     955 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 27 times"> + </span>]:<span class="lineCov">         27 :     LIBSPDM_ASSERT (hash_size == libspdm_get_hash_size(base_hash_algo));</span></a>
+<a name="953"><span class="lineNum">     953 </span>                :<span class="lineCov">         28 :     hash_nid = libspdm_get_hash_nid(base_hash_algo);</span></a>
+<a name="954"><span class="lineNum">     954 </span>                :<span class="lineCov">         28 :     need_hash = libspdm_asym_func_need_hash(base_asym_algo);</span></a>
+<a name="955"><span class="lineNum">     955 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 28 times"> + </span>]:<span class="lineCov">         28 :     LIBSPDM_ASSERT (hash_size == libspdm_get_hash_size(base_hash_algo));</span></a>
 <a name="956"><span class="lineNum">     956 </span>                :            : </a>
-<a name="957"><span class="lineNum">     957 </span>                :<span class="lineCov">         27 :     param = NULL;</span></a>
-<a name="958"><span class="lineNum">     958 </span>                :<span class="lineCov">         27 :     param_size = 0;</span></a>
+<a name="957"><span class="lineNum">     957 </span>                :<span class="lineCov">         28 :     param = NULL;</span></a>
+<a name="958"><span class="lineNum">     958 </span>                :<span class="lineCov">         28 :     param_size = 0;</span></a>
 <a name="959"><span class="lineNum">     959 </span>                :            : </a>
-<a name="960"><span class="lineNum">     960 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">         27 :     if ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11) {</span></a>
+<a name="960"><span class="lineNum">     960 </span>        [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">         28 :     if ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt; SPDM_MESSAGE_VERSION_11) {</span></a>
 <a name="961"><span class="lineNum">     961 </span>                :            :         /* Need use SPDM 1.2 signing */</a>
-<a name="962"><span class="lineNum">     962 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 6 times"> + </span>]:<span class="lineCov">          6 :         switch (base_asym_algo) {</span></a>
+<a name="962"><span class="lineNum">     962 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 7 times"> + </span>]:<span class="lineCov">          7 :         switch (base_asym_algo) {</span></a>
 <a name="963"><span class="lineNum">     963 </span>                :<span class="lineNoCov">          0 :         case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_SM2_ECC_SM2_P256:</span></a>
 <a name="964"><span class="lineNum">     964 </span>                :<span class="lineNoCov">          0 :             param = &quot;&quot;;</span></a>
 <a name="965"><span class="lineNum">     965 </span>                :<span class="lineNoCov">          0 :             param_size = 0;</span></a>
@@ -1048,29 +1048,29 @@
 <a name="971"><span class="lineNum">     971 </span>                :<span class="lineNoCov">          0 :             hash_nid = LIBSPDM_CRYPTO_NID_NULL;</span></a>
 <a name="972"><span class="lineNum">     972 </span>                :<span class="lineNoCov">          0 :             param = libspdm_get_signing_context_string (spdm_version, op_code, false, &amp;param_size);</span></a>
 <a name="973"><span class="lineNum">     973 </span>                :<span class="lineNoCov">          0 :             break;</span></a>
-<a name="974"><span class="lineNum">     974 </span>                :<span class="lineCov">          6 :         default:</span></a>
+<a name="974"><span class="lineNum">     974 </span>                :<span class="lineCov">          7 :         default:</span></a>
 <a name="975"><span class="lineNum">     975 </span>                :            :             /* pass thru for rest algorithm */</a>
-<a name="976"><span class="lineNum">     976 </span>                :<span class="lineCov">          6 :             break;</span></a>
+<a name="976"><span class="lineNum">     976 </span>                :<span class="lineCov">          7 :             break;</span></a>
 <a name="977"><span class="lineNum">     977 </span>                :            :         }</a>
 <a name="978"><span class="lineNum">     978 </span>                :            : </a>
-<a name="979"><span class="lineNum">     979 </span>                :<span class="lineCov">          6 :         libspdm_create_signing_context (spdm_version, op_code, false,</span></a>
+<a name="979"><span class="lineNum">     979 </span>                :<span class="lineCov">          7 :         libspdm_create_signing_context (spdm_version, op_code, false,</span></a>
 <a name="980"><span class="lineNum">     980 </span>                :            :                                         spdm12_signing_context_with_hash);</a>
-<a name="981"><span class="lineNum">     981 </span>                :<span class="lineCov">          6 :         libspdm_copy_mem(&amp;spdm12_signing_context_with_hash[SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE],</span></a>
+<a name="981"><span class="lineNum">     981 </span>                :<span class="lineCov">          7 :         libspdm_copy_mem(&amp;spdm12_signing_context_with_hash[SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE],</span></a>
 <a name="982"><span class="lineNum">     982 </span>                :            :                          sizeof(spdm12_signing_context_with_hash)</a>
 <a name="983"><span class="lineNum">     983 </span>                :            :                          - (&amp;spdm12_signing_context_with_hash[SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE]</a>
 <a name="984"><span class="lineNum">     984 </span>                :            :                             - spdm12_signing_context_with_hash),</a>
 <a name="985"><span class="lineNum">     985 </span>                :            :                          message_hash, hash_size);</a>
 <a name="986"><span class="lineNum">     986 </span>                :            : </a>
 <a name="987"><span class="lineNum">     987 </span>                :            :         /* assign message and message_size for signing */</a>
-<a name="988"><span class="lineNum">     988 </span>                :<span class="lineCov">          6 :         message = spdm12_signing_context_with_hash;</span></a>
-<a name="989"><span class="lineNum">     989 </span>                :<span class="lineCov">          6 :         message_size = SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE + hash_size;</span></a>
+<a name="988"><span class="lineNum">     988 </span>                :<span class="lineCov">          7 :         message = spdm12_signing_context_with_hash;</span></a>
+<a name="989"><span class="lineNum">     989 </span>                :<span class="lineCov">          7 :         message_size = SPDM_VERSION_1_2_SIGNING_CONTEXT_SIZE + hash_size;</span></a>
 <a name="990"><span class="lineNum">     990 </span>                :            : </a>
-<a name="991"><span class="lineNum">     991 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          6 :         if (need_hash) {</span></a>
-<a name="992"><span class="lineNum">     992 </span>                :<span class="lineCov">          6 :             result = libspdm_hash_all(base_hash_algo, message, message_size, full_message_hash);</span></a>
-<a name="993"><span class="lineNum">     993 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">          6 :             if (!result) {</span></a>
+<a name="991"><span class="lineNum">     991 </span>        [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          7 :         if (need_hash) {</span></a>
+<a name="992"><span class="lineNum">     992 </span>                :<span class="lineCov">          7 :             result = libspdm_hash_all(base_hash_algo, message, message_size, full_message_hash);</span></a>
+<a name="993"><span class="lineNum">     993 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7 times"> + </span>]:<span class="lineCov">          7 :             if (!result) {</span></a>
 <a name="994"><span class="lineNum">     994 </span>                :<span class="lineNoCov">          0 :                 return false;</span></a>
 <a name="995"><span class="lineNum">     995 </span>                :            :             }</a>
-<a name="996"><span class="lineNum">     996 </span>                :<span class="lineCov">          6 :             return libspdm_asym_sign_wrap(context, hash_nid, base_asym_algo,</span></a>
+<a name="996"><span class="lineNum">     996 </span>                :<span class="lineCov">          7 :             return libspdm_asym_sign_wrap(context, hash_nid, base_asym_algo,</span></a>
 <a name="997"><span class="lineNum">     997 </span>                :            :                                           param, param_size,</a>
 <a name="998"><span class="lineNum">     998 </span>                :            :                                           full_message_hash, hash_size,</a>
 <a name="999"><span class="lineNum">     999 </span>                :            :                                           signature, sig_size);</a>

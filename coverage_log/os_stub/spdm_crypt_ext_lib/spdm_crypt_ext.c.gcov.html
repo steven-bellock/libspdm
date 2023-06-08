@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-07 08:16:25</td>
+            <td class="headerValue">2023-06-08 08:14:49</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -90,9 +90,9 @@
 <a name="19"><span class="lineNum">      19 </span>                :            :  * @return asymmetric GET_PRIVATE_KEY_FROM_PEM function</a>
 <a name="20"><span class="lineNum">      20 </span>                :            :  **/</a>
 <a name="21"><span class="lineNum">      21 </span>                :            : libspdm_asym_get_private_key_from_pem_func</a>
-<a name="22"><span class="lineNum">      22 </span>                :<span class="lineCov">        128 : libspdm_get_asym_get_private_key_from_pem(uint32_t base_asym_algo)</span></a>
+<a name="22"><span class="lineNum">      22 </span>                :<span class="lineCov">        131 : libspdm_get_asym_get_private_key_from_pem(uint32_t base_asym_algo)</span></a>
 <a name="23"><span class="lineNum">      23 </span>                :            : {</a>
-<a name="24"><span class="lineNum">      24 </span>  [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchCov" title="Branch 1 was taken 112 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        128 :     switch (base_asym_algo) {</span></a>
+<a name="24"><span class="lineNum">      24 </span>  [<span class="branchCov" title="Branch 0 was taken 16 times"> + </span><span class="branchCov" title="Branch 1 was taken 115 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        131 :     switch (base_asym_algo) {</span></a>
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 4 was not taken"> - </span>]
 <a name="25"><span class="lineNum">      25 </span>                :<span class="lineCov">         16 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
 <a name="26"><span class="lineNum">      26 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_3072:</a>
@@ -106,11 +106,11 @@
 <a name="34"><span class="lineNum">      34 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="35"><span class="lineNum">      35 </span>                :            :         break;</a>
 <a name="36"><span class="lineNum">      36 </span>                :            : #endif</a>
-<a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">        112 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="37"><span class="lineNum">      37 </span>                :<span class="lineCov">        115 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
 <a name="38"><span class="lineNum">      38 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</a>
 <a name="39"><span class="lineNum">      39 </span>                :            :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</a>
 <a name="40"><span class="lineNum">      40 </span>                :            : #if LIBSPDM_ECDSA_SUPPORT</a>
-<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">        112 :         return libspdm_ec_get_private_key_from_pem;</span></a>
+<a name="41"><span class="lineNum">      41 </span>                :<span class="lineCov">        115 :         return libspdm_ec_get_private_key_from_pem;</span></a>
 <a name="42"><span class="lineNum">      42 </span>                :            : #else</a>
 <a name="43"><span class="lineNum">      43 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="44"><span class="lineNum">      44 </span>                :            :         break;</a>
@@ -151,18 +151,18 @@
 <a name="79"><span class="lineNum">      79 </span>                :            :  * @retval  true   Private key was retrieved successfully.</a>
 <a name="80"><span class="lineNum">      80 </span>                :            :  * @retval  false  Invalid PEM key data or incorrect password.</a>
 <a name="81"><span class="lineNum">      81 </span>                :            :  **/</a>
-<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">        112 : bool libspdm_asym_get_private_key_from_pem(uint32_t base_asym_algo,</span></a>
+<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">        115 : bool libspdm_asym_get_private_key_from_pem(uint32_t base_asym_algo,</span></a>
 <a name="83"><span class="lineNum">      83 </span>                :            :                                            const uint8_t *pem_data,</a>
 <a name="84"><span class="lineNum">      84 </span>                :            :                                            size_t pem_size,</a>
 <a name="85"><span class="lineNum">      85 </span>                :            :                                            const char *password,</a>
 <a name="86"><span class="lineNum">      86 </span>                :            :                                            void **context)</a>
 <a name="87"><span class="lineNum">      87 </span>                :            : {</a>
 <a name="88"><span class="lineNum">      88 </span>                :            :     libspdm_asym_get_private_key_from_pem_func asym_get_private_key_from_pem;</a>
-<a name="89"><span class="lineNum">      89 </span>                :<span class="lineCov">        112 :     asym_get_private_key_from_pem = libspdm_get_asym_get_private_key_from_pem(base_asym_algo);</span></a>
-<a name="90"><span class="lineNum">      90 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 112 times"> + </span>]:<span class="lineCov">        112 :     if (asym_get_private_key_from_pem == NULL) {</span></a>
+<a name="89"><span class="lineNum">      89 </span>                :<span class="lineCov">        115 :     asym_get_private_key_from_pem = libspdm_get_asym_get_private_key_from_pem(base_asym_algo);</span></a>
+<a name="90"><span class="lineNum">      90 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 115 times"> + </span>]:<span class="lineCov">        115 :     if (asym_get_private_key_from_pem == NULL) {</span></a>
 <a name="91"><span class="lineNum">      91 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="92"><span class="lineNum">      92 </span>                :            :     }</a>
-<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">        112 :     return asym_get_private_key_from_pem(pem_data, pem_size, password, context);</span></a>
+<a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">        115 :     return asym_get_private_key_from_pem(pem_data, pem_size, password, context);</span></a>
 <a name="94"><span class="lineNum">      94 </span>                :            : }</a>
 <a name="95"><span class="lineNum">      95 </span>                :            : </a>
 <a name="96"><span class="lineNum">      96 </span>                :            : /**</a>
@@ -301,10 +301,10 @@
 <a name="228"><span class="lineNum">     228 </span>                :<span class="lineCov">         67 :     return hash_function(data, data_size, hash_value);</span></a>
 <a name="229"><span class="lineNum">     229 </span>                :            : }</a>
 <a name="230"><span class="lineNum">     230 </span>                :            : </a>
-<a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">          5 : size_t libspdm_get_aysm_nid(uint32_t base_asym_algo)</span></a>
+<a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">          6 : size_t libspdm_get_aysm_nid(uint32_t base_asym_algo)</span></a>
 <a name="232"><span class="lineNum">     232 </span>                :            : {</a>
-<a name="233"><span class="lineNum">     233 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          5 :     switch (base_asym_algo)</span></a>
-<span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
+<a name="233"><span class="lineNum">     233 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          6 :     switch (base_asym_algo)</span></a>
+<span class="lineNum">         </span><span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchNoCov" title="Branch 8 was not taken"> - </span> 
 <span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span>]
 <a name="234"><span class="lineNum">     234 </span>                :            :     {</a>
 <a name="235"><span class="lineNum">     235 </span>                :<span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048:</span></a>
@@ -319,8 +319,8 @@
 <a name="244"><span class="lineNum">     244 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_CRYPTO_NID_RSAPSS3072;</span></a>
 <a name="245"><span class="lineNum">     245 </span>                :<span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_4096:</span></a>
 <a name="246"><span class="lineNum">     246 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_CRYPTO_NID_RSAPSS4096;</span></a>
-<a name="247"><span class="lineNum">     247 </span>                :<span class="lineCov">          5 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
-<a name="248"><span class="lineNum">     248 </span>                :<span class="lineCov">          5 :         return LIBSPDM_CRYPTO_NID_ECDSA_NIST_P256;</span></a>
+<a name="247"><span class="lineNum">     247 </span>                :<span class="lineCov">          6 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256:</span></a>
+<a name="248"><span class="lineNum">     248 </span>                :<span class="lineCov">          6 :         return LIBSPDM_CRYPTO_NID_ECDSA_NIST_P256;</span></a>
 <a name="249"><span class="lineNum">     249 </span>                :<span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384:</span></a>
 <a name="250"><span class="lineNum">     250 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_CRYPTO_NID_ECDSA_NIST_P384;</span></a>
 <a name="251"><span class="lineNum">     251 </span>                :<span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521:</span></a>
