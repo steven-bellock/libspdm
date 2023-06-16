@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">147</td>
-            <td class="headerCovTableEntry">204</td>
-            <td class="headerCovTableEntryLo">72.1 %</td>
+            <td class="headerCovTableEntry">202</td>
+            <td class="headerCovTableEntryLo">72.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-15 08:14:36</td>
+            <td class="headerValue">2023-06-16 08:14:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -206,7 +206,7 @@
 <a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">         47 :     cert_chain_capacity = *cert_chain_size;</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :<span class="lineCov">         47 :     cert_chain_size_internal = 0;</span></a>
 <a name="137"><span class="lineNum">     137 </span>                :            : </a>
-<a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">         47 :     transport_header_size = spdm_context-&gt;transport_get_header_size(spdm_context);</span></a>
+<a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">         47 :     transport_header_size = spdm_context-&gt;local_context.capability.transport_header_size;</span></a>
 <a name="139"><span class="lineNum">     139 </span>                :            : </a>
 <a name="140"><span class="lineNum">     140 </span>                :            :     do {</a>
 <a name="141"><span class="lineNum">     141 </span>                :            :         /* -=[Construct Request Phase]=- */</a>
@@ -344,199 +344,197 @@
 <a name="273"><span class="lineNum">     273 </span>                :<span class="lineCov">       1421 :             status = libspdm_append_message_b(spdm_context, spdm_request, spdm_request_size);</span></a>
 <a name="274"><span class="lineNum">     274 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1421 times"> + </span>]:<span class="lineCov">       1421 :             if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="275"><span class="lineNum">     275 </span>                :<span class="lineNoCov">          0 :                 libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="276"><span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :                 status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
-<a name="277"><span class="lineNum">     277 </span>                :<span class="lineNoCov">          0 :                 goto done;</span></a>
-<a name="278"><span class="lineNum">     278 </span>                :            :             }</a>
-<a name="279"><span class="lineNum">     279 </span>                :<span class="lineCov">       1421 :             status = libspdm_append_message_b(spdm_context, spdm_response, spdm_response_size);</span></a>
-<a name="280"><span class="lineNum">     280 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1421 times"> + </span>]:<span class="lineCov">       1421 :             if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="281"><span class="lineNum">     281 </span>                :<span class="lineNoCov">          0 :                 libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="282"><span class="lineNum">     282 </span>                :<span class="lineNoCov">          0 :                 status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
-<a name="283"><span class="lineNum">     283 </span>                :<span class="lineNoCov">          0 :                 goto done;</span></a>
-<a name="284"><span class="lineNum">     284 </span>                :            :             }</a>
-<a name="285"><span class="lineNum">     285 </span>                :            :         }</a>
-<a name="286"><span class="lineNum">     286 </span>                :            : </a>
-<a name="287"><span class="lineNum">     287 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1423 times"> + </span>]:<span class="lineCov">       1423 :         if (cert_chain_size_internal + spdm_response-&gt;portion_length &gt; cert_chain_capacity) {</span></a>
-<a name="288"><span class="lineNum">     288 </span>                :<span class="lineNoCov">          0 :             libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="289"><span class="lineNum">     289 </span>                :<span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
-<a name="290"><span class="lineNum">     290 </span>                :<span class="lineNoCov">          0 :             goto done;</span></a>
-<a name="291"><span class="lineNum">     291 </span>                :            :         }</a>
-<a name="292"><span class="lineNum">     292 </span>                :            : </a>
-<a name="293"><span class="lineNum">     293 </span>                :<span class="lineCov">       1423 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;Certificate (offset 0x%x, size 0x%x):\n&quot;,</span></a>
-<a name="294"><span class="lineNum">     294 </span>                :            :                        spdm_request-&gt;offset, spdm_response-&gt;portion_length));</a>
-<a name="295"><span class="lineNum">     295 </span>                :<span class="lineCov">       1423 :         LIBSPDM_INTERNAL_DUMP_HEX(spdm_response-&gt;cert_chain, spdm_response-&gt;portion_length);</span></a>
-<a name="296"><span class="lineNum">     296 </span>                :            : </a>
-<a name="297"><span class="lineNum">     297 </span>                :<span class="lineCov">       1423 :         libspdm_copy_mem((uint8_t *)cert_chain + cert_chain_size_internal,</span></a>
-<a name="298"><span class="lineNum">     298 </span>                :            :                          cert_chain_capacity - cert_chain_size_internal,</a>
-<a name="299"><span class="lineNum">     299 </span>                :<span class="lineCov">       1423 :                          spdm_response-&gt;cert_chain,</span></a>
-<a name="300"><span class="lineNum">     300 </span>                :<span class="lineCov">       1423 :                          spdm_response-&gt;portion_length);</span></a>
+<a name="276"><span class="lineNum">     276 </span>                :<span class="lineNoCov">          0 :                 goto done;</span></a>
+<a name="277"><span class="lineNum">     277 </span>                :            :             }</a>
+<a name="278"><span class="lineNum">     278 </span>                :<span class="lineCov">       1421 :             status = libspdm_append_message_b(spdm_context, spdm_response, spdm_response_size);</span></a>
+<a name="279"><span class="lineNum">     279 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1421 times"> + </span>]:<span class="lineCov">       1421 :             if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
+<a name="280"><span class="lineNum">     280 </span>                :<span class="lineNoCov">          0 :                 libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="281"><span class="lineNum">     281 </span>                :<span class="lineNoCov">          0 :                 goto done;</span></a>
+<a name="282"><span class="lineNum">     282 </span>                :            :             }</a>
+<a name="283"><span class="lineNum">     283 </span>                :            :         }</a>
+<a name="284"><span class="lineNum">     284 </span>                :            : </a>
+<a name="285"><span class="lineNum">     285 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1423 times"> + </span>]:<span class="lineCov">       1423 :         if (cert_chain_size_internal + spdm_response-&gt;portion_length &gt; cert_chain_capacity) {</span></a>
+<a name="286"><span class="lineNum">     286 </span>                :<span class="lineNoCov">          0 :             libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="287"><span class="lineNum">     287 </span>                :<span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_BUFFER_FULL;</span></a>
+<a name="288"><span class="lineNum">     288 </span>                :<span class="lineNoCov">          0 :             goto done;</span></a>
+<a name="289"><span class="lineNum">     289 </span>                :            :         }</a>
+<a name="290"><span class="lineNum">     290 </span>                :            : </a>
+<a name="291"><span class="lineNum">     291 </span>                :<span class="lineCov">       1423 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;Certificate (offset 0x%x, size 0x%x):\n&quot;,</span></a>
+<a name="292"><span class="lineNum">     292 </span>                :            :                        spdm_request-&gt;offset, spdm_response-&gt;portion_length));</a>
+<a name="293"><span class="lineNum">     293 </span>                :<span class="lineCov">       1423 :         LIBSPDM_INTERNAL_DUMP_HEX(spdm_response-&gt;cert_chain, spdm_response-&gt;portion_length);</span></a>
+<a name="294"><span class="lineNum">     294 </span>                :            : </a>
+<a name="295"><span class="lineNum">     295 </span>                :<span class="lineCov">       1423 :         libspdm_copy_mem((uint8_t *)cert_chain + cert_chain_size_internal,</span></a>
+<a name="296"><span class="lineNum">     296 </span>                :            :                          cert_chain_capacity - cert_chain_size_internal,</a>
+<a name="297"><span class="lineNum">     297 </span>                :<span class="lineCov">       1423 :                          spdm_response-&gt;cert_chain,</span></a>
+<a name="298"><span class="lineNum">     298 </span>                :<span class="lineCov">       1423 :                          spdm_response-&gt;portion_length);</span></a>
+<a name="299"><span class="lineNum">     299 </span>                :            : </a>
+<a name="300"><span class="lineNum">     300 </span>                :<span class="lineCov">       1423 :         cert_chain_size_internal += spdm_response-&gt;portion_length;</span></a>
 <a name="301"><span class="lineNum">     301 </span>                :            : </a>
-<a name="302"><span class="lineNum">     302 </span>                :<span class="lineCov">       1423 :         cert_chain_size_internal += spdm_response-&gt;portion_length;</span></a>
-<a name="303"><span class="lineNum">     303 </span>                :            : </a>
-<a name="304"><span class="lineNum">     304 </span>        [<span class="branchCov" title="Branch 0 was taken 19 times"> + </span><span class="branchCov" title="Branch 1 was taken 1404 times"> + </span>]:<span class="lineCov">       1423 :         if (spdm_context-&gt;connection_info.connection_state &lt;</span></a>
-<a name="305"><span class="lineNum">     305 </span>                :            :             LIBSPDM_CONNECTION_STATE_AFTER_CERTIFICATE) {</a>
-<a name="306"><span class="lineNum">     306 </span>                :<span class="lineCov">         19 :             spdm_context-&gt;connection_info.connection_state =</span></a>
-<a name="307"><span class="lineNum">     307 </span>                :            :                 LIBSPDM_CONNECTION_STATE_AFTER_CERTIFICATE;</a>
-<a name="308"><span class="lineNum">     308 </span>                :            :         }</a>
-<a name="309"><span class="lineNum">     309 </span>                :            : </a>
-<a name="310"><span class="lineNum">     310 </span>                :            :         /* -=[Log Message Phase]=- */</a>
-<a name="311"><span class="lineNum">     311 </span>                :            :         #if LIBSPDM_ENABLE_MSG_LOG</a>
-<a name="312"><span class="lineNum">     312 </span>                :<span class="lineCov">       1423 :         libspdm_append_msg_log(spdm_context, spdm_response, spdm_response_size);</span></a>
-<a name="313"><span class="lineNum">     313 </span>                :            :         #endif /* LIBSPDM_ENABLE_MSG_LOG */</a>
-<a name="314"><span class="lineNum">     314 </span>                :            : </a>
-<a name="315"><span class="lineNum">     315 </span>                :<span class="lineCov">       1423 :         libspdm_release_receiver_buffer (spdm_context);</span></a>
-<a name="316"><span class="lineNum">     316 </span>        [<span class="branchCov" title="Branch 0 was taken 1404 times"> + </span><span class="branchCov" title="Branch 1 was taken 19 times"> + </span>]:<span class="lineCov">       1423 :     } while (remainder_length != 0);</span></a>
-<a name="317"><span class="lineNum">     317 </span>                :            : </a>
-<a name="318"><span class="lineNum">     318 </span>                :<span class="lineCov">         19 :     *cert_chain_size = cert_chain_size_internal;</span></a>
-<a name="319"><span class="lineNum">     319 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 19 times"> + </span>]:<span class="lineCov">         19 :     LIBSPDM_ASSERT(*cert_chain_size &lt;= SPDM_MAX_CERTIFICATE_CHAIN_SIZE);</span></a>
-<a name="320"><span class="lineNum">     320 </span>                :            : </a>
-<a name="321"><span class="lineNum">     321 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 19 times"> + </span>]:<span class="lineCov">         19 :     if (spdm_context-&gt;local_context.verify_peer_spdm_cert_chain != NULL) {</span></a>
-<a name="322"><span class="lineNum">     322 </span>                :<span class="lineNoCov">          0 :         result = spdm_context-&gt;local_context.verify_peer_spdm_cert_chain (</span></a>
-<a name="323"><span class="lineNum">     323 </span>                :            :             spdm_context, slot_id, cert_chain_size_internal, cert_chain,</a>
-<a name="324"><span class="lineNum">     324 </span>                :            :             trust_anchor, trust_anchor_size);</a>
-<a name="325"><span class="lineNum">     325 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (!result) {</span></a>
-<a name="326"><span class="lineNum">     326 </span>                :<span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_VERIF_FAIL;</span></a>
-<a name="327"><span class="lineNum">     327 </span>                :<span class="lineNoCov">          0 :             goto done;</span></a>
-<a name="328"><span class="lineNum">     328 </span>                :            :         }</a>
-<a name="329"><span class="lineNum">     329 </span>                :            :     } else {</a>
-<a name="330"><span class="lineNum">     330 </span>                :<span class="lineCov">         19 :         result = libspdm_verify_peer_cert_chain_buffer_integrity(</span></a>
-<a name="331"><span class="lineNum">     331 </span>                :            :             spdm_context, cert_chain, cert_chain_size_internal);</a>
-<a name="332"><span class="lineNum">     332 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         19 :         if (!result) {</span></a>
-<a name="333"><span class="lineNum">     333 </span>                :<span class="lineCov">          4 :             status = LIBSPDM_STATUS_VERIF_FAIL;</span></a>
-<a name="334"><span class="lineNum">     334 </span>                :<span class="lineCov">          4 :             goto done;</span></a>
-<a name="335"><span class="lineNum">     335 </span>                :            :         }</a>
-<a name="336"><span class="lineNum">     336 </span>                :            :     }</a>
-<a name="337"><span class="lineNum">     337 </span>                :            : </a>
-<a name="338"><span class="lineNum">     338 </span>                :            :     /*verify peer cert chain authority*/</a>
-<a name="339"><span class="lineNum">     339 </span>                :<span class="lineCov">         15 :     result = libspdm_verify_peer_cert_chain_buffer_authority(</span></a>
-<a name="340"><span class="lineNum">     340 </span>                :            :         spdm_context, cert_chain,cert_chain_size_internal,</a>
-<a name="341"><span class="lineNum">     341 </span>                :            :         trust_anchor, trust_anchor_size);</a>
-<a name="342"><span class="lineNum">     342 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 13 times"> + </span>]:<span class="lineCov">         15 :     if (!result) {</span></a>
-<a name="343"><span class="lineNum">     343 </span>                :<span class="lineCov">          2 :         status = LIBSPDM_STATUS_VERIF_NO_AUTHORITY;</span></a>
-<a name="344"><span class="lineNum">     344 </span>                :            :     }</a>
-<a name="345"><span class="lineNum">     345 </span>                :            : </a>
-<a name="346"><span class="lineNum">     346 </span>                :<span class="lineCov">         15 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = slot_id;</span></a>
-<a name="347"><span class="lineNum">     347 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="348"><span class="lineNum">     348 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer_size =</a>
-<a name="349"><span class="lineNum">     349 </span>                :            :         cert_chain_size_internal;</a>
-<a name="350"><span class="lineNum">     350 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer,</a>
-<a name="351"><span class="lineNum">     351 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer),</a>
-<a name="352"><span class="lineNum">     352 </span>                :            :                      cert_chain, cert_chain_size_internal);</a>
-<a name="353"><span class="lineNum">     353 </span>                :            : #else</a>
-<a name="354"><span class="lineNum">     354 </span>                :<span class="lineCov">         15 :     result = libspdm_hash_all(</span></a>
-<a name="355"><span class="lineNum">     355 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
-<a name="356"><span class="lineNum">     356 </span>                :            :         cert_chain, cert_chain_size_internal,</a>
-<a name="357"><span class="lineNum">     357 </span>                :<span class="lineCov">         15 :         spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer_hash);</span></a>
-<a name="358"><span class="lineNum">     358 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (!result) {</span></a>
-<a name="359"><span class="lineNum">     359 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
-<a name="360"><span class="lineNum">     360 </span>                :<span class="lineNoCov">          0 :         goto done;</span></a>
-<a name="361"><span class="lineNum">     361 </span>                :            :     }</a>
-<a name="362"><span class="lineNum">     362 </span>                :            : </a>
-<a name="363"><span class="lineNum">     363 </span>                :<span class="lineCov">         30 :     spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer_hash_size =</span></a>
-<a name="364"><span class="lineNum">     364 </span>                :<span class="lineCov">         15 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
-<a name="365"><span class="lineNum">     365 </span>                :            : </a>
-<a name="366"><span class="lineNum">     366 </span>                :<span class="lineCov">         15 :     result = libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
-<a name="367"><span class="lineNum">     367 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
-<a name="368"><span class="lineNum">     368 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
-<a name="369"><span class="lineNum">     369 </span>                :            :         cert_chain, cert_chain_size_internal,</a>
-<a name="370"><span class="lineNum">     370 </span>                :<span class="lineCov">         15 :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].leaf_cert_public_key);</span></a>
-<a name="371"><span class="lineNum">     371 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (!result) {</span></a>
-<a name="372"><span class="lineNum">     372 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_CERT;</span></a>
-<a name="373"><span class="lineNum">     373 </span>                :<span class="lineNoCov">          0 :         goto done;</span></a>
-<a name="374"><span class="lineNum">     374 </span>                :            :     }</a>
-<a name="375"><span class="lineNum">     375 </span>                :            : #endif</a>
-<a name="376"><span class="lineNum">     376 </span>                :            : </a>
-<a name="377"><span class="lineNum">     377 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 13 times"> + </span>]:<span class="lineCov">         15 :     if (status != LIBSPDM_STATUS_VERIF_NO_AUTHORITY) {</span></a>
-<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">         13 :         status = LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="379"><span class="lineNum">     379 </span>                :            :     }</a>
-<a name="380"><span class="lineNum">     380 </span>                :<span class="lineCov">          2 : done:</span></a>
-<a name="381"><span class="lineNum">     381 </span>                :<span class="lineCov">         47 :     return status;</span></a>
-<a name="382"><span class="lineNum">     382 </span>                :            : }</a>
-<a name="383"><span class="lineNum">     383 </span>                :            : </a>
-<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">         45 : libspdm_return_t libspdm_get_certificate(void *spdm_context, const uint32_t *session_id,</span></a>
-<a name="385"><span class="lineNum">     385 </span>                :            :                                          uint8_t slot_id,</a>
-<a name="386"><span class="lineNum">     386 </span>                :            :                                          size_t *cert_chain_size,</a>
-<a name="387"><span class="lineNum">     387 </span>                :            :                                          void *cert_chain)</a>
-<a name="388"><span class="lineNum">     388 </span>                :            : {</a>
-<a name="389"><span class="lineNum">     389 </span>                :<span class="lineCov">         45 :     return libspdm_get_certificate_choose_length(spdm_context, session_id, slot_id,</span></a>
-<a name="390"><span class="lineNum">     390 </span>                :            :                                                  LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN,</a>
-<a name="391"><span class="lineNum">     391 </span>                :            :                                                  cert_chain_size, cert_chain);</a>
-<a name="392"><span class="lineNum">     392 </span>                :            : }</a>
-<a name="393"><span class="lineNum">     393 </span>                :            : </a>
-<a name="394"><span class="lineNum">     394 </span>                :<span class="lineCov">          1 : libspdm_return_t libspdm_get_certificate_ex(void *spdm_context, const uint32_t *session_id,</span></a>
-<a name="395"><span class="lineNum">     395 </span>                :            :                                             uint8_t slot_id,</a>
-<a name="396"><span class="lineNum">     396 </span>                :            :                                             size_t *cert_chain_size,</a>
-<a name="397"><span class="lineNum">     397 </span>                :            :                                             void *cert_chain,</a>
-<a name="398"><span class="lineNum">     398 </span>                :            :                                             const void **trust_anchor,</a>
-<a name="399"><span class="lineNum">     399 </span>                :            :                                             size_t *trust_anchor_size)</a>
-<a name="400"><span class="lineNum">     400 </span>                :            : {</a>
-<a name="401"><span class="lineNum">     401 </span>                :<span class="lineCov">          1 :     return libspdm_get_certificate_choose_length_ex(spdm_context, session_id, slot_id,</span></a>
-<a name="402"><span class="lineNum">     402 </span>                :            :                                                     LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN,</a>
-<a name="403"><span class="lineNum">     403 </span>                :            :                                                     cert_chain_size, cert_chain,</a>
-<a name="404"><span class="lineNum">     404 </span>                :            :                                                     trust_anchor, trust_anchor_size);</a>
-<a name="405"><span class="lineNum">     405 </span>                :            : }</a>
-<a name="406"><span class="lineNum">     406 </span>                :            : </a>
-<a name="407"><span class="lineNum">     407 </span>                :<span class="lineCov">         46 : libspdm_return_t libspdm_get_certificate_choose_length(void *spdm_context,</span></a>
-<a name="408"><span class="lineNum">     408 </span>                :            :                                                        const uint32_t *session_id,</a>
-<a name="409"><span class="lineNum">     409 </span>                :            :                                                        uint8_t slot_id,</a>
-<a name="410"><span class="lineNum">     410 </span>                :            :                                                        uint16_t length,</a>
-<a name="411"><span class="lineNum">     411 </span>                :            :                                                        size_t *cert_chain_size,</a>
-<a name="412"><span class="lineNum">     412 </span>                :            :                                                        void *cert_chain)</a>
-<a name="413"><span class="lineNum">     413 </span>                :            : {</a>
-<a name="414"><span class="lineNum">     414 </span>                :            :     libspdm_context_t *context;</a>
-<a name="415"><span class="lineNum">     415 </span>                :            :     size_t retry;</a>
-<a name="416"><span class="lineNum">     416 </span>                :            :     uint64_t retry_delay_time;</a>
-<a name="417"><span class="lineNum">     417 </span>                :            :     libspdm_return_t status;</a>
-<a name="418"><span class="lineNum">     418 </span>                :            : </a>
-<a name="419"><span class="lineNum">     419 </span>                :<span class="lineCov">         46 :     context = spdm_context;</span></a>
-<a name="420"><span class="lineNum">     420 </span>                :<span class="lineCov">         46 :     context-&gt;crypto_request = true;</span></a>
-<a name="421"><span class="lineNum">     421 </span>                :<span class="lineCov">         46 :     retry = context-&gt;retry_times;</span></a>
-<a name="422"><span class="lineNum">     422 </span>                :<span class="lineCov">         46 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
-<a name="423"><span class="lineNum">     423 </span>                :            :     do {</a>
-<a name="424"><span class="lineNum">     424 </span>                :<span class="lineCov">         47 :         status = libspdm_try_get_certificate(context, session_id, slot_id, length,</span></a>
-<a name="425"><span class="lineNum">     425 </span>                :            :                                              cert_chain_size, cert_chain, NULL, NULL);</a>
-<a name="426"><span class="lineNum">     426 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 45 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">         47 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
-<a name="427"><span class="lineNum">     427 </span>                :<span class="lineCov">         46 :             return status;</span></a>
-<a name="428"><span class="lineNum">     428 </span>                :            :         }</a>
-<a name="429"><span class="lineNum">     429 </span>                :            : </a>
-<a name="430"><span class="lineNum">     430 </span>                :<span class="lineCov">          1 :         libspdm_sleep(retry_delay_time);</span></a>
-<a name="431"><span class="lineNum">     431 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     } while (retry-- != 0);</span></a>
-<a name="432"><span class="lineNum">     432 </span>                :            : </a>
-<a name="433"><span class="lineNum">     433 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
-<a name="434"><span class="lineNum">     434 </span>                :            : }</a>
-<a name="435"><span class="lineNum">     435 </span>                :            : </a>
-<a name="436"><span class="lineNum">     436 </span>                :<span class="lineCov">          1 : libspdm_return_t libspdm_get_certificate_choose_length_ex(void *spdm_context,</span></a>
-<a name="437"><span class="lineNum">     437 </span>                :            :                                                           const uint32_t *session_id,</a>
-<a name="438"><span class="lineNum">     438 </span>                :            :                                                           uint8_t slot_id,</a>
-<a name="439"><span class="lineNum">     439 </span>                :            :                                                           uint16_t length,</a>
-<a name="440"><span class="lineNum">     440 </span>                :            :                                                           size_t *cert_chain_size,</a>
-<a name="441"><span class="lineNum">     441 </span>                :            :                                                           void *cert_chain,</a>
-<a name="442"><span class="lineNum">     442 </span>                :            :                                                           const void **trust_anchor,</a>
-<a name="443"><span class="lineNum">     443 </span>                :            :                                                           size_t *trust_anchor_size)</a>
-<a name="444"><span class="lineNum">     444 </span>                :            : {</a>
-<a name="445"><span class="lineNum">     445 </span>                :            :     libspdm_context_t *context;</a>
-<a name="446"><span class="lineNum">     446 </span>                :            :     size_t retry;</a>
-<a name="447"><span class="lineNum">     447 </span>                :            :     uint64_t retry_delay_time;</a>
-<a name="448"><span class="lineNum">     448 </span>                :            :     libspdm_return_t status;</a>
-<a name="449"><span class="lineNum">     449 </span>                :            : </a>
-<a name="450"><span class="lineNum">     450 </span>                :<span class="lineCov">          1 :     context = spdm_context;</span></a>
-<a name="451"><span class="lineNum">     451 </span>                :<span class="lineCov">          1 :     context-&gt;crypto_request = true;</span></a>
-<a name="452"><span class="lineNum">     452 </span>                :<span class="lineCov">          1 :     retry = context-&gt;retry_times;</span></a>
-<a name="453"><span class="lineNum">     453 </span>                :<span class="lineCov">          1 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
-<a name="454"><span class="lineNum">     454 </span>                :            :     do {</a>
-<a name="455"><span class="lineNum">     455 </span>                :<span class="lineCov">          1 :         status = libspdm_try_get_certificate(context, session_id, slot_id, length,</span></a>
-<a name="456"><span class="lineNum">     456 </span>                :            :                                              cert_chain_size, cert_chain, trust_anchor,</a>
-<a name="457"><span class="lineNum">     457 </span>                :            :                                              trust_anchor_size);</a>
-<a name="458"><span class="lineNum">     458 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
-<a name="459"><span class="lineNum">     459 </span>                :<span class="lineCov">          1 :             return status;</span></a>
-<a name="460"><span class="lineNum">     460 </span>                :            :         }</a>
-<a name="461"><span class="lineNum">     461 </span>                :            : </a>
-<a name="462"><span class="lineNum">     462 </span>                :<span class="lineNoCov">          0 :         libspdm_sleep(retry_delay_time);</span></a>
-<a name="463"><span class="lineNum">     463 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
-<a name="464"><span class="lineNum">     464 </span>                :            : </a>
-<a name="465"><span class="lineNum">     465 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
-<a name="466"><span class="lineNum">     466 </span>                :            : }</a>
-<a name="467"><span class="lineNum">     467 </span>                :            : </a>
-<a name="468"><span class="lineNum">     468 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="302"><span class="lineNum">     302 </span>        [<span class="branchCov" title="Branch 0 was taken 19 times"> + </span><span class="branchCov" title="Branch 1 was taken 1404 times"> + </span>]:<span class="lineCov">       1423 :         if (spdm_context-&gt;connection_info.connection_state &lt;</span></a>
+<a name="303"><span class="lineNum">     303 </span>                :            :             LIBSPDM_CONNECTION_STATE_AFTER_CERTIFICATE) {</a>
+<a name="304"><span class="lineNum">     304 </span>                :<span class="lineCov">         19 :             spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="305"><span class="lineNum">     305 </span>                :            :                 LIBSPDM_CONNECTION_STATE_AFTER_CERTIFICATE;</a>
+<a name="306"><span class="lineNum">     306 </span>                :            :         }</a>
+<a name="307"><span class="lineNum">     307 </span>                :            : </a>
+<a name="308"><span class="lineNum">     308 </span>                :            :         /* -=[Log Message Phase]=- */</a>
+<a name="309"><span class="lineNum">     309 </span>                :            :         #if LIBSPDM_ENABLE_MSG_LOG</a>
+<a name="310"><span class="lineNum">     310 </span>                :<span class="lineCov">       1423 :         libspdm_append_msg_log(spdm_context, spdm_response, spdm_response_size);</span></a>
+<a name="311"><span class="lineNum">     311 </span>                :            :         #endif /* LIBSPDM_ENABLE_MSG_LOG */</a>
+<a name="312"><span class="lineNum">     312 </span>                :            : </a>
+<a name="313"><span class="lineNum">     313 </span>                :<span class="lineCov">       1423 :         libspdm_release_receiver_buffer (spdm_context);</span></a>
+<a name="314"><span class="lineNum">     314 </span>        [<span class="branchCov" title="Branch 0 was taken 1404 times"> + </span><span class="branchCov" title="Branch 1 was taken 19 times"> + </span>]:<span class="lineCov">       1423 :     } while (remainder_length != 0);</span></a>
+<a name="315"><span class="lineNum">     315 </span>                :            : </a>
+<a name="316"><span class="lineNum">     316 </span>                :<span class="lineCov">         19 :     *cert_chain_size = cert_chain_size_internal;</span></a>
+<a name="317"><span class="lineNum">     317 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 19 times"> + </span>]:<span class="lineCov">         19 :     LIBSPDM_ASSERT(*cert_chain_size &lt;= SPDM_MAX_CERTIFICATE_CHAIN_SIZE);</span></a>
+<a name="318"><span class="lineNum">     318 </span>                :            : </a>
+<a name="319"><span class="lineNum">     319 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 19 times"> + </span>]:<span class="lineCov">         19 :     if (spdm_context-&gt;local_context.verify_peer_spdm_cert_chain != NULL) {</span></a>
+<a name="320"><span class="lineNum">     320 </span>                :<span class="lineNoCov">          0 :         result = spdm_context-&gt;local_context.verify_peer_spdm_cert_chain (</span></a>
+<a name="321"><span class="lineNum">     321 </span>                :            :             spdm_context, slot_id, cert_chain_size_internal, cert_chain,</a>
+<a name="322"><span class="lineNum">     322 </span>                :            :             trust_anchor, trust_anchor_size);</a>
+<a name="323"><span class="lineNum">     323 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (!result) {</span></a>
+<a name="324"><span class="lineNum">     324 </span>                :<span class="lineNoCov">          0 :             status = LIBSPDM_STATUS_VERIF_FAIL;</span></a>
+<a name="325"><span class="lineNum">     325 </span>                :<span class="lineNoCov">          0 :             goto done;</span></a>
+<a name="326"><span class="lineNum">     326 </span>                :            :         }</a>
+<a name="327"><span class="lineNum">     327 </span>                :            :     } else {</a>
+<a name="328"><span class="lineNum">     328 </span>                :<span class="lineCov">         19 :         result = libspdm_verify_peer_cert_chain_buffer_integrity(</span></a>
+<a name="329"><span class="lineNum">     329 </span>                :            :             spdm_context, cert_chain, cert_chain_size_internal);</a>
+<a name="330"><span class="lineNum">     330 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         19 :         if (!result) {</span></a>
+<a name="331"><span class="lineNum">     331 </span>                :<span class="lineCov">          4 :             status = LIBSPDM_STATUS_VERIF_FAIL;</span></a>
+<a name="332"><span class="lineNum">     332 </span>                :<span class="lineCov">          4 :             goto done;</span></a>
+<a name="333"><span class="lineNum">     333 </span>                :            :         }</a>
+<a name="334"><span class="lineNum">     334 </span>                :            :     }</a>
+<a name="335"><span class="lineNum">     335 </span>                :            : </a>
+<a name="336"><span class="lineNum">     336 </span>                :            :     /*verify peer cert chain authority*/</a>
+<a name="337"><span class="lineNum">     337 </span>                :<span class="lineCov">         15 :     result = libspdm_verify_peer_cert_chain_buffer_authority(</span></a>
+<a name="338"><span class="lineNum">     338 </span>                :            :         spdm_context, cert_chain,cert_chain_size_internal,</a>
+<a name="339"><span class="lineNum">     339 </span>                :            :         trust_anchor, trust_anchor_size);</a>
+<a name="340"><span class="lineNum">     340 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 13 times"> + </span>]:<span class="lineCov">         15 :     if (!result) {</span></a>
+<a name="341"><span class="lineNum">     341 </span>                :<span class="lineCov">          2 :         status = LIBSPDM_STATUS_VERIF_NO_AUTHORITY;</span></a>
+<a name="342"><span class="lineNum">     342 </span>                :            :     }</a>
+<a name="343"><span class="lineNum">     343 </span>                :            : </a>
+<a name="344"><span class="lineNum">     344 </span>                :<span class="lineCov">         15 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = slot_id;</span></a>
+<a name="345"><span class="lineNum">     345 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="346"><span class="lineNum">     346 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer_size =</a>
+<a name="347"><span class="lineNum">     347 </span>                :            :         cert_chain_size_internal;</a>
+<a name="348"><span class="lineNum">     348 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer,</a>
+<a name="349"><span class="lineNum">     349 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer),</a>
+<a name="350"><span class="lineNum">     350 </span>                :            :                      cert_chain, cert_chain_size_internal);</a>
+<a name="351"><span class="lineNum">     351 </span>                :            : #else</a>
+<a name="352"><span class="lineNum">     352 </span>                :<span class="lineCov">         15 :     result = libspdm_hash_all(</span></a>
+<a name="353"><span class="lineNum">     353 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="354"><span class="lineNum">     354 </span>                :            :         cert_chain, cert_chain_size_internal,</a>
+<a name="355"><span class="lineNum">     355 </span>                :<span class="lineCov">         15 :         spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer_hash);</span></a>
+<a name="356"><span class="lineNum">     356 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (!result) {</span></a>
+<a name="357"><span class="lineNum">     357 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_CRYPTO_ERROR;</span></a>
+<a name="358"><span class="lineNum">     358 </span>                :<span class="lineNoCov">          0 :         goto done;</span></a>
+<a name="359"><span class="lineNum">     359 </span>                :            :     }</a>
+<a name="360"><span class="lineNum">     360 </span>                :            : </a>
+<a name="361"><span class="lineNum">     361 </span>                :<span class="lineCov">         30 :     spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].buffer_hash_size =</span></a>
+<a name="362"><span class="lineNum">     362 </span>                :<span class="lineCov">         15 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="363"><span class="lineNum">     363 </span>                :            : </a>
+<a name="364"><span class="lineNum">     364 </span>                :<span class="lineCov">         15 :     result = libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="365"><span class="lineNum">     365 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="366"><span class="lineNum">     366 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
+<a name="367"><span class="lineNum">     367 </span>                :            :         cert_chain, cert_chain_size_internal,</a>
+<a name="368"><span class="lineNum">     368 </span>                :<span class="lineCov">         15 :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[slot_id].leaf_cert_public_key);</span></a>
+<a name="369"><span class="lineNum">     369 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     if (!result) {</span></a>
+<a name="370"><span class="lineNum">     370 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_CERT;</span></a>
+<a name="371"><span class="lineNum">     371 </span>                :<span class="lineNoCov">          0 :         goto done;</span></a>
+<a name="372"><span class="lineNum">     372 </span>                :            :     }</a>
+<a name="373"><span class="lineNum">     373 </span>                :            : #endif</a>
+<a name="374"><span class="lineNum">     374 </span>                :            : </a>
+<a name="375"><span class="lineNum">     375 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 13 times"> + </span>]:<span class="lineCov">         15 :     if (status != LIBSPDM_STATUS_VERIF_NO_AUTHORITY) {</span></a>
+<a name="376"><span class="lineNum">     376 </span>                :<span class="lineCov">         13 :         status = LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="377"><span class="lineNum">     377 </span>                :            :     }</a>
+<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">          2 : done:</span></a>
+<a name="379"><span class="lineNum">     379 </span>                :<span class="lineCov">         47 :     return status;</span></a>
+<a name="380"><span class="lineNum">     380 </span>                :            : }</a>
+<a name="381"><span class="lineNum">     381 </span>                :            : </a>
+<a name="382"><span class="lineNum">     382 </span>                :<span class="lineCov">         45 : libspdm_return_t libspdm_get_certificate(void *spdm_context, const uint32_t *session_id,</span></a>
+<a name="383"><span class="lineNum">     383 </span>                :            :                                          uint8_t slot_id,</a>
+<a name="384"><span class="lineNum">     384 </span>                :            :                                          size_t *cert_chain_size,</a>
+<a name="385"><span class="lineNum">     385 </span>                :            :                                          void *cert_chain)</a>
+<a name="386"><span class="lineNum">     386 </span>                :            : {</a>
+<a name="387"><span class="lineNum">     387 </span>                :<span class="lineCov">         45 :     return libspdm_get_certificate_choose_length(spdm_context, session_id, slot_id,</span></a>
+<a name="388"><span class="lineNum">     388 </span>                :            :                                                  LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN,</a>
+<a name="389"><span class="lineNum">     389 </span>                :            :                                                  cert_chain_size, cert_chain);</a>
+<a name="390"><span class="lineNum">     390 </span>                :            : }</a>
+<a name="391"><span class="lineNum">     391 </span>                :            : </a>
+<a name="392"><span class="lineNum">     392 </span>                :<span class="lineCov">          1 : libspdm_return_t libspdm_get_certificate_ex(void *spdm_context, const uint32_t *session_id,</span></a>
+<a name="393"><span class="lineNum">     393 </span>                :            :                                             uint8_t slot_id,</a>
+<a name="394"><span class="lineNum">     394 </span>                :            :                                             size_t *cert_chain_size,</a>
+<a name="395"><span class="lineNum">     395 </span>                :            :                                             void *cert_chain,</a>
+<a name="396"><span class="lineNum">     396 </span>                :            :                                             const void **trust_anchor,</a>
+<a name="397"><span class="lineNum">     397 </span>                :            :                                             size_t *trust_anchor_size)</a>
+<a name="398"><span class="lineNum">     398 </span>                :            : {</a>
+<a name="399"><span class="lineNum">     399 </span>                :<span class="lineCov">          1 :     return libspdm_get_certificate_choose_length_ex(spdm_context, session_id, slot_id,</span></a>
+<a name="400"><span class="lineNum">     400 </span>                :            :                                                     LIBSPDM_MAX_CERT_CHAIN_BLOCK_LEN,</a>
+<a name="401"><span class="lineNum">     401 </span>                :            :                                                     cert_chain_size, cert_chain,</a>
+<a name="402"><span class="lineNum">     402 </span>                :            :                                                     trust_anchor, trust_anchor_size);</a>
+<a name="403"><span class="lineNum">     403 </span>                :            : }</a>
+<a name="404"><span class="lineNum">     404 </span>                :            : </a>
+<a name="405"><span class="lineNum">     405 </span>                :<span class="lineCov">         46 : libspdm_return_t libspdm_get_certificate_choose_length(void *spdm_context,</span></a>
+<a name="406"><span class="lineNum">     406 </span>                :            :                                                        const uint32_t *session_id,</a>
+<a name="407"><span class="lineNum">     407 </span>                :            :                                                        uint8_t slot_id,</a>
+<a name="408"><span class="lineNum">     408 </span>                :            :                                                        uint16_t length,</a>
+<a name="409"><span class="lineNum">     409 </span>                :            :                                                        size_t *cert_chain_size,</a>
+<a name="410"><span class="lineNum">     410 </span>                :            :                                                        void *cert_chain)</a>
+<a name="411"><span class="lineNum">     411 </span>                :            : {</a>
+<a name="412"><span class="lineNum">     412 </span>                :            :     libspdm_context_t *context;</a>
+<a name="413"><span class="lineNum">     413 </span>                :            :     size_t retry;</a>
+<a name="414"><span class="lineNum">     414 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="415"><span class="lineNum">     415 </span>                :            :     libspdm_return_t status;</a>
+<a name="416"><span class="lineNum">     416 </span>                :            : </a>
+<a name="417"><span class="lineNum">     417 </span>                :<span class="lineCov">         46 :     context = spdm_context;</span></a>
+<a name="418"><span class="lineNum">     418 </span>                :<span class="lineCov">         46 :     context-&gt;crypto_request = true;</span></a>
+<a name="419"><span class="lineNum">     419 </span>                :<span class="lineCov">         46 :     retry = context-&gt;retry_times;</span></a>
+<a name="420"><span class="lineNum">     420 </span>                :<span class="lineCov">         46 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
+<a name="421"><span class="lineNum">     421 </span>                :            :     do {</a>
+<a name="422"><span class="lineNum">     422 </span>                :<span class="lineCov">         47 :         status = libspdm_try_get_certificate(context, session_id, slot_id, length,</span></a>
+<a name="423"><span class="lineNum">     423 </span>                :            :                                              cert_chain_size, cert_chain, NULL, NULL);</a>
+<a name="424"><span class="lineNum">     424 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 45 times"> + </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">         47 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
+<a name="425"><span class="lineNum">     425 </span>                :<span class="lineCov">         46 :             return status;</span></a>
+<a name="426"><span class="lineNum">     426 </span>                :            :         }</a>
+<a name="427"><span class="lineNum">     427 </span>                :            : </a>
+<a name="428"><span class="lineNum">     428 </span>                :<span class="lineCov">          1 :         libspdm_sleep(retry_delay_time);</span></a>
+<a name="429"><span class="lineNum">     429 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :     } while (retry-- != 0);</span></a>
+<a name="430"><span class="lineNum">     430 </span>                :            : </a>
+<a name="431"><span class="lineNum">     431 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
+<a name="432"><span class="lineNum">     432 </span>                :            : }</a>
+<a name="433"><span class="lineNum">     433 </span>                :            : </a>
+<a name="434"><span class="lineNum">     434 </span>                :<span class="lineCov">          1 : libspdm_return_t libspdm_get_certificate_choose_length_ex(void *spdm_context,</span></a>
+<a name="435"><span class="lineNum">     435 </span>                :            :                                                           const uint32_t *session_id,</a>
+<a name="436"><span class="lineNum">     436 </span>                :            :                                                           uint8_t slot_id,</a>
+<a name="437"><span class="lineNum">     437 </span>                :            :                                                           uint16_t length,</a>
+<a name="438"><span class="lineNum">     438 </span>                :            :                                                           size_t *cert_chain_size,</a>
+<a name="439"><span class="lineNum">     439 </span>                :            :                                                           void *cert_chain,</a>
+<a name="440"><span class="lineNum">     440 </span>                :            :                                                           const void **trust_anchor,</a>
+<a name="441"><span class="lineNum">     441 </span>                :            :                                                           size_t *trust_anchor_size)</a>
+<a name="442"><span class="lineNum">     442 </span>                :            : {</a>
+<a name="443"><span class="lineNum">     443 </span>                :            :     libspdm_context_t *context;</a>
+<a name="444"><span class="lineNum">     444 </span>                :            :     size_t retry;</a>
+<a name="445"><span class="lineNum">     445 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="446"><span class="lineNum">     446 </span>                :            :     libspdm_return_t status;</a>
+<a name="447"><span class="lineNum">     447 </span>                :            : </a>
+<a name="448"><span class="lineNum">     448 </span>                :<span class="lineCov">          1 :     context = spdm_context;</span></a>
+<a name="449"><span class="lineNum">     449 </span>                :<span class="lineCov">          1 :     context-&gt;crypto_request = true;</span></a>
+<a name="450"><span class="lineNum">     450 </span>                :<span class="lineCov">          1 :     retry = context-&gt;retry_times;</span></a>
+<a name="451"><span class="lineNum">     451 </span>                :<span class="lineCov">          1 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
+<a name="452"><span class="lineNum">     452 </span>                :            :     do {</a>
+<a name="453"><span class="lineNum">     453 </span>                :<span class="lineCov">          1 :         status = libspdm_try_get_certificate(context, session_id, slot_id, length,</span></a>
+<a name="454"><span class="lineNum">     454 </span>                :            :                                              cert_chain_size, cert_chain, trust_anchor,</a>
+<a name="455"><span class="lineNum">     455 </span>                :            :                                              trust_anchor_size);</a>
+<a name="456"><span class="lineNum">     456 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          1 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
+<a name="457"><span class="lineNum">     457 </span>                :<span class="lineCov">          1 :             return status;</span></a>
+<a name="458"><span class="lineNum">     458 </span>                :            :         }</a>
+<a name="459"><span class="lineNum">     459 </span>                :            : </a>
+<a name="460"><span class="lineNum">     460 </span>                :<span class="lineNoCov">          0 :         libspdm_sleep(retry_delay_time);</span></a>
+<a name="461"><span class="lineNum">     461 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="462"><span class="lineNum">     462 </span>                :            : </a>
+<a name="463"><span class="lineNum">     463 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
+<a name="464"><span class="lineNum">     464 </span>                :            : }</a>
+<a name="465"><span class="lineNum">     465 </span>                :            : </a>
+<a name="466"><span class="lineNum">     466 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
 </pre>
       </td>
     </tr>
