@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">105</td>
-            <td class="headerCovTableEntry">115</td>
-            <td class="headerCovTableEntryHi">91.3 %</td>
+            <td class="headerCovTableEntry">110</td>
+            <td class="headerCovTableEntry">120</td>
+            <td class="headerCovTableEntryHi">91.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-23 08:16:37</td>
+            <td class="headerValue">2023-06-24 08:15:21</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">78</td>
-            <td class="headerCovTableEntry">100</td>
-            <td class="headerCovTableEntryMed">78.0 %</td>
+            <td class="headerCovTableEntry">82</td>
+            <td class="headerCovTableEntry">104</td>
+            <td class="headerCovTableEntryMed">78.8 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -310,28 +310,38 @@
 <a name="238"><span class="lineNum">     238 </span>                :            :                                                SPDM_ERROR_CODE_UNSPECIFIED, 0,</a>
 <a name="239"><span class="lineNum">     239 </span>                :            :                                                response_size, response);</a>
 <a name="240"><span class="lineNum">     240 </span>                :            :     }</a>
-<a name="241"><span class="lineNum">     241 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_11) {</span></a>
-<a name="242"><span class="lineNum">     242 </span>                :<span class="lineCov">          5 :         spdm_context-&gt;connection_info.capability.ct_exponent = spdm_request-&gt;ct_exponent;</span></a>
-<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">          5 :         spdm_context-&gt;connection_info.capability.flags = spdm_request-&gt;flags;</span></a>
+<a name="241"><span class="lineNum">     241 </span>                :            : </a>
+<a name="242"><span class="lineNum">     242 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_11) {</span></a>
+<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">          5 :         spdm_context-&gt;connection_info.capability.ct_exponent = spdm_request-&gt;ct_exponent;</span></a>
 <a name="244"><span class="lineNum">     244 </span>                :            :     } else {</a>
 <a name="245"><span class="lineNum">     245 </span>                :<span class="lineCov">          2 :         spdm_context-&gt;connection_info.capability.ct_exponent = 0;</span></a>
-<a name="246"><span class="lineNum">     246 </span>                :<span class="lineCov">          2 :         spdm_context-&gt;connection_info.capability.flags = 0;</span></a>
-<a name="247"><span class="lineNum">     247 </span>                :            :     }</a>
-<a name="248"><span class="lineNum">     248 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
-<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.data_transfer_size =</span></a>
-<a name="250"><span class="lineNum">     250 </span>                :<span class="lineCov">          1 :             spdm_request-&gt;data_transfer_size;</span></a>
-<a name="251"><span class="lineNum">     251 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size =</span></a>
-<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">          1 :             spdm_request-&gt;max_spdm_msg_size;</span></a>
+<a name="246"><span class="lineNum">     246 </span>                :            :     }</a>
+<a name="247"><span class="lineNum">     247 </span>                :            : </a>
+<a name="248"><span class="lineNum">     248 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version == SPDM_MESSAGE_VERSION_10) {</span></a>
+<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">          2 :         spdm_context-&gt;connection_info.capability.flags = 0;</span></a>
+<a name="250"><span class="lineNum">     250 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          5 :     } else if (spdm_response-&gt;header.spdm_version == SPDM_MESSAGE_VERSION_11) {</span></a>
+<a name="251"><span class="lineNum">     251 </span>                :<span class="lineCov">          4 :         spdm_context-&gt;connection_info.capability.flags =</span></a>
+<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">          4 :             spdm_request-&gt;flags &amp; SPDM_GET_CAPABILITIES_REQUEST_FLAGS_11_MASK;</span></a>
 <a name="253"><span class="lineNum">     253 </span>                :            :     } else {</a>
-<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.data_transfer_size = 0;</span></a>
-<a name="255"><span class="lineNum">     255 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size = 0;</span></a>
+<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.flags =</span></a>
+<a name="255"><span class="lineNum">     255 </span>                :<span class="lineCov">          1 :             spdm_request-&gt;flags &amp; SPDM_GET_CAPABILITIES_REQUEST_FLAGS_12_MASK;</span></a>
 <a name="256"><span class="lineNum">     256 </span>                :            :     }</a>
 <a name="257"><span class="lineNum">     257 </span>                :            : </a>
-<a name="258"><span class="lineNum">     258 </span>                :            :     /* -=[Update State Phase]=- */</a>
-<a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">          7 :     libspdm_set_connection_state(spdm_context, LIBSPDM_CONNECTION_STATE_AFTER_CAPABILITIES);</span></a>
-<a name="260"><span class="lineNum">     260 </span>                :            : </a>
-<a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">          7 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="262"><span class="lineNum">     262 </span>                :            : }</a>
+<a name="258"><span class="lineNum">     258 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">          7 :     if (spdm_response-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_12) {</span></a>
+<a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.data_transfer_size =</span></a>
+<a name="260"><span class="lineNum">     260 </span>                :<span class="lineCov">          1 :             spdm_request-&gt;data_transfer_size;</span></a>
+<a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size =</span></a>
+<a name="262"><span class="lineNum">     262 </span>                :<span class="lineCov">          1 :             spdm_request-&gt;max_spdm_msg_size;</span></a>
+<a name="263"><span class="lineNum">     263 </span>                :            :     } else {</a>
+<a name="264"><span class="lineNum">     264 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.data_transfer_size = 0;</span></a>
+<a name="265"><span class="lineNum">     265 </span>                :<span class="lineCov">          6 :         spdm_context-&gt;connection_info.capability.max_spdm_msg_size = 0;</span></a>
+<a name="266"><span class="lineNum">     266 </span>                :            :     }</a>
+<a name="267"><span class="lineNum">     267 </span>                :            : </a>
+<a name="268"><span class="lineNum">     268 </span>                :            :     /* -=[Update State Phase]=- */</a>
+<a name="269"><span class="lineNum">     269 </span>                :<span class="lineCov">          7 :     libspdm_set_connection_state(spdm_context, LIBSPDM_CONNECTION_STATE_AFTER_CAPABILITIES);</span></a>
+<a name="270"><span class="lineNum">     270 </span>                :            : </a>
+<a name="271"><span class="lineNum">     271 </span>                :<span class="lineCov">          7 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="272"><span class="lineNum">     272 </span>                :            : }</a>
 </pre>
       </td>
     </tr>
