@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-06-27 08:16:17</td>
+            <td class="headerValue">2023-06-28 08:17:59</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">13</td>
@@ -78,7 +78,7 @@
 <a name="7"><span class="lineNum">       7 </span>                :            : #include &quot;spdm_unit_test.h&quot;</a>
 <a name="8"><span class="lineNum">       8 </span>                :            : #include &quot;internal/libspdm_requester_lib.h&quot;</a>
 <a name="9"><span class="lineNum">       9 </span>                :            : </a>
-<a name="10"><span class="lineNum">      10 </span>                :            : #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) || (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)</a>
+<a name="10"><span class="lineNum">      10 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP</a>
 <a name="11"><span class="lineNum">      11 </span>                :            : </a>
 <a name="12"><span class="lineNum">      12 </span>                :            : static uint8_t m_libspdm_local_certificate_chain[LIBSPDM_MAX_CERT_CHAIN_SIZE];</a>
 <a name="13"><span class="lineNum">      13 </span>                :            : static uint8_t temp_buf[LIBSPDM_RECEIVER_BUFFER_SIZE];</a>
@@ -685,7 +685,7 @@
 <a name="610"><span class="lineNum">     610 </span>                :            :     }</a>
 <a name="611"><span class="lineNum">     611 </span>                :            : }</a>
 <a name="612"><span class="lineNum">     612 </span>                :            : </a>
-<a name="613"><span class="lineNum">     613 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="613"><span class="lineNum">     613 </span>                :            : #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) &amp;&amp; (LIBSPDM_ENABLE_CAPABILITY_CERT_CAP)</a>
 <a name="614"><span class="lineNum">     614 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_encap_request_case1(void **State)</span></a>
 <a name="615"><span class="lineNum">     615 </span>                :            : {</a>
 <a name="616"><span class="lineNum">     616 </span>                :            :     libspdm_return_t status;</a>
@@ -1098,7 +1098,7 @@
 <a name="1023"><span class="lineNum">    1023 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
 <a name="1024"><span class="lineNum">    1024 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
 <a name="1025"><span class="lineNum">    1025 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="1026"><span class="lineNum">    1026 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */</a>
+<a name="1026"><span class="lineNum">    1026 </span>                :            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) &amp;&amp; (LIBSPDM_ENABLE_CAPABILITY_CERT_CAP) */</a>
 <a name="1027"><span class="lineNum">    1027 </span>                :            : </a>
 <a name="1028"><span class="lineNum">    1028 </span>                :<span class="lineCov">          1 : void libspdm_test_requester_encap_request_case9(void **State)</span></a>
 <a name="1029"><span class="lineNum">    1029 </span>                :            : {</a>
@@ -1194,7 +1194,7 @@
 <a name="1119"><span class="lineNum">    1119 </span>                :            : {</a>
 <a name="1120"><span class="lineNum">    1120 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_encap_request_tests[] = {</span></a>
 <a name="1121"><span class="lineNum">    1121 </span>                :            :         /* SendRequest failed*/</a>
-<a name="1122"><span class="lineNum">    1122 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CERT_CAP</a>
+<a name="1122"><span class="lineNum">    1122 </span>                :            : #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) &amp;&amp; (LIBSPDM_ENABLE_CAPABILITY_CERT_CAP)</a>
 <a name="1123"><span class="lineNum">    1123 </span>                :            :         cmocka_unit_test(libspdm_test_requester_encap_request_case1),</a>
 <a name="1124"><span class="lineNum">    1124 </span>                :            :         /* Success Case ,func :libspdm_get_encap_response_digest*/</a>
 <a name="1125"><span class="lineNum">    1125 </span>                :            :         cmocka_unit_test(libspdm_test_requester_encap_request_case2),</a>
@@ -1210,7 +1210,7 @@
 <a name="1135"><span class="lineNum">    1135 </span>                :            :         cmocka_unit_test(libspdm_test_requester_encap_request_case7),</a>
 <a name="1136"><span class="lineNum">    1136 </span>                :            :         /*Success Case ,func :libspdm_get_encap_response_certificate */</a>
 <a name="1137"><span class="lineNum">    1137 </span>                :            :         cmocka_unit_test(libspdm_test_requester_encap_request_case8),</a>
-<a name="1138"><span class="lineNum">    1138 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */</a>
+<a name="1138"><span class="lineNum">    1138 </span>                :            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) &amp;&amp; (..) */</a>
 <a name="1139"><span class="lineNum">    1139 </span>                :            : </a>
 <a name="1140"><span class="lineNum">    1140 </span>                :            :         /*Success Case ,func :libspdm_get_encap_response_key_update */</a>
 <a name="1141"><span class="lineNum">    1141 </span>                :            :         cmocka_unit_test(libspdm_test_requester_encap_request_case9),</a>
@@ -1225,7 +1225,7 @@
 <a name="1150"><span class="lineNum">    1150 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
 <a name="1151"><span class="lineNum">    1151 </span>                :            : }</a>
 <a name="1152"><span class="lineNum">    1152 </span>                :            : </a>
-<a name="1153"><span class="lineNum">    1153 </span>                :            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) || (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)*/</a>
+<a name="1153"><span class="lineNum">    1153 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */</a>
 </pre>
       </td>
     </tr>
