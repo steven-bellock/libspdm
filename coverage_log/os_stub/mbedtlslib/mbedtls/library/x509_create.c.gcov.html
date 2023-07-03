@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-07-02 08:15:14</td>
+            <td class="headerValue">2023-07-03 08:16:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -176,52 +176,52 @@
 <a name="105"><span class="lineNum">     105 </span>                :            :     { NULL, 0, NULL, MBEDTLS_ASN1_NULL }</a>
 <a name="106"><span class="lineNum">     106 </span>                :            : };</a>
 <a name="107"><span class="lineNum">     107 </span>                :            : </a>
-<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">         18 : static const x509_attr_descriptor_t *x509_attr_descr_from_name( const char *name, size_t name_len )</span></a>
+<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">         24 : static const x509_attr_descriptor_t *x509_attr_descr_from_name( const char *name, size_t name_len )</span></a>
 <a name="109"><span class="lineNum">     109 </span>                :            : {</a>
 <a name="110"><span class="lineNum">     110 </span>                :            :     const x509_attr_descriptor_t *cur;</a>
 <a name="111"><span class="lineNum">     111 </span>                :            : </a>
-<a name="112"><span class="lineNum">     112 </span>        [<span class="branchCov" title="Branch 0 was taken 54 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         54 :     for( cur = x509_attrs; cur-&gt;name != NULL; cur++ )</span></a>
-<a name="113"><span class="lineNum">     113 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 30 times"> + </span>]:<span class="lineCov">         54 :         if( cur-&gt;name_len == name_len &amp;&amp;</span></a>
-<a name="114"><span class="lineNum">     114 </span>        [<span class="branchCov" title="Branch 0 was taken 18 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">         24 :             strncmp( cur-&gt;name, name, name_len ) == 0 )</span></a>
-<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">         18 :             break;</span></a>
+<a name="112"><span class="lineNum">     112 </span>        [<span class="branchCov" title="Branch 0 was taken 94 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         94 :     for( cur = x509_attrs; cur-&gt;name != NULL; cur++ )</span></a>
+<a name="113"><span class="lineNum">     113 </span>        [<span class="branchCov" title="Branch 0 was taken 36 times"> + </span><span class="branchCov" title="Branch 1 was taken 58 times"> + </span>]:<span class="lineCov">         94 :         if( cur-&gt;name_len == name_len &amp;&amp;</span></a>
+<a name="114"><span class="lineNum">     114 </span>        [<span class="branchCov" title="Branch 0 was taken 24 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span>]:<span class="lineCov">         36 :             strncmp( cur-&gt;name, name, name_len ) == 0 )</span></a>
+<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">         24 :             break;</span></a>
 <a name="116"><span class="lineNum">     116 </span>                :            : </a>
-<a name="117"><span class="lineNum">     117 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 18 times"> + </span>]:<span class="lineCov">         18 :     if ( cur-&gt;name == NULL )</span></a>
+<a name="117"><span class="lineNum">     117 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span>]:<span class="lineCov">         24 :     if ( cur-&gt;name == NULL )</span></a>
 <a name="118"><span class="lineNum">     118 </span>                :<span class="lineNoCov">          0 :         return( NULL );</span></a>
 <a name="119"><span class="lineNum">     119 </span>                :            : </a>
-<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">         18 :     return( cur );</span></a>
+<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">         24 :     return( cur );</span></a>
 <a name="121"><span class="lineNum">     121 </span>                :            : }</a>
 <a name="122"><span class="lineNum">     122 </span>                :            : </a>
-<a name="123"><span class="lineNum">     123 </span>                :<span class="lineCov">          6 : int mbedtls_x509_string_to_names( mbedtls_asn1_named_data **head, const char *name )</span></a>
+<a name="123"><span class="lineNum">     123 </span>                :<span class="lineCov">          8 : int mbedtls_x509_string_to_names( mbedtls_asn1_named_data **head, const char *name )</span></a>
 <a name="124"><span class="lineNum">     124 </span>                :            : {</a>
-<a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">          6 :     int ret = 0;</span></a>
-<a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">          6 :     const char *s = name, *c = s;</span></a>
-<a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">          6 :     const char *end = s + strlen( s );</span></a>
-<a name="128"><span class="lineNum">     128 </span>                :<span class="lineCov">          6 :     const char *oid = NULL;</span></a>
-<a name="129"><span class="lineNum">     129 </span>                :<span class="lineCov">          6 :     const x509_attr_descriptor_t* attr_descr = NULL;</span></a>
-<a name="130"><span class="lineNum">     130 </span>                :<span class="lineCov">          6 :     int in_tag = 1;</span></a>
+<a name="125"><span class="lineNum">     125 </span>                :<span class="lineCov">          8 :     int ret = 0;</span></a>
+<a name="126"><span class="lineNum">     126 </span>                :<span class="lineCov">          8 :     const char *s = name, *c = s;</span></a>
+<a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">          8 :     const char *end = s + strlen( s );</span></a>
+<a name="128"><span class="lineNum">     128 </span>                :<span class="lineCov">          8 :     const char *oid = NULL;</span></a>
+<a name="129"><span class="lineNum">     129 </span>                :<span class="lineCov">          8 :     const x509_attr_descriptor_t* attr_descr = NULL;</span></a>
+<a name="130"><span class="lineNum">     130 </span>                :<span class="lineCov">          8 :     int in_tag = 1;</span></a>
 <a name="131"><span class="lineNum">     131 </span>                :            :     char data[MBEDTLS_X509_MAX_DN_NAME_SIZE];</a>
-<a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">          6 :     char *d = data;</span></a>
+<a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">          8 :     char *d = data;</span></a>
 <a name="133"><span class="lineNum">     133 </span>                :            : </a>
 <a name="134"><span class="lineNum">     134 </span>                :            :     /* Clear existing chain if present */</a>
-<a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">          6 :     mbedtls_asn1_free_named_data_list( head );</span></a>
+<a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">          8 :     mbedtls_asn1_free_named_data_list( head );</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :            : </a>
-<a name="137"><span class="lineNum">     137 </span>        [<span class="branchCov" title="Branch 0 was taken 222 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">        228 :     while( c &lt;= end )</span></a>
+<a name="137"><span class="lineNum">     137 </span>        [<span class="branchCov" title="Branch 0 was taken 316 times"> + </span><span class="branchCov" title="Branch 1 was taken 8 times"> + </span>]:<span class="lineCov">        324 :     while( c &lt;= end )</span></a>
 <a name="138"><span class="lineNum">     138 </span>                :            :     {</a>
-<a name="139"><span class="lineNum">     139 </span>  [<span class="branchCov" title="Branch 0 was taken 42 times"> + </span><span class="branchCov" title="Branch 1 was taken 180 times"> + </span><span class="branchCov" title="Branch 2 was taken 18 times"> + </span><span class="branchCov" title="Branch 3 was taken 24 times"> + </span>]:<span class="lineCov">        222 :         if( in_tag &amp;&amp; *c == '=' )</span></a>
+<a name="139"><span class="lineNum">     139 </span>  [<span class="branchCov" title="Branch 0 was taken 58 times"> + </span><span class="branchCov" title="Branch 1 was taken 258 times"> + </span><span class="branchCov" title="Branch 2 was taken 24 times"> + </span><span class="branchCov" title="Branch 3 was taken 34 times"> + </span>]:<span class="lineCov">        316 :         if( in_tag &amp;&amp; *c == '=' )</span></a>
 <a name="140"><span class="lineNum">     140 </span>                :            :         {</a>
-<a name="141"><span class="lineNum">     141 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 18 times"> + </span>]:<span class="lineCov">         18 :             if( ( attr_descr = x509_attr_descr_from_name( s, c - s ) ) == NULL )</span></a>
+<a name="141"><span class="lineNum">     141 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span>]:<span class="lineCov">         24 :             if( ( attr_descr = x509_attr_descr_from_name( s, c - s ) ) == NULL )</span></a>
 <a name="142"><span class="lineNum">     142 </span>                :            :             {</a>
 <a name="143"><span class="lineNum">     143 </span>                :<span class="lineNoCov">          0 :                 ret = MBEDTLS_ERR_X509_UNKNOWN_OID;</span></a>
 <a name="144"><span class="lineNum">     144 </span>                :<span class="lineNoCov">          0 :                 goto exit;</span></a>
 <a name="145"><span class="lineNum">     145 </span>                :            :             }</a>
 <a name="146"><span class="lineNum">     146 </span>                :            : </a>
-<a name="147"><span class="lineNum">     147 </span>                :<span class="lineCov">         18 :             oid = attr_descr-&gt;oid;</span></a>
-<a name="148"><span class="lineNum">     148 </span>                :<span class="lineCov">         18 :             s = c + 1;</span></a>
-<a name="149"><span class="lineNum">     149 </span>                :<span class="lineCov">         18 :             in_tag = 0;</span></a>
-<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">         18 :             d = data;</span></a>
+<a name="147"><span class="lineNum">     147 </span>                :<span class="lineCov">         24 :             oid = attr_descr-&gt;oid;</span></a>
+<a name="148"><span class="lineNum">     148 </span>                :<span class="lineCov">         24 :             s = c + 1;</span></a>
+<a name="149"><span class="lineNum">     149 </span>                :<span class="lineCov">         24 :             in_tag = 0;</span></a>
+<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">         24 :             d = data;</span></a>
 <a name="151"><span class="lineNum">     151 </span>                :            :         }</a>
 <a name="152"><span class="lineNum">     152 </span>                :            : </a>
-<a name="153"><span class="lineNum">     153 </span>  [<span class="branchCov" title="Branch 0 was taken 198 times"> + </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 198 times"> + </span> :<span class="lineCov">        222 :         if( !in_tag &amp;&amp; *c == '\\' &amp;&amp; c != end )</span></a>
+<a name="153"><span class="lineNum">     153 </span>  [<span class="branchCov" title="Branch 0 was taken 282 times"> + </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 282 times"> + </span> :<span class="lineCov">        316 :         if( !in_tag &amp;&amp; *c == '\\' &amp;&amp; c != end )</span></a>
 <span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="154"><span class="lineNum">     154 </span>                :            :         {</a>
 <a name="155"><span class="lineNum">     155 </span>                :<span class="lineNoCov">          0 :             c++;</span></a>
@@ -233,46 +233,46 @@
 <a name="161"><span class="lineNum">     161 </span>                :<span class="lineNoCov">          0 :                 goto exit;</span></a>
 <a name="162"><span class="lineNum">     162 </span>                :            :             }</a>
 <a name="163"><span class="lineNum">     163 </span>                :            :         }</a>
-<a name="164"><span class="lineNum">     164 </span>  [<span class="branchCov" title="Branch 0 was taken 198 times"> + </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span><span class="branchCov" title="Branch 2 was taken 186 times"> + </span><span class="branchCov" title="Branch 3 was taken 12 times"> + </span> :<span class="lineCov">        222 :         else if( !in_tag &amp;&amp; ( *c == ',' || c == end ) )</span></a>
-<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 6 times"> + </span><span class="branchCov" title="Branch 5 was taken 180 times"> + </span>]
+<a name="164"><span class="lineNum">     164 </span>  [<span class="branchCov" title="Branch 0 was taken 282 times"> + </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span><span class="branchCov" title="Branch 2 was taken 264 times"> + </span><span class="branchCov" title="Branch 3 was taken 18 times"> + </span> :<span class="lineCov">        316 :         else if( !in_tag &amp;&amp; ( *c == ',' || c == end ) )</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 6 times"> + </span><span class="branchCov" title="Branch 5 was taken 258 times"> + </span>]
 <a name="165"><span class="lineNum">     165 </span>                :            :         {</a>
 <a name="166"><span class="lineNum">     166 </span>                :            :             mbedtls_asn1_named_data* cur =</a>
-<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">         18 :                 mbedtls_asn1_store_named_data( head, oid, strlen( oid ),</span></a>
+<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">         24 :                 mbedtls_asn1_store_named_data( head, oid, strlen( oid ),</span></a>
 <a name="168"><span class="lineNum">     168 </span>                :            :                                                (unsigned char *) data,</a>
-<a name="169"><span class="lineNum">     169 </span>                :<span class="lineCov">         18 :                                                d - data );</span></a>
+<a name="169"><span class="lineNum">     169 </span>                :<span class="lineCov">         24 :                                                d - data );</span></a>
 <a name="170"><span class="lineNum">     170 </span>                :            : </a>
-<a name="171"><span class="lineNum">     171 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 18 times"> + </span>]:<span class="lineCov">         18 :             if(cur == NULL )</span></a>
+<a name="171"><span class="lineNum">     171 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 24 times"> + </span>]:<span class="lineCov">         24 :             if(cur == NULL )</span></a>
 <a name="172"><span class="lineNum">     172 </span>                :            :             {</a>
 <a name="173"><span class="lineNum">     173 </span>                :<span class="lineNoCov">          0 :                 return( MBEDTLS_ERR_X509_ALLOC_FAILED );</span></a>
 <a name="174"><span class="lineNum">     174 </span>                :            :             }</a>
 <a name="175"><span class="lineNum">     175 </span>                :            : </a>
 <a name="176"><span class="lineNum">     176 </span>                :            :             // set tagType</a>
-<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">         18 :             cur-&gt;val.tag = attr_descr-&gt;default_tag;</span></a>
+<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">         24 :             cur-&gt;val.tag = attr_descr-&gt;default_tag;</span></a>
 <a name="178"><span class="lineNum">     178 </span>                :            : </a>
-<a name="179"><span class="lineNum">     179 </span>  [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 12 times"> + </span>]:<span class="lineCov">         18 :             while( c &lt; end &amp;&amp; *(c + 1) == ' ' )</span></a>
+<a name="179"><span class="lineNum">     179 </span>  [<span class="branchCov" title="Branch 0 was taken 18 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 18 times"> + </span>]:<span class="lineCov">         24 :             while( c &lt; end &amp;&amp; *(c + 1) == ' ' )</span></a>
 <a name="180"><span class="lineNum">     180 </span>                :<span class="lineNoCov">          0 :                 c++;</span></a>
 <a name="181"><span class="lineNum">     181 </span>                :            : </a>
-<a name="182"><span class="lineNum">     182 </span>                :<span class="lineCov">         18 :             s = c + 1;</span></a>
-<a name="183"><span class="lineNum">     183 </span>                :<span class="lineCov">         18 :             in_tag = 1;</span></a>
+<a name="182"><span class="lineNum">     182 </span>                :<span class="lineCov">         24 :             s = c + 1;</span></a>
+<a name="183"><span class="lineNum">     183 </span>                :<span class="lineCov">         24 :             in_tag = 1;</span></a>
 <a name="184"><span class="lineNum">     184 </span>                :            :         }</a>
 <a name="185"><span class="lineNum">     185 </span>                :            : </a>
-<a name="186"><span class="lineNum">     186 </span>  [<span class="branchCov" title="Branch 0 was taken 180 times"> + </span><span class="branchCov" title="Branch 1 was taken 42 times"> + </span><span class="branchCov" title="Branch 2 was taken 162 times"> + </span><span class="branchCov" title="Branch 3 was taken 18 times"> + </span>]:<span class="lineCov">        222 :         if( !in_tag &amp;&amp; s != c + 1 )</span></a>
+<a name="186"><span class="lineNum">     186 </span>  [<span class="branchCov" title="Branch 0 was taken 258 times"> + </span><span class="branchCov" title="Branch 1 was taken 58 times"> + </span><span class="branchCov" title="Branch 2 was taken 234 times"> + </span><span class="branchCov" title="Branch 3 was taken 24 times"> + </span>]:<span class="lineCov">        316 :         if( !in_tag &amp;&amp; s != c + 1 )</span></a>
 <a name="187"><span class="lineNum">     187 </span>                :            :         {</a>
-<a name="188"><span class="lineNum">     188 </span>                :<span class="lineCov">        162 :             *(d++) = *c;</span></a>
+<a name="188"><span class="lineNum">     188 </span>                :<span class="lineCov">        234 :             *(d++) = *c;</span></a>
 <a name="189"><span class="lineNum">     189 </span>                :            : </a>
-<a name="190"><span class="lineNum">     190 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 162 times"> + </span>]:<span class="lineCov">        162 :             if( d - data == MBEDTLS_X509_MAX_DN_NAME_SIZE )</span></a>
+<a name="190"><span class="lineNum">     190 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 234 times"> + </span>]:<span class="lineCov">        234 :             if( d - data == MBEDTLS_X509_MAX_DN_NAME_SIZE )</span></a>
 <a name="191"><span class="lineNum">     191 </span>                :            :             {</a>
 <a name="192"><span class="lineNum">     192 </span>                :<span class="lineNoCov">          0 :                 ret = MBEDTLS_ERR_X509_INVALID_NAME;</span></a>
 <a name="193"><span class="lineNum">     193 </span>                :<span class="lineNoCov">          0 :                 goto exit;</span></a>
 <a name="194"><span class="lineNum">     194 </span>                :            :             }</a>
 <a name="195"><span class="lineNum">     195 </span>                :            :         }</a>
 <a name="196"><span class="lineNum">     196 </span>                :            : </a>
-<a name="197"><span class="lineNum">     197 </span>                :<span class="lineCov">        222 :         c++;</span></a>
+<a name="197"><span class="lineNum">     197 </span>                :<span class="lineCov">        316 :         c++;</span></a>
 <a name="198"><span class="lineNum">     198 </span>                :            :     }</a>
 <a name="199"><span class="lineNum">     199 </span>                :            : </a>
-<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">          6 : exit:</span></a>
+<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">          8 : exit:</span></a>
 <a name="201"><span class="lineNum">     201 </span>                :            : </a>
-<a name="202"><span class="lineNum">     202 </span>                :<span class="lineCov">          6 :     return( ret );</span></a>
+<a name="202"><span class="lineNum">     202 </span>                :<span class="lineCov">          8 :     return( ret );</span></a>
 <a name="203"><span class="lineNum">     203 </span>                :            : }</a>
 <a name="204"><span class="lineNum">     204 </span>                :            : </a>
 <a name="205"><span class="lineNum">     205 </span>                :            : /* The first byte of the value in the mbedtls_asn1_named_data structure is reserved</a>
