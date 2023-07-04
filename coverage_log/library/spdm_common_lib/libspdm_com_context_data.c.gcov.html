@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">596</td>
-            <td class="headerCovTableEntry">1230</td>
-            <td class="headerCovTableEntryLo">48.5 %</td>
+            <td class="headerCovTableEntry">591</td>
+            <td class="headerCovTableEntry">1225</td>
+            <td class="headerCovTableEntryLo">48.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-07-03 08:16:46</td>
+            <td class="headerValue">2023-07-04 08:16:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">55</td>
@@ -2738,256 +2738,241 @@
 <a name="2652"><span class="lineNum">    2652 </span>                :            :                                                      LIBSPDM_MAX_SESSION_COUNT);</a>
 <a name="2653"><span class="lineNum">    2653 </span>                :            : }</a>
 <a name="2654"><span class="lineNum">    2654 </span>                :            : </a>
-<a name="2655"><span class="lineNum">    2655 </span>                :            : /**</a>
-<a name="2656"><span class="lineNum">    2656 </span>                :            :  * Reset an SPDM context.</a>
-<a name="2657"><span class="lineNum">    2657 </span>                :            :  *</a>
-<a name="2658"><span class="lineNum">    2658 </span>                :            :  * The size in bytes of the spdm_context can be returned by libspdm_get_context_size.</a>
-<a name="2659"><span class="lineNum">    2659 </span>                :            :  *</a>
-<a name="2660"><span class="lineNum">    2660 </span>                :            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
-<a name="2661"><span class="lineNum">    2661 </span>                :            :  */</a>
-<a name="2662"><span class="lineNum">    2662 </span>                :<span class="lineCov">         42 : void libspdm_reset_context(void *spdm_context)</span></a>
-<a name="2663"><span class="lineNum">    2663 </span>                :            : {</a>
-<a name="2664"><span class="lineNum">    2664 </span>                :            :     libspdm_context_t *context;</a>
-<a name="2665"><span class="lineNum">    2665 </span>                :            :     size_t index;</a>
-<a name="2666"><span class="lineNum">    2666 </span>                :            : </a>
-<a name="2667"><span class="lineNum">    2667 </span>                :<span class="lineCov">         42 :     context = spdm_context;</span></a>
-<a name="2668"><span class="lineNum">    2668 </span>                :            : </a>
-<a name="2669"><span class="lineNum">    2669 </span>                :            :     /*Clear all info about last connection*/</a>
-<a name="2670"><span class="lineNum">    2670 </span>                :            : </a>
-<a name="2671"><span class="lineNum">    2671 </span>                :            :     /*need clear session info to free context before algo is zeroed.*/</a>
-<a name="2672"><span class="lineNum">    2672 </span>        [<span class="branchCov" title="Branch 0 was taken 168 times"> + </span><span class="branchCov" title="Branch 1 was taken 42 times"> + </span>]:<span class="lineCov">        210 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
-<a name="2673"><span class="lineNum">    2673 </span>                :            :     {</a>
-<a name="2674"><span class="lineNum">    2674 </span>                :<span class="lineCov">        168 :         libspdm_session_info_init(context,</span></a>
-<a name="2675"><span class="lineNum">    2675 </span>                :            :                                   &amp;context-&gt;session_info[index],</a>
-<a name="2676"><span class="lineNum">    2676 </span>                :            :                                   INVALID_SESSION_ID,</a>
-<a name="2677"><span class="lineNum">    2677 </span>                :            :                                   false);</a>
-<a name="2678"><span class="lineNum">    2678 </span>                :            :     }</a>
-<a name="2679"><span class="lineNum">    2679 </span>                :            : </a>
-<a name="2680"><span class="lineNum">    2680 </span>                :<span class="lineCov">         42 :     context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NOT_STARTED;</span></a>
-<a name="2681"><span class="lineNum">    2681 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;connection_info.version, sizeof(spdm_version_number_t));</span></a>
-<a name="2682"><span class="lineNum">    2682 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;connection_info.capability,</span></a>
-<a name="2683"><span class="lineNum">    2683 </span>                :            :                      sizeof(libspdm_device_capability_t));</a>
-<a name="2684"><span class="lineNum">    2684 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;connection_info.algorithm, sizeof(libspdm_device_algorithm_t));</span></a>
-<a name="2685"><span class="lineNum">    2685 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;last_spdm_error, sizeof(libspdm_error_struct_t));</span></a>
-<a name="2686"><span class="lineNum">    2686 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;encap_context, sizeof(libspdm_encap_context_t));</span></a>
-<a name="2687"><span class="lineNum">    2687 </span>                :<span class="lineCov">         42 :     context-&gt;connection_info.local_used_cert_chain_buffer_size = 0;</span></a>
-<a name="2688"><span class="lineNum">    2688 </span>                :<span class="lineCov">         42 :     context-&gt;connection_info.local_used_cert_chain_buffer = NULL;</span></a>
-<a name="2689"><span class="lineNum">    2689 </span>                :            : #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
-<a name="2690"><span class="lineNum">    2690 </span>                :<span class="lineCov">         42 :     context-&gt;cache_spdm_request_size = 0;</span></a>
-<a name="2691"><span class="lineNum">    2691 </span>                :            : #endif</a>
-<a name="2692"><span class="lineNum">    2692 </span>                :<span class="lineCov">         42 :     context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
-<a name="2693"><span class="lineNum">    2693 </span>                :<span class="lineCov">         42 :     context-&gt;current_token = 0;</span></a>
-<a name="2694"><span class="lineNum">    2694 </span>                :<span class="lineCov">         42 :     context-&gt;last_spdm_request_session_id = INVALID_SESSION_ID;</span></a>
-<a name="2695"><span class="lineNum">    2695 </span>                :<span class="lineCov">         42 :     context-&gt;last_spdm_request_session_id_valid = false;</span></a>
-<a name="2696"><span class="lineNum">    2696 </span>                :<span class="lineCov">         42 :     context-&gt;last_spdm_request_size = 0;</span></a>
-<a name="2697"><span class="lineNum">    2697 </span>                :<span class="lineCov">         42 :     context-&gt;mut_auth_cert_chain_buffer_size = 0;</span></a>
-<a name="2698"><span class="lineNum">    2698 </span>                :<span class="lineCov">         42 :     context-&gt;current_dhe_session_count = 0;</span></a>
-<a name="2699"><span class="lineNum">    2699 </span>                :<span class="lineCov">         42 :     context-&gt;current_psk_session_count = 0;</span></a>
-<a name="2700"><span class="lineNum">    2700 </span>                :            : </a>
-<a name="2701"><span class="lineNum">    2701 </span>                :            :     #if LIBSPDM_ENABLE_MSG_LOG</a>
-<a name="2702"><span class="lineNum">    2702 </span>                :<span class="lineCov">         42 :     context-&gt;msg_log.buffer = NULL;</span></a>
-<a name="2703"><span class="lineNum">    2703 </span>                :<span class="lineCov">         42 :     context-&gt;msg_log.max_buffer_size = 0;</span></a>
-<a name="2704"><span class="lineNum">    2704 </span>                :<span class="lineCov">         42 :     context-&gt;msg_log.buffer_size = 0;</span></a>
-<a name="2705"><span class="lineNum">    2705 </span>                :<span class="lineCov">         42 :     context-&gt;msg_log.mode = 0;</span></a>
-<a name="2706"><span class="lineNum">    2706 </span>                :<span class="lineCov">         42 :     context-&gt;msg_log.status = 0;</span></a>
-<a name="2707"><span class="lineNum">    2707 </span>                :            :     #endif /* LIBSPDM_ENABLE_MSG_LOG */</a>
-<a name="2708"><span class="lineNum">    2708 </span>                :<span class="lineCov">         42 : }</span></a>
-<a name="2709"><span class="lineNum">    2709 </span>                :            : </a>
-<a name="2710"><span class="lineNum">    2710 </span>                :            : /**</a>
-<a name="2711"><span class="lineNum">    2711 </span>                :            :  * Free the memory of contexts within the SPDM context.</a>
-<a name="2712"><span class="lineNum">    2712 </span>                :            :  * These are typically contexts whose memory has been allocated by the cryptography library.</a>
-<a name="2713"><span class="lineNum">    2713 </span>                :            :  * This function does not free the SPDM context itself.</a>
-<a name="2714"><span class="lineNum">    2714 </span>                :            :  *</a>
-<a name="2715"><span class="lineNum">    2715 </span>                :            :  * @param[in]  spdm_context         A pointer to the SPDM context.</a>
-<a name="2716"><span class="lineNum">    2716 </span>                :            :  *</a>
-<a name="2717"><span class="lineNum">    2717 </span>                :            :  */</a>
-<a name="2718"><span class="lineNum">    2718 </span>                :<span class="lineNoCov">          0 : void libspdm_deinit_context(void *spdm_context)</span></a>
-<a name="2719"><span class="lineNum">    2719 </span>                :            : {</a>
-<a name="2720"><span class="lineNum">    2720 </span>                :            :     uint32_t session_id;</a>
-<a name="2721"><span class="lineNum">    2721 </span>                :            :     libspdm_context_t *context;</a>
-<a name="2722"><span class="lineNum">    2722 </span>                :            :     libspdm_session_info_t *session_info;</a>
-<a name="2723"><span class="lineNum">    2723 </span>                :            : #if !(LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT)</a>
-<a name="2724"><span class="lineNum">    2724 </span>                :            :     void *pubkey_context;</a>
-<a name="2725"><span class="lineNum">    2725 </span>                :            :     bool is_requester;</a>
-<a name="2726"><span class="lineNum">    2726 </span>                :            :     uint8_t slot_index;</a>
-<a name="2727"><span class="lineNum">    2727 </span>                :            : #endif</a>
-<a name="2728"><span class="lineNum">    2728 </span>                :            : </a>
-<a name="2729"><span class="lineNum">    2729 </span>                :<span class="lineNoCov">          0 :     context = spdm_context;</span></a>
-<a name="2730"><span class="lineNum">    2730 </span>                :            : </a>
-<a name="2731"><span class="lineNum">    2731 </span>                :            : #if !(LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT)</a>
-<a name="2732"><span class="lineNum">    2732 </span>                :<span class="lineNoCov">          0 :     is_requester = context-&gt;local_context.is_requester;</span></a>
-<a name="2733"><span class="lineNum">    2733 </span>                :            : </a>
-<a name="2734"><span class="lineNum">    2734 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     for (slot_index = 0; slot_index &lt; SPDM_MAX_SLOT_COUNT; slot_index++) {</span></a>
-<a name="2735"><span class="lineNum">    2735 </span>                :<span class="lineNoCov">          0 :         pubkey_context = context-&gt;connection_info.peer_used_cert_chain[slot_index].</span></a>
-<a name="2736"><span class="lineNum">    2736 </span>                :            :                          leaf_cert_public_key;</a>
-<a name="2737"><span class="lineNum">    2737 </span>                :            : </a>
-<a name="2738"><span class="lineNum">    2738 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (pubkey_context != NULL) {</span></a>
-<a name="2739"><span class="lineNum">    2739 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :             if (is_requester) {</span></a>
-<a name="2740"><span class="lineNum">    2740 </span>                :<span class="lineNoCov">          0 :                 libspdm_asym_free(</span></a>
-<a name="2741"><span class="lineNum">    2741 </span>                :            :                     context-&gt;connection_info.algorithm.base_asym_algo, pubkey_context);</a>
-<a name="2742"><span class="lineNum">    2742 </span>                :            :             } else {</a>
-<a name="2743"><span class="lineNum">    2743 </span>                :<span class="lineNoCov">          0 :                 libspdm_req_asym_free(</span></a>
-<a name="2744"><span class="lineNum">    2744 </span>                :<span class="lineNoCov">          0 :                     context-&gt;connection_info.algorithm.req_base_asym_alg, pubkey_context);</span></a>
-<a name="2745"><span class="lineNum">    2745 </span>                :            :             }</a>
-<a name="2746"><span class="lineNum">    2746 </span>                :            : </a>
-<a name="2747"><span class="lineNum">    2747 </span>                :<span class="lineNoCov">          0 :             pubkey_context = NULL;</span></a>
-<a name="2748"><span class="lineNum">    2748 </span>                :<span class="lineNoCov">          0 :             context-&gt;connection_info.peer_used_cert_chain[slot_index].</span></a>
-<a name="2749"><span class="lineNum">    2749 </span>                :<span class="lineNoCov">          0 :             leaf_cert_public_key = NULL;</span></a>
-<a name="2750"><span class="lineNum">    2750 </span>                :            :         }</a>
-<a name="2751"><span class="lineNum">    2751 </span>                :            :     }</a>
-<a name="2752"><span class="lineNum">    2752 </span>                :            : #endif</a>
-<a name="2753"><span class="lineNum">    2753 </span>                :            : </a>
-<a name="2754"><span class="lineNum">    2754 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_a(context);</span></a>
-<a name="2755"><span class="lineNum">    2755 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_b(context);</span></a>
-<a name="2756"><span class="lineNum">    2756 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_c(context);</span></a>
-<a name="2757"><span class="lineNum">    2757 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(context);</span></a>
-<a name="2758"><span class="lineNum">    2758 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(context);</span></a>
-<a name="2759"><span class="lineNum">    2759 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     for (session_id = 0; session_id &lt; LIBSPDM_MAX_SESSION_COUNT; session_id++) {</span></a>
-<a name="2760"><span class="lineNum">    2760 </span>                :<span class="lineNoCov">          0 :         session_info = &amp;context-&gt;session_info[session_id];</span></a>
-<a name="2761"><span class="lineNum">    2761 </span>                :<span class="lineNoCov">          0 :         libspdm_reset_message_m(context, session_info);</span></a>
-<a name="2762"><span class="lineNum">    2762 </span>                :<span class="lineNoCov">          0 :         libspdm_reset_message_k(context, session_info);</span></a>
-<a name="2763"><span class="lineNum">    2763 </span>                :<span class="lineNoCov">          0 :         libspdm_reset_message_f(context, session_info);</span></a>
-<a name="2764"><span class="lineNum">    2764 </span>                :            :     }</a>
-<a name="2765"><span class="lineNum">    2765 </span>                :<span class="lineNoCov">          0 : }</span></a>
-<a name="2766"><span class="lineNum">    2766 </span>                :            : </a>
-<a name="2767"><span class="lineNum">    2767 </span>                :            : /**</a>
-<a name="2768"><span class="lineNum">    2768 </span>                :            :  * Return the size in bytes of the SPDM context. This includes all</a>
-<a name="2769"><span class="lineNum">    2769 </span>                :            :  * secured message context data as well.</a>
-<a name="2770"><span class="lineNum">    2770 </span>                :            :  *</a>
-<a name="2771"><span class="lineNum">    2771 </span>                :            :  * For just the SPDM context size, use libspdm_get_context_size_without_secured_context.</a>
+<a name="2655"><span class="lineNum">    2655 </span>                :<span class="lineCov">         42 : void libspdm_reset_context(void *spdm_context)</span></a>
+<a name="2656"><span class="lineNum">    2656 </span>                :            : {</a>
+<a name="2657"><span class="lineNum">    2657 </span>                :            :     libspdm_context_t *context;</a>
+<a name="2658"><span class="lineNum">    2658 </span>                :            :     size_t index;</a>
+<a name="2659"><span class="lineNum">    2659 </span>                :            : </a>
+<a name="2660"><span class="lineNum">    2660 </span>                :<span class="lineCov">         42 :     context = spdm_context;</span></a>
+<a name="2661"><span class="lineNum">    2661 </span>                :            : </a>
+<a name="2662"><span class="lineNum">    2662 </span>                :            :     /*Clear all info about last connection*/</a>
+<a name="2663"><span class="lineNum">    2663 </span>                :            : </a>
+<a name="2664"><span class="lineNum">    2664 </span>                :            :     /*need clear session info to free context before algo is zeroed.*/</a>
+<a name="2665"><span class="lineNum">    2665 </span>        [<span class="branchCov" title="Branch 0 was taken 168 times"> + </span><span class="branchCov" title="Branch 1 was taken 42 times"> + </span>]:<span class="lineCov">        210 :     for (index = 0; index &lt; LIBSPDM_MAX_SESSION_COUNT; index++)</span></a>
+<a name="2666"><span class="lineNum">    2666 </span>                :            :     {</a>
+<a name="2667"><span class="lineNum">    2667 </span>                :<span class="lineCov">        168 :         libspdm_session_info_init(context,</span></a>
+<a name="2668"><span class="lineNum">    2668 </span>                :            :                                   &amp;context-&gt;session_info[index],</a>
+<a name="2669"><span class="lineNum">    2669 </span>                :            :                                   INVALID_SESSION_ID,</a>
+<a name="2670"><span class="lineNum">    2670 </span>                :            :                                   false);</a>
+<a name="2671"><span class="lineNum">    2671 </span>                :            :     }</a>
+<a name="2672"><span class="lineNum">    2672 </span>                :            : </a>
+<a name="2673"><span class="lineNum">    2673 </span>                :<span class="lineCov">         42 :     context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NOT_STARTED;</span></a>
+<a name="2674"><span class="lineNum">    2674 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;connection_info.version, sizeof(spdm_version_number_t));</span></a>
+<a name="2675"><span class="lineNum">    2675 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;connection_info.capability,</span></a>
+<a name="2676"><span class="lineNum">    2676 </span>                :            :                      sizeof(libspdm_device_capability_t));</a>
+<a name="2677"><span class="lineNum">    2677 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;connection_info.algorithm, sizeof(libspdm_device_algorithm_t));</span></a>
+<a name="2678"><span class="lineNum">    2678 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;last_spdm_error, sizeof(libspdm_error_struct_t));</span></a>
+<a name="2679"><span class="lineNum">    2679 </span>                :<span class="lineCov">         42 :     libspdm_zero_mem(&amp;context-&gt;encap_context, sizeof(libspdm_encap_context_t));</span></a>
+<a name="2680"><span class="lineNum">    2680 </span>                :<span class="lineCov">         42 :     context-&gt;connection_info.local_used_cert_chain_buffer_size = 0;</span></a>
+<a name="2681"><span class="lineNum">    2681 </span>                :<span class="lineCov">         42 :     context-&gt;connection_info.local_used_cert_chain_buffer = NULL;</span></a>
+<a name="2682"><span class="lineNum">    2682 </span>                :            : #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
+<a name="2683"><span class="lineNum">    2683 </span>                :<span class="lineCov">         42 :     context-&gt;cache_spdm_request_size = 0;</span></a>
+<a name="2684"><span class="lineNum">    2684 </span>                :            : #endif</a>
+<a name="2685"><span class="lineNum">    2685 </span>                :<span class="lineCov">         42 :     context-&gt;response_state = LIBSPDM_RESPONSE_STATE_NORMAL;</span></a>
+<a name="2686"><span class="lineNum">    2686 </span>                :<span class="lineCov">         42 :     context-&gt;current_token = 0;</span></a>
+<a name="2687"><span class="lineNum">    2687 </span>                :<span class="lineCov">         42 :     context-&gt;last_spdm_request_session_id = INVALID_SESSION_ID;</span></a>
+<a name="2688"><span class="lineNum">    2688 </span>                :<span class="lineCov">         42 :     context-&gt;last_spdm_request_session_id_valid = false;</span></a>
+<a name="2689"><span class="lineNum">    2689 </span>                :<span class="lineCov">         42 :     context-&gt;last_spdm_request_size = 0;</span></a>
+<a name="2690"><span class="lineNum">    2690 </span>                :<span class="lineCov">         42 :     context-&gt;mut_auth_cert_chain_buffer_size = 0;</span></a>
+<a name="2691"><span class="lineNum">    2691 </span>                :<span class="lineCov">         42 :     context-&gt;current_dhe_session_count = 0;</span></a>
+<a name="2692"><span class="lineNum">    2692 </span>                :<span class="lineCov">         42 :     context-&gt;current_psk_session_count = 0;</span></a>
+<a name="2693"><span class="lineNum">    2693 </span>                :<span class="lineCov">         42 : }</span></a>
+<a name="2694"><span class="lineNum">    2694 </span>                :            : </a>
+<a name="2695"><span class="lineNum">    2695 </span>                :            : /**</a>
+<a name="2696"><span class="lineNum">    2696 </span>                :            :  * Free the memory of contexts within the SPDM context.</a>
+<a name="2697"><span class="lineNum">    2697 </span>                :            :  * These are typically contexts whose memory has been allocated by the cryptography library.</a>
+<a name="2698"><span class="lineNum">    2698 </span>                :            :  * This function does not free the SPDM context itself.</a>
+<a name="2699"><span class="lineNum">    2699 </span>                :            :  *</a>
+<a name="2700"><span class="lineNum">    2700 </span>                :            :  * @param[in]  spdm_context         A pointer to the SPDM context.</a>
+<a name="2701"><span class="lineNum">    2701 </span>                :            :  *</a>
+<a name="2702"><span class="lineNum">    2702 </span>                :            :  */</a>
+<a name="2703"><span class="lineNum">    2703 </span>                :<span class="lineNoCov">          0 : void libspdm_deinit_context(void *spdm_context)</span></a>
+<a name="2704"><span class="lineNum">    2704 </span>                :            : {</a>
+<a name="2705"><span class="lineNum">    2705 </span>                :            :     uint32_t session_id;</a>
+<a name="2706"><span class="lineNum">    2706 </span>                :            :     libspdm_context_t *context;</a>
+<a name="2707"><span class="lineNum">    2707 </span>                :            :     libspdm_session_info_t *session_info;</a>
+<a name="2708"><span class="lineNum">    2708 </span>                :            : #if !(LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT)</a>
+<a name="2709"><span class="lineNum">    2709 </span>                :            :     void *pubkey_context;</a>
+<a name="2710"><span class="lineNum">    2710 </span>                :            :     bool is_requester;</a>
+<a name="2711"><span class="lineNum">    2711 </span>                :            :     uint8_t slot_index;</a>
+<a name="2712"><span class="lineNum">    2712 </span>                :            : #endif</a>
+<a name="2713"><span class="lineNum">    2713 </span>                :            : </a>
+<a name="2714"><span class="lineNum">    2714 </span>                :<span class="lineNoCov">          0 :     context = spdm_context;</span></a>
+<a name="2715"><span class="lineNum">    2715 </span>                :            : </a>
+<a name="2716"><span class="lineNum">    2716 </span>                :            : #if !(LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT)</a>
+<a name="2717"><span class="lineNum">    2717 </span>                :<span class="lineNoCov">          0 :     is_requester = context-&gt;local_context.is_requester;</span></a>
+<a name="2718"><span class="lineNum">    2718 </span>                :            : </a>
+<a name="2719"><span class="lineNum">    2719 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     for (slot_index = 0; slot_index &lt; SPDM_MAX_SLOT_COUNT; slot_index++) {</span></a>
+<a name="2720"><span class="lineNum">    2720 </span>                :<span class="lineNoCov">          0 :         pubkey_context = context-&gt;connection_info.peer_used_cert_chain[slot_index].</span></a>
+<a name="2721"><span class="lineNum">    2721 </span>                :            :                          leaf_cert_public_key;</a>
+<a name="2722"><span class="lineNum">    2722 </span>                :            : </a>
+<a name="2723"><span class="lineNum">    2723 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (pubkey_context != NULL) {</span></a>
+<a name="2724"><span class="lineNum">    2724 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :             if (is_requester) {</span></a>
+<a name="2725"><span class="lineNum">    2725 </span>                :<span class="lineNoCov">          0 :                 libspdm_asym_free(</span></a>
+<a name="2726"><span class="lineNum">    2726 </span>                :            :                     context-&gt;connection_info.algorithm.base_asym_algo, pubkey_context);</a>
+<a name="2727"><span class="lineNum">    2727 </span>                :            :             } else {</a>
+<a name="2728"><span class="lineNum">    2728 </span>                :<span class="lineNoCov">          0 :                 libspdm_req_asym_free(</span></a>
+<a name="2729"><span class="lineNum">    2729 </span>                :<span class="lineNoCov">          0 :                     context-&gt;connection_info.algorithm.req_base_asym_alg, pubkey_context);</span></a>
+<a name="2730"><span class="lineNum">    2730 </span>                :            :             }</a>
+<a name="2731"><span class="lineNum">    2731 </span>                :            : </a>
+<a name="2732"><span class="lineNum">    2732 </span>                :<span class="lineNoCov">          0 :             pubkey_context = NULL;</span></a>
+<a name="2733"><span class="lineNum">    2733 </span>                :<span class="lineNoCov">          0 :             context-&gt;connection_info.peer_used_cert_chain[slot_index].</span></a>
+<a name="2734"><span class="lineNum">    2734 </span>                :<span class="lineNoCov">          0 :             leaf_cert_public_key = NULL;</span></a>
+<a name="2735"><span class="lineNum">    2735 </span>                :            :         }</a>
+<a name="2736"><span class="lineNum">    2736 </span>                :            :     }</a>
+<a name="2737"><span class="lineNum">    2737 </span>                :            : #endif</a>
+<a name="2738"><span class="lineNum">    2738 </span>                :            : </a>
+<a name="2739"><span class="lineNum">    2739 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_a(context);</span></a>
+<a name="2740"><span class="lineNum">    2740 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_b(context);</span></a>
+<a name="2741"><span class="lineNum">    2741 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_c(context);</span></a>
+<a name="2742"><span class="lineNum">    2742 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_mut_b(context);</span></a>
+<a name="2743"><span class="lineNum">    2743 </span>                :<span class="lineNoCov">          0 :     libspdm_reset_message_mut_c(context);</span></a>
+<a name="2744"><span class="lineNum">    2744 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     for (session_id = 0; session_id &lt; LIBSPDM_MAX_SESSION_COUNT; session_id++) {</span></a>
+<a name="2745"><span class="lineNum">    2745 </span>                :<span class="lineNoCov">          0 :         session_info = &amp;context-&gt;session_info[session_id];</span></a>
+<a name="2746"><span class="lineNum">    2746 </span>                :<span class="lineNoCov">          0 :         libspdm_reset_message_m(context, session_info);</span></a>
+<a name="2747"><span class="lineNum">    2747 </span>                :<span class="lineNoCov">          0 :         libspdm_reset_message_k(context, session_info);</span></a>
+<a name="2748"><span class="lineNum">    2748 </span>                :<span class="lineNoCov">          0 :         libspdm_reset_message_f(context, session_info);</span></a>
+<a name="2749"><span class="lineNum">    2749 </span>                :            :     }</a>
+<a name="2750"><span class="lineNum">    2750 </span>                :<span class="lineNoCov">          0 : }</span></a>
+<a name="2751"><span class="lineNum">    2751 </span>                :            : </a>
+<a name="2752"><span class="lineNum">    2752 </span>                :            : /**</a>
+<a name="2753"><span class="lineNum">    2753 </span>                :            :  * Return the size in bytes of the SPDM context. This includes all</a>
+<a name="2754"><span class="lineNum">    2754 </span>                :            :  * secured message context data as well.</a>
+<a name="2755"><span class="lineNum">    2755 </span>                :            :  *</a>
+<a name="2756"><span class="lineNum">    2756 </span>                :            :  * For just the SPDM context size, use libspdm_get_context_size_without_secured_context.</a>
+<a name="2757"><span class="lineNum">    2757 </span>                :            :  *</a>
+<a name="2758"><span class="lineNum">    2758 </span>                :            :  * @return the size in bytes of the SPDM context and secured message contexts.</a>
+<a name="2759"><span class="lineNum">    2759 </span>                :            :  **/</a>
+<a name="2760"><span class="lineNum">    2760 </span>                :<span class="lineCov">         68 : size_t libspdm_get_context_size(void)</span></a>
+<a name="2761"><span class="lineNum">    2761 </span>                :            : {</a>
+<a name="2762"><span class="lineNum">    2762 </span>                :            :     size_t size;</a>
+<a name="2763"><span class="lineNum">    2763 </span>                :            : </a>
+<a name="2764"><span class="lineNum">    2764 </span>                :<span class="lineCov">         68 :     size = sizeof(libspdm_context_t) +</span></a>
+<a name="2765"><span class="lineNum">    2765 </span>                :<span class="lineCov">         68 :            libspdm_secured_message_get_context_size() * LIBSPDM_MAX_SESSION_COUNT;</span></a>
+<a name="2766"><span class="lineNum">    2766 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 68 times"> + </span>]:<span class="lineCov">         68 :     LIBSPDM_ASSERT (size == LIBSPDM_CONTEXT_SIZE_ALL);</span></a>
+<a name="2767"><span class="lineNum">    2767 </span>                :<span class="lineCov">         68 :     return size;</span></a>
+<a name="2768"><span class="lineNum">    2768 </span>                :            : }</a>
+<a name="2769"><span class="lineNum">    2769 </span>                :            : </a>
+<a name="2770"><span class="lineNum">    2770 </span>                :            : /**</a>
+<a name="2771"><span class="lineNum">    2771 </span>                :            :  * Return the size in bytes of just the SPDM context, without secured message context.</a>
 <a name="2772"><span class="lineNum">    2772 </span>                :            :  *</a>
-<a name="2773"><span class="lineNum">    2773 </span>                :            :  * @return the size in bytes of the SPDM context and secured message contexts.</a>
-<a name="2774"><span class="lineNum">    2774 </span>                :            :  **/</a>
-<a name="2775"><span class="lineNum">    2775 </span>                :<span class="lineCov">         68 : size_t libspdm_get_context_size(void)</span></a>
-<a name="2776"><span class="lineNum">    2776 </span>                :            : {</a>
-<a name="2777"><span class="lineNum">    2777 </span>                :            :     size_t size;</a>
-<a name="2778"><span class="lineNum">    2778 </span>                :            : </a>
-<a name="2779"><span class="lineNum">    2779 </span>                :<span class="lineCov">         68 :     size = sizeof(libspdm_context_t) +</span></a>
-<a name="2780"><span class="lineNum">    2780 </span>                :<span class="lineCov">         68 :            libspdm_secured_message_get_context_size() * LIBSPDM_MAX_SESSION_COUNT;</span></a>
-<a name="2781"><span class="lineNum">    2781 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 68 times"> + </span>]:<span class="lineCov">         68 :     LIBSPDM_ASSERT (size == LIBSPDM_CONTEXT_SIZE_ALL);</span></a>
-<a name="2782"><span class="lineNum">    2782 </span>                :<span class="lineCov">         68 :     return size;</span></a>
-<a name="2783"><span class="lineNum">    2783 </span>                :            : }</a>
-<a name="2784"><span class="lineNum">    2784 </span>                :            : </a>
-<a name="2785"><span class="lineNum">    2785 </span>                :            : /**</a>
-<a name="2786"><span class="lineNum">    2786 </span>                :            :  * Return the size in bytes of just the SPDM context, without secured message context.</a>
-<a name="2787"><span class="lineNum">    2787 </span>                :            :  *</a>
-<a name="2788"><span class="lineNum">    2788 </span>                :            :  * For the complete context size, use libspdm_get_context_size.</a>
-<a name="2789"><span class="lineNum">    2789 </span>                :            :  *</a>
-<a name="2790"><span class="lineNum">    2790 </span>                :            :  * @return the size in bytes of the SPDM context.</a>
-<a name="2791"><span class="lineNum">    2791 </span>                :            :  **/</a>
-<a name="2792"><span class="lineNum">    2792 </span>                :<span class="lineCov">          1 : size_t libspdm_get_context_size_without_secured_context(void)</span></a>
-<a name="2793"><span class="lineNum">    2793 </span>                :            : {</a>
-<a name="2794"><span class="lineNum">    2794 </span>                :            :     size_t size;</a>
-<a name="2795"><span class="lineNum">    2795 </span>                :            : </a>
-<a name="2796"><span class="lineNum">    2796 </span>                :<span class="lineCov">          1 :     size = sizeof(libspdm_context_t);</span></a>
-<a name="2797"><span class="lineNum">    2797 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     LIBSPDM_ASSERT (size == LIBSPDM_CONTEXT_SIZE_WITHOUT_SECURED_CONTEXT);</span></a>
-<a name="2798"><span class="lineNum">    2798 </span>                :<span class="lineCov">          1 :     return size;</span></a>
-<a name="2799"><span class="lineNum">    2799 </span>                :            : }</a>
-<a name="2800"><span class="lineNum">    2800 </span>                :            : </a>
-<a name="2801"><span class="lineNum">    2801 </span>                :            : /**</a>
-<a name="2802"><span class="lineNum">    2802 </span>                :            :  * Return the SPDMversion field of the version number struct.</a>
-<a name="2803"><span class="lineNum">    2803 </span>                :            :  *</a>
-<a name="2804"><span class="lineNum">    2804 </span>                :            :  * @param  ver                Spdm version number struct.</a>
-<a name="2805"><span class="lineNum">    2805 </span>                :            :  *</a>
-<a name="2806"><span class="lineNum">    2806 </span>                :            :  * @return the SPDMversion of the version number struct.</a>
-<a name="2807"><span class="lineNum">    2807 </span>                :            :  **/</a>
-<a name="2808"><span class="lineNum">    2808 </span>                :<span class="lineCov">        221 : uint8_t libspdm_get_version_from_version_number(const spdm_version_number_t ver)</span></a>
-<a name="2809"><span class="lineNum">    2809 </span>                :            : {</a>
-<a name="2810"><span class="lineNum">    2810 </span>                :<span class="lineCov">        221 :     return (uint8_t)(ver &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT);</span></a>
-<a name="2811"><span class="lineNum">    2811 </span>                :            : }</a>
-<a name="2812"><span class="lineNum">    2812 </span>                :            : </a>
-<a name="2813"><span class="lineNum">    2813 </span>                :            : /**</a>
-<a name="2814"><span class="lineNum">    2814 </span>                :            :  * Sort SPDMversion in descending order.</a>
-<a name="2815"><span class="lineNum">    2815 </span>                :            :  *</a>
-<a name="2816"><span class="lineNum">    2816 </span>                :            :  * @param  spdm_context                A pointer to the SPDM context.</a>
-<a name="2817"><span class="lineNum">    2817 </span>                :            :  * @param  ver_set                    A pointer to the version set.</a>
-<a name="2818"><span class="lineNum">    2818 </span>                :            :  * @param  ver_num                    Version number.</a>
-<a name="2819"><span class="lineNum">    2819 </span>                :            :  */</a>
-<a name="2820"><span class="lineNum">    2820 </span>                :<span class="lineCov">         56 : void libspdm_version_number_sort(spdm_version_number_t *ver_set, size_t ver_num)</span></a>
-<a name="2821"><span class="lineNum">    2821 </span>                :            : {</a>
-<a name="2822"><span class="lineNum">    2822 </span>                :            :     size_t index;</a>
-<a name="2823"><span class="lineNum">    2823 </span>                :            :     size_t index_sort;</a>
-<a name="2824"><span class="lineNum">    2824 </span>                :            :     size_t index_max;</a>
-<a name="2825"><span class="lineNum">    2825 </span>                :            :     spdm_version_number_t version;</a>
-<a name="2826"><span class="lineNum">    2826 </span>                :            : </a>
-<a name="2827"><span class="lineNum">    2827 </span>                :            :     /* Select sort */</a>
-<a name="2828"><span class="lineNum">    2828 </span>        [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchCov" title="Branch 1 was taken 22 times"> + </span>]:<span class="lineCov">         56 :     if (ver_num &gt; 1) {</span></a>
-<a name="2829"><span class="lineNum">    2829 </span>        [<span class="branchCov" title="Branch 0 was taken 81 times"> + </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">        115 :         for (index_sort = 0; index_sort &lt; ver_num; index_sort++) {</span></a>
-<a name="2830"><span class="lineNum">    2830 </span>                :<span class="lineCov">         81 :             index_max = index_sort;</span></a>
-<a name="2831"><span class="lineNum">    2831 </span>        [<span class="branchCov" title="Branch 0 was taken 69 times"> + </span><span class="branchCov" title="Branch 1 was taken 81 times"> + </span>]:<span class="lineCov">        150 :             for (index = index_sort + 1; index &lt; ver_num; index++) {</span></a>
-<a name="2832"><span class="lineNum">    2832 </span>                :            :                 /* if ver_ser[index] higher than ver_set[index_max] */</a>
-<a name="2833"><span class="lineNum">    2833 </span>        [<span class="branchCov" title="Branch 0 was taken 40 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span>]:<span class="lineCov">         69 :                 if (ver_set[index] &gt; ver_set[index_max]) {</span></a>
-<a name="2834"><span class="lineNum">    2834 </span>                :<span class="lineCov">         40 :                     index_max = index;</span></a>
-<a name="2835"><span class="lineNum">    2835 </span>                :            :                 }</a>
-<a name="2836"><span class="lineNum">    2836 </span>                :            :             }</a>
-<a name="2837"><span class="lineNum">    2837 </span>                :            :             /* swap ver_ser[index_min] and ver_set[index_sort] */</a>
-<a name="2838"><span class="lineNum">    2838 </span>                :<span class="lineCov">         81 :             version = ver_set[index_sort];</span></a>
-<a name="2839"><span class="lineNum">    2839 </span>                :<span class="lineCov">         81 :             ver_set[index_sort] = ver_set[index_max];</span></a>
-<a name="2840"><span class="lineNum">    2840 </span>                :<span class="lineCov">         81 :             ver_set[index_max] = version;</span></a>
-<a name="2841"><span class="lineNum">    2841 </span>                :            :         }</a>
-<a name="2842"><span class="lineNum">    2842 </span>                :            :     }</a>
-<a name="2843"><span class="lineNum">    2843 </span>                :<span class="lineCov">         56 : }</span></a>
-<a name="2844"><span class="lineNum">    2844 </span>                :            : </a>
-<a name="2845"><span class="lineNum">    2845 </span>                :            : /**</a>
-<a name="2846"><span class="lineNum">    2846 </span>                :            :  * Negotiate SPDMversion for connection.</a>
-<a name="2847"><span class="lineNum">    2847 </span>                :            :  * ver_set is the local version set of requester, res_ver_set is the version set of responder.</a>
-<a name="2848"><span class="lineNum">    2848 </span>                :            :  *</a>
-<a name="2849"><span class="lineNum">    2849 </span>                :            :  * @param  common_version             A pointer to store the common version.</a>
-<a name="2850"><span class="lineNum">    2850 </span>                :            :  * @param  req_ver_set                A pointer to the requester version set.</a>
-<a name="2851"><span class="lineNum">    2851 </span>                :            :  * @param  req_ver_num                Version number of requester.</a>
-<a name="2852"><span class="lineNum">    2852 </span>                :            :  * @param  res_ver_set                A pointer to the responder version set.</a>
-<a name="2853"><span class="lineNum">    2853 </span>                :            :  * @param  res_ver_num                Version number of responder.</a>
-<a name="2854"><span class="lineNum">    2854 </span>                :            :  *</a>
-<a name="2855"><span class="lineNum">    2855 </span>                :            :  * @retval true                       Negotiation successfully, connect version be saved to common_version.</a>
-<a name="2856"><span class="lineNum">    2856 </span>                :            :  * @retval false                      Negotiation failed.</a>
-<a name="2857"><span class="lineNum">    2857 </span>                :            :  */</a>
-<a name="2858"><span class="lineNum">    2858 </span>                :<span class="lineCov">         28 : bool libspdm_negotiate_connection_version(spdm_version_number_t *common_version,</span></a>
-<a name="2859"><span class="lineNum">    2859 </span>                :            :                                           spdm_version_number_t *req_ver_set,</a>
-<a name="2860"><span class="lineNum">    2860 </span>                :            :                                           size_t req_ver_num,</a>
-<a name="2861"><span class="lineNum">    2861 </span>                :            :                                           const spdm_version_number_t *res_ver_set,</a>
-<a name="2862"><span class="lineNum">    2862 </span>                :            :                                           size_t res_ver_num)</a>
-<a name="2863"><span class="lineNum">    2863 </span>                :            : {</a>
-<a name="2864"><span class="lineNum">    2864 </span>                :            :     spdm_version_number_t req_version_list[LIBSPDM_MAX_VERSION_COUNT];</a>
-<a name="2865"><span class="lineNum">    2865 </span>                :            :     spdm_version_number_t res_version_list[LIBSPDM_MAX_VERSION_COUNT];</a>
-<a name="2866"><span class="lineNum">    2866 </span>                :            :     size_t req_index;</a>
-<a name="2867"><span class="lineNum">    2867 </span>                :            :     size_t res_index;</a>
-<a name="2868"><span class="lineNum">    2868 </span>                :            : </a>
-<a name="2869"><span class="lineNum">    2869 </span>  [<span class="branchCov" title="Branch 0 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 28 times"> + </span>]:<span class="lineCov">         28 :     if (req_ver_num &gt; LIBSPDM_MAX_VERSION_COUNT || res_ver_num &gt; LIBSPDM_MAX_VERSION_COUNT) {</span></a>
-<a name="2870"><span class="lineNum">    2870 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
-<a name="2871"><span class="lineNum">    2871 </span>                :            :     }</a>
-<a name="2872"><span class="lineNum">    2872 </span>                :            : </a>
-<a name="2873"><span class="lineNum">    2873 </span>  [<span class="branchCov" title="Branch 0 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">         28 :     if (req_ver_set == NULL || req_ver_num == 0 || res_ver_set == NULL || res_ver_num == 0) {</span></a>
+<a name="2773"><span class="lineNum">    2773 </span>                :            :  * For the complete context size, use libspdm_get_context_size.</a>
+<a name="2774"><span class="lineNum">    2774 </span>                :            :  *</a>
+<a name="2775"><span class="lineNum">    2775 </span>                :            :  * @return the size in bytes of the SPDM context.</a>
+<a name="2776"><span class="lineNum">    2776 </span>                :            :  **/</a>
+<a name="2777"><span class="lineNum">    2777 </span>                :<span class="lineCov">          1 : size_t libspdm_get_context_size_without_secured_context(void)</span></a>
+<a name="2778"><span class="lineNum">    2778 </span>                :            : {</a>
+<a name="2779"><span class="lineNum">    2779 </span>                :            :     size_t size;</a>
+<a name="2780"><span class="lineNum">    2780 </span>                :            : </a>
+<a name="2781"><span class="lineNum">    2781 </span>                :<span class="lineCov">          1 :     size = sizeof(libspdm_context_t);</span></a>
+<a name="2782"><span class="lineNum">    2782 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     LIBSPDM_ASSERT (size == LIBSPDM_CONTEXT_SIZE_WITHOUT_SECURED_CONTEXT);</span></a>
+<a name="2783"><span class="lineNum">    2783 </span>                :<span class="lineCov">          1 :     return size;</span></a>
+<a name="2784"><span class="lineNum">    2784 </span>                :            : }</a>
+<a name="2785"><span class="lineNum">    2785 </span>                :            : </a>
+<a name="2786"><span class="lineNum">    2786 </span>                :            : /**</a>
+<a name="2787"><span class="lineNum">    2787 </span>                :            :  * Return the SPDMversion field of the version number struct.</a>
+<a name="2788"><span class="lineNum">    2788 </span>                :            :  *</a>
+<a name="2789"><span class="lineNum">    2789 </span>                :            :  * @param  ver                Spdm version number struct.</a>
+<a name="2790"><span class="lineNum">    2790 </span>                :            :  *</a>
+<a name="2791"><span class="lineNum">    2791 </span>                :            :  * @return the SPDMversion of the version number struct.</a>
+<a name="2792"><span class="lineNum">    2792 </span>                :            :  **/</a>
+<a name="2793"><span class="lineNum">    2793 </span>                :<span class="lineCov">        221 : uint8_t libspdm_get_version_from_version_number(const spdm_version_number_t ver)</span></a>
+<a name="2794"><span class="lineNum">    2794 </span>                :            : {</a>
+<a name="2795"><span class="lineNum">    2795 </span>                :<span class="lineCov">        221 :     return (uint8_t)(ver &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT);</span></a>
+<a name="2796"><span class="lineNum">    2796 </span>                :            : }</a>
+<a name="2797"><span class="lineNum">    2797 </span>                :            : </a>
+<a name="2798"><span class="lineNum">    2798 </span>                :            : /**</a>
+<a name="2799"><span class="lineNum">    2799 </span>                :            :  * Sort SPDMversion in descending order.</a>
+<a name="2800"><span class="lineNum">    2800 </span>                :            :  *</a>
+<a name="2801"><span class="lineNum">    2801 </span>                :            :  * @param  spdm_context                A pointer to the SPDM context.</a>
+<a name="2802"><span class="lineNum">    2802 </span>                :            :  * @param  ver_set                    A pointer to the version set.</a>
+<a name="2803"><span class="lineNum">    2803 </span>                :            :  * @param  ver_num                    Version number.</a>
+<a name="2804"><span class="lineNum">    2804 </span>                :            :  */</a>
+<a name="2805"><span class="lineNum">    2805 </span>                :<span class="lineCov">         56 : void libspdm_version_number_sort(spdm_version_number_t *ver_set, size_t ver_num)</span></a>
+<a name="2806"><span class="lineNum">    2806 </span>                :            : {</a>
+<a name="2807"><span class="lineNum">    2807 </span>                :            :     size_t index;</a>
+<a name="2808"><span class="lineNum">    2808 </span>                :            :     size_t index_sort;</a>
+<a name="2809"><span class="lineNum">    2809 </span>                :            :     size_t index_max;</a>
+<a name="2810"><span class="lineNum">    2810 </span>                :            :     spdm_version_number_t version;</a>
+<a name="2811"><span class="lineNum">    2811 </span>                :            : </a>
+<a name="2812"><span class="lineNum">    2812 </span>                :            :     /* Select sort */</a>
+<a name="2813"><span class="lineNum">    2813 </span>        [<span class="branchCov" title="Branch 0 was taken 34 times"> + </span><span class="branchCov" title="Branch 1 was taken 22 times"> + </span>]:<span class="lineCov">         56 :     if (ver_num &gt; 1) {</span></a>
+<a name="2814"><span class="lineNum">    2814 </span>        [<span class="branchCov" title="Branch 0 was taken 81 times"> + </span><span class="branchCov" title="Branch 1 was taken 34 times"> + </span>]:<span class="lineCov">        115 :         for (index_sort = 0; index_sort &lt; ver_num; index_sort++) {</span></a>
+<a name="2815"><span class="lineNum">    2815 </span>                :<span class="lineCov">         81 :             index_max = index_sort;</span></a>
+<a name="2816"><span class="lineNum">    2816 </span>        [<span class="branchCov" title="Branch 0 was taken 69 times"> + </span><span class="branchCov" title="Branch 1 was taken 81 times"> + </span>]:<span class="lineCov">        150 :             for (index = index_sort + 1; index &lt; ver_num; index++) {</span></a>
+<a name="2817"><span class="lineNum">    2817 </span>                :            :                 /* if ver_ser[index] higher than ver_set[index_max] */</a>
+<a name="2818"><span class="lineNum">    2818 </span>        [<span class="branchCov" title="Branch 0 was taken 40 times"> + </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span>]:<span class="lineCov">         69 :                 if (ver_set[index] &gt; ver_set[index_max]) {</span></a>
+<a name="2819"><span class="lineNum">    2819 </span>                :<span class="lineCov">         40 :                     index_max = index;</span></a>
+<a name="2820"><span class="lineNum">    2820 </span>                :            :                 }</a>
+<a name="2821"><span class="lineNum">    2821 </span>                :            :             }</a>
+<a name="2822"><span class="lineNum">    2822 </span>                :            :             /* swap ver_ser[index_min] and ver_set[index_sort] */</a>
+<a name="2823"><span class="lineNum">    2823 </span>                :<span class="lineCov">         81 :             version = ver_set[index_sort];</span></a>
+<a name="2824"><span class="lineNum">    2824 </span>                :<span class="lineCov">         81 :             ver_set[index_sort] = ver_set[index_max];</span></a>
+<a name="2825"><span class="lineNum">    2825 </span>                :<span class="lineCov">         81 :             ver_set[index_max] = version;</span></a>
+<a name="2826"><span class="lineNum">    2826 </span>                :            :         }</a>
+<a name="2827"><span class="lineNum">    2827 </span>                :            :     }</a>
+<a name="2828"><span class="lineNum">    2828 </span>                :<span class="lineCov">         56 : }</span></a>
+<a name="2829"><span class="lineNum">    2829 </span>                :            : </a>
+<a name="2830"><span class="lineNum">    2830 </span>                :            : /**</a>
+<a name="2831"><span class="lineNum">    2831 </span>                :            :  * Negotiate SPDMversion for connection.</a>
+<a name="2832"><span class="lineNum">    2832 </span>                :            :  * ver_set is the local version set of requester, res_ver_set is the version set of responder.</a>
+<a name="2833"><span class="lineNum">    2833 </span>                :            :  *</a>
+<a name="2834"><span class="lineNum">    2834 </span>                :            :  * @param  common_version             A pointer to store the common version.</a>
+<a name="2835"><span class="lineNum">    2835 </span>                :            :  * @param  req_ver_set                A pointer to the requester version set.</a>
+<a name="2836"><span class="lineNum">    2836 </span>                :            :  * @param  req_ver_num                Version number of requester.</a>
+<a name="2837"><span class="lineNum">    2837 </span>                :            :  * @param  res_ver_set                A pointer to the responder version set.</a>
+<a name="2838"><span class="lineNum">    2838 </span>                :            :  * @param  res_ver_num                Version number of responder.</a>
+<a name="2839"><span class="lineNum">    2839 </span>                :            :  *</a>
+<a name="2840"><span class="lineNum">    2840 </span>                :            :  * @retval true                       Negotiation successfully, connect version be saved to common_version.</a>
+<a name="2841"><span class="lineNum">    2841 </span>                :            :  * @retval false                      Negotiation failed.</a>
+<a name="2842"><span class="lineNum">    2842 </span>                :            :  */</a>
+<a name="2843"><span class="lineNum">    2843 </span>                :<span class="lineCov">         28 : bool libspdm_negotiate_connection_version(spdm_version_number_t *common_version,</span></a>
+<a name="2844"><span class="lineNum">    2844 </span>                :            :                                           spdm_version_number_t *req_ver_set,</a>
+<a name="2845"><span class="lineNum">    2845 </span>                :            :                                           size_t req_ver_num,</a>
+<a name="2846"><span class="lineNum">    2846 </span>                :            :                                           const spdm_version_number_t *res_ver_set,</a>
+<a name="2847"><span class="lineNum">    2847 </span>                :            :                                           size_t res_ver_num)</a>
+<a name="2848"><span class="lineNum">    2848 </span>                :            : {</a>
+<a name="2849"><span class="lineNum">    2849 </span>                :            :     spdm_version_number_t req_version_list[LIBSPDM_MAX_VERSION_COUNT];</a>
+<a name="2850"><span class="lineNum">    2850 </span>                :            :     spdm_version_number_t res_version_list[LIBSPDM_MAX_VERSION_COUNT];</a>
+<a name="2851"><span class="lineNum">    2851 </span>                :            :     size_t req_index;</a>
+<a name="2852"><span class="lineNum">    2852 </span>                :            :     size_t res_index;</a>
+<a name="2853"><span class="lineNum">    2853 </span>                :            : </a>
+<a name="2854"><span class="lineNum">    2854 </span>  [<span class="branchCov" title="Branch 0 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 28 times"> + </span>]:<span class="lineCov">         28 :     if (req_ver_num &gt; LIBSPDM_MAX_VERSION_COUNT || res_ver_num &gt; LIBSPDM_MAX_VERSION_COUNT) {</span></a>
+<a name="2855"><span class="lineNum">    2855 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
+<a name="2856"><span class="lineNum">    2856 </span>                :            :     }</a>
+<a name="2857"><span class="lineNum">    2857 </span>                :            : </a>
+<a name="2858"><span class="lineNum">    2858 </span>  [<span class="branchCov" title="Branch 0 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">         28 :     if (req_ver_set == NULL || req_ver_num == 0 || res_ver_set == NULL || res_ver_num == 0) {</span></a>
 <span class="lineNum">         </span>   <span class="branchCov" title="Branch 4 was taken 28 times"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchCov" title="Branch 7 was taken 28 times"> + </span>]
-<a name="2874"><span class="lineNum">    2874 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
-<a name="2875"><span class="lineNum">    2875 </span>                :            :     }</a>
-<a name="2876"><span class="lineNum">    2876 </span>                :            : </a>
-<a name="2877"><span class="lineNum">    2877 </span>                :<span class="lineCov">         28 :     libspdm_zero_mem(req_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT);</span></a>
-<a name="2878"><span class="lineNum">    2878 </span>                :<span class="lineCov">         28 :     libspdm_zero_mem(res_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT);</span></a>
-<a name="2879"><span class="lineNum">    2879 </span>                :            : </a>
-<a name="2880"><span class="lineNum">    2880 </span>                :<span class="lineCov">         28 :     libspdm_copy_mem(req_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT,</span></a>
-<a name="2881"><span class="lineNum">    2881 </span>                :            :                      req_ver_set, sizeof(spdm_version_number_t) * req_ver_num);</a>
-<a name="2882"><span class="lineNum">    2882 </span>                :<span class="lineCov">         28 :     libspdm_copy_mem(res_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT,</span></a>
-<a name="2883"><span class="lineNum">    2883 </span>                :            :                      res_ver_set, sizeof(spdm_version_number_t) * res_ver_num);</a>
-<a name="2884"><span class="lineNum">    2884 </span>                :            : </a>
-<a name="2885"><span class="lineNum">    2885 </span>                :            :     /* Sort SPDMversion in descending order. */</a>
-<a name="2886"><span class="lineNum">    2886 </span>                :<span class="lineCov">         28 :     libspdm_version_number_sort(req_version_list, req_ver_num);</span></a>
-<a name="2887"><span class="lineNum">    2887 </span>                :<span class="lineCov">         28 :     libspdm_version_number_sort(res_version_list, res_ver_num);</span></a>
-<a name="2888"><span class="lineNum">    2888 </span>                :            : </a>
-<a name="2889"><span class="lineNum">    2889 </span>                :            :     /**</a>
-<a name="2890"><span class="lineNum">    2890 </span>                :            :      * Find highest same version and make req_index point to it.</a>
-<a name="2891"><span class="lineNum">    2891 </span>                :            :      * If not found, return false.</a>
-<a name="2892"><span class="lineNum">    2892 </span>                :            :      **/</a>
-<a name="2893"><span class="lineNum">    2893 </span>        [<span class="branchCov" title="Branch 0 was taken 32 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         33 :     for (res_index = 0; res_index &lt; res_ver_num; res_index++) {</span></a>
-<a name="2894"><span class="lineNum">    2894 </span>        [<span class="branchCov" title="Branch 0 was taken 55 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         60 :         for (req_index = 0; req_index &lt; req_ver_num; req_index++) {</span></a>
-<a name="2895"><span class="lineNum">    2895 </span>        [<span class="branchCov" title="Branch 0 was taken 27 times"> + </span><span class="branchCov" title="Branch 1 was taken 28 times"> + </span>]:<span class="lineCov">        110 :             if (libspdm_get_version_from_version_number(req_version_list[req_index]) ==</span></a>
-<a name="2896"><span class="lineNum">    2896 </span>                :<span class="lineCov">         55 :                 libspdm_get_version_from_version_number(res_version_list[res_index])) {</span></a>
-<a name="2897"><span class="lineNum">    2897 </span>                :<span class="lineCov">         27 :                 *common_version = req_version_list[req_index];</span></a>
-<a name="2898"><span class="lineNum">    2898 </span>                :<span class="lineCov">         27 :                 return true;</span></a>
-<a name="2899"><span class="lineNum">    2899 </span>                :            :             }</a>
-<a name="2900"><span class="lineNum">    2900 </span>                :            :         }</a>
-<a name="2901"><span class="lineNum">    2901 </span>                :            :     }</a>
-<a name="2902"><span class="lineNum">    2902 </span>                :<span class="lineCov">          1 :     return false;</span></a>
-<a name="2903"><span class="lineNum">    2903 </span>                :            : }</a>
+<a name="2859"><span class="lineNum">    2859 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
+<a name="2860"><span class="lineNum">    2860 </span>                :            :     }</a>
+<a name="2861"><span class="lineNum">    2861 </span>                :            : </a>
+<a name="2862"><span class="lineNum">    2862 </span>                :<span class="lineCov">         28 :     libspdm_zero_mem(req_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT);</span></a>
+<a name="2863"><span class="lineNum">    2863 </span>                :<span class="lineCov">         28 :     libspdm_zero_mem(res_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT);</span></a>
+<a name="2864"><span class="lineNum">    2864 </span>                :            : </a>
+<a name="2865"><span class="lineNum">    2865 </span>                :<span class="lineCov">         28 :     libspdm_copy_mem(req_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT,</span></a>
+<a name="2866"><span class="lineNum">    2866 </span>                :            :                      req_ver_set, sizeof(spdm_version_number_t) * req_ver_num);</a>
+<a name="2867"><span class="lineNum">    2867 </span>                :<span class="lineCov">         28 :     libspdm_copy_mem(res_version_list, sizeof(spdm_version_number_t) * LIBSPDM_MAX_VERSION_COUNT,</span></a>
+<a name="2868"><span class="lineNum">    2868 </span>                :            :                      res_ver_set, sizeof(spdm_version_number_t) * res_ver_num);</a>
+<a name="2869"><span class="lineNum">    2869 </span>                :            : </a>
+<a name="2870"><span class="lineNum">    2870 </span>                :            :     /* Sort SPDMversion in descending order. */</a>
+<a name="2871"><span class="lineNum">    2871 </span>                :<span class="lineCov">         28 :     libspdm_version_number_sort(req_version_list, req_ver_num);</span></a>
+<a name="2872"><span class="lineNum">    2872 </span>                :<span class="lineCov">         28 :     libspdm_version_number_sort(res_version_list, res_ver_num);</span></a>
+<a name="2873"><span class="lineNum">    2873 </span>                :            : </a>
+<a name="2874"><span class="lineNum">    2874 </span>                :            :     /**</a>
+<a name="2875"><span class="lineNum">    2875 </span>                :            :      * Find highest same version and make req_index point to it.</a>
+<a name="2876"><span class="lineNum">    2876 </span>                :            :      * If not found, return false.</a>
+<a name="2877"><span class="lineNum">    2877 </span>                :            :      **/</a>
+<a name="2878"><span class="lineNum">    2878 </span>        [<span class="branchCov" title="Branch 0 was taken 32 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         33 :     for (res_index = 0; res_index &lt; res_ver_num; res_index++) {</span></a>
+<a name="2879"><span class="lineNum">    2879 </span>        [<span class="branchCov" title="Branch 0 was taken 55 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         60 :         for (req_index = 0; req_index &lt; req_ver_num; req_index++) {</span></a>
+<a name="2880"><span class="lineNum">    2880 </span>        [<span class="branchCov" title="Branch 0 was taken 27 times"> + </span><span class="branchCov" title="Branch 1 was taken 28 times"> + </span>]:<span class="lineCov">        110 :             if (libspdm_get_version_from_version_number(req_version_list[req_index]) ==</span></a>
+<a name="2881"><span class="lineNum">    2881 </span>                :<span class="lineCov">         55 :                 libspdm_get_version_from_version_number(res_version_list[res_index])) {</span></a>
+<a name="2882"><span class="lineNum">    2882 </span>                :<span class="lineCov">         27 :                 *common_version = req_version_list[req_index];</span></a>
+<a name="2883"><span class="lineNum">    2883 </span>                :<span class="lineCov">         27 :                 return true;</span></a>
+<a name="2884"><span class="lineNum">    2884 </span>                :            :             }</a>
+<a name="2885"><span class="lineNum">    2885 </span>                :            :         }</a>
+<a name="2886"><span class="lineNum">    2886 </span>                :            :     }</a>
+<a name="2887"><span class="lineNum">    2887 </span>                :<span class="lineCov">          1 :     return false;</span></a>
+<a name="2888"><span class="lineNum">    2888 </span>                :            : }</a>
 </pre>
       </td>
     </tr>
