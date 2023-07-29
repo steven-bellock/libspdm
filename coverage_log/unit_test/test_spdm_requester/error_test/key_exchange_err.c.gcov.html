@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-07-28 08:14:40</td>
+            <td class="headerValue">2023-07-29 08:12:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">35</td>
@@ -476,7 +476,7 @@
 <a name="393"><span class="lineNum">     393 </span>                :            :         size_t transport_header_size;</a>
 <a name="394"><span class="lineNum">     394 </span>                :            : </a>
 <a name="395"><span class="lineNum">     395 </span>                :<span class="lineCov">          1 :         ((libspdm_context_t *)spdm_context)-&gt;connection_info.secured_message_version =</span></a>
-<a name="396"><span class="lineNum">     396 </span>                :            :             SPDM_MESSAGE_VERSION_11 &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="396"><span class="lineNum">     396 </span>                :            :             SECURED_SPDM_VERSION_11 &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
 <a name="397"><span class="lineNum">     397 </span>                :            :         ((libspdm_context_t *)spdm_context)</a>
 <a name="398"><span class="lineNum">     398 </span>                :<span class="lineCov">          1 :         -&gt;connection_info.algorithm.base_asym_algo =</span></a>
 <a name="399"><span class="lineNum">     399 </span>                :            :             m_libspdm_use_asym_algo;</a>
@@ -4366,7 +4366,7 @@
 <a name="4283"><span class="lineNum">    4283 </span>                :            :         size_t transport_header_size;</a>
 <a name="4284"><span class="lineNum">    4284 </span>                :            : </a>
 <a name="4285"><span class="lineNum">    4285 </span>                :<span class="lineNoCov">          0 :         ((libspdm_context_t *)spdm_context)-&gt;connection_info.secured_message_version =</span></a>
-<a name="4286"><span class="lineNum">    4286 </span>                :            :             SPDM_MESSAGE_VERSION_11 &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="4286"><span class="lineNum">    4286 </span>                :            :             SECURED_SPDM_VERSION_11 &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
 <a name="4287"><span class="lineNum">    4287 </span>                :            :         ((libspdm_context_t *)spdm_context)</a>
 <a name="4288"><span class="lineNum">    4288 </span>                :<span class="lineNoCov">          0 :         -&gt;connection_info.algorithm.base_asym_algo =</span></a>
 <a name="4289"><span class="lineNum">    4289 </span>                :            :             m_libspdm_use_asym_algo;</a>
@@ -4738,7 +4738,7 @@
 <a name="4655"><span class="lineNum">    4655 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="4656"><span class="lineNum">    4656 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="4657"><span class="lineNum">    4657 </span>                :            :         spdm_context,</a>
-<a name="4658"><span class="lineNum">    4658 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="4658"><span class="lineNum">    4658 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="4659"><span class="lineNum">    4659 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="4660"><span class="lineNum">    4660 </span>                :            :         measurement_hash);</a>
 <a name="4661"><span class="lineNum">    4661 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SEND_FAIL);</span></a>
@@ -4772,7 +4772,7 @@
 <a name="4689"><span class="lineNum">    4689 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
 <a name="4690"><span class="lineNum">    4690 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.secured_message_version.spdm_version_count = 1;</span></a>
 <a name="4691"><span class="lineNum">    4691 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.secured_message_version.spdm_version[0] =</span></a>
-<a name="4692"><span class="lineNum">    4692 </span>                :            :         SPDM_MESSAGE_VERSION_11 &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="4692"><span class="lineNum">    4692 </span>                :            :         SECURED_SPDM_VERSION_11 &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
 <a name="4693"><span class="lineNum">    4693 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
 <a name="4694"><span class="lineNum">    4694 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data,</a>
 <a name="4695"><span class="lineNum">    4695 </span>                :            :                                                     &amp;data_size, &amp;hash, &amp;hash_size);</a>
@@ -4810,7 +4810,7 @@
 <a name="4727"><span class="lineNum">    4727 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="4728"><span class="lineNum">    4728 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="4729"><span class="lineNum">    4729 </span>                :            :         spdm_context,</a>
-<a name="4730"><span class="lineNum">    4730 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="4730"><span class="lineNum">    4730 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="4731"><span class="lineNum">    4731 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="4732"><span class="lineNum">    4732 </span>                :            :         measurement_hash);</a>
 <a name="4733"><span class="lineNum">    4733 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
@@ -4884,7 +4884,7 @@
 <a name="4801"><span class="lineNum">    4801 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="4802"><span class="lineNum">    4802 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="4803"><span class="lineNum">    4803 </span>                :            :         spdm_context,</a>
-<a name="4804"><span class="lineNum">    4804 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="4804"><span class="lineNum">    4804 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="4805"><span class="lineNum">    4805 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="4806"><span class="lineNum">    4806 </span>                :            :         measurement_hash);</a>
 <a name="4807"><span class="lineNum">    4807 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_STATE_LOCAL);</span></a>
@@ -4953,7 +4953,7 @@
 <a name="4870"><span class="lineNum">    4870 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="4871"><span class="lineNum">    4871 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="4872"><span class="lineNum">    4872 </span>                :            :         spdm_context,</a>
-<a name="4873"><span class="lineNum">    4873 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="4873"><span class="lineNum">    4873 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="4874"><span class="lineNum">    4874 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="4875"><span class="lineNum">    4875 </span>                :            :         measurement_hash);</a>
 <a name="4876"><span class="lineNum">    4876 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_ERROR_PEER);</span></a>
@@ -5022,7 +5022,7 @@
 <a name="4939"><span class="lineNum">    4939 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="4940"><span class="lineNum">    4940 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="4941"><span class="lineNum">    4941 </span>                :            :         spdm_context,</a>
-<a name="4942"><span class="lineNum">    4942 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="4942"><span class="lineNum">    4942 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="4943"><span class="lineNum">    4943 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="4944"><span class="lineNum">    4944 </span>                :            :         measurement_hash);</a>
 <a name="4945"><span class="lineNum">    4945 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_BUSY_PEER);</span></a>
@@ -5051,7 +5051,7 @@
 <a name="4968"><span class="lineNum">    4968 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags = 0;</span></a>
 <a name="4969"><span class="lineNum">    4969 </span>                :            : </a>
 <a name="4970"><span class="lineNum">    4970 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
-<a name="4971"><span class="lineNum">    4971 </span>                :            :         spdm_context, SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="4971"><span class="lineNum">    4971 </span>                :            :         spdm_context, SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="4972"><span class="lineNum">    4972 </span>                :            :         &amp;session_id, NULL, &amp;slot_id_param, NULL);</a>
 <a name="4973"><span class="lineNum">    4973 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_UNSUPPORTED_CAP);</span></a>
 <a name="4974"><span class="lineNum">    4974 </span>                :<span class="lineCov">          1 : }</span></a>
@@ -5118,7 +5118,7 @@
 <a name="5035"><span class="lineNum">    5035 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5036"><span class="lineNum">    5036 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="5037"><span class="lineNum">    5037 </span>                :            :         spdm_context,</a>
-<a name="5038"><span class="lineNum">    5038 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5038"><span class="lineNum">    5038 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5039"><span class="lineNum">    5039 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="5040"><span class="lineNum">    5040 </span>                :            :         measurement_hash);</a>
 <a name="5041"><span class="lineNum">    5041 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_RESYNCH_PEER);</span></a>
@@ -5189,7 +5189,7 @@
 <a name="5106"><span class="lineNum">    5106 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5107"><span class="lineNum">    5107 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="5108"><span class="lineNum">    5108 </span>                :            :         spdm_context,</a>
-<a name="5109"><span class="lineNum">    5109 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5109"><span class="lineNum">    5109 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5110"><span class="lineNum">    5110 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="5111"><span class="lineNum">    5111 </span>                :            :         measurement_hash);</a>
 <a name="5112"><span class="lineNum">    5112 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_NOT_READY_PEER);</span></a>
@@ -5221,7 +5221,7 @@
 <a name="5138"><span class="lineNum">    5138 </span>                :            : </a>
 <a name="5139"><span class="lineNum">    5139 </span>                :<span class="lineCov">          1 :     libspdm_force_error (LIBSPDM_ERR_ACQUIRE_SENDER_BUFFER);</span></a>
 <a name="5140"><span class="lineNum">    5140 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
-<a name="5141"><span class="lineNum">    5141 </span>                :            :         spdm_context, SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5141"><span class="lineNum">    5141 </span>                :            :         spdm_context, SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5142"><span class="lineNum">    5142 </span>                :            :         &amp;session_id, NULL, &amp;slot_id_param, NULL);</a>
 <a name="5143"><span class="lineNum">    5143 </span>                :<span class="lineCov">          1 :     libspdm_release_error (LIBSPDM_ERR_ACQUIRE_SENDER_BUFFER);</span></a>
 <a name="5144"><span class="lineNum">    5144 </span>                :            : </a>
@@ -5287,7 +5287,7 @@
 <a name="5204"><span class="lineNum">    5204 </span>                :<span class="lineCov">         18 :         heartbeat_period = 0;</span></a>
 <a name="5205"><span class="lineNum">    5205 </span>                :<span class="lineCov">         18 :         libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5206"><span class="lineNum">    5206 </span>                :<span class="lineCov">         18 :         status = libspdm_send_receive_key_exchange (spdm_context,</span></a>
-<a name="5207"><span class="lineNum">    5207 </span>                :            :                                                     SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH,</a>
+<a name="5207"><span class="lineNum">    5207 </span>                :            :                                                     SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH,</a>
 <a name="5208"><span class="lineNum">    5208 </span>                :            :                                                     0, 0, &amp;session_id, &amp;heartbeat_period,</a>
 <a name="5209"><span class="lineNum">    5209 </span>                :            :                                                     &amp;slot_id_param, measurement_hash);</a>
 <a name="5210"><span class="lineNum">    5210 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 18 times"> + </span>]:<span class="lineCov">         18 :         LIBSPDM_ASSERT_INT_EQUAL_CASE (status, LIBSPDM_STATUS_ERROR_PEER, error_code);</span></a>
@@ -5332,7 +5332,7 @@
 <a name="5249"><span class="lineNum">    5249 </span>                :            : </a>
 <a name="5250"><span class="lineNum">    5250 </span>                :<span class="lineCov">          1 :     libspdm_force_error (LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER);</span></a>
 <a name="5251"><span class="lineNum">    5251 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
-<a name="5252"><span class="lineNum">    5252 </span>                :            :         spdm_context, SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5252"><span class="lineNum">    5252 </span>                :            :         spdm_context, SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5253"><span class="lineNum">    5253 </span>                :            :         &amp;session_id, NULL, &amp;slot_id_param, NULL);</a>
 <a name="5254"><span class="lineNum">    5254 </span>                :<span class="lineCov">          1 :     libspdm_release_error (LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER);</span></a>
 <a name="5255"><span class="lineNum">    5255 </span>                :            : </a>
@@ -5363,7 +5363,7 @@
 <a name="5280"><span class="lineNum">    5280 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
 <a name="5281"><span class="lineNum">    5281 </span>                :            : </a>
 <a name="5282"><span class="lineNum">    5282 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
-<a name="5283"><span class="lineNum">    5283 </span>                :            :         spdm_context, SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5283"><span class="lineNum">    5283 </span>                :            :         spdm_context, SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5284"><span class="lineNum">    5284 </span>                :            :         &amp;session_id, NULL, &amp;slot_id_param, NULL);</a>
 <a name="5285"><span class="lineNum">    5285 </span>                :            : </a>
 <a name="5286"><span class="lineNum">    5286 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_MSG_FIELD);</span></a>
@@ -5393,7 +5393,7 @@
 <a name="5310"><span class="lineNum">    5310 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
 <a name="5311"><span class="lineNum">    5311 </span>                :            : </a>
 <a name="5312"><span class="lineNum">    5312 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
-<a name="5313"><span class="lineNum">    5313 </span>                :            :         spdm_context, SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5313"><span class="lineNum">    5313 </span>                :            :         spdm_context, SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5314"><span class="lineNum">    5314 </span>                :            :         &amp;session_id, NULL, &amp;slot_id_param, NULL);</a>
 <a name="5315"><span class="lineNum">    5315 </span>                :            : </a>
 <a name="5316"><span class="lineNum">    5316 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_MSG_FIELD);</span></a>
@@ -5423,7 +5423,7 @@
 <a name="5340"><span class="lineNum">    5340 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
 <a name="5341"><span class="lineNum">    5341 </span>                :            : </a>
 <a name="5342"><span class="lineNum">    5342 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
-<a name="5343"><span class="lineNum">    5343 </span>                :            :         spdm_context, SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5343"><span class="lineNum">    5343 </span>                :            :         spdm_context, SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5344"><span class="lineNum">    5344 </span>                :            :         &amp;session_id, NULL, &amp;slot_id_param, NULL);</a>
 <a name="5345"><span class="lineNum">    5345 </span>                :            : </a>
 <a name="5346"><span class="lineNum">    5346 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_MSG_FIELD);</span></a>
@@ -5659,7 +5659,7 @@
 <a name="5576"><span class="lineNum">    5576 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5577"><span class="lineNum">    5577 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="5578"><span class="lineNum">    5578 </span>                :            :         spdm_context,</a>
-<a name="5579"><span class="lineNum">    5579 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5579"><span class="lineNum">    5579 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5580"><span class="lineNum">    5580 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="5581"><span class="lineNum">    5581 </span>                :            :         measurement_hash);</a>
 <a name="5582"><span class="lineNum">    5582 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_MSG_SIZE);</span></a>
@@ -5738,7 +5738,7 @@
 <a name="5655"><span class="lineNum">    5655 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5656"><span class="lineNum">    5656 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="5657"><span class="lineNum">    5657 </span>                :            :         spdm_context,</a>
-<a name="5658"><span class="lineNum">    5658 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5658"><span class="lineNum">    5658 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5659"><span class="lineNum">    5659 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="5660"><span class="lineNum">    5660 </span>                :            :         measurement_hash);</a>
 <a name="5661"><span class="lineNum">    5661 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_VERIF_FAIL);</span></a>
@@ -5826,7 +5826,7 @@
 <a name="5743"><span class="lineNum">    5743 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5744"><span class="lineNum">    5744 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="5745"><span class="lineNum">    5745 </span>                :            :         spdm_context,</a>
-<a name="5746"><span class="lineNum">    5746 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5746"><span class="lineNum">    5746 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5747"><span class="lineNum">    5747 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="5748"><span class="lineNum">    5748 </span>                :            :         measurement_hash);</a>
 <a name="5749"><span class="lineNum">    5749 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_MSG_FIELD);</span></a>
@@ -5857,7 +5857,7 @@
 <a name="5774"><span class="lineNum">    5774 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
 <a name="5775"><span class="lineNum">    5775 </span>                :            : </a>
 <a name="5776"><span class="lineNum">    5776 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
-<a name="5777"><span class="lineNum">    5777 </span>                :            :         spdm_context, SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5777"><span class="lineNum">    5777 </span>                :            :         spdm_context, SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5778"><span class="lineNum">    5778 </span>                :            :         &amp;session_id, NULL, &amp;slot_id_param, NULL);</a>
 <a name="5779"><span class="lineNum">    5779 </span>                :            : </a>
 <a name="5780"><span class="lineNum">    5780 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_MSG_FIELD);</span></a>
@@ -5957,7 +5957,7 @@
 <a name="5874"><span class="lineNum">    5874 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5875"><span class="lineNum">    5875 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="5876"><span class="lineNum">    5876 </span>                :            :         spdm_context,</a>
-<a name="5877"><span class="lineNum">    5877 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5877"><span class="lineNum">    5877 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5878"><span class="lineNum">    5878 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="5879"><span class="lineNum">    5879 </span>                :            :         measurement_hash);</a>
 <a name="5880"><span class="lineNum">    5880 </span>                :            :     /* Clear Mut_auth flags */</a>
@@ -6047,7 +6047,7 @@
 <a name="5964"><span class="lineNum">    5964 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="5965"><span class="lineNum">    5965 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="5966"><span class="lineNum">    5966 </span>                :            :         spdm_context,</a>
-<a name="5967"><span class="lineNum">    5967 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="5967"><span class="lineNum">    5967 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="5968"><span class="lineNum">    5968 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="5969"><span class="lineNum">    5969 </span>                :            :         measurement_hash);</a>
 <a name="5970"><span class="lineNum">    5970 </span>                :            :     /*Clear Mut_auth flags*/</a>
@@ -6137,7 +6137,7 @@
 <a name="6054"><span class="lineNum">    6054 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="6055"><span class="lineNum">    6055 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="6056"><span class="lineNum">    6056 </span>                :            :         spdm_context,</a>
-<a name="6057"><span class="lineNum">    6057 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="6057"><span class="lineNum">    6057 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="6058"><span class="lineNum">    6058 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="6059"><span class="lineNum">    6059 </span>                :            :         measurement_hash);</a>
 <a name="6060"><span class="lineNum">    6060 </span>                :            :     /* Clear Mut_auth flags */</a>
@@ -6239,7 +6239,7 @@
 <a name="6156"><span class="lineNum">    6156 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(measurement_hash, sizeof(measurement_hash));</span></a>
 <a name="6157"><span class="lineNum">    6157 </span>                :<span class="lineCov">          1 :     status = libspdm_send_receive_key_exchange(</span></a>
 <a name="6158"><span class="lineNum">    6158 </span>                :            :         spdm_context,</a>
-<a name="6159"><span class="lineNum">    6159 </span>                :            :         SPDM_CHALLENGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
+<a name="6159"><span class="lineNum">    6159 </span>                :            :         SPDM_KEY_EXCHANGE_REQUEST_NO_MEASUREMENT_SUMMARY_HASH, 0, 0,</a>
 <a name="6160"><span class="lineNum">    6160 </span>                :            :         &amp;session_id, &amp;heartbeat_period, &amp;slot_id_param,</a>
 <a name="6161"><span class="lineNum">    6161 </span>                :            :         measurement_hash);</a>
 <a name="6162"><span class="lineNum">    6162 </span>                :            :     /* Clear Mut_auth flags */</a>
