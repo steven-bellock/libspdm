@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-09-14 08:14:56</td>
+            <td class="headerValue">2023-09-15 08:14:45</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">18</td>
@@ -963,34 +963,34 @@
 <a name="892"><span class="lineNum">     892 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_b(spdm_context);</span></a>
 <a name="893"><span class="lineNum">     893 </span>                :            : </a>
 <a name="894"><span class="lineNum">     894 </span>                :<span class="lineCov">          1 :     spdm_response = NULL;</span></a>
-<a name="895"><span class="lineNum">     895 </span>        [<span class="branchCov" title="Branch 0 was taken 1388 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">       1389 :     for (size_t offset = 0; offset &lt; data_size; offset++) {</span></a>
+<a name="895"><span class="lineNum">     895 </span>        [<span class="branchCov" title="Branch 0 was taken 1390 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">       1391 :     for (size_t offset = 0; offset &lt; data_size; offset++) {</span></a>
 <a name="896"><span class="lineNum">     896 </span>                :            :         TEST_LIBSPDM_DEBUG_PRINT(&quot;offset:%u \n&quot;, offset);</a>
-<a name="897"><span class="lineNum">     897 </span>                :<span class="lineCov">       1388 :         m_libspdm_get_certificate_request3.offset = (uint16_t)offset;</span></a>
+<a name="897"><span class="lineNum">     897 </span>                :<span class="lineCov">       1390 :         m_libspdm_get_certificate_request3.offset = (uint16_t)offset;</span></a>
 <a name="898"><span class="lineNum">     898 </span>                :            : </a>
-<a name="899"><span class="lineNum">     899 </span>                :<span class="lineCov">       1388 :         response_size = sizeof(response);</span></a>
-<a name="900"><span class="lineNum">     900 </span>                :<span class="lineCov">       1388 :         status = libspdm_get_response_certificate(</span></a>
+<a name="899"><span class="lineNum">     899 </span>                :<span class="lineCov">       1390 :         response_size = sizeof(response);</span></a>
+<a name="900"><span class="lineNum">     900 </span>                :<span class="lineCov">       1390 :         status = libspdm_get_response_certificate(</span></a>
 <a name="901"><span class="lineNum">     901 </span>                :            :             spdm_context, m_libspdm_get_certificate_request3_size,</a>
 <a name="902"><span class="lineNum">     902 </span>                :            :             &amp;m_libspdm_get_certificate_request3, &amp;response_size,</a>
 <a name="903"><span class="lineNum">     903 </span>                :            :             response);</a>
-<a name="904"><span class="lineNum">     904 </span>                :<span class="lineCov">       1388 :         assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="905"><span class="lineNum">     905 </span>                :<span class="lineCov">       1388 :         spdm_response = (void *)response;</span></a>
+<a name="904"><span class="lineNum">     904 </span>                :<span class="lineCov">       1390 :         assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="905"><span class="lineNum">     905 </span>                :<span class="lineCov">       1390 :         spdm_response = (void *)response;</span></a>
 <a name="906"><span class="lineNum">     906 </span>                :            :         /* It may fail because the spdm does not support too many messages.</a>
 <a name="907"><span class="lineNum">     907 </span>                :            :          * assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_CERTIFICATE);*/</a>
-<a name="908"><span class="lineNum">     908 </span>        [<span class="branchCov" title="Branch 0 was taken 1388 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1388 :         if (spdm_response-&gt;header.request_response_code ==</span></a>
+<a name="908"><span class="lineNum">     908 </span>        [<span class="branchCov" title="Branch 0 was taken 1390 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">       1390 :         if (spdm_response-&gt;header.request_response_code ==</span></a>
 <a name="909"><span class="lineNum">     909 </span>                :            :             SPDM_CERTIFICATE) {</a>
-<a name="910"><span class="lineNum">     910 </span>                :<span class="lineCov">       1388 :             assert_int_equal(</span></a>
+<a name="910"><span class="lineNum">     910 </span>                :<span class="lineCov">       1390 :             assert_int_equal(</span></a>
 <a name="911"><span class="lineNum">     911 </span>                :            :                 spdm_response-&gt;header.request_response_code,</a>
 <a name="912"><span class="lineNum">     912 </span>                :            :                 SPDM_CERTIFICATE);</a>
-<a name="913"><span class="lineNum">     913 </span>                :<span class="lineCov">       1388 :             assert_int_equal(response_size,</span></a>
+<a name="913"><span class="lineNum">     913 </span>                :<span class="lineCov">       1390 :             assert_int_equal(response_size,</span></a>
 <a name="914"><span class="lineNum">     914 </span>                :            :                              sizeof(spdm_certificate_response_t) +</a>
 <a name="915"><span class="lineNum">     915 </span>                :            :                              expected_chunk_size);</a>
-<a name="916"><span class="lineNum">     916 </span>                :<span class="lineCov">       1388 :             assert_int_equal(spdm_response-&gt;header.param1, 0);</span></a>
-<a name="917"><span class="lineNum">     917 </span>                :<span class="lineCov">       1388 :             assert_int_equal(spdm_response-&gt;portion_length,</span></a>
+<a name="916"><span class="lineNum">     916 </span>                :<span class="lineCov">       1390 :             assert_int_equal(spdm_response-&gt;header.param1, 0);</span></a>
+<a name="917"><span class="lineNum">     917 </span>                :<span class="lineCov">       1390 :             assert_int_equal(spdm_response-&gt;portion_length,</span></a>
 <a name="918"><span class="lineNum">     918 </span>                :            :                              expected_chunk_size);</a>
-<a name="919"><span class="lineNum">     919 </span>                :<span class="lineCov">       1388 :             assert_int_equal(spdm_response-&gt;remainder_length,</span></a>
+<a name="919"><span class="lineNum">     919 </span>                :<span class="lineCov">       1390 :             assert_int_equal(spdm_response-&gt;remainder_length,</span></a>
 <a name="920"><span class="lineNum">     920 </span>                :            :                              data_size - offset -</a>
 <a name="921"><span class="lineNum">     921 </span>                :            :                              expected_chunk_size);</a>
-<a name="922"><span class="lineNum">     922 </span>                :<span class="lineCov">       1388 :             assert_int_equal(</span></a>
+<a name="922"><span class="lineNum">     922 </span>                :<span class="lineCov">       1390 :             assert_int_equal(</span></a>
 <a name="923"><span class="lineNum">     923 </span>                :            :                 ((uint8_t *)data)[offset],</a>
 <a name="924"><span class="lineNum">     924 </span>                :            :                 (response +</a>
 <a name="925"><span class="lineNum">     925 </span>                :            :                  sizeof(spdm_certificate_response_t))[0]);</a>
