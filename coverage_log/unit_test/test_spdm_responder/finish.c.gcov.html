@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">1220</td>
-            <td class="headerCovTableEntry">1220</td>
+            <td class="headerCovTableEntry">1679</td>
+            <td class="headerCovTableEntry">1679</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-09-20 08:14:56</td>
+            <td class="headerValue">2023-09-21 08:15:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">24</td>
-            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntry">30</td>
+            <td class="headerCovTableEntry">30</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -125,17 +125,17 @@
 <a name="54"><span class="lineNum">      54 </span>                :            : </a>
 <a name="55"><span class="lineNum">      55 </span>                :            : static libspdm_th_managed_buffer_t th_curr;</a>
 <a name="56"><span class="lineNum">      56 </span>                :            : </a>
-<a name="57"><span class="lineNum">      57 </span>                :<span class="lineCov">         20 : void libspdm_secured_message_set_request_finished_key(</span></a>
+<a name="57"><span class="lineNum">      57 </span>                :<span class="lineCov">         26 : void libspdm_secured_message_set_request_finished_key(</span></a>
 <a name="58"><span class="lineNum">      58 </span>                :            :     void *spdm_secured_message_context, const void *key, size_t key_size)</a>
 <a name="59"><span class="lineNum">      59 </span>                :            : {</a>
 <a name="60"><span class="lineNum">      60 </span>                :            :     libspdm_secured_message_context_t *secured_message_context;</a>
 <a name="61"><span class="lineNum">      61 </span>                :            : </a>
-<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">         20 :     secured_message_context = spdm_secured_message_context;</span></a>
-<a name="63"><span class="lineNum">      63 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 20 times"> + </span>]:<span class="lineCov">         20 :     LIBSPDM_ASSERT(key_size == secured_message_context-&gt;hash_size);</span></a>
-<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">         20 :     libspdm_copy_mem(secured_message_context-&gt;handshake_secret.request_finished_key,</span></a>
+<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">         26 :     secured_message_context = spdm_secured_message_context;</span></a>
+<a name="63"><span class="lineNum">      63 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 26 times"> + </span>]:<span class="lineCov">         26 :     LIBSPDM_ASSERT(key_size == secured_message_context-&gt;hash_size);</span></a>
+<a name="64"><span class="lineNum">      64 </span>                :<span class="lineCov">         26 :     libspdm_copy_mem(secured_message_context-&gt;handshake_secret.request_finished_key,</span></a>
 <a name="65"><span class="lineNum">      65 </span>                :            :                      sizeof(secured_message_context-&gt;handshake_secret.request_finished_key),</a>
 <a name="66"><span class="lineNum">      66 </span>                :            :                      key, secured_message_context-&gt;hash_size);</a>
-<a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">         20 : }</span></a>
+<a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">         26 : }</span></a>
 <a name="68"><span class="lineNum">      68 </span>                :            : </a>
 <a name="69"><span class="lineNum">      69 </span>                :            : /**</a>
 <a name="70"><span class="lineNum">      70 </span>                :            :  * Test 1: receiving a correct FINISH message from the requester with a</a>
@@ -2751,66 +2751,1073 @@
 <a name="2680"><span class="lineNum">    2680 </span>                :<span class="lineCov">          1 :     free(data2);</span></a>
 <a name="2681"><span class="lineNum">    2681 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="2682"><span class="lineNum">    2682 </span>                :            : </a>
-<a name="2683"><span class="lineNum">    2683 </span>                :            : libspdm_test_context_t m_libspdm_responder_finish_test_context = {</a>
-<a name="2684"><span class="lineNum">    2684 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="2685"><span class="lineNum">    2685 </span>                :            :     false,</a>
-<a name="2686"><span class="lineNum">    2686 </span>                :            : };</a>
-<a name="2687"><span class="lineNum">    2687 </span>                :            : </a>
-<a name="2688"><span class="lineNum">    2688 </span>                :<span class="lineCov">          1 : int libspdm_responder_finish_test_main(void)</span></a>
+<a name="2683"><span class="lineNum">    2683 </span>                :            : /**</a>
+<a name="2684"><span class="lineNum">    2684 </span>                :            :  * Test 23: Same as test case 22 but test signature endianness.</a>
+<a name="2685"><span class="lineNum">    2685 </span>                :            :  * Big-Endian Sign. Little-Endian Verify.</a>
+<a name="2686"><span class="lineNum">    2686 </span>                :            :  * Expecting signature to fail.</a>
+<a name="2687"><span class="lineNum">    2687 </span>                :            :  **/</a>
+<a name="2688"><span class="lineNum">    2688 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_finish_case23(void** state)</span></a>
 <a name="2689"><span class="lineNum">    2689 </span>                :            : {</a>
-<a name="2690"><span class="lineNum">    2690 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_finish_tests[] = {</span></a>
-<a name="2691"><span class="lineNum">    2691 </span>                :            :         /* Success Case*/</a>
-<a name="2692"><span class="lineNum">    2692 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case1),</a>
-<a name="2693"><span class="lineNum">    2693 </span>                :            :         /* Can be populated with new test.*/</a>
-<a name="2694"><span class="lineNum">    2694 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case2),</a>
-<a name="2695"><span class="lineNum">    2695 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_BUSY*/</a>
-<a name="2696"><span class="lineNum">    2696 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case3),</a>
-<a name="2697"><span class="lineNum">    2697 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
-<a name="2698"><span class="lineNum">    2698 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case4),</a>
-<a name="2699"><span class="lineNum">    2699 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
-<a name="2700"><span class="lineNum">    2700 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
-<a name="2701"><span class="lineNum">    2701 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case5),</a>
-<a name="2702"><span class="lineNum">    2702 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
-<a name="2703"><span class="lineNum">    2703 </span>                :            :         /* connection_state Check*/</a>
-<a name="2704"><span class="lineNum">    2704 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case6),</a>
-<a name="2705"><span class="lineNum">    2705 </span>                :            :         /* Buffer reset*/</a>
-<a name="2706"><span class="lineNum">    2706 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case7),</a>
-<a name="2707"><span class="lineNum">    2707 </span>                :            :         /* Success Case*/</a>
-<a name="2708"><span class="lineNum">    2708 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case8),</a>
-<a name="2709"><span class="lineNum">    2709 </span>                :            :         /* Unsupported KEY_EX capabilities*/</a>
-<a name="2710"><span class="lineNum">    2710 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case9),</a>
-<a name="2711"><span class="lineNum">    2711 </span>                :            :         /* Uninitialized session*/</a>
-<a name="2712"><span class="lineNum">    2712 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case10),</a>
-<a name="2713"><span class="lineNum">    2713 </span>                :            :         /* Incorrect MAC*/</a>
-<a name="2714"><span class="lineNum">    2714 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case11),</a>
-<a name="2715"><span class="lineNum">    2715 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case12),</a>
-<a name="2716"><span class="lineNum">    2716 </span>                :            :         /* Can be populated with new test.*/</a>
-<a name="2717"><span class="lineNum">    2717 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case13),</a>
-<a name="2718"><span class="lineNum">    2718 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case14),</a>
-<a name="2719"><span class="lineNum">    2719 </span>                :            :         /* Incorrect signature*/</a>
-<a name="2720"><span class="lineNum">    2720 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case15),</a>
-<a name="2721"><span class="lineNum">    2721 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case16),</a>
-<a name="2722"><span class="lineNum">    2722 </span>                :            :         /* Buffer verification*/</a>
-<a name="2723"><span class="lineNum">    2723 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case17),</a>
-<a name="2724"><span class="lineNum">    2724 </span>                :            :         /* Success Case, enable mutual authentication and use slot_id 0xFF */</a>
-<a name="2725"><span class="lineNum">    2725 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case18),</a>
-<a name="2726"><span class="lineNum">    2726 </span>                :            :         /* Invalid SlotID in FINISH request message when mutual authentication */</a>
-<a name="2727"><span class="lineNum">    2727 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case19, libspdm_unit_test_group_setup),</a>
-<a name="2728"><span class="lineNum">    2728 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case20, libspdm_unit_test_group_setup),</a>
-<a name="2729"><span class="lineNum">    2729 </span>                :            :         /* If FINISH.Param1 != 0x01, then FINISH.Param2 is reserved, shall be ignored when read */</a>
-<a name="2730"><span class="lineNum">    2730 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case21, libspdm_unit_test_group_setup),</a>
-<a name="2731"><span class="lineNum">    2731 </span>                :            :         /* If KEY_EXCHANGE_RSP.MutAuthRequested equals neither 0x02 nor 0x04, FINISH.Param2 no need match ENCAPSULATED_RESPONSE_ACK.EncapsulatedRequest */</a>
-<a name="2732"><span class="lineNum">    2732 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case22, libspdm_unit_test_group_setup),</a>
-<a name="2733"><span class="lineNum">    2733 </span>                :            :     };</a>
-<a name="2734"><span class="lineNum">    2734 </span>                :            : </a>
-<a name="2735"><span class="lineNum">    2735 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_finish_test_context);</span></a>
-<a name="2736"><span class="lineNum">    2736 </span>                :            : </a>
-<a name="2737"><span class="lineNum">    2737 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_finish_tests,</span></a>
-<a name="2738"><span class="lineNum">    2738 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="2739"><span class="lineNum">    2739 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="2740"><span class="lineNum">    2740 </span>                :            : }</a>
-<a name="2741"><span class="lineNum">    2741 </span>                :            : </a>
-<a name="2742"><span class="lineNum">    2742 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP*/</a>
+<a name="2690"><span class="lineNum">    2690 </span>                :            :     libspdm_return_t status;</a>
+<a name="2691"><span class="lineNum">    2691 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="2692"><span class="lineNum">    2692 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="2693"><span class="lineNum">    2693 </span>                :            :     size_t response_size;</a>
+<a name="2694"><span class="lineNum">    2694 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="2695"><span class="lineNum">    2695 </span>                :            :     spdm_finish_response_t* spdm_response;</a>
+<a name="2696"><span class="lineNum">    2696 </span>                :            :     void* data1;</a>
+<a name="2697"><span class="lineNum">    2697 </span>                :            :     size_t data_size1;</a>
+<a name="2698"><span class="lineNum">    2698 </span>                :            :     void* data2;</a>
+<a name="2699"><span class="lineNum">    2699 </span>                :            :     size_t data_size2;</a>
+<a name="2700"><span class="lineNum">    2700 </span>                :            :     uint8_t* ptr;</a>
+<a name="2701"><span class="lineNum">    2701 </span>                :            :     uint8_t* cert_buffer;</a>
+<a name="2702"><span class="lineNum">    2702 </span>                :            :     size_t cert_buffer_size;</a>
+<a name="2703"><span class="lineNum">    2703 </span>                :            :     uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2704"><span class="lineNum">    2704 </span>                :            :     uint8_t req_cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2705"><span class="lineNum">    2705 </span>                :            :     uint8_t hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2706"><span class="lineNum">    2706 </span>                :            :     uint8_t request_finished_key[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2707"><span class="lineNum">    2707 </span>                :            :     libspdm_session_info_t* session_info;</a>
+<a name="2708"><span class="lineNum">    2708 </span>                :            :     uint32_t session_id;</a>
+<a name="2709"><span class="lineNum">    2709 </span>                :            :     uint32_t hash_size;</a>
+<a name="2710"><span class="lineNum">    2710 </span>                :            :     uint32_t hmac_size;</a>
+<a name="2711"><span class="lineNum">    2711 </span>                :            :     size_t req_asym_signature_size;</a>
+<a name="2712"><span class="lineNum">    2712 </span>                :            : </a>
+<a name="2713"><span class="lineNum">    2713 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="2714"><span class="lineNum">    2714 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="2715"><span class="lineNum">    2715 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 23;</span></a>
+<a name="2716"><span class="lineNum">    2716 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_11 &lt;&lt;</span></a>
+<a name="2717"><span class="lineNum">    2717 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="2718"><span class="lineNum">    2718 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="2719"><span class="lineNum">    2719 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="2720"><span class="lineNum">    2720 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="2721"><span class="lineNum">    2721 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
+<a name="2722"><span class="lineNum">    2722 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="2723"><span class="lineNum">    2723 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_EX_CAP;</a>
+<a name="2724"><span class="lineNum">    2724 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="2725"><span class="lineNum">    2725 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2726"><span class="lineNum">    2726 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="2727"><span class="lineNum">    2727 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2728"><span class="lineNum">    2728 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
+<a name="2729"><span class="lineNum">    2729 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
+<a name="2730"><span class="lineNum">    2730 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="2731"><span class="lineNum">    2731 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="2732"><span class="lineNum">    2732 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="2733"><span class="lineNum">    2733 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="2734"><span class="lineNum">    2734 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="2735"><span class="lineNum">    2735 </span>                :            :         m_libspdm_use_dhe_algo;</a>
+<a name="2736"><span class="lineNum">    2736 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="2737"><span class="lineNum">    2737 </span>                :            :         m_libspdm_use_aead_algo;</a>
+<a name="2738"><span class="lineNum">    2738 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="2739"><span class="lineNum">    2739 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data1,</a>
+<a name="2740"><span class="lineNum">    2740 </span>                :            :                                                     &amp;data_size1, NULL, NULL);</a>
+<a name="2741"><span class="lineNum">    2741 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data1;</span></a>
+<a name="2742"><span class="lineNum">    2742 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="2743"><span class="lineNum">    2743 </span>                :            :         data_size1;</a>
+<a name="2744"><span class="lineNum">    2744 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer = data1;</span></a>
+<a name="2745"><span class="lineNum">    2745 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer_size =</span></a>
+<a name="2746"><span class="lineNum">    2746 </span>                :            :         data_size1;</a>
+<a name="2747"><span class="lineNum">    2747 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;spdm_10_11_verify_signature_endian =</span></a>
+<a name="2748"><span class="lineNum">    2748 </span>                :            :         LIBSPDM_SPDM_10_11_VERIFY_SIGNATURE_ENDIAN_LITTLE_ONLY;</a>
+<a name="2749"><span class="lineNum">    2749 </span>                :            : </a>
+<a name="2750"><span class="lineNum">    2750 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="2751"><span class="lineNum">    2751 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="2752"><span class="lineNum">    2752 </span>                :<span class="lineCov">          1 :     libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="2753"><span class="lineNum">    2753 </span>                :            :                                                     m_libspdm_use_req_asym_algo, &amp;data2,</a>
+<a name="2754"><span class="lineNum">    2754 </span>                :            :                                                     &amp;data_size2, NULL, NULL);</a>
+<a name="2755"><span class="lineNum">    2755 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="2756"><span class="lineNum">    2756 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="2757"><span class="lineNum">    2757 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="2758"><span class="lineNum">    2758 </span>                :            :                      data2, data_size2);</a>
+<a name="2759"><span class="lineNum">    2759 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size =</a>
+<a name="2760"><span class="lineNum">    2760 </span>                :            :         data_size2;</a>
+<a name="2761"><span class="lineNum">    2761 </span>                :            : #else</a>
+<a name="2762"><span class="lineNum">    2762 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="2763"><span class="lineNum">    2763 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="2764"><span class="lineNum">    2764 </span>                :            :         data2, data_size2,</a>
+<a name="2765"><span class="lineNum">    2765 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="2766"><span class="lineNum">    2766 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="2767"><span class="lineNum">    2767 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="2768"><span class="lineNum">    2768 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="2769"><span class="lineNum">    2769 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="2770"><span class="lineNum">    2770 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.algorithm.req_base_asym_alg,</span></a>
+<a name="2771"><span class="lineNum">    2771 </span>                :            :         data2,</a>
+<a name="2772"><span class="lineNum">    2772 </span>                :            :         data_size2,</a>
+<a name="2773"><span class="lineNum">    2773 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="2774"><span class="lineNum">    2774 </span>                :            : #endif</a>
+<a name="2775"><span class="lineNum">    2775 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = 0;</span></a>
+<a name="2776"><span class="lineNum">    2776 </span>                :            : </a>
+<a name="2777"><span class="lineNum">    2777 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
+<a name="2778"><span class="lineNum">    2778 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;latest_session_id = session_id;</span></a>
+<a name="2779"><span class="lineNum">    2779 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
+<a name="2780"><span class="lineNum">    2780 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, false);</span></a>
+<a name="2781"><span class="lineNum">    2781 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="2782"><span class="lineNum">    2782 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_dummy_buffer, hash_size, (uint8_t)(0xFF));</span></a>
+<a name="2783"><span class="lineNum">    2783 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_request_finished_key(</span></a>
+<a name="2784"><span class="lineNum">    2784 </span>                :            :         session_info-&gt;secured_message_context, m_dummy_buffer,</a>
+<a name="2785"><span class="lineNum">    2785 </span>                :            :         hash_size);</a>
+<a name="2786"><span class="lineNum">    2786 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(</span></a>
+<a name="2787"><span class="lineNum">    2787 </span>                :            :         session_info-&gt;secured_message_context,</a>
+<a name="2788"><span class="lineNum">    2788 </span>                :            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
+<a name="2789"><span class="lineNum">    2789 </span>                :<span class="lineCov">          1 :     session_info-&gt;mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="2790"><span class="lineNum">    2790 </span>                :            : </a>
+<a name="2791"><span class="lineNum">    2791 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="2792"><span class="lineNum">    2792 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="2793"><span class="lineNum">    2793 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="2794"><span class="lineNum">    2794 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="2795"><span class="lineNum">    2795 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="2796"><span class="lineNum">    2796 </span>                :<span class="lineCov">          1 :     hmac_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="2797"><span class="lineNum">    2797 </span>                :<span class="lineCov">          1 :     req_asym_signature_size =</span></a>
+<a name="2798"><span class="lineNum">    2798 </span>                :<span class="lineCov">          1 :         libspdm_get_req_asym_signature_size(m_libspdm_use_req_asym_algo);</span></a>
+<a name="2799"><span class="lineNum">    2799 </span>                :<span class="lineCov">          1 :     ptr = m_libspdm_finish_request7.signature;</span></a>
+<a name="2800"><span class="lineNum">    2800 </span>                :<span class="lineCov">          1 :     libspdm_init_managed_buffer(&amp;th_curr, sizeof(th_curr.buffer));</span></a>
+<a name="2801"><span class="lineNum">    2801 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data1;</span></a>
+<a name="2802"><span class="lineNum">    2802 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size1;</span></a>
+<a name="2803"><span class="lineNum">    2803 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="2804"><span class="lineNum">    2804 </span>                :            :                      cert_buffer_hash);</a>
+<a name="2805"><span class="lineNum">    2805 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data2;</span></a>
+<a name="2806"><span class="lineNum">    2806 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size2;</span></a>
+<a name="2807"><span class="lineNum">    2807 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="2808"><span class="lineNum">    2808 </span>                :            :                      req_cert_buffer_hash);</a>
+<a name="2809"><span class="lineNum">    2809 </span>                :            :     /* transcript.message_a size is 0*/</a>
+<a name="2810"><span class="lineNum">    2810 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, cert_buffer_hash, hash_size);</span></a>
+<a name="2811"><span class="lineNum">    2811 </span>                :            :     /* session_transcript.message_k is 0*/</a>
+<a name="2812"><span class="lineNum">    2812 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, req_cert_buffer_hash, hash_size);</span></a>
+<a name="2813"><span class="lineNum">    2813 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, (uint8_t*)&amp;m_libspdm_finish_request7,</span></a>
+<a name="2814"><span class="lineNum">    2814 </span>                :            :                                   sizeof(spdm_finish_request_t));</a>
+<a name="2815"><span class="lineNum">    2815 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP</a>
+<a name="2816"><span class="lineNum">    2816 </span>                :<span class="lineCov">          1 :     libspdm_requester_data_sign(</span></a>
+<a name="2817"><span class="lineNum">    2817 </span>                :<span class="lineCov">          1 :         m_libspdm_finish_request7.header.spdm_version &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT, SPDM_FINISH,</span></a>
+<a name="2818"><span class="lineNum">    2818 </span>                :            :             m_libspdm_use_req_asym_algo, m_libspdm_use_hash_algo,</a>
+<a name="2819"><span class="lineNum">    2819 </span>                :<span class="lineCov">          1 :             false, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="2820"><span class="lineNum">    2820 </span>                :            :             libspdm_get_managed_buffer_size(&amp;th_curr),</a>
+<a name="2821"><span class="lineNum">    2821 </span>                :            :             ptr, &amp;req_asym_signature_size);</a>
+<a name="2822"><span class="lineNum">    2822 </span>                :            : #endif</a>
+<a name="2823"><span class="lineNum">    2823 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, ptr, req_asym_signature_size);</span></a>
+<a name="2824"><span class="lineNum">    2824 </span>                :<span class="lineCov">          1 :     ptr += req_asym_signature_size;</span></a>
+<a name="2825"><span class="lineNum">    2825 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request_finished_key, LIBSPDM_MAX_HASH_SIZE, (uint8_t)(0xFF));</span></a>
+<a name="2826"><span class="lineNum">    2826 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="2827"><span class="lineNum">    2827 </span>                :            :                      libspdm_get_managed_buffer_size(&amp;th_curr), hash_data);</a>
+<a name="2828"><span class="lineNum">    2828 </span>                :<span class="lineCov">          1 :     libspdm_hmac_all(m_libspdm_use_hash_algo, hash_data, hash_size,</span></a>
+<a name="2829"><span class="lineNum">    2829 </span>                :            :                      request_finished_key, hash_size, ptr);</a>
+<a name="2830"><span class="lineNum">    2830 </span>                :<span class="lineCov">          1 :     m_libspdm_finish_request7_size = sizeof(spdm_finish_request_t) +</span></a>
+<a name="2831"><span class="lineNum">    2831 </span>                :<span class="lineCov">          1 :                                      req_asym_signature_size + hmac_size;</span></a>
+<a name="2832"><span class="lineNum">    2832 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="2833"><span class="lineNum">    2833 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_finish(spdm_context,</span></a>
+<a name="2834"><span class="lineNum">    2834 </span>                :            :                                          m_libspdm_finish_request7_size,</a>
+<a name="2835"><span class="lineNum">    2835 </span>                :            :                                          &amp;m_libspdm_finish_request7,</a>
+<a name="2836"><span class="lineNum">    2836 </span>                :            :                                          &amp;response_size, response);</a>
+<a name="2837"><span class="lineNum">    2837 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="2838"><span class="lineNum">    2838 </span>                :<span class="lineCov">          1 :     spdm_response = (void*)response;</span></a>
+<a name="2839"><span class="lineNum">    2839 </span>                :            : </a>
+<a name="2840"><span class="lineNum">    2840 </span>                :            :     /* Expecting failure on little-endian signature */</a>
+<a name="2841"><span class="lineNum">    2841 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="2842"><span class="lineNum">    2842 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="2843"><span class="lineNum">    2843 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
+<a name="2844"><span class="lineNum">    2844 </span>                :<span class="lineCov">          1 :     free(data2);</span></a>
+<a name="2845"><span class="lineNum">    2845 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="2846"><span class="lineNum">    2846 </span>                :            : </a>
+<a name="2847"><span class="lineNum">    2847 </span>                :            : /**</a>
+<a name="2848"><span class="lineNum">    2848 </span>                :            :  * Test 24: Same as test case 22 but test signature endianness.</a>
+<a name="2849"><span class="lineNum">    2849 </span>                :            :  * Big-Endian Sign. Big-Endian Verify.</a>
+<a name="2850"><span class="lineNum">    2850 </span>                :            :  * Expecting signature to PASS.</a>
+<a name="2851"><span class="lineNum">    2851 </span>                :            :  **/</a>
+<a name="2852"><span class="lineNum">    2852 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_finish_case24(void** state)</span></a>
+<a name="2853"><span class="lineNum">    2853 </span>                :            : {</a>
+<a name="2854"><span class="lineNum">    2854 </span>                :            :     libspdm_return_t status;</a>
+<a name="2855"><span class="lineNum">    2855 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="2856"><span class="lineNum">    2856 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="2857"><span class="lineNum">    2857 </span>                :            :     size_t response_size;</a>
+<a name="2858"><span class="lineNum">    2858 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="2859"><span class="lineNum">    2859 </span>                :            :     spdm_finish_response_t* spdm_response;</a>
+<a name="2860"><span class="lineNum">    2860 </span>                :            :     void* data1;</a>
+<a name="2861"><span class="lineNum">    2861 </span>                :            :     size_t data_size1;</a>
+<a name="2862"><span class="lineNum">    2862 </span>                :            :     void* data2;</a>
+<a name="2863"><span class="lineNum">    2863 </span>                :            :     size_t data_size2;</a>
+<a name="2864"><span class="lineNum">    2864 </span>                :            :     uint8_t* ptr;</a>
+<a name="2865"><span class="lineNum">    2865 </span>                :            :     uint8_t* cert_buffer;</a>
+<a name="2866"><span class="lineNum">    2866 </span>                :            :     size_t cert_buffer_size;</a>
+<a name="2867"><span class="lineNum">    2867 </span>                :            :     uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2868"><span class="lineNum">    2868 </span>                :            :     uint8_t req_cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2869"><span class="lineNum">    2869 </span>                :            :     uint8_t hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2870"><span class="lineNum">    2870 </span>                :            :     uint8_t request_finished_key[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="2871"><span class="lineNum">    2871 </span>                :            :     libspdm_session_info_t* session_info;</a>
+<a name="2872"><span class="lineNum">    2872 </span>                :            :     uint32_t session_id;</a>
+<a name="2873"><span class="lineNum">    2873 </span>                :            :     uint32_t hash_size;</a>
+<a name="2874"><span class="lineNum">    2874 </span>                :            :     uint32_t hmac_size;</a>
+<a name="2875"><span class="lineNum">    2875 </span>                :            :     size_t req_asym_signature_size;</a>
+<a name="2876"><span class="lineNum">    2876 </span>                :            : </a>
+<a name="2877"><span class="lineNum">    2877 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="2878"><span class="lineNum">    2878 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="2879"><span class="lineNum">    2879 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 24;</span></a>
+<a name="2880"><span class="lineNum">    2880 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_11 &lt;&lt;</span></a>
+<a name="2881"><span class="lineNum">    2881 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="2882"><span class="lineNum">    2882 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="2883"><span class="lineNum">    2883 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="2884"><span class="lineNum">    2884 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="2885"><span class="lineNum">    2885 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
+<a name="2886"><span class="lineNum">    2886 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="2887"><span class="lineNum">    2887 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_EX_CAP;</a>
+<a name="2888"><span class="lineNum">    2888 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="2889"><span class="lineNum">    2889 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2890"><span class="lineNum">    2890 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="2891"><span class="lineNum">    2891 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2892"><span class="lineNum">    2892 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
+<a name="2893"><span class="lineNum">    2893 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
+<a name="2894"><span class="lineNum">    2894 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="2895"><span class="lineNum">    2895 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="2896"><span class="lineNum">    2896 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="2897"><span class="lineNum">    2897 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="2898"><span class="lineNum">    2898 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="2899"><span class="lineNum">    2899 </span>                :            :         m_libspdm_use_dhe_algo;</a>
+<a name="2900"><span class="lineNum">    2900 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="2901"><span class="lineNum">    2901 </span>                :            :         m_libspdm_use_aead_algo;</a>
+<a name="2902"><span class="lineNum">    2902 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="2903"><span class="lineNum">    2903 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data1,</a>
+<a name="2904"><span class="lineNum">    2904 </span>                :            :                                                     &amp;data_size1, NULL, NULL);</a>
+<a name="2905"><span class="lineNum">    2905 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data1;</span></a>
+<a name="2906"><span class="lineNum">    2906 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="2907"><span class="lineNum">    2907 </span>                :            :         data_size1;</a>
+<a name="2908"><span class="lineNum">    2908 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer = data1;</span></a>
+<a name="2909"><span class="lineNum">    2909 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer_size =</span></a>
+<a name="2910"><span class="lineNum">    2910 </span>                :            :         data_size1;</a>
+<a name="2911"><span class="lineNum">    2911 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;spdm_10_11_verify_signature_endian =</span></a>
+<a name="2912"><span class="lineNum">    2912 </span>                :            :         LIBSPDM_SPDM_10_11_VERIFY_SIGNATURE_ENDIAN_BIG_ONLY;</a>
+<a name="2913"><span class="lineNum">    2913 </span>                :            : </a>
+<a name="2914"><span class="lineNum">    2914 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="2915"><span class="lineNum">    2915 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="2916"><span class="lineNum">    2916 </span>                :<span class="lineCov">          1 :     libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="2917"><span class="lineNum">    2917 </span>                :            :                                                     m_libspdm_use_req_asym_algo, &amp;data2,</a>
+<a name="2918"><span class="lineNum">    2918 </span>                :            :                                                     &amp;data_size2, NULL, NULL);</a>
+<a name="2919"><span class="lineNum">    2919 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="2920"><span class="lineNum">    2920 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="2921"><span class="lineNum">    2921 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="2922"><span class="lineNum">    2922 </span>                :            :                      data2, data_size2);</a>
+<a name="2923"><span class="lineNum">    2923 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size =</a>
+<a name="2924"><span class="lineNum">    2924 </span>                :            :         data_size2;</a>
+<a name="2925"><span class="lineNum">    2925 </span>                :            : #else</a>
+<a name="2926"><span class="lineNum">    2926 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="2927"><span class="lineNum">    2927 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="2928"><span class="lineNum">    2928 </span>                :            :         data2, data_size2,</a>
+<a name="2929"><span class="lineNum">    2929 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="2930"><span class="lineNum">    2930 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="2931"><span class="lineNum">    2931 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="2932"><span class="lineNum">    2932 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="2933"><span class="lineNum">    2933 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="2934"><span class="lineNum">    2934 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.algorithm.req_base_asym_alg,</span></a>
+<a name="2935"><span class="lineNum">    2935 </span>                :            :         data2,</a>
+<a name="2936"><span class="lineNum">    2936 </span>                :            :         data_size2,</a>
+<a name="2937"><span class="lineNum">    2937 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="2938"><span class="lineNum">    2938 </span>                :            : #endif</a>
+<a name="2939"><span class="lineNum">    2939 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = 0;</span></a>
+<a name="2940"><span class="lineNum">    2940 </span>                :            : </a>
+<a name="2941"><span class="lineNum">    2941 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
+<a name="2942"><span class="lineNum">    2942 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;latest_session_id = session_id;</span></a>
+<a name="2943"><span class="lineNum">    2943 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
+<a name="2944"><span class="lineNum">    2944 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, false);</span></a>
+<a name="2945"><span class="lineNum">    2945 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="2946"><span class="lineNum">    2946 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_dummy_buffer, hash_size, (uint8_t)(0xFF));</span></a>
+<a name="2947"><span class="lineNum">    2947 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_request_finished_key(</span></a>
+<a name="2948"><span class="lineNum">    2948 </span>                :            :         session_info-&gt;secured_message_context, m_dummy_buffer,</a>
+<a name="2949"><span class="lineNum">    2949 </span>                :            :         hash_size);</a>
+<a name="2950"><span class="lineNum">    2950 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(</span></a>
+<a name="2951"><span class="lineNum">    2951 </span>                :            :         session_info-&gt;secured_message_context,</a>
+<a name="2952"><span class="lineNum">    2952 </span>                :            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
+<a name="2953"><span class="lineNum">    2953 </span>                :<span class="lineCov">          1 :     session_info-&gt;mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="2954"><span class="lineNum">    2954 </span>                :            : </a>
+<a name="2955"><span class="lineNum">    2955 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="2956"><span class="lineNum">    2956 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="2957"><span class="lineNum">    2957 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="2958"><span class="lineNum">    2958 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="2959"><span class="lineNum">    2959 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="2960"><span class="lineNum">    2960 </span>                :<span class="lineCov">          1 :     hmac_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="2961"><span class="lineNum">    2961 </span>                :<span class="lineCov">          1 :     req_asym_signature_size =</span></a>
+<a name="2962"><span class="lineNum">    2962 </span>                :<span class="lineCov">          1 :         libspdm_get_req_asym_signature_size(m_libspdm_use_req_asym_algo);</span></a>
+<a name="2963"><span class="lineNum">    2963 </span>                :<span class="lineCov">          1 :     ptr = m_libspdm_finish_request7.signature;</span></a>
+<a name="2964"><span class="lineNum">    2964 </span>                :<span class="lineCov">          1 :     libspdm_init_managed_buffer(&amp;th_curr, sizeof(th_curr.buffer));</span></a>
+<a name="2965"><span class="lineNum">    2965 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data1;</span></a>
+<a name="2966"><span class="lineNum">    2966 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size1;</span></a>
+<a name="2967"><span class="lineNum">    2967 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="2968"><span class="lineNum">    2968 </span>                :            :                      cert_buffer_hash);</a>
+<a name="2969"><span class="lineNum">    2969 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data2;</span></a>
+<a name="2970"><span class="lineNum">    2970 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size2;</span></a>
+<a name="2971"><span class="lineNum">    2971 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="2972"><span class="lineNum">    2972 </span>                :            :                      req_cert_buffer_hash);</a>
+<a name="2973"><span class="lineNum">    2973 </span>                :            :     /* transcript.message_a size is 0*/</a>
+<a name="2974"><span class="lineNum">    2974 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, cert_buffer_hash, hash_size);</span></a>
+<a name="2975"><span class="lineNum">    2975 </span>                :            :     /* session_transcript.message_k is 0*/</a>
+<a name="2976"><span class="lineNum">    2976 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, req_cert_buffer_hash, hash_size);</span></a>
+<a name="2977"><span class="lineNum">    2977 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, (uint8_t*)&amp;m_libspdm_finish_request7,</span></a>
+<a name="2978"><span class="lineNum">    2978 </span>                :            :                                   sizeof(spdm_finish_request_t));</a>
+<a name="2979"><span class="lineNum">    2979 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP</a>
+<a name="2980"><span class="lineNum">    2980 </span>                :<span class="lineCov">          1 :     libspdm_requester_data_sign(</span></a>
+<a name="2981"><span class="lineNum">    2981 </span>                :<span class="lineCov">          1 :         m_libspdm_finish_request7.header.spdm_version &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT, SPDM_FINISH,</span></a>
+<a name="2982"><span class="lineNum">    2982 </span>                :            :             m_libspdm_use_req_asym_algo, m_libspdm_use_hash_algo,</a>
+<a name="2983"><span class="lineNum">    2983 </span>                :<span class="lineCov">          1 :             false, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="2984"><span class="lineNum">    2984 </span>                :            :             libspdm_get_managed_buffer_size(&amp;th_curr),</a>
+<a name="2985"><span class="lineNum">    2985 </span>                :            :             ptr, &amp;req_asym_signature_size);</a>
+<a name="2986"><span class="lineNum">    2986 </span>                :            : #endif</a>
+<a name="2987"><span class="lineNum">    2987 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, ptr, req_asym_signature_size);</span></a>
+<a name="2988"><span class="lineNum">    2988 </span>                :<span class="lineCov">          1 :     ptr += req_asym_signature_size;</span></a>
+<a name="2989"><span class="lineNum">    2989 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request_finished_key, LIBSPDM_MAX_HASH_SIZE, (uint8_t)(0xFF));</span></a>
+<a name="2990"><span class="lineNum">    2990 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="2991"><span class="lineNum">    2991 </span>                :            :                      libspdm_get_managed_buffer_size(&amp;th_curr), hash_data);</a>
+<a name="2992"><span class="lineNum">    2992 </span>                :<span class="lineCov">          1 :     libspdm_hmac_all(m_libspdm_use_hash_algo, hash_data, hash_size,</span></a>
+<a name="2993"><span class="lineNum">    2993 </span>                :            :                      request_finished_key, hash_size, ptr);</a>
+<a name="2994"><span class="lineNum">    2994 </span>                :<span class="lineCov">          1 :     m_libspdm_finish_request7_size = sizeof(spdm_finish_request_t) +</span></a>
+<a name="2995"><span class="lineNum">    2995 </span>                :<span class="lineCov">          1 :                                      req_asym_signature_size + hmac_size;</span></a>
+<a name="2996"><span class="lineNum">    2996 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="2997"><span class="lineNum">    2997 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_finish(spdm_context,</span></a>
+<a name="2998"><span class="lineNum">    2998 </span>                :            :                                          m_libspdm_finish_request7_size,</a>
+<a name="2999"><span class="lineNum">    2999 </span>                :            :                                          &amp;m_libspdm_finish_request7,</a>
+<a name="3000"><span class="lineNum">    3000 </span>                :            :                                          &amp;response_size, response);</a>
+<a name="3001"><span class="lineNum">    3001 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="3002"><span class="lineNum">    3002 </span>                :<span class="lineCov">          1 :     spdm_response = (void*)response;</span></a>
+<a name="3003"><span class="lineNum">    3003 </span>                :            : </a>
+<a name="3004"><span class="lineNum">    3004 </span>                :            :     /* Expecting pass on big-endian signature */</a>
+<a name="3005"><span class="lineNum">    3005 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_FINISH_RSP);</span></a>
+<a name="3006"><span class="lineNum">    3006 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_finish_response_t) + hmac_size);</span></a>
+<a name="3007"><span class="lineNum">    3007 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
+<a name="3008"><span class="lineNum">    3008 </span>                :<span class="lineCov">          1 :     free(data2);</span></a>
+<a name="3009"><span class="lineNum">    3009 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="3010"><span class="lineNum">    3010 </span>                :            : </a>
+<a name="3011"><span class="lineNum">    3011 </span>                :            : /**</a>
+<a name="3012"><span class="lineNum">    3012 </span>                :            :  * Test 25: Same as test case 22, but test signature endianness.</a>
+<a name="3013"><span class="lineNum">    3013 </span>                :            :  * Big Endian Sign. Big or Little Endian Verify.</a>
+<a name="3014"><span class="lineNum">    3014 </span>                :            :  * Expecting signature to PASS.</a>
+<a name="3015"><span class="lineNum">    3015 </span>                :            :  **/</a>
+<a name="3016"><span class="lineNum">    3016 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_finish_case25(void** state)</span></a>
+<a name="3017"><span class="lineNum">    3017 </span>                :            : {</a>
+<a name="3018"><span class="lineNum">    3018 </span>                :            :     libspdm_return_t status;</a>
+<a name="3019"><span class="lineNum">    3019 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="3020"><span class="lineNum">    3020 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="3021"><span class="lineNum">    3021 </span>                :            :     size_t response_size;</a>
+<a name="3022"><span class="lineNum">    3022 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="3023"><span class="lineNum">    3023 </span>                :            :     spdm_finish_response_t* spdm_response;</a>
+<a name="3024"><span class="lineNum">    3024 </span>                :            :     void* data1;</a>
+<a name="3025"><span class="lineNum">    3025 </span>                :            :     size_t data_size1;</a>
+<a name="3026"><span class="lineNum">    3026 </span>                :            :     void* data2;</a>
+<a name="3027"><span class="lineNum">    3027 </span>                :            :     size_t data_size2;</a>
+<a name="3028"><span class="lineNum">    3028 </span>                :            :     uint8_t* ptr;</a>
+<a name="3029"><span class="lineNum">    3029 </span>                :            :     uint8_t* cert_buffer;</a>
+<a name="3030"><span class="lineNum">    3030 </span>                :            :     size_t cert_buffer_size;</a>
+<a name="3031"><span class="lineNum">    3031 </span>                :            :     uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3032"><span class="lineNum">    3032 </span>                :            :     uint8_t req_cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3033"><span class="lineNum">    3033 </span>                :            :     uint8_t hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3034"><span class="lineNum">    3034 </span>                :            :     uint8_t request_finished_key[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3035"><span class="lineNum">    3035 </span>                :            :     libspdm_session_info_t* session_info;</a>
+<a name="3036"><span class="lineNum">    3036 </span>                :            :     uint32_t session_id;</a>
+<a name="3037"><span class="lineNum">    3037 </span>                :            :     uint32_t hash_size;</a>
+<a name="3038"><span class="lineNum">    3038 </span>                :            :     uint32_t hmac_size;</a>
+<a name="3039"><span class="lineNum">    3039 </span>                :            :     size_t req_asym_signature_size;</a>
+<a name="3040"><span class="lineNum">    3040 </span>                :            : </a>
+<a name="3041"><span class="lineNum">    3041 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="3042"><span class="lineNum">    3042 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="3043"><span class="lineNum">    3043 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 25;</span></a>
+<a name="3044"><span class="lineNum">    3044 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_11 &lt;&lt;</span></a>
+<a name="3045"><span class="lineNum">    3045 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="3046"><span class="lineNum">    3046 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="3047"><span class="lineNum">    3047 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="3048"><span class="lineNum">    3048 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3049"><span class="lineNum">    3049 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
+<a name="3050"><span class="lineNum">    3050 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3051"><span class="lineNum">    3051 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_EX_CAP;</a>
+<a name="3052"><span class="lineNum">    3052 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="3053"><span class="lineNum">    3053 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="3054"><span class="lineNum">    3054 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="3055"><span class="lineNum">    3055 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="3056"><span class="lineNum">    3056 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
+<a name="3057"><span class="lineNum">    3057 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
+<a name="3058"><span class="lineNum">    3058 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="3059"><span class="lineNum">    3059 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="3060"><span class="lineNum">    3060 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="3061"><span class="lineNum">    3061 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="3062"><span class="lineNum">    3062 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="3063"><span class="lineNum">    3063 </span>                :            :         m_libspdm_use_dhe_algo;</a>
+<a name="3064"><span class="lineNum">    3064 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="3065"><span class="lineNum">    3065 </span>                :            :         m_libspdm_use_aead_algo;</a>
+<a name="3066"><span class="lineNum">    3066 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3067"><span class="lineNum">    3067 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data1,</a>
+<a name="3068"><span class="lineNum">    3068 </span>                :            :                                                     &amp;data_size1, NULL, NULL);</a>
+<a name="3069"><span class="lineNum">    3069 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data1;</span></a>
+<a name="3070"><span class="lineNum">    3070 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="3071"><span class="lineNum">    3071 </span>                :            :         data_size1;</a>
+<a name="3072"><span class="lineNum">    3072 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer = data1;</span></a>
+<a name="3073"><span class="lineNum">    3073 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer_size =</span></a>
+<a name="3074"><span class="lineNum">    3074 </span>                :            :         data_size1;</a>
+<a name="3075"><span class="lineNum">    3075 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;spdm_10_11_verify_signature_endian =</span></a>
+<a name="3076"><span class="lineNum">    3076 </span>                :            :         LIBSPDM_SPDM_10_11_VERIFY_SIGNATURE_ENDIAN_BIG_OR_LITTLE;</a>
+<a name="3077"><span class="lineNum">    3077 </span>                :            : </a>
+<a name="3078"><span class="lineNum">    3078 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="3079"><span class="lineNum">    3079 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3080"><span class="lineNum">    3080 </span>                :<span class="lineCov">          1 :     libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3081"><span class="lineNum">    3081 </span>                :            :                                                     m_libspdm_use_req_asym_algo, &amp;data2,</a>
+<a name="3082"><span class="lineNum">    3082 </span>                :            :                                                     &amp;data_size2, NULL, NULL);</a>
+<a name="3083"><span class="lineNum">    3083 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="3084"><span class="lineNum">    3084 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="3085"><span class="lineNum">    3085 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="3086"><span class="lineNum">    3086 </span>                :            :                      data2, data_size2);</a>
+<a name="3087"><span class="lineNum">    3087 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size =</a>
+<a name="3088"><span class="lineNum">    3088 </span>                :            :         data_size2;</a>
+<a name="3089"><span class="lineNum">    3089 </span>                :            : #else</a>
+<a name="3090"><span class="lineNum">    3090 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="3091"><span class="lineNum">    3091 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3092"><span class="lineNum">    3092 </span>                :            :         data2, data_size2,</a>
+<a name="3093"><span class="lineNum">    3093 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="3094"><span class="lineNum">    3094 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="3095"><span class="lineNum">    3095 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="3096"><span class="lineNum">    3096 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="3097"><span class="lineNum">    3097 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3098"><span class="lineNum">    3098 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.algorithm.req_base_asym_alg,</span></a>
+<a name="3099"><span class="lineNum">    3099 </span>                :            :         data2,</a>
+<a name="3100"><span class="lineNum">    3100 </span>                :            :         data_size2,</a>
+<a name="3101"><span class="lineNum">    3101 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="3102"><span class="lineNum">    3102 </span>                :            : #endif</a>
+<a name="3103"><span class="lineNum">    3103 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = 0;</span></a>
+<a name="3104"><span class="lineNum">    3104 </span>                :            : </a>
+<a name="3105"><span class="lineNum">    3105 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
+<a name="3106"><span class="lineNum">    3106 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;latest_session_id = session_id;</span></a>
+<a name="3107"><span class="lineNum">    3107 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
+<a name="3108"><span class="lineNum">    3108 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, false);</span></a>
+<a name="3109"><span class="lineNum">    3109 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3110"><span class="lineNum">    3110 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_dummy_buffer, hash_size, (uint8_t)(0xFF));</span></a>
+<a name="3111"><span class="lineNum">    3111 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_request_finished_key(</span></a>
+<a name="3112"><span class="lineNum">    3112 </span>                :            :         session_info-&gt;secured_message_context, m_dummy_buffer,</a>
+<a name="3113"><span class="lineNum">    3113 </span>                :            :         hash_size);</a>
+<a name="3114"><span class="lineNum">    3114 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(</span></a>
+<a name="3115"><span class="lineNum">    3115 </span>                :            :         session_info-&gt;secured_message_context,</a>
+<a name="3116"><span class="lineNum">    3116 </span>                :            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
+<a name="3117"><span class="lineNum">    3117 </span>                :<span class="lineCov">          1 :     session_info-&gt;mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3118"><span class="lineNum">    3118 </span>                :            : </a>
+<a name="3119"><span class="lineNum">    3119 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3120"><span class="lineNum">    3120 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3121"><span class="lineNum">    3121 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3122"><span class="lineNum">    3122 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3123"><span class="lineNum">    3123 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3124"><span class="lineNum">    3124 </span>                :<span class="lineCov">          1 :     hmac_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3125"><span class="lineNum">    3125 </span>                :<span class="lineCov">          1 :     req_asym_signature_size =</span></a>
+<a name="3126"><span class="lineNum">    3126 </span>                :<span class="lineCov">          1 :         libspdm_get_req_asym_signature_size(m_libspdm_use_req_asym_algo);</span></a>
+<a name="3127"><span class="lineNum">    3127 </span>                :<span class="lineCov">          1 :     ptr = m_libspdm_finish_request7.signature;</span></a>
+<a name="3128"><span class="lineNum">    3128 </span>                :<span class="lineCov">          1 :     libspdm_init_managed_buffer(&amp;th_curr, sizeof(th_curr.buffer));</span></a>
+<a name="3129"><span class="lineNum">    3129 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data1;</span></a>
+<a name="3130"><span class="lineNum">    3130 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size1;</span></a>
+<a name="3131"><span class="lineNum">    3131 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3132"><span class="lineNum">    3132 </span>                :            :                      cert_buffer_hash);</a>
+<a name="3133"><span class="lineNum">    3133 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data2;</span></a>
+<a name="3134"><span class="lineNum">    3134 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size2;</span></a>
+<a name="3135"><span class="lineNum">    3135 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3136"><span class="lineNum">    3136 </span>                :            :                      req_cert_buffer_hash);</a>
+<a name="3137"><span class="lineNum">    3137 </span>                :            :     /* transcript.message_a size is 0*/</a>
+<a name="3138"><span class="lineNum">    3138 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, cert_buffer_hash, hash_size);</span></a>
+<a name="3139"><span class="lineNum">    3139 </span>                :            :     /* session_transcript.message_k is 0*/</a>
+<a name="3140"><span class="lineNum">    3140 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, req_cert_buffer_hash, hash_size);</span></a>
+<a name="3141"><span class="lineNum">    3141 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, (uint8_t*)&amp;m_libspdm_finish_request7,</span></a>
+<a name="3142"><span class="lineNum">    3142 </span>                :            :                                   sizeof(spdm_finish_request_t));</a>
+<a name="3143"><span class="lineNum">    3143 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP</a>
+<a name="3144"><span class="lineNum">    3144 </span>                :<span class="lineCov">          1 :     libspdm_requester_data_sign(</span></a>
+<a name="3145"><span class="lineNum">    3145 </span>                :<span class="lineCov">          1 :         m_libspdm_finish_request7.header.spdm_version &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT, SPDM_FINISH,</span></a>
+<a name="3146"><span class="lineNum">    3146 </span>                :            :             m_libspdm_use_req_asym_algo, m_libspdm_use_hash_algo,</a>
+<a name="3147"><span class="lineNum">    3147 </span>                :<span class="lineCov">          1 :             false, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3148"><span class="lineNum">    3148 </span>                :            :             libspdm_get_managed_buffer_size(&amp;th_curr),</a>
+<a name="3149"><span class="lineNum">    3149 </span>                :            :             ptr, &amp;req_asym_signature_size);</a>
+<a name="3150"><span class="lineNum">    3150 </span>                :            : #endif</a>
+<a name="3151"><span class="lineNum">    3151 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, ptr, req_asym_signature_size);</span></a>
+<a name="3152"><span class="lineNum">    3152 </span>                :<span class="lineCov">          1 :     ptr += req_asym_signature_size;</span></a>
+<a name="3153"><span class="lineNum">    3153 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request_finished_key, LIBSPDM_MAX_HASH_SIZE, (uint8_t)(0xFF));</span></a>
+<a name="3154"><span class="lineNum">    3154 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3155"><span class="lineNum">    3155 </span>                :            :                      libspdm_get_managed_buffer_size(&amp;th_curr), hash_data);</a>
+<a name="3156"><span class="lineNum">    3156 </span>                :<span class="lineCov">          1 :     libspdm_hmac_all(m_libspdm_use_hash_algo, hash_data, hash_size,</span></a>
+<a name="3157"><span class="lineNum">    3157 </span>                :            :                      request_finished_key, hash_size, ptr);</a>
+<a name="3158"><span class="lineNum">    3158 </span>                :<span class="lineCov">          1 :     m_libspdm_finish_request7_size = sizeof(spdm_finish_request_t) +</span></a>
+<a name="3159"><span class="lineNum">    3159 </span>                :<span class="lineCov">          1 :                                      req_asym_signature_size + hmac_size;</span></a>
+<a name="3160"><span class="lineNum">    3160 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="3161"><span class="lineNum">    3161 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_finish(spdm_context,</span></a>
+<a name="3162"><span class="lineNum">    3162 </span>                :            :                                          m_libspdm_finish_request7_size,</a>
+<a name="3163"><span class="lineNum">    3163 </span>                :            :                                          &amp;m_libspdm_finish_request7,</a>
+<a name="3164"><span class="lineNum">    3164 </span>                :            :                                          &amp;response_size, response);</a>
+<a name="3165"><span class="lineNum">    3165 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="3166"><span class="lineNum">    3166 </span>                :<span class="lineCov">          1 :     spdm_response = (void*)response;</span></a>
+<a name="3167"><span class="lineNum">    3167 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_FINISH_RSP);</span></a>
+<a name="3168"><span class="lineNum">    3168 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_finish_response_t) + hmac_size);</span></a>
+<a name="3169"><span class="lineNum">    3169 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
+<a name="3170"><span class="lineNum">    3170 </span>                :<span class="lineCov">          1 :     free(data2);</span></a>
+<a name="3171"><span class="lineNum">    3171 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="3172"><span class="lineNum">    3172 </span>                :            : </a>
+<a name="3173"><span class="lineNum">    3173 </span>                :            : /**</a>
+<a name="3174"><span class="lineNum">    3174 </span>                :            :  * Test 26: Same as test case 22, but test endian verification.</a>
+<a name="3175"><span class="lineNum">    3175 </span>                :            :  * Sign as Little Endian, Verify as Little.</a>
+<a name="3176"><span class="lineNum">    3176 </span>                :            :  * Expecting signature to PASS.</a>
+<a name="3177"><span class="lineNum">    3177 </span>                :            :  **/</a>
+<a name="3178"><span class="lineNum">    3178 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_finish_case26(void** state)</span></a>
+<a name="3179"><span class="lineNum">    3179 </span>                :            : {</a>
+<a name="3180"><span class="lineNum">    3180 </span>                :            :     libspdm_return_t status;</a>
+<a name="3181"><span class="lineNum">    3181 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="3182"><span class="lineNum">    3182 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="3183"><span class="lineNum">    3183 </span>                :            :     size_t response_size;</a>
+<a name="3184"><span class="lineNum">    3184 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="3185"><span class="lineNum">    3185 </span>                :            :     spdm_finish_response_t* spdm_response;</a>
+<a name="3186"><span class="lineNum">    3186 </span>                :            :     void* data1;</a>
+<a name="3187"><span class="lineNum">    3187 </span>                :            :     size_t data_size1;</a>
+<a name="3188"><span class="lineNum">    3188 </span>                :            :     void* data2;</a>
+<a name="3189"><span class="lineNum">    3189 </span>                :            :     size_t data_size2;</a>
+<a name="3190"><span class="lineNum">    3190 </span>                :            :     uint8_t* ptr;</a>
+<a name="3191"><span class="lineNum">    3191 </span>                :            :     uint8_t* cert_buffer;</a>
+<a name="3192"><span class="lineNum">    3192 </span>                :            :     size_t cert_buffer_size;</a>
+<a name="3193"><span class="lineNum">    3193 </span>                :            :     uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3194"><span class="lineNum">    3194 </span>                :            :     uint8_t req_cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3195"><span class="lineNum">    3195 </span>                :            :     uint8_t hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3196"><span class="lineNum">    3196 </span>                :            :     uint8_t request_finished_key[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3197"><span class="lineNum">    3197 </span>                :            :     libspdm_session_info_t* session_info;</a>
+<a name="3198"><span class="lineNum">    3198 </span>                :            :     uint32_t session_id;</a>
+<a name="3199"><span class="lineNum">    3199 </span>                :            :     uint32_t hash_size;</a>
+<a name="3200"><span class="lineNum">    3200 </span>                :            :     uint32_t hmac_size;</a>
+<a name="3201"><span class="lineNum">    3201 </span>                :            :     size_t req_asym_signature_size;</a>
+<a name="3202"><span class="lineNum">    3202 </span>                :            : </a>
+<a name="3203"><span class="lineNum">    3203 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="3204"><span class="lineNum">    3204 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="3205"><span class="lineNum">    3205 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 26;</span></a>
+<a name="3206"><span class="lineNum">    3206 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_11 &lt;&lt;</span></a>
+<a name="3207"><span class="lineNum">    3207 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="3208"><span class="lineNum">    3208 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="3209"><span class="lineNum">    3209 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="3210"><span class="lineNum">    3210 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3211"><span class="lineNum">    3211 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
+<a name="3212"><span class="lineNum">    3212 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3213"><span class="lineNum">    3213 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_EX_CAP;</a>
+<a name="3214"><span class="lineNum">    3214 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="3215"><span class="lineNum">    3215 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="3216"><span class="lineNum">    3216 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="3217"><span class="lineNum">    3217 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="3218"><span class="lineNum">    3218 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
+<a name="3219"><span class="lineNum">    3219 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
+<a name="3220"><span class="lineNum">    3220 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="3221"><span class="lineNum">    3221 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="3222"><span class="lineNum">    3222 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="3223"><span class="lineNum">    3223 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="3224"><span class="lineNum">    3224 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="3225"><span class="lineNum">    3225 </span>                :            :         m_libspdm_use_dhe_algo;</a>
+<a name="3226"><span class="lineNum">    3226 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="3227"><span class="lineNum">    3227 </span>                :            :         m_libspdm_use_aead_algo;</a>
+<a name="3228"><span class="lineNum">    3228 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3229"><span class="lineNum">    3229 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data1,</a>
+<a name="3230"><span class="lineNum">    3230 </span>                :            :                                                     &amp;data_size1, NULL, NULL);</a>
+<a name="3231"><span class="lineNum">    3231 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data1;</span></a>
+<a name="3232"><span class="lineNum">    3232 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="3233"><span class="lineNum">    3233 </span>                :            :         data_size1;</a>
+<a name="3234"><span class="lineNum">    3234 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer = data1;</span></a>
+<a name="3235"><span class="lineNum">    3235 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer_size =</span></a>
+<a name="3236"><span class="lineNum">    3236 </span>                :            :         data_size1;</a>
+<a name="3237"><span class="lineNum">    3237 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;spdm_10_11_verify_signature_endian =</span></a>
+<a name="3238"><span class="lineNum">    3238 </span>                :            :         LIBSPDM_SPDM_10_11_VERIFY_SIGNATURE_ENDIAN_LITTLE_ONLY;</a>
+<a name="3239"><span class="lineNum">    3239 </span>                :            : </a>
+<a name="3240"><span class="lineNum">    3240 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="3241"><span class="lineNum">    3241 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3242"><span class="lineNum">    3242 </span>                :<span class="lineCov">          1 :     libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3243"><span class="lineNum">    3243 </span>                :            :                                                     m_libspdm_use_req_asym_algo, &amp;data2,</a>
+<a name="3244"><span class="lineNum">    3244 </span>                :            :                                                     &amp;data_size2, NULL, NULL);</a>
+<a name="3245"><span class="lineNum">    3245 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="3246"><span class="lineNum">    3246 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="3247"><span class="lineNum">    3247 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="3248"><span class="lineNum">    3248 </span>                :            :                      data2, data_size2);</a>
+<a name="3249"><span class="lineNum">    3249 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size =</a>
+<a name="3250"><span class="lineNum">    3250 </span>                :            :         data_size2;</a>
+<a name="3251"><span class="lineNum">    3251 </span>                :            : #else</a>
+<a name="3252"><span class="lineNum">    3252 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="3253"><span class="lineNum">    3253 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3254"><span class="lineNum">    3254 </span>                :            :         data2, data_size2,</a>
+<a name="3255"><span class="lineNum">    3255 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="3256"><span class="lineNum">    3256 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="3257"><span class="lineNum">    3257 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="3258"><span class="lineNum">    3258 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="3259"><span class="lineNum">    3259 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3260"><span class="lineNum">    3260 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.algorithm.req_base_asym_alg,</span></a>
+<a name="3261"><span class="lineNum">    3261 </span>                :            :         data2,</a>
+<a name="3262"><span class="lineNum">    3262 </span>                :            :         data_size2,</a>
+<a name="3263"><span class="lineNum">    3263 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="3264"><span class="lineNum">    3264 </span>                :            : #endif</a>
+<a name="3265"><span class="lineNum">    3265 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = 0;</span></a>
+<a name="3266"><span class="lineNum">    3266 </span>                :            : </a>
+<a name="3267"><span class="lineNum">    3267 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
+<a name="3268"><span class="lineNum">    3268 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;latest_session_id = session_id;</span></a>
+<a name="3269"><span class="lineNum">    3269 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
+<a name="3270"><span class="lineNum">    3270 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, false);</span></a>
+<a name="3271"><span class="lineNum">    3271 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3272"><span class="lineNum">    3272 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_dummy_buffer, hash_size, (uint8_t)(0xFF));</span></a>
+<a name="3273"><span class="lineNum">    3273 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_request_finished_key(</span></a>
+<a name="3274"><span class="lineNum">    3274 </span>                :            :         session_info-&gt;secured_message_context, m_dummy_buffer,</a>
+<a name="3275"><span class="lineNum">    3275 </span>                :            :         hash_size);</a>
+<a name="3276"><span class="lineNum">    3276 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(</span></a>
+<a name="3277"><span class="lineNum">    3277 </span>                :            :         session_info-&gt;secured_message_context,</a>
+<a name="3278"><span class="lineNum">    3278 </span>                :            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
+<a name="3279"><span class="lineNum">    3279 </span>                :<span class="lineCov">          1 :     session_info-&gt;mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3280"><span class="lineNum">    3280 </span>                :            : </a>
+<a name="3281"><span class="lineNum">    3281 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3282"><span class="lineNum">    3282 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3283"><span class="lineNum">    3283 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3284"><span class="lineNum">    3284 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3285"><span class="lineNum">    3285 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3286"><span class="lineNum">    3286 </span>                :<span class="lineCov">          1 :     hmac_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3287"><span class="lineNum">    3287 </span>                :<span class="lineCov">          1 :     req_asym_signature_size =</span></a>
+<a name="3288"><span class="lineNum">    3288 </span>                :<span class="lineCov">          1 :         libspdm_get_req_asym_signature_size(m_libspdm_use_req_asym_algo);</span></a>
+<a name="3289"><span class="lineNum">    3289 </span>                :<span class="lineCov">          1 :     ptr = m_libspdm_finish_request7.signature;</span></a>
+<a name="3290"><span class="lineNum">    3290 </span>                :<span class="lineCov">          1 :     libspdm_init_managed_buffer(&amp;th_curr, sizeof(th_curr.buffer));</span></a>
+<a name="3291"><span class="lineNum">    3291 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data1;</span></a>
+<a name="3292"><span class="lineNum">    3292 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size1;</span></a>
+<a name="3293"><span class="lineNum">    3293 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3294"><span class="lineNum">    3294 </span>                :            :                      cert_buffer_hash);</a>
+<a name="3295"><span class="lineNum">    3295 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data2;</span></a>
+<a name="3296"><span class="lineNum">    3296 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size2;</span></a>
+<a name="3297"><span class="lineNum">    3297 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3298"><span class="lineNum">    3298 </span>                :            :                      req_cert_buffer_hash);</a>
+<a name="3299"><span class="lineNum">    3299 </span>                :            :     /* transcript.message_a size is 0*/</a>
+<a name="3300"><span class="lineNum">    3300 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, cert_buffer_hash, hash_size);</span></a>
+<a name="3301"><span class="lineNum">    3301 </span>                :            :     /* session_transcript.message_k is 0*/</a>
+<a name="3302"><span class="lineNum">    3302 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, req_cert_buffer_hash, hash_size);</span></a>
+<a name="3303"><span class="lineNum">    3303 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, (uint8_t*)&amp;m_libspdm_finish_request7,</span></a>
+<a name="3304"><span class="lineNum">    3304 </span>                :            :                                   sizeof(spdm_finish_request_t));</a>
+<a name="3305"><span class="lineNum">    3305 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP</a>
+<a name="3306"><span class="lineNum">    3306 </span>                :<span class="lineCov">          1 :     libspdm_requester_data_sign(</span></a>
+<a name="3307"><span class="lineNum">    3307 </span>                :<span class="lineCov">          1 :         m_libspdm_finish_request7.header.spdm_version &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT, SPDM_FINISH,</span></a>
+<a name="3308"><span class="lineNum">    3308 </span>                :            :             m_libspdm_use_req_asym_algo, m_libspdm_use_hash_algo,</a>
+<a name="3309"><span class="lineNum">    3309 </span>                :<span class="lineCov">          1 :             false, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3310"><span class="lineNum">    3310 </span>                :            :             libspdm_get_managed_buffer_size(&amp;th_curr),</a>
+<a name="3311"><span class="lineNum">    3311 </span>                :            :             ptr, &amp;req_asym_signature_size);</a>
+<a name="3312"><span class="lineNum">    3312 </span>                :            : </a>
+<a name="3313"><span class="lineNum">    3313 </span>                :            :     /* Switch signature to little endian */</a>
+<a name="3314"><span class="lineNum">    3314 </span>                :<span class="lineCov">          1 :     libspdm_copy_signature_swap_endian(</span></a>
+<a name="3315"><span class="lineNum">    3315 </span>                :            :         m_libspdm_use_req_asym_algo,</a>
+<a name="3316"><span class="lineNum">    3316 </span>                :            :         ptr, req_asym_signature_size,</a>
+<a name="3317"><span class="lineNum">    3317 </span>                :            :         ptr, req_asym_signature_size);</a>
+<a name="3318"><span class="lineNum">    3318 </span>                :            : #endif</a>
+<a name="3319"><span class="lineNum">    3319 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, ptr, req_asym_signature_size);</span></a>
+<a name="3320"><span class="lineNum">    3320 </span>                :<span class="lineCov">          1 :     ptr += req_asym_signature_size;</span></a>
+<a name="3321"><span class="lineNum">    3321 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request_finished_key, LIBSPDM_MAX_HASH_SIZE, (uint8_t)(0xFF));</span></a>
+<a name="3322"><span class="lineNum">    3322 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3323"><span class="lineNum">    3323 </span>                :            :                      libspdm_get_managed_buffer_size(&amp;th_curr), hash_data);</a>
+<a name="3324"><span class="lineNum">    3324 </span>                :<span class="lineCov">          1 :     libspdm_hmac_all(m_libspdm_use_hash_algo, hash_data, hash_size,</span></a>
+<a name="3325"><span class="lineNum">    3325 </span>                :            :                      request_finished_key, hash_size, ptr);</a>
+<a name="3326"><span class="lineNum">    3326 </span>                :<span class="lineCov">          1 :     m_libspdm_finish_request7_size = sizeof(spdm_finish_request_t) +</span></a>
+<a name="3327"><span class="lineNum">    3327 </span>                :<span class="lineCov">          1 :                                      req_asym_signature_size + hmac_size;</span></a>
+<a name="3328"><span class="lineNum">    3328 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="3329"><span class="lineNum">    3329 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_finish(spdm_context,</span></a>
+<a name="3330"><span class="lineNum">    3330 </span>                :            :                                          m_libspdm_finish_request7_size,</a>
+<a name="3331"><span class="lineNum">    3331 </span>                :            :                                          &amp;m_libspdm_finish_request7,</a>
+<a name="3332"><span class="lineNum">    3332 </span>                :            :                                          &amp;response_size, response);</a>
+<a name="3333"><span class="lineNum">    3333 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="3334"><span class="lineNum">    3334 </span>                :<span class="lineCov">          1 :     spdm_response = (void*)response;</span></a>
+<a name="3335"><span class="lineNum">    3335 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_FINISH_RSP);</span></a>
+<a name="3336"><span class="lineNum">    3336 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_finish_response_t) + hmac_size);</span></a>
+<a name="3337"><span class="lineNum">    3337 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
+<a name="3338"><span class="lineNum">    3338 </span>                :<span class="lineCov">          1 :     free(data2);</span></a>
+<a name="3339"><span class="lineNum">    3339 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="3340"><span class="lineNum">    3340 </span>                :            : </a>
+<a name="3341"><span class="lineNum">    3341 </span>                :            : /**</a>
+<a name="3342"><span class="lineNum">    3342 </span>                :            :  * Test 27: Same as test case 22, but test endian verification.</a>
+<a name="3343"><span class="lineNum">    3343 </span>                :            :  * Sign as Little Endian, Verify as Big.</a>
+<a name="3344"><span class="lineNum">    3344 </span>                :            :  * Expecting signature to FAIL.</a>
+<a name="3345"><span class="lineNum">    3345 </span>                :            :  **/</a>
+<a name="3346"><span class="lineNum">    3346 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_finish_case27(void** state)</span></a>
+<a name="3347"><span class="lineNum">    3347 </span>                :            : {</a>
+<a name="3348"><span class="lineNum">    3348 </span>                :            :     libspdm_return_t status;</a>
+<a name="3349"><span class="lineNum">    3349 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="3350"><span class="lineNum">    3350 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="3351"><span class="lineNum">    3351 </span>                :            :     size_t response_size;</a>
+<a name="3352"><span class="lineNum">    3352 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="3353"><span class="lineNum">    3353 </span>                :            :     spdm_finish_response_t* spdm_response;</a>
+<a name="3354"><span class="lineNum">    3354 </span>                :            :     void* data1;</a>
+<a name="3355"><span class="lineNum">    3355 </span>                :            :     size_t data_size1;</a>
+<a name="3356"><span class="lineNum">    3356 </span>                :            :     void* data2;</a>
+<a name="3357"><span class="lineNum">    3357 </span>                :            :     size_t data_size2;</a>
+<a name="3358"><span class="lineNum">    3358 </span>                :            :     uint8_t* ptr;</a>
+<a name="3359"><span class="lineNum">    3359 </span>                :            :     uint8_t* cert_buffer;</a>
+<a name="3360"><span class="lineNum">    3360 </span>                :            :     size_t cert_buffer_size;</a>
+<a name="3361"><span class="lineNum">    3361 </span>                :            :     uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3362"><span class="lineNum">    3362 </span>                :            :     uint8_t req_cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3363"><span class="lineNum">    3363 </span>                :            :     uint8_t hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3364"><span class="lineNum">    3364 </span>                :            :     uint8_t request_finished_key[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3365"><span class="lineNum">    3365 </span>                :            :     libspdm_session_info_t* session_info;</a>
+<a name="3366"><span class="lineNum">    3366 </span>                :            :     uint32_t session_id;</a>
+<a name="3367"><span class="lineNum">    3367 </span>                :            :     uint32_t hash_size;</a>
+<a name="3368"><span class="lineNum">    3368 </span>                :            :     uint32_t hmac_size;</a>
+<a name="3369"><span class="lineNum">    3369 </span>                :            :     size_t req_asym_signature_size;</a>
+<a name="3370"><span class="lineNum">    3370 </span>                :            : </a>
+<a name="3371"><span class="lineNum">    3371 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="3372"><span class="lineNum">    3372 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="3373"><span class="lineNum">    3373 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 27;</span></a>
+<a name="3374"><span class="lineNum">    3374 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_11 &lt;&lt;</span></a>
+<a name="3375"><span class="lineNum">    3375 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="3376"><span class="lineNum">    3376 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="3377"><span class="lineNum">    3377 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="3378"><span class="lineNum">    3378 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3379"><span class="lineNum">    3379 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
+<a name="3380"><span class="lineNum">    3380 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3381"><span class="lineNum">    3381 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_EX_CAP;</a>
+<a name="3382"><span class="lineNum">    3382 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="3383"><span class="lineNum">    3383 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="3384"><span class="lineNum">    3384 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="3385"><span class="lineNum">    3385 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="3386"><span class="lineNum">    3386 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
+<a name="3387"><span class="lineNum">    3387 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
+<a name="3388"><span class="lineNum">    3388 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="3389"><span class="lineNum">    3389 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="3390"><span class="lineNum">    3390 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="3391"><span class="lineNum">    3391 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="3392"><span class="lineNum">    3392 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="3393"><span class="lineNum">    3393 </span>                :            :         m_libspdm_use_dhe_algo;</a>
+<a name="3394"><span class="lineNum">    3394 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="3395"><span class="lineNum">    3395 </span>                :            :         m_libspdm_use_aead_algo;</a>
+<a name="3396"><span class="lineNum">    3396 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3397"><span class="lineNum">    3397 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data1,</a>
+<a name="3398"><span class="lineNum">    3398 </span>                :            :                                                     &amp;data_size1, NULL, NULL);</a>
+<a name="3399"><span class="lineNum">    3399 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data1;</span></a>
+<a name="3400"><span class="lineNum">    3400 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="3401"><span class="lineNum">    3401 </span>                :            :         data_size1;</a>
+<a name="3402"><span class="lineNum">    3402 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer = data1;</span></a>
+<a name="3403"><span class="lineNum">    3403 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer_size =</span></a>
+<a name="3404"><span class="lineNum">    3404 </span>                :            :         data_size1;</a>
+<a name="3405"><span class="lineNum">    3405 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;spdm_10_11_verify_signature_endian =</span></a>
+<a name="3406"><span class="lineNum">    3406 </span>                :            :         LIBSPDM_SPDM_10_11_VERIFY_SIGNATURE_ENDIAN_BIG_ONLY;</a>
+<a name="3407"><span class="lineNum">    3407 </span>                :            : </a>
+<a name="3408"><span class="lineNum">    3408 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="3409"><span class="lineNum">    3409 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3410"><span class="lineNum">    3410 </span>                :<span class="lineCov">          1 :     libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3411"><span class="lineNum">    3411 </span>                :            :                                                     m_libspdm_use_req_asym_algo, &amp;data2,</a>
+<a name="3412"><span class="lineNum">    3412 </span>                :            :                                                     &amp;data_size2, NULL, NULL);</a>
+<a name="3413"><span class="lineNum">    3413 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="3414"><span class="lineNum">    3414 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="3415"><span class="lineNum">    3415 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="3416"><span class="lineNum">    3416 </span>                :            :                      data2, data_size2);</a>
+<a name="3417"><span class="lineNum">    3417 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size =</a>
+<a name="3418"><span class="lineNum">    3418 </span>                :            :         data_size2;</a>
+<a name="3419"><span class="lineNum">    3419 </span>                :            : #else</a>
+<a name="3420"><span class="lineNum">    3420 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="3421"><span class="lineNum">    3421 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3422"><span class="lineNum">    3422 </span>                :            :         data2, data_size2,</a>
+<a name="3423"><span class="lineNum">    3423 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="3424"><span class="lineNum">    3424 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="3425"><span class="lineNum">    3425 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="3426"><span class="lineNum">    3426 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="3427"><span class="lineNum">    3427 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3428"><span class="lineNum">    3428 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.algorithm.req_base_asym_alg,</span></a>
+<a name="3429"><span class="lineNum">    3429 </span>                :            :         data2,</a>
+<a name="3430"><span class="lineNum">    3430 </span>                :            :         data_size2,</a>
+<a name="3431"><span class="lineNum">    3431 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="3432"><span class="lineNum">    3432 </span>                :            : #endif</a>
+<a name="3433"><span class="lineNum">    3433 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = 0;</span></a>
+<a name="3434"><span class="lineNum">    3434 </span>                :            : </a>
+<a name="3435"><span class="lineNum">    3435 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
+<a name="3436"><span class="lineNum">    3436 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;latest_session_id = session_id;</span></a>
+<a name="3437"><span class="lineNum">    3437 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
+<a name="3438"><span class="lineNum">    3438 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, false);</span></a>
+<a name="3439"><span class="lineNum">    3439 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3440"><span class="lineNum">    3440 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_dummy_buffer, hash_size, (uint8_t)(0xFF));</span></a>
+<a name="3441"><span class="lineNum">    3441 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_request_finished_key(</span></a>
+<a name="3442"><span class="lineNum">    3442 </span>                :            :         session_info-&gt;secured_message_context, m_dummy_buffer,</a>
+<a name="3443"><span class="lineNum">    3443 </span>                :            :         hash_size);</a>
+<a name="3444"><span class="lineNum">    3444 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(</span></a>
+<a name="3445"><span class="lineNum">    3445 </span>                :            :         session_info-&gt;secured_message_context,</a>
+<a name="3446"><span class="lineNum">    3446 </span>                :            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
+<a name="3447"><span class="lineNum">    3447 </span>                :<span class="lineCov">          1 :     session_info-&gt;mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3448"><span class="lineNum">    3448 </span>                :            : </a>
+<a name="3449"><span class="lineNum">    3449 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3450"><span class="lineNum">    3450 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3451"><span class="lineNum">    3451 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3452"><span class="lineNum">    3452 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3453"><span class="lineNum">    3453 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3454"><span class="lineNum">    3454 </span>                :<span class="lineCov">          1 :     hmac_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3455"><span class="lineNum">    3455 </span>                :<span class="lineCov">          1 :     req_asym_signature_size =</span></a>
+<a name="3456"><span class="lineNum">    3456 </span>                :<span class="lineCov">          1 :         libspdm_get_req_asym_signature_size(m_libspdm_use_req_asym_algo);</span></a>
+<a name="3457"><span class="lineNum">    3457 </span>                :<span class="lineCov">          1 :     ptr = m_libspdm_finish_request7.signature;</span></a>
+<a name="3458"><span class="lineNum">    3458 </span>                :<span class="lineCov">          1 :     libspdm_init_managed_buffer(&amp;th_curr, sizeof(th_curr.buffer));</span></a>
+<a name="3459"><span class="lineNum">    3459 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data1;</span></a>
+<a name="3460"><span class="lineNum">    3460 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size1;</span></a>
+<a name="3461"><span class="lineNum">    3461 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3462"><span class="lineNum">    3462 </span>                :            :                      cert_buffer_hash);</a>
+<a name="3463"><span class="lineNum">    3463 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data2;</span></a>
+<a name="3464"><span class="lineNum">    3464 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size2;</span></a>
+<a name="3465"><span class="lineNum">    3465 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3466"><span class="lineNum">    3466 </span>                :            :                      req_cert_buffer_hash);</a>
+<a name="3467"><span class="lineNum">    3467 </span>                :            :     /* transcript.message_a size is 0*/</a>
+<a name="3468"><span class="lineNum">    3468 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, cert_buffer_hash, hash_size);</span></a>
+<a name="3469"><span class="lineNum">    3469 </span>                :            :     /* session_transcript.message_k is 0*/</a>
+<a name="3470"><span class="lineNum">    3470 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, req_cert_buffer_hash, hash_size);</span></a>
+<a name="3471"><span class="lineNum">    3471 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, (uint8_t*)&amp;m_libspdm_finish_request7,</span></a>
+<a name="3472"><span class="lineNum">    3472 </span>                :            :                                   sizeof(spdm_finish_request_t));</a>
+<a name="3473"><span class="lineNum">    3473 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP</a>
+<a name="3474"><span class="lineNum">    3474 </span>                :<span class="lineCov">          1 :     libspdm_requester_data_sign(</span></a>
+<a name="3475"><span class="lineNum">    3475 </span>                :<span class="lineCov">          1 :         m_libspdm_finish_request7.header.spdm_version &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT, SPDM_FINISH,</span></a>
+<a name="3476"><span class="lineNum">    3476 </span>                :            :             m_libspdm_use_req_asym_algo, m_libspdm_use_hash_algo,</a>
+<a name="3477"><span class="lineNum">    3477 </span>                :<span class="lineCov">          1 :             false, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3478"><span class="lineNum">    3478 </span>                :            :             libspdm_get_managed_buffer_size(&amp;th_curr),</a>
+<a name="3479"><span class="lineNum">    3479 </span>                :            :             ptr, &amp;req_asym_signature_size);</a>
+<a name="3480"><span class="lineNum">    3480 </span>                :            : </a>
+<a name="3481"><span class="lineNum">    3481 </span>                :            :     /* Switch signature to little endian */</a>
+<a name="3482"><span class="lineNum">    3482 </span>                :<span class="lineCov">          1 :     libspdm_copy_signature_swap_endian(</span></a>
+<a name="3483"><span class="lineNum">    3483 </span>                :            :         m_libspdm_use_req_asym_algo,</a>
+<a name="3484"><span class="lineNum">    3484 </span>                :            :         ptr, req_asym_signature_size,</a>
+<a name="3485"><span class="lineNum">    3485 </span>                :            :         ptr, req_asym_signature_size);</a>
+<a name="3486"><span class="lineNum">    3486 </span>                :            : #endif</a>
+<a name="3487"><span class="lineNum">    3487 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, ptr, req_asym_signature_size);</span></a>
+<a name="3488"><span class="lineNum">    3488 </span>                :<span class="lineCov">          1 :     ptr += req_asym_signature_size;</span></a>
+<a name="3489"><span class="lineNum">    3489 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request_finished_key, LIBSPDM_MAX_HASH_SIZE, (uint8_t)(0xFF));</span></a>
+<a name="3490"><span class="lineNum">    3490 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3491"><span class="lineNum">    3491 </span>                :            :                      libspdm_get_managed_buffer_size(&amp;th_curr), hash_data);</a>
+<a name="3492"><span class="lineNum">    3492 </span>                :<span class="lineCov">          1 :     libspdm_hmac_all(m_libspdm_use_hash_algo, hash_data, hash_size,</span></a>
+<a name="3493"><span class="lineNum">    3493 </span>                :            :                      request_finished_key, hash_size, ptr);</a>
+<a name="3494"><span class="lineNum">    3494 </span>                :<span class="lineCov">          1 :     m_libspdm_finish_request7_size = sizeof(spdm_finish_request_t) +</span></a>
+<a name="3495"><span class="lineNum">    3495 </span>                :<span class="lineCov">          1 :                                      req_asym_signature_size + hmac_size;</span></a>
+<a name="3496"><span class="lineNum">    3496 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="3497"><span class="lineNum">    3497 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_finish(spdm_context,</span></a>
+<a name="3498"><span class="lineNum">    3498 </span>                :            :                                          m_libspdm_finish_request7_size,</a>
+<a name="3499"><span class="lineNum">    3499 </span>                :            :                                          &amp;m_libspdm_finish_request7,</a>
+<a name="3500"><span class="lineNum">    3500 </span>                :            :                                          &amp;response_size, response);</a>
+<a name="3501"><span class="lineNum">    3501 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="3502"><span class="lineNum">    3502 </span>                :<span class="lineCov">          1 :     spdm_response = (void*)response;</span></a>
+<a name="3503"><span class="lineNum">    3503 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="3504"><span class="lineNum">    3504 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="3505"><span class="lineNum">    3505 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
+<a name="3506"><span class="lineNum">    3506 </span>                :<span class="lineCov">          1 :     free(data2);</span></a>
+<a name="3507"><span class="lineNum">    3507 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="3508"><span class="lineNum">    3508 </span>                :            : </a>
+<a name="3509"><span class="lineNum">    3509 </span>                :            : /**</a>
+<a name="3510"><span class="lineNum">    3510 </span>                :            :  * Test 28: Same as test case 22, but test endian verification.</a>
+<a name="3511"><span class="lineNum">    3511 </span>                :            :  * Sign as Little Endian, Verify as Big Or Little.</a>
+<a name="3512"><span class="lineNum">    3512 </span>                :            :  * Expecting signature to PASS.</a>
+<a name="3513"><span class="lineNum">    3513 </span>                :            :  **/</a>
+<a name="3514"><span class="lineNum">    3514 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_finish_case28(void** state)</span></a>
+<a name="3515"><span class="lineNum">    3515 </span>                :            : {</a>
+<a name="3516"><span class="lineNum">    3516 </span>                :            :     libspdm_return_t status;</a>
+<a name="3517"><span class="lineNum">    3517 </span>                :            :     libspdm_test_context_t* spdm_test_context;</a>
+<a name="3518"><span class="lineNum">    3518 </span>                :            :     libspdm_context_t* spdm_context;</a>
+<a name="3519"><span class="lineNum">    3519 </span>                :            :     size_t response_size;</a>
+<a name="3520"><span class="lineNum">    3520 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="3521"><span class="lineNum">    3521 </span>                :            :     spdm_finish_response_t* spdm_response;</a>
+<a name="3522"><span class="lineNum">    3522 </span>                :            :     void* data1;</a>
+<a name="3523"><span class="lineNum">    3523 </span>                :            :     size_t data_size1;</a>
+<a name="3524"><span class="lineNum">    3524 </span>                :            :     void* data2;</a>
+<a name="3525"><span class="lineNum">    3525 </span>                :            :     size_t data_size2;</a>
+<a name="3526"><span class="lineNum">    3526 </span>                :            :     uint8_t* ptr;</a>
+<a name="3527"><span class="lineNum">    3527 </span>                :            :     uint8_t* cert_buffer;</a>
+<a name="3528"><span class="lineNum">    3528 </span>                :            :     size_t cert_buffer_size;</a>
+<a name="3529"><span class="lineNum">    3529 </span>                :            :     uint8_t cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3530"><span class="lineNum">    3530 </span>                :            :     uint8_t req_cert_buffer_hash[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3531"><span class="lineNum">    3531 </span>                :            :     uint8_t hash_data[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3532"><span class="lineNum">    3532 </span>                :            :     uint8_t request_finished_key[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="3533"><span class="lineNum">    3533 </span>                :            :     libspdm_session_info_t* session_info;</a>
+<a name="3534"><span class="lineNum">    3534 </span>                :            :     uint32_t session_id;</a>
+<a name="3535"><span class="lineNum">    3535 </span>                :            :     uint32_t hash_size;</a>
+<a name="3536"><span class="lineNum">    3536 </span>                :            :     uint32_t hmac_size;</a>
+<a name="3537"><span class="lineNum">    3537 </span>                :            :     size_t req_asym_signature_size;</a>
+<a name="3538"><span class="lineNum">    3538 </span>                :            : </a>
+<a name="3539"><span class="lineNum">    3539 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="3540"><span class="lineNum">    3540 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="3541"><span class="lineNum">    3541 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 28;</span></a>
+<a name="3542"><span class="lineNum">    3542 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_11 &lt;&lt;</span></a>
+<a name="3543"><span class="lineNum">    3543 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="3544"><span class="lineNum">    3544 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="3545"><span class="lineNum">    3545 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="3546"><span class="lineNum">    3546 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3547"><span class="lineNum">    3547 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_EX_CAP;</a>
+<a name="3548"><span class="lineNum">    3548 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3549"><span class="lineNum">    3549 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_EX_CAP;</a>
+<a name="3550"><span class="lineNum">    3550 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="3551"><span class="lineNum">    3551 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="3552"><span class="lineNum">    3552 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="3553"><span class="lineNum">    3553 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="3554"><span class="lineNum">    3554 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
+<a name="3555"><span class="lineNum">    3555 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
+<a name="3556"><span class="lineNum">    3556 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="3557"><span class="lineNum">    3557 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="3558"><span class="lineNum">    3558 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="3559"><span class="lineNum">    3559 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="3560"><span class="lineNum">    3560 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.dhe_named_group =</span></a>
+<a name="3561"><span class="lineNum">    3561 </span>                :            :         m_libspdm_use_dhe_algo;</a>
+<a name="3562"><span class="lineNum">    3562 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.aead_cipher_suite =</span></a>
+<a name="3563"><span class="lineNum">    3563 </span>                :            :         m_libspdm_use_aead_algo;</a>
+<a name="3564"><span class="lineNum">    3564 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3565"><span class="lineNum">    3565 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data1,</a>
+<a name="3566"><span class="lineNum">    3566 </span>                :            :                                                     &amp;data_size1, NULL, NULL);</a>
+<a name="3567"><span class="lineNum">    3567 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data1;</span></a>
+<a name="3568"><span class="lineNum">    3568 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="3569"><span class="lineNum">    3569 </span>                :            :         data_size1;</a>
+<a name="3570"><span class="lineNum">    3570 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer = data1;</span></a>
+<a name="3571"><span class="lineNum">    3571 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.local_used_cert_chain_buffer_size =</span></a>
+<a name="3572"><span class="lineNum">    3572 </span>                :            :         data_size1;</a>
+<a name="3573"><span class="lineNum">    3573 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;spdm_10_11_verify_signature_endian =</span></a>
+<a name="3574"><span class="lineNum">    3574 </span>                :            :         LIBSPDM_SPDM_10_11_VERIFY_SIGNATURE_ENDIAN_LITTLE_ONLY;</a>
+<a name="3575"><span class="lineNum">    3575 </span>                :            : </a>
+<a name="3576"><span class="lineNum">    3576 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="3577"><span class="lineNum">    3577 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3578"><span class="lineNum">    3578 </span>                :<span class="lineCov">          1 :     libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="3579"><span class="lineNum">    3579 </span>                :            :                                                     m_libspdm_use_req_asym_algo, &amp;data2,</a>
+<a name="3580"><span class="lineNum">    3580 </span>                :            :                                                     &amp;data_size2, NULL, NULL);</a>
+<a name="3581"><span class="lineNum">    3581 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="3582"><span class="lineNum">    3582 </span>                :            :     libspdm_copy_mem(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer,</a>
+<a name="3583"><span class="lineNum">    3583 </span>                :            :                      sizeof(spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer),</a>
+<a name="3584"><span class="lineNum">    3584 </span>                :            :                      data2, data_size2);</a>
+<a name="3585"><span class="lineNum">    3585 </span>                :            :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_size =</a>
+<a name="3586"><span class="lineNum">    3586 </span>                :            :         data_size2;</a>
+<a name="3587"><span class="lineNum">    3587 </span>                :            : #else</a>
+<a name="3588"><span class="lineNum">    3588 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(</span></a>
+<a name="3589"><span class="lineNum">    3589 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3590"><span class="lineNum">    3590 </span>                :            :         data2, data_size2,</a>
+<a name="3591"><span class="lineNum">    3591 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash);</span></a>
+<a name="3592"><span class="lineNum">    3592 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain[0].buffer_hash_size =</span></a>
+<a name="3593"><span class="lineNum">    3593 </span>                :<span class="lineCov">          1 :         libspdm_get_hash_size(spdm_context-&gt;connection_info.algorithm.base_hash_algo);</span></a>
+<a name="3594"><span class="lineNum">    3594 </span>                :<span class="lineCov">          1 :     libspdm_get_leaf_cert_public_key_from_cert_chain(</span></a>
+<a name="3595"><span class="lineNum">    3595 </span>                :            :         spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="3596"><span class="lineNum">    3596 </span>                :<span class="lineCov">          1 :         spdm_context-&gt;connection_info.algorithm.req_base_asym_alg,</span></a>
+<a name="3597"><span class="lineNum">    3597 </span>                :            :         data2,</a>
+<a name="3598"><span class="lineNum">    3598 </span>                :            :         data_size2,</a>
+<a name="3599"><span class="lineNum">    3599 </span>                :            :         &amp;spdm_context-&gt;connection_info.peer_used_cert_chain[0].leaf_cert_public_key);</a>
+<a name="3600"><span class="lineNum">    3600 </span>                :            : #endif</a>
+<a name="3601"><span class="lineNum">    3601 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.peer_used_cert_chain_slot_id = 0;</span></a>
+<a name="3602"><span class="lineNum">    3602 </span>                :            : </a>
+<a name="3603"><span class="lineNum">    3603 </span>                :<span class="lineCov">          1 :     session_id = 0xFFFFFFFF;</span></a>
+<a name="3604"><span class="lineNum">    3604 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;latest_session_id = session_id;</span></a>
+<a name="3605"><span class="lineNum">    3605 </span>                :<span class="lineCov">          1 :     session_info = &amp;spdm_context-&gt;session_info[0];</span></a>
+<a name="3606"><span class="lineNum">    3606 </span>                :<span class="lineCov">          1 :     libspdm_session_info_init(spdm_context, session_info, session_id, false);</span></a>
+<a name="3607"><span class="lineNum">    3607 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3608"><span class="lineNum">    3608 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_dummy_buffer, hash_size, (uint8_t)(0xFF));</span></a>
+<a name="3609"><span class="lineNum">    3609 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_request_finished_key(</span></a>
+<a name="3610"><span class="lineNum">    3610 </span>                :            :         session_info-&gt;secured_message_context, m_dummy_buffer,</a>
+<a name="3611"><span class="lineNum">    3611 </span>                :            :         hash_size);</a>
+<a name="3612"><span class="lineNum">    3612 </span>                :<span class="lineCov">          1 :     libspdm_secured_message_set_session_state(</span></a>
+<a name="3613"><span class="lineNum">    3613 </span>                :            :         session_info-&gt;secured_message_context,</a>
+<a name="3614"><span class="lineNum">    3614 </span>                :            :         LIBSPDM_SESSION_STATE_HANDSHAKING);</a>
+<a name="3615"><span class="lineNum">    3615 </span>                :<span class="lineCov">          1 :     session_info-&gt;mut_auth_requested = SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED;</span></a>
+<a name="3616"><span class="lineNum">    3616 </span>                :            : </a>
+<a name="3617"><span class="lineNum">    3617 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |=</span></a>
+<a name="3618"><span class="lineNum">    3618 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3619"><span class="lineNum">    3619 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="3620"><span class="lineNum">    3620 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;</a>
+<a name="3621"><span class="lineNum">    3621 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3622"><span class="lineNum">    3622 </span>                :<span class="lineCov">          1 :     hmac_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="3623"><span class="lineNum">    3623 </span>                :<span class="lineCov">          1 :     req_asym_signature_size =</span></a>
+<a name="3624"><span class="lineNum">    3624 </span>                :<span class="lineCov">          1 :         libspdm_get_req_asym_signature_size(m_libspdm_use_req_asym_algo);</span></a>
+<a name="3625"><span class="lineNum">    3625 </span>                :<span class="lineCov">          1 :     ptr = m_libspdm_finish_request7.signature;</span></a>
+<a name="3626"><span class="lineNum">    3626 </span>                :<span class="lineCov">          1 :     libspdm_init_managed_buffer(&amp;th_curr, sizeof(th_curr.buffer));</span></a>
+<a name="3627"><span class="lineNum">    3627 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data1;</span></a>
+<a name="3628"><span class="lineNum">    3628 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size1;</span></a>
+<a name="3629"><span class="lineNum">    3629 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3630"><span class="lineNum">    3630 </span>                :            :                      cert_buffer_hash);</a>
+<a name="3631"><span class="lineNum">    3631 </span>                :<span class="lineCov">          1 :     cert_buffer = (uint8_t*)data2;</span></a>
+<a name="3632"><span class="lineNum">    3632 </span>                :<span class="lineCov">          1 :     cert_buffer_size = data_size2;</span></a>
+<a name="3633"><span class="lineNum">    3633 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, cert_buffer, cert_buffer_size,</span></a>
+<a name="3634"><span class="lineNum">    3634 </span>                :            :                      req_cert_buffer_hash);</a>
+<a name="3635"><span class="lineNum">    3635 </span>                :            :     /* transcript.message_a size is 0*/</a>
+<a name="3636"><span class="lineNum">    3636 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, cert_buffer_hash, hash_size);</span></a>
+<a name="3637"><span class="lineNum">    3637 </span>                :            :     /* session_transcript.message_k is 0*/</a>
+<a name="3638"><span class="lineNum">    3638 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, req_cert_buffer_hash, hash_size);</span></a>
+<a name="3639"><span class="lineNum">    3639 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, (uint8_t*)&amp;m_libspdm_finish_request7,</span></a>
+<a name="3640"><span class="lineNum">    3640 </span>                :            :                                   sizeof(spdm_finish_request_t));</a>
+<a name="3641"><span class="lineNum">    3641 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP</a>
+<a name="3642"><span class="lineNum">    3642 </span>                :<span class="lineCov">          1 :     libspdm_requester_data_sign(</span></a>
+<a name="3643"><span class="lineNum">    3643 </span>                :<span class="lineCov">          1 :         m_libspdm_finish_request7.header.spdm_version &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT, SPDM_FINISH,</span></a>
+<a name="3644"><span class="lineNum">    3644 </span>                :            :             m_libspdm_use_req_asym_algo, m_libspdm_use_hash_algo,</a>
+<a name="3645"><span class="lineNum">    3645 </span>                :<span class="lineCov">          1 :             false, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3646"><span class="lineNum">    3646 </span>                :            :             libspdm_get_managed_buffer_size(&amp;th_curr),</a>
+<a name="3647"><span class="lineNum">    3647 </span>                :            :             ptr, &amp;req_asym_signature_size);</a>
+<a name="3648"><span class="lineNum">    3648 </span>                :            : </a>
+<a name="3649"><span class="lineNum">    3649 </span>                :            :     /* Switch signature to little endian */</a>
+<a name="3650"><span class="lineNum">    3650 </span>                :<span class="lineCov">          1 :     libspdm_copy_signature_swap_endian(</span></a>
+<a name="3651"><span class="lineNum">    3651 </span>                :            :         m_libspdm_use_req_asym_algo,</a>
+<a name="3652"><span class="lineNum">    3652 </span>                :            :         ptr, req_asym_signature_size,</a>
+<a name="3653"><span class="lineNum">    3653 </span>                :            :         ptr, req_asym_signature_size);</a>
+<a name="3654"><span class="lineNum">    3654 </span>                :            : #endif</a>
+<a name="3655"><span class="lineNum">    3655 </span>                :<span class="lineCov">          1 :     libspdm_append_managed_buffer(&amp;th_curr, ptr, req_asym_signature_size);</span></a>
+<a name="3656"><span class="lineNum">    3656 </span>                :<span class="lineCov">          1 :     ptr += req_asym_signature_size;</span></a>
+<a name="3657"><span class="lineNum">    3657 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request_finished_key, LIBSPDM_MAX_HASH_SIZE, (uint8_t)(0xFF));</span></a>
+<a name="3658"><span class="lineNum">    3658 </span>                :<span class="lineCov">          1 :     libspdm_hash_all(m_libspdm_use_hash_algo, libspdm_get_managed_buffer(&amp;th_curr),</span></a>
+<a name="3659"><span class="lineNum">    3659 </span>                :            :                      libspdm_get_managed_buffer_size(&amp;th_curr), hash_data);</a>
+<a name="3660"><span class="lineNum">    3660 </span>                :<span class="lineCov">          1 :     libspdm_hmac_all(m_libspdm_use_hash_algo, hash_data, hash_size,</span></a>
+<a name="3661"><span class="lineNum">    3661 </span>                :            :                      request_finished_key, hash_size, ptr);</a>
+<a name="3662"><span class="lineNum">    3662 </span>                :<span class="lineCov">          1 :     m_libspdm_finish_request7_size = sizeof(spdm_finish_request_t) +</span></a>
+<a name="3663"><span class="lineNum">    3663 </span>                :<span class="lineCov">          1 :                                      req_asym_signature_size + hmac_size;</span></a>
+<a name="3664"><span class="lineNum">    3664 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="3665"><span class="lineNum">    3665 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_finish(spdm_context,</span></a>
+<a name="3666"><span class="lineNum">    3666 </span>                :            :                                          m_libspdm_finish_request7_size,</a>
+<a name="3667"><span class="lineNum">    3667 </span>                :            :                                          &amp;m_libspdm_finish_request7,</a>
+<a name="3668"><span class="lineNum">    3668 </span>                :            :                                          &amp;response_size, response);</a>
+<a name="3669"><span class="lineNum">    3669 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="3670"><span class="lineNum">    3670 </span>                :<span class="lineCov">          1 :     spdm_response = (void*)response;</span></a>
+<a name="3671"><span class="lineNum">    3671 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_FINISH_RSP);</span></a>
+<a name="3672"><span class="lineNum">    3672 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_finish_response_t) + hmac_size);</span></a>
+<a name="3673"><span class="lineNum">    3673 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
+<a name="3674"><span class="lineNum">    3674 </span>                :<span class="lineCov">          1 :     free(data2);</span></a>
+<a name="3675"><span class="lineNum">    3675 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="3676"><span class="lineNum">    3676 </span>                :            : </a>
+<a name="3677"><span class="lineNum">    3677 </span>                :            : </a>
+<a name="3678"><span class="lineNum">    3678 </span>                :            : libspdm_test_context_t m_libspdm_responder_finish_test_context = {</a>
+<a name="3679"><span class="lineNum">    3679 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="3680"><span class="lineNum">    3680 </span>                :            :     false,</a>
+<a name="3681"><span class="lineNum">    3681 </span>                :            : };</a>
+<a name="3682"><span class="lineNum">    3682 </span>                :            : </a>
+<a name="3683"><span class="lineNum">    3683 </span>                :<span class="lineCov">          1 : int libspdm_responder_finish_test_main(void)</span></a>
+<a name="3684"><span class="lineNum">    3684 </span>                :            : {</a>
+<a name="3685"><span class="lineNum">    3685 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_finish_tests[] = {</span></a>
+<a name="3686"><span class="lineNum">    3686 </span>                :            :         /* Success Case*/</a>
+<a name="3687"><span class="lineNum">    3687 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case1),</a>
+<a name="3688"><span class="lineNum">    3688 </span>                :            :         /* Can be populated with new test.*/</a>
+<a name="3689"><span class="lineNum">    3689 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case2),</a>
+<a name="3690"><span class="lineNum">    3690 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_BUSY*/</a>
+<a name="3691"><span class="lineNum">    3691 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case3),</a>
+<a name="3692"><span class="lineNum">    3692 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
+<a name="3693"><span class="lineNum">    3693 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case4),</a>
+<a name="3694"><span class="lineNum">    3694 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
+<a name="3695"><span class="lineNum">    3695 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
+<a name="3696"><span class="lineNum">    3696 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case5),</a>
+<a name="3697"><span class="lineNum">    3697 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
+<a name="3698"><span class="lineNum">    3698 </span>                :            :         /* connection_state Check*/</a>
+<a name="3699"><span class="lineNum">    3699 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case6),</a>
+<a name="3700"><span class="lineNum">    3700 </span>                :            :         /* Buffer reset*/</a>
+<a name="3701"><span class="lineNum">    3701 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case7),</a>
+<a name="3702"><span class="lineNum">    3702 </span>                :            :         /* Success Case*/</a>
+<a name="3703"><span class="lineNum">    3703 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case8),</a>
+<a name="3704"><span class="lineNum">    3704 </span>                :            :         /* Unsupported KEY_EX capabilities*/</a>
+<a name="3705"><span class="lineNum">    3705 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case9),</a>
+<a name="3706"><span class="lineNum">    3706 </span>                :            :         /* Uninitialized session*/</a>
+<a name="3707"><span class="lineNum">    3707 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case10),</a>
+<a name="3708"><span class="lineNum">    3708 </span>                :            :         /* Incorrect MAC*/</a>
+<a name="3709"><span class="lineNum">    3709 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case11),</a>
+<a name="3710"><span class="lineNum">    3710 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case12),</a>
+<a name="3711"><span class="lineNum">    3711 </span>                :            :         /* Can be populated with new test.*/</a>
+<a name="3712"><span class="lineNum">    3712 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case13),</a>
+<a name="3713"><span class="lineNum">    3713 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case14),</a>
+<a name="3714"><span class="lineNum">    3714 </span>                :            :         /* Incorrect signature*/</a>
+<a name="3715"><span class="lineNum">    3715 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case15),</a>
+<a name="3716"><span class="lineNum">    3716 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case16),</a>
+<a name="3717"><span class="lineNum">    3717 </span>                :            :         /* Buffer verification*/</a>
+<a name="3718"><span class="lineNum">    3718 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case17),</a>
+<a name="3719"><span class="lineNum">    3719 </span>                :            :         /* Success Case, enable mutual authentication and use slot_id 0xFF */</a>
+<a name="3720"><span class="lineNum">    3720 </span>                :            :         cmocka_unit_test(libspdm_test_responder_finish_case18),</a>
+<a name="3721"><span class="lineNum">    3721 </span>                :            :         /* Invalid SlotID in FINISH request message when mutual authentication */</a>
+<a name="3722"><span class="lineNum">    3722 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case19, libspdm_unit_test_group_setup),</a>
+<a name="3723"><span class="lineNum">    3723 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case20, libspdm_unit_test_group_setup),</a>
+<a name="3724"><span class="lineNum">    3724 </span>                :            :         /* If FINISH.Param1 != 0x01, then FINISH.Param2 is reserved, shall be ignored when read */</a>
+<a name="3725"><span class="lineNum">    3725 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case21, libspdm_unit_test_group_setup),</a>
+<a name="3726"><span class="lineNum">    3726 </span>                :            :         /* If KEY_EXCHANGE_RSP.MutAuthRequested equals neither 0x02 nor 0x04, FINISH.Param2 no need match ENCAPSULATED_RESPONSE_ACK.EncapsulatedRequest */</a>
+<a name="3727"><span class="lineNum">    3727 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case22, libspdm_unit_test_group_setup),</a>
+<a name="3728"><span class="lineNum">    3728 </span>                :            :         /* Big Endian Sign - Little Endian Verify */</a>
+<a name="3729"><span class="lineNum">    3729 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case23, libspdm_unit_test_group_setup),</a>
+<a name="3730"><span class="lineNum">    3730 </span>                :            :         /* Big Endian Sign - Big Endian Verify */</a>
+<a name="3731"><span class="lineNum">    3731 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case24, libspdm_unit_test_group_setup),</a>
+<a name="3732"><span class="lineNum">    3732 </span>                :            :         /* Big Endian Sign - Big or Little Endian Verify */</a>
+<a name="3733"><span class="lineNum">    3733 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case25, libspdm_unit_test_group_setup),</a>
+<a name="3734"><span class="lineNum">    3734 </span>                :            :         /* Little Endian Sign - Little Endian Verify*/</a>
+<a name="3735"><span class="lineNum">    3735 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case26, libspdm_unit_test_group_setup),</a>
+<a name="3736"><span class="lineNum">    3736 </span>                :            :         /* Little Endian Sign - Big Endian Verify */</a>
+<a name="3737"><span class="lineNum">    3737 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case27, libspdm_unit_test_group_setup),</a>
+<a name="3738"><span class="lineNum">    3738 </span>                :            :         /* Little Endian Sign - Big or Little Endian Verify */</a>
+<a name="3739"><span class="lineNum">    3739 </span>                :            :         cmocka_unit_test_setup(libspdm_test_responder_finish_case28, libspdm_unit_test_group_setup),</a>
+<a name="3740"><span class="lineNum">    3740 </span>                :            :     };</a>
+<a name="3741"><span class="lineNum">    3741 </span>                :            : </a>
+<a name="3742"><span class="lineNum">    3742 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_finish_test_context);</span></a>
+<a name="3743"><span class="lineNum">    3743 </span>                :            : </a>
+<a name="3744"><span class="lineNum">    3744 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_finish_tests,</span></a>
+<a name="3745"><span class="lineNum">    3745 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="3746"><span class="lineNum">    3746 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="3747"><span class="lineNum">    3747 </span>                :            : }</a>
+<a name="3748"><span class="lineNum">    3748 </span>                :            : </a>
+<a name="3749"><span class="lineNum">    3749 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP*/</a>
 </pre>
       </td>
     </tr>
