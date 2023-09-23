@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-09-22 08:14:45</td>
+            <td class="headerValue">2023-09-23 08:13:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -207,43 +207,42 @@
 <a name="136"><span class="lineNum">     136 </span>                :<span class="lineCov">          1 :         *response_size = sizeof(spdm_chunk_response_response_t)</span></a>
 <a name="137"><span class="lineNum">     137 </span>                :            :                          + sizeof(uint32_t)</a>
 <a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">          1 :                          + spdm_response-&gt;chunk_size;</span></a>
-<a name="139"><span class="lineNum">     139 </span>                :            :     }</a>
-<a name="140"><span class="lineNum">     140 </span>                :            :     else {</a>
-<a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">          3 :         spdm_response-&gt;chunk_size =</span></a>
-<a name="142"><span class="lineNum">     142 </span>                :<span class="lineCov">          3 :             LIBSPDM_MIN(min_data_transfer_size</span></a>
-<a name="143"><span class="lineNum">     143 </span>                :            :                         - sizeof(spdm_chunk_response_response_t),</a>
-<a name="144"><span class="lineNum">     144 </span>                :            :                         (uint32_t) (get_info-&gt;large_message_size</a>
-<a name="145"><span class="lineNum">     145 </span>                :            :                                     - get_info-&gt;chunk_bytes_transferred));</a>
-<a name="146"><span class="lineNum">     146 </span>                :            : </a>
-<a name="147"><span class="lineNum">     147 </span>                :<span class="lineCov">          3 :         spdm_chunk = (uint8_t*) (spdm_response + 1);</span></a>
-<a name="148"><span class="lineNum">     148 </span>                :            : </a>
-<a name="149"><span class="lineNum">     149 </span>                :<span class="lineCov">          3 :         *response_size = sizeof(spdm_chunk_response_response_t)</span></a>
-<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">          3 :                          + spdm_response-&gt;chunk_size;</span></a>
-<a name="151"><span class="lineNum">     151 </span>                :            :     }</a>
-<a name="152"><span class="lineNum">     152 </span>                :            : </a>
-<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">          4 :     libspdm_copy_mem(spdm_chunk, spdm_response-&gt;chunk_size,</span></a>
-<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">          4 :                      (uint8_t*) get_info-&gt;large_message + get_info-&gt;chunk_bytes_transferred,</span></a>
-<a name="155"><span class="lineNum">     155 </span>                :<span class="lineCov">          4 :                      spdm_response-&gt;chunk_size);</span></a>
-<a name="156"><span class="lineNum">     156 </span>                :            : </a>
-<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">          4 :     get_info-&gt;chunk_seq_no++;</span></a>
-<a name="158"><span class="lineNum">     158 </span>                :<span class="lineCov">          4 :     get_info-&gt;chunk_bytes_transferred += spdm_response-&gt;chunk_size;</span></a>
-<a name="159"><span class="lineNum">     159 </span>                :            : </a>
-<a name="160"><span class="lineNum">     160 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     LIBSPDM_ASSERT(get_info-&gt;chunk_bytes_transferred &lt;= get_info-&gt;large_message_size);</span></a>
-<a name="161"><span class="lineNum">     161 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          4 :     if (get_info-&gt;chunk_bytes_transferred == get_info-&gt;large_message_size) {</span></a>
-<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_in_use = false;</span></a>
-<a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_handle++; /* implicit wrap - around to 0. */</span></a>
-<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_seq_no = 0;</span></a>
-<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          2 :         get_info-&gt;large_message = NULL;</span></a>
-<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">          2 :         get_info-&gt;large_message_size = 0;</span></a>
-<a name="167"><span class="lineNum">     167 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_bytes_transferred = 0;</span></a>
-<a name="168"><span class="lineNum">     168 </span>                :            : </a>
-<a name="169"><span class="lineNum">     169 </span>                :<span class="lineCov">          2 :         spdm_response-&gt;header.param1 |= SPDM_CHUNK_GET_RESPONSE_ATTRIBUTE_LAST_CHUNK;</span></a>
-<a name="170"><span class="lineNum">     170 </span>                :            :     }</a>
-<a name="171"><span class="lineNum">     171 </span>                :            : </a>
-<a name="172"><span class="lineNum">     172 </span>                :<span class="lineCov">          4 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="173"><span class="lineNum">     173 </span>                :            : }</a>
-<a name="174"><span class="lineNum">     174 </span>                :            : </a>
-<a name="175"><span class="lineNum">     175 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
+<a name="139"><span class="lineNum">     139 </span>                :            :     } else {</a>
+<a name="140"><span class="lineNum">     140 </span>                :<span class="lineCov">          3 :         spdm_response-&gt;chunk_size =</span></a>
+<a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">          3 :             LIBSPDM_MIN(min_data_transfer_size</span></a>
+<a name="142"><span class="lineNum">     142 </span>                :            :                         - sizeof(spdm_chunk_response_response_t),</a>
+<a name="143"><span class="lineNum">     143 </span>                :            :                         (uint32_t) (get_info-&gt;large_message_size</a>
+<a name="144"><span class="lineNum">     144 </span>                :            :                                     - get_info-&gt;chunk_bytes_transferred));</a>
+<a name="145"><span class="lineNum">     145 </span>                :            : </a>
+<a name="146"><span class="lineNum">     146 </span>                :<span class="lineCov">          3 :         spdm_chunk = (uint8_t*) (spdm_response + 1);</span></a>
+<a name="147"><span class="lineNum">     147 </span>                :            : </a>
+<a name="148"><span class="lineNum">     148 </span>                :<span class="lineCov">          3 :         *response_size = sizeof(spdm_chunk_response_response_t)</span></a>
+<a name="149"><span class="lineNum">     149 </span>                :<span class="lineCov">          3 :                          + spdm_response-&gt;chunk_size;</span></a>
+<a name="150"><span class="lineNum">     150 </span>                :            :     }</a>
+<a name="151"><span class="lineNum">     151 </span>                :            : </a>
+<a name="152"><span class="lineNum">     152 </span>                :<span class="lineCov">          4 :     libspdm_copy_mem(spdm_chunk, spdm_response-&gt;chunk_size,</span></a>
+<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">          4 :                      (uint8_t*) get_info-&gt;large_message + get_info-&gt;chunk_bytes_transferred,</span></a>
+<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">          4 :                      spdm_response-&gt;chunk_size);</span></a>
+<a name="155"><span class="lineNum">     155 </span>                :            : </a>
+<a name="156"><span class="lineNum">     156 </span>                :<span class="lineCov">          4 :     get_info-&gt;chunk_seq_no++;</span></a>
+<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">          4 :     get_info-&gt;chunk_bytes_transferred += spdm_response-&gt;chunk_size;</span></a>
+<a name="158"><span class="lineNum">     158 </span>                :            : </a>
+<a name="159"><span class="lineNum">     159 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     LIBSPDM_ASSERT(get_info-&gt;chunk_bytes_transferred &lt;= get_info-&gt;large_message_size);</span></a>
+<a name="160"><span class="lineNum">     160 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          4 :     if (get_info-&gt;chunk_bytes_transferred == get_info-&gt;large_message_size) {</span></a>
+<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_in_use = false;</span></a>
+<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_handle++; /* implicit wrap - around to 0. */</span></a>
+<a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_seq_no = 0;</span></a>
+<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">          2 :         get_info-&gt;large_message = NULL;</span></a>
+<a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">          2 :         get_info-&gt;large_message_size = 0;</span></a>
+<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">          2 :         get_info-&gt;chunk_bytes_transferred = 0;</span></a>
+<a name="167"><span class="lineNum">     167 </span>                :            : </a>
+<a name="168"><span class="lineNum">     168 </span>                :<span class="lineCov">          2 :         spdm_response-&gt;header.param1 |= SPDM_CHUNK_GET_RESPONSE_ATTRIBUTE_LAST_CHUNK;</span></a>
+<a name="169"><span class="lineNum">     169 </span>                :            :     }</a>
+<a name="170"><span class="lineNum">     170 </span>                :            : </a>
+<a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">          4 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="172"><span class="lineNum">     172 </span>                :            : }</a>
+<a name="173"><span class="lineNum">     173 </span>                :            : </a>
+<a name="174"><span class="lineNum">     174 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */</a>
 </pre>
       </td>
     </tr>
