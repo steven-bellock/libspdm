@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-11-05 08:13:36</td>
+            <td class="headerValue">2023-11-06 08:15:30</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -254,7 +254,7 @@
 <a name="183"><span class="lineNum">     183 </span>                :            :     uint8_t bin_str2[128];</a>
 <a name="184"><span class="lineNum">     184 </span>                :            :     size_t bin_str2_size;</a>
 <a name="185"><span class="lineNum">     185 </span>                :            :     libspdm_secured_message_context_t *secured_message_context;</a>
-<a name="186"><span class="lineNum">     186 </span>                :            :     uint8_t zero_filled_buffer[LIBSPDM_MAX_HASH_SIZE];</a>
+<a name="186"><span class="lineNum">     186 </span>                :            :     uint8_t salt0[LIBSPDM_MAX_HASH_SIZE];</a>
 <a name="187"><span class="lineNum">     187 </span>                :            : </a>
 <a name="188"><span class="lineNum">     188 </span>                :<span class="lineCov">         55 :     secured_message_context = spdm_secured_message_context;</span></a>
 <a name="189"><span class="lineNum">     189 </span>                :            : </a>
@@ -266,12 +266,12 @@
 <a name="195"><span class="lineNum">     195 </span>                :            :             secured_message_context-&gt;master_secret.dhe_secret,</a>
 <a name="196"><span class="lineNum">     196 </span>                :            :             secured_message_context-&gt;dhe_key_size);</a>
 <a name="197"><span class="lineNum">     197 </span>                :<span class="lineCov">         29 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
-<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">         29 :         libspdm_zero_mem(zero_filled_buffer, sizeof(zero_filled_buffer));</span></a>
+<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">         29 :         libspdm_zero_mem(salt0, sizeof(salt0));</span></a>
 <a name="199"><span class="lineNum">     199 </span>                :<span class="lineCov">         29 :         status = libspdm_hkdf_extract(</span></a>
 <a name="200"><span class="lineNum">     200 </span>                :            :             secured_message_context-&gt;base_hash_algo,</a>
 <a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">         29 :             secured_message_context-&gt;master_secret.dhe_secret,</span></a>
 <a name="202"><span class="lineNum">     202 </span>                :            :             secured_message_context-&gt;dhe_key_size,</a>
-<a name="203"><span class="lineNum">     203 </span>                :            :             zero_filled_buffer, hash_size,</a>
+<a name="203"><span class="lineNum">     203 </span>                :            :             salt0, hash_size,</a>
 <a name="204"><span class="lineNum">     204 </span>                :<span class="lineCov">         29 :             secured_message_context-&gt;master_secret.handshake_secret, hash_size);</span></a>
 <a name="205"><span class="lineNum">     205 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 29 times"> + </span>]:<span class="lineCov">         29 :         if (!status) {</span></a>
 <a name="206"><span class="lineNum">     206 </span>                :<span class="lineNoCov">          0 :             return false;</span></a>
