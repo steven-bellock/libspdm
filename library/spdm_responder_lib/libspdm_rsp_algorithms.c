@@ -52,7 +52,7 @@ static uint32_t libspdm_prioritize_algorithm(const uint32_t *priority_table,
         }
     }
 
-    return 0;
+    return 1;
 }
 
 libspdm_return_t libspdm_get_response_algorithms(libspdm_context_t *spdm_context,
