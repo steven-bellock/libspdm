@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-12-27 08:13:41</td>
+            <td class="headerValue">2023-12-28 08:14:13</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -312,9 +312,9 @@
 <a name="241"><span class="lineNum">     241 </span>                :            : #define LIBSPDM_MAX_MESSAGE_TH_BUFFER_SIZE \</a>
 <a name="242"><span class="lineNum">     242 </span>                :            :     (LIBSPDM_MAX_MESSAGE_VCA_BUFFER_SIZE + \</a>
 <a name="243"><span class="lineNum">     243 </span>                :            :      LIBSPDM_MAX_MESSAGE_D_BUFFER_SIZE + \</a>
-<a name="244"><span class="lineNum">     244 </span>                :            :      LIBSPDM_MAX_CERT_CHAIN_SIZE + LIBSPDM_MAX_MESSAGE_K_BUFFER_SIZE + \</a>
+<a name="244"><span class="lineNum">     244 </span>                :            :      LIBSPDM_MAX_HASH_SIZE + LIBSPDM_MAX_MESSAGE_K_BUFFER_SIZE + \</a>
 <a name="245"><span class="lineNum">     245 </span>                :            :      LIBSPDM_MAX_MESSAGE_D_BUFFER_SIZE + \</a>
-<a name="246"><span class="lineNum">     246 </span>                :            :      LIBSPDM_MAX_CERT_CHAIN_SIZE + LIBSPDM_MAX_MESSAGE_F_BUFFER_SIZE)</a>
+<a name="246"><span class="lineNum">     246 </span>                :            :      LIBSPDM_MAX_HASH_SIZE + LIBSPDM_MAX_MESSAGE_F_BUFFER_SIZE)</a>
 <a name="247"><span class="lineNum">     247 </span>                :            : </a>
 <a name="248"><span class="lineNum">     248 </span>                :            : typedef struct {</a>
 <a name="249"><span class="lineNum">     249 </span>                :            :     size_t max_buffer_size;</a>
@@ -930,7 +930,7 @@
 <a name="859"><span class="lineNum">     859 </span>                :            :  *</a>
 <a name="860"><span class="lineNum">     860 </span>                :            :  * @retval true   Both endpoints support encapsulated messages.</a>
 <a name="861"><span class="lineNum">     861 </span>                :            :  * @retval false  At least one endpoint does not support encapsulated messages.</a>
-<a name="862"><span class="lineNum">     862 </span>                :            : **/</a>
+<a name="862"><span class="lineNum">     862 </span>                :            :  **/</a>
 <a name="863"><span class="lineNum">     863 </span>                :            : bool libspdm_is_encap_supported(const libspdm_context_t *spdm_context);</a>
 <a name="864"><span class="lineNum">     864 </span>                :            : </a>
 <a name="865"><span class="lineNum">     865 </span>                :            : /**</a>
@@ -1759,9 +1759,9 @@
 <a name="1688"><span class="lineNum">    1688 </span>                :            :  * @return true   At most one bit is set.</a>
 <a name="1689"><span class="lineNum">    1689 </span>                :            :  * @return false  More than one bit is set.</a>
 <a name="1690"><span class="lineNum">    1690 </span>                :            :  */</a>
-<a name="1691"><span class="lineNum">    1691 </span>                :<span class="lineCov">        235 : static inline bool libspdm_onehot0(uint32_t mask)</span></a>
+<a name="1691"><span class="lineNum">    1691 </span>                :<span class="lineCov">        265 : static inline bool libspdm_onehot0(uint32_t mask)</span></a>
 <a name="1692"><span class="lineNum">    1692 </span>                :            : {</a>
-<a name="1693"><span class="lineNum">    1693 </span>  [<span class="branchCov" title="Branch 0 was taken 229 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span><span class="branchCov" title="Branch 2 was taken 219 times"> + </span><span class="branchCov" title="Branch 3 was taken 10 times"> + </span>]:<span class="lineCov">        235 :     return !mask || !(mask &amp; (mask - 1));</span></a>
+<a name="1693"><span class="lineNum">    1693 </span>  [<span class="branchCov" title="Branch 0 was taken 253 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span><span class="branchCov" title="Branch 2 was taken 243 times"> + </span><span class="branchCov" title="Branch 3 was taken 10 times"> + </span>]:<span class="lineCov">        265 :     return !mask || !(mask &amp; (mask - 1));</span></a>
 <a name="1694"><span class="lineNum">    1694 </span>                :            : }</a>
 <a name="1695"><span class="lineNum">    1695 </span>                :            : </a>
 <a name="1696"><span class="lineNum">    1696 </span>                :<span class="lineCov">          1 : static inline uint64_t libspdm_le_to_be_64(uint64_t value)</span></a>
