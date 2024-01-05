@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">191</td>
-            <td class="headerCovTableEntry">191</td>
+            <td class="headerCovTableEntry">230</td>
+            <td class="headerCovTableEntry">230</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-04 08:14:07</td>
+            <td class="headerValue">2024-01-05 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">10</td>
-            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">11</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -49,8 +49,8 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">2</td>
-            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">6</td>
+            <td class="headerCovTableEntry">6</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
@@ -571,44 +571,141 @@
 <a name="500"><span class="lineNum">     500 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;transcript.message_d.buffer_size, 0);</span></a>
 <a name="501"><span class="lineNum">     501 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="502"><span class="lineNum">     502 </span>                :            : </a>
-<a name="503"><span class="lineNum">     503 </span>                :            : libspdm_test_context_t m_libspdm_responder_digests_test_context = {</a>
-<a name="504"><span class="lineNum">     504 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="505"><span class="lineNum">     505 </span>                :            :     false,</a>
-<a name="506"><span class="lineNum">     506 </span>                :            : };</a>
-<a name="507"><span class="lineNum">     507 </span>                :            : </a>
-<a name="508"><span class="lineNum">     508 </span>                :<span class="lineCov">          1 : int libspdm_responder_digests_test_main(void)</span></a>
+<a name="503"><span class="lineNum">     503 </span>                :            : /**</a>
+<a name="504"><span class="lineNum">     504 </span>                :            :  * Test10: a response message is successfully sent ,</a>
+<a name="505"><span class="lineNum">     505 </span>                :            :  * Check KeyPairID CertificateInfo and KeyUsageMask</a>
+<a name="506"><span class="lineNum">     506 </span>                :            :  * Expected Behavior: requester returns the status LIBSPDM_STATUS_SUCCESS</a>
+<a name="507"><span class="lineNum">     507 </span>                :            :  **/</a>
+<a name="508"><span class="lineNum">     508 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_digests_case10(void **state)</span></a>
 <a name="509"><span class="lineNum">     509 </span>                :            : {</a>
-<a name="510"><span class="lineNum">     510 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_digests_tests[] = {</span></a>
-<a name="511"><span class="lineNum">     511 </span>                :            :         /* Success Case*/</a>
-<a name="512"><span class="lineNum">     512 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case1),</a>
-<a name="513"><span class="lineNum">     513 </span>                :            :         /* Can be populated with new test.*/</a>
-<a name="514"><span class="lineNum">     514 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case2),</a>
-<a name="515"><span class="lineNum">     515 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_BUSY*/</a>
-<a name="516"><span class="lineNum">     516 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case3),</a>
-<a name="517"><span class="lineNum">     517 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
-<a name="518"><span class="lineNum">     518 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case4),</a>
-<a name="519"><span class="lineNum">     519 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
-<a name="520"><span class="lineNum">     520 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
-<a name="521"><span class="lineNum">     521 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case5),</a>
-<a name="522"><span class="lineNum">     522 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
-<a name="523"><span class="lineNum">     523 </span>                :            :         /* connection_state Check*/</a>
-<a name="524"><span class="lineNum">     524 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case6),</a>
-<a name="525"><span class="lineNum">     525 </span>                :            :         /* No digest to send*/</a>
-<a name="526"><span class="lineNum">     526 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case7),</a>
-<a name="527"><span class="lineNum">     527 </span>                :            :         /* Success Case in a session*/</a>
-<a name="528"><span class="lineNum">     528 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case8),</a>
-<a name="529"><span class="lineNum">     529 </span>                :            :         /* Set multi_key_conn_rsp to check if it responds correctly */</a>
-<a name="530"><span class="lineNum">     530 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case9),</a>
-<a name="531"><span class="lineNum">     531 </span>                :            :     };</a>
-<a name="532"><span class="lineNum">     532 </span>                :            : </a>
-<a name="533"><span class="lineNum">     533 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_digests_test_context);</span></a>
-<a name="534"><span class="lineNum">     534 </span>                :            : </a>
-<a name="535"><span class="lineNum">     535 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_digests_tests,</span></a>
-<a name="536"><span class="lineNum">     536 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="537"><span class="lineNum">     537 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="538"><span class="lineNum">     538 </span>                :            : }</a>
-<a name="539"><span class="lineNum">     539 </span>                :            : </a>
-<a name="540"><span class="lineNum">     540 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
+<a name="510"><span class="lineNum">     510 </span>                :            :     libspdm_return_t status;</a>
+<a name="511"><span class="lineNum">     511 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="512"><span class="lineNum">     512 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="513"><span class="lineNum">     513 </span>                :            :     size_t response_size;</a>
+<a name="514"><span class="lineNum">     514 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="515"><span class="lineNum">     515 </span>                :            :     spdm_digest_response_t *spdm_response;</a>
+<a name="516"><span class="lineNum">     516 </span>                :            :     uint8_t *digest;</a>
+<a name="517"><span class="lineNum">     517 </span>                :            :     spdm_key_pair_id_t *key_pair_id;</a>
+<a name="518"><span class="lineNum">     518 </span>                :            :     spdm_certificate_info_t *cert_info;</a>
+<a name="519"><span class="lineNum">     519 </span>                :            :     spdm_key_usage_bit_mask_t *key_usage_bit_mask;</a>
+<a name="520"><span class="lineNum">     520 </span>                :            :     uint32_t hash_size;</a>
+<a name="521"><span class="lineNum">     521 </span>                :            :     uint8_t slot_count;</a>
+<a name="522"><span class="lineNum">     522 </span>                :            :     size_t additional_size;</a>
+<a name="523"><span class="lineNum">     523 </span>                :            : </a>
+<a name="524"><span class="lineNum">     524 </span>                :<span class="lineCov">          1 :     slot_count = SPDM_MAX_SLOT_COUNT;</span></a>
+<a name="525"><span class="lineNum">     525 </span>                :<span class="lineCov">          1 :     additional_size = sizeof(spdm_key_pair_id_t) + sizeof(spdm_certificate_info_t) +</span></a>
+<a name="526"><span class="lineNum">     526 </span>                :            :                       sizeof(spdm_key_usage_bit_mask_t);</a>
+<a name="527"><span class="lineNum">     527 </span>                :<span class="lineCov">          1 :     hash_size = libspdm_get_hash_size(m_libspdm_use_hash_algo);</span></a>
+<a name="528"><span class="lineNum">     528 </span>                :            : </a>
+<a name="529"><span class="lineNum">     529 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="530"><span class="lineNum">     530 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="531"><span class="lineNum">     531 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x0A;</span></a>
+<a name="532"><span class="lineNum">     532 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_13 &lt;&lt;</span></a>
+<a name="533"><span class="lineNum">     533 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="534"><span class="lineNum">     534 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="535"><span class="lineNum">     535 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="536"><span class="lineNum">     536 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags = 0;</span></a>
+<a name="537"><span class="lineNum">     537 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;last_spdm_request_session_id_valid = false;</span></a>
+<a name="538"><span class="lineNum">     538 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="539"><span class="lineNum">     539 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;</a>
+<a name="540"><span class="lineNum">     540 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="541"><span class="lineNum">     541 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="542"><span class="lineNum">     542 </span>                :            : </a>
+<a name="543"><span class="lineNum">     543 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          9 :     for (uint8_t index = 0; index &lt; SPDM_MAX_SLOT_COUNT; index++) {</span></a>
+<a name="544"><span class="lineNum">     544 </span>                :<span class="lineCov">          8 :         spdm_context-&gt;local_context.local_cert_chain_provision[index] =</span></a>
+<a name="545"><span class="lineNum">     545 </span>                :<span class="lineCov">          8 :             &amp;m_libspdm_local_certificate_chain[hash_size *index];</span></a>
+<a name="546"><span class="lineNum">     546 </span>                :<span class="lineCov">          8 :         spdm_context-&gt;local_context.local_cert_chain_provision_size[index] = hash_size;</span></a>
+<a name="547"><span class="lineNum">     547 </span>                :            :     }</a>
+<a name="548"><span class="lineNum">     548 </span>                :            : </a>
+<a name="549"><span class="lineNum">     549 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(m_libspdm_local_certificate_chain,</span></a>
+<a name="550"><span class="lineNum">     550 </span>                :            :                     sizeof(m_libspdm_local_certificate_chain),</a>
+<a name="551"><span class="lineNum">     551 </span>                :            :                     (uint8_t)(0xFF));</a>
+<a name="552"><span class="lineNum">     552 </span>                :            : </a>
+<a name="553"><span class="lineNum">     553 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="554"><span class="lineNum">     554 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="555"><span class="lineNum">     555 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="556"><span class="lineNum">     556 </span>                :            : #endif</a>
+<a name="557"><span class="lineNum">     557 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.multi_key_conn_rsp = true;</span></a>
+<a name="558"><span class="lineNum">     558 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_d(spdm_context);</span></a>
+<a name="559"><span class="lineNum">     559 </span>                :            : </a>
+<a name="560"><span class="lineNum">     560 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="561"><span class="lineNum">     561 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_digests(spdm_context,</span></a>
+<a name="562"><span class="lineNum">     562 </span>                :            :                                           m_libspdm_get_digests_request2_size,</a>
+<a name="563"><span class="lineNum">     563 </span>                :            :                                           &amp;m_libspdm_get_digests_request2,</a>
+<a name="564"><span class="lineNum">     564 </span>                :            :                                           &amp;response_size, response);</a>
+<a name="565"><span class="lineNum">     565 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="566"><span class="lineNum">     566 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size,</span></a>
+<a name="567"><span class="lineNum">     567 </span>                :            :                      sizeof(spdm_digest_response_t) +</a>
+<a name="568"><span class="lineNum">     568 </span>                :            :                      (hash_size + additional_size) *</a>
+<a name="569"><span class="lineNum">     569 </span>                :            :                      slot_count);</a>
+<a name="570"><span class="lineNum">     570 </span>                :            : </a>
+<a name="571"><span class="lineNum">     571 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="572"><span class="lineNum">     572 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code,</span></a>
+<a name="573"><span class="lineNum">     573 </span>                :            :                      SPDM_DIGESTS);</a>
+<a name="574"><span class="lineNum">     574 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;transcript.message_d.buffer_size,</span></a>
+<a name="575"><span class="lineNum">     575 </span>                :            :                      sizeof(spdm_digest_response_t) + (hash_size + additional_size) * slot_count);</a>
+<a name="576"><span class="lineNum">     576 </span>                :            : </a>
+<a name="577"><span class="lineNum">     577 </span>                :<span class="lineCov">          1 :     digest = (void *)(spdm_response + 1);</span></a>
+<a name="578"><span class="lineNum">     578 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem (digest, hash_size * slot_count);</span></a>
+<a name="579"><span class="lineNum">     579 </span>                :<span class="lineCov">          1 :     key_pair_id = (spdm_key_pair_id_t *)((uint8_t *)digest + (hash_size * slot_count));</span></a>
+<a name="580"><span class="lineNum">     580 </span>                :<span class="lineCov">          1 :     cert_info = (spdm_certificate_info_t *)((uint8_t *)key_pair_id +</span></a>
+<a name="581"><span class="lineNum">     581 </span>                :<span class="lineCov">          1 :                                             sizeof(spdm_key_pair_id_t) * slot_count);</span></a>
+<a name="582"><span class="lineNum">     582 </span>                :<span class="lineCov">          1 :     key_usage_bit_mask = (spdm_key_usage_bit_mask_t *)((uint8_t *)cert_info +</span></a>
+<a name="583"><span class="lineNum">     583 </span>                :<span class="lineCov">          1 :                                                        sizeof(spdm_certificate_info_t) *</span></a>
+<a name="584"><span class="lineNum">     584 </span>                :            :                                                        slot_count);</a>
+<a name="585"><span class="lineNum">     585 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          9 :     for (uint8_t index = 0; index &lt; SPDM_MAX_SLOT_COUNT; index++) {</span></a>
+<a name="586"><span class="lineNum">     586 </span>                :<span class="lineCov">          8 :         assert_memory_equal((void *)&amp;key_pair_id[index],</span></a>
+<a name="587"><span class="lineNum">     587 </span>                :            :                             (void *)&amp;spdm_context-&gt;local_context.local_key_pair_id[index],</a>
+<a name="588"><span class="lineNum">     588 </span>                :            :                             sizeof(spdm_key_pair_id_t));</a>
+<a name="589"><span class="lineNum">     589 </span>                :<span class="lineCov">          8 :         assert_memory_equal((void *)&amp;cert_info[index],</span></a>
+<a name="590"><span class="lineNum">     590 </span>                :            :                             (void *)&amp;spdm_context-&gt;local_context.local_cert_info[index],</a>
+<a name="591"><span class="lineNum">     591 </span>                :            :                             sizeof(spdm_certificate_info_t));</a>
+<a name="592"><span class="lineNum">     592 </span>                :<span class="lineCov">          8 :         assert_memory_equal((void *)&amp;key_usage_bit_mask[index],</span></a>
+<a name="593"><span class="lineNum">     593 </span>                :            :                             (void *)&amp;spdm_context-&gt;local_context.local_key_usage_bit_mask[index],</a>
+<a name="594"><span class="lineNum">     594 </span>                :            :                             sizeof(spdm_key_usage_bit_mask_t));</a>
+<a name="595"><span class="lineNum">     595 </span>                :            :     }</a>
+<a name="596"><span class="lineNum">     596 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="597"><span class="lineNum">     597 </span>                :            : </a>
+<a name="598"><span class="lineNum">     598 </span>                :            : libspdm_test_context_t m_libspdm_responder_digests_test_context = {</a>
+<a name="599"><span class="lineNum">     599 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="600"><span class="lineNum">     600 </span>                :            :     false,</a>
+<a name="601"><span class="lineNum">     601 </span>                :            : };</a>
+<a name="602"><span class="lineNum">     602 </span>                :            : </a>
+<a name="603"><span class="lineNum">     603 </span>                :<span class="lineCov">          1 : int libspdm_responder_digests_test_main(void)</span></a>
+<a name="604"><span class="lineNum">     604 </span>                :            : {</a>
+<a name="605"><span class="lineNum">     605 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_digests_tests[] = {</span></a>
+<a name="606"><span class="lineNum">     606 </span>                :            :         /* Success Case*/</a>
+<a name="607"><span class="lineNum">     607 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case1),</a>
+<a name="608"><span class="lineNum">     608 </span>                :            :         /* Can be populated with new test.*/</a>
+<a name="609"><span class="lineNum">     609 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case2),</a>
+<a name="610"><span class="lineNum">     610 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_BUSY*/</a>
+<a name="611"><span class="lineNum">     611 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case3),</a>
+<a name="612"><span class="lineNum">     612 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
+<a name="613"><span class="lineNum">     613 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case4),</a>
+<a name="614"><span class="lineNum">     614 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
+<a name="615"><span class="lineNum">     615 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
+<a name="616"><span class="lineNum">     616 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case5),</a>
+<a name="617"><span class="lineNum">     617 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
+<a name="618"><span class="lineNum">     618 </span>                :            :         /* connection_state Check*/</a>
+<a name="619"><span class="lineNum">     619 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case6),</a>
+<a name="620"><span class="lineNum">     620 </span>                :            :         /* No digest to send*/</a>
+<a name="621"><span class="lineNum">     621 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case7),</a>
+<a name="622"><span class="lineNum">     622 </span>                :            :         /* Success Case in a session*/</a>
+<a name="623"><span class="lineNum">     623 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case8),</a>
+<a name="624"><span class="lineNum">     624 </span>                :            :         /* Set multi_key_conn_rsp to check if it responds correctly */</a>
+<a name="625"><span class="lineNum">     625 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case9),</a>
+<a name="626"><span class="lineNum">     626 </span>                :            :         /* Check KeyPairID CertificateInfo and KeyUsageMask*/</a>
+<a name="627"><span class="lineNum">     627 </span>                :            :         cmocka_unit_test(libspdm_test_responder_digests_case10),</a>
+<a name="628"><span class="lineNum">     628 </span>                :            :     };</a>
+<a name="629"><span class="lineNum">     629 </span>                :            : </a>
+<a name="630"><span class="lineNum">     630 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_digests_test_context);</span></a>
+<a name="631"><span class="lineNum">     631 </span>                :            : </a>
+<a name="632"><span class="lineNum">     632 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_digests_tests,</span></a>
+<a name="633"><span class="lineNum">     633 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="634"><span class="lineNum">     634 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="635"><span class="lineNum">     635 </span>                :            : }</a>
+<a name="636"><span class="lineNum">     636 </span>                :            : </a>
+<a name="637"><span class="lineNum">     637 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP*/</a>
 </pre>
       </td>
     </tr>

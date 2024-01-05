@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-04 08:14:07</td>
+            <td class="headerValue">2024-01-05 08:14:35</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">8</td>
@@ -90,16 +90,16 @@
 <a name="19"><span class="lineNum">      19 </span>                :            :  *         If the allocations fails, libspdm_sha256_new() returns NULL.</a>
 <a name="20"><span class="lineNum">      20 </span>                :            :  *</a>
 <a name="21"><span class="lineNum">      21 </span>                :            :  **/</a>
-<a name="22"><span class="lineNum">      22 </span>                :<span class="lineCov">        789 : void *libspdm_sha256_new(void)</span></a>
+<a name="22"><span class="lineNum">      22 </span>                :<span class="lineCov">        800 : void *libspdm_sha256_new(void)</span></a>
 <a name="23"><span class="lineNum">      23 </span>                :            : {</a>
 <a name="24"><span class="lineNum">      24 </span>                :            :     void *hmac_md_ctx;</a>
 <a name="25"><span class="lineNum">      25 </span>                :            : </a>
-<a name="26"><span class="lineNum">      26 </span>                :<span class="lineCov">        789 :     hmac_md_ctx = allocate_zero_pool(sizeof(mbedtls_sha256_context));</span></a>
-<a name="27"><span class="lineNum">      27 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 789 times"> + </span>]:<span class="lineCov">        789 :     if (hmac_md_ctx == NULL) {</span></a>
+<a name="26"><span class="lineNum">      26 </span>                :<span class="lineCov">        800 :     hmac_md_ctx = allocate_zero_pool(sizeof(mbedtls_sha256_context));</span></a>
+<a name="27"><span class="lineNum">      27 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 800 times"> + </span>]:<span class="lineCov">        800 :     if (hmac_md_ctx == NULL) {</span></a>
 <a name="28"><span class="lineNum">      28 </span>                :<span class="lineNoCov">          0 :         return NULL;</span></a>
 <a name="29"><span class="lineNum">      29 </span>                :            :     }</a>
 <a name="30"><span class="lineNum">      30 </span>                :            : </a>
-<a name="31"><span class="lineNum">      31 </span>                :<span class="lineCov">        789 :     return hmac_md_ctx;</span></a>
+<a name="31"><span class="lineNum">      31 </span>                :<span class="lineCov">        800 :     return hmac_md_ctx;</span></a>
 <a name="32"><span class="lineNum">      32 </span>                :            : }</a>
 <a name="33"><span class="lineNum">      33 </span>                :            : </a>
 <a name="34"><span class="lineNum">      34 </span>                :            : /**</a>
@@ -108,11 +108,11 @@
 <a name="37"><span class="lineNum">      37 </span>                :            :  * @param[in]  sha256_ctx  Pointer to the HASH_CTX context to be released.</a>
 <a name="38"><span class="lineNum">      38 </span>                :            :  *</a>
 <a name="39"><span class="lineNum">      39 </span>                :            :  **/</a>
-<a name="40"><span class="lineNum">      40 </span>                :<span class="lineCov">        744 : void libspdm_sha256_free(void *sha256_ctx)</span></a>
+<a name="40"><span class="lineNum">      40 </span>                :<span class="lineCov">        757 : void libspdm_sha256_free(void *sha256_ctx)</span></a>
 <a name="41"><span class="lineNum">      41 </span>                :            : {</a>
-<a name="42"><span class="lineNum">      42 </span>                :<span class="lineCov">        744 :     mbedtls_sha256_free(sha256_ctx);</span></a>
-<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">        744 :     free_pool (sha256_ctx);</span></a>
-<a name="44"><span class="lineNum">      44 </span>                :<span class="lineCov">        744 : }</span></a>
+<a name="42"><span class="lineNum">      42 </span>                :<span class="lineCov">        757 :     mbedtls_sha256_free(sha256_ctx);</span></a>
+<a name="43"><span class="lineNum">      43 </span>                :<span class="lineCov">        757 :     free_pool (sha256_ctx);</span></a>
+<a name="44"><span class="lineNum">      44 </span>                :<span class="lineCov">        757 : }</span></a>
 <a name="45"><span class="lineNum">      45 </span>                :            : </a>
 <a name="46"><span class="lineNum">      46 </span>                :            : /**</a>
 <a name="47"><span class="lineNum">      47 </span>                :            :  * Initializes user-supplied memory pointed by sha256_context as SHA-256 hash context for</a>
@@ -126,21 +126,21 @@
 <a name="55"><span class="lineNum">      55 </span>                :            :  * @retval false  SHA-256 context initialization failed.</a>
 <a name="56"><span class="lineNum">      56 </span>                :            :  *</a>
 <a name="57"><span class="lineNum">      57 </span>                :            :  **/</a>
-<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">        408 : bool libspdm_sha256_init(void *sha256_context)</span></a>
+<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">        419 : bool libspdm_sha256_init(void *sha256_context)</span></a>
 <a name="59"><span class="lineNum">      59 </span>                :            : {</a>
 <a name="60"><span class="lineNum">      60 </span>                :            :     int ret;</a>
 <a name="61"><span class="lineNum">      61 </span>                :            : </a>
-<a name="62"><span class="lineNum">      62 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 408 times"> + </span>]:<span class="lineCov">        408 :     if (sha256_context == NULL) {</span></a>
+<a name="62"><span class="lineNum">      62 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 419 times"> + </span>]:<span class="lineCov">        419 :     if (sha256_context == NULL) {</span></a>
 <a name="63"><span class="lineNum">      63 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="64"><span class="lineNum">      64 </span>                :            :     }</a>
 <a name="65"><span class="lineNum">      65 </span>                :            : </a>
-<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">        408 :     mbedtls_sha256_init(sha256_context);</span></a>
+<a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">        419 :     mbedtls_sha256_init(sha256_context);</span></a>
 <a name="67"><span class="lineNum">      67 </span>                :            : </a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">        408 :     ret = mbedtls_sha256_starts_ret(sha256_context, false);</span></a>
-<a name="69"><span class="lineNum">      69 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 408 times"> + </span>]:<span class="lineCov">        408 :     if (ret != 0) {</span></a>
+<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">        419 :     ret = mbedtls_sha256_starts_ret(sha256_context, false);</span></a>
+<a name="69"><span class="lineNum">      69 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 419 times"> + </span>]:<span class="lineCov">        419 :     if (ret != 0) {</span></a>
 <a name="70"><span class="lineNum">      70 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="71"><span class="lineNum">      71 </span>                :            :     }</a>
-<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">        408 :     return true;</span></a>
+<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">        419 :     return true;</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :            : }</a>
 <a name="74"><span class="lineNum">      74 </span>                :            : </a>
 <a name="75"><span class="lineNum">      75 </span>                :            : /**</a>
@@ -186,27 +186,27 @@
 <a name="115"><span class="lineNum">     115 </span>                :            :  * @retval false  SHA-256 data digest failed.</a>
 <a name="116"><span class="lineNum">     116 </span>                :            :  *</a>
 <a name="117"><span class="lineNum">     117 </span>                :            :  **/</a>
-<a name="118"><span class="lineNum">     118 </span>                :<span class="lineCov">      10470 : bool libspdm_sha256_update(void *sha256_context, const void *data,</span></a>
+<a name="118"><span class="lineNum">     118 </span>                :<span class="lineCov">      10511 : bool libspdm_sha256_update(void *sha256_context, const void *data,</span></a>
 <a name="119"><span class="lineNum">     119 </span>                :            :                            size_t data_size)</a>
 <a name="120"><span class="lineNum">     120 </span>                :            : {</a>
 <a name="121"><span class="lineNum">     121 </span>                :            :     int ret;</a>
 <a name="122"><span class="lineNum">     122 </span>                :            : </a>
-<a name="123"><span class="lineNum">     123 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10470 times"> + </span>]:<span class="lineCov">      10470 :     if (sha256_context == NULL) {</span></a>
+<a name="123"><span class="lineNum">     123 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10511 times"> + </span>]:<span class="lineCov">      10511 :     if (sha256_context == NULL) {</span></a>
 <a name="124"><span class="lineNum">     124 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="125"><span class="lineNum">     125 </span>                :            :     }</a>
 <a name="126"><span class="lineNum">     126 </span>                :            : </a>
-<a name="127"><span class="lineNum">     127 </span>  [<span class="branchCov" title="Branch 0 was taken 89 times"> + </span><span class="branchCov" title="Branch 1 was taken 10381 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 89 times"> + </span>]:<span class="lineCov">      10470 :     if (data == NULL &amp;&amp; data_size != 0) {</span></a>
+<a name="127"><span class="lineNum">     127 </span>  [<span class="branchCov" title="Branch 0 was taken 89 times"> + </span><span class="branchCov" title="Branch 1 was taken 10422 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 89 times"> + </span>]:<span class="lineCov">      10511 :     if (data == NULL &amp;&amp; data_size != 0) {</span></a>
 <a name="128"><span class="lineNum">     128 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="129"><span class="lineNum">     129 </span>                :            :     }</a>
-<a name="130"><span class="lineNum">     130 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10470 times"> + </span>]:<span class="lineCov">      10470 :     if (data_size &gt; INT_MAX) {</span></a>
+<a name="130"><span class="lineNum">     130 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10511 times"> + </span>]:<span class="lineCov">      10511 :     if (data_size &gt; INT_MAX) {</span></a>
 <a name="131"><span class="lineNum">     131 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="132"><span class="lineNum">     132 </span>                :            :     }</a>
 <a name="133"><span class="lineNum">     133 </span>                :            : </a>
-<a name="134"><span class="lineNum">     134 </span>                :<span class="lineCov">      10470 :     ret = mbedtls_sha256_update_ret(sha256_context, data, data_size);</span></a>
-<a name="135"><span class="lineNum">     135 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10470 times"> + </span>]:<span class="lineCov">      10470 :     if (ret != 0) {</span></a>
+<a name="134"><span class="lineNum">     134 </span>                :<span class="lineCov">      10511 :     ret = mbedtls_sha256_update_ret(sha256_context, data, data_size);</span></a>
+<a name="135"><span class="lineNum">     135 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10511 times"> + </span>]:<span class="lineCov">      10511 :     if (ret != 0) {</span></a>
 <a name="136"><span class="lineNum">     136 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="137"><span class="lineNum">     137 </span>                :            :     }</a>
-<a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">      10470 :     return true;</span></a>
+<a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">      10511 :     return true;</span></a>
 <a name="139"><span class="lineNum">     139 </span>                :            : }</a>
 <a name="140"><span class="lineNum">     140 </span>                :            : </a>
 <a name="141"><span class="lineNum">     141 </span>                :            : /**</a>
@@ -263,26 +263,26 @@
 <a name="192"><span class="lineNum">     192 </span>                :            :  * @retval false  This interface is not supported.</a>
 <a name="193"><span class="lineNum">     193 </span>                :            :  *</a>
 <a name="194"><span class="lineNum">     194 </span>                :            :  **/</a>
-<a name="195"><span class="lineNum">     195 </span>                :<span class="lineCov">       1540 : bool libspdm_sha256_hash_all(const void *data, size_t data_size,</span></a>
+<a name="195"><span class="lineNum">     195 </span>                :<span class="lineCov">       1593 : bool libspdm_sha256_hash_all(const void *data, size_t data_size,</span></a>
 <a name="196"><span class="lineNum">     196 </span>                :            :                              uint8_t *hash_value)</a>
 <a name="197"><span class="lineNum">     197 </span>                :            : {</a>
 <a name="198"><span class="lineNum">     198 </span>                :            :     int ret;</a>
 <a name="199"><span class="lineNum">     199 </span>                :            : </a>
-<a name="200"><span class="lineNum">     200 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1540 times"> + </span>]:<span class="lineCov">       1540 :     if (hash_value == NULL) {</span></a>
+<a name="200"><span class="lineNum">     200 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1593 times"> + </span>]:<span class="lineCov">       1593 :     if (hash_value == NULL) {</span></a>
 <a name="201"><span class="lineNum">     201 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="202"><span class="lineNum">     202 </span>                :            :     }</a>
-<a name="203"><span class="lineNum">     203 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1540 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       1540 :     if (data == NULL &amp;&amp; data_size != 0) {</span></a>
+<a name="203"><span class="lineNum">     203 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1593 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">       1593 :     if (data == NULL &amp;&amp; data_size != 0) {</span></a>
 <a name="204"><span class="lineNum">     204 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="205"><span class="lineNum">     205 </span>                :            :     }</a>
-<a name="206"><span class="lineNum">     206 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1540 times"> + </span>]:<span class="lineCov">       1540 :     if (data_size &gt; INT_MAX) {</span></a>
+<a name="206"><span class="lineNum">     206 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1593 times"> + </span>]:<span class="lineCov">       1593 :     if (data_size &gt; INT_MAX) {</span></a>
 <a name="207"><span class="lineNum">     207 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="208"><span class="lineNum">     208 </span>                :            :     }</a>
 <a name="209"><span class="lineNum">     209 </span>                :            : </a>
-<a name="210"><span class="lineNum">     210 </span>                :<span class="lineCov">       1540 :     ret = mbedtls_sha256_ret(data, data_size, hash_value, false);</span></a>
-<a name="211"><span class="lineNum">     211 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1540 times"> + </span>]:<span class="lineCov">       1540 :     if (ret != 0) {</span></a>
+<a name="210"><span class="lineNum">     210 </span>                :<span class="lineCov">       1593 :     ret = mbedtls_sha256_ret(data, data_size, hash_value, false);</span></a>
+<a name="211"><span class="lineNum">     211 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1593 times"> + </span>]:<span class="lineCov">       1593 :     if (ret != 0) {</span></a>
 <a name="212"><span class="lineNum">     212 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="213"><span class="lineNum">     213 </span>                :            :     }</a>
-<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">       1540 :     return true;</span></a>
+<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">       1593 :     return true;</span></a>
 <a name="215"><span class="lineNum">     215 </span>                :            : }</a>
 <a name="216"><span class="lineNum">     216 </span>                :            : </a>
 <a name="217"><span class="lineNum">     217 </span>                :            : /**</a>
