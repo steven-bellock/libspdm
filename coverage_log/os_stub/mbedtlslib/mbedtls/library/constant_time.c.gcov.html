@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-05 08:14:35</td>
+            <td class="headerValue">2024-01-06 08:13:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">10</td>
@@ -172,7 +172,7 @@
 <a name="101"><span class="lineNum">     101 </span>                :            : </a>
 <a name="102"><span class="lineNum">     102 </span>                :            : #if defined(MBEDTLS_BIGNUM_C)</a>
 <a name="103"><span class="lineNum">     103 </span>                :            : </a>
-<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">    4118882 : mbedtls_mpi_uint mbedtls_ct_mpi_uint_mask( mbedtls_mpi_uint value )</span></a>
+<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">    4117346 : mbedtls_mpi_uint mbedtls_ct_mpi_uint_mask( mbedtls_mpi_uint value )</span></a>
 <a name="105"><span class="lineNum">     105 </span>                :            : {</a>
 <a name="106"><span class="lineNum">     106 </span>                :            :     /* MSVC has a warning about unary minus on unsigned, but this is</a>
 <a name="107"><span class="lineNum">     107 </span>                :            :      * well-defined and precisely what we want to do here */</a>
@@ -180,7 +180,7 @@
 <a name="109"><span class="lineNum">     109 </span>                :            : #pragma warning( push )</a>
 <a name="110"><span class="lineNum">     110 </span>                :            : #pragma warning( disable : 4146 )</a>
 <a name="111"><span class="lineNum">     111 </span>                :            : #endif</a>
-<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">    4118882 :     return( - ( ( value | - value ) &gt;&gt; ( sizeof( value ) * 8 - 1 ) ) );</span></a>
+<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">    4117346 :     return( - ( ( value | - value ) &gt;&gt; ( sizeof( value ) * 8 - 1 ) ) );</span></a>
 <a name="113"><span class="lineNum">     113 </span>                :            : #if defined(_MSC_VER)</a>
 <a name="114"><span class="lineNum">     114 </span>                :            : #pragma warning( pop )</a>
 <a name="115"><span class="lineNum">     115 </span>                :            : #endif</a>
@@ -245,11 +245,11 @@
 <a name="174"><span class="lineNum">     174 </span>                :            : </a>
 <a name="175"><span class="lineNum">     175 </span>                :            : #endif /* MBEDTLS_BASE64_C */</a>
 <a name="176"><span class="lineNum">     176 </span>                :            : </a>
-<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">     729248 : unsigned mbedtls_ct_size_bool_eq( size_t x,</span></a>
+<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">     727712 : unsigned mbedtls_ct_size_bool_eq( size_t x,</span></a>
 <a name="178"><span class="lineNum">     178 </span>                :            :                                   size_t y )</a>
 <a name="179"><span class="lineNum">     179 </span>                :            : {</a>
 <a name="180"><span class="lineNum">     180 </span>                :            :     /* diff = 0 if x == y, non-zero otherwise */</a>
-<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">     729248 :     const size_t diff = x ^ y;</span></a>
+<a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">     727712 :     const size_t diff = x ^ y;</span></a>
 <a name="182"><span class="lineNum">     182 </span>                :            : </a>
 <a name="183"><span class="lineNum">     183 </span>                :            :     /* MSVC has a warning about unary minus on unsigned integer types,</a>
 <a name="184"><span class="lineNum">     184 </span>                :            :      * but this is well-defined and precisely what we want to do here. */</a>
@@ -259,16 +259,16 @@
 <a name="188"><span class="lineNum">     188 </span>                :            : #endif</a>
 <a name="189"><span class="lineNum">     189 </span>                :            : </a>
 <a name="190"><span class="lineNum">     190 </span>                :            :     /* diff_msb's most significant bit is equal to x != y */</a>
-<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">     729248 :     const size_t diff_msb = ( diff | (size_t) -diff );</span></a>
+<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">     727712 :     const size_t diff_msb = ( diff | (size_t) -diff );</span></a>
 <a name="192"><span class="lineNum">     192 </span>                :            : </a>
 <a name="193"><span class="lineNum">     193 </span>                :            : #if defined(_MSC_VER)</a>
 <a name="194"><span class="lineNum">     194 </span>                :            : #pragma warning( pop )</a>
 <a name="195"><span class="lineNum">     195 </span>                :            : #endif</a>
 <a name="196"><span class="lineNum">     196 </span>                :            : </a>
 <a name="197"><span class="lineNum">     197 </span>                :            :     /* diff1 = (x != y) ? 1 : 0 */</a>
-<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">     729248 :     const unsigned diff1 = diff_msb &gt;&gt; ( sizeof( diff_msb ) * 8 - 1 );</span></a>
+<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">     727712 :     const unsigned diff1 = diff_msb &gt;&gt; ( sizeof( diff_msb ) * 8 - 1 );</span></a>
 <a name="199"><span class="lineNum">     199 </span>                :            : </a>
-<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">     729248 :     return( 1 ^ diff1 );</span></a>
+<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">     727712 :     return( 1 ^ diff1 );</span></a>
 <a name="201"><span class="lineNum">     201 </span>                :            : }</a>
 <a name="202"><span class="lineNum">     202 </span>                :            : </a>
 <a name="203"><span class="lineNum">     203 </span>                :            : #if defined(MBEDTLS_PKCS1_V15) &amp;&amp; defined(MBEDTLS_RSA_C) &amp;&amp; !defined(MBEDTLS_RSA_ALT)</a>
@@ -349,27 +349,27 @@
 <a name="278"><span class="lineNum">     278 </span>                :            :  *</a>
 <a name="279"><span class="lineNum">     279 </span>                :            :  * \return  \c if1 if \p condition is nonzero, otherwise \c if0.</a>
 <a name="280"><span class="lineNum">     280 </span>                :            :  * */</a>
-<a name="281"><span class="lineNum">     281 </span>                :<span class="lineCov">    4118882 : static int mbedtls_ct_cond_select_sign( unsigned char condition,</span></a>
+<a name="281"><span class="lineNum">     281 </span>                :<span class="lineCov">    4117346 : static int mbedtls_ct_cond_select_sign( unsigned char condition,</span></a>
 <a name="282"><span class="lineNum">     282 </span>                :            :                                         int if1,</a>
 <a name="283"><span class="lineNum">     283 </span>                :            :                                         int if0 )</a>
 <a name="284"><span class="lineNum">     284 </span>                :            : {</a>
 <a name="285"><span class="lineNum">     285 </span>                :            :     /* In order to avoid questions about what we can reasonably assume about</a>
 <a name="286"><span class="lineNum">     286 </span>                :            :      * the representations of signed integers, move everything to unsigned</a>
 <a name="287"><span class="lineNum">     287 </span>                :            :      * by taking advantage of the fact that if1 and if0 are either +1 or -1. */</a>
-<a name="288"><span class="lineNum">     288 </span>                :<span class="lineCov">    4118882 :     unsigned uif1 = if1 + 1;</span></a>
-<a name="289"><span class="lineNum">     289 </span>                :<span class="lineCov">    4118882 :     unsigned uif0 = if0 + 1;</span></a>
+<a name="288"><span class="lineNum">     288 </span>                :<span class="lineCov">    4117346 :     unsigned uif1 = if1 + 1;</span></a>
+<a name="289"><span class="lineNum">     289 </span>                :<span class="lineCov">    4117346 :     unsigned uif0 = if0 + 1;</span></a>
 <a name="290"><span class="lineNum">     290 </span>                :            : </a>
 <a name="291"><span class="lineNum">     291 </span>                :            :     /* condition was 0 or 1, mask is 0 or 2 as are uif1 and uif0 */</a>
-<a name="292"><span class="lineNum">     292 </span>                :<span class="lineCov">    4118882 :     const unsigned mask = condition &lt;&lt; 1;</span></a>
+<a name="292"><span class="lineNum">     292 </span>                :<span class="lineCov">    4117346 :     const unsigned mask = condition &lt;&lt; 1;</span></a>
 <a name="293"><span class="lineNum">     293 </span>                :            : </a>
 <a name="294"><span class="lineNum">     294 </span>                :            :     /* select uif1 or uif0 */</a>
-<a name="295"><span class="lineNum">     295 </span>                :<span class="lineCov">    4118882 :     unsigned ur = ( uif0 &amp; ~mask ) | ( uif1 &amp; mask );</span></a>
+<a name="295"><span class="lineNum">     295 </span>                :<span class="lineCov">    4117346 :     unsigned ur = ( uif0 &amp; ~mask ) | ( uif1 &amp; mask );</span></a>
 <a name="296"><span class="lineNum">     296 </span>                :            : </a>
 <a name="297"><span class="lineNum">     297 </span>                :            :     /* ur is now 0 or 2, convert back to -1 or +1 */</a>
-<a name="298"><span class="lineNum">     298 </span>                :<span class="lineCov">    4118882 :     return( (int) ur - 1 );</span></a>
+<a name="298"><span class="lineNum">     298 </span>                :<span class="lineCov">    4117346 :     return( (int) ur - 1 );</span></a>
 <a name="299"><span class="lineNum">     299 </span>                :            : }</a>
 <a name="300"><span class="lineNum">     300 </span>                :            : </a>
-<a name="301"><span class="lineNum">     301 </span>                :<span class="lineCov">    4219876 : void mbedtls_ct_mpi_uint_cond_assign( size_t n,</span></a>
+<a name="301"><span class="lineNum">     301 </span>                :<span class="lineCov">    4218331 : void mbedtls_ct_mpi_uint_cond_assign( size_t n,</span></a>
 <a name="302"><span class="lineNum">     302 </span>                :            :                                       mbedtls_mpi_uint *dest,</a>
 <a name="303"><span class="lineNum">     303 </span>                :            :                                       const mbedtls_mpi_uint *src,</a>
 <a name="304"><span class="lineNum">     304 </span>                :            :                                       unsigned char condition )</a>
@@ -384,15 +384,15 @@
 <a name="313"><span class="lineNum">     313 </span>                :            : #endif</a>
 <a name="314"><span class="lineNum">     314 </span>                :            : </a>
 <a name="315"><span class="lineNum">     315 </span>                :            :     /* all-bits 1 if condition is 1, all-bits 0 if condition is 0 */</a>
-<a name="316"><span class="lineNum">     316 </span>                :<span class="lineCov">    4219876 :     const mbedtls_mpi_uint mask = -condition;</span></a>
+<a name="316"><span class="lineNum">     316 </span>                :<span class="lineCov">    4218331 :     const mbedtls_mpi_uint mask = -condition;</span></a>
 <a name="317"><span class="lineNum">     317 </span>                :            : </a>
 <a name="318"><span class="lineNum">     318 </span>                :            : #if defined(_MSC_VER)</a>
 <a name="319"><span class="lineNum">     319 </span>                :            : #pragma warning( pop )</a>
 <a name="320"><span class="lineNum">     320 </span>                :            : #endif</a>
 <a name="321"><span class="lineNum">     321 </span>                :            : </a>
-<a name="322"><span class="lineNum">     322 </span>        [<span class="branchCov" title="Branch 0 was taken 23757714 times"> + </span><span class="branchCov" title="Branch 1 was taken 4219876 times"> + </span>]:<span class="lineCov">   27977590 :     for( i = 0; i &lt; n; i++ )</span></a>
-<a name="323"><span class="lineNum">     323 </span>                :<span class="lineCov">   23757714 :         dest[i] = ( src[i] &amp; mask ) | ( dest[i] &amp; ~mask );</span></a>
-<a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">    4219876 : }</span></a>
+<a name="322"><span class="lineNum">     322 </span>        [<span class="branchCov" title="Branch 0 was taken 23730035 times"> + </span><span class="branchCov" title="Branch 1 was taken 4218331 times"> + </span>]:<span class="lineCov">   27948366 :     for( i = 0; i &lt; n; i++ )</span></a>
+<a name="323"><span class="lineNum">     323 </span>                :<span class="lineCov">   23730035 :         dest[i] = ( src[i] &amp; mask ) | ( dest[i] &amp; ~mask );</span></a>
+<a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">    4218331 : }</span></a>
 <a name="325"><span class="lineNum">     325 </span>                :            : </a>
 <a name="326"><span class="lineNum">     326 </span>                :            : #endif /* MBEDTLS_BIGNUM_C */</a>
 <a name="327"><span class="lineNum">     327 </span>                :            : </a>
@@ -617,30 +617,30 @@
 <a name="546"><span class="lineNum">     546 </span>                :            :  */</a>
 <a name="547"><span class="lineNum">     547 </span>                :            : __declspec(noinline)</a>
 <a name="548"><span class="lineNum">     548 </span>                :            : #endif</a>
-<a name="549"><span class="lineNum">     549 </span>                :<span class="lineCov">    4118882 : int mbedtls_mpi_safe_cond_assign( mbedtls_mpi *X,</span></a>
+<a name="549"><span class="lineNum">     549 </span>                :<span class="lineCov">    4117346 : int mbedtls_mpi_safe_cond_assign( mbedtls_mpi *X,</span></a>
 <a name="550"><span class="lineNum">     550 </span>                :            :                                   const mbedtls_mpi *Y,</a>
 <a name="551"><span class="lineNum">     551 </span>                :            :                                   unsigned char assign )</a>
 <a name="552"><span class="lineNum">     552 </span>                :            : {</a>
-<a name="553"><span class="lineNum">     553 </span>                :<span class="lineCov">    4118882 :     int ret = 0;</span></a>
+<a name="553"><span class="lineNum">     553 </span>                :<span class="lineCov">    4117346 :     int ret = 0;</span></a>
 <a name="554"><span class="lineNum">     554 </span>                :            :     size_t i;</a>
 <a name="555"><span class="lineNum">     555 </span>                :            :     mbedtls_mpi_uint limb_mask;</a>
 <a name="556"><span class="lineNum">     556 </span>                :            :     MPI_VALIDATE_RET( X != NULL );</a>
 <a name="557"><span class="lineNum">     557 </span>                :            :     MPI_VALIDATE_RET( Y != NULL );</a>
 <a name="558"><span class="lineNum">     558 </span>                :            : </a>
 <a name="559"><span class="lineNum">     559 </span>                :            :     /* all-bits 1 if assign is 1, all-bits 0 if assign is 0 */</a>
-<a name="560"><span class="lineNum">     560 </span>                :<span class="lineCov">    4118882 :     limb_mask = mbedtls_ct_mpi_uint_mask( assign );;</span></a>
+<a name="560"><span class="lineNum">     560 </span>                :<span class="lineCov">    4117346 :     limb_mask = mbedtls_ct_mpi_uint_mask( assign );;</span></a>
 <a name="561"><span class="lineNum">     561 </span>                :            : </a>
-<a name="562"><span class="lineNum">     562 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4118882 times"> + </span>]:<span class="lineCov">    4118882 :     MBEDTLS_MPI_CHK( mbedtls_mpi_grow( X, Y-&gt;n ) );</span></a>
+<a name="562"><span class="lineNum">     562 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4117346 times"> + </span>]:<span class="lineCov">    4117346 :     MBEDTLS_MPI_CHK( mbedtls_mpi_grow( X, Y-&gt;n ) );</span></a>
 <a name="563"><span class="lineNum">     563 </span>                :            : </a>
-<a name="564"><span class="lineNum">     564 </span>                :<span class="lineCov">    4118882 :     X-&gt;s = mbedtls_ct_cond_select_sign( assign, Y-&gt;s, X-&gt;s );</span></a>
+<a name="564"><span class="lineNum">     564 </span>                :<span class="lineCov">    4117346 :     X-&gt;s = mbedtls_ct_cond_select_sign( assign, Y-&gt;s, X-&gt;s );</span></a>
 <a name="565"><span class="lineNum">     565 </span>                :            : </a>
-<a name="566"><span class="lineNum">     566 </span>                :<span class="lineCov">    4118882 :     mbedtls_ct_mpi_uint_cond_assign( Y-&gt;n, X-&gt;p, Y-&gt;p, assign );</span></a>
+<a name="566"><span class="lineNum">     566 </span>                :<span class="lineCov">    4117346 :     mbedtls_ct_mpi_uint_cond_assign( Y-&gt;n, X-&gt;p, Y-&gt;p, assign );</span></a>
 <a name="567"><span class="lineNum">     567 </span>                :            : </a>
-<a name="568"><span class="lineNum">     568 </span>        [<span class="branchCov" title="Branch 0 was taken 7440761 times"> + </span><span class="branchCov" title="Branch 1 was taken 4118882 times"> + </span>]:<span class="lineCov">   11559643 :     for( i = Y-&gt;n; i &lt; X-&gt;n; i++ )</span></a>
-<a name="569"><span class="lineNum">     569 </span>                :<span class="lineCov">    7440761 :         X-&gt;p[i] &amp;= ~limb_mask;</span></a>
+<a name="568"><span class="lineNum">     568 </span>        [<span class="branchCov" title="Branch 0 was taken 7415031 times"> + </span><span class="branchCov" title="Branch 1 was taken 4117346 times"> + </span>]:<span class="lineCov">   11532377 :     for( i = Y-&gt;n; i &lt; X-&gt;n; i++ )</span></a>
+<a name="569"><span class="lineNum">     569 </span>                :<span class="lineCov">    7415031 :         X-&gt;p[i] &amp;= ~limb_mask;</span></a>
 <a name="570"><span class="lineNum">     570 </span>                :            : </a>
-<a name="571"><span class="lineNum">     571 </span>                :<span class="lineCov">    4118882 : cleanup:</span></a>
-<a name="572"><span class="lineNum">     572 </span>                :<span class="lineCov">    4118882 :     return( ret );</span></a>
+<a name="571"><span class="lineNum">     571 </span>                :<span class="lineCov">    4117346 : cleanup:</span></a>
+<a name="572"><span class="lineNum">     572 </span>                :<span class="lineCov">    4117346 :     return( ret );</span></a>
 <a name="573"><span class="lineNum">     573 </span>                :            : }</a>
 <a name="574"><span class="lineNum">     574 </span>                :            : </a>
 <a name="575"><span class="lineNum">     575 </span>                :            : /*</a>
