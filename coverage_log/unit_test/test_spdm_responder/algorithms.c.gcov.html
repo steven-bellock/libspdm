@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">998</td>
-            <td class="headerCovTableEntry">998</td>
+            <td class="headerCovTableEntry">1024</td>
+            <td class="headerCovTableEntry">1024</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-20 08:13:48</td>
+            <td class="headerValue">2024-01-21 08:13:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">30</td>
-            <td class="headerCovTableEntry">30</td>
+            <td class="headerCovTableEntry">31</td>
+            <td class="headerCovTableEntry">31</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -2797,156 +2797,206 @@
 <a name="2726"><span class="lineNum">    2726 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;connection_info.multi_key_conn_req, true);</span></a>
 <a name="2727"><span class="lineNum">    2727 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="2728"><span class="lineNum">    2728 </span>                :            : </a>
-<a name="2729"><span class="lineNum">    2729 </span>                :            : libspdm_test_context_t m_libspdm_responder_algorithms_test_context = {</a>
-<a name="2730"><span class="lineNum">    2730 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="2731"><span class="lineNum">    2731 </span>                :            :     false,</a>
-<a name="2732"><span class="lineNum">    2732 </span>                :            : };</a>
-<a name="2733"><span class="lineNum">    2733 </span>                :            : </a>
-<a name="2734"><span class="lineNum">    2734 </span>                :<span class="lineCov">          1 : int libspdm_responder_algorithms_test_main(void)</span></a>
+<a name="2729"><span class="lineNum">    2729 </span>                :            : </a>
+<a name="2730"><span class="lineNum">    2730 </span>                :            : /**</a>
+<a name="2731"><span class="lineNum">    2731 </span>                :            :  * Test 31: NEGOTIATE_ALGORITHMS message received with MEL correct</a>
+<a name="2732"><span class="lineNum">    2732 </span>                :            :  * Expected Behavior: get a RETURN_SUCCESS return code</a>
+<a name="2733"><span class="lineNum">    2733 </span>                :            :  **/</a>
+<a name="2734"><span class="lineNum">    2734 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_algorithms_case31(void **state)</span></a>
 <a name="2735"><span class="lineNum">    2735 </span>                :            : {</a>
-<a name="2736"><span class="lineNum">    2736 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_algorithms_tests[] = {</span></a>
-<a name="2737"><span class="lineNum">    2737 </span>                :            :         /* Success Case*/</a>
-<a name="2738"><span class="lineNum">    2738 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case1),</a>
-<a name="2739"><span class="lineNum">    2739 </span>                :            :         /* Bad request size*/</a>
-<a name="2740"><span class="lineNum">    2740 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case2),</a>
-<a name="2741"><span class="lineNum">    2741 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
-<a name="2742"><span class="lineNum">    2742 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case3),</a>
-<a name="2743"><span class="lineNum">    2743 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
-<a name="2744"><span class="lineNum">    2744 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case4),</a>
-<a name="2745"><span class="lineNum">    2745 </span>                :            :         /* connection_state Check*/</a>
-<a name="2746"><span class="lineNum">    2746 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case6),</a>
-<a name="2747"><span class="lineNum">    2747 </span>                :            :         /* Success case V1.1*/</a>
-<a name="2748"><span class="lineNum">    2748 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case7),</a>
-<a name="2749"><span class="lineNum">    2749 </span>                :            :         /* No match for base_asym_algo*/</a>
-<a name="2750"><span class="lineNum">    2750 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case8),</a>
-<a name="2751"><span class="lineNum">    2751 </span>                :            :         /* No match for base_hash_algo*/</a>
-<a name="2752"><span class="lineNum">    2752 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case9),</a>
-<a name="2753"><span class="lineNum">    2753 </span>                :            :         /* No match for dhe_named_group*/</a>
-<a name="2754"><span class="lineNum">    2754 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case10),</a>
-<a name="2755"><span class="lineNum">    2755 </span>                :            :         /* No match for aead_cipher_suite*/</a>
-<a name="2756"><span class="lineNum">    2756 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case11),</a>
-<a name="2757"><span class="lineNum">    2757 </span>                :            :         /* No match for req_base_asym_alg*/</a>
-<a name="2758"><span class="lineNum">    2758 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case12),</a>
-<a name="2759"><span class="lineNum">    2759 </span>                :            :         /* No match for key_schedule*/</a>
-<a name="2760"><span class="lineNum">    2760 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case13),</a>
-<a name="2761"><span class="lineNum">    2761 </span>                :            :         /* Spdm length greater than 64 bytes for V1.0*/</a>
-<a name="2762"><span class="lineNum">    2762 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case14),</a>
-<a name="2763"><span class="lineNum">    2763 </span>                :            :         /* Spdm length greater than 128 bytes for V1.1*/</a>
-<a name="2764"><span class="lineNum">    2764 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case15),</a>
-<a name="2765"><span class="lineNum">    2765 </span>                :            :         /* Multiple repeated Alg structs for V1.1*/</a>
-<a name="2766"><span class="lineNum">    2766 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case16),</a>
-<a name="2767"><span class="lineNum">    2767 </span>                :            :         /* param1 is smaller than the number of Alg structs for V1.1*/</a>
-<a name="2768"><span class="lineNum">    2768 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case17),</a>
-<a name="2769"><span class="lineNum">    2769 </span>                :            :         /* param1 is bigger than the number of  Alg structs for V1.1*/</a>
-<a name="2770"><span class="lineNum">    2770 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case18),</a>
-<a name="2771"><span class="lineNum">    2771 </span>                :            :         /* Invalid  Alg structs + valid Alg Structs for V1.1*/</a>
-<a name="2772"><span class="lineNum">    2772 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case19),</a>
-<a name="2773"><span class="lineNum">    2773 </span>                :            :         /* When support multiple algorithms, then defaults to choose the strongest available algorithm*/</a>
-<a name="2774"><span class="lineNum">    2774 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case20),</a>
-<a name="2775"><span class="lineNum">    2775 </span>                :            :         /* Buffer verification*/</a>
-<a name="2776"><span class="lineNum">    2776 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case21),</a>
-<a name="2777"><span class="lineNum">    2777 </span>                :            :         /* Success case V1.2*/</a>
-<a name="2778"><span class="lineNum">    2778 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case22),</a>
-<a name="2779"><span class="lineNum">    2779 </span>                :            :         /* No match for other_params_support*/</a>
-<a name="2780"><span class="lineNum">    2780 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case23),</a>
-<a name="2781"><span class="lineNum">    2781 </span>                :            :         /* No support for MEASUREMENT from requester*/</a>
-<a name="2782"><span class="lineNum">    2782 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case24),</a>
-<a name="2783"><span class="lineNum">    2783 </span>                :            :         /* Invalid (Redundant) alg_type value*/</a>
-<a name="2784"><span class="lineNum">    2784 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case25),</a>
-<a name="2785"><span class="lineNum">    2785 </span>                :            :         /* Invalid (Decreasing) alg_type value*/</a>
-<a name="2786"><span class="lineNum">    2786 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case26),</a>
-<a name="2787"><span class="lineNum">    2787 </span>                :            :         /* Invalid (smaller than DHE) alg_type value*/</a>
-<a name="2788"><span class="lineNum">    2788 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case27),</a>
-<a name="2789"><span class="lineNum">    2789 </span>                :            :         /* Invalid (bigger than KEY_SCHEDULE) alg_type value*/</a>
-<a name="2790"><span class="lineNum">    2790 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case28),</a>
-<a name="2791"><span class="lineNum">    2791 </span>                :            :         /* Invalid AlgStruct, contains an AlgSupported=0 (Non-supported)*/</a>
-<a name="2792"><span class="lineNum">    2792 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case29),</a>
-<a name="2793"><span class="lineNum">    2793 </span>                :            :         /* MULTI_KEY_CONN_REQ and MULTI_KEY_CONN_RSP value validation*/</a>
-<a name="2794"><span class="lineNum">    2794 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case30),</a>
-<a name="2795"><span class="lineNum">    2795 </span>                :            :     };</a>
-<a name="2796"><span class="lineNum">    2796 </span>                :            : </a>
-<a name="2797"><span class="lineNum">    2797 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request1.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
-<a name="2798"><span class="lineNum">    2798 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request1.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="2799"><span class="lineNum">    2799 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request2.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
-<a name="2800"><span class="lineNum">    2800 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request2.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="2801"><span class="lineNum">    2801 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request3.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2802"><span class="lineNum">    2802 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2803"><span class="lineNum">    2803 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request3.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2804"><span class="lineNum">    2804 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2805"><span class="lineNum">    2805 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request4.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2806"><span class="lineNum">    2806 </span>                :<span class="lineCov">          1 :         (m_libspdm_use_asym_algo &gt;&gt; 1);</span></a>
-<a name="2807"><span class="lineNum">    2807 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request4.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2808"><span class="lineNum">    2808 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2809"><span class="lineNum">    2809 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request5.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2810"><span class="lineNum">    2810 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2811"><span class="lineNum">    2811 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request5.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2812"><span class="lineNum">    2812 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA3_512;</a>
-<a name="2813"><span class="lineNum">    2813 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request6.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2814"><span class="lineNum">    2814 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2815"><span class="lineNum">    2815 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request6.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2816"><span class="lineNum">    2816 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2817"><span class="lineNum">    2817 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request7.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2818"><span class="lineNum">    2818 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2819"><span class="lineNum">    2819 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request7.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2820"><span class="lineNum">    2820 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2821"><span class="lineNum">    2821 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request8.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2822"><span class="lineNum">    2822 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2823"><span class="lineNum">    2823 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request8.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2824"><span class="lineNum">    2824 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2825"><span class="lineNum">    2825 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request9.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2826"><span class="lineNum">    2826 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2827"><span class="lineNum">    2827 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request9.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2828"><span class="lineNum">    2828 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2829"><span class="lineNum">    2829 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request10.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
-<a name="2830"><span class="lineNum">    2830 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request10.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="2831"><span class="lineNum">    2831 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request10.ext_asym_count = 0x09;</span></a>
-<a name="2832"><span class="lineNum">    2832 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request11.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2833"><span class="lineNum">    2833 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2834"><span class="lineNum">    2834 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request11.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2835"><span class="lineNum">    2835 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2836"><span class="lineNum">    2836 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request11.spdm_request_version10.ext_asym_count = 0x15;</span></a>
-<a name="2837"><span class="lineNum">    2837 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request12.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2838"><span class="lineNum">    2838 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2839"><span class="lineNum">    2839 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request12.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2840"><span class="lineNum">    2840 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2841"><span class="lineNum">    2841 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request13.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2842"><span class="lineNum">    2842 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2843"><span class="lineNum">    2843 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request13.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2844"><span class="lineNum">    2844 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2845"><span class="lineNum">    2845 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request14.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2846"><span class="lineNum">    2846 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2847"><span class="lineNum">    2847 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request14.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2848"><span class="lineNum">    2848 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2849"><span class="lineNum">    2849 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request15.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2850"><span class="lineNum">    2850 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2851"><span class="lineNum">    2851 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request15.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2852"><span class="lineNum">    2852 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2853"><span class="lineNum">    2853 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request16.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2854"><span class="lineNum">    2854 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521 |</a>
-<a name="2855"><span class="lineNum">    2855 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384 |</a>
-<a name="2856"><span class="lineNum">    2856 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256 |</a>
-<a name="2857"><span class="lineNum">    2857 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_3072 |</a>
-<a name="2858"><span class="lineNum">    2858 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048;</a>
-<a name="2859"><span class="lineNum">    2859 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request16.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2860"><span class="lineNum">    2860 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_512 |</a>
-<a name="2861"><span class="lineNum">    2861 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_384 |</a>
-<a name="2862"><span class="lineNum">    2862 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_256;</a>
-<a name="2863"><span class="lineNum">    2863 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request17.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2864"><span class="lineNum">    2864 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2865"><span class="lineNum">    2865 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request17.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2866"><span class="lineNum">    2866 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2867"><span class="lineNum">    2867 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request18.spdm_request_version10.base_hash_algo =</span></a>
-<a name="2868"><span class="lineNum">    2868 </span>                :            :         m_libspdm_use_hash_algo;</a>
-<a name="2869"><span class="lineNum">    2869 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request18.spdm_request_version10.base_asym_algo =</span></a>
-<a name="2870"><span class="lineNum">    2870 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2871"><span class="lineNum">    2871 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request24.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2736"><span class="lineNum">    2736 </span>                :            :     libspdm_return_t status;</a>
+<a name="2737"><span class="lineNum">    2737 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="2738"><span class="lineNum">    2738 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="2739"><span class="lineNum">    2739 </span>                :            :     size_t response_size;</a>
+<a name="2740"><span class="lineNum">    2740 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="2741"><span class="lineNum">    2741 </span>                :            :     spdm_algorithms_response_t *spdm_response;</a>
+<a name="2742"><span class="lineNum">    2742 </span>                :            : </a>
+<a name="2743"><span class="lineNum">    2743 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="2744"><span class="lineNum">    2744 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="2745"><span class="lineNum">    2745 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x1E;</span></a>
+<a name="2746"><span class="lineNum">    2746 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_13 &lt;&lt;</span></a>
+<a name="2747"><span class="lineNum">    2747 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="2748"><span class="lineNum">    2748 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_AFTER_CAPABILITIES;</span></a>
+<a name="2749"><span class="lineNum">    2749 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="2750"><span class="lineNum">    2750 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="2751"><span class="lineNum">    2751 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_hash_algo = 0;</span></a>
+<a name="2752"><span class="lineNum">    2752 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_spec = 0;</span></a>
+<a name="2753"><span class="lineNum">    2753 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags = 0;</span></a>
+<a name="2754"><span class="lineNum">    2754 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MEL_CAP;</span></a>
+<a name="2755"><span class="lineNum">    2755 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.other_params_support = 0;</span></a>
+<a name="2756"><span class="lineNum">    2756 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.mel_spec = SPDM_MEL_SPECIFICATION_DMTF;</span></a>
+<a name="2757"><span class="lineNum">    2757 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="2758"><span class="lineNum">    2758 </span>                :            : </a>
+<a name="2759"><span class="lineNum">    2759 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request30.other_params_support = 0;</span></a>
+<a name="2760"><span class="lineNum">    2760 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request30.mel_specification = SPDM_MEL_SPECIFICATION_DMTF;</span></a>
+<a name="2761"><span class="lineNum">    2761 </span>                :            : </a>
+<a name="2762"><span class="lineNum">    2762 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="2763"><span class="lineNum">    2763 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_algorithms(</span></a>
+<a name="2764"><span class="lineNum">    2764 </span>                :            :         spdm_context, m_libspdm_negotiate_algorithms_request30_size,</a>
+<a name="2765"><span class="lineNum">    2765 </span>                :            :         &amp;m_libspdm_negotiate_algorithms_request30, &amp;response_size,</a>
+<a name="2766"><span class="lineNum">    2766 </span>                :            :         response);</a>
+<a name="2767"><span class="lineNum">    2767 </span>                :            : </a>
+<a name="2768"><span class="lineNum">    2768 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="2769"><span class="lineNum">    2769 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_algorithms_response_t));</span></a>
+<a name="2770"><span class="lineNum">    2770 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="2771"><span class="lineNum">    2771 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code,</span></a>
+<a name="2772"><span class="lineNum">    2772 </span>                :            :                      SPDM_ALGORITHMS);</a>
+<a name="2773"><span class="lineNum">    2773 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;mel_specification_sel, SPDM_MEL_SPECIFICATION_DMTF);</span></a>
+<a name="2774"><span class="lineNum">    2774 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_context-&gt;connection_info.algorithm.mel_spec, SPDM_MEL_SPECIFICATION_DMTF);</span></a>
+<a name="2775"><span class="lineNum">    2775 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="2776"><span class="lineNum">    2776 </span>                :            : </a>
+<a name="2777"><span class="lineNum">    2777 </span>                :            : libspdm_test_context_t m_libspdm_responder_algorithms_test_context = {</a>
+<a name="2778"><span class="lineNum">    2778 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="2779"><span class="lineNum">    2779 </span>                :            :     false,</a>
+<a name="2780"><span class="lineNum">    2780 </span>                :            : };</a>
+<a name="2781"><span class="lineNum">    2781 </span>                :            : </a>
+<a name="2782"><span class="lineNum">    2782 </span>                :<span class="lineCov">          1 : int libspdm_responder_algorithms_test_main(void)</span></a>
+<a name="2783"><span class="lineNum">    2783 </span>                :            : {</a>
+<a name="2784"><span class="lineNum">    2784 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_algorithms_tests[] = {</span></a>
+<a name="2785"><span class="lineNum">    2785 </span>                :            :         /* Success Case*/</a>
+<a name="2786"><span class="lineNum">    2786 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case1),</a>
+<a name="2787"><span class="lineNum">    2787 </span>                :            :         /* Bad request size*/</a>
+<a name="2788"><span class="lineNum">    2788 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case2),</a>
+<a name="2789"><span class="lineNum">    2789 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
+<a name="2790"><span class="lineNum">    2790 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case3),</a>
+<a name="2791"><span class="lineNum">    2791 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
+<a name="2792"><span class="lineNum">    2792 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case4),</a>
+<a name="2793"><span class="lineNum">    2793 </span>                :            :         /* connection_state Check*/</a>
+<a name="2794"><span class="lineNum">    2794 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case6),</a>
+<a name="2795"><span class="lineNum">    2795 </span>                :            :         /* Success case V1.1*/</a>
+<a name="2796"><span class="lineNum">    2796 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case7),</a>
+<a name="2797"><span class="lineNum">    2797 </span>                :            :         /* No match for base_asym_algo*/</a>
+<a name="2798"><span class="lineNum">    2798 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case8),</a>
+<a name="2799"><span class="lineNum">    2799 </span>                :            :         /* No match for base_hash_algo*/</a>
+<a name="2800"><span class="lineNum">    2800 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case9),</a>
+<a name="2801"><span class="lineNum">    2801 </span>                :            :         /* No match for dhe_named_group*/</a>
+<a name="2802"><span class="lineNum">    2802 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case10),</a>
+<a name="2803"><span class="lineNum">    2803 </span>                :            :         /* No match for aead_cipher_suite*/</a>
+<a name="2804"><span class="lineNum">    2804 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case11),</a>
+<a name="2805"><span class="lineNum">    2805 </span>                :            :         /* No match for req_base_asym_alg*/</a>
+<a name="2806"><span class="lineNum">    2806 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case12),</a>
+<a name="2807"><span class="lineNum">    2807 </span>                :            :         /* No match for key_schedule*/</a>
+<a name="2808"><span class="lineNum">    2808 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case13),</a>
+<a name="2809"><span class="lineNum">    2809 </span>                :            :         /* Spdm length greater than 64 bytes for V1.0*/</a>
+<a name="2810"><span class="lineNum">    2810 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case14),</a>
+<a name="2811"><span class="lineNum">    2811 </span>                :            :         /* Spdm length greater than 128 bytes for V1.1*/</a>
+<a name="2812"><span class="lineNum">    2812 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case15),</a>
+<a name="2813"><span class="lineNum">    2813 </span>                :            :         /* Multiple repeated Alg structs for V1.1*/</a>
+<a name="2814"><span class="lineNum">    2814 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case16),</a>
+<a name="2815"><span class="lineNum">    2815 </span>                :            :         /* param1 is smaller than the number of Alg structs for V1.1*/</a>
+<a name="2816"><span class="lineNum">    2816 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case17),</a>
+<a name="2817"><span class="lineNum">    2817 </span>                :            :         /* param1 is bigger than the number of  Alg structs for V1.1*/</a>
+<a name="2818"><span class="lineNum">    2818 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case18),</a>
+<a name="2819"><span class="lineNum">    2819 </span>                :            :         /* Invalid  Alg structs + valid Alg Structs for V1.1*/</a>
+<a name="2820"><span class="lineNum">    2820 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case19),</a>
+<a name="2821"><span class="lineNum">    2821 </span>                :            :         /* When support multiple algorithms, then defaults to choose the strongest available algorithm*/</a>
+<a name="2822"><span class="lineNum">    2822 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case20),</a>
+<a name="2823"><span class="lineNum">    2823 </span>                :            :         /* Buffer verification*/</a>
+<a name="2824"><span class="lineNum">    2824 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case21),</a>
+<a name="2825"><span class="lineNum">    2825 </span>                :            :         /* Success case V1.2*/</a>
+<a name="2826"><span class="lineNum">    2826 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case22),</a>
+<a name="2827"><span class="lineNum">    2827 </span>                :            :         /* No match for other_params_support*/</a>
+<a name="2828"><span class="lineNum">    2828 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case23),</a>
+<a name="2829"><span class="lineNum">    2829 </span>                :            :         /* No support for MEASUREMENT from requester*/</a>
+<a name="2830"><span class="lineNum">    2830 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case24),</a>
+<a name="2831"><span class="lineNum">    2831 </span>                :            :         /* Invalid (Redundant) alg_type value*/</a>
+<a name="2832"><span class="lineNum">    2832 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case25),</a>
+<a name="2833"><span class="lineNum">    2833 </span>                :            :         /* Invalid (Decreasing) alg_type value*/</a>
+<a name="2834"><span class="lineNum">    2834 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case26),</a>
+<a name="2835"><span class="lineNum">    2835 </span>                :            :         /* Invalid (smaller than DHE) alg_type value*/</a>
+<a name="2836"><span class="lineNum">    2836 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case27),</a>
+<a name="2837"><span class="lineNum">    2837 </span>                :            :         /* Invalid (bigger than KEY_SCHEDULE) alg_type value*/</a>
+<a name="2838"><span class="lineNum">    2838 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case28),</a>
+<a name="2839"><span class="lineNum">    2839 </span>                :            :         /* Invalid AlgStruct, contains an AlgSupported=0 (Non-supported)*/</a>
+<a name="2840"><span class="lineNum">    2840 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case29),</a>
+<a name="2841"><span class="lineNum">    2841 </span>                :            :         /* MULTI_KEY_CONN_REQ and MULTI_KEY_CONN_RSP value validation*/</a>
+<a name="2842"><span class="lineNum">    2842 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case30),</a>
+<a name="2843"><span class="lineNum">    2843 </span>                :            :         /* Success Case , set MELspecificationSel*/</a>
+<a name="2844"><span class="lineNum">    2844 </span>                :            :         cmocka_unit_test(libspdm_test_responder_algorithms_case31),</a>
+<a name="2845"><span class="lineNum">    2845 </span>                :            :     };</a>
+<a name="2846"><span class="lineNum">    2846 </span>                :            : </a>
+<a name="2847"><span class="lineNum">    2847 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request1.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="2848"><span class="lineNum">    2848 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request1.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="2849"><span class="lineNum">    2849 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request2.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="2850"><span class="lineNum">    2850 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithms_request2.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="2851"><span class="lineNum">    2851 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request3.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2852"><span class="lineNum">    2852 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2853"><span class="lineNum">    2853 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request3.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2854"><span class="lineNum">    2854 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2855"><span class="lineNum">    2855 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request4.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2856"><span class="lineNum">    2856 </span>                :<span class="lineCov">          1 :         (m_libspdm_use_asym_algo &gt;&gt; 1);</span></a>
+<a name="2857"><span class="lineNum">    2857 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request4.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2858"><span class="lineNum">    2858 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2859"><span class="lineNum">    2859 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request5.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2860"><span class="lineNum">    2860 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2861"><span class="lineNum">    2861 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request5.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2862"><span class="lineNum">    2862 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA3_512;</a>
+<a name="2863"><span class="lineNum">    2863 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request6.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2864"><span class="lineNum">    2864 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2865"><span class="lineNum">    2865 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request6.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2866"><span class="lineNum">    2866 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2867"><span class="lineNum">    2867 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request7.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2868"><span class="lineNum">    2868 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2869"><span class="lineNum">    2869 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request7.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2870"><span class="lineNum">    2870 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2871"><span class="lineNum">    2871 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request8.spdm_request_version10.base_asym_algo =</span></a>
 <a name="2872"><span class="lineNum">    2872 </span>                :            :         m_libspdm_use_asym_algo;</a>
-<a name="2873"><span class="lineNum">    2873 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_algorithms_test_context);</span></a>
-<a name="2874"><span class="lineNum">    2874 </span>                :            : </a>
-<a name="2875"><span class="lineNum">    2875 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_algorithms_tests,</span></a>
-<a name="2876"><span class="lineNum">    2876 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="2877"><span class="lineNum">    2877 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="2878"><span class="lineNum">    2878 </span>                :            : }</a>
+<a name="2873"><span class="lineNum">    2873 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request8.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2874"><span class="lineNum">    2874 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2875"><span class="lineNum">    2875 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request9.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2876"><span class="lineNum">    2876 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2877"><span class="lineNum">    2877 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request9.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2878"><span class="lineNum">    2878 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2879"><span class="lineNum">    2879 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request10.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="2880"><span class="lineNum">    2880 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request10.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="2881"><span class="lineNum">    2881 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request10.ext_asym_count = 0x09;</span></a>
+<a name="2882"><span class="lineNum">    2882 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request11.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2883"><span class="lineNum">    2883 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2884"><span class="lineNum">    2884 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request11.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2885"><span class="lineNum">    2885 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2886"><span class="lineNum">    2886 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request11.spdm_request_version10.ext_asym_count = 0x15;</span></a>
+<a name="2887"><span class="lineNum">    2887 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request12.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2888"><span class="lineNum">    2888 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2889"><span class="lineNum">    2889 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request12.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2890"><span class="lineNum">    2890 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2891"><span class="lineNum">    2891 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request13.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2892"><span class="lineNum">    2892 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2893"><span class="lineNum">    2893 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request13.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2894"><span class="lineNum">    2894 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2895"><span class="lineNum">    2895 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request14.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2896"><span class="lineNum">    2896 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2897"><span class="lineNum">    2897 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request14.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2898"><span class="lineNum">    2898 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2899"><span class="lineNum">    2899 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request15.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2900"><span class="lineNum">    2900 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2901"><span class="lineNum">    2901 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request15.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2902"><span class="lineNum">    2902 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2903"><span class="lineNum">    2903 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request16.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2904"><span class="lineNum">    2904 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P521 |</a>
+<a name="2905"><span class="lineNum">    2905 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P384 |</a>
+<a name="2906"><span class="lineNum">    2906 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_ECDSA_ECC_NIST_P256 |</a>
+<a name="2907"><span class="lineNum">    2907 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSAPSS_3072 |</a>
+<a name="2908"><span class="lineNum">    2908 </span>                :            :         SPDM_ALGORITHMS_BASE_ASYM_ALGO_TPM_ALG_RSASSA_2048;</a>
+<a name="2909"><span class="lineNum">    2909 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request16.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2910"><span class="lineNum">    2910 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_512 |</a>
+<a name="2911"><span class="lineNum">    2911 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_384 |</a>
+<a name="2912"><span class="lineNum">    2912 </span>                :            :         SPDM_ALGORITHMS_BASE_HASH_ALGO_TPM_ALG_SHA_256;</a>
+<a name="2913"><span class="lineNum">    2913 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request17.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2914"><span class="lineNum">    2914 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2915"><span class="lineNum">    2915 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request17.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2916"><span class="lineNum">    2916 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2917"><span class="lineNum">    2917 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request18.spdm_request_version10.base_hash_algo =</span></a>
+<a name="2918"><span class="lineNum">    2918 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2919"><span class="lineNum">    2919 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request18.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2920"><span class="lineNum">    2920 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2921"><span class="lineNum">    2921 </span>                :<span class="lineCov">          1 :     m_libspdm_negotiate_algorithm_request24.spdm_request_version10.base_asym_algo =</span></a>
+<a name="2922"><span class="lineNum">    2922 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2923"><span class="lineNum">    2923 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_algorithms_test_context);</span></a>
+<a name="2924"><span class="lineNum">    2924 </span>                :            : </a>
+<a name="2925"><span class="lineNum">    2925 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_algorithms_tests,</span></a>
+<a name="2926"><span class="lineNum">    2926 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="2927"><span class="lineNum">    2927 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="2928"><span class="lineNum">    2928 </span>                :            : }</a>
 </pre>
       </td>
     </tr>

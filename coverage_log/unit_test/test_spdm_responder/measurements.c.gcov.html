@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">985</td>
-            <td class="headerCovTableEntry">987</td>
+            <td class="headerCovTableEntry">1022</td>
+            <td class="headerCovTableEntry">1024</td>
             <td class="headerCovTableEntryHi">99.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-20 08:13:48</td>
+            <td class="headerValue">2024-01-21 08:13:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">35</td>
-            <td class="headerCovTableEntry">35</td>
+            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntry">36</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">11</td>
-            <td class="headerCovTableEntry">12</td>
-            <td class="headerCovTableEntryHi">91.7 %</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryHi">92.9 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -2701,97 +2701,180 @@
 <a name="2630"><span class="lineNum">    2630 </span>                :            : #endif</a>
 <a name="2631"><span class="lineNum">    2631 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="2632"><span class="lineNum">    2632 </span>                :            : </a>
-<a name="2633"><span class="lineNum">    2633 </span>                :            : libspdm_test_context_t m_libspdm_responder_measurements_test_context = {</a>
-<a name="2634"><span class="lineNum">    2634 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="2635"><span class="lineNum">    2635 </span>                :            :     false,</a>
-<a name="2636"><span class="lineNum">    2636 </span>                :            : };</a>
-<a name="2637"><span class="lineNum">    2637 </span>                :            : </a>
-<a name="2638"><span class="lineNum">    2638 </span>                :<span class="lineCov">          1 : int libspdm_responder_measurements_test_main(void)</span></a>
-<a name="2639"><span class="lineNum">    2639 </span>                :            : {</a>
-<a name="2640"><span class="lineNum">    2640 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request11.slot_id_param = SPDM_MAX_SLOT_COUNT - 1;</span></a>
-<a name="2641"><span class="lineNum">    2641 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request12.slot_id_param = SPDM_MAX_SLOT_COUNT + 1;</span></a>
-<a name="2642"><span class="lineNum">    2642 </span>                :            : </a>
-<a name="2643"><span class="lineNum">    2643 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_measurements_tests[] = {</span></a>
-<a name="2644"><span class="lineNum">    2644 </span>                :            :         /* Success Case to get measurement number without signature*/</a>
-<a name="2645"><span class="lineNum">    2645 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case1),</a>
-<a name="2646"><span class="lineNum">    2646 </span>                :            :         /* Can be populated with new test.*/</a>
-<a name="2647"><span class="lineNum">    2647 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case2),</a>
-<a name="2648"><span class="lineNum">    2648 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_BUSY*/</a>
-<a name="2649"><span class="lineNum">    2649 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case3),</a>
-<a name="2650"><span class="lineNum">    2650 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
-<a name="2651"><span class="lineNum">    2651 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case4),</a>
-<a name="2652"><span class="lineNum">    2652 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
-<a name="2653"><span class="lineNum">    2653 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_NOT_READY*/</a>
-<a name="2654"><span class="lineNum">    2654 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case5),</a>
-<a name="2655"><span class="lineNum">    2655 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
-<a name="2656"><span class="lineNum">    2656 </span>                :            :         /* connection_state Check*/</a>
-<a name="2657"><span class="lineNum">    2657 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case6),</a>
-<a name="2658"><span class="lineNum">    2658 </span>                :            :         /* Success Case to get measurement number with signature*/</a>
-<a name="2659"><span class="lineNum">    2659 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case7),</a>
-<a name="2660"><span class="lineNum">    2660 </span>                :            :         /* Success Case to get one measurement with signature*/</a>
-<a name="2661"><span class="lineNum">    2661 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case8),</a>
-<a name="2662"><span class="lineNum">    2662 </span>                :            :         /* Bad request size to get one measurement with signature*/</a>
-<a name="2663"><span class="lineNum">    2663 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case9),</a>
-<a name="2664"><span class="lineNum">    2664 </span>                :            :         /* Success Case to get one measurement without signature*/</a>
-<a name="2665"><span class="lineNum">    2665 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case10),</a>
-<a name="2666"><span class="lineNum">    2666 </span>                :            :         /* Success Case to get all measurements with signature*/</a>
-<a name="2667"><span class="lineNum">    2667 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case11),</a>
-<a name="2668"><span class="lineNum">    2668 </span>                :            :         /* Success Case to get all measurements without signature*/</a>
-<a name="2669"><span class="lineNum">    2669 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case12),</a>
-<a name="2670"><span class="lineNum">    2670 </span>                :            :         /* Can be populated with new test.*/</a>
-<a name="2671"><span class="lineNum">    2671 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case13),</a>
-<a name="2672"><span class="lineNum">    2672 </span>                :            :         /* Error Case: sig required, but no nonce and/or SlotID*/</a>
-<a name="2673"><span class="lineNum">    2673 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case14),</a>
-<a name="2674"><span class="lineNum">    2674 </span>                :            :         /* Error Case: sig required, but meas_cap = 01b (including nonce and SlotId on request)*/</a>
-<a name="2675"><span class="lineNum">    2675 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case15),</a>
-<a name="2676"><span class="lineNum">    2676 </span>                :            :         /* Error Case: sig required, but meas_cap = 01b (not including nonce and SlotId on request)*/</a>
-<a name="2677"><span class="lineNum">    2677 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case16),</a>
-<a name="2678"><span class="lineNum">    2678 </span>                :            :         /* Error Case: meas_cap = 00b*/</a>
-<a name="2679"><span class="lineNum">    2679 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case17),</a>
-<a name="2680"><span class="lineNum">    2680 </span>                :            :         /* Success Case: SlotId different from default*/</a>
-<a name="2681"><span class="lineNum">    2681 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case18),</a>
-<a name="2682"><span class="lineNum">    2682 </span>                :            :         /* Bad SlotId parameter (&gt;= SPDM_MAX_SLOT_COUNT)*/</a>
-<a name="2683"><span class="lineNum">    2683 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case19),</a>
-<a name="2684"><span class="lineNum">    2684 </span>                :            :         /* Error Case: request a measurement out of bounds*/</a>
-<a name="2685"><span class="lineNum">    2685 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case21),</a>
-<a name="2686"><span class="lineNum">    2686 </span>                :            :         /* Large number of requests before requiring a signature*/</a>
-<a name="2687"><span class="lineNum">    2687 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case22),</a>
-<a name="2688"><span class="lineNum">    2688 </span>                :            :         /* Successful response to get a session based measurement with signature*/</a>
-<a name="2689"><span class="lineNum">    2689 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case23),</a>
-<a name="2690"><span class="lineNum">    2690 </span>                :            :         /* Buffer verification */</a>
-<a name="2691"><span class="lineNum">    2691 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case24),</a>
-<a name="2692"><span class="lineNum">    2692 </span>                :            :         /* Success Case V1.2 to get one measurement without signature*/</a>
-<a name="2693"><span class="lineNum">    2693 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case25),</a>
-<a name="2694"><span class="lineNum">    2694 </span>                :            :         /* Successful response V1.2 to get one measurement with signature and without opqaue data*/</a>
-<a name="2695"><span class="lineNum">    2695 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case26),</a>
-<a name="2696"><span class="lineNum">    2696 </span>                :            :         /* Successful response V1.2 to get one measurement with signature and with opqaue data*/</a>
-<a name="2697"><span class="lineNum">    2697 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case27),</a>
-<a name="2698"><span class="lineNum">    2698 </span>                :            :         /* Success Case to get measurement with signature using slot_id 0xFF */</a>
-<a name="2699"><span class="lineNum">    2699 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case28),</a>
-<a name="2700"><span class="lineNum">    2700 </span>                :            :         /* Error Case: Big Endian Signature. Little Endian Verify */</a>
-<a name="2701"><span class="lineNum">    2701 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case29),</a>
-<a name="2702"><span class="lineNum">    2702 </span>                :            :         /* Success Case: Big Endian Signature. Big Endian Verify */</a>
-<a name="2703"><span class="lineNum">    2703 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case30),</a>
-<a name="2704"><span class="lineNum">    2704 </span>                :            :         /* Success Case: Big Endian Signature. Big or Little Endian Verify */</a>
-<a name="2705"><span class="lineNum">    2705 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case31),</a>
-<a name="2706"><span class="lineNum">    2706 </span>                :            :         /* Success Case: Little Endian Signature. Little Endian Verify */</a>
-<a name="2707"><span class="lineNum">    2707 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case32),</a>
-<a name="2708"><span class="lineNum">    2708 </span>                :            :         /* Error Case: Little Endian Signature. Big Endian Verify */</a>
-<a name="2709"><span class="lineNum">    2709 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case33),</a>
-<a name="2710"><span class="lineNum">    2710 </span>                :            :         /* Success Case: Little Endian Signature. Big or Little Endian Verify */</a>
-<a name="2711"><span class="lineNum">    2711 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case34),</a>
-<a name="2712"><span class="lineNum">    2712 </span>                :            :         /* Success Case: V1.3 get a correct context field */</a>
-<a name="2713"><span class="lineNum">    2713 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case35),</a>
-<a name="2714"><span class="lineNum">    2714 </span>                :            :     };</a>
-<a name="2715"><span class="lineNum">    2715 </span>                :            : </a>
-<a name="2716"><span class="lineNum">    2716 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_measurements_test_context);</span></a>
-<a name="2717"><span class="lineNum">    2717 </span>                :            : </a>
-<a name="2718"><span class="lineNum">    2718 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_measurements_tests,</span></a>
-<a name="2719"><span class="lineNum">    2719 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="2720"><span class="lineNum">    2720 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="2721"><span class="lineNum">    2721 </span>                :            : }</a>
-<a name="2722"><span class="lineNum">    2722 </span>                :            : </a>
-<a name="2723"><span class="lineNum">    2723 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP*/</a>
+<a name="2633"><span class="lineNum">    2633 </span>                :            : /**</a>
+<a name="2634"><span class="lineNum">    2634 </span>                :            :  * Test 36: The key usage bit mask is not set, the SlotID fields in GET_MEASUREMENTS and MEASUREMENTS shall not specify this certificate slot</a>
+<a name="2635"><span class="lineNum">    2635 </span>                :            :  * Expected Behavior: get a SPDM_ERROR_CODE_INVALID_REQUEST return code</a>
+<a name="2636"><span class="lineNum">    2636 </span>                :            :  **/</a>
+<a name="2637"><span class="lineNum">    2637 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_measurements_case36(void **state)</span></a>
+<a name="2638"><span class="lineNum">    2638 </span>                :            : {</a>
+<a name="2639"><span class="lineNum">    2639 </span>                :            :     libspdm_return_t status;</a>
+<a name="2640"><span class="lineNum">    2640 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="2641"><span class="lineNum">    2641 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="2642"><span class="lineNum">    2642 </span>                :            :     size_t response_size;</a>
+<a name="2643"><span class="lineNum">    2643 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="2644"><span class="lineNum">    2644 </span>                :            :     spdm_measurements_response_t *spdm_response;</a>
+<a name="2645"><span class="lineNum">    2645 </span>                :            :     uint8_t *requester_context;</a>
+<a name="2646"><span class="lineNum">    2646 </span>                :            :     uint8_t slot_id;</a>
+<a name="2647"><span class="lineNum">    2647 </span>                :            :     void *data;</a>
+<a name="2648"><span class="lineNum">    2648 </span>                :            :     size_t data_size;</a>
+<a name="2649"><span class="lineNum">    2649 </span>                :            : </a>
+<a name="2650"><span class="lineNum">    2650 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="2651"><span class="lineNum">    2651 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="2652"><span class="lineNum">    2652 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 36;</span></a>
+<a name="2653"><span class="lineNum">    2653 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_13 &lt;&lt;</span></a>
+<a name="2654"><span class="lineNum">    2654 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="2655"><span class="lineNum">    2655 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="2656"><span class="lineNum">    2656 </span>                :            :         LIBSPDM_CONNECTION_STATE_AUTHENTICATED;</a>
+<a name="2657"><span class="lineNum">    2657 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="2658"><span class="lineNum">    2658 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MEAS_CAP_SIG;</a>
+<a name="2659"><span class="lineNum">    2659 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |=</span></a>
+<a name="2660"><span class="lineNum">    2660 </span>                :            :         SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PUB_KEY_ID_CAP;</a>
+<a name="2661"><span class="lineNum">    2661 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="2662"><span class="lineNum">    2662 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2663"><span class="lineNum">    2663 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="2664"><span class="lineNum">    2664 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="2665"><span class="lineNum">    2665 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="2666"><span class="lineNum">    2666 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="2667"><span class="lineNum">    2667 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="2668"><span class="lineNum">    2668 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="2669"><span class="lineNum">    2669 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="2670"><span class="lineNum">    2670 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="2671"><span class="lineNum">    2671 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.multi_key_conn_rsp = true;</span></a>
+<a name="2672"><span class="lineNum">    2672 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_m(spdm_context, NULL);</span></a>
+<a name="2673"><span class="lineNum">    2673 </span>                :            : </a>
+<a name="2674"><span class="lineNum">    2674 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="2675"><span class="lineNum">    2675 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data,</a>
+<a name="2676"><span class="lineNum">    2676 </span>                :            :                                                     &amp;data_size, NULL, NULL);</a>
+<a name="2677"><span class="lineNum">    2677 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          9 :     for (int i = 0; i &lt; SPDM_MAX_SLOT_COUNT; i++) {</span></a>
+<a name="2678"><span class="lineNum">    2678 </span>                :<span class="lineCov">          8 :         spdm_context-&gt;local_context.local_cert_chain_provision_size[i] = data_size;</span></a>
+<a name="2679"><span class="lineNum">    2679 </span>                :<span class="lineCov">          8 :         spdm_context-&gt;local_context.local_cert_chain_provision[i] = data;</span></a>
+<a name="2680"><span class="lineNum">    2680 </span>                :            :     }</a>
+<a name="2681"><span class="lineNum">    2681 </span>                :            : </a>
+<a name="2682"><span class="lineNum">    2682 </span>                :            :     /* If set, the SlotID fields in GET_MEASUREMENTS and MEASUREMENTS can specify this certificate slot. If not set,</a>
+<a name="2683"><span class="lineNum">    2683 </span>                :            :      * the SlotID fields in GET_MEASUREMENTS and MEASUREMENTS shall not specify this certificate slot. */</a>
+<a name="2684"><span class="lineNum">    2684 </span>                :<span class="lineCov">          1 :     slot_id = 0;</span></a>
+<a name="2685"><span class="lineNum">    2685 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request17.slot_id_param = slot_id;</span></a>
+<a name="2686"><span class="lineNum">    2686 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_key_usage_bit_mask[slot_id] =</span></a>
+<a name="2687"><span class="lineNum">    2687 </span>                :            :         SPDM_KEY_USAGE_BIT_MASK_KEY_EX_USE |</a>
+<a name="2688"><span class="lineNum">    2688 </span>                :            :         SPDM_KEY_USAGE_BIT_MASK_CHALLENGE_USE;</a>
+<a name="2689"><span class="lineNum">    2689 </span>                :            : </a>
+<a name="2690"><span class="lineNum">    2690 </span>                :<span class="lineCov">          1 :     libspdm_get_random_number(SPDM_NONCE_SIZE,</span></a>
+<a name="2691"><span class="lineNum">    2691 </span>                :            :                               m_libspdm_get_measurements_request17.nonce);</a>
+<a name="2692"><span class="lineNum">    2692 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request17.header.param1 =</span></a>
+<a name="2693"><span class="lineNum">    2693 </span>                :            :         SPDM_GET_MEASUREMENTS_REQUEST_ATTRIBUTES_GENERATE_SIGNATURE;</a>
+<a name="2694"><span class="lineNum">    2694 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request17.header.param2 = 1;</span></a>
+<a name="2695"><span class="lineNum">    2695 </span>                :            : </a>
+<a name="2696"><span class="lineNum">    2696 </span>                :<span class="lineCov">          1 :     requester_context = ((uint8_t *)&amp;m_libspdm_get_measurements_request17) +</span></a>
+<a name="2697"><span class="lineNum">    2697 </span>                :            :                         sizeof(m_libspdm_get_measurements_request17);</a>
+<a name="2698"><span class="lineNum">    2698 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(requester_context, SPDM_REQ_CONTEXT_SIZE, 0xAA);</span></a>
+<a name="2699"><span class="lineNum">    2699 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request17_size = sizeof(m_libspdm_get_measurements_request17) +</span></a>
+<a name="2700"><span class="lineNum">    2700 </span>                :            :                                                 SPDM_REQ_CONTEXT_SIZE;</a>
+<a name="2701"><span class="lineNum">    2701 </span>                :            : </a>
+<a name="2702"><span class="lineNum">    2702 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="2703"><span class="lineNum">    2703 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_measurements(</span></a>
+<a name="2704"><span class="lineNum">    2704 </span>                :            :         spdm_context, m_libspdm_get_measurements_request17_size,</a>
+<a name="2705"><span class="lineNum">    2705 </span>                :            :         &amp;m_libspdm_get_measurements_request17, &amp;response_size, response);</a>
+<a name="2706"><span class="lineNum">    2706 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="2707"><span class="lineNum">    2707 </span>                :<span class="lineCov">          1 :     assert_int_equal(response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="2708"><span class="lineNum">    2708 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="2709"><span class="lineNum">    2709 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="2710"><span class="lineNum">    2710 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
+<a name="2711"><span class="lineNum">    2711 </span>                :<span class="lineCov">          1 :     assert_int_equal(spdm_response-&gt;header.param2, 0);</span></a>
+<a name="2712"><span class="lineNum">    2712 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="2713"><span class="lineNum">    2713 </span>                :            : </a>
+<a name="2714"><span class="lineNum">    2714 </span>                :            : libspdm_test_context_t m_libspdm_responder_measurements_test_context = {</a>
+<a name="2715"><span class="lineNum">    2715 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="2716"><span class="lineNum">    2716 </span>                :            :     false,</a>
+<a name="2717"><span class="lineNum">    2717 </span>                :            : };</a>
+<a name="2718"><span class="lineNum">    2718 </span>                :            : </a>
+<a name="2719"><span class="lineNum">    2719 </span>                :<span class="lineCov">          1 : int libspdm_responder_measurements_test_main(void)</span></a>
+<a name="2720"><span class="lineNum">    2720 </span>                :            : {</a>
+<a name="2721"><span class="lineNum">    2721 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request11.slot_id_param = SPDM_MAX_SLOT_COUNT - 1;</span></a>
+<a name="2722"><span class="lineNum">    2722 </span>                :<span class="lineCov">          1 :     m_libspdm_get_measurements_request12.slot_id_param = SPDM_MAX_SLOT_COUNT + 1;</span></a>
+<a name="2723"><span class="lineNum">    2723 </span>                :            : </a>
+<a name="2724"><span class="lineNum">    2724 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_measurements_tests[] = {</span></a>
+<a name="2725"><span class="lineNum">    2725 </span>                :            :         /* Success Case to get measurement number without signature*/</a>
+<a name="2726"><span class="lineNum">    2726 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case1),</a>
+<a name="2727"><span class="lineNum">    2727 </span>                :            :         /* Can be populated with new test.*/</a>
+<a name="2728"><span class="lineNum">    2728 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case2),</a>
+<a name="2729"><span class="lineNum">    2729 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_BUSY*/</a>
+<a name="2730"><span class="lineNum">    2730 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case3),</a>
+<a name="2731"><span class="lineNum">    2731 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
+<a name="2732"><span class="lineNum">    2732 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case4),</a>
+<a name="2733"><span class="lineNum">    2733 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
+<a name="2734"><span class="lineNum">    2734 </span>                :            :         /* response_state: SPDM_RESPONSE_STATE_NOT_READY*/</a>
+<a name="2735"><span class="lineNum">    2735 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case5),</a>
+<a name="2736"><span class="lineNum">    2736 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
+<a name="2737"><span class="lineNum">    2737 </span>                :            :         /* connection_state Check*/</a>
+<a name="2738"><span class="lineNum">    2738 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case6),</a>
+<a name="2739"><span class="lineNum">    2739 </span>                :            :         /* Success Case to get measurement number with signature*/</a>
+<a name="2740"><span class="lineNum">    2740 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case7),</a>
+<a name="2741"><span class="lineNum">    2741 </span>                :            :         /* Success Case to get one measurement with signature*/</a>
+<a name="2742"><span class="lineNum">    2742 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case8),</a>
+<a name="2743"><span class="lineNum">    2743 </span>                :            :         /* Bad request size to get one measurement with signature*/</a>
+<a name="2744"><span class="lineNum">    2744 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case9),</a>
+<a name="2745"><span class="lineNum">    2745 </span>                :            :         /* Success Case to get one measurement without signature*/</a>
+<a name="2746"><span class="lineNum">    2746 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case10),</a>
+<a name="2747"><span class="lineNum">    2747 </span>                :            :         /* Success Case to get all measurements with signature*/</a>
+<a name="2748"><span class="lineNum">    2748 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case11),</a>
+<a name="2749"><span class="lineNum">    2749 </span>                :            :         /* Success Case to get all measurements without signature*/</a>
+<a name="2750"><span class="lineNum">    2750 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case12),</a>
+<a name="2751"><span class="lineNum">    2751 </span>                :            :         /* Can be populated with new test.*/</a>
+<a name="2752"><span class="lineNum">    2752 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case13),</a>
+<a name="2753"><span class="lineNum">    2753 </span>                :            :         /* Error Case: sig required, but no nonce and/or SlotID*/</a>
+<a name="2754"><span class="lineNum">    2754 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case14),</a>
+<a name="2755"><span class="lineNum">    2755 </span>                :            :         /* Error Case: sig required, but meas_cap = 01b (including nonce and SlotId on request)*/</a>
+<a name="2756"><span class="lineNum">    2756 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case15),</a>
+<a name="2757"><span class="lineNum">    2757 </span>                :            :         /* Error Case: sig required, but meas_cap = 01b (not including nonce and SlotId on request)*/</a>
+<a name="2758"><span class="lineNum">    2758 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case16),</a>
+<a name="2759"><span class="lineNum">    2759 </span>                :            :         /* Error Case: meas_cap = 00b*/</a>
+<a name="2760"><span class="lineNum">    2760 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case17),</a>
+<a name="2761"><span class="lineNum">    2761 </span>                :            :         /* Success Case: SlotId different from default*/</a>
+<a name="2762"><span class="lineNum">    2762 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case18),</a>
+<a name="2763"><span class="lineNum">    2763 </span>                :            :         /* Bad SlotId parameter (&gt;= SPDM_MAX_SLOT_COUNT)*/</a>
+<a name="2764"><span class="lineNum">    2764 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case19),</a>
+<a name="2765"><span class="lineNum">    2765 </span>                :            :         /* Error Case: request a measurement out of bounds*/</a>
+<a name="2766"><span class="lineNum">    2766 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case21),</a>
+<a name="2767"><span class="lineNum">    2767 </span>                :            :         /* Large number of requests before requiring a signature*/</a>
+<a name="2768"><span class="lineNum">    2768 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case22),</a>
+<a name="2769"><span class="lineNum">    2769 </span>                :            :         /* Successful response to get a session based measurement with signature*/</a>
+<a name="2770"><span class="lineNum">    2770 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case23),</a>
+<a name="2771"><span class="lineNum">    2771 </span>                :            :         /* Buffer verification */</a>
+<a name="2772"><span class="lineNum">    2772 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case24),</a>
+<a name="2773"><span class="lineNum">    2773 </span>                :            :         /* Success Case V1.2 to get one measurement without signature*/</a>
+<a name="2774"><span class="lineNum">    2774 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case25),</a>
+<a name="2775"><span class="lineNum">    2775 </span>                :            :         /* Successful response V1.2 to get one measurement with signature and without opqaue data*/</a>
+<a name="2776"><span class="lineNum">    2776 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case26),</a>
+<a name="2777"><span class="lineNum">    2777 </span>                :            :         /* Successful response V1.2 to get one measurement with signature and with opqaue data*/</a>
+<a name="2778"><span class="lineNum">    2778 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case27),</a>
+<a name="2779"><span class="lineNum">    2779 </span>                :            :         /* Success Case to get measurement with signature using slot_id 0xFF */</a>
+<a name="2780"><span class="lineNum">    2780 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case28),</a>
+<a name="2781"><span class="lineNum">    2781 </span>                :            :         /* Error Case: Big Endian Signature. Little Endian Verify */</a>
+<a name="2782"><span class="lineNum">    2782 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case29),</a>
+<a name="2783"><span class="lineNum">    2783 </span>                :            :         /* Success Case: Big Endian Signature. Big Endian Verify */</a>
+<a name="2784"><span class="lineNum">    2784 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case30),</a>
+<a name="2785"><span class="lineNum">    2785 </span>                :            :         /* Success Case: Big Endian Signature. Big or Little Endian Verify */</a>
+<a name="2786"><span class="lineNum">    2786 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case31),</a>
+<a name="2787"><span class="lineNum">    2787 </span>                :            :         /* Success Case: Little Endian Signature. Little Endian Verify */</a>
+<a name="2788"><span class="lineNum">    2788 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case32),</a>
+<a name="2789"><span class="lineNum">    2789 </span>                :            :         /* Error Case: Little Endian Signature. Big Endian Verify */</a>
+<a name="2790"><span class="lineNum">    2790 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case33),</a>
+<a name="2791"><span class="lineNum">    2791 </span>                :            :         /* Success Case: Little Endian Signature. Big or Little Endian Verify */</a>
+<a name="2792"><span class="lineNum">    2792 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case34),</a>
+<a name="2793"><span class="lineNum">    2793 </span>                :            :         /* Success Case: V1.3 get a correct context field */</a>
+<a name="2794"><span class="lineNum">    2794 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case35),</a>
+<a name="2795"><span class="lineNum">    2795 </span>                :            :         /* The key usage bit mask is not set, failed Case*/</a>
+<a name="2796"><span class="lineNum">    2796 </span>                :            :         cmocka_unit_test(libspdm_test_responder_measurements_case36),</a>
+<a name="2797"><span class="lineNum">    2797 </span>                :            :     };</a>
+<a name="2798"><span class="lineNum">    2798 </span>                :            : </a>
+<a name="2799"><span class="lineNum">    2799 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_measurements_test_context);</span></a>
+<a name="2800"><span class="lineNum">    2800 </span>                :            : </a>
+<a name="2801"><span class="lineNum">    2801 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_measurements_tests,</span></a>
+<a name="2802"><span class="lineNum">    2802 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="2803"><span class="lineNum">    2803 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="2804"><span class="lineNum">    2804 </span>                :            : }</a>
+<a name="2805"><span class="lineNum">    2805 </span>                :            : </a>
+<a name="2806"><span class="lineNum">    2806 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP*/</a>
 </pre>
       </td>
     </tr>

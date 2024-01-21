@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">196</td>
-            <td class="headerCovTableEntry">196</td>
+            <td class="headerCovTableEntry">239</td>
+            <td class="headerCovTableEntry">239</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-20 08:13:48</td>
+            <td class="headerValue">2024-01-21 08:13:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">8</td>
-            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">9</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -539,36 +539,133 @@
 <a name="468"><span class="lineNum">     468 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
 <a name="469"><span class="lineNum">     469 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="470"><span class="lineNum">     470 </span>                :            : </a>
-<a name="471"><span class="lineNum">     471 </span>                :            : libspdm_test_context_t m_spdm_requester_challenge_auth_test_context = {</a>
-<a name="472"><span class="lineNum">     472 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="473"><span class="lineNum">     473 </span>                :            :     false,</a>
-<a name="474"><span class="lineNum">     474 </span>                :            : };</a>
-<a name="475"><span class="lineNum">     475 </span>                :            : </a>
-<a name="476"><span class="lineNum">     476 </span>                :<span class="lineCov">          1 : int libspdm_requester_encap_challenge_auth_test_main(void)</span></a>
+<a name="471"><span class="lineNum">     471 </span>                :            : /**</a>
+<a name="472"><span class="lineNum">     472 </span>                :            :  * Test 8: The key usage bit mask is not set, the SlotID fields in CHALLENGE and CHALLENGE_AUTH shall not specify this certificate slot</a>
+<a name="473"><span class="lineNum">     473 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
+<a name="474"><span class="lineNum">     474 </span>                :            :  * indicating the invalid state.</a>
+<a name="475"><span class="lineNum">     475 </span>                :            :  **/</a>
+<a name="476"><span class="lineNum">     476 </span>                :<span class="lineCov">          1 : void test_libspdm_requester_encap_challenge_auth_case8(void **state)</span></a>
 <a name="477"><span class="lineNum">     477 </span>                :            : {</a>
-<a name="478"><span class="lineNum">     478 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_challenge_auth_tests[] = {</span></a>
-<a name="479"><span class="lineNum">     479 </span>                :            :         /* Success Case*/</a>
-<a name="480"><span class="lineNum">     480 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case1),</a>
-<a name="481"><span class="lineNum">     481 </span>                :            :         /* Can be populated with new test.*/</a>
-<a name="482"><span class="lineNum">     482 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case2),</a>
-<a name="483"><span class="lineNum">     483 </span>                :            :         /* connection_state Check*/</a>
-<a name="484"><span class="lineNum">     484 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case3),</a>
-<a name="485"><span class="lineNum">     485 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case4),</a>
-<a name="486"><span class="lineNum">     486 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case5),</a>
-<a name="487"><span class="lineNum">     487 </span>                :            :         /* Success Case, use provisioned public key (slot 0xFF) */</a>
-<a name="488"><span class="lineNum">     488 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case6),</a>
-<a name="489"><span class="lineNum">     489 </span>                :            :         /* Success Case: V1.3 get a correct context field */</a>
-<a name="490"><span class="lineNum">     490 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case7),</a>
-<a name="491"><span class="lineNum">     491 </span>                :            :     };</a>
-<a name="492"><span class="lineNum">     492 </span>                :            : </a>
-<a name="493"><span class="lineNum">     493 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_spdm_requester_challenge_auth_test_context);</span></a>
-<a name="494"><span class="lineNum">     494 </span>                :            : </a>
-<a name="495"><span class="lineNum">     495 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_challenge_auth_tests,</span></a>
-<a name="496"><span class="lineNum">     496 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="497"><span class="lineNum">     497 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="498"><span class="lineNum">     498 </span>                :            : }</a>
-<a name="499"><span class="lineNum">     499 </span>                :            : </a>
-<a name="500"><span class="lineNum">     500 </span>                :            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) &amp;&amp; (..) */</a>
+<a name="478"><span class="lineNum">     478 </span>                :            :     libspdm_return_t status;</a>
+<a name="479"><span class="lineNum">     479 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="480"><span class="lineNum">     480 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="481"><span class="lineNum">     481 </span>                :            :     size_t response_size;</a>
+<a name="482"><span class="lineNum">     482 </span>                :            :     uint8_t request[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="483"><span class="lineNum">     483 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="484"><span class="lineNum">     484 </span>                :            :     spdm_challenge_auth_response_t *spdm_response;</a>
+<a name="485"><span class="lineNum">     485 </span>                :            :     void *data;</a>
+<a name="486"><span class="lineNum">     486 </span>                :            :     size_t data_size;</a>
+<a name="487"><span class="lineNum">     487 </span>                :            :     uint8_t *requester_context;</a>
+<a name="488"><span class="lineNum">     488 </span>                :            :     uint8_t slot_id;</a>
+<a name="489"><span class="lineNum">     489 </span>                :            : </a>
+<a name="490"><span class="lineNum">     490 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="491"><span class="lineNum">     491 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="492"><span class="lineNum">     492 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x8;</span></a>
+<a name="493"><span class="lineNum">     493 </span>                :            : </a>
+<a name="494"><span class="lineNum">     494 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags = 0;</span></a>
+<a name="495"><span class="lineNum">     495 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHAL_CAP;</span></a>
+<a name="496"><span class="lineNum">     496 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHAL_CAP;</span></a>
+<a name="497"><span class="lineNum">     497 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags = 0;</span></a>
+<a name="498"><span class="lineNum">     498 </span>                :            : </a>
+<a name="499"><span class="lineNum">     499 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="500"><span class="lineNum">     500 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="501"><span class="lineNum">     501 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec = m_libspdm_use_measurement_spec;</span></a>
+<a name="502"><span class="lineNum">     502 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="503"><span class="lineNum">     503 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="504"><span class="lineNum">     504 </span>                :            : </a>
+<a name="505"><span class="lineNum">     505 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state =</span></a>
+<a name="506"><span class="lineNum">     506 </span>                :            :         LIBSPDM_CONNECTION_STATE_NEGOTIATED;</a>
+<a name="507"><span class="lineNum">     507 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo =</span></a>
+<a name="508"><span class="lineNum">     508 </span>                :            :         m_libspdm_use_hash_algo;</a>
+<a name="509"><span class="lineNum">     509 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo =</span></a>
+<a name="510"><span class="lineNum">     510 </span>                :            :         m_libspdm_use_asym_algo;</a>
+<a name="511"><span class="lineNum">     511 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec =</span></a>
+<a name="512"><span class="lineNum">     512 </span>                :            :         m_libspdm_use_measurement_spec;</a>
+<a name="513"><span class="lineNum">     513 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="514"><span class="lineNum">     514 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.req_base_asym_alg =</span></a>
+<a name="516"><span class="lineNum">     516 </span>                :            :         m_libspdm_use_req_asym_algo;</a>
+<a name="517"><span class="lineNum">     517 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.multi_key_conn_req = true;</span></a>
+<a name="518"><span class="lineNum">     518 </span>                :            : </a>
+<a name="519"><span class="lineNum">     519 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_13</span></a>
+<a name="520"><span class="lineNum">     520 </span>                :            :                                             &lt;&lt; SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="521"><span class="lineNum">     521 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="522"><span class="lineNum">     522 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data,</a>
+<a name="523"><span class="lineNum">     523 </span>                :            :                                                     &amp;data_size, NULL, NULL);</a>
+<a name="524"><span class="lineNum">     524 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data;</span></a>
+<a name="525"><span class="lineNum">     525 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] =</span></a>
+<a name="526"><span class="lineNum">     526 </span>                :            :         data_size;</a>
+<a name="527"><span class="lineNum">     527 </span>                :            : </a>
+<a name="528"><span class="lineNum">     528 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_mut_c(spdm_context);</span></a>
+<a name="529"><span class="lineNum">     529 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="530"><span class="lineNum">     530 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="531"><span class="lineNum">     531 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="532"><span class="lineNum">     532 </span>                :            : #endif</a>
+<a name="533"><span class="lineNum">     533 </span>                :            : </a>
+<a name="534"><span class="lineNum">     534 </span>                :            :     /* If set, the SlotID fields in CHALLENGE and CHALLENGE_AUTH can specify this certificate slot. If not set, the</a>
+<a name="535"><span class="lineNum">     535 </span>                :            :      * SlotID fields in CHALLENGE and CHALLENGE_AUTH shall not specify this certificate slot. */</a>
+<a name="536"><span class="lineNum">     536 </span>                :<span class="lineCov">          1 :     slot_id = 0;</span></a>
+<a name="537"><span class="lineNum">     537 </span>                :<span class="lineCov">          1 :     m_spdm_challenge_request5.header.param1 = slot_id;</span></a>
+<a name="538"><span class="lineNum">     538 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_key_usage_bit_mask[slot_id] =</span></a>
+<a name="539"><span class="lineNum">     539 </span>                :            :         SPDM_KEY_USAGE_BIT_MASK_KEY_EX_USE |</a>
+<a name="540"><span class="lineNum">     540 </span>                :            :         SPDM_KEY_USAGE_BIT_MASK_MEASUREMENT_USE;</a>
+<a name="541"><span class="lineNum">     541 </span>                :            : </a>
+<a name="542"><span class="lineNum">     542 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="543"><span class="lineNum">     543 </span>                :<span class="lineCov">          1 :     libspdm_get_random_number(SPDM_NONCE_SIZE,</span></a>
+<a name="544"><span class="lineNum">     544 </span>                :            :                               m_spdm_challenge_request5.nonce);</a>
+<a name="545"><span class="lineNum">     545 </span>                :            : </a>
+<a name="546"><span class="lineNum">     546 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(request, sizeof(request));</span></a>
+<a name="547"><span class="lineNum">     547 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(request, sizeof(spdm_challenge_request_t),</span></a>
+<a name="548"><span class="lineNum">     548 </span>                :            :                      &amp;m_spdm_challenge_request5, sizeof(m_spdm_challenge_request5));</a>
+<a name="549"><span class="lineNum">     549 </span>                :<span class="lineCov">          1 :     requester_context = request + sizeof(m_spdm_challenge_request5);</span></a>
+<a name="550"><span class="lineNum">     550 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(requester_context, SPDM_REQ_CONTEXT_SIZE, 0xAA);</span></a>
+<a name="551"><span class="lineNum">     551 </span>                :<span class="lineCov">          1 :     m_spdm_challenge_request5_size = sizeof(m_spdm_challenge_request5) + SPDM_REQ_CONTEXT_SIZE;</span></a>
+<a name="552"><span class="lineNum">     552 </span>                :            : </a>
+<a name="553"><span class="lineNum">     553 </span>                :<span class="lineCov">          1 :     status = libspdm_get_encap_response_challenge_auth(</span></a>
+<a name="554"><span class="lineNum">     554 </span>                :            :         spdm_context, m_spdm_challenge_request5_size,</a>
+<a name="555"><span class="lineNum">     555 </span>                :            :         request, &amp;response_size, response);</a>
+<a name="556"><span class="lineNum">     556 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="557"><span class="lineNum">     557 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="558"><span class="lineNum">     558 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="559"><span class="lineNum">     559 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="560"><span class="lineNum">     560 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
+<a name="561"><span class="lineNum">     561 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
+<a name="562"><span class="lineNum">     562 </span>                :            : </a>
+<a name="563"><span class="lineNum">     563 </span>                :<span class="lineCov">          1 :     free(data);</span></a>
+<a name="564"><span class="lineNum">     564 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="565"><span class="lineNum">     565 </span>                :            : </a>
+<a name="566"><span class="lineNum">     566 </span>                :            : libspdm_test_context_t m_spdm_requester_challenge_auth_test_context = {</a>
+<a name="567"><span class="lineNum">     567 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="568"><span class="lineNum">     568 </span>                :            :     false,</a>
+<a name="569"><span class="lineNum">     569 </span>                :            : };</a>
+<a name="570"><span class="lineNum">     570 </span>                :            : </a>
+<a name="571"><span class="lineNum">     571 </span>                :<span class="lineCov">          1 : int libspdm_requester_encap_challenge_auth_test_main(void)</span></a>
+<a name="572"><span class="lineNum">     572 </span>                :            : {</a>
+<a name="573"><span class="lineNum">     573 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_challenge_auth_tests[] = {</span></a>
+<a name="574"><span class="lineNum">     574 </span>                :            :         /* Success Case*/</a>
+<a name="575"><span class="lineNum">     575 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case1),</a>
+<a name="576"><span class="lineNum">     576 </span>                :            :         /* Can be populated with new test.*/</a>
+<a name="577"><span class="lineNum">     577 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case2),</a>
+<a name="578"><span class="lineNum">     578 </span>                :            :         /* connection_state Check*/</a>
+<a name="579"><span class="lineNum">     579 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case3),</a>
+<a name="580"><span class="lineNum">     580 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case4),</a>
+<a name="581"><span class="lineNum">     581 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case5),</a>
+<a name="582"><span class="lineNum">     582 </span>                :            :         /* Success Case, use provisioned public key (slot 0xFF) */</a>
+<a name="583"><span class="lineNum">     583 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case6),</a>
+<a name="584"><span class="lineNum">     584 </span>                :            :         /* Success Case: V1.3 get a correct context field */</a>
+<a name="585"><span class="lineNum">     585 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case7),</a>
+<a name="586"><span class="lineNum">     586 </span>                :            :         /* The key usage bit mask is not set, failed Case*/</a>
+<a name="587"><span class="lineNum">     587 </span>                :            :         cmocka_unit_test(test_libspdm_requester_encap_challenge_auth_case8),</a>
+<a name="588"><span class="lineNum">     588 </span>                :            :     };</a>
+<a name="589"><span class="lineNum">     589 </span>                :            : </a>
+<a name="590"><span class="lineNum">     590 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_spdm_requester_challenge_auth_test_context);</span></a>
+<a name="591"><span class="lineNum">     591 </span>                :            : </a>
+<a name="592"><span class="lineNum">     592 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_challenge_auth_tests,</span></a>
+<a name="593"><span class="lineNum">     593 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="594"><span class="lineNum">     594 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="595"><span class="lineNum">     595 </span>                :            : }</a>
+<a name="596"><span class="lineNum">     596 </span>                :            : </a>
+<a name="597"><span class="lineNum">     597 </span>                :            : #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) &amp;&amp; (..) */</a>
 </pre>
       </td>
     </tr>

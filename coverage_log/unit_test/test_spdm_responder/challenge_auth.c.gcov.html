@@ -31,17 +31,17 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">516</td>
-            <td class="headerCovTableEntry">516</td>
+            <td class="headerCovTableEntry">553</td>
+            <td class="headerCovTableEntry">553</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-20 08:13:48</td>
+            <td class="headerValue">2024-01-21 08:13:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">19</td>
-            <td class="headerCovTableEntry">19</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">20</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
@@ -1208,53 +1208,133 @@
 <a name="1137"><span class="lineNum">    1137 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
 <a name="1138"><span class="lineNum">    1138 </span>                :<span class="lineCov">          1 : }</span></a>
 <a name="1139"><span class="lineNum">    1139 </span>                :            : </a>
-<a name="1140"><span class="lineNum">    1140 </span>                :            : libspdm_test_context_t m_libspdm_responder_challenge_auth_test_context = {</a>
-<a name="1141"><span class="lineNum">    1141 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="1142"><span class="lineNum">    1142 </span>                :            :     false,</a>
-<a name="1143"><span class="lineNum">    1143 </span>                :            : };</a>
-<a name="1144"><span class="lineNum">    1144 </span>                :            : </a>
-<a name="1145"><span class="lineNum">    1145 </span>                :<span class="lineCov">          1 : int libspdm_responder_challenge_auth_test_main(void)</span></a>
+<a name="1140"><span class="lineNum">    1140 </span>                :            : /**</a>
+<a name="1141"><span class="lineNum">    1141 </span>                :            :  * Test 19: The key usage bit mask is not set, the SlotID fields in CHALLENGE and CHALLENGE_AUTH shall not specify this certificate slot</a>
+<a name="1142"><span class="lineNum">    1142 </span>                :            :  * Expected behavior: the responder accepts the request, but produces an ERROR message</a>
+<a name="1143"><span class="lineNum">    1143 </span>                :            :  * indicating the invalid state.</a>
+<a name="1144"><span class="lineNum">    1144 </span>                :            :  **/</a>
+<a name="1145"><span class="lineNum">    1145 </span>                :<span class="lineCov">          1 : void libspdm_test_responder_challenge_auth_case19(void **state)</span></a>
 <a name="1146"><span class="lineNum">    1146 </span>                :            : {</a>
-<a name="1147"><span class="lineNum">    1147 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_challenge_auth_tests[] = {</span></a>
-<a name="1148"><span class="lineNum">    1148 </span>                :            :         /* Success Case*/</a>
-<a name="1149"><span class="lineNum">    1149 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case1),</a>
-<a name="1150"><span class="lineNum">    1150 </span>                :            :         /* Can be populated with new test.*/</a>
-<a name="1151"><span class="lineNum">    1151 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case2),</a>
-<a name="1152"><span class="lineNum">    1152 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
-<a name="1153"><span class="lineNum">    1153 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case3),</a>
-<a name="1154"><span class="lineNum">    1154 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
-<a name="1155"><span class="lineNum">    1155 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case4),</a>
-<a name="1156"><span class="lineNum">    1156 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
-<a name="1157"><span class="lineNum">    1157 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
-<a name="1158"><span class="lineNum">    1158 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case5),</a>
-<a name="1159"><span class="lineNum">    1159 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
-<a name="1160"><span class="lineNum">    1160 </span>                :            :         /* connection_state Check*/</a>
-<a name="1161"><span class="lineNum">    1161 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case6),</a>
-<a name="1162"><span class="lineNum">    1162 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case7),</a>
-<a name="1163"><span class="lineNum">    1163 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case8),</a>
-<a name="1164"><span class="lineNum">    1164 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case9),</a>
-<a name="1165"><span class="lineNum">    1165 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case10),</a>
-<a name="1166"><span class="lineNum">    1166 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case11),</a>
-<a name="1167"><span class="lineNum">    1167 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case12),</a>
-<a name="1168"><span class="lineNum">    1168 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case13),</a>
-<a name="1169"><span class="lineNum">    1169 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case14),</a>
-<a name="1170"><span class="lineNum">    1170 </span>                :            :         /* Buffer verification*/</a>
-<a name="1171"><span class="lineNum">    1171 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case15),</a>
-<a name="1172"><span class="lineNum">    1172 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case16),</a>
-<a name="1173"><span class="lineNum">    1173 </span>                :            :         /* using provisioned public key (slot_id 0xFF) */</a>
-<a name="1174"><span class="lineNum">    1174 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case17),</a>
-<a name="1175"><span class="lineNum">    1175 </span>                :            :         /* Success Case: V1.3 get a correct context field */</a>
-<a name="1176"><span class="lineNum">    1176 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case18),</a>
-<a name="1177"><span class="lineNum">    1177 </span>                :            :     };</a>
-<a name="1178"><span class="lineNum">    1178 </span>                :            : </a>
-<a name="1179"><span class="lineNum">    1179 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_challenge_auth_test_context);</span></a>
-<a name="1180"><span class="lineNum">    1180 </span>                :            : </a>
-<a name="1181"><span class="lineNum">    1181 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_challenge_auth_tests,</span></a>
-<a name="1182"><span class="lineNum">    1182 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="1183"><span class="lineNum">    1183 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="1184"><span class="lineNum">    1184 </span>                :            : }</a>
-<a name="1185"><span class="lineNum">    1185 </span>                :            : </a>
-<a name="1186"><span class="lineNum">    1186 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP*/</a>
+<a name="1147"><span class="lineNum">    1147 </span>                :            :     libspdm_return_t status;</a>
+<a name="1148"><span class="lineNum">    1148 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
+<a name="1149"><span class="lineNum">    1149 </span>                :            :     libspdm_context_t *spdm_context;</a>
+<a name="1150"><span class="lineNum">    1150 </span>                :            :     size_t response_size;</a>
+<a name="1151"><span class="lineNum">    1151 </span>                :            :     spdm_challenge_auth_response_t *spdm_response;</a>
+<a name="1152"><span class="lineNum">    1152 </span>                :            :     void *data1;</a>
+<a name="1153"><span class="lineNum">    1153 </span>                :            :     size_t data_size1;</a>
+<a name="1154"><span class="lineNum">    1154 </span>                :            :     uint8_t *requester_context;</a>
+<a name="1155"><span class="lineNum">    1155 </span>                :            :     uint8_t request[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="1156"><span class="lineNum">    1156 </span>                :            :     uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];</a>
+<a name="1157"><span class="lineNum">    1157 </span>                :            :     uint8_t slot_id;</a>
+<a name="1158"><span class="lineNum">    1158 </span>                :            : </a>
+<a name="1159"><span class="lineNum">    1159 </span>                :<span class="lineCov">          1 :     spdm_test_context = *state;</span></a>
+<a name="1160"><span class="lineNum">    1160 </span>                :<span class="lineCov">          1 :     spdm_context = spdm_test_context-&gt;spdm_context;</span></a>
+<a name="1161"><span class="lineNum">    1161 </span>                :<span class="lineCov">          1 :     spdm_test_context-&gt;case_id = 0x13;</span></a>
+<a name="1162"><span class="lineNum">    1162 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;</span></a>
+<a name="1163"><span class="lineNum">    1163 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags = 0;</span></a>
+<a name="1164"><span class="lineNum">    1164 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CHAL_CAP;</span></a>
+<a name="1165"><span class="lineNum">    1165 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="1166"><span class="lineNum">    1166 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="1167"><span class="lineNum">    1167 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_spec = m_libspdm_use_measurement_spec;</span></a>
+<a name="1168"><span class="lineNum">    1168 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.algorithm.measurement_hash_algo =</span></a>
+<a name="1169"><span class="lineNum">    1169 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="1170"><span class="lineNum">    1170 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.multi_key_conn_rsp = true;</span></a>
+<a name="1171"><span class="lineNum">    1171 </span>                :            : </a>
+<a name="1172"><span class="lineNum">    1172 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.version = SPDM_MESSAGE_VERSION_13 &lt;&lt;</span></a>
+<a name="1173"><span class="lineNum">    1173 </span>                :            :                                             SPDM_VERSION_NUMBER_SHIFT_BIT;</a>
+<a name="1174"><span class="lineNum">    1174 </span>                :<span class="lineCov">          1 :     libspdm_read_responder_public_certificate_chain(m_libspdm_use_hash_algo,</span></a>
+<a name="1175"><span class="lineNum">    1175 </span>                :            :                                                     m_libspdm_use_asym_algo, &amp;data1,</a>
+<a name="1176"><span class="lineNum">    1176 </span>                :            :                                                     &amp;data_size1, NULL, NULL);</a>
+<a name="1177"><span class="lineNum">    1177 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision[0] = data1;</span></a>
+<a name="1178"><span class="lineNum">    1178 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_cert_chain_provision_size[0] = data_size1;</span></a>
+<a name="1179"><span class="lineNum">    1179 </span>                :            : </a>
+<a name="1180"><span class="lineNum">    1180 </span>                :<span class="lineCov">          1 :     libspdm_secret_lib_challenge_opaque_data_size = 0;</span></a>
+<a name="1181"><span class="lineNum">    1181 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_c(spdm_context);</span></a>
+<a name="1182"><span class="lineNum">    1182 </span>                :            : #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="1183"><span class="lineNum">    1183 </span>                :            :     spdm_context-&gt;transcript.message_m.buffer_size =</a>
+<a name="1184"><span class="lineNum">    1184 </span>                :            :         spdm_context-&gt;transcript.message_m.max_buffer_size;</a>
+<a name="1185"><span class="lineNum">    1185 </span>                :            : #endif</a>
+<a name="1186"><span class="lineNum">    1186 </span>                :            : </a>
+<a name="1187"><span class="lineNum">    1187 </span>                :            :     /* If set, the SlotID fields in CHALLENGE and CHALLENGE_AUTH can specify this certificate slot. If not set, the</a>
+<a name="1188"><span class="lineNum">    1188 </span>                :            :      * SlotID fields in CHALLENGE and CHALLENGE_AUTH shall not specify this certificate slot. */</a>
+<a name="1189"><span class="lineNum">    1189 </span>                :<span class="lineCov">          1 :     slot_id = 0;</span></a>
+<a name="1190"><span class="lineNum">    1190 </span>                :<span class="lineCov">          1 :     m_libspdm_challenge_request8.header.param1 = slot_id;</span></a>
+<a name="1191"><span class="lineNum">    1191 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.local_key_usage_bit_mask[slot_id] =</span></a>
+<a name="1192"><span class="lineNum">    1192 </span>                :            :         SPDM_KEY_USAGE_BIT_MASK_KEY_EX_USE |</a>
+<a name="1193"><span class="lineNum">    1193 </span>                :            :         SPDM_KEY_USAGE_BIT_MASK_MEASUREMENT_USE;</a>
+<a name="1194"><span class="lineNum">    1194 </span>                :            : </a>
+<a name="1195"><span class="lineNum">    1195 </span>                :<span class="lineCov">          1 :     libspdm_get_random_number(SPDM_NONCE_SIZE, m_libspdm_challenge_request8.nonce);</span></a>
+<a name="1196"><span class="lineNum">    1196 </span>                :            : </a>
+<a name="1197"><span class="lineNum">    1197 </span>                :<span class="lineCov">          1 :     libspdm_zero_mem(request, sizeof(request));</span></a>
+<a name="1198"><span class="lineNum">    1198 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(request, sizeof(spdm_challenge_request_t),</span></a>
+<a name="1199"><span class="lineNum">    1199 </span>                :            :                      &amp;m_libspdm_challenge_request8, sizeof(m_libspdm_challenge_request8));</a>
+<a name="1200"><span class="lineNum">    1200 </span>                :<span class="lineCov">          1 :     requester_context = request + sizeof(m_libspdm_challenge_request8);</span></a>
+<a name="1201"><span class="lineNum">    1201 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(requester_context, SPDM_REQ_CONTEXT_SIZE, 0xAA);</span></a>
+<a name="1202"><span class="lineNum">    1202 </span>                :<span class="lineCov">          1 :     m_libspdm_challenge_request8_size = sizeof(m_libspdm_challenge_request8) +</span></a>
+<a name="1203"><span class="lineNum">    1203 </span>                :            :                                         SPDM_REQ_CONTEXT_SIZE;</a>
+<a name="1204"><span class="lineNum">    1204 </span>                :            : </a>
+<a name="1205"><span class="lineNum">    1205 </span>                :<span class="lineCov">          1 :     response_size = sizeof(response);</span></a>
+<a name="1206"><span class="lineNum">    1206 </span>                :<span class="lineCov">          1 :     status = libspdm_get_response_challenge_auth(</span></a>
+<a name="1207"><span class="lineNum">    1207 </span>                :            :         spdm_context, m_libspdm_challenge_request8_size,</a>
+<a name="1208"><span class="lineNum">    1208 </span>                :            :         request, &amp;response_size, response);</a>
+<a name="1209"><span class="lineNum">    1209 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="1210"><span class="lineNum">    1210 </span>                :<span class="lineCov">          1 :     assert_int_equal (response_size, sizeof(spdm_error_response_t));</span></a>
+<a name="1211"><span class="lineNum">    1211 </span>                :<span class="lineCov">          1 :     spdm_response = (void *)response;</span></a>
+<a name="1212"><span class="lineNum">    1212 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.request_response_code, SPDM_ERROR);</span></a>
+<a name="1213"><span class="lineNum">    1213 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param1, SPDM_ERROR_CODE_INVALID_REQUEST);</span></a>
+<a name="1214"><span class="lineNum">    1214 </span>                :<span class="lineCov">          1 :     assert_int_equal (spdm_response-&gt;header.param2, 0);</span></a>
+<a name="1215"><span class="lineNum">    1215 </span>                :<span class="lineCov">          1 :     free(data1);</span></a>
+<a name="1216"><span class="lineNum">    1216 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="1217"><span class="lineNum">    1217 </span>                :            : libspdm_test_context_t m_libspdm_responder_challenge_auth_test_context = {</a>
+<a name="1218"><span class="lineNum">    1218 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="1219"><span class="lineNum">    1219 </span>                :            :     false,</a>
+<a name="1220"><span class="lineNum">    1220 </span>                :            : };</a>
+<a name="1221"><span class="lineNum">    1221 </span>                :            : </a>
+<a name="1222"><span class="lineNum">    1222 </span>                :<span class="lineCov">          1 : int libspdm_responder_challenge_auth_test_main(void)</span></a>
+<a name="1223"><span class="lineNum">    1223 </span>                :            : {</a>
+<a name="1224"><span class="lineNum">    1224 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_challenge_auth_tests[] = {</span></a>
+<a name="1225"><span class="lineNum">    1225 </span>                :            :         /* Success Case*/</a>
+<a name="1226"><span class="lineNum">    1226 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case1),</a>
+<a name="1227"><span class="lineNum">    1227 </span>                :            :         /* Can be populated with new test.*/</a>
+<a name="1228"><span class="lineNum">    1228 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case2),</a>
+<a name="1229"><span class="lineNum">    1229 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_BUSY*/</a>
+<a name="1230"><span class="lineNum">    1230 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case3),</a>
+<a name="1231"><span class="lineNum">    1231 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NEED_RESYNC*/</a>
+<a name="1232"><span class="lineNum">    1232 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case4),</a>
+<a name="1233"><span class="lineNum">    1233 </span>                :            :         #if LIBSPDM_RESPOND_IF_READY_SUPPORT</a>
+<a name="1234"><span class="lineNum">    1234 </span>                :            :         /* response_state: LIBSPDM_RESPONSE_STATE_NOT_READY*/</a>
+<a name="1235"><span class="lineNum">    1235 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case5),</a>
+<a name="1236"><span class="lineNum">    1236 </span>                :            :         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */</a>
+<a name="1237"><span class="lineNum">    1237 </span>                :            :         /* connection_state Check*/</a>
+<a name="1238"><span class="lineNum">    1238 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case6),</a>
+<a name="1239"><span class="lineNum">    1239 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case7),</a>
+<a name="1240"><span class="lineNum">    1240 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case8),</a>
+<a name="1241"><span class="lineNum">    1241 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case9),</a>
+<a name="1242"><span class="lineNum">    1242 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case10),</a>
+<a name="1243"><span class="lineNum">    1243 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case11),</a>
+<a name="1244"><span class="lineNum">    1244 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case12),</a>
+<a name="1245"><span class="lineNum">    1245 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case13),</a>
+<a name="1246"><span class="lineNum">    1246 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case14),</a>
+<a name="1247"><span class="lineNum">    1247 </span>                :            :         /* Buffer verification*/</a>
+<a name="1248"><span class="lineNum">    1248 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case15),</a>
+<a name="1249"><span class="lineNum">    1249 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case16),</a>
+<a name="1250"><span class="lineNum">    1250 </span>                :            :         /* using provisioned public key (slot_id 0xFF) */</a>
+<a name="1251"><span class="lineNum">    1251 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case17),</a>
+<a name="1252"><span class="lineNum">    1252 </span>                :            :         /* Success Case: V1.3 get a correct context field */</a>
+<a name="1253"><span class="lineNum">    1253 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case18),</a>
+<a name="1254"><span class="lineNum">    1254 </span>                :            :         /* The key usage bit mask is not set, failed Case*/</a>
+<a name="1255"><span class="lineNum">    1255 </span>                :            :         cmocka_unit_test(libspdm_test_responder_challenge_auth_case19),</a>
+<a name="1256"><span class="lineNum">    1256 </span>                :            : </a>
+<a name="1257"><span class="lineNum">    1257 </span>                :            :     };</a>
+<a name="1258"><span class="lineNum">    1258 </span>                :            : </a>
+<a name="1259"><span class="lineNum">    1259 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_challenge_auth_test_context);</span></a>
+<a name="1260"><span class="lineNum">    1260 </span>                :            : </a>
+<a name="1261"><span class="lineNum">    1261 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_challenge_auth_tests,</span></a>
+<a name="1262"><span class="lineNum">    1262 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="1263"><span class="lineNum">    1263 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="1264"><span class="lineNum">    1264 </span>                :            : }</a>
+<a name="1265"><span class="lineNum">    1265 </span>                :            : </a>
+<a name="1266"><span class="lineNum">    1266 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP*/</a>
 </pre>
       </td>
     </tr>

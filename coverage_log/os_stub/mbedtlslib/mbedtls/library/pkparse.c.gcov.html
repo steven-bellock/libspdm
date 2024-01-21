@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-20 08:13:48</td>
+            <td class="headerValue">2024-01-21 08:13:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">11</td>
@@ -524,14 +524,14 @@
 <a name="453"><span class="lineNum">     453 </span>                :            :  *   specifiedCurve     SpecifiedECDomain -- = SEQUENCE { ... }</a>
 <a name="454"><span class="lineNum">     454 </span>                :            :  *   -- implicitCurve   NULL</a>
 <a name="455"><span class="lineNum">     455 </span>                :            :  */</a>
-<a name="456"><span class="lineNum">     456 </span>                :<span class="lineCov">      10778 : static int pk_use_ecparams( const mbedtls_asn1_buf *params, mbedtls_ecp_group *grp )</span></a>
+<a name="456"><span class="lineNum">     456 </span>                :<span class="lineCov">      10842 : static int pk_use_ecparams( const mbedtls_asn1_buf *params, mbedtls_ecp_group *grp )</span></a>
 <a name="457"><span class="lineNum">     457 </span>                :            : {</a>
-<a name="458"><span class="lineNum">     458 </span>                :<span class="lineCov">      10778 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="458"><span class="lineNum">     458 </span>                :<span class="lineCov">      10842 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="459"><span class="lineNum">     459 </span>                :            :     mbedtls_ecp_group_id grp_id;</a>
 <a name="460"><span class="lineNum">     460 </span>                :            : </a>
-<a name="461"><span class="lineNum">     461 </span>        [<span class="branchCov" title="Branch 0 was taken 10778 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10778 :     if( params-&gt;tag == MBEDTLS_ASN1_OID )</span></a>
+<a name="461"><span class="lineNum">     461 </span>        [<span class="branchCov" title="Branch 0 was taken 10842 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10842 :     if( params-&gt;tag == MBEDTLS_ASN1_OID )</span></a>
 <a name="462"><span class="lineNum">     462 </span>                :            :     {</a>
-<a name="463"><span class="lineNum">     463 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10778 times"> + </span>]:<span class="lineCov">      10778 :         if( mbedtls_oid_get_ec_grp( params, &amp;grp_id ) != 0 )</span></a>
+<a name="463"><span class="lineNum">     463 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10842 times"> + </span>]:<span class="lineCov">      10842 :         if( mbedtls_oid_get_ec_grp( params, &amp;grp_id ) != 0 )</span></a>
 <a name="464"><span class="lineNum">     464 </span>                :<span class="lineNoCov">          0 :             return( MBEDTLS_ERR_PK_UNKNOWN_NAMED_CURVE );</span></a>
 <a name="465"><span class="lineNum">     465 </span>                :            :     }</a>
 <a name="466"><span class="lineNum">     466 </span>                :            :     else</a>
@@ -547,13 +547,13 @@
 <a name="476"><span class="lineNum">     476 </span>                :            :     /*</a>
 <a name="477"><span class="lineNum">     477 </span>                :            :      * grp may already be initialized; if so, make sure IDs match</a>
 <a name="478"><span class="lineNum">     478 </span>                :            :      */</a>
-<a name="479"><span class="lineNum">     479 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10778 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      10778 :     if( grp-&gt;id != MBEDTLS_ECP_DP_NONE &amp;&amp; grp-&gt;id != grp_id )</span></a>
+<a name="479"><span class="lineNum">     479 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10842 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      10842 :     if( grp-&gt;id != MBEDTLS_ECP_DP_NONE &amp;&amp; grp-&gt;id != grp_id )</span></a>
 <a name="480"><span class="lineNum">     480 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_PK_KEY_INVALID_FORMAT );</span></a>
 <a name="481"><span class="lineNum">     481 </span>                :            : </a>
-<a name="482"><span class="lineNum">     482 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10778 times"> + </span>]:<span class="lineCov">      10778 :     if( ( ret = mbedtls_ecp_group_load( grp, grp_id ) ) != 0 )</span></a>
+<a name="482"><span class="lineNum">     482 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 10842 times"> + </span>]:<span class="lineCov">      10842 :     if( ( ret = mbedtls_ecp_group_load( grp, grp_id ) ) != 0 )</span></a>
 <a name="483"><span class="lineNum">     483 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="484"><span class="lineNum">     484 </span>                :            : </a>
-<a name="485"><span class="lineNum">     485 </span>                :<span class="lineCov">      10778 :     return( 0 );</span></a>
+<a name="485"><span class="lineNum">     485 </span>                :<span class="lineCov">      10842 :     return( 0 );</span></a>
 <a name="486"><span class="lineNum">     486 </span>                :            : }</a>
 <a name="487"><span class="lineNum">     487 </span>                :            : </a>
 <a name="488"><span class="lineNum">     488 </span>                :            : /*</a>
@@ -563,23 +563,23 @@
 <a name="492"><span class="lineNum">     492 </span>                :            :  * desired. Take care to pass along the possible ECP_FEATURE_UNAVAILABLE</a>
 <a name="493"><span class="lineNum">     493 </span>                :            :  * return code of mbedtls_ecp_point_read_binary() and leave p in a usable state.</a>
 <a name="494"><span class="lineNum">     494 </span>                :            :  */</a>
-<a name="495"><span class="lineNum">     495 </span>                :<span class="lineCov">      10778 : static int pk_get_ecpubkey( unsigned char **p, const unsigned char *end,</span></a>
+<a name="495"><span class="lineNum">     495 </span>                :<span class="lineCov">      10842 : static int pk_get_ecpubkey( unsigned char **p, const unsigned char *end,</span></a>
 <a name="496"><span class="lineNum">     496 </span>                :            :                             mbedtls_ecp_keypair *key )</a>
 <a name="497"><span class="lineNum">     497 </span>                :            : {</a>
-<a name="498"><span class="lineNum">     498 </span>                :<span class="lineCov">      10778 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="498"><span class="lineNum">     498 </span>                :<span class="lineCov">      10842 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="499"><span class="lineNum">     499 </span>                :            : </a>
-<a name="500"><span class="lineNum">     500 </span>        [<span class="branchCov" title="Branch 0 was taken 10778 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10778 :     if( ( ret = mbedtls_ecp_point_read_binary( &amp;key-&gt;grp, &amp;key-&gt;Q,</span></a>
-<a name="501"><span class="lineNum">     501 </span>                :<span class="lineCov">      10778 :                     (const unsigned char *) *p, end - *p ) ) == 0 )</span></a>
+<a name="500"><span class="lineNum">     500 </span>        [<span class="branchCov" title="Branch 0 was taken 10842 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10842 :     if( ( ret = mbedtls_ecp_point_read_binary( &amp;key-&gt;grp, &amp;key-&gt;Q,</span></a>
+<a name="501"><span class="lineNum">     501 </span>                :<span class="lineCov">      10842 :                     (const unsigned char *) *p, end - *p ) ) == 0 )</span></a>
 <a name="502"><span class="lineNum">     502 </span>                :            :     {</a>
-<a name="503"><span class="lineNum">     503 </span>                :<span class="lineCov">      10778 :         ret = mbedtls_ecp_check_pubkey( &amp;key-&gt;grp, &amp;key-&gt;Q );</span></a>
+<a name="503"><span class="lineNum">     503 </span>                :<span class="lineCov">      10842 :         ret = mbedtls_ecp_check_pubkey( &amp;key-&gt;grp, &amp;key-&gt;Q );</span></a>
 <a name="504"><span class="lineNum">     504 </span>                :            :     }</a>
 <a name="505"><span class="lineNum">     505 </span>                :            : </a>
 <a name="506"><span class="lineNum">     506 </span>                :            :     /*</a>
 <a name="507"><span class="lineNum">     507 </span>                :            :      * We know mbedtls_ecp_point_read_binary consumed all bytes or failed</a>
 <a name="508"><span class="lineNum">     508 </span>                :            :      */</a>
-<a name="509"><span class="lineNum">     509 </span>                :<span class="lineCov">      10778 :     *p = (unsigned char *) end;</span></a>
+<a name="509"><span class="lineNum">     509 </span>                :<span class="lineCov">      10842 :     *p = (unsigned char *) end;</span></a>
 <a name="510"><span class="lineNum">     510 </span>                :            : </a>
-<a name="511"><span class="lineNum">     511 </span>                :<span class="lineCov">      10778 :     return( ret );</span></a>
+<a name="511"><span class="lineNum">     511 </span>                :<span class="lineCov">      10842 :     return( ret );</span></a>
 <a name="512"><span class="lineNum">     512 </span>                :            : }</a>
 <a name="513"><span class="lineNum">     513 </span>                :            : #endif /* MBEDTLS_ECP_C */</a>
 <a name="514"><span class="lineNum">     514 </span>                :            : </a>
@@ -645,32 +645,32 @@
 <a name="574"><span class="lineNum">     574 </span>                :            :  *       algorithm               OBJECT IDENTIFIER,</a>
 <a name="575"><span class="lineNum">     575 </span>                :            :  *       parameters              ANY DEFINED BY algorithm OPTIONAL  }</a>
 <a name="576"><span class="lineNum">     576 </span>                :            :  */</a>
-<a name="577"><span class="lineNum">     577 </span>                :<span class="lineCov">      11775 : static int pk_get_pk_alg( unsigned char **p,</span></a>
+<a name="577"><span class="lineNum">     577 </span>                :<span class="lineCov">      11839 : static int pk_get_pk_alg( unsigned char **p,</span></a>
 <a name="578"><span class="lineNum">     578 </span>                :            :                           const unsigned char *end,</a>
 <a name="579"><span class="lineNum">     579 </span>                :            :                           mbedtls_pk_type_t *pk_alg, mbedtls_asn1_buf *params )</a>
 <a name="580"><span class="lineNum">     580 </span>                :            : {</a>
-<a name="581"><span class="lineNum">     581 </span>                :<span class="lineCov">      11775 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="581"><span class="lineNum">     581 </span>                :<span class="lineCov">      11839 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="582"><span class="lineNum">     582 </span>                :            :     mbedtls_asn1_buf alg_oid;</a>
 <a name="583"><span class="lineNum">     583 </span>                :            : </a>
-<a name="584"><span class="lineNum">     584 </span>                :<span class="lineCov">      11775 :     memset( params, 0, sizeof(mbedtls_asn1_buf) );</span></a>
+<a name="584"><span class="lineNum">     584 </span>                :<span class="lineCov">      11839 :     memset( params, 0, sizeof(mbedtls_asn1_buf) );</span></a>
 <a name="585"><span class="lineNum">     585 </span>                :            : </a>
-<a name="586"><span class="lineNum">     586 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11775 times"> + </span>]:<span class="lineCov">      11775 :     if( ( ret = mbedtls_asn1_get_alg( p, end, &amp;alg_oid, params ) ) != 0 )</span></a>
+<a name="586"><span class="lineNum">     586 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11839 times"> + </span>]:<span class="lineCov">      11839 :     if( ( ret = mbedtls_asn1_get_alg( p, end, &amp;alg_oid, params ) ) != 0 )</span></a>
 <a name="587"><span class="lineNum">     587 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERROR_ADD( MBEDTLS_ERR_PK_INVALID_ALG, ret ) );</span></a>
 <a name="588"><span class="lineNum">     588 </span>                :            : </a>
-<a name="589"><span class="lineNum">     589 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11775 times"> + </span>]:<span class="lineCov">      11775 :     if( mbedtls_oid_get_pk_alg( &amp;alg_oid, pk_alg ) != 0 )</span></a>
+<a name="589"><span class="lineNum">     589 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11839 times"> + </span>]:<span class="lineCov">      11839 :     if( mbedtls_oid_get_pk_alg( &amp;alg_oid, pk_alg ) != 0 )</span></a>
 <a name="590"><span class="lineNum">     590 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_PK_UNKNOWN_PK_ALG );</span></a>
 <a name="591"><span class="lineNum">     591 </span>                :            : </a>
 <a name="592"><span class="lineNum">     592 </span>                :            :     /*</a>
 <a name="593"><span class="lineNum">     593 </span>                :            :      * No parameters with RSA (only for EC)</a>
 <a name="594"><span class="lineNum">     594 </span>                :            :      */</a>
-<a name="595"><span class="lineNum">     595 </span>        [<span class="branchCov" title="Branch 0 was taken 997 times"> + </span><span class="branchCov" title="Branch 1 was taken 10778 times"> + </span>]:<span class="lineCov">      11775 :     if( *pk_alg == MBEDTLS_PK_RSA &amp;&amp;</span></a>
+<a name="595"><span class="lineNum">     595 </span>        [<span class="branchCov" title="Branch 0 was taken 997 times"> + </span><span class="branchCov" title="Branch 1 was taken 10842 times"> + </span>]:<span class="lineCov">      11839 :     if( *pk_alg == MBEDTLS_PK_RSA &amp;&amp;</span></a>
 <a name="596"><span class="lineNum">     596 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 997 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">        997 :             ( ( params-&gt;tag != MBEDTLS_ASN1_NULL &amp;&amp; params-&gt;tag != 0 ) ||</span></a>
 <a name="597"><span class="lineNum">     597 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 997 times"> + </span>]:<span class="lineCov">        997 :                 params-&gt;len != 0 ) )</span></a>
 <a name="598"><span class="lineNum">     598 </span>                :            :     {</a>
 <a name="599"><span class="lineNum">     599 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_PK_INVALID_ALG );</span></a>
 <a name="600"><span class="lineNum">     600 </span>                :            :     }</a>
 <a name="601"><span class="lineNum">     601 </span>                :            : </a>
-<a name="602"><span class="lineNum">     602 </span>                :<span class="lineCov">      11775 :     return( 0 );</span></a>
+<a name="602"><span class="lineNum">     602 </span>                :<span class="lineCov">      11839 :     return( 0 );</span></a>
 <a name="603"><span class="lineNum">     603 </span>                :            : }</a>
 <a name="604"><span class="lineNum">     604 </span>                :            : </a>
 <a name="605"><span class="lineNum">     605 </span>                :            : /*</a>
@@ -678,13 +678,13 @@
 <a name="607"><span class="lineNum">     607 </span>                :            :  *       algorithm            AlgorithmIdentifier,</a>
 <a name="608"><span class="lineNum">     608 </span>                :            :  *       subjectPublicKey     BIT STRING }</a>
 <a name="609"><span class="lineNum">     609 </span>                :            :  */</a>
-<a name="610"><span class="lineNum">     610 </span>                :<span class="lineCov">      11625 : int mbedtls_pk_parse_subpubkey( unsigned char **p, const unsigned char *end,</span></a>
+<a name="610"><span class="lineNum">     610 </span>                :<span class="lineCov">      11689 : int mbedtls_pk_parse_subpubkey( unsigned char **p, const unsigned char *end,</span></a>
 <a name="611"><span class="lineNum">     611 </span>                :            :                         mbedtls_pk_context *pk )</a>
 <a name="612"><span class="lineNum">     612 </span>                :            : {</a>
-<a name="613"><span class="lineNum">     613 </span>                :<span class="lineCov">      11625 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="613"><span class="lineNum">     613 </span>                :<span class="lineCov">      11689 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="614"><span class="lineNum">     614 </span>                :            :     size_t len;</a>
 <a name="615"><span class="lineNum">     615 </span>                :            :     mbedtls_asn1_buf alg_params;</a>
-<a name="616"><span class="lineNum">     616 </span>                :<span class="lineCov">      11625 :     mbedtls_pk_type_t pk_alg = MBEDTLS_PK_NONE;</span></a>
+<a name="616"><span class="lineNum">     616 </span>                :<span class="lineCov">      11689 :     mbedtls_pk_type_t pk_alg = MBEDTLS_PK_NONE;</span></a>
 <a name="617"><span class="lineNum">     617 </span>                :            :     const mbedtls_pk_info_t *pk_info;</a>
 <a name="618"><span class="lineNum">     618 </span>                :            : </a>
 <a name="619"><span class="lineNum">     619 </span>                :            :     PK_VALIDATE_RET( p != NULL );</a>
@@ -692,54 +692,54 @@
 <a name="621"><span class="lineNum">     621 </span>                :            :     PK_VALIDATE_RET( end != NULL );</a>
 <a name="622"><span class="lineNum">     622 </span>                :            :     PK_VALIDATE_RET( pk != NULL );</a>
 <a name="623"><span class="lineNum">     623 </span>                :            : </a>
-<a name="624"><span class="lineNum">     624 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;len,</span></a>
+<a name="624"><span class="lineNum">     624 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( ( ret = mbedtls_asn1_get_tag( p, end, &amp;len,</span></a>
 <a name="625"><span class="lineNum">     625 </span>                :            :                     MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE ) ) != 0 )</a>
 <a name="626"><span class="lineNum">     626 </span>                :            :     {</a>
 <a name="627"><span class="lineNum">     627 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERROR_ADD( MBEDTLS_ERR_PK_KEY_INVALID_FORMAT, ret ) );</span></a>
 <a name="628"><span class="lineNum">     628 </span>                :            :     }</a>
 <a name="629"><span class="lineNum">     629 </span>                :            : </a>
-<a name="630"><span class="lineNum">     630 </span>                :<span class="lineCov">      11625 :     end = *p + len;</span></a>
+<a name="630"><span class="lineNum">     630 </span>                :<span class="lineCov">      11689 :     end = *p + len;</span></a>
 <a name="631"><span class="lineNum">     631 </span>                :            : </a>
-<a name="632"><span class="lineNum">     632 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( ( ret = pk_get_pk_alg( p, end, &amp;pk_alg, &amp;alg_params ) ) != 0 )</span></a>
+<a name="632"><span class="lineNum">     632 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( ( ret = pk_get_pk_alg( p, end, &amp;pk_alg, &amp;alg_params ) ) != 0 )</span></a>
 <a name="633"><span class="lineNum">     633 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="634"><span class="lineNum">     634 </span>                :            : </a>
-<a name="635"><span class="lineNum">     635 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( ( ret = mbedtls_asn1_get_bitstring_null( p, end, &amp;len ) ) != 0 )</span></a>
+<a name="635"><span class="lineNum">     635 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( ( ret = mbedtls_asn1_get_bitstring_null( p, end, &amp;len ) ) != 0 )</span></a>
 <a name="636"><span class="lineNum">     636 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERROR_ADD( MBEDTLS_ERR_PK_INVALID_PUBKEY, ret ) );</span></a>
 <a name="637"><span class="lineNum">     637 </span>                :            : </a>
-<a name="638"><span class="lineNum">     638 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( *p + len != end )</span></a>
+<a name="638"><span class="lineNum">     638 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( *p + len != end )</span></a>
 <a name="639"><span class="lineNum">     639 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERROR_ADD( MBEDTLS_ERR_PK_INVALID_PUBKEY,</span></a>
 <a name="640"><span class="lineNum">     640 </span>                :            :                 MBEDTLS_ERR_ASN1_LENGTH_MISMATCH ) );</a>
 <a name="641"><span class="lineNum">     641 </span>                :            : </a>
-<a name="642"><span class="lineNum">     642 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( ( pk_info = mbedtls_pk_info_from_type( pk_alg ) ) == NULL )</span></a>
+<a name="642"><span class="lineNum">     642 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( ( pk_info = mbedtls_pk_info_from_type( pk_alg ) ) == NULL )</span></a>
 <a name="643"><span class="lineNum">     643 </span>                :<span class="lineNoCov">          0 :         return( MBEDTLS_ERR_PK_UNKNOWN_PK_ALG );</span></a>
 <a name="644"><span class="lineNum">     644 </span>                :            : </a>
-<a name="645"><span class="lineNum">     645 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( ( ret = mbedtls_pk_setup( pk, pk_info ) ) != 0 )</span></a>
+<a name="645"><span class="lineNum">     645 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( ( ret = mbedtls_pk_setup( pk, pk_info ) ) != 0 )</span></a>
 <a name="646"><span class="lineNum">     646 </span>                :<span class="lineNoCov">          0 :         return( ret );</span></a>
 <a name="647"><span class="lineNum">     647 </span>                :            : </a>
 <a name="648"><span class="lineNum">     648 </span>                :            : #if defined(MBEDTLS_RSA_C)</a>
-<a name="649"><span class="lineNum">     649 </span>        [<span class="branchCov" title="Branch 0 was taken 972 times"> + </span><span class="branchCov" title="Branch 1 was taken 10653 times"> + </span>]:<span class="lineCov">      11625 :     if( pk_alg == MBEDTLS_PK_RSA )</span></a>
+<a name="649"><span class="lineNum">     649 </span>        [<span class="branchCov" title="Branch 0 was taken 972 times"> + </span><span class="branchCov" title="Branch 1 was taken 10717 times"> + </span>]:<span class="lineCov">      11689 :     if( pk_alg == MBEDTLS_PK_RSA )</span></a>
 <a name="650"><span class="lineNum">     650 </span>                :            :     {</a>
 <a name="651"><span class="lineNum">     651 </span>                :<span class="lineCov">        972 :         ret = pk_get_rsapubkey( p, end, mbedtls_pk_rsa( *pk ) );</span></a>
 <a name="652"><span class="lineNum">     652 </span>                :            :     } else</a>
 <a name="653"><span class="lineNum">     653 </span>                :            : #endif /* MBEDTLS_RSA_C */</a>
 <a name="654"><span class="lineNum">     654 </span>                :            : #if defined(MBEDTLS_ECP_C)</a>
-<a name="655"><span class="lineNum">     655 </span>  [<span class="branchCov" title="Branch 0 was taken 10653 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 10653 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      10653 :     if( pk_alg == MBEDTLS_PK_ECKEY_DH || pk_alg == MBEDTLS_PK_ECKEY )</span></a>
+<a name="655"><span class="lineNum">     655 </span>  [<span class="branchCov" title="Branch 0 was taken 10717 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 10717 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">      10717 :     if( pk_alg == MBEDTLS_PK_ECKEY_DH || pk_alg == MBEDTLS_PK_ECKEY )</span></a>
 <a name="656"><span class="lineNum">     656 </span>                :            :     {</a>
-<a name="657"><span class="lineNum">     657 </span>                :<span class="lineCov">      10653 :         ret = pk_use_ecparams( &amp;alg_params, &amp;mbedtls_pk_ec( *pk )-&gt;grp );</span></a>
-<a name="658"><span class="lineNum">     658 </span>        [<span class="branchCov" title="Branch 0 was taken 10653 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10653 :         if( ret == 0 )</span></a>
-<a name="659"><span class="lineNum">     659 </span>                :<span class="lineCov">      10653 :             ret = pk_get_ecpubkey( p, end, mbedtls_pk_ec( *pk ) );</span></a>
+<a name="657"><span class="lineNum">     657 </span>                :<span class="lineCov">      10717 :         ret = pk_use_ecparams( &amp;alg_params, &amp;mbedtls_pk_ec( *pk )-&gt;grp );</span></a>
+<a name="658"><span class="lineNum">     658 </span>        [<span class="branchCov" title="Branch 0 was taken 10717 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      10717 :         if( ret == 0 )</span></a>
+<a name="659"><span class="lineNum">     659 </span>                :<span class="lineCov">      10717 :             ret = pk_get_ecpubkey( p, end, mbedtls_pk_ec( *pk ) );</span></a>
 <a name="660"><span class="lineNum">     660 </span>                :            :     } else</a>
 <a name="661"><span class="lineNum">     661 </span>                :            : #endif /* MBEDTLS_ECP_C */</a>
 <a name="662"><span class="lineNum">     662 </span>                :<span class="lineNoCov">          0 :         ret = MBEDTLS_ERR_PK_UNKNOWN_PK_ALG;</span></a>
 <a name="663"><span class="lineNum">     663 </span>                :            : </a>
-<a name="664"><span class="lineNum">     664 </span>  [<span class="branchCov" title="Branch 0 was taken 11625 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( ret == 0 &amp;&amp; *p != end )</span></a>
+<a name="664"><span class="lineNum">     664 </span>  [<span class="branchCov" title="Branch 0 was taken 11689 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( ret == 0 &amp;&amp; *p != end )</span></a>
 <a name="665"><span class="lineNum">     665 </span>                :<span class="lineNoCov">          0 :         ret = MBEDTLS_ERROR_ADD( MBEDTLS_ERR_PK_INVALID_PUBKEY,</span></a>
 <a name="666"><span class="lineNum">     666 </span>                :            :               MBEDTLS_ERR_ASN1_LENGTH_MISMATCH );</a>
 <a name="667"><span class="lineNum">     667 </span>                :            : </a>
-<a name="668"><span class="lineNum">     668 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11625 times"> + </span>]:<span class="lineCov">      11625 :     if( ret != 0 )</span></a>
+<a name="668"><span class="lineNum">     668 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 11689 times"> + </span>]:<span class="lineCov">      11689 :     if( ret != 0 )</span></a>
 <a name="669"><span class="lineNum">     669 </span>                :<span class="lineNoCov">          0 :         mbedtls_pk_free( pk );</span></a>
 <a name="670"><span class="lineNum">     670 </span>                :            : </a>
-<a name="671"><span class="lineNum">     671 </span>                :<span class="lineCov">      11625 :     return( ret );</span></a>
+<a name="671"><span class="lineNum">     671 </span>                :<span class="lineCov">      11689 :     return( ret );</span></a>
 <a name="672"><span class="lineNum">     672 </span>                :            : }</a>
 <a name="673"><span class="lineNum">     673 </span>                :            : </a>
 <a name="674"><span class="lineNum">     674 </span>                :            : #if defined(MBEDTLS_RSA_C)</a>

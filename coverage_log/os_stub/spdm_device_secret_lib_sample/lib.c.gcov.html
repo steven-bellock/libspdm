@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-20 08:13:48</td>
+            <td class="headerValue">2024-01-21 08:13:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">27</td>
@@ -1093,7 +1093,7 @@
 <a name="1010"><span class="lineNum">    1010 </span>                :            :  *</a>
 <a name="1011"><span class="lineNum">    1011 </span>                :            :  * @return measurement block size.</a>
 <a name="1012"><span class="lineNum">    1012 </span>                :            :  **/</a>
-<a name="1013"><span class="lineNum">    1013 </span>                :<span class="lineCov">        169 : size_t libspdm_fill_measurement_image_hash_block (</span></a>
+<a name="1013"><span class="lineNum">    1013 </span>                :<span class="lineCov">        170 : size_t libspdm_fill_measurement_image_hash_block (</span></a>
 <a name="1014"><span class="lineNum">    1014 </span>                :            :     bool use_bit_stream,</a>
 <a name="1015"><span class="lineNum">    1015 </span>                :            :     uint32_t measurement_hash_algo,</a>
 <a name="1016"><span class="lineNum">    1016 </span>                :            :     uint8_t measurements_index,</a>
@@ -1104,38 +1104,38 @@
 <a name="1021"><span class="lineNum">    1021 </span>                :            :     uint8_t data[LIBSPDM_MEASUREMENT_RAW_DATA_SIZE];</a>
 <a name="1022"><span class="lineNum">    1022 </span>                :            :     bool result;</a>
 <a name="1023"><span class="lineNum">    1023 </span>                :            : </a>
-<a name="1024"><span class="lineNum">    1024 </span>                :<span class="lineCov">        169 :     hash_size = libspdm_get_measurement_hash_size(measurement_hash_algo);</span></a>
+<a name="1024"><span class="lineNum">    1024 </span>                :<span class="lineCov">        170 :     hash_size = libspdm_get_measurement_hash_size(measurement_hash_algo);</span></a>
 <a name="1025"><span class="lineNum">    1025 </span>                :            : </a>
 <a name="1026"><span class="lineNum">    1026 </span>                :            :     measurement_block-&gt;measurement_block_common_header</a>
-<a name="1027"><span class="lineNum">    1027 </span>                :<span class="lineCov">        169 :     .index = measurements_index;</span></a>
+<a name="1027"><span class="lineNum">    1027 </span>                :<span class="lineCov">        170 :     .index = measurements_index;</span></a>
 <a name="1028"><span class="lineNum">    1028 </span>                :            :     measurement_block-&gt;measurement_block_common_header</a>
-<a name="1029"><span class="lineNum">    1029 </span>                :<span class="lineCov">        169 :     .measurement_specification =</span></a>
+<a name="1029"><span class="lineNum">    1029 </span>                :<span class="lineCov">        170 :     .measurement_specification =</span></a>
 <a name="1030"><span class="lineNum">    1030 </span>                :            :         SPDM_MEASUREMENT_SPECIFICATION_DMTF;</a>
 <a name="1031"><span class="lineNum">    1031 </span>                :            : </a>
-<a name="1032"><span class="lineNum">    1032 </span>                :<span class="lineCov">        169 :     libspdm_set_mem(data, sizeof(data), (uint8_t)(measurements_index));</span></a>
+<a name="1032"><span class="lineNum">    1032 </span>                :<span class="lineCov">        170 :     libspdm_set_mem(data, sizeof(data), (uint8_t)(measurements_index));</span></a>
 <a name="1033"><span class="lineNum">    1033 </span>                :            : </a>
-<a name="1034"><span class="lineNum">    1034 </span>        [<span class="branchCov" title="Branch 0 was taken 168 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        169 :     if (!use_bit_stream) {</span></a>
+<a name="1034"><span class="lineNum">    1034 </span>        [<span class="branchCov" title="Branch 0 was taken 169 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        170 :     if (!use_bit_stream) {</span></a>
 <a name="1035"><span class="lineNum">    1035 </span>                :            :         measurement_block-&gt;measurement_block_dmtf_header</a>
-<a name="1036"><span class="lineNum">    1036 </span>                :<span class="lineCov">        168 :         .dmtf_spec_measurement_value_type =</span></a>
-<a name="1037"><span class="lineNum">    1037 </span>                :<span class="lineCov">        168 :             (measurements_index - 1);</span></a>
+<a name="1036"><span class="lineNum">    1036 </span>                :<span class="lineCov">        169 :         .dmtf_spec_measurement_value_type =</span></a>
+<a name="1037"><span class="lineNum">    1037 </span>                :<span class="lineCov">        169 :             (measurements_index - 1);</span></a>
 <a name="1038"><span class="lineNum">    1038 </span>                :            :         measurement_block-&gt;measurement_block_dmtf_header</a>
-<a name="1039"><span class="lineNum">    1039 </span>                :<span class="lineCov">        168 :         .dmtf_spec_measurement_value_size =</span></a>
-<a name="1040"><span class="lineNum">    1040 </span>                :<span class="lineCov">        168 :             (uint16_t)hash_size;</span></a>
+<a name="1039"><span class="lineNum">    1039 </span>                :<span class="lineCov">        169 :         .dmtf_spec_measurement_value_size =</span></a>
+<a name="1040"><span class="lineNum">    1040 </span>                :<span class="lineCov">        169 :             (uint16_t)hash_size;</span></a>
 <a name="1041"><span class="lineNum">    1041 </span>                :            : </a>
 <a name="1042"><span class="lineNum">    1042 </span>                :            :         measurement_block-&gt;measurement_block_common_header</a>
-<a name="1043"><span class="lineNum">    1043 </span>                :<span class="lineCov">        168 :         .measurement_size =</span></a>
-<a name="1044"><span class="lineNum">    1044 </span>                :<span class="lineCov">        168 :             (uint16_t)(sizeof(spdm_measurement_block_dmtf_header_t) +</span></a>
-<a name="1045"><span class="lineNum">    1045 </span>                :<span class="lineCov">        168 :                        (uint16_t)hash_size);</span></a>
+<a name="1043"><span class="lineNum">    1043 </span>                :<span class="lineCov">        169 :         .measurement_size =</span></a>
+<a name="1044"><span class="lineNum">    1044 </span>                :<span class="lineCov">        169 :             (uint16_t)(sizeof(spdm_measurement_block_dmtf_header_t) +</span></a>
+<a name="1045"><span class="lineNum">    1045 </span>                :<span class="lineCov">        169 :                        (uint16_t)hash_size);</span></a>
 <a name="1046"><span class="lineNum">    1046 </span>                :            : </a>
-<a name="1047"><span class="lineNum">    1047 </span>                :<span class="lineCov">        168 :         result = libspdm_measurement_hash_all(</span></a>
+<a name="1047"><span class="lineNum">    1047 </span>                :<span class="lineCov">        169 :         result = libspdm_measurement_hash_all(</span></a>
 <a name="1048"><span class="lineNum">    1048 </span>                :            :             measurement_hash_algo, data,</a>
 <a name="1049"><span class="lineNum">    1049 </span>                :            :             sizeof(data),</a>
-<a name="1050"><span class="lineNum">    1050 </span>                :<span class="lineCov">        168 :             (void *)(measurement_block + 1));</span></a>
-<a name="1051"><span class="lineNum">    1051 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 168 times"> + </span>]:<span class="lineCov">        168 :         if (!result) {</span></a>
+<a name="1050"><span class="lineNum">    1050 </span>                :<span class="lineCov">        169 :             (void *)(measurement_block + 1));</span></a>
+<a name="1051"><span class="lineNum">    1051 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 169 times"> + </span>]:<span class="lineCov">        169 :         if (!result) {</span></a>
 <a name="1052"><span class="lineNum">    1052 </span>                :<span class="lineNoCov">          0 :             return 0;</span></a>
 <a name="1053"><span class="lineNum">    1053 </span>                :            :         }</a>
 <a name="1054"><span class="lineNum">    1054 </span>                :            : </a>
-<a name="1055"><span class="lineNum">    1055 </span>                :<span class="lineCov">        168 :         return sizeof(spdm_measurement_block_dmtf_t) + hash_size;</span></a>
+<a name="1055"><span class="lineNum">    1055 </span>                :<span class="lineCov">        169 :         return sizeof(spdm_measurement_block_dmtf_t) + hash_size;</span></a>
 <a name="1056"><span class="lineNum">    1056 </span>                :            : </a>
 <a name="1057"><span class="lineNum">    1057 </span>                :            :     } else {</a>
 <a name="1058"><span class="lineNum">    1058 </span>                :            :         measurement_block-&gt;measurement_block_dmtf_header</a>
@@ -1287,7 +1287,7 @@
 <a name="1204"><span class="lineNum">    1204 </span>                :<span class="lineCov">         15 :     return sizeof(spdm_measurement_block_dmtf_t) + sizeof(device_mode);</span></a>
 <a name="1205"><span class="lineNum">    1205 </span>                :            : }</a>
 <a name="1206"><span class="lineNum">    1206 </span>                :            : </a>
-<a name="1207"><span class="lineNum">    1207 </span>                :<span class="lineCov">        136 : libspdm_return_t libspdm_measurement_collection(</span></a>
+<a name="1207"><span class="lineNum">    1207 </span>                :<span class="lineCov">        137 : libspdm_return_t libspdm_measurement_collection(</span></a>
 <a name="1208"><span class="lineNum">    1208 </span>                :            :     spdm_version_number_t spdm_version,</a>
 <a name="1209"><span class="lineNum">    1209 </span>                :            :     uint8_t measurement_specification,</a>
 <a name="1210"><span class="lineNum">    1210 </span>                :            :     uint32_t measurement_hash_algo,</a>
@@ -1305,27 +1305,27 @@
 <a name="1222"><span class="lineNum">    1222 </span>                :            :     bool use_bit_stream;</a>
 <a name="1223"><span class="lineNum">    1223 </span>                :            :     size_t measurement_block_size;</a>
 <a name="1224"><span class="lineNum">    1224 </span>                :            : </a>
-<a name="1225"><span class="lineNum">    1225 </span>        [<span class="branchCov" title="Branch 0 was taken 136 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        136 :     if ((measurement_specification !=</span></a>
-<a name="1226"><span class="lineNum">    1226 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 136 times"> + </span>]:<span class="lineCov">        136 :          SPDM_MEASUREMENT_SPECIFICATION_DMTF) ||</span></a>
+<a name="1225"><span class="lineNum">    1225 </span>        [<span class="branchCov" title="Branch 0 was taken 137 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        137 :     if ((measurement_specification !=</span></a>
+<a name="1226"><span class="lineNum">    1226 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 137 times"> + </span>]:<span class="lineCov">        137 :          SPDM_MEASUREMENT_SPECIFICATION_DMTF) ||</span></a>
 <a name="1227"><span class="lineNum">    1227 </span>                :            :         (measurement_hash_algo == 0)) {</a>
 <a name="1228"><span class="lineNum">    1228 </span>                :<span class="lineNoCov">          0 :         return LIBSPDM_STATUS_UNSUPPORTED_CAP;</span></a>
 <a name="1229"><span class="lineNum">    1229 </span>                :            :     }</a>
 <a name="1230"><span class="lineNum">    1230 </span>                :            : </a>
-<a name="1231"><span class="lineNum">    1231 </span>                :<span class="lineCov">        136 :     hash_size = libspdm_get_measurement_hash_size(measurement_hash_algo);</span></a>
-<a name="1232"><span class="lineNum">    1232 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 136 times"> + </span>]:<span class="lineCov">        136 :     LIBSPDM_ASSERT(hash_size != 0);</span></a>
+<a name="1231"><span class="lineNum">    1231 </span>                :<span class="lineCov">        137 :     hash_size = libspdm_get_measurement_hash_size(measurement_hash_algo);</span></a>
+<a name="1232"><span class="lineNum">    1232 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 137 times"> + </span>]:<span class="lineCov">        137 :     LIBSPDM_ASSERT(hash_size != 0);</span></a>
 <a name="1233"><span class="lineNum">    1233 </span>                :            : </a>
-<a name="1234"><span class="lineNum">    1234 </span>                :<span class="lineCov">        136 :     use_bit_stream = false;</span></a>
-<a name="1235"><span class="lineNum">    1235 </span>        [<span class="branchCov" title="Branch 0 was taken 136 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        136 :     if ((measurement_hash_algo == SPDM_ALGORITHMS_MEASUREMENT_HASH_ALGO_RAW_BIT_STREAM_ONLY) ||</span></a>
-<a name="1236"><span class="lineNum">    1236 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 135 times"> + </span>]:<span class="lineCov">        136 :         ((request_attribute &amp; SPDM_GET_MEASUREMENTS_REQUEST_ATTRIBUTES_RAW_BIT_STREAM_REQUESTED) !=</span></a>
+<a name="1234"><span class="lineNum">    1234 </span>                :<span class="lineCov">        137 :     use_bit_stream = false;</span></a>
+<a name="1235"><span class="lineNum">    1235 </span>        [<span class="branchCov" title="Branch 0 was taken 137 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        137 :     if ((measurement_hash_algo == SPDM_ALGORITHMS_MEASUREMENT_HASH_ALGO_RAW_BIT_STREAM_ONLY) ||</span></a>
+<a name="1236"><span class="lineNum">    1236 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 136 times"> + </span>]:<span class="lineCov">        137 :         ((request_attribute &amp; SPDM_GET_MEASUREMENTS_REQUEST_ATTRIBUTES_RAW_BIT_STREAM_REQUESTED) !=</span></a>
 <a name="1237"><span class="lineNum">    1237 </span>                :            :          0)) {</a>
 <a name="1238"><span class="lineNum">    1238 </span>                :<span class="lineCov">          1 :         use_bit_stream = true;</span></a>
 <a name="1239"><span class="lineNum">    1239 </span>                :            :     }</a>
 <a name="1240"><span class="lineNum">    1240 </span>                :            : </a>
-<a name="1241"><span class="lineNum">    1241 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 125 times"> + </span>]:<span class="lineCov">        136 :     if (measurements_index ==</span></a>
+<a name="1241"><span class="lineNum">    1241 </span>        [<span class="branchCov" title="Branch 0 was taken 11 times"> + </span><span class="branchCov" title="Branch 1 was taken 126 times"> + </span>]:<span class="lineCov">        137 :     if (measurements_index ==</span></a>
 <a name="1242"><span class="lineNum">    1242 </span>                :            :         SPDM_GET_MEASUREMENTS_REQUEST_MEASUREMENT_OPERATION_TOTAL_NUMBER_OF_MEASUREMENTS) {</a>
 <a name="1243"><span class="lineNum">    1243 </span>                :<span class="lineCov">         11 :         *measurements_count = LIBSPDM_MEASUREMENT_BLOCK_NUMBER;</span></a>
 <a name="1244"><span class="lineNum">    1244 </span>                :<span class="lineCov">         11 :         goto successful_return;</span></a>
-<a name="1245"><span class="lineNum">    1245 </span>        [<span class="branchCov" title="Branch 0 was taken 15 times"> + </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        125 :     } else if (measurements_index ==</span></a>
+<a name="1245"><span class="lineNum">    1245 </span>        [<span class="branchCov" title="Branch 0 was taken 15 times"> + </span><span class="branchCov" title="Branch 1 was taken 111 times"> + </span>]:<span class="lineCov">        126 :     } else if (measurements_index ==</span></a>
 <a name="1246"><span class="lineNum">    1246 </span>                :            :                SPDM_GET_MEASUREMENTS_REQUEST_MEASUREMENT_OPERATION_ALL_MEASUREMENTS) {</a>
 <a name="1247"><span class="lineNum">    1247 </span>                :            : </a>
 <a name="1248"><span class="lineNum">    1248 </span>                :            :         /* Calculate total_size_needed based on hash algo selected.</a>
@@ -1390,9 +1390,9 @@
 <a name="1307"><span class="lineNum">    1307 </span>                :<span class="lineCov">         15 :         goto successful_return;</span></a>
 <a name="1308"><span class="lineNum">    1308 </span>                :            :     } else {</a>
 <a name="1309"><span class="lineNum">    1309 </span>                :            :         /* One Index */</a>
-<a name="1310"><span class="lineNum">    1310 </span>        [<span class="branchCov" title="Branch 0 was taken 109 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        110 :         if (measurements_index &lt;= LIBSPDM_MEASUREMENT_BLOCK_HASH_NUMBER) {</span></a>
-<a name="1311"><span class="lineNum">    1311 </span>        [<span class="branchCov" title="Branch 0 was taken 108 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        109 :             if (!use_bit_stream) {</span></a>
-<a name="1312"><span class="lineNum">    1312 </span>                :<span class="lineCov">        108 :                 total_size_needed =</span></a>
+<a name="1310"><span class="lineNum">    1310 </span>        [<span class="branchCov" title="Branch 0 was taken 110 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        111 :         if (measurements_index &lt;= LIBSPDM_MEASUREMENT_BLOCK_HASH_NUMBER) {</span></a>
+<a name="1311"><span class="lineNum">    1311 </span>        [<span class="branchCov" title="Branch 0 was taken 109 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">        110 :             if (!use_bit_stream) {</span></a>
+<a name="1312"><span class="lineNum">    1312 </span>                :<span class="lineCov">        109 :                 total_size_needed =</span></a>
 <a name="1313"><span class="lineNum">    1313 </span>                :            :                     sizeof(spdm_measurement_block_dmtf_t) +</a>
 <a name="1314"><span class="lineNum">    1314 </span>                :            :                     hash_size;</a>
 <a name="1315"><span class="lineNum">    1315 </span>                :            :             } else {</a>
@@ -1400,20 +1400,20 @@
 <a name="1317"><span class="lineNum">    1317 </span>                :            :                     sizeof(spdm_measurement_block_dmtf_t) +</a>
 <a name="1318"><span class="lineNum">    1318 </span>                :            :                     LIBSPDM_MEASUREMENT_RAW_DATA_SIZE;</a>
 <a name="1319"><span class="lineNum">    1319 </span>                :            :             }</a>
-<a name="1320"><span class="lineNum">    1320 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :             LIBSPDM_ASSERT(total_size_needed &lt;= *measurements_size);</span></a>
-<a name="1321"><span class="lineNum">    1321 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :             if (total_size_needed &gt; *measurements_size) {</span></a>
+<a name="1320"><span class="lineNum">    1320 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :             LIBSPDM_ASSERT(total_size_needed &lt;= *measurements_size);</span></a>
+<a name="1321"><span class="lineNum">    1321 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :             if (total_size_needed &gt; *measurements_size) {</span></a>
 <a name="1322"><span class="lineNum">    1322 </span>                :<span class="lineNoCov">          0 :                 return LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
 <a name="1323"><span class="lineNum">    1323 </span>                :            :             }</a>
 <a name="1324"><span class="lineNum">    1324 </span>                :            : </a>
-<a name="1325"><span class="lineNum">    1325 </span>                :<span class="lineCov">        109 :             *measurements_count = 1;</span></a>
-<a name="1326"><span class="lineNum">    1326 </span>                :<span class="lineCov">        109 :             *measurements_size = total_size_needed;</span></a>
+<a name="1325"><span class="lineNum">    1325 </span>                :<span class="lineCov">        110 :             *measurements_count = 1;</span></a>
+<a name="1326"><span class="lineNum">    1326 </span>                :<span class="lineCov">        110 :             *measurements_size = total_size_needed;</span></a>
 <a name="1327"><span class="lineNum">    1327 </span>                :            : </a>
-<a name="1328"><span class="lineNum">    1328 </span>                :<span class="lineCov">        109 :             measurement_block = measurements;</span></a>
-<a name="1329"><span class="lineNum">    1329 </span>                :<span class="lineCov">        109 :             measurement_block_size = libspdm_fill_measurement_image_hash_block (use_bit_stream,</span></a>
+<a name="1328"><span class="lineNum">    1328 </span>                :<span class="lineCov">        110 :             measurement_block = measurements;</span></a>
+<a name="1329"><span class="lineNum">    1329 </span>                :<span class="lineCov">        110 :             measurement_block_size = libspdm_fill_measurement_image_hash_block (use_bit_stream,</span></a>
 <a name="1330"><span class="lineNum">    1330 </span>                :            :                                                                                 measurement_hash_algo,</a>
 <a name="1331"><span class="lineNum">    1331 </span>                :            :                                                                                 measurements_index,</a>
 <a name="1332"><span class="lineNum">    1332 </span>                :            :                                                                                 measurement_block);</a>
-<a name="1333"><span class="lineNum">    1333 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 109 times"> + </span>]:<span class="lineCov">        109 :             if (measurement_block_size == 0) {</span></a>
+<a name="1333"><span class="lineNum">    1333 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 110 times"> + </span>]:<span class="lineCov">        110 :             if (measurement_block_size == 0) {</span></a>
 <a name="1334"><span class="lineNum">    1334 </span>                :<span class="lineNoCov">          0 :                 return LIBSPDM_STATUS_MEAS_INTERNAL_ERROR;</span></a>
 <a name="1335"><span class="lineNum">    1335 </span>                :            :             }</a>
 <a name="1336"><span class="lineNum">    1336 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :         } else if (measurements_index == LIBSPDM_MEASUREMENT_INDEX_SVN) {</span></a>
@@ -1474,24 +1474,24 @@
 <a name="1391"><span class="lineNum">    1391 </span>                :            :         }</a>
 <a name="1392"><span class="lineNum">    1392 </span>                :            :     }</a>
 <a name="1393"><span class="lineNum">    1393 </span>                :            : </a>
-<a name="1394"><span class="lineNum">    1394 </span>                :<span class="lineCov">        135 : successful_return:</span></a>
-<a name="1395"><span class="lineNum">    1395 </span>        [<span class="branchCov" title="Branch 0 was taken 125 times"> + </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">        135 :     if ((content_changed != NULL) &amp;&amp;</span></a>
-<a name="1396"><span class="lineNum">    1396 </span>        [<span class="branchCov" title="Branch 0 was taken 8 times"> + </span><span class="branchCov" title="Branch 1 was taken 117 times"> + </span>]:<span class="lineCov">        125 :         ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt;= SPDM_MESSAGE_VERSION_12)) {</span></a>
+<a name="1394"><span class="lineNum">    1394 </span>                :<span class="lineCov">        136 : successful_return:</span></a>
+<a name="1395"><span class="lineNum">    1395 </span>        [<span class="branchCov" title="Branch 0 was taken 126 times"> + </span><span class="branchCov" title="Branch 1 was taken 10 times"> + </span>]:<span class="lineCov">        136 :     if ((content_changed != NULL) &amp;&amp;</span></a>
+<a name="1396"><span class="lineNum">    1396 </span>        [<span class="branchCov" title="Branch 0 was taken 9 times"> + </span><span class="branchCov" title="Branch 1 was taken 117 times"> + </span>]:<span class="lineCov">        126 :         ((spdm_version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT) &gt;= SPDM_MESSAGE_VERSION_12)) {</span></a>
 <a name="1397"><span class="lineNum">    1397 </span>                :            :         /* return content change*/</a>
-<a name="1398"><span class="lineNum">    1398 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          8 :         if ((request_attribute &amp; SPDM_GET_MEASUREMENTS_REQUEST_ATTRIBUTES_GENERATE_SIGNATURE) !=</span></a>
+<a name="1398"><span class="lineNum">    1398 </span>        [<span class="branchCov" title="Branch 0 was taken 7 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">          9 :         if ((request_attribute &amp; SPDM_GET_MEASUREMENTS_REQUEST_ATTRIBUTES_GENERATE_SIGNATURE) !=</span></a>
 <a name="1399"><span class="lineNum">    1399 </span>                :            :             0) {</a>
-<a name="1400"><span class="lineNum">    1400 </span>                :<span class="lineCov">          6 :             *content_changed = SPDM_MEASUREMENTS_RESPONSE_CONTENT_NO_CHANGE_DETECTED;</span></a>
+<a name="1400"><span class="lineNum">    1400 </span>                :<span class="lineCov">          7 :             *content_changed = SPDM_MEASUREMENTS_RESPONSE_CONTENT_NO_CHANGE_DETECTED;</span></a>
 <a name="1401"><span class="lineNum">    1401 </span>                :            :         } else {</a>
 <a name="1402"><span class="lineNum">    1402 </span>                :<span class="lineCov">          2 :             *content_changed = SPDM_MEASUREMENTS_RESPONSE_CONTENT_CHANGE_NO_DETECTION;</span></a>
 <a name="1403"><span class="lineNum">    1403 </span>                :            :         }</a>
 <a name="1404"><span class="lineNum">    1404 </span>                :            :     }</a>
 <a name="1405"><span class="lineNum">    1405 </span>                :            : </a>
-<a name="1406"><span class="lineNum">    1406 </span>                :<span class="lineCov">        135 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="1406"><span class="lineNum">    1406 </span>                :<span class="lineCov">        136 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="1407"><span class="lineNum">    1407 </span>                :            : }</a>
 <a name="1408"><span class="lineNum">    1408 </span>                :            : </a>
 <a name="1409"><span class="lineNum">    1409 </span>                :            : size_t libspdm_secret_lib_meas_opaque_data_size;</a>
 <a name="1410"><span class="lineNum">    1410 </span>                :            : </a>
-<a name="1411"><span class="lineNum">    1411 </span>                :<span class="lineCov">        121 : bool libspdm_measurement_opaque_data(</span></a>
+<a name="1411"><span class="lineNum">    1411 </span>                :<span class="lineCov">        122 : bool libspdm_measurement_opaque_data(</span></a>
 <a name="1412"><span class="lineNum">    1412 </span>                :            :     spdm_version_number_t spdm_version,</a>
 <a name="1413"><span class="lineNum">    1413 </span>                :            :     uint8_t measurement_specification,</a>
 <a name="1414"><span class="lineNum">    1414 </span>                :            :     uint32_t measurement_hash_algo,</a>
@@ -1502,16 +1502,16 @@
 <a name="1419"><span class="lineNum">    1419 </span>                :            : {</a>
 <a name="1420"><span class="lineNum">    1420 </span>                :            :     size_t index;</a>
 <a name="1421"><span class="lineNum">    1421 </span>                :            : </a>
-<a name="1422"><span class="lineNum">    1422 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 121 times"> + </span>]:<span class="lineCov">        121 :     LIBSPDM_ASSERT(libspdm_secret_lib_meas_opaque_data_size &lt;= *opaque_data_size);</span></a>
+<a name="1422"><span class="lineNum">    1422 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 122 times"> + </span>]:<span class="lineCov">        122 :     LIBSPDM_ASSERT(libspdm_secret_lib_meas_opaque_data_size &lt;= *opaque_data_size);</span></a>
 <a name="1423"><span class="lineNum">    1423 </span>                :            : </a>
-<a name="1424"><span class="lineNum">    1424 </span>                :<span class="lineCov">        121 :     *opaque_data_size = libspdm_secret_lib_meas_opaque_data_size;</span></a>
+<a name="1424"><span class="lineNum">    1424 </span>                :<span class="lineCov">        122 :     *opaque_data_size = libspdm_secret_lib_meas_opaque_data_size;</span></a>
 <a name="1425"><span class="lineNum">    1425 </span>                :            : </a>
-<a name="1426"><span class="lineNum">    1426 </span>        [<span class="branchCov" title="Branch 0 was taken 96 times"> + </span><span class="branchCov" title="Branch 1 was taken 121 times"> + </span>]:<span class="lineCov">        217 :     for (index = 0; index &lt; *opaque_data_size; index++)</span></a>
+<a name="1426"><span class="lineNum">    1426 </span>        [<span class="branchCov" title="Branch 0 was taken 96 times"> + </span><span class="branchCov" title="Branch 1 was taken 122 times"> + </span>]:<span class="lineCov">        218 :     for (index = 0; index &lt; *opaque_data_size; index++)</span></a>
 <a name="1427"><span class="lineNum">    1427 </span>                :            :     {</a>
 <a name="1428"><span class="lineNum">    1428 </span>                :<span class="lineCov">         96 :         ((uint8_t *)opaque_data)[index] = (uint8_t)index;</span></a>
 <a name="1429"><span class="lineNum">    1429 </span>                :            :     }</a>
 <a name="1430"><span class="lineNum">    1430 </span>                :            : </a>
-<a name="1431"><span class="lineNum">    1431 </span>                :<span class="lineCov">        121 :     return true;</span></a>
+<a name="1431"><span class="lineNum">    1431 </span>                :<span class="lineCov">        122 :     return true;</span></a>
 <a name="1432"><span class="lineNum">    1432 </span>                :            : }</a>
 <a name="1433"><span class="lineNum">    1433 </span>                :            : </a>
 <a name="1434"><span class="lineNum">    1434 </span>                :            : size_t libspdm_secret_lib_challenge_opaque_data_size;</a>
