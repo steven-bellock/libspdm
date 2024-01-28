@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-01-27 08:13:08</td>
+            <td class="headerValue">2024-01-28 08:13:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -106,7 +106,7 @@
 <a name="35"><span class="lineNum">      35 </span>                :<span class="lineCov">        326 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="36"><span class="lineNum">      36 </span>                :            : }</a>
 <a name="37"><span class="lineNum">      37 </span>                :            : </a>
-<a name="38"><span class="lineNum">      38 </span>                :<span class="lineCov">         15 : libspdm_return_t libspdm_generate_extended_error_response(</span></a>
+<a name="38"><span class="lineNum">      38 </span>                :<span class="lineCov">         16 : libspdm_return_t libspdm_generate_extended_error_response(</span></a>
 <a name="39"><span class="lineNum">      39 </span>                :            :     const void *spdm_context, uint8_t error_code, uint8_t error_data,</a>
 <a name="40"><span class="lineNum">      40 </span>                :            :     size_t extended_error_data_size, const uint8_t *extended_error_data,</a>
 <a name="41"><span class="lineNum">      41 </span>                :            :     size_t *response_size, void *response)</a>
@@ -114,20 +114,20 @@
 <a name="43"><span class="lineNum">      43 </span>                :            :     spdm_error_response_t *spdm_response;</a>
 <a name="44"><span class="lineNum">      44 </span>                :            :     size_t response_capacity;</a>
 <a name="45"><span class="lineNum">      45 </span>                :            : </a>
-<a name="46"><span class="lineNum">      46 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         15 :     LIBSPDM_ASSERT(*response_size &gt;=</span></a>
+<a name="46"><span class="lineNum">      46 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 16 times"> + </span>]:<span class="lineCov">         16 :     LIBSPDM_ASSERT(*response_size &gt;=</span></a>
 <a name="47"><span class="lineNum">      47 </span>                :            :                    sizeof(spdm_error_response_t) + extended_error_data_size);</a>
-<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">         15 :     response_capacity = *response_size;</span></a>
-<a name="49"><span class="lineNum">      49 </span>                :<span class="lineCov">         15 :     *response_size = sizeof(spdm_error_response_t) + extended_error_data_size;</span></a>
-<a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">         15 :     spdm_response = response;</span></a>
+<a name="48"><span class="lineNum">      48 </span>                :<span class="lineCov">         16 :     response_capacity = *response_size;</span></a>
+<a name="49"><span class="lineNum">      49 </span>                :<span class="lineCov">         16 :     *response_size = sizeof(spdm_error_response_t) + extended_error_data_size;</span></a>
+<a name="50"><span class="lineNum">      50 </span>                :<span class="lineCov">         16 :     spdm_response = response;</span></a>
 <a name="51"><span class="lineNum">      51 </span>                :            : </a>
-<a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">         15 :     spdm_response-&gt;header.spdm_version = libspdm_get_connection_version (spdm_context);</span></a>
-<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">         15 :     spdm_response-&gt;header.request_response_code = SPDM_ERROR;</span></a>
-<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">         15 :     spdm_response-&gt;header.param1 = error_code;</span></a>
-<a name="55"><span class="lineNum">      55 </span>                :<span class="lineCov">         15 :     spdm_response-&gt;header.param2 = error_data;</span></a>
-<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">         15 :     libspdm_copy_mem(spdm_response + 1, response_capacity - sizeof(spdm_error_response_t),</span></a>
+<a name="52"><span class="lineNum">      52 </span>                :<span class="lineCov">         16 :     spdm_response-&gt;header.spdm_version = libspdm_get_connection_version (spdm_context);</span></a>
+<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">         16 :     spdm_response-&gt;header.request_response_code = SPDM_ERROR;</span></a>
+<a name="54"><span class="lineNum">      54 </span>                :<span class="lineCov">         16 :     spdm_response-&gt;header.param1 = error_code;</span></a>
+<a name="55"><span class="lineNum">      55 </span>                :<span class="lineCov">         16 :     spdm_response-&gt;header.param2 = error_data;</span></a>
+<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">         16 :     libspdm_copy_mem(spdm_response + 1, response_capacity - sizeof(spdm_error_response_t),</span></a>
 <a name="57"><span class="lineNum">      57 </span>                :            :                      extended_error_data, extended_error_data_size);</a>
 <a name="58"><span class="lineNum">      58 </span>                :            : </a>
-<a name="59"><span class="lineNum">      59 </span>                :<span class="lineCov">         15 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="59"><span class="lineNum">      59 </span>                :<span class="lineCov">         16 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
 <a name="60"><span class="lineNum">      60 </span>                :            : }</a>
 </pre>
       </td>
