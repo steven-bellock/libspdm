@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">417</td>
-            <td class="headerCovTableEntry">421</td>
-            <td class="headerCovTableEntryHi">99.0 %</td>
+            <td class="headerCovTableEntry">419</td>
+            <td class="headerCovTableEntry">423</td>
+            <td class="headerCovTableEntryHi">99.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-01 08:13:50</td>
+            <td class="headerValue">2024-02-02 08:14:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">13</td>
@@ -950,69 +950,71 @@
 <a name="879"><span class="lineNum">     879 </span>                :            :         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHUNK_CAP;</a>
 <a name="880"><span class="lineNum">     880 </span>                :            :     spdm_context-&gt;local_context.capability.data_transfer_size</a>
 <a name="881"><span class="lineNum">     881 </span>                :<span class="lineCov">          1 :         = CHUNK_GET_REQUESTER_UNIT_TEST_DATA_TRANSFER_SIZE;</span></a>
-<a name="882"><span class="lineNum">     882 </span>                :            : </a>
-<a name="883"><span class="lineNum">     883 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_hash_algo =</span></a>
-<a name="884"><span class="lineNum">     884 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
-<a name="885"><span class="lineNum">     885 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
-<a name="886"><span class="lineNum">     886 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
-<a name="887"><span class="lineNum">     887 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.dhe_named_group = m_libspdm_use_dhe_algo;</span></a>
-<a name="888"><span class="lineNum">     888 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.aead_cipher_suite = m_libspdm_use_aead_algo;</span></a>
-<a name="889"><span class="lineNum">     889 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;</span></a>
-<a name="890"><span class="lineNum">     890 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.key_schedule = m_libspdm_use_key_schedule_algo;</span></a>
-<a name="891"><span class="lineNum">     891 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
-<a name="892"><span class="lineNum">     892 </span>                :            : </a>
-<a name="893"><span class="lineNum">     893 </span>                :<span class="lineCov">          1 :     status = libspdm_negotiate_algorithms(spdm_context);</span></a>
-<a name="894"><span class="lineNum">     894 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
-<a name="895"><span class="lineNum">     895 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
-<a name="896"><span class="lineNum">     896 </span>                :            :     assert_int_equal(</a>
-<a name="897"><span class="lineNum">     897 </span>                :            :         spdm_context-&gt;transcript.message_a.buffer_size,</a>
-<a name="898"><span class="lineNum">     898 </span>                :            :         sizeof(spdm_negotiate_algorithms_request_t) +</a>
-<a name="899"><span class="lineNum">     899 </span>                :            :         4 * sizeof(spdm_negotiate_algorithms_common_struct_table_t) +</a>
-<a name="900"><span class="lineNum">     900 </span>                :            :         sizeof(spdm_algorithms_response_t));</a>
-<a name="901"><span class="lineNum">     901 </span>                :            :     #endif</a>
-<a name="902"><span class="lineNum">     902 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="903"><span class="lineNum">     903 </span>                :            : </a>
-<a name="904"><span class="lineNum">     904 </span>                :            : libspdm_test_context_t m_libspdm_requester_chunk_get_test_context = {</a>
-<a name="905"><span class="lineNum">     905 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="906"><span class="lineNum">     906 </span>                :            :     true,</a>
-<a name="907"><span class="lineNum">     907 </span>                :            :     libspdm_requester_chunk_get_test_send_message,</a>
-<a name="908"><span class="lineNum">     908 </span>                :            :     libspdm_requester_chunk_get_test_receive_message,</a>
-<a name="909"><span class="lineNum">     909 </span>                :            : };</a>
-<a name="910"><span class="lineNum">     910 </span>                :            : </a>
-<a name="911"><span class="lineNum">     911 </span>                :<span class="lineCov">          1 : int libspdm_requester_chunk_get_test_main(void)</span></a>
-<a name="912"><span class="lineNum">     912 </span>                :            : {</a>
-<a name="913"><span class="lineNum">     913 </span>                :            :     /* Test the CHUNK_GET handlers in various requester handlers */</a>
-<a name="914"><span class="lineNum">     914 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_chunk_get_tests[] = {</span></a>
-<a name="915"><span class="lineNum">     915 </span>                :            : #if LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT</a>
-<a name="916"><span class="lineNum">     916 </span>                :            :         /* Request a certificate in portions */</a>
-<a name="917"><span class="lineNum">     917 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case1),</a>
-<a name="918"><span class="lineNum">     918 </span>                :            : #endif</a>
-<a name="919"><span class="lineNum">     919 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
-<a name="920"><span class="lineNum">     920 </span>                :            :         /* Request all measurements */</a>
-<a name="921"><span class="lineNum">     921 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case2),</a>
-<a name="922"><span class="lineNum">     922 </span>                :            : #endif</a>
-<a name="923"><span class="lineNum">     923 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
-<a name="924"><span class="lineNum">     924 </span>                :            :         /* Request Challenge */</a>
-<a name="925"><span class="lineNum">     925 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case3),</a>
-<a name="926"><span class="lineNum">     926 </span>                :            : #endif</a>
-<a name="927"><span class="lineNum">     927 </span>                :            : #if LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT</a>
-<a name="928"><span class="lineNum">     928 </span>                :            :         /* Request Digests */</a>
-<a name="929"><span class="lineNum">     929 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case4),</a>
-<a name="930"><span class="lineNum">     930 </span>                :            : #endif</a>
-<a name="931"><span class="lineNum">     931 </span>                :            : </a>
-<a name="932"><span class="lineNum">     932 </span>                :            :         /* Request Algorithms */</a>
-<a name="933"><span class="lineNum">     933 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case5),</a>
-<a name="934"><span class="lineNum">     934 </span>                :            :     };</a>
-<a name="935"><span class="lineNum">     935 </span>                :            : </a>
-<a name="936"><span class="lineNum">     936 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(</span></a>
-<a name="937"><span class="lineNum">     937 </span>                :            :         &amp;m_libspdm_requester_chunk_get_test_context);</a>
-<a name="938"><span class="lineNum">     938 </span>                :            : </a>
-<a name="939"><span class="lineNum">     939 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_chunk_get_tests,</span></a>
-<a name="940"><span class="lineNum">     940 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="941"><span class="lineNum">     941 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="942"><span class="lineNum">     942 </span>                :            : }</a>
-<a name="943"><span class="lineNum">     943 </span>                :            : </a>
-<a name="944"><span class="lineNum">     944 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP*/</a>
+<a name="882"><span class="lineNum">     882 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;connection_info.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_MEAS_CAP;</span></a>
+<a name="883"><span class="lineNum">     883 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_spec = SPDM_MEASUREMENT_SPECIFICATION_DMTF;</span></a>
+<a name="884"><span class="lineNum">     884 </span>                :            : </a>
+<a name="885"><span class="lineNum">     885 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.measurement_hash_algo =</span></a>
+<a name="886"><span class="lineNum">     886 </span>                :            :         m_libspdm_use_measurement_hash_algo;</a>
+<a name="887"><span class="lineNum">     887 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_asym_algo = m_libspdm_use_asym_algo;</span></a>
+<a name="888"><span class="lineNum">     888 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.base_hash_algo = m_libspdm_use_hash_algo;</span></a>
+<a name="889"><span class="lineNum">     889 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.dhe_named_group = m_libspdm_use_dhe_algo;</span></a>
+<a name="890"><span class="lineNum">     890 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.aead_cipher_suite = m_libspdm_use_aead_algo;</span></a>
+<a name="891"><span class="lineNum">     891 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;</span></a>
+<a name="892"><span class="lineNum">     892 </span>                :<span class="lineCov">          1 :     spdm_context-&gt;local_context.algorithm.key_schedule = m_libspdm_use_key_schedule_algo;</span></a>
+<a name="893"><span class="lineNum">     893 </span>                :<span class="lineCov">          1 :     libspdm_reset_message_a(spdm_context);</span></a>
+<a name="894"><span class="lineNum">     894 </span>                :            : </a>
+<a name="895"><span class="lineNum">     895 </span>                :<span class="lineCov">          1 :     status = libspdm_negotiate_algorithms(spdm_context);</span></a>
+<a name="896"><span class="lineNum">     896 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
+<a name="897"><span class="lineNum">     897 </span>                :            :     #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</a>
+<a name="898"><span class="lineNum">     898 </span>                :            :     assert_int_equal(</a>
+<a name="899"><span class="lineNum">     899 </span>                :            :         spdm_context-&gt;transcript.message_a.buffer_size,</a>
+<a name="900"><span class="lineNum">     900 </span>                :            :         sizeof(spdm_negotiate_algorithms_request_t) +</a>
+<a name="901"><span class="lineNum">     901 </span>                :            :         4 * sizeof(spdm_negotiate_algorithms_common_struct_table_t) +</a>
+<a name="902"><span class="lineNum">     902 </span>                :            :         sizeof(spdm_algorithms_response_t));</a>
+<a name="903"><span class="lineNum">     903 </span>                :            :     #endif</a>
+<a name="904"><span class="lineNum">     904 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="905"><span class="lineNum">     905 </span>                :            : </a>
+<a name="906"><span class="lineNum">     906 </span>                :            : libspdm_test_context_t m_libspdm_requester_chunk_get_test_context = {</a>
+<a name="907"><span class="lineNum">     907 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="908"><span class="lineNum">     908 </span>                :            :     true,</a>
+<a name="909"><span class="lineNum">     909 </span>                :            :     libspdm_requester_chunk_get_test_send_message,</a>
+<a name="910"><span class="lineNum">     910 </span>                :            :     libspdm_requester_chunk_get_test_receive_message,</a>
+<a name="911"><span class="lineNum">     911 </span>                :            : };</a>
+<a name="912"><span class="lineNum">     912 </span>                :            : </a>
+<a name="913"><span class="lineNum">     913 </span>                :<span class="lineCov">          1 : int libspdm_requester_chunk_get_test_main(void)</span></a>
+<a name="914"><span class="lineNum">     914 </span>                :            : {</a>
+<a name="915"><span class="lineNum">     915 </span>                :            :     /* Test the CHUNK_GET handlers in various requester handlers */</a>
+<a name="916"><span class="lineNum">     916 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_requester_chunk_get_tests[] = {</span></a>
+<a name="917"><span class="lineNum">     917 </span>                :            : #if LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT</a>
+<a name="918"><span class="lineNum">     918 </span>                :            :         /* Request a certificate in portions */</a>
+<a name="919"><span class="lineNum">     919 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case1),</a>
+<a name="920"><span class="lineNum">     920 </span>                :            : #endif</a>
+<a name="921"><span class="lineNum">     921 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP</a>
+<a name="922"><span class="lineNum">     922 </span>                :            :         /* Request all measurements */</a>
+<a name="923"><span class="lineNum">     923 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case2),</a>
+<a name="924"><span class="lineNum">     924 </span>                :            : #endif</a>
+<a name="925"><span class="lineNum">     925 </span>                :            : #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP</a>
+<a name="926"><span class="lineNum">     926 </span>                :            :         /* Request Challenge */</a>
+<a name="927"><span class="lineNum">     927 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case3),</a>
+<a name="928"><span class="lineNum">     928 </span>                :            : #endif</a>
+<a name="929"><span class="lineNum">     929 </span>                :            : #if LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT</a>
+<a name="930"><span class="lineNum">     930 </span>                :            :         /* Request Digests */</a>
+<a name="931"><span class="lineNum">     931 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case4),</a>
+<a name="932"><span class="lineNum">     932 </span>                :            : #endif</a>
+<a name="933"><span class="lineNum">     933 </span>                :            : </a>
+<a name="934"><span class="lineNum">     934 </span>                :            :         /* Request Algorithms */</a>
+<a name="935"><span class="lineNum">     935 </span>                :            :         cmocka_unit_test(libspdm_test_requester_chunk_get_case5),</a>
+<a name="936"><span class="lineNum">     936 </span>                :            :     };</a>
+<a name="937"><span class="lineNum">     937 </span>                :            : </a>
+<a name="938"><span class="lineNum">     938 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(</span></a>
+<a name="939"><span class="lineNum">     939 </span>                :            :         &amp;m_libspdm_requester_chunk_get_test_context);</a>
+<a name="940"><span class="lineNum">     940 </span>                :            : </a>
+<a name="941"><span class="lineNum">     941 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_requester_chunk_get_tests,</span></a>
+<a name="942"><span class="lineNum">     942 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="943"><span class="lineNum">     943 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="944"><span class="lineNum">     944 </span>                :            : }</a>
+<a name="945"><span class="lineNum">     945 </span>                :            : </a>
+<a name="946"><span class="lineNum">     946 </span>                :            : #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP*/</a>
 </pre>
       </td>
     </tr>
