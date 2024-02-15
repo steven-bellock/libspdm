@@ -177,6 +177,12 @@ jobs:
           cmake -DARCH=x64 -DTOOLCHAIN=GCC -DTARGET=Debug -DCRYPTO=${{matrix.crypto}} -DGCOV=ON ..
           make copy_sample_key
           make -j`nproc`
+      - name: Build - Check printf Specifiers
+        run: |
+          mkdir build
+          cd build
+          cmake -DARCH=x64 -DTOOLCHAIN=GCC -DTARGET=Debug -DCRYPTO=mbedtls ..
+          CFLAGS="-include stdio.h" make -j`nproc`
       - name: Test Requester
         if: matrix.toolchain != 'LIBFUZZER' && matrix.toolchain != 'ARM_GNU' && matrix.configurations != '-DDISABLE_TESTS=1'
         run: |
