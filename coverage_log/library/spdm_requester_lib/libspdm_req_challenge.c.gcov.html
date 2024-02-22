@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-21 08:14:55</td>
+            <td class="headerValue">2024-02-22 08:14:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : /**</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  *  Copyright Notice:</a>
-<a name="3"><span class="lineNum">       3 </span>                :            :  *  Copyright 2021-2022 DMTF. All rights reserved.</a>
+<a name="3"><span class="lineNum">       3 </span>                :            :  *  Copyright 2021-2024 DMTF. All rights reserved.</a>
 <a name="4"><span class="lineNum">       4 </span>                :            :  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  **/</a>
 <a name="6"><span class="lineNum">       6 </span>                :            : </a>
@@ -312,7 +312,7 @@
 <a name="240"><span class="lineNum">     240 </span>                :            : </a>
 <a name="241"><span class="lineNum">     241 </span>                :<span class="lineCov">         18 :     cert_chain_hash = ptr;</span></a>
 <a name="242"><span class="lineNum">     242 </span>                :<span class="lineCov">         18 :     ptr += hash_size;</span></a>
-<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">         18 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;cert_chain_hash (0x%x) - &quot;, hash_size));</span></a>
+<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">         18 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;cert_chain_hash (0x%zx) - &quot;, hash_size));</span></a>
 <a name="244"><span class="lineNum">     244 </span>                :<span class="lineCov">         18 :     LIBSPDM_INTERNAL_DUMP_DATA(cert_chain_hash, hash_size);</span></a>
 <a name="245"><span class="lineNum">     245 </span>                :<span class="lineCov">         18 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
 <a name="246"><span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 17 times"> + </span>]:<span class="lineCov">         18 :     if (slot_id == 0xFF) {</span></a>
@@ -425,7 +425,7 @@
 <a name="353"><span class="lineNum">     353 </span>                :            :     }</a>
 <a name="354"><span class="lineNum">     354 </span>                :            : </a>
 <a name="355"><span class="lineNum">     355 </span>                :<span class="lineCov">         16 :     signature = ptr;</span></a>
-<a name="356"><span class="lineNum">     356 </span>                :<span class="lineCov">         16 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;signature (0x%x):\n&quot;, signature_size));</span></a>
+<a name="356"><span class="lineNum">     356 </span>                :<span class="lineCov">         16 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;signature (0x%zx):\n&quot;, signature_size));</span></a>
 <a name="357"><span class="lineNum">     357 </span>                :<span class="lineCov">         16 :     LIBSPDM_INTERNAL_DUMP_HEX(signature, signature_size);</span></a>
 <a name="358"><span class="lineNum">     358 </span>                :<span class="lineCov">         16 :     result = libspdm_verify_challenge_auth_signature(spdm_context, true, signature, signature_size);</span></a>
 <a name="359"><span class="lineNum">     359 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchCov" title="Branch 1 was taken 15 times"> + </span>]:<span class="lineCov">         16 :     if (!result) {</span></a>
@@ -451,7 +451,7 @@
 <a name="379"><span class="lineNum">     379 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;BasicMutAuth :\n&quot;));</span></a>
 <a name="380"><span class="lineNum">     380 </span>                :<span class="lineNoCov">          0 :         status = libspdm_encapsulated_request(spdm_context, NULL, 0, NULL);</span></a>
 <a name="381"><span class="lineNum">     381 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,</span></a>
-<a name="382"><span class="lineNum">     382 </span>                :            :                        &quot;libspdm_challenge - libspdm_encapsulated_request - %p\n&quot;, status));</a>
+<a name="382"><span class="lineNum">     382 </span>                :            :                        &quot;libspdm_challenge - libspdm_encapsulated_request - %xu\n&quot;, status));</a>
 <a name="383"><span class="lineNum">     383 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
 <a name="384"><span class="lineNum">     384 </span>                :<span class="lineNoCov">          0 :             libspdm_reset_message_c(spdm_context);</span></a>
 <a name="385"><span class="lineNum">     385 </span>                :<span class="lineNoCov">          0 :             return status;</span></a>

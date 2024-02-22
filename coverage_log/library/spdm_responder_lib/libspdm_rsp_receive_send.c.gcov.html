@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-21 08:14:55</td>
+            <td class="headerValue">2024-02-22 08:14:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -299,7 +299,7 @@
 <a name="228"><span class="lineNum">     228 </span>                :            :     }</a>
 <a name="229"><span class="lineNum">     229 </span>                :            : </a>
 <a name="230"><span class="lineNum">     230 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     if (LIBSPDM_STATUS_IS_ERROR(status)) {</span></a>
-<a name="231"><span class="lineNum">     231 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;transport_decode_message : %p\n&quot;, status));</span></a>
+<a name="231"><span class="lineNum">     231 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;transport_decode_message : %xu\n&quot;, status));</span></a>
 <a name="232"><span class="lineNum">     232 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         if (context-&gt;last_spdm_error.error_code != 0) {</span></a>
 <a name="233"><span class="lineNum">     233 </span>                :            : </a>
 <a name="234"><span class="lineNum">     234 </span>                :            :             /* If the SPDM error code is Non-Zero, that means we need send the error message back to requester.</a>
@@ -358,7 +358,7 @@
 <a name="287"><span class="lineNum">     287 </span>                :<span class="lineNoCov">          0 :         context-&gt;last_spdm_request_session_id_valid = true;</span></a>
 <a name="288"><span class="lineNum">     288 </span>                :            :     }</a>
 <a name="289"><span class="lineNum">     289 </span>                :            : </a>
-<a name="290"><span class="lineNum">     290 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;SpdmReceiveRequest[%x] msg %s(0x%x), size (0x%x): \n&quot;,</span></a>
+<a name="290"><span class="lineNum">     290 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;SpdmReceiveRequest[%x] msg %s(0x%x), size (0x%zx): \n&quot;,</span></a>
 <a name="291"><span class="lineNum">     291 </span>                :            :                    (message_session_id != NULL) ? *message_session_id : 0,</a>
 <a name="292"><span class="lineNum">     292 </span>                :            :                    libspdm_get_code_str(((spdm_message_header_t *)context-&gt;last_spdm_request)-&gt;</a>
 <a name="293"><span class="lineNum">     293 </span>                :            :                                         request_response_code),</a>
@@ -423,15 +423,15 @@
 <a name="352"><span class="lineNum">     352 </span>                :            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
 <a name="353"><span class="lineNum">     353 </span>                :            :  * @param  connection_state              Indicate the SPDM connection state.</a>
 <a name="354"><span class="lineNum">     354 </span>                :            :  **/</a>
-<a name="355"><span class="lineNum">     355 </span>                :<span class="lineCov">         75 : static void libspdm_trigger_connection_state_callback(libspdm_context_t *spdm_context,</span></a>
+<a name="355"><span class="lineNum">     355 </span>                :<span class="lineCov">         78 : static void libspdm_trigger_connection_state_callback(libspdm_context_t *spdm_context,</span></a>
 <a name="356"><span class="lineNum">     356 </span>                :            :                                                       const libspdm_connection_state_t</a>
 <a name="357"><span class="lineNum">     357 </span>                :            :                                                       connection_state)</a>
 <a name="358"><span class="lineNum">     358 </span>                :            : {</a>
-<a name="359"><span class="lineNum">     359 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 75 times"> + </span>]:<span class="lineCov">         75 :     if (spdm_context-&gt;spdm_connection_state_callback != NULL) {</span></a>
+<a name="359"><span class="lineNum">     359 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 78 times"> + </span>]:<span class="lineCov">         78 :     if (spdm_context-&gt;spdm_connection_state_callback != NULL) {</span></a>
 <a name="360"><span class="lineNum">     360 </span>                :<span class="lineNoCov">          0 :         ((libspdm_connection_state_callback_func)</span></a>
 <a name="361"><span class="lineNum">     361 </span>                :<span class="lineNoCov">          0 :          spdm_context-&gt;spdm_connection_state_callback)(spdm_context, connection_state);</span></a>
 <a name="362"><span class="lineNum">     362 </span>                :            :     }</a>
-<a name="363"><span class="lineNum">     363 </span>                :<span class="lineCov">         75 : }</span></a>
+<a name="363"><span class="lineNum">     363 </span>                :<span class="lineCov">         78 : }</span></a>
 <a name="364"><span class="lineNum">     364 </span>                :            : </a>
 <a name="365"><span class="lineNum">     365 </span>                :            : /**</a>
 <a name="366"><span class="lineNum">     366 </span>                :            :  * Set connection_state to an SPDM context and trigger callback.</a>
@@ -439,14 +439,14 @@
 <a name="368"><span class="lineNum">     368 </span>                :            :  * @param  spdm_context                  A pointer to the SPDM context.</a>
 <a name="369"><span class="lineNum">     369 </span>                :            :  * @param  connection_state              Indicate the SPDM connection state.</a>
 <a name="370"><span class="lineNum">     370 </span>                :            :  */</a>
-<a name="371"><span class="lineNum">     371 </span>                :<span class="lineCov">         77 : void libspdm_set_connection_state(libspdm_context_t *spdm_context,</span></a>
+<a name="371"><span class="lineNum">     371 </span>                :<span class="lineCov">         80 : void libspdm_set_connection_state(libspdm_context_t *spdm_context,</span></a>
 <a name="372"><span class="lineNum">     372 </span>                :            :                                   libspdm_connection_state_t connection_state)</a>
 <a name="373"><span class="lineNum">     373 </span>                :            : {</a>
-<a name="374"><span class="lineNum">     374 </span>        [<span class="branchCov" title="Branch 0 was taken 75 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         77 :     if (spdm_context-&gt;connection_info.connection_state != connection_state) {</span></a>
-<a name="375"><span class="lineNum">     375 </span>                :<span class="lineCov">         75 :         spdm_context-&gt;connection_info.connection_state = connection_state;</span></a>
-<a name="376"><span class="lineNum">     376 </span>                :<span class="lineCov">         75 :         libspdm_trigger_connection_state_callback(spdm_context, connection_state);</span></a>
+<a name="374"><span class="lineNum">     374 </span>        [<span class="branchCov" title="Branch 0 was taken 78 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         80 :     if (spdm_context-&gt;connection_info.connection_state != connection_state) {</span></a>
+<a name="375"><span class="lineNum">     375 </span>                :<span class="lineCov">         78 :         spdm_context-&gt;connection_info.connection_state = connection_state;</span></a>
+<a name="376"><span class="lineNum">     376 </span>                :<span class="lineCov">         78 :         libspdm_trigger_connection_state_callback(spdm_context, connection_state);</span></a>
 <a name="377"><span class="lineNum">     377 </span>                :            :     }</a>
-<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">         77 : }</span></a>
+<a name="378"><span class="lineNum">     378 </span>                :<span class="lineCov">         80 : }</span></a>
 <a name="379"><span class="lineNum">     379 </span>                :            : </a>
 <a name="380"><span class="lineNum">     380 </span>                :<span class="lineCov">         15 : void libspdm_trigger_key_update_callback(void *spdm_context, uint32_t session_id,</span></a>
 <a name="381"><span class="lineNum">     381 </span>                :            :                                          libspdm_key_update_operation_t key_update_op,</a>
@@ -582,7 +582,7 @@
 <a name="511"><span class="lineNum">     511 </span>                :<span class="lineNoCov">          0 :             return status;</span></a>
 <a name="512"><span class="lineNum">     512 </span>                :            :         }</a>
 <a name="513"><span class="lineNum">     513 </span>                :            : </a>
-<a name="514"><span class="lineNum">     514 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;SpdmSendResponse[%x]: msg %s(0x%x), size (0x%x): \n&quot;,</span></a>
+<a name="514"><span class="lineNum">     514 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;SpdmSendResponse[%x]: msg %s(0x%x), size (0x%zx): \n&quot;,</span></a>
 <a name="515"><span class="lineNum">     515 </span>                :            :                        (session_id != NULL) ? *session_id : 0,</a>
 <a name="516"><span class="lineNum">     516 </span>                :            :                        libspdm_get_code_str(spdm_response-&gt;request_response_code),</a>
 <a name="517"><span class="lineNum">     517 </span>                :            :                        spdm_response-&gt;request_response_code,</a>
@@ -598,7 +598,7 @@
 <a name="527"><span class="lineNum">     527 </span>                :            :                  (status == LIBSPDM_STATUS_CRYPTO_ERROR))) {</a>
 <a name="528"><span class="lineNum">     528 </span>                :<span class="lineNoCov">          0 :                 libspdm_free_session_id(context, *session_id);</span></a>
 <a name="529"><span class="lineNum">     529 </span>                :            :             }</a>
-<a name="530"><span class="lineNum">     530 </span>                :<span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;transport_encode_message : %p\n&quot;, status));</span></a>
+<a name="530"><span class="lineNum">     530 </span>                :<span class="lineNoCov">          0 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;transport_encode_message : %xu\n&quot;, status));</span></a>
 <a name="531"><span class="lineNum">     531 </span>                :<span class="lineNoCov">          0 :             return status;</span></a>
 <a name="532"><span class="lineNum">     532 </span>                :            :         }</a>
 <a name="533"><span class="lineNum">     533 </span>                :            : </a>
@@ -800,7 +800,7 @@
 <a name="729"><span class="lineNum">     729 </span>                :            :         }</a>
 <a name="730"><span class="lineNum">     730 </span>                :            :     }</a>
 <a name="731"><span class="lineNum">     731 </span>                :            : </a>
-<a name="732"><span class="lineNum">     732 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;SpdmSendResponse[%x]: msg %s(0x%x), size (0x%x): \n&quot;,</span></a>
+<a name="732"><span class="lineNum">     732 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4 times"> + </span>]:<span class="lineCov">          4 :     LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;SpdmSendResponse[%x]: msg %s(0x%x), size (0x%zx): \n&quot;,</span></a>
 <a name="733"><span class="lineNum">     733 </span>                :            :                    (session_id != NULL) ? *session_id : 0,</a>
 <a name="734"><span class="lineNum">     734 </span>                :            :                    libspdm_get_code_str(spdm_response-&gt;request_response_code),</a>
 <a name="735"><span class="lineNum">     735 </span>                :            :                    spdm_response-&gt;request_response_code,</a>
@@ -816,7 +816,7 @@
 <a name="745"><span class="lineNum">     745 </span>                :            :              (status == LIBSPDM_STATUS_CRYPTO_ERROR))) {</a>
 <a name="746"><span class="lineNum">     746 </span>                :<span class="lineNoCov">          0 :             libspdm_free_session_id(context, *session_id);</span></a>
 <a name="747"><span class="lineNum">     747 </span>                :            :         }</a>
-<a name="748"><span class="lineNum">     748 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;transport_encode_message : %p\n&quot;, status));</span></a>
+<a name="748"><span class="lineNum">     748 </span>                :<span class="lineNoCov">          0 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;transport_encode_message : %xu\n&quot;, status));</span></a>
 <a name="749"><span class="lineNum">     749 </span>                :<span class="lineNoCov">          0 :         return status;</span></a>
 <a name="750"><span class="lineNum">     750 </span>                :            :     }</a>
 <a name="751"><span class="lineNum">     751 </span>                :            : </a>

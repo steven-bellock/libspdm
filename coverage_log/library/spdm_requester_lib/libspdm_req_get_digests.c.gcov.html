@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-21 08:14:55</td>
+            <td class="headerValue">2024-02-22 08:14:36</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -71,7 +71,7 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>                :            : /**</a>
 <a name="2"><span class="lineNum">       2 </span>                :            :  *  Copyright Notice:</a>
-<a name="3"><span class="lineNum">       3 </span>                :            :  *  Copyright 2021-2022 DMTF. All rights reserved.</a>
+<a name="3"><span class="lineNum">       3 </span>                :            :  *  Copyright 2021-2024 DMTF. All rights reserved.</a>
 <a name="4"><span class="lineNum">       4 </span>                :            :  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md</a>
 <a name="5"><span class="lineNum">       5 </span>                :            :  **/</a>
 <a name="6"><span class="lineNum">       6 </span>                :            : </a>
@@ -306,22 +306,22 @@
 <a name="235"><span class="lineNum">     235 </span>                :            :         (spdm_key_usage_bit_mask_t *)((uint8_t *)cert_info + sizeof(spdm_certificate_info_t) *</a>
 <a name="236"><span class="lineNum">     236 </span>                :            :                                       digest_count);</a>
 <a name="237"><span class="lineNum">     237 </span>        [<span class="branchCov" title="Branch 0 was taken 27 times"> + </span><span class="branchCov" title="Branch 1 was taken 12 times"> + </span>]:<span class="lineCov">         39 :     for (index = 0; index &lt; digest_count; index++) {</span></a>
-<a name="238"><span class="lineNum">     238 </span>                :<span class="lineCov">         27 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;digest (0x%x) - &quot;, index));</span></a>
+<a name="238"><span class="lineNum">     238 </span>                :<span class="lineCov">         27 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;digest (0x%zx) - &quot;, index));</span></a>
 <a name="239"><span class="lineNum">     239 </span>                :<span class="lineCov">         27 :         LIBSPDM_INTERNAL_DUMP_DATA(&amp;spdm_response-&gt;digest[digest_size * index], digest_size);</span></a>
 <a name="240"><span class="lineNum">     240 </span>                :<span class="lineCov">         27 :         LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;\n&quot;));</span></a>
 <a name="241"><span class="lineNum">     241 </span>                :            :     }</a>
 <a name="242"><span class="lineNum">     242 </span>        [<span class="branchCov" title="Branch 0 was taken 6 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">         12 :     if ((spdm_request-&gt;header.spdm_version &gt;= SPDM_MESSAGE_VERSION_13) &amp;&amp;</span></a>
 <a name="243"><span class="lineNum">     243 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          6 :         spdm_context-&gt;connection_info.multi_key_conn_rsp) {</span></a>
 <a name="244"><span class="lineNum">     244 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         18 :         for (index = 0; index &lt; digest_count; index++) {</span></a>
-<a name="245"><span class="lineNum">     245 </span>                :<span class="lineCov">         13 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;key_pair_id (0x%x) - 0x%02x\n&quot;, index,</span></a>
+<a name="245"><span class="lineNum">     245 </span>                :<span class="lineCov">         13 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;key_pair_id (0x%zx) - 0x%02x\n&quot;, index,</span></a>
 <a name="246"><span class="lineNum">     246 </span>                :            :                            key_pair_id[index]));</a>
 <a name="247"><span class="lineNum">     247 </span>                :            :         }</a>
 <a name="248"><span class="lineNum">     248 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         18 :         for (index = 0; index &lt; digest_count; index++) {</span></a>
-<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">         13 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;cert_info (0x%x) - 0x%02x\n&quot;, index,</span></a>
+<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">         13 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;cert_info (0x%zx) - 0x%02x\n&quot;, index,</span></a>
 <a name="250"><span class="lineNum">     250 </span>                :            :                            cert_info[index]));</a>
 <a name="251"><span class="lineNum">     251 </span>                :            :         }</a>
 <a name="252"><span class="lineNum">     252 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchCov" title="Branch 1 was taken 5 times"> + </span>]:<span class="lineCov">         18 :         for (index = 0; index &lt; digest_count; index++) {</span></a>
-<a name="253"><span class="lineNum">     253 </span>                :<span class="lineCov">         13 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;key_usage_bit_mask (0x%x) - 0x%04x\n&quot;, index,</span></a>
+<a name="253"><span class="lineNum">     253 </span>                :<span class="lineCov">         13 :             LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO, &quot;key_usage_bit_mask (0x%zx) - 0x%04x\n&quot;, index,</span></a>
 <a name="254"><span class="lineNum">     254 </span>                :            :                            key_usage_bit_mask[index]));</a>
 <a name="255"><span class="lineNum">     255 </span>                :            :         }</a>
 <a name="256"><span class="lineNum">     256 </span>                :            :     }</a>
