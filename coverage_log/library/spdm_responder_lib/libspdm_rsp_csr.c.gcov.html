@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-04 09:41:58</td>
+            <td class="headerValue">2024-03-05 08:15:30</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -270,66 +270,74 @@
 <a name="198"><span class="lineNum">     198 </span>                :            :                                                    response_size, response);</a>
 <a name="199"><span class="lineNum">     199 </span>                :            :         }</a>
 <a name="200"><span class="lineNum">     200 </span>                :            : </a>
-<a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">         15 :         result = libspdm_gen_csr_ex(spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
-<a name="202"><span class="lineNum">     202 </span>                :            :                                     spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
-<a name="203"><span class="lineNum">     203 </span>                :            :                                     &amp;need_reset, request, request_size,</a>
-<a name="204"><span class="lineNum">     204 </span>                :            :                                     requester_info, requester_info_length,</a>
-<a name="205"><span class="lineNum">     205 </span>                :            :                                     opaque_data, opaque_data_length,</a>
-<a name="206"><span class="lineNum">     206 </span>                :            :                                     &amp;csr_len, csr_p, req_cert_model,</a>
-<a name="207"><span class="lineNum">     207 </span>                :            :                                     &amp;csr_tracking_tag, key_pair_id, overwrite);</a>
-<a name="208"><span class="lineNum">     208 </span>                :            : #else</a>
-<a name="209"><span class="lineNum">     209 </span>                :            :         return libspdm_generate_error_response(</a>
-<a name="210"><span class="lineNum">     210 </span>                :            :             spdm_context,</a>
-<a name="211"><span class="lineNum">     211 </span>                :            :             SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
-<a name="212"><span class="lineNum">     212 </span>                :            :             response_size, response);</a>
-<a name="213"><span class="lineNum">     213 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_CSR_CAP_EX*/</a>
-<a name="214"><span class="lineNum">     214 </span>                :            :     } else {</a>
-<a name="215"><span class="lineNum">     215 </span>                :<span class="lineCov">         10 :         result = libspdm_gen_csr(spdm_context-&gt;connection_info.algorithm.base_hash_algo,</span></a>
-<a name="216"><span class="lineNum">     216 </span>                :            :                                  spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
-<a name="217"><span class="lineNum">     217 </span>                :            :                                  &amp;need_reset, request, request_size,</a>
-<a name="218"><span class="lineNum">     218 </span>                :            :                                  requester_info, requester_info_length,</a>
-<a name="219"><span class="lineNum">     219 </span>                :            :                                  opaque_data, opaque_data_length,</a>
-<a name="220"><span class="lineNum">     220 </span>                :            :                                  &amp;csr_len, csr_p, is_device_cert_model);</a>
-<a name="221"><span class="lineNum">     221 </span>                :            :     }</a>
-<a name="222"><span class="lineNum">     222 </span>                :            : </a>
-<a name="223"><span class="lineNum">     223 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">         25 :     if (!result) {</span></a>
-<a name="224"><span class="lineNum">     224 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          6 :         if ((csr_tracking_tag == 0xFF) &amp;&amp;</span></a>
-<a name="225"><span class="lineNum">     225 </span>                :<span class="lineCov">          2 :             (libspdm_get_connection_version(spdm_context) &gt;= SPDM_MESSAGE_VERSION_13)) {</span></a>
-<a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">          2 :             return libspdm_generate_error_response(</span></a>
-<a name="227"><span class="lineNum">     227 </span>                :            :                 spdm_context,</a>
-<a name="228"><span class="lineNum">     228 </span>                :            :                 SPDM_ERROR_CODE_BUSY, 0,</a>
-<a name="229"><span class="lineNum">     229 </span>                :            :                 response_size, response);</a>
-<a name="230"><span class="lineNum">     230 </span>                :            :         } else {</a>
-<a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">          2 :             return libspdm_generate_error_response(</span></a>
-<a name="232"><span class="lineNum">     232 </span>                :            :                 spdm_context,</a>
-<a name="233"><span class="lineNum">     233 </span>                :            :                 SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
-<a name="234"><span class="lineNum">     234 </span>                :            :                 response_size, response);</a>
-<a name="235"><span class="lineNum">     235 </span>                :            :         }</a>
-<a name="236"><span class="lineNum">     236 </span>                :            :     }</a>
-<a name="237"><span class="lineNum">     237 </span>                :            : </a>
-<a name="238"><span class="lineNum">     238 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">         21 :     LIBSPDM_ASSERT(*response_size &gt;= sizeof(spdm_csr_response_t) + csr_len);</span></a>
-<a name="239"><span class="lineNum">     239 </span>                :<span class="lineCov">         21 :     *response_size = sizeof(spdm_csr_response_t) + csr_len;</span></a>
-<a name="240"><span class="lineNum">     240 </span>                :            : </a>
-<a name="241"><span class="lineNum">     241 </span>        [<span class="branchCov" title="Branch 0 was taken 15 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">         21 :     if (libspdm_is_capabilities_flag_supported(</span></a>
-<a name="242"><span class="lineNum">     242 </span>                :            :             spdm_context, false, 0,</a>
-<a name="243"><span class="lineNum">     243 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         15 :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_INSTALL_RESET_CAP) &amp;&amp;</span></a>
-<a name="244"><span class="lineNum">     244 </span>                :            :         need_reset) {</a>
-<a name="245"><span class="lineNum">     245 </span>                :<span class="lineCov">         13 :         return libspdm_generate_error_response(spdm_context,</span></a>
-<a name="246"><span class="lineNum">     246 </span>                :            :                                                SPDM_ERROR_CODE_RESET_REQUIRED, csr_tracking_tag,</a>
-<a name="247"><span class="lineNum">     247 </span>                :            :                                                response_size, response);</a>
-<a name="248"><span class="lineNum">     248 </span>                :            :     } else {</a>
-<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
-<a name="250"><span class="lineNum">     250 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.request_response_code = SPDM_CSR;</span></a>
-<a name="251"><span class="lineNum">     251 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.param1 = 0;</span></a>
-<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.param2 = 0;</span></a>
-<a name="253"><span class="lineNum">     253 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;csr_length = (uint16_t)csr_len;</span></a>
-<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;reserved = 0;</span></a>
-<a name="255"><span class="lineNum">     255 </span>                :            :     }</a>
-<a name="256"><span class="lineNum">     256 </span>                :            : </a>
-<a name="257"><span class="lineNum">     257 </span>                :<span class="lineCov">          8 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
-<a name="258"><span class="lineNum">     258 </span>                :            : }</a>
-<a name="259"><span class="lineNum">     259 </span>                :            : </a>
-<a name="260"><span class="lineNum">     260 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_CSR_CAP*/</a>
+<a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">         15 :         result = libspdm_gen_csr_ex(</span></a>
+<a name="202"><span class="lineNum">     202 </span>                :            : #if LIBSPDM_HAL_PASS_SPDM_CONTEXT</a>
+<a name="203"><span class="lineNum">     203 </span>                :            :             spdm_context,</a>
+<a name="204"><span class="lineNum">     204 </span>                :            : #endif</a>
+<a name="205"><span class="lineNum">     205 </span>                :            :             spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="206"><span class="lineNum">     206 </span>                :            :             spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
+<a name="207"><span class="lineNum">     207 </span>                :            :             &amp;need_reset, request, request_size,</a>
+<a name="208"><span class="lineNum">     208 </span>                :            :             requester_info, requester_info_length,</a>
+<a name="209"><span class="lineNum">     209 </span>                :            :             opaque_data, opaque_data_length,</a>
+<a name="210"><span class="lineNum">     210 </span>                :            :             &amp;csr_len, csr_p, req_cert_model,</a>
+<a name="211"><span class="lineNum">     211 </span>                :            :             &amp;csr_tracking_tag, key_pair_id, overwrite);</a>
+<a name="212"><span class="lineNum">     212 </span>                :            : #else</a>
+<a name="213"><span class="lineNum">     213 </span>                :            :         return libspdm_generate_error_response(</a>
+<a name="214"><span class="lineNum">     214 </span>                :            :             spdm_context,</a>
+<a name="215"><span class="lineNum">     215 </span>                :            :             SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
+<a name="216"><span class="lineNum">     216 </span>                :            :             response_size, response);</a>
+<a name="217"><span class="lineNum">     217 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_CSR_CAP_EX*/</a>
+<a name="218"><span class="lineNum">     218 </span>                :            :     } else {</a>
+<a name="219"><span class="lineNum">     219 </span>                :<span class="lineCov">         10 :         result = libspdm_gen_csr(</span></a>
+<a name="220"><span class="lineNum">     220 </span>                :            : #if LIBSPDM_HAL_PASS_SPDM_CONTEXT</a>
+<a name="221"><span class="lineNum">     221 </span>                :            :             spdm_context,</a>
+<a name="222"><span class="lineNum">     222 </span>                :            : #endif</a>
+<a name="223"><span class="lineNum">     223 </span>                :            :             spdm_context-&gt;connection_info.algorithm.base_hash_algo,</a>
+<a name="224"><span class="lineNum">     224 </span>                :            :             spdm_context-&gt;connection_info.algorithm.base_asym_algo,</a>
+<a name="225"><span class="lineNum">     225 </span>                :            :             &amp;need_reset, request, request_size,</a>
+<a name="226"><span class="lineNum">     226 </span>                :            :             requester_info, requester_info_length,</a>
+<a name="227"><span class="lineNum">     227 </span>                :            :             opaque_data, opaque_data_length,</a>
+<a name="228"><span class="lineNum">     228 </span>                :            :             &amp;csr_len, csr_p, is_device_cert_model);</a>
+<a name="229"><span class="lineNum">     229 </span>                :            :     }</a>
+<a name="230"><span class="lineNum">     230 </span>                :            : </a>
+<a name="231"><span class="lineNum">     231 </span>        [<span class="branchCov" title="Branch 0 was taken 4 times"> + </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">         25 :     if (!result) {</span></a>
+<a name="232"><span class="lineNum">     232 </span>  [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchCov" title="Branch 2 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          6 :         if ((csr_tracking_tag == 0xFF) &amp;&amp;</span></a>
+<a name="233"><span class="lineNum">     233 </span>                :<span class="lineCov">          2 :             (libspdm_get_connection_version(spdm_context) &gt;= SPDM_MESSAGE_VERSION_13)) {</span></a>
+<a name="234"><span class="lineNum">     234 </span>                :<span class="lineCov">          2 :             return libspdm_generate_error_response(</span></a>
+<a name="235"><span class="lineNum">     235 </span>                :            :                 spdm_context,</a>
+<a name="236"><span class="lineNum">     236 </span>                :            :                 SPDM_ERROR_CODE_BUSY, 0,</a>
+<a name="237"><span class="lineNum">     237 </span>                :            :                 response_size, response);</a>
+<a name="238"><span class="lineNum">     238 </span>                :            :         } else {</a>
+<a name="239"><span class="lineNum">     239 </span>                :<span class="lineCov">          2 :             return libspdm_generate_error_response(</span></a>
+<a name="240"><span class="lineNum">     240 </span>                :            :                 spdm_context,</a>
+<a name="241"><span class="lineNum">     241 </span>                :            :                 SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,</a>
+<a name="242"><span class="lineNum">     242 </span>                :            :                 response_size, response);</a>
+<a name="243"><span class="lineNum">     243 </span>                :            :         }</a>
+<a name="244"><span class="lineNum">     244 </span>                :            :     }</a>
+<a name="245"><span class="lineNum">     245 </span>                :            : </a>
+<a name="246"><span class="lineNum">     246 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 21 times"> + </span>]:<span class="lineCov">         21 :     LIBSPDM_ASSERT(*response_size &gt;= sizeof(spdm_csr_response_t) + csr_len);</span></a>
+<a name="247"><span class="lineNum">     247 </span>                :<span class="lineCov">         21 :     *response_size = sizeof(spdm_csr_response_t) + csr_len;</span></a>
+<a name="248"><span class="lineNum">     248 </span>                :            : </a>
+<a name="249"><span class="lineNum">     249 </span>        [<span class="branchCov" title="Branch 0 was taken 15 times"> + </span><span class="branchCov" title="Branch 1 was taken 6 times"> + </span>]:<span class="lineCov">         21 :     if (libspdm_is_capabilities_flag_supported(</span></a>
+<a name="250"><span class="lineNum">     250 </span>                :            :             spdm_context, false, 0,</a>
+<a name="251"><span class="lineNum">     251 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">         15 :             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_INSTALL_RESET_CAP) &amp;&amp;</span></a>
+<a name="252"><span class="lineNum">     252 </span>                :            :         need_reset) {</a>
+<a name="253"><span class="lineNum">     253 </span>                :<span class="lineCov">         13 :         return libspdm_generate_error_response(spdm_context,</span></a>
+<a name="254"><span class="lineNum">     254 </span>                :            :                                                SPDM_ERROR_CODE_RESET_REQUIRED, csr_tracking_tag,</a>
+<a name="255"><span class="lineNum">     255 </span>                :            :                                                response_size, response);</a>
+<a name="256"><span class="lineNum">     256 </span>                :            :     } else {</a>
+<a name="257"><span class="lineNum">     257 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.spdm_version = spdm_request-&gt;header.spdm_version;</span></a>
+<a name="258"><span class="lineNum">     258 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.request_response_code = SPDM_CSR;</span></a>
+<a name="259"><span class="lineNum">     259 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.param1 = 0;</span></a>
+<a name="260"><span class="lineNum">     260 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;header.param2 = 0;</span></a>
+<a name="261"><span class="lineNum">     261 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;csr_length = (uint16_t)csr_len;</span></a>
+<a name="262"><span class="lineNum">     262 </span>                :<span class="lineCov">          8 :         spdm_response-&gt;reserved = 0;</span></a>
+<a name="263"><span class="lineNum">     263 </span>                :            :     }</a>
+<a name="264"><span class="lineNum">     264 </span>                :            : </a>
+<a name="265"><span class="lineNum">     265 </span>                :<span class="lineCov">          8 :     return LIBSPDM_STATUS_SUCCESS;</span></a>
+<a name="266"><span class="lineNum">     266 </span>                :            : }</a>
+<a name="267"><span class="lineNum">     267 </span>                :            : </a>
+<a name="268"><span class="lineNum">     268 </span>                :            : #endif /*LIBSPDM_ENABLE_CAPABILITY_CSR_CAP*/</a>
 </pre>
       </td>
     </tr>
