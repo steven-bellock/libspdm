@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">57</td>
-            <td class="headerCovTableEntry">83</td>
-            <td class="headerCovTableEntryLo">68.7 %</td>
+            <td class="headerCovTableEntry">60</td>
+            <td class="headerCovTableEntry">90</td>
+            <td class="headerCovTableEntryLo">66.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-04-04 08:15:21</td>
+            <td class="headerValue">2024-04-05 08:14:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">22</td>
-            <td class="headerCovTableEntry">48</td>
-            <td class="headerCovTableEntryLo">45.8 %</td>
+            <td class="headerCovTableEntry">24</td>
+            <td class="headerCovTableEntry">52</td>
+            <td class="headerCovTableEntryLo">46.2 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -137,7 +137,7 @@
 <a name="66"><span class="lineNum">      66 </span>                :<span class="lineCov">          2 :     spdm_request-&gt;header.request_response_code = SPDM_GET_SUPPORTED_EVENT_TYPES;</span></a>
 <a name="67"><span class="lineNum">      67 </span>                :<span class="lineCov">          2 :     spdm_request-&gt;header.param1 = 0;</span></a>
 <a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">          2 :     spdm_request-&gt;header.param2 = 0;</span></a>
-<a name="69"><span class="lineNum">      69 </span>                :<span class="lineCov">          2 :     spdm_request_size = sizeof(spdm_heartbeat_request_t);</span></a>
+<a name="69"><span class="lineNum">      69 </span>                :<span class="lineCov">          2 :     spdm_request_size = sizeof(spdm_get_supported_event_types_request_t);</span></a>
 <a name="70"><span class="lineNum">      70 </span>                :            : </a>
 <a name="71"><span class="lineNum">      71 </span>                :            :     /* -=[Send Request Phase]=- */</a>
 <a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">          2 :     status = libspdm_send_spdm_request(spdm_context, &amp;session_id, spdm_request_size, spdm_request);</span></a>
@@ -189,58 +189,67 @@
 <a name="118"><span class="lineNum">     118 </span>                :<span class="lineCov">          1 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
 <a name="119"><span class="lineNum">     119 </span>                :<span class="lineCov">          1 :         goto receive_done;</span></a>
 <a name="120"><span class="lineNum">     120 </span>                :            :     }</a>
-<a name="121"><span class="lineNum">     121 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (spdm_response-&gt;supported_event_groups_list_len == 0) {</span></a>
-<a name="122"><span class="lineNum">     122 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
+<a name="121"><span class="lineNum">     121 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (spdm_response_size &lt; sizeof(spdm_supported_event_types_response_t)) {</span></a>
+<a name="122"><span class="lineNum">     122 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
 <a name="123"><span class="lineNum">     123 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="124"><span class="lineNum">     124 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     } else if (spdm_response-&gt;supported_event_groups_list_len &gt; *supported_event_groups_list_len) {</span></a>
-<a name="125"><span class="lineNum">     125 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
-<a name="126"><span class="lineNum">     126 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
-<a name="127"><span class="lineNum">     127 </span>                :            :     }</a>
-<a name="128"><span class="lineNum">     128 </span>                :            : </a>
-<a name="129"><span class="lineNum">     129 </span>                :            :     /* -=[Process Response Phase]=- */</a>
-<a name="130"><span class="lineNum">     130 </span>                :<span class="lineCov">          1 :     *event_group_count = spdm_response-&gt;header.param1;</span></a>
-<a name="131"><span class="lineNum">     131 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(supported_event_groups_list, *supported_event_groups_list_len,</span></a>
-<a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">          1 :                      spdm_response + 1, spdm_response-&gt;supported_event_groups_list_len);</span></a>
-<a name="133"><span class="lineNum">     133 </span>                :<span class="lineCov">          1 :     *supported_event_groups_list_len = spdm_response-&gt;supported_event_groups_list_len;</span></a>
-<a name="134"><span class="lineNum">     134 </span>                :            : </a>
-<a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">          2 : receive_done:</span></a>
-<a name="136"><span class="lineNum">     136 </span>                :<span class="lineCov">          2 :     libspdm_release_receiver_buffer(spdm_context);</span></a>
+<a name="124"><span class="lineNum">     124 </span>                :            :     }</a>
+<a name="125"><span class="lineNum">     125 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     if (spdm_response-&gt;supported_event_groups_list_len == 0) {</span></a>
+<a name="126"><span class="lineNum">     126 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_FIELD;</span></a>
+<a name="127"><span class="lineNum">     127 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="128"><span class="lineNum">     128 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :     } else if (spdm_response-&gt;supported_event_groups_list_len &gt; *supported_event_groups_list_len) {</span></a>
+<a name="129"><span class="lineNum">     129 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_BUFFER_TOO_SMALL;</span></a>
+<a name="130"><span class="lineNum">     130 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="131"><span class="lineNum">     131 </span>                :            :     }</a>
+<a name="132"><span class="lineNum">     132 </span>                :<span class="lineCov">          1 :     if (spdm_response_size != sizeof(spdm_supported_event_types_response_t) +</span></a>
+<a name="133"><span class="lineNum">     133 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :         (uint64_t)spdm_response-&gt;supported_event_groups_list_len) {</span></a>
+<a name="134"><span class="lineNum">     134 </span>                :<span class="lineNoCov">          0 :         status = LIBSPDM_STATUS_INVALID_MSG_SIZE;</span></a>
+<a name="135"><span class="lineNum">     135 </span>                :<span class="lineNoCov">          0 :         goto receive_done;</span></a>
+<a name="136"><span class="lineNum">     136 </span>                :            :     }</a>
 <a name="137"><span class="lineNum">     137 </span>                :            : </a>
-<a name="138"><span class="lineNum">     138 </span>                :<span class="lineCov">          2 :     return status;</span></a>
-<a name="139"><span class="lineNum">     139 </span>                :            : }</a>
-<a name="140"><span class="lineNum">     140 </span>                :            : </a>
-<a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">          2 : libspdm_return_t libspdm_get_event_types(void *spdm_context,</span></a>
-<a name="142"><span class="lineNum">     142 </span>                :            :                                          uint32_t session_id,</a>
-<a name="143"><span class="lineNum">     143 </span>                :            :                                          uint8_t *event_group_count,</a>
-<a name="144"><span class="lineNum">     144 </span>                :            :                                          uint32_t *supported_event_groups_list_len,</a>
-<a name="145"><span class="lineNum">     145 </span>                :            :                                          void *supported_event_groups_list)</a>
-<a name="146"><span class="lineNum">     146 </span>                :            : {</a>
-<a name="147"><span class="lineNum">     147 </span>                :            :     size_t retry;</a>
-<a name="148"><span class="lineNum">     148 </span>                :            :     uint64_t retry_delay_time;</a>
-<a name="149"><span class="lineNum">     149 </span>                :            :     libspdm_return_t status;</a>
-<a name="150"><span class="lineNum">     150 </span>                :            :     libspdm_context_t *context;</a>
-<a name="151"><span class="lineNum">     151 </span>                :            : </a>
-<a name="152"><span class="lineNum">     152 </span>                :<span class="lineCov">          2 :     context = spdm_context;</span></a>
-<a name="153"><span class="lineNum">     153 </span>                :<span class="lineCov">          2 :     context-&gt;crypto_request = true;</span></a>
-<a name="154"><span class="lineNum">     154 </span>                :<span class="lineCov">          2 :     retry = context-&gt;retry_times;</span></a>
-<a name="155"><span class="lineNum">     155 </span>                :<span class="lineCov">          2 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
-<a name="156"><span class="lineNum">     156 </span>                :            :     do {</a>
-<a name="157"><span class="lineNum">     157 </span>                :<span class="lineCov">          2 :         status = libspdm_try_get_event_types(context,</span></a>
-<a name="158"><span class="lineNum">     158 </span>                :            :                                              session_id,</a>
-<a name="159"><span class="lineNum">     159 </span>                :            :                                              event_group_count,</a>
-<a name="160"><span class="lineNum">     160 </span>                :            :                                              supported_event_groups_list_len,</a>
-<a name="161"><span class="lineNum">     161 </span>                :            :                                              supported_event_groups_list);</a>
-<a name="162"><span class="lineNum">     162 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
-<a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">          2 :             return status;</span></a>
-<a name="164"><span class="lineNum">     164 </span>                :            :         }</a>
-<a name="165"><span class="lineNum">     165 </span>                :            : </a>
-<a name="166"><span class="lineNum">     166 </span>                :<span class="lineNoCov">          0 :         libspdm_sleep(retry_delay_time);</span></a>
-<a name="167"><span class="lineNum">     167 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
-<a name="168"><span class="lineNum">     168 </span>                :            : </a>
-<a name="169"><span class="lineNum">     169 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
-<a name="170"><span class="lineNum">     170 </span>                :            : }</a>
-<a name="171"><span class="lineNum">     171 </span>                :            : </a>
-<a name="172"><span class="lineNum">     172 </span>                :            : #endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */</a>
+<a name="138"><span class="lineNum">     138 </span>                :            :     /* -=[Process Response Phase]=- */</a>
+<a name="139"><span class="lineNum">     139 </span>                :<span class="lineCov">          1 :     *event_group_count = spdm_response-&gt;header.param1;</span></a>
+<a name="140"><span class="lineNum">     140 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(supported_event_groups_list, *supported_event_groups_list_len,</span></a>
+<a name="141"><span class="lineNum">     141 </span>                :<span class="lineCov">          1 :                      spdm_response + 1, spdm_response-&gt;supported_event_groups_list_len);</span></a>
+<a name="142"><span class="lineNum">     142 </span>                :<span class="lineCov">          1 :     *supported_event_groups_list_len = spdm_response-&gt;supported_event_groups_list_len;</span></a>
+<a name="143"><span class="lineNum">     143 </span>                :            : </a>
+<a name="144"><span class="lineNum">     144 </span>                :<span class="lineCov">          2 : receive_done:</span></a>
+<a name="145"><span class="lineNum">     145 </span>                :<span class="lineCov">          2 :     libspdm_release_receiver_buffer(spdm_context);</span></a>
+<a name="146"><span class="lineNum">     146 </span>                :            : </a>
+<a name="147"><span class="lineNum">     147 </span>                :<span class="lineCov">          2 :     return status;</span></a>
+<a name="148"><span class="lineNum">     148 </span>                :            : }</a>
+<a name="149"><span class="lineNum">     149 </span>                :            : </a>
+<a name="150"><span class="lineNum">     150 </span>                :<span class="lineCov">          2 : libspdm_return_t libspdm_get_event_types(void *spdm_context,</span></a>
+<a name="151"><span class="lineNum">     151 </span>                :            :                                          uint32_t session_id,</a>
+<a name="152"><span class="lineNum">     152 </span>                :            :                                          uint8_t *event_group_count,</a>
+<a name="153"><span class="lineNum">     153 </span>                :            :                                          uint32_t *supported_event_groups_list_len,</a>
+<a name="154"><span class="lineNum">     154 </span>                :            :                                          void *supported_event_groups_list)</a>
+<a name="155"><span class="lineNum">     155 </span>                :            : {</a>
+<a name="156"><span class="lineNum">     156 </span>                :            :     size_t retry;</a>
+<a name="157"><span class="lineNum">     157 </span>                :            :     uint64_t retry_delay_time;</a>
+<a name="158"><span class="lineNum">     158 </span>                :            :     libspdm_return_t status;</a>
+<a name="159"><span class="lineNum">     159 </span>                :            :     libspdm_context_t *context;</a>
+<a name="160"><span class="lineNum">     160 </span>                :            : </a>
+<a name="161"><span class="lineNum">     161 </span>                :<span class="lineCov">          2 :     context = spdm_context;</span></a>
+<a name="162"><span class="lineNum">     162 </span>                :<span class="lineCov">          2 :     context-&gt;crypto_request = true;</span></a>
+<a name="163"><span class="lineNum">     163 </span>                :<span class="lineCov">          2 :     retry = context-&gt;retry_times;</span></a>
+<a name="164"><span class="lineNum">     164 </span>                :<span class="lineCov">          2 :     retry_delay_time = context-&gt;retry_delay_time;</span></a>
+<a name="165"><span class="lineNum">     165 </span>                :            :     do {</a>
+<a name="166"><span class="lineNum">     166 </span>                :<span class="lineCov">          2 :         status = libspdm_try_get_event_types(context,</span></a>
+<a name="167"><span class="lineNum">     167 </span>                :            :                                              session_id,</a>
+<a name="168"><span class="lineNum">     168 </span>                :            :                                              event_group_count,</a>
+<a name="169"><span class="lineNum">     169 </span>                :            :                                              supported_event_groups_list_len,</a>
+<a name="170"><span class="lineNum">     170 </span>                :            :                                              supported_event_groups_list);</a>
+<a name="171"><span class="lineNum">     171 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span>]:<span class="lineCov">          2 :         if ((status != LIBSPDM_STATUS_BUSY_PEER) || (retry == 0)) {</span></a>
+<a name="172"><span class="lineNum">     172 </span>                :<span class="lineCov">          2 :             return status;</span></a>
+<a name="173"><span class="lineNum">     173 </span>                :            :         }</a>
+<a name="174"><span class="lineNum">     174 </span>                :            : </a>
+<a name="175"><span class="lineNum">     175 </span>                :<span class="lineNoCov">          0 :         libspdm_sleep(retry_delay_time);</span></a>
+<a name="176"><span class="lineNum">     176 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     } while (retry-- != 0);</span></a>
+<a name="177"><span class="lineNum">     177 </span>                :            : </a>
+<a name="178"><span class="lineNum">     178 </span>                :<span class="lineNoCov">          0 :     return status;</span></a>
+<a name="179"><span class="lineNum">     179 </span>                :            : }</a>
+<a name="180"><span class="lineNum">     180 </span>                :            : </a>
+<a name="181"><span class="lineNum">     181 </span>                :            : #endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */</a>
 </pre>
       </td>
     </tr>
