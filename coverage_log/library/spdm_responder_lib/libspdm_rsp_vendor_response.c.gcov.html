@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">64</td>
-            <td class="headerCovTableEntry">81</td>
-            <td class="headerCovTableEntryMed">79.0 %</td>
+            <td class="headerCovTableEntry">62</td>
+            <td class="headerCovTableEntry">79</td>
+            <td class="headerCovTableEntryMed">78.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-05-07 08:14:49</td>
+            <td class="headerValue">2024-05-08 08:13:15</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -252,44 +252,41 @@
 <a name="181"><span class="lineNum">     181 </span>                :<span class="lineCov">          1 :     spdm_response-&gt;len = SPDM_MAX_VENDOR_ID_LENGTH;</span></a>
 <a name="182"><span class="lineNum">     182 </span>                :<span class="lineCov">          1 :     resp_data = ((uint8_t *)response) + sizeof(spdm_vendor_defined_response_msg_t);</span></a>
 <a name="183"><span class="lineNum">     183 </span>                :            : </a>
-<a name="184"><span class="lineNum">     184 </span>                :<span class="lineCov">          1 :     req_vendor_id = ((const uint8_t *)request) +</span></a>
-<a name="185"><span class="lineNum">     185 </span>                :            :                     sizeof(spdm_vendor_defined_request_msg_t);</a>
-<a name="186"><span class="lineNum">     186 </span>                :<span class="lineCov">          1 :     req_size = *(const uint16_t *)(req_vendor_id + spdm_request-&gt;len);</span></a>
-<a name="187"><span class="lineNum">     187 </span>                :<span class="lineCov">          1 :     req_data = ((const uint8_t *)request) +</span></a>
-<a name="188"><span class="lineNum">     188 </span>                :            :                sizeof(spdm_vendor_defined_request_msg_t) +</a>
-<a name="189"><span class="lineNum">     189 </span>                :<span class="lineCov">          1 :                ((const spdm_vendor_defined_request_msg_t*)request)-&gt;len +</span></a>
-<a name="190"><span class="lineNum">     190 </span>                :            :                sizeof(uint16_t);</a>
-<a name="191"><span class="lineNum">     191 </span>                :            : </a>
-<a name="192"><span class="lineNum">     192 </span>                :<span class="lineCov">          1 :     status = spdm_context-&gt;vendor_response_get_id(</span></a>
-<a name="193"><span class="lineNum">     193 </span>                :            :         spdm_context,</a>
-<a name="194"><span class="lineNum">     194 </span>                :            :         &amp;spdm_response-&gt;standard_id,</a>
-<a name="195"><span class="lineNum">     195 </span>                :            :         &amp;spdm_response-&gt;len,</a>
-<a name="196"><span class="lineNum">     196 </span>                :            :         resp_data);</a>
-<a name="197"><span class="lineNum">     197 </span>                :            : </a>
-<a name="198"><span class="lineNum">     198 </span>                :            :     /* move pointer and adjust buffer size */</a>
-<a name="199"><span class="lineNum">     199 </span>                :<span class="lineCov">          1 :     resp_data += spdm_response-&gt;len + sizeof(uint16_t);</span></a>
-<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">          1 :     response_capacity -= spdm_response-&gt;len + sizeof(uint16_t);</span></a>
-<a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">          1 :     resp_size = (uint16_t)response_capacity;</span></a>
-<a name="202"><span class="lineNum">     202 </span>                :            : </a>
-<a name="203"><span class="lineNum">     203 </span>                :<span class="lineCov">          1 :     status = spdm_context-&gt;vendor_response_callback(spdm_context,</span></a>
-<a name="204"><span class="lineNum">     204 </span>                :<span class="lineCov">          1 :                                                     spdm_request-&gt;standard_id,</span></a>
-<a name="205"><span class="lineNum">     205 </span>                :<span class="lineCov">          1 :                                                     spdm_request-&gt;len,</span></a>
-<a name="206"><span class="lineNum">     206 </span>                :            :                                                     req_vendor_id, req_size, req_data,</a>
-<a name="207"><span class="lineNum">     207 </span>                :            :                                                     &amp;resp_size,</a>
-<a name="208"><span class="lineNum">     208 </span>                :            :                                                     resp_data</a>
-<a name="209"><span class="lineNum">     209 </span>                :            :                                                     );</a>
-<a name="210"><span class="lineNum">     210 </span>                :            : </a>
-<a name="211"><span class="lineNum">     211 </span>                :            :     /* store back the response payload size */</a>
-<a name="212"><span class="lineNum">     212 </span>                :<span class="lineCov">          1 :     *((uint16_t*)(resp_data - sizeof(uint16_t))) = resp_size;</span></a>
-<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">          1 :     *response_size = resp_size + (size_t)header_length;</span></a>
+<a name="184"><span class="lineNum">     184 </span>                :<span class="lineCov">          1 :     req_data = ((const uint8_t *)request) +</span></a>
+<a name="185"><span class="lineNum">     185 </span>                :            :                sizeof(spdm_vendor_defined_request_msg_t) +</a>
+<a name="186"><span class="lineNum">     186 </span>                :<span class="lineCov">          1 :                ((const spdm_vendor_defined_request_msg_t*)request)-&gt;len +</span></a>
+<a name="187"><span class="lineNum">     187 </span>                :            :                sizeof(uint16_t);</a>
+<a name="188"><span class="lineNum">     188 </span>                :            : </a>
+<a name="189"><span class="lineNum">     189 </span>                :<span class="lineCov">          1 :     status = spdm_context-&gt;vendor_response_get_id(</span></a>
+<a name="190"><span class="lineNum">     190 </span>                :            :         spdm_context,</a>
+<a name="191"><span class="lineNum">     191 </span>                :            :         &amp;spdm_response-&gt;standard_id,</a>
+<a name="192"><span class="lineNum">     192 </span>                :            :         &amp;spdm_response-&gt;len,</a>
+<a name="193"><span class="lineNum">     193 </span>                :            :         resp_data);</a>
+<a name="194"><span class="lineNum">     194 </span>                :            : </a>
+<a name="195"><span class="lineNum">     195 </span>                :            :     /* move pointer and adjust buffer size */</a>
+<a name="196"><span class="lineNum">     196 </span>                :<span class="lineCov">          1 :     resp_data += spdm_response-&gt;len + sizeof(uint16_t);</span></a>
+<a name="197"><span class="lineNum">     197 </span>                :<span class="lineCov">          1 :     response_capacity -= spdm_response-&gt;len + sizeof(uint16_t);</span></a>
+<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">          1 :     resp_size = (uint16_t)response_capacity;</span></a>
+<a name="199"><span class="lineNum">     199 </span>                :            : </a>
+<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">          1 :     status = spdm_context-&gt;vendor_response_callback(spdm_context,</span></a>
+<a name="201"><span class="lineNum">     201 </span>                :<span class="lineCov">          1 :                                                     spdm_request-&gt;standard_id,</span></a>
+<a name="202"><span class="lineNum">     202 </span>                :<span class="lineCov">          1 :                                                     spdm_request-&gt;len,</span></a>
+<a name="203"><span class="lineNum">     203 </span>                :            :                                                     req_vendor_id, req_size, req_data,</a>
+<a name="204"><span class="lineNum">     204 </span>                :            :                                                     &amp;resp_size,</a>
+<a name="205"><span class="lineNum">     205 </span>                :            :                                                     resp_data</a>
+<a name="206"><span class="lineNum">     206 </span>                :            :                                                     );</a>
+<a name="207"><span class="lineNum">     207 </span>                :            : </a>
+<a name="208"><span class="lineNum">     208 </span>                :            :     /* store back the response payload size */</a>
+<a name="209"><span class="lineNum">     209 </span>                :<span class="lineCov">          1 :     *((uint16_t*)(resp_data - sizeof(uint16_t))) = resp_size;</span></a>
+<a name="210"><span class="lineNum">     210 </span>                :<span class="lineCov">          1 :     *response_size = resp_size + (size_t)header_length;</span></a>
+<a name="211"><span class="lineNum">     211 </span>                :            : </a>
+<a name="212"><span class="lineNum">     212 </span>                :            :     LIBSPDM_ASSERT(sizeof(spdm_vendor_defined_request_msg_t) ==</a>
+<a name="213"><span class="lineNum">     213 </span>                :            :                    SPDM_VENDOR_DEFINED_FIXED_HEADER_LEN);</a>
 <a name="214"><span class="lineNum">     214 </span>                :            : </a>
-<a name="215"><span class="lineNum">     215 </span>                :            :     LIBSPDM_ASSERT(sizeof(spdm_vendor_defined_request_msg_t) ==</a>
-<a name="216"><span class="lineNum">     216 </span>                :            :                    SPDM_VENDOR_DEFINED_FIXED_HEADER_LEN);</a>
+<a name="215"><span class="lineNum">     215 </span>                :<span class="lineCov">          1 :     return status;</span></a>
+<a name="216"><span class="lineNum">     216 </span>                :            : }</a>
 <a name="217"><span class="lineNum">     217 </span>                :            : </a>
-<a name="218"><span class="lineNum">     218 </span>                :<span class="lineCov">          1 :     return status;</span></a>
-<a name="219"><span class="lineNum">     219 </span>                :            : }</a>
-<a name="220"><span class="lineNum">     220 </span>                :            : </a>
-<a name="221"><span class="lineNum">     221 </span>                :            : #endif /* LIBSPDM_ENABLE_VENDOR_DEFINED_MESSAGES */</a>
+<a name="218"><span class="lineNum">     218 </span>                :            : #endif /* LIBSPDM_ENABLE_VENDOR_DEFINED_MESSAGES */</a>
 </pre>
       </td>
     </tr>
