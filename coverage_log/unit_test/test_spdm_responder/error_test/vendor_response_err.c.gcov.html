@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">36</td>
-            <td class="headerCovTableEntry">45</td>
-            <td class="headerCovTableEntryMed">80.0 %</td>
+            <td class="headerCovTableEntry">35</td>
+            <td class="headerCovTableEntry">44</td>
+            <td class="headerCovTableEntryMed">79.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-05-29 08:15:59</td>
+            <td class="headerValue">2024-05-31 08:15:33</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -140,7 +140,7 @@
 <a name="69"><span class="lineNum">      69 </span>                :            :     libspdm_return_t status;</a>
 <a name="70"><span class="lineNum">      70 </span>                :            :     libspdm_test_context_t *spdm_test_context;</a>
 <a name="71"><span class="lineNum">      71 </span>                :            :     libspdm_context_t *spdm_context;</a>
-<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">          1 :     uint8_t request_buffer[255] = {0};</span></a>
+<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">          1 :     uint8_t request_buffer[LIBSPDM_MAX_SPDM_MSG_SIZE] = {0};</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :            :     libspdm_vendor_request_test request;</a>
 <a name="74"><span class="lineNum">      74 </span>                :<span class="lineCov">          1 :     libspdm_vendor_response_test response = {0};</span></a>
 <a name="75"><span class="lineNum">      75 </span>                :<span class="lineCov">          1 :     response.vendor_id_len = sizeof(response.vendor_id);</span></a>
@@ -164,53 +164,52 @@
 <a name="93"><span class="lineNum">      93 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);</span></a>
 <a name="94"><span class="lineNum">      94 </span>                :            : </a>
 <a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">          1 :     request.standard_id = 6;</span></a>
-<a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">          1 :     request.vendor_id_len = 2;</span></a>
-<a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">          1 :     request.vendor_id[0] = 0xAA;</span></a>
-<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">          1 :     request.vendor_id[1] = 0xAA;</span></a>
-<a name="99"><span class="lineNum">      99 </span>                :<span class="lineCov">          1 :     request.data_len = sizeof(request.data);</span></a>
-<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request.data, sizeof(request.data), 0xAA);</span></a>
-<a name="101"><span class="lineNum">     101 </span>                :            : </a>
-<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">          1 :     response_len = sizeof(response);</span></a>
-<a name="103"><span class="lineNum">     103 </span>                :            : </a>
-<a name="104"><span class="lineNum">     104 </span>                :            :     /* copy header of request structure to buffer */</a>
-<a name="105"><span class="lineNum">     105 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(request_buffer, 255, &amp;request,</span></a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">          1 :                      sizeof(request.header) + 3 + request.vendor_id_len);</span></a>
-<a name="107"><span class="lineNum">     107 </span>                :            :     /* copy the request data to the correct offset in the request_buffer */</a>
-<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(request_buffer + sizeof(request.header) + 3 + request.vendor_id_len,</span></a>
-<a name="109"><span class="lineNum">     109 </span>                :<span class="lineCov">          1 :                      request.data_len + 2, &amp;request.data_len, request.data_len + 2);</span></a>
-<a name="110"><span class="lineNum">     110 </span>                :            : </a>
-<a name="111"><span class="lineNum">     111 </span>                :            :     /* requires correctly encoded spdm vendor request message */</a>
-<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">          1 :     status = libspdm_get_vendor_defined_response(spdm_context, sizeof(request),</span></a>
-<a name="113"><span class="lineNum">     113 </span>                :            :                                                  request_buffer, &amp;response_len, NULL);</a>
-<a name="114"><span class="lineNum">     114 </span>                :            : </a>
-<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_PARAMETER);</span></a>
-<a name="116"><span class="lineNum">     116 </span>                :<span class="lineCov">          1 :     assert_int_equal(</span></a>
-<a name="117"><span class="lineNum">     117 </span>                :            :         spdm_context-&gt;connection_info.version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT,</a>
-<a name="118"><span class="lineNum">     118 </span>                :            :         SPDM_MESSAGE_VERSION_10);</a>
-<a name="119"><span class="lineNum">     119 </span>                :            : </a>
-<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">          1 :     response.data_len = (uint16_t)response_len;</span></a>
-<a name="121"><span class="lineNum">     121 </span>                :<span class="lineCov">          1 : }</span></a>
-<a name="122"><span class="lineNum">     122 </span>                :            : </a>
-<a name="123"><span class="lineNum">     123 </span>                :            : libspdm_test_context_t m_libspdm_responder_vendor_cmds_err_test_context = {</a>
-<a name="124"><span class="lineNum">     124 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
-<a name="125"><span class="lineNum">     125 </span>                :            :     true,</a>
-<a name="126"><span class="lineNum">     126 </span>                :            : };</a>
-<a name="127"><span class="lineNum">     127 </span>                :            : </a>
-<a name="128"><span class="lineNum">     128 </span>                :<span class="lineCov">          1 : int libspdm_responder_vendor_cmds_error_test_main(void)</span></a>
-<a name="129"><span class="lineNum">     129 </span>                :            : {</a>
-<a name="130"><span class="lineNum">     130 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_vendor_cmds_tests[] = {</span></a>
-<a name="131"><span class="lineNum">     131 </span>                :            :         cmocka_unit_test(libspdm_test_responder_vendor_cmds_err_case1),</a>
-<a name="132"><span class="lineNum">     132 </span>                :            :     };</a>
-<a name="133"><span class="lineNum">     133 </span>                :            : </a>
-<a name="134"><span class="lineNum">     134 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_vendor_cmds_err_test_context);</span></a>
-<a name="135"><span class="lineNum">     135 </span>                :            : </a>
-<a name="136"><span class="lineNum">     136 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_vendor_cmds_tests,</span></a>
-<a name="137"><span class="lineNum">     137 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
-<a name="138"><span class="lineNum">     138 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
-<a name="139"><span class="lineNum">     139 </span>                :            : }</a>
+<a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">          1 :     request.vendor_id_len = sizeof(request.vendor_id);</span></a>
+<a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request.vendor_id, sizeof(request.vendor_id), 0xAA);</span></a>
+<a name="98"><span class="lineNum">      98 </span>                :<span class="lineCov">          1 :     request.data_len = sizeof(request.data);</span></a>
+<a name="99"><span class="lineNum">      99 </span>                :<span class="lineCov">          1 :     libspdm_set_mem(request.data, sizeof(request.data), 0xAA);</span></a>
+<a name="100"><span class="lineNum">     100 </span>                :            : </a>
+<a name="101"><span class="lineNum">     101 </span>                :<span class="lineCov">          1 :     response_len = sizeof(response);</span></a>
+<a name="102"><span class="lineNum">     102 </span>                :            : </a>
+<a name="103"><span class="lineNum">     103 </span>                :            :     /* copy header of request structure to buffer */</a>
+<a name="104"><span class="lineNum">     104 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(request_buffer, sizeof(request_buffer), &amp;request,</span></a>
+<a name="105"><span class="lineNum">     105 </span>                :<span class="lineCov">          1 :                      sizeof(request.header) + 3 + request.vendor_id_len);</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :            :     /* copy the request data to the correct offset in the request_buffer */</a>
+<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">          1 :     libspdm_copy_mem(request_buffer + sizeof(request.header) + 3 + request.vendor_id_len,</span></a>
+<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">          1 :                      request.data_len + 2, &amp;request.data_len, request.data_len + 2);</span></a>
+<a name="109"><span class="lineNum">     109 </span>                :            : </a>
+<a name="110"><span class="lineNum">     110 </span>                :            :     /* requires correctly encoded spdm vendor request message */</a>
+<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">          1 :     status = libspdm_get_vendor_defined_response(spdm_context, sizeof(request),</span></a>
+<a name="112"><span class="lineNum">     112 </span>                :            :                                                  request_buffer, &amp;response_len, NULL);</a>
+<a name="113"><span class="lineNum">     113 </span>                :            : </a>
+<a name="114"><span class="lineNum">     114 </span>                :<span class="lineCov">          1 :     assert_int_equal(status, LIBSPDM_STATUS_INVALID_PARAMETER);</span></a>
+<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">          1 :     assert_int_equal(</span></a>
+<a name="116"><span class="lineNum">     116 </span>                :            :         spdm_context-&gt;connection_info.version &gt;&gt; SPDM_VERSION_NUMBER_SHIFT_BIT,</a>
+<a name="117"><span class="lineNum">     117 </span>                :            :         SPDM_MESSAGE_VERSION_10);</a>
+<a name="118"><span class="lineNum">     118 </span>                :            : </a>
+<a name="119"><span class="lineNum">     119 </span>                :<span class="lineCov">          1 :     response.data_len = (uint16_t)response_len;</span></a>
+<a name="120"><span class="lineNum">     120 </span>                :<span class="lineCov">          1 : }</span></a>
+<a name="121"><span class="lineNum">     121 </span>                :            : </a>
+<a name="122"><span class="lineNum">     122 </span>                :            : libspdm_test_context_t m_libspdm_responder_vendor_cmds_err_test_context = {</a>
+<a name="123"><span class="lineNum">     123 </span>                :            :     LIBSPDM_TEST_CONTEXT_VERSION,</a>
+<a name="124"><span class="lineNum">     124 </span>                :            :     true,</a>
+<a name="125"><span class="lineNum">     125 </span>                :            : };</a>
+<a name="126"><span class="lineNum">     126 </span>                :            : </a>
+<a name="127"><span class="lineNum">     127 </span>                :<span class="lineCov">          1 : int libspdm_responder_vendor_cmds_error_test_main(void)</span></a>
+<a name="128"><span class="lineNum">     128 </span>                :            : {</a>
+<a name="129"><span class="lineNum">     129 </span>                :<span class="lineCov">          1 :     const struct CMUnitTest spdm_responder_vendor_cmds_tests[] = {</span></a>
+<a name="130"><span class="lineNum">     130 </span>                :            :         cmocka_unit_test(libspdm_test_responder_vendor_cmds_err_case1),</a>
+<a name="131"><span class="lineNum">     131 </span>                :            :     };</a>
+<a name="132"><span class="lineNum">     132 </span>                :            : </a>
+<a name="133"><span class="lineNum">     133 </span>                :<span class="lineCov">          1 :     libspdm_setup_test_context(&amp;m_libspdm_responder_vendor_cmds_err_test_context);</span></a>
+<a name="134"><span class="lineNum">     134 </span>                :            : </a>
+<a name="135"><span class="lineNum">     135 </span>                :<span class="lineCov">          1 :     return cmocka_run_group_tests(spdm_responder_vendor_cmds_tests,</span></a>
+<a name="136"><span class="lineNum">     136 </span>                :            :                                   libspdm_unit_test_group_setup,</a>
+<a name="137"><span class="lineNum">     137 </span>                :            :                                   libspdm_unit_test_group_teardown);</a>
+<a name="138"><span class="lineNum">     138 </span>                :            : }</a>
+<a name="139"><span class="lineNum">     139 </span>                :            : </a>
 <a name="140"><span class="lineNum">     140 </span>                :            : </a>
-<a name="141"><span class="lineNum">     141 </span>                :            : </a>
-<a name="142"><span class="lineNum">     142 </span>                :            : #endif /* LIBSPDM_ENABLE_VENDOR_DEFINED_MESSAGES */</a>
+<a name="141"><span class="lineNum">     141 </span>                :            : #endif /* LIBSPDM_ENABLE_VENDOR_DEFINED_MESSAGES */</a>
 </pre>
       </td>
     </tr>
