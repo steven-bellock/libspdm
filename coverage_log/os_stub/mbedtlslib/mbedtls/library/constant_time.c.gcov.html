@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-06-16 08:14:21</td>
+            <td class="headerValue">2024-06-17 08:16:42</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -136,20 +136,20 @@
 <a name="65"><span class="lineNum">      65 </span>                :            : #endif /* defined(MBEDTLS_EFFICIENT_UNALIGNED_ACCESS) &amp;&amp;</a>
 <a name="66"><span class="lineNum">      66 </span>                :            :           (defined(MBEDTLS_CT_ARM_ASM) || defined(MBEDTLS_CT_AARCH64_ASM)) */</a>
 <a name="67"><span class="lineNum">      67 </span>                :            : </a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">        618 : int mbedtls_ct_memcmp(const void *a,</span></a>
+<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">        620 : int mbedtls_ct_memcmp(const void *a,</span></a>
 <a name="69"><span class="lineNum">      69 </span>                :            :                       const void *b,</a>
 <a name="70"><span class="lineNum">      70 </span>                :            :                       size_t n)</a>
 <a name="71"><span class="lineNum">      71 </span>                :            : {</a>
-<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">        618 :     size_t i = 0;</span></a>
+<a name="72"><span class="lineNum">      72 </span>                :<span class="lineCov">        620 :     size_t i = 0;</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :            :     /*</a>
 <a name="74"><span class="lineNum">      74 </span>                :            :      * `A` and `B` are cast to volatile to ensure that the compiler</a>
 <a name="75"><span class="lineNum">      75 </span>                :            :      * generates code that always fully reads both buffers.</a>
 <a name="76"><span class="lineNum">      76 </span>                :            :      * Otherwise it could generate a test to exit early if `diff` has all</a>
 <a name="77"><span class="lineNum">      77 </span>                :            :      * bits set early in the loop.</a>
 <a name="78"><span class="lineNum">      78 </span>                :            :      */</a>
-<a name="79"><span class="lineNum">      79 </span>                :<span class="lineCov">        618 :     volatile const unsigned char *A = (volatile const unsigned char *) a;</span></a>
-<a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">        618 :     volatile const unsigned char *B = (volatile const unsigned char *) b;</span></a>
-<a name="81"><span class="lineNum">      81 </span>                :<span class="lineCov">        618 :     uint32_t diff = 0;</span></a>
+<a name="79"><span class="lineNum">      79 </span>                :<span class="lineCov">        620 :     volatile const unsigned char *A = (volatile const unsigned char *) a;</span></a>
+<a name="80"><span class="lineNum">      80 </span>                :<span class="lineCov">        620 :     volatile const unsigned char *B = (volatile const unsigned char *) b;</span></a>
+<a name="81"><span class="lineNum">      81 </span>                :<span class="lineCov">        620 :     uint32_t diff = 0;</span></a>
 <a name="82"><span class="lineNum">      82 </span>                :            : </a>
 <a name="83"><span class="lineNum">      83 </span>                :            : #if defined(MBEDTLS_EFFICIENT_UNALIGNED_VOLATILE_ACCESS)</a>
 <a name="84"><span class="lineNum">      84 </span>                :            :     for (; (i + 4) &lt;= n; i += 4) {</a>
@@ -159,12 +159,12 @@
 <a name="88"><span class="lineNum">      88 </span>                :            :     }</a>
 <a name="89"><span class="lineNum">      89 </span>                :            : #endif</a>
 <a name="90"><span class="lineNum">      90 </span>                :            : </a>
-<a name="91"><span class="lineNum">      91 </span>        [<span class="branchCov" title="Branch 0 was taken 142064 times"> + </span><span class="branchCov" title="Branch 1 was taken 618 times"> + </span>]:<span class="lineCov">     142682 :     for (; i &lt; n; i++) {</span></a>
+<a name="91"><span class="lineNum">      91 </span>        [<span class="branchCov" title="Branch 0 was taken 142960 times"> + </span><span class="branchCov" title="Branch 1 was taken 620 times"> + </span>]:<span class="lineCov">     143580 :     for (; i &lt; n; i++) {</span></a>
 <a name="92"><span class="lineNum">      92 </span>                :            :         /* Read volatile data in order before computing diff.</a>
 <a name="93"><span class="lineNum">      93 </span>                :            :          * This avoids IAR compiler warning:</a>
 <a name="94"><span class="lineNum">      94 </span>                :            :          * 'the order of volatile accesses is undefined ..' */</a>
-<a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">     142064 :         unsigned char x = A[i], y = B[i];</span></a>
-<a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">     142064 :         diff |= x ^ y;</span></a>
+<a name="95"><span class="lineNum">      95 </span>                :<span class="lineCov">     142960 :         unsigned char x = A[i], y = B[i];</span></a>
+<a name="96"><span class="lineNum">      96 </span>                :<span class="lineCov">     142960 :         diff |= x ^ y;</span></a>
 <a name="97"><span class="lineNum">      97 </span>                :            :     }</a>
 <a name="98"><span class="lineNum">      98 </span>                :            : </a>
 <a name="99"><span class="lineNum">      99 </span>                :            : </a>
@@ -183,7 +183,7 @@
 <a name="112"><span class="lineNum">     112 </span>                :            :      * This ensures that the value returned by the function is non-zero iff</a>
 <a name="113"><span class="lineNum">     113 </span>                :            :      * diff is non-zero.</a>
 <a name="114"><span class="lineNum">     114 </span>                :            :      */</a>
-<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">        618 :     return (int) ((diff &amp; 0xffff) | (diff &gt;&gt; 16));</span></a>
+<a name="115"><span class="lineNum">     115 </span>                :<span class="lineCov">        620 :     return (int) ((diff &amp; 0xffff) | (diff &gt;&gt; 16));</span></a>
 <a name="116"><span class="lineNum">     116 </span>                :            : #endif</a>
 <a name="117"><span class="lineNum">     117 </span>                :            : }</a>
 <a name="118"><span class="lineNum">     118 </span>                :            : </a>
@@ -238,15 +238,15 @@
 <a name="167"><span class="lineNum">     167 </span>                :            : </a>
 <a name="168"><span class="lineNum">     168 </span>                :            : #endif /* MBEDTLS_PKCS1_V15 &amp;&amp; MBEDTLS_RSA_C &amp;&amp; ! MBEDTLS_RSA_ALT */</a>
 <a name="169"><span class="lineNum">     169 </span>                :            : </a>
-<a name="170"><span class="lineNum">     170 </span>                :<span class="lineCov">     155702 : void mbedtls_ct_memcpy_if(mbedtls_ct_condition_t condition,</span></a>
+<a name="170"><span class="lineNum">     170 </span>                :<span class="lineCov">     155964 : void mbedtls_ct_memcpy_if(mbedtls_ct_condition_t condition,</span></a>
 <a name="171"><span class="lineNum">     171 </span>                :            :                           unsigned char *dest,</a>
 <a name="172"><span class="lineNum">     172 </span>                :            :                           const unsigned char *src1,</a>
 <a name="173"><span class="lineNum">     173 </span>                :            :                           const unsigned char *src2,</a>
 <a name="174"><span class="lineNum">     174 </span>                :            :                           size_t len)</a>
 <a name="175"><span class="lineNum">     175 </span>                :            : {</a>
 <a name="176"><span class="lineNum">     176 </span>                :            : #if defined(MBEDTLS_CT_SIZE_64)</a>
-<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">     155702 :     const uint64_t mask     = (uint64_t) condition;</span></a>
-<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">     155702 :     const uint64_t not_mask = (uint64_t) ~mbedtls_ct_compiler_opaque(condition);</span></a>
+<a name="177"><span class="lineNum">     177 </span>                :<span class="lineCov">     155964 :     const uint64_t mask     = (uint64_t) condition;</span></a>
+<a name="178"><span class="lineNum">     178 </span>                :<span class="lineCov">     155964 :     const uint64_t not_mask = (uint64_t) ~mbedtls_ct_compiler_opaque(condition);</span></a>
 <a name="179"><span class="lineNum">     179 </span>                :            : #else</a>
 <a name="180"><span class="lineNum">     180 </span>                :            :     const uint32_t mask     = (uint32_t) condition;</a>
 <a name="181"><span class="lineNum">     181 </span>                :            :     const uint32_t not_mask = (uint32_t) ~mbedtls_ct_compiler_opaque(condition);</a>
@@ -257,18 +257,18 @@
 <a name="186"><span class="lineNum">     186 </span>                :            :      * This means that if src2 == NULL &amp;&amp; condition is false, the result will be a</a>
 <a name="187"><span class="lineNum">     187 </span>                :            :      * no-op because we read from dest and write the same data back into dest.</a>
 <a name="188"><span class="lineNum">     188 </span>                :            :      */</a>
-<a name="189"><span class="lineNum">     189 </span>        [<span class="branchCov" title="Branch 0 was taken 155702 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">     155702 :     if (src2 == NULL) {</span></a>
-<a name="190"><span class="lineNum">     190 </span>                :<span class="lineCov">     155702 :         src2 = dest;</span></a>
+<a name="189"><span class="lineNum">     189 </span>        [<span class="branchCov" title="Branch 0 was taken 155964 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">     155964 :     if (src2 == NULL) {</span></a>
+<a name="190"><span class="lineNum">     190 </span>                :<span class="lineCov">     155964 :         src2 = dest;</span></a>
 <a name="191"><span class="lineNum">     191 </span>                :            :     }</a>
 <a name="192"><span class="lineNum">     192 </span>                :            : </a>
 <a name="193"><span class="lineNum">     193 </span>                :            :     /* dest[i] = c1 == c2 ? src[i] : dest[i] */</a>
-<a name="194"><span class="lineNum">     194 </span>                :<span class="lineCov">     155702 :     size_t i = 0;</span></a>
+<a name="194"><span class="lineNum">     194 </span>                :<span class="lineCov">     155964 :     size_t i = 0;</span></a>
 <a name="195"><span class="lineNum">     195 </span>                :            : #if defined(MBEDTLS_EFFICIENT_UNALIGNED_ACCESS)</a>
 <a name="196"><span class="lineNum">     196 </span>                :            : #if defined(MBEDTLS_CT_SIZE_64)</a>
-<a name="197"><span class="lineNum">     197 </span>        [<span class="branchCov" title="Branch 0 was taken 4576945 times"> + </span><span class="branchCov" title="Branch 1 was taken 155702 times"> + </span>]:<span class="lineCov">    4732647 :     for (; (i + 8) &lt;= len; i += 8) {</span></a>
-<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">    4576945 :         uint64_t a = mbedtls_get_unaligned_uint64(src1 + i) &amp; mask;</span></a>
-<a name="199"><span class="lineNum">     199 </span>                :<span class="lineCov">    4576945 :         uint64_t b = mbedtls_get_unaligned_uint64(src2 + i) &amp; not_mask;</span></a>
-<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">    4576945 :         mbedtls_put_unaligned_uint64(dest + i, a | b);</span></a>
+<a name="197"><span class="lineNum">     197 </span>        [<span class="branchCov" title="Branch 0 was taken 4591879 times"> + </span><span class="branchCov" title="Branch 1 was taken 155964 times"> + </span>]:<span class="lineCov">    4747843 :     for (; (i + 8) &lt;= len; i += 8) {</span></a>
+<a name="198"><span class="lineNum">     198 </span>                :<span class="lineCov">    4591879 :         uint64_t a = mbedtls_get_unaligned_uint64(src1 + i) &amp; mask;</span></a>
+<a name="199"><span class="lineNum">     199 </span>                :<span class="lineCov">    4591879 :         uint64_t b = mbedtls_get_unaligned_uint64(src2 + i) &amp; not_mask;</span></a>
+<a name="200"><span class="lineNum">     200 </span>                :<span class="lineCov">    4591879 :         mbedtls_put_unaligned_uint64(dest + i, a | b);</span></a>
 <a name="201"><span class="lineNum">     201 </span>                :            :     }</a>
 <a name="202"><span class="lineNum">     202 </span>                :            : #else</a>
 <a name="203"><span class="lineNum">     203 </span>                :            :     for (; (i + 4) &lt;= len; i += 4) {</a>
@@ -278,10 +278,10 @@
 <a name="207"><span class="lineNum">     207 </span>                :            :     }</a>
 <a name="208"><span class="lineNum">     208 </span>                :            : #endif /* defined(MBEDTLS_CT_SIZE_64) */</a>
 <a name="209"><span class="lineNum">     209 </span>                :            : #endif /* MBEDTLS_EFFICIENT_UNALIGNED_ACCESS */</a>
-<a name="210"><span class="lineNum">     210 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 155702 times"> + </span>]:<span class="lineCov">     155702 :     for (; i &lt; len; i++) {</span></a>
+<a name="210"><span class="lineNum">     210 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 155964 times"> + </span>]:<span class="lineCov">     155964 :     for (; i &lt; len; i++) {</span></a>
 <a name="211"><span class="lineNum">     211 </span>                :<span class="lineNoCov">          0 :         dest[i] = (src1[i] &amp; mask) | (src2[i] &amp; not_mask);</span></a>
 <a name="212"><span class="lineNum">     212 </span>                :            :     }</a>
-<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">     155702 : }</span></a>
+<a name="213"><span class="lineNum">     213 </span>                :<span class="lineCov">     155964 : }</span></a>
 <a name="214"><span class="lineNum">     214 </span>                :            : </a>
 <a name="215"><span class="lineNum">     215 </span>                :<span class="lineNoCov">          0 : void mbedtls_ct_memcpy_offset(unsigned char *dest,</span></a>
 <a name="216"><span class="lineNum">     216 </span>                :            :                               const unsigned char *src,</a>

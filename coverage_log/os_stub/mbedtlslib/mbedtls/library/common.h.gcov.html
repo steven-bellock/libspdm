@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-06-16 08:14:21</td>
+            <td class="headerValue">2024-06-17 08:16:42</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -259,7 +259,7 @@
 <a name="188"><span class="lineNum">     188 </span>                :            :                                const unsigned char *b,</a>
 <a name="189"><span class="lineNum">     189 </span>                :            :                                size_t n)</a>
 <a name="190"><span class="lineNum">     190 </span>                :            : {</a>
-<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">       9906 :     size_t i = 0;</span></a>
+<a name="191"><span class="lineNum">     191 </span>                :<span class="lineCov">       9742 :     size_t i = 0;</span></a>
 <a name="192"><span class="lineNum">     192 </span>                :            : #if defined(MBEDTLS_EFFICIENT_UNALIGNED_ACCESS)</a>
 <a name="193"><span class="lineNum">     193 </span>                :            : #if defined(MBEDTLS_HAVE_NEON_INTRINSICS) &amp;&amp; \</a>
 <a name="194"><span class="lineNum">     194 </span>                :            :     (!(defined(MBEDTLS_COMPILER_IS_GCC) &amp;&amp; MBEDTLS_GCC_VERSION &lt; 70300))</a>
@@ -281,13 +281,13 @@
 <a name="210"><span class="lineNum">     210 </span>                :            : #endif</a>
 <a name="211"><span class="lineNum">     211 </span>                :            : #elif defined(MBEDTLS_ARCH_IS_X64) || defined(MBEDTLS_ARCH_IS_ARM64)</a>
 <a name="212"><span class="lineNum">     212 </span>                :            :     /* This codepath probably only makes sense on architectures with 64-bit registers */</a>
-<a name="213"><span class="lineNum">     213 </span>  [<span class="branchCov" title="Branch 0 was taken 8557 times"> + </span><span class="branchCov" title="Branch 1 was taken 2528 times"> + </span><span class="branchCov" title="Branch 2 was taken 8557 times"> + </span><span class="branchCov" title="Branch 3 was taken 2528 times"> + </span> :<span class="lineCov">      33722 :     for (; (i + 8) &lt;= n; i += 8) {</span></a>
-<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1246 times"> + </span><span class="branchCov" title="Branch 5 was taken 856 times"> + </span><span class="branchCov" title="Branch 6 was taken 2959 times"> + </span><span class="branchCov" title="Branch 7 was taken 2035 times"> + </span><span class="branchCov" title="Branch 8 was taken 1713 times"> + </span> 
-<span class="lineNum">         </span><span class="branchCov" title="Branch 9 was taken 1179 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 8 times"> + </span><span class="branchCov" title="Branch 13 was taken 4 times"> + </span> 
+<a name="213"><span class="lineNum">     213 </span>  [<span class="branchCov" title="Branch 0 was taken 8557 times"> + </span><span class="branchCov" title="Branch 1 was taken 2528 times"> + </span><span class="branchCov" title="Branch 2 was taken 8557 times"> + </span><span class="branchCov" title="Branch 3 was taken 2528 times"> + </span> :<span class="lineCov">      33326 :     for (; (i + 8) &lt;= n; i += 8) {</span></a>
+<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1184 times"> + </span><span class="branchCov" title="Branch 5 was taken 813 times"> + </span><span class="branchCov" title="Branch 6 was taken 2843 times"> + </span><span class="branchCov" title="Branch 7 was taken 1953 times"> + </span><span class="branchCov" title="Branch 8 was taken 1659 times"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 9 was taken 1140 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 8 times"> + </span><span class="branchCov" title="Branch 13 was taken 4 times"> + </span> 
 <span class="lineNum">         </span><span class="branchCov" title="Branch 14 was taken 776 times"> + </span><span class="branchCov" title="Branch 15 was taken 776 times"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span><span class="branchNoCov" title="Branch 18 was not taken"> - </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
-<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">      47632 :         uint64_t x = mbedtls_get_unaligned_uint64(a + i) ^ mbedtls_get_unaligned_uint64(b + i);</span></a>
-<a name="215"><span class="lineNum">     215 </span>                :<span class="lineCov">      23816 :         mbedtls_put_unaligned_uint64(r + i, x);</span></a>
+<a name="214"><span class="lineNum">     214 </span>                :<span class="lineCov">      47168 :         uint64_t x = mbedtls_get_unaligned_uint64(a + i) ^ mbedtls_get_unaligned_uint64(b + i);</span></a>
+<a name="215"><span class="lineNum">     215 </span>                :<span class="lineCov">      23584 :         mbedtls_put_unaligned_uint64(r + i, x);</span></a>
 <a name="216"><span class="lineNum">     216 </span>                :            :     }</a>
 <a name="217"><span class="lineNum">     217 </span>                :            : #if defined(__IAR_SYSTEMS_ICC__)</a>
 <a name="218"><span class="lineNum">     218 </span>                :            :     if (n % 8 == 0) {</a>
@@ -306,14 +306,14 @@
 <a name="231"><span class="lineNum">     231 </span>                :            : #endif</a>
 <a name="232"><span class="lineNum">     232 </span>                :            : #endif</a>
 <a name="233"><span class="lineNum">     233 </span>                :            : #endif</a>
-<a name="234"><span class="lineNum">     234 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 2528 times"> + </span><span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchCov" title="Branch 3 was taken 2528 times"> + </span> :<span class="lineCov">      15388 :     for (; i &lt; n; i++) {</span></a>
-<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1088 times"> + </span><span class="branchCov" title="Branch 5 was taken 856 times"> + </span><span class="branchCov" title="Branch 6 was taken 2732 times"> + </span><span class="branchCov" title="Branch 7 was taken 2035 times"> + </span><span class="branchCov" title="Branch 8 was taken 1644 times"> + </span> 
-<span class="lineNum">         </span><span class="branchCov" title="Branch 9 was taken 1179 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchCov" title="Branch 13 was taken 4 times"> + </span> 
+<a name="234"><span class="lineNum">     234 </span>  [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchCov" title="Branch 1 was taken 2528 times"> + </span><span class="branchCov" title="Branch 2 was taken 5 times"> + </span><span class="branchCov" title="Branch 3 was taken 2528 times"> + </span> :<span class="lineCov">      15108 :     for (; i &lt; n; i++) {</span></a>
+<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1090 times"> + </span><span class="branchCov" title="Branch 5 was taken 813 times"> + </span><span class="branchCov" title="Branch 6 was taken 2674 times"> + </span><span class="branchCov" title="Branch 7 was taken 1953 times"> + </span><span class="branchCov" title="Branch 8 was taken 1584 times"> + </span> 
+<span class="lineNum">         </span><span class="branchCov" title="Branch 9 was taken 1140 times"> + </span><span class="branchNoCov" title="Branch 10 was not taken"> - </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchNoCov" title="Branch 12 was not taken"> - </span><span class="branchCov" title="Branch 13 was taken 4 times"> + </span> 
 <span class="lineNum">         </span><span class="branchCov" title="Branch 14 was taken 8 times"> + </span><span class="branchCov" title="Branch 15 was taken 776 times"> + </span><span class="branchNoCov" title="Branch 16 was not taken"> - </span><span class="branchNoCov" title="Branch 17 was not taken"> - </span><span class="branchNoCov" title="Branch 18 was not taken"> - </span> 
 <span class="lineNum">         </span>            <span class="branchNoCov" title="Branch 19 was not taken"> - </span>]
-<a name="235"><span class="lineNum">     235 </span>                :<span class="lineCov">       5482 :         r[i] = a[i] ^ b[i];</span></a>
+<a name="235"><span class="lineNum">     235 </span>                :<span class="lineCov">       5366 :         r[i] = a[i] ^ b[i];</span></a>
 <a name="236"><span class="lineNum">     236 </span>                :            :     }</a>
-<a name="237"><span class="lineNum">     237 </span>                :<span class="lineCov">       9906 : }</span></a>
+<a name="237"><span class="lineNum">     237 </span>                :<span class="lineCov">       9742 : }</span></a>
 <a name="238"><span class="lineNum">     238 </span>                :            : </a>
 <a name="239"><span class="lineNum">     239 </span>                :            : /* Always inline mbedtls_xor_no_simd() as we see significant perf regressions when it does not get</a>
 <a name="240"><span class="lineNum">     240 </span>                :            :  * inlined (e.g., observed about 3x perf difference in gcm_mult_largetable with gcc 7 - 12) */</a>

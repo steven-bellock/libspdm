@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-06-16 08:14:21</td>
+            <td class="headerValue">2024-06-17 08:16:42</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">28</td>
@@ -92,7 +92,7 @@
 <a name="21"><span class="lineNum">      21 </span>                :            : #include &quot;bn_mul.h&quot;</a>
 <a name="22"><span class="lineNum">      22 </span>                :            : #include &quot;constant_time_internal.h&quot;</a>
 <a name="23"><span class="lineNum">      23 </span>                :            : </a>
-<a name="24"><span class="lineNum">      24 </span>                :<span class="lineCov">    8056118 : size_t mbedtls_mpi_core_clz(mbedtls_mpi_uint a)</span></a>
+<a name="24"><span class="lineNum">      24 </span>                :<span class="lineCov">    8066897 : size_t mbedtls_mpi_core_clz(mbedtls_mpi_uint a)</span></a>
 <a name="25"><span class="lineNum">      25 </span>                :            : {</a>
 <a name="26"><span class="lineNum">      26 </span>                :            : #if defined(__has_builtin)</a>
 <a name="27"><span class="lineNum">      27 </span>                :            : #if (MBEDTLS_MPI_UINT_MAX == UINT_MAX) &amp;&amp; __has_builtin(__builtin_clz)</a>
@@ -104,7 +104,7 @@
 <a name="33"><span class="lineNum">      33 </span>                :            : #endif</a>
 <a name="34"><span class="lineNum">      34 </span>                :            : #endif</a>
 <a name="35"><span class="lineNum">      35 </span>                :            : #if defined(core_clz)</a>
-<a name="36"><span class="lineNum">      36 </span>                :<span class="lineCov">    8056118 :     return (size_t) core_clz(a);</span></a>
+<a name="36"><span class="lineNum">      36 </span>                :<span class="lineCov">    8066897 :     return (size_t) core_clz(a);</span></a>
 <a name="37"><span class="lineNum">      37 </span>                :            : #else</a>
 <a name="38"><span class="lineNum">      38 </span>                :            :     size_t j;</a>
 <a name="39"><span class="lineNum">      39 </span>                :            :     mbedtls_mpi_uint mask = (mbedtls_mpi_uint) 1 &lt;&lt; (biL - 1);</a>
@@ -121,22 +121,22 @@
 <a name="50"><span class="lineNum">      50 </span>                :            : #endif</a>
 <a name="51"><span class="lineNum">      51 </span>                :            : }</a>
 <a name="52"><span class="lineNum">      52 </span>                :            : </a>
-<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">    8056120 : size_t mbedtls_mpi_core_bitlen(const mbedtls_mpi_uint *A, size_t A_limbs)</span></a>
+<a name="53"><span class="lineNum">      53 </span>                :<span class="lineCov">    8066899 : size_t mbedtls_mpi_core_bitlen(const mbedtls_mpi_uint *A, size_t A_limbs)</span></a>
 <a name="54"><span class="lineNum">      54 </span>                :            : {</a>
 <a name="55"><span class="lineNum">      55 </span>                :            :     int i;</a>
 <a name="56"><span class="lineNum">      56 </span>                :            :     size_t j;</a>
 <a name="57"><span class="lineNum">      57 </span>                :            : </a>
-<a name="58"><span class="lineNum">      58 </span>        [<span class="branchCov" title="Branch 0 was taken 25485860 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">   25485862 :     for (i = ((int) A_limbs) - 1; i &gt;= 0; i--) {</span></a>
-<a name="59"><span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 0 was taken 8056118 times"> + </span><span class="branchCov" title="Branch 1 was taken 17429742 times"> + </span>]:<span class="lineCov">   25485860 :         if (A[i] != 0) {</span></a>
-<a name="60"><span class="lineNum">      60 </span>                :<span class="lineCov">    8056118 :             j = biL - mbedtls_mpi_core_clz(A[i]);</span></a>
-<a name="61"><span class="lineNum">      61 </span>                :<span class="lineCov">    8056118 :             return (i * biL) + j;</span></a>
+<a name="58"><span class="lineNum">      58 </span>        [<span class="branchCov" title="Branch 0 was taken 25525202 times"> + </span><span class="branchCov" title="Branch 1 was taken 2 times"> + </span>]:<span class="lineCov">   25525204 :     for (i = ((int) A_limbs) - 1; i &gt;= 0; i--) {</span></a>
+<a name="59"><span class="lineNum">      59 </span>        [<span class="branchCov" title="Branch 0 was taken 8066897 times"> + </span><span class="branchCov" title="Branch 1 was taken 17458305 times"> + </span>]:<span class="lineCov">   25525202 :         if (A[i] != 0) {</span></a>
+<a name="60"><span class="lineNum">      60 </span>                :<span class="lineCov">    8066897 :             j = biL - mbedtls_mpi_core_clz(A[i]);</span></a>
+<a name="61"><span class="lineNum">      61 </span>                :<span class="lineCov">    8066897 :             return (i * biL) + j;</span></a>
 <a name="62"><span class="lineNum">      62 </span>                :            :         }</a>
 <a name="63"><span class="lineNum">      63 </span>                :            :     }</a>
 <a name="64"><span class="lineNum">      64 </span>                :            : </a>
 <a name="65"><span class="lineNum">      65 </span>                :<span class="lineCov">          2 :     return 0;</span></a>
 <a name="66"><span class="lineNum">      66 </span>                :            : }</a>
 <a name="67"><span class="lineNum">      67 </span>                :            : </a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">     194268 : static mbedtls_mpi_uint mpi_bigendian_to_host(mbedtls_mpi_uint a)</span></a>
+<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">     194800 : static mbedtls_mpi_uint mpi_bigendian_to_host(mbedtls_mpi_uint a)</span></a>
 <a name="69"><span class="lineNum">      69 </span>                :            : {</a>
 <a name="70"><span class="lineNum">      70 </span>                :            :     if (MBEDTLS_IS_BIG_ENDIAN) {</a>
 <a name="71"><span class="lineNum">      71 </span>                :            :         /* Nothing to do on bigendian systems. */</a>
@@ -145,17 +145,17 @@
 <a name="74"><span class="lineNum">      74 </span>                :            : #if defined(MBEDTLS_HAVE_INT32)</a>
 <a name="75"><span class="lineNum">      75 </span>                :            :         return (mbedtls_mpi_uint) MBEDTLS_BSWAP32(a);</a>
 <a name="76"><span class="lineNum">      76 </span>                :            : #elif defined(MBEDTLS_HAVE_INT64)</a>
-<a name="77"><span class="lineNum">      77 </span>                :<span class="lineCov">     194268 :         return (mbedtls_mpi_uint) MBEDTLS_BSWAP64(a);</span></a>
+<a name="77"><span class="lineNum">      77 </span>                :<span class="lineCov">     194800 :         return (mbedtls_mpi_uint) MBEDTLS_BSWAP64(a);</span></a>
 <a name="78"><span class="lineNum">      78 </span>                :            : #endif</a>
 <a name="79"><span class="lineNum">      79 </span>                :            :     }</a>
 <a name="80"><span class="lineNum">      80 </span>                :            : }</a>
 <a name="81"><span class="lineNum">      81 </span>                :            : </a>
-<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">      30527 : void mbedtls_mpi_core_bigendian_to_host(mbedtls_mpi_uint *A,</span></a>
+<a name="82"><span class="lineNum">      82 </span>                :<span class="lineCov">      30559 : void mbedtls_mpi_core_bigendian_to_host(mbedtls_mpi_uint *A,</span></a>
 <a name="83"><span class="lineNum">      83 </span>                :            :                                         size_t A_limbs)</a>
 <a name="84"><span class="lineNum">      84 </span>                :            : {</a>
 <a name="85"><span class="lineNum">      85 </span>                :            :     mbedtls_mpi_uint *cur_limb_left;</a>
 <a name="86"><span class="lineNum">      86 </span>                :            :     mbedtls_mpi_uint *cur_limb_right;</a>
-<a name="87"><span class="lineNum">      87 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 30527 times"> + </span>]:<span class="lineCov">      30527 :     if (A_limbs == 0) {</span></a>
+<a name="87"><span class="lineNum">      87 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 30559 times"> + </span>]:<span class="lineCov">      30559 :     if (A_limbs == 0) {</span></a>
 <a name="88"><span class="lineNum">      88 </span>                :<span class="lineNoCov">          0 :         return;</span></a>
 <a name="89"><span class="lineNum">      89 </span>                :            :     }</a>
 <a name="90"><span class="lineNum">      90 </span>                :            : </a>
@@ -168,15 +168,15 @@
 <a name="97"><span class="lineNum">      97 </span>                :            :      * than the right index (it's not a problem if limbs is odd and the</a>
 <a name="98"><span class="lineNum">      98 </span>                :            :      * indices coincide in the last iteration).</a>
 <a name="99"><span class="lineNum">      99 </span>                :            :      */</a>
-<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">      30527 :     for (cur_limb_left = A, cur_limb_right = A + (A_limbs - 1);</span></a>
-<a name="101"><span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 0 was taken 97134 times"> + </span><span class="branchCov" title="Branch 1 was taken 30527 times"> + </span>]:<span class="lineCov">     127661 :          cur_limb_left &lt;= cur_limb_right;</span></a>
-<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">      97134 :          cur_limb_left++, cur_limb_right--) {</span></a>
+<a name="100"><span class="lineNum">     100 </span>                :<span class="lineCov">      30559 :     for (cur_limb_left = A, cur_limb_right = A + (A_limbs - 1);</span></a>
+<a name="101"><span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 0 was taken 97400 times"> + </span><span class="branchCov" title="Branch 1 was taken 30559 times"> + </span>]:<span class="lineCov">     127959 :          cur_limb_left &lt;= cur_limb_right;</span></a>
+<a name="102"><span class="lineNum">     102 </span>                :<span class="lineCov">      97400 :          cur_limb_left++, cur_limb_right--) {</span></a>
 <a name="103"><span class="lineNum">     103 </span>                :            :         mbedtls_mpi_uint tmp;</a>
 <a name="104"><span class="lineNum">     104 </span>                :            :         /* Note that if cur_limb_left == cur_limb_right,</a>
 <a name="105"><span class="lineNum">     105 </span>                :            :          * this code effectively swaps the bytes only once. */</a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">      97134 :         tmp             = mpi_bigendian_to_host(*cur_limb_left);</span></a>
-<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">      97134 :         *cur_limb_left  = mpi_bigendian_to_host(*cur_limb_right);</span></a>
-<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">      97134 :         *cur_limb_right = tmp;</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">      97400 :         tmp             = mpi_bigendian_to_host(*cur_limb_left);</span></a>
+<a name="107"><span class="lineNum">     107 </span>                :<span class="lineCov">      97400 :         *cur_limb_left  = mpi_bigendian_to_host(*cur_limb_right);</span></a>
+<a name="108"><span class="lineNum">     108 </span>                :<span class="lineCov">      97400 :         *cur_limb_right = tmp;</span></a>
 <a name="109"><span class="lineNum">     109 </span>                :            :     }</a>
 <a name="110"><span class="lineNum">     110 </span>                :            : }</a>
 <a name="111"><span class="lineNum">     111 </span>                :            : </a>
@@ -236,12 +236,12 @@
 <a name="165"><span class="lineNum">     165 </span>                :<span class="lineCov">       1124 :     return ret;</span></a>
 <a name="166"><span class="lineNum">     166 </span>                :            : }</a>
 <a name="167"><span class="lineNum">     167 </span>                :            : </a>
-<a name="168"><span class="lineNum">     168 </span>                :<span class="lineCov">    4789177 : void mbedtls_mpi_core_cond_assign(mbedtls_mpi_uint *X,</span></a>
+<a name="168"><span class="lineNum">     168 </span>                :<span class="lineCov">    4795149 : void mbedtls_mpi_core_cond_assign(mbedtls_mpi_uint *X,</span></a>
 <a name="169"><span class="lineNum">     169 </span>                :            :                                   const mbedtls_mpi_uint *A,</a>
 <a name="170"><span class="lineNum">     170 </span>                :            :                                   size_t limbs,</a>
 <a name="171"><span class="lineNum">     171 </span>                :            :                                   mbedtls_ct_condition_t assign)</a>
 <a name="172"><span class="lineNum">     172 </span>                :            : {</a>
-<a name="173"><span class="lineNum">     173 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4789177 times"> + </span>]:<span class="lineCov">    4789177 :     if (X == A) {</span></a>
+<a name="173"><span class="lineNum">     173 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 4795149 times"> + </span>]:<span class="lineCov">    4795149 :     if (X == A) {</span></a>
 <a name="174"><span class="lineNum">     174 </span>                :<span class="lineNoCov">          0 :         return;</span></a>
 <a name="175"><span class="lineNum">     175 </span>                :            :     }</a>
 <a name="176"><span class="lineNum">     176 </span>                :            : </a>
@@ -250,8 +250,8 @@
 <a name="179"><span class="lineNum">     179 </span>                :            :      * (this is more optimal since here we don't have to handle the case where</a>
 <a name="180"><span class="lineNum">     180 </span>                :            :      * we copy awkwardly sized data).</a>
 <a name="181"><span class="lineNum">     181 </span>                :            :      */</a>
-<a name="182"><span class="lineNum">     182 </span>        [<span class="branchCov" title="Branch 0 was taken 24674468 times"> + </span><span class="branchCov" title="Branch 1 was taken 4789177 times"> + </span>]:<span class="lineCov">   29463645 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
-<a name="183"><span class="lineNum">     183 </span>                :<span class="lineCov">   24674468 :         X[i] = mbedtls_ct_mpi_uint_if(assign, A[i], X[i]);</span></a>
+<a name="182"><span class="lineNum">     182 </span>        [<span class="branchCov" title="Branch 0 was taken 24711924 times"> + </span><span class="branchCov" title="Branch 1 was taken 4795149 times"> + </span>]:<span class="lineCov">   29507073 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
+<a name="183"><span class="lineNum">     183 </span>                :<span class="lineCov">   24711924 :         X[i] = mbedtls_ct_mpi_uint_if(assign, A[i], X[i]);</span></a>
 <a name="184"><span class="lineNum">     184 </span>                :            :     }</a>
 <a name="185"><span class="lineNum">     185 </span>                :            : }</a>
 <a name="186"><span class="lineNum">     186 </span>                :            : </a>
@@ -294,35 +294,35 @@
 <a name="223"><span class="lineNum">     223 </span>                :<span class="lineNoCov">          0 :     return 0;</span></a>
 <a name="224"><span class="lineNum">     224 </span>                :            : }</a>
 <a name="225"><span class="lineNum">     225 </span>                :            : </a>
-<a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">      29295 : int mbedtls_mpi_core_read_be(mbedtls_mpi_uint *X,</span></a>
+<a name="226"><span class="lineNum">     226 </span>                :<span class="lineCov">      29327 : int mbedtls_mpi_core_read_be(mbedtls_mpi_uint *X,</span></a>
 <a name="227"><span class="lineNum">     227 </span>                :            :                              size_t X_limbs,</a>
 <a name="228"><span class="lineNum">     228 </span>                :            :                              const unsigned char *input,</a>
 <a name="229"><span class="lineNum">     229 </span>                :            :                              size_t input_length)</a>
 <a name="230"><span class="lineNum">     230 </span>                :            : {</a>
-<a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">      29295 :     const size_t limbs = CHARS_TO_LIMBS(input_length);</span></a>
+<a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">      29327 :     const size_t limbs = CHARS_TO_LIMBS(input_length);</span></a>
 <a name="232"><span class="lineNum">     232 </span>                :            : </a>
-<a name="233"><span class="lineNum">     233 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 29295 times"> + </span>]:<span class="lineCov">      29295 :     if (X_limbs &lt; limbs) {</span></a>
+<a name="233"><span class="lineNum">     233 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 29327 times"> + </span>]:<span class="lineCov">      29327 :     if (X_limbs &lt; limbs) {</span></a>
 <a name="234"><span class="lineNum">     234 </span>                :<span class="lineNoCov">          0 :         return MBEDTLS_ERR_MPI_BUFFER_TOO_SMALL;</span></a>
 <a name="235"><span class="lineNum">     235 </span>                :            :     }</a>
 <a name="236"><span class="lineNum">     236 </span>                :            : </a>
 <a name="237"><span class="lineNum">     237 </span>                :            :     /* If X_limbs is 0, input_length must also be 0 (from previous test).</a>
 <a name="238"><span class="lineNum">     238 </span>                :            :      * Nothing to do. */</a>
-<a name="239"><span class="lineNum">     239 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 29295 times"> + </span>]:<span class="lineCov">      29295 :     if (X_limbs == 0) {</span></a>
+<a name="239"><span class="lineNum">     239 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 29327 times"> + </span>]:<span class="lineCov">      29327 :     if (X_limbs == 0) {</span></a>
 <a name="240"><span class="lineNum">     240 </span>                :<span class="lineNoCov">          0 :         return 0;</span></a>
 <a name="241"><span class="lineNum">     241 </span>                :            :     }</a>
 <a name="242"><span class="lineNum">     242 </span>                :            : </a>
-<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">      29295 :     memset(X, 0, X_limbs * ciL);</span></a>
+<a name="243"><span class="lineNum">     243 </span>                :<span class="lineCov">      29327 :     memset(X, 0, X_limbs * ciL);</span></a>
 <a name="244"><span class="lineNum">     244 </span>                :            : </a>
 <a name="245"><span class="lineNum">     245 </span>                :            :     /* memcpy() with (NULL, 0) is undefined behaviour */</a>
-<a name="246"><span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 0 was taken 29295 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      29295 :     if (input_length != 0) {</span></a>
-<a name="247"><span class="lineNum">     247 </span>                :<span class="lineCov">      29295 :         size_t overhead = (X_limbs * ciL) - input_length;</span></a>
-<a name="248"><span class="lineNum">     248 </span>                :<span class="lineCov">      29295 :         unsigned char *Xp = (unsigned char *) X;</span></a>
-<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">      29295 :         memcpy(Xp + overhead, input, input_length);</span></a>
+<a name="246"><span class="lineNum">     246 </span>        [<span class="branchCov" title="Branch 0 was taken 29327 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">      29327 :     if (input_length != 0) {</span></a>
+<a name="247"><span class="lineNum">     247 </span>                :<span class="lineCov">      29327 :         size_t overhead = (X_limbs * ciL) - input_length;</span></a>
+<a name="248"><span class="lineNum">     248 </span>                :<span class="lineCov">      29327 :         unsigned char *Xp = (unsigned char *) X;</span></a>
+<a name="249"><span class="lineNum">     249 </span>                :<span class="lineCov">      29327 :         memcpy(Xp + overhead, input, input_length);</span></a>
 <a name="250"><span class="lineNum">     250 </span>                :            :     }</a>
 <a name="251"><span class="lineNum">     251 </span>                :            : </a>
-<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">      29295 :     mbedtls_mpi_core_bigendian_to_host(X, X_limbs);</span></a>
+<a name="252"><span class="lineNum">     252 </span>                :<span class="lineCov">      29327 :     mbedtls_mpi_core_bigendian_to_host(X, X_limbs);</span></a>
 <a name="253"><span class="lineNum">     253 </span>                :            : </a>
-<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">      29295 :     return 0;</span></a>
+<a name="254"><span class="lineNum">     254 </span>                :<span class="lineCov">      29327 :     return 0;</span></a>
 <a name="255"><span class="lineNum">     255 </span>                :            : }</a>
 <a name="256"><span class="lineNum">     256 </span>                :            : </a>
 <a name="257"><span class="lineNum">     257 </span>                :<span class="lineNoCov">          0 : int mbedtls_mpi_core_write_le(const mbedtls_mpi_uint *A,</span></a>
@@ -359,7 +359,7 @@
 <a name="288"><span class="lineNum">     288 </span>                :<span class="lineNoCov">          0 :     return 0;</span></a>
 <a name="289"><span class="lineNum">     289 </span>                :            : }</a>
 <a name="290"><span class="lineNum">     290 </span>                :            : </a>
-<a name="291"><span class="lineNum">     291 </span>                :<span class="lineCov">       1007 : int mbedtls_mpi_core_write_be(const mbedtls_mpi_uint *X,</span></a>
+<a name="291"><span class="lineNum">     291 </span>                :<span class="lineCov">       1009 : int mbedtls_mpi_core_write_be(const mbedtls_mpi_uint *X,</span></a>
 <a name="292"><span class="lineNum">     292 </span>                :            :                               size_t X_limbs,</a>
 <a name="293"><span class="lineNum">     293 </span>                :            :                               unsigned char *output,</a>
 <a name="294"><span class="lineNum">     294 </span>                :            :                               size_t output_length)</a>
@@ -368,9 +368,9 @@
 <a name="297"><span class="lineNum">     297 </span>                :            :     size_t bytes_to_copy;</a>
 <a name="298"><span class="lineNum">     298 </span>                :            :     unsigned char *p;</a>
 <a name="299"><span class="lineNum">     299 </span>                :            : </a>
-<a name="300"><span class="lineNum">     300 </span>                :<span class="lineCov">       1007 :     stored_bytes = X_limbs * ciL;</span></a>
+<a name="300"><span class="lineNum">     300 </span>                :<span class="lineCov">       1009 :     stored_bytes = X_limbs * ciL;</span></a>
 <a name="301"><span class="lineNum">     301 </span>                :            : </a>
-<a name="302"><span class="lineNum">     302 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1007 times"> + </span>]:<span class="lineCov">       1007 :     if (stored_bytes &lt; output_length) {</span></a>
+<a name="302"><span class="lineNum">     302 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1009 times"> + </span>]:<span class="lineCov">       1009 :     if (stored_bytes &lt; output_length) {</span></a>
 <a name="303"><span class="lineNum">     303 </span>                :            :         /* There is enough space in the output buffer. Write initial</a>
 <a name="304"><span class="lineNum">     304 </span>                :            :          * null bytes and record the position at which to start</a>
 <a name="305"><span class="lineNum">     305 </span>                :            :          * writing the significant bytes. In this case, the execution</a>
@@ -382,32 +382,32 @@
 <a name="311"><span class="lineNum">     311 </span>                :            :     } else {</a>
 <a name="312"><span class="lineNum">     312 </span>                :            :         /* The output buffer is smaller than the allocated size of X.</a>
 <a name="313"><span class="lineNum">     313 </span>                :            :          * However X may fit if its leading bytes are zero. */</a>
-<a name="314"><span class="lineNum">     314 </span>                :<span class="lineCov">       1007 :         bytes_to_copy = output_length;</span></a>
-<a name="315"><span class="lineNum">     315 </span>                :<span class="lineCov">       1007 :         p = output;</span></a>
-<a name="316"><span class="lineNum">     316 </span>        [<span class="branchCov" title="Branch 0 was taken 33770 times"> + </span><span class="branchCov" title="Branch 1 was taken 1007 times"> + </span>]:<span class="lineCov">      34777 :         for (size_t i = bytes_to_copy; i &lt; stored_bytes; i++) {</span></a>
-<a name="317"><span class="lineNum">     317 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 33770 times"> + </span>]:<span class="lineCov">      33770 :             if (GET_BYTE(X, i) != 0) {</span></a>
+<a name="314"><span class="lineNum">     314 </span>                :<span class="lineCov">       1009 :         bytes_to_copy = output_length;</span></a>
+<a name="315"><span class="lineNum">     315 </span>                :<span class="lineCov">       1009 :         p = output;</span></a>
+<a name="316"><span class="lineNum">     316 </span>        [<span class="branchCov" title="Branch 0 was taken 33785 times"> + </span><span class="branchCov" title="Branch 1 was taken 1009 times"> + </span>]:<span class="lineCov">      34794 :         for (size_t i = bytes_to_copy; i &lt; stored_bytes; i++) {</span></a>
+<a name="317"><span class="lineNum">     317 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 33785 times"> + </span>]:<span class="lineCov">      33785 :             if (GET_BYTE(X, i) != 0) {</span></a>
 <a name="318"><span class="lineNum">     318 </span>                :<span class="lineNoCov">          0 :                 return MBEDTLS_ERR_MPI_BUFFER_TOO_SMALL;</span></a>
 <a name="319"><span class="lineNum">     319 </span>                :            :             }</a>
 <a name="320"><span class="lineNum">     320 </span>                :            :         }</a>
 <a name="321"><span class="lineNum">     321 </span>                :            :     }</a>
 <a name="322"><span class="lineNum">     322 </span>                :            : </a>
-<a name="323"><span class="lineNum">     323 </span>        [<span class="branchCov" title="Branch 0 was taken 166782 times"> + </span><span class="branchCov" title="Branch 1 was taken 1007 times"> + </span>]:<span class="lineCov">     167789 :     for (size_t i = 0; i &lt; bytes_to_copy; i++) {</span></a>
-<a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">     166782 :         p[bytes_to_copy - i - 1] = GET_BYTE(X, i);</span></a>
+<a name="323"><span class="lineNum">     323 </span>        [<span class="branchCov" title="Branch 0 was taken 167679 times"> + </span><span class="branchCov" title="Branch 1 was taken 1009 times"> + </span>]:<span class="lineCov">     168688 :     for (size_t i = 0; i &lt; bytes_to_copy; i++) {</span></a>
+<a name="324"><span class="lineNum">     324 </span>                :<span class="lineCov">     167679 :         p[bytes_to_copy - i - 1] = GET_BYTE(X, i);</span></a>
 <a name="325"><span class="lineNum">     325 </span>                :            :     }</a>
 <a name="326"><span class="lineNum">     326 </span>                :            : </a>
-<a name="327"><span class="lineNum">     327 </span>                :<span class="lineCov">       1007 :     return 0;</span></a>
+<a name="327"><span class="lineNum">     327 </span>                :<span class="lineCov">       1009 :     return 0;</span></a>
 <a name="328"><span class="lineNum">     328 </span>                :            : }</a>
 <a name="329"><span class="lineNum">     329 </span>                :            : </a>
-<a name="330"><span class="lineNum">     330 </span>                :<span class="lineCov">   14840245 : void mbedtls_mpi_core_shift_r(mbedtls_mpi_uint *X, size_t limbs,</span></a>
+<a name="330"><span class="lineNum">     330 </span>                :<span class="lineCov">   14860291 : void mbedtls_mpi_core_shift_r(mbedtls_mpi_uint *X, size_t limbs,</span></a>
 <a name="331"><span class="lineNum">     331 </span>                :            :                               size_t count)</a>
 <a name="332"><span class="lineNum">     332 </span>                :            : {</a>
 <a name="333"><span class="lineNum">     333 </span>                :            :     size_t i, v0, v1;</a>
-<a name="334"><span class="lineNum">     334 </span>                :<span class="lineCov">   14840245 :     mbedtls_mpi_uint r0 = 0, r1;</span></a>
+<a name="334"><span class="lineNum">     334 </span>                :<span class="lineCov">   14860291 :     mbedtls_mpi_uint r0 = 0, r1;</span></a>
 <a name="335"><span class="lineNum">     335 </span>                :            : </a>
-<a name="336"><span class="lineNum">     336 </span>                :<span class="lineCov">   14840245 :     v0 = count /  biL;</span></a>
-<a name="337"><span class="lineNum">     337 </span>                :<span class="lineCov">   14840245 :     v1 = count &amp; (biL - 1);</span></a>
+<a name="336"><span class="lineNum">     336 </span>                :<span class="lineCov">   14860291 :     v0 = count /  biL;</span></a>
+<a name="337"><span class="lineNum">     337 </span>                :<span class="lineCov">   14860291 :     v1 = count &amp; (biL - 1);</span></a>
 <a name="338"><span class="lineNum">     338 </span>                :            : </a>
-<a name="339"><span class="lineNum">     339 </span>  [<span class="branchCov" title="Branch 0 was taken 14840245 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 14840245 times"> + </span> :<span class="lineCov">   14840245 :     if (v0 &gt; limbs || (v0 == limbs &amp;&amp; v1 &gt; 0)) {</span></a>
+<a name="339"><span class="lineNum">     339 </span>  [<span class="branchCov" title="Branch 0 was taken 14860291 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 14860291 times"> + </span> :<span class="lineCov">   14860291 :     if (v0 &gt; limbs || (v0 == limbs &amp;&amp; v1 &gt; 0)) {</span></a>
 <span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
 <a name="340"><span class="lineNum">     340 </span>                :<span class="lineNoCov">          0 :         memset(X, 0, limbs * ciL);</span></a>
 <a name="341"><span class="lineNum">     341 </span>                :<span class="lineNoCov">          0 :         return;</span></a>
@@ -416,80 +416,80 @@
 <a name="344"><span class="lineNum">     344 </span>                :            :     /*</a>
 <a name="345"><span class="lineNum">     345 </span>                :            :      * shift by count / limb_size</a>
 <a name="346"><span class="lineNum">     346 </span>                :            :      */</a>
-<a name="347"><span class="lineNum">     347 </span>        [<span class="branchCov" title="Branch 0 was taken 3561 times"> + </span><span class="branchCov" title="Branch 1 was taken 14836684 times"> + </span>]:<span class="lineCov">   14840245 :     if (v0 &gt; 0) {</span></a>
-<a name="348"><span class="lineNum">     348 </span>        [<span class="branchCov" title="Branch 0 was taken 38305 times"> + </span><span class="branchCov" title="Branch 1 was taken 3561 times"> + </span>]:<span class="lineCov">      41866 :         for (i = 0; i &lt; limbs - v0; i++) {</span></a>
-<a name="349"><span class="lineNum">     349 </span>                :<span class="lineCov">      38305 :             X[i] = X[i + v0];</span></a>
+<a name="347"><span class="lineNum">     347 </span>        [<span class="branchCov" title="Branch 0 was taken 3567 times"> + </span><span class="branchCov" title="Branch 1 was taken 14856724 times"> + </span>]:<span class="lineCov">   14860291 :     if (v0 &gt; 0) {</span></a>
+<a name="348"><span class="lineNum">     348 </span>        [<span class="branchCov" title="Branch 0 was taken 38439 times"> + </span><span class="branchCov" title="Branch 1 was taken 3567 times"> + </span>]:<span class="lineCov">      42006 :         for (i = 0; i &lt; limbs - v0; i++) {</span></a>
+<a name="349"><span class="lineNum">     349 </span>                :<span class="lineCov">      38439 :             X[i] = X[i + v0];</span></a>
 <a name="350"><span class="lineNum">     350 </span>                :            :         }</a>
 <a name="351"><span class="lineNum">     351 </span>                :            : </a>
-<a name="352"><span class="lineNum">     352 </span>        [<span class="branchCov" title="Branch 0 was taken 36326 times"> + </span><span class="branchCov" title="Branch 1 was taken 3561 times"> + </span>]:<span class="lineCov">      39887 :         for (; i &lt; limbs; i++) {</span></a>
-<a name="353"><span class="lineNum">     353 </span>                :<span class="lineCov">      36326 :             X[i] = 0;</span></a>
+<a name="352"><span class="lineNum">     352 </span>        [<span class="branchCov" title="Branch 0 was taken 36458 times"> + </span><span class="branchCov" title="Branch 1 was taken 3567 times"> + </span>]:<span class="lineCov">      40025 :         for (; i &lt; limbs; i++) {</span></a>
+<a name="353"><span class="lineNum">     353 </span>                :<span class="lineCov">      36458 :             X[i] = 0;</span></a>
 <a name="354"><span class="lineNum">     354 </span>                :            :         }</a>
 <a name="355"><span class="lineNum">     355 </span>                :            :     }</a>
 <a name="356"><span class="lineNum">     356 </span>                :            : </a>
 <a name="357"><span class="lineNum">     357 </span>                :            :     /*</a>
 <a name="358"><span class="lineNum">     358 </span>                :            :      * shift by count % limb_size</a>
 <a name="359"><span class="lineNum">     359 </span>                :            :      */</a>
-<a name="360"><span class="lineNum">     360 </span>        [<span class="branchCov" title="Branch 0 was taken 12353677 times"> + </span><span class="branchCov" title="Branch 1 was taken 2486568 times"> + </span>]:<span class="lineCov">   14840245 :     if (v1 &gt; 0) {</span></a>
-<a name="361"><span class="lineNum">     361 </span>        [<span class="branchCov" title="Branch 0 was taken 62606501 times"> + </span><span class="branchCov" title="Branch 1 was taken 12353677 times"> + </span>]:<span class="lineCov">   74960178 :         for (i = limbs; i &gt; 0; i--) {</span></a>
-<a name="362"><span class="lineNum">     362 </span>                :<span class="lineCov">   62606501 :             r1 = X[i - 1] &lt;&lt; (biL - v1);</span></a>
-<a name="363"><span class="lineNum">     363 </span>                :<span class="lineCov">   62606501 :             X[i - 1] &gt;&gt;= v1;</span></a>
-<a name="364"><span class="lineNum">     364 </span>                :<span class="lineCov">   62606501 :             X[i - 1] |= r0;</span></a>
-<a name="365"><span class="lineNum">     365 </span>                :<span class="lineCov">   62606501 :             r0 = r1;</span></a>
+<a name="360"><span class="lineNum">     360 </span>        [<span class="branchCov" title="Branch 0 was taken 12370057 times"> + </span><span class="branchCov" title="Branch 1 was taken 2490234 times"> + </span>]:<span class="lineCov">   14860291 :     if (v1 &gt; 0) {</span></a>
+<a name="361"><span class="lineNum">     361 </span>        [<span class="branchCov" title="Branch 0 was taken 62681840 times"> + </span><span class="branchCov" title="Branch 1 was taken 12370057 times"> + </span>]:<span class="lineCov">   75051897 :         for (i = limbs; i &gt; 0; i--) {</span></a>
+<a name="362"><span class="lineNum">     362 </span>                :<span class="lineCov">   62681840 :             r1 = X[i - 1] &lt;&lt; (biL - v1);</span></a>
+<a name="363"><span class="lineNum">     363 </span>                :<span class="lineCov">   62681840 :             X[i - 1] &gt;&gt;= v1;</span></a>
+<a name="364"><span class="lineNum">     364 </span>                :<span class="lineCov">   62681840 :             X[i - 1] |= r0;</span></a>
+<a name="365"><span class="lineNum">     365 </span>                :<span class="lineCov">   62681840 :             r0 = r1;</span></a>
 <a name="366"><span class="lineNum">     366 </span>                :            :         }</a>
 <a name="367"><span class="lineNum">     367 </span>                :            :     }</a>
 <a name="368"><span class="lineNum">     368 </span>                :            : }</a>
 <a name="369"><span class="lineNum">     369 </span>                :            : </a>
-<a name="370"><span class="lineNum">     370 </span>                :<span class="lineCov">    2081076 : void mbedtls_mpi_core_shift_l(mbedtls_mpi_uint *X, size_t limbs,</span></a>
+<a name="370"><span class="lineNum">     370 </span>                :<span class="lineCov">    2083952 : void mbedtls_mpi_core_shift_l(mbedtls_mpi_uint *X, size_t limbs,</span></a>
 <a name="371"><span class="lineNum">     371 </span>                :            :                               size_t count)</a>
 <a name="372"><span class="lineNum">     372 </span>                :            : {</a>
 <a name="373"><span class="lineNum">     373 </span>                :            :     size_t i, v0, v1;</a>
-<a name="374"><span class="lineNum">     374 </span>                :<span class="lineCov">    2081076 :     mbedtls_mpi_uint r0 = 0, r1;</span></a>
+<a name="374"><span class="lineNum">     374 </span>                :<span class="lineCov">    2083952 :     mbedtls_mpi_uint r0 = 0, r1;</span></a>
 <a name="375"><span class="lineNum">     375 </span>                :            : </a>
-<a name="376"><span class="lineNum">     376 </span>                :<span class="lineCov">    2081076 :     v0 = count / (biL);</span></a>
-<a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">    2081076 :     v1 = count &amp; (biL - 1);</span></a>
+<a name="376"><span class="lineNum">     376 </span>                :<span class="lineCov">    2083952 :     v0 = count / (biL);</span></a>
+<a name="377"><span class="lineNum">     377 </span>                :<span class="lineCov">    2083952 :     v1 = count &amp; (biL - 1);</span></a>
 <a name="378"><span class="lineNum">     378 </span>                :            : </a>
 <a name="379"><span class="lineNum">     379 </span>                :            :     /*</a>
 <a name="380"><span class="lineNum">     380 </span>                :            :      * shift by count / limb_size</a>
 <a name="381"><span class="lineNum">     381 </span>                :            :      */</a>
-<a name="382"><span class="lineNum">     382 </span>        [<span class="branchCov" title="Branch 0 was taken 36701 times"> + </span><span class="branchCov" title="Branch 1 was taken 2044375 times"> + </span>]:<span class="lineCov">    2081076 :     if (v0 &gt; 0) {</span></a>
-<a name="383"><span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 0 was taken 1968300 times"> + </span><span class="branchCov" title="Branch 1 was taken 36701 times"> + </span>]:<span class="lineCov">    2005001 :         for (i = limbs; i &gt; v0; i--) {</span></a>
-<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">    1968300 :             X[i - 1] = X[i - v0 - 1];</span></a>
+<a name="382"><span class="lineNum">     382 </span>        [<span class="branchCov" title="Branch 0 was taken 36835 times"> + </span><span class="branchCov" title="Branch 1 was taken 2047117 times"> + </span>]:<span class="lineCov">    2083952 :     if (v0 &gt; 0) {</span></a>
+<a name="383"><span class="lineNum">     383 </span>        [<span class="branchCov" title="Branch 0 was taken 1978756 times"> + </span><span class="branchCov" title="Branch 1 was taken 36835 times"> + </span>]:<span class="lineCov">    2015591 :         for (i = limbs; i &gt; v0; i--) {</span></a>
+<a name="384"><span class="lineNum">     384 </span>                :<span class="lineCov">    1978756 :             X[i - 1] = X[i - v0 - 1];</span></a>
 <a name="385"><span class="lineNum">     385 </span>                :            :         }</a>
 <a name="386"><span class="lineNum">     386 </span>                :            : </a>
-<a name="387"><span class="lineNum">     387 </span>        [<span class="branchCov" title="Branch 0 was taken 704623 times"> + </span><span class="branchCov" title="Branch 1 was taken 36701 times"> + </span>]:<span class="lineCov">     741324 :         for (; i &gt; 0; i--) {</span></a>
-<a name="388"><span class="lineNum">     388 </span>                :<span class="lineCov">     704623 :             X[i - 1] = 0;</span></a>
+<a name="387"><span class="lineNum">     387 </span>        [<span class="branchCov" title="Branch 0 was taken 708377 times"> + </span><span class="branchCov" title="Branch 1 was taken 36835 times"> + </span>]:<span class="lineCov">     745212 :         for (; i &gt; 0; i--) {</span></a>
+<a name="388"><span class="lineNum">     388 </span>                :<span class="lineCov">     708377 :             X[i - 1] = 0;</span></a>
 <a name="389"><span class="lineNum">     389 </span>                :            :         }</a>
 <a name="390"><span class="lineNum">     390 </span>                :            :     }</a>
 <a name="391"><span class="lineNum">     391 </span>                :            : </a>
 <a name="392"><span class="lineNum">     392 </span>                :            :     /*</a>
 <a name="393"><span class="lineNum">     393 </span>                :            :      * shift by count % limb_size</a>
 <a name="394"><span class="lineNum">     394 </span>                :            :      */</a>
-<a name="395"><span class="lineNum">     395 </span>        [<span class="branchCov" title="Branch 0 was taken 2031866 times"> + </span><span class="branchCov" title="Branch 1 was taken 49210 times"> + </span>]:<span class="lineCov">    2081076 :     if (v1 &gt; 0) {</span></a>
-<a name="396"><span class="lineNum">     396 </span>        [<span class="branchCov" title="Branch 0 was taken 18335648 times"> + </span><span class="branchCov" title="Branch 1 was taken 2031866 times"> + </span>]:<span class="lineCov">   20367514 :         for (i = v0; i &lt; limbs; i++) {</span></a>
-<a name="397"><span class="lineNum">     397 </span>                :<span class="lineCov">   18335648 :             r1 = X[i] &gt;&gt; (biL - v1);</span></a>
-<a name="398"><span class="lineNum">     398 </span>                :<span class="lineCov">   18335648 :             X[i] &lt;&lt;= v1;</span></a>
-<a name="399"><span class="lineNum">     399 </span>                :<span class="lineCov">   18335648 :             X[i] |= r0;</span></a>
-<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">   18335648 :             r0 = r1;</span></a>
+<a name="395"><span class="lineNum">     395 </span>        [<span class="branchCov" title="Branch 0 was taken 2034590 times"> + </span><span class="branchCov" title="Branch 1 was taken 49362 times"> + </span>]:<span class="lineCov">    2083952 :     if (v1 &gt; 0) {</span></a>
+<a name="396"><span class="lineNum">     396 </span>        [<span class="branchCov" title="Branch 0 was taken 18360456 times"> + </span><span class="branchCov" title="Branch 1 was taken 2034590 times"> + </span>]:<span class="lineCov">   20395046 :         for (i = v0; i &lt; limbs; i++) {</span></a>
+<a name="397"><span class="lineNum">     397 </span>                :<span class="lineCov">   18360456 :             r1 = X[i] &gt;&gt; (biL - v1);</span></a>
+<a name="398"><span class="lineNum">     398 </span>                :<span class="lineCov">   18360456 :             X[i] &lt;&lt;= v1;</span></a>
+<a name="399"><span class="lineNum">     399 </span>                :<span class="lineCov">   18360456 :             X[i] |= r0;</span></a>
+<a name="400"><span class="lineNum">     400 </span>                :<span class="lineCov">   18360456 :             r0 = r1;</span></a>
 <a name="401"><span class="lineNum">     401 </span>                :            :         }</a>
 <a name="402"><span class="lineNum">     402 </span>                :            :     }</a>
-<a name="403"><span class="lineNum">     403 </span>                :<span class="lineCov">    2081076 : }</span></a>
+<a name="403"><span class="lineNum">     403 </span>                :<span class="lineCov">    2083952 : }</span></a>
 <a name="404"><span class="lineNum">     404 </span>                :            : </a>
-<a name="405"><span class="lineNum">     405 </span>                :<span class="lineCov">    3695407 : mbedtls_mpi_uint mbedtls_mpi_core_add(mbedtls_mpi_uint *X,</span></a>
+<a name="405"><span class="lineNum">     405 </span>                :<span class="lineCov">    3700618 : mbedtls_mpi_uint mbedtls_mpi_core_add(mbedtls_mpi_uint *X,</span></a>
 <a name="406"><span class="lineNum">     406 </span>                :            :                                       const mbedtls_mpi_uint *A,</a>
 <a name="407"><span class="lineNum">     407 </span>                :            :                                       const mbedtls_mpi_uint *B,</a>
 <a name="408"><span class="lineNum">     408 </span>                :            :                                       size_t limbs)</a>
 <a name="409"><span class="lineNum">     409 </span>                :            : {</a>
-<a name="410"><span class="lineNum">     410 </span>                :<span class="lineCov">    3695407 :     mbedtls_mpi_uint c = 0;</span></a>
+<a name="410"><span class="lineNum">     410 </span>                :<span class="lineCov">    3700618 :     mbedtls_mpi_uint c = 0;</span></a>
 <a name="411"><span class="lineNum">     411 </span>                :            : </a>
-<a name="412"><span class="lineNum">     412 </span>        [<span class="branchCov" title="Branch 0 was taken 16948475 times"> + </span><span class="branchCov" title="Branch 1 was taken 3695407 times"> + </span>]:<span class="lineCov">   20643882 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
-<a name="413"><span class="lineNum">     413 </span>                :<span class="lineCov">   16948475 :         mbedtls_mpi_uint t = c + A[i];</span></a>
-<a name="414"><span class="lineNum">     414 </span>                :<span class="lineCov">   16948475 :         c = (t &lt; A[i]);</span></a>
-<a name="415"><span class="lineNum">     415 </span>                :<span class="lineCov">   16948475 :         t += B[i];</span></a>
-<a name="416"><span class="lineNum">     416 </span>                :<span class="lineCov">   16948475 :         c += (t &lt; B[i]);</span></a>
-<a name="417"><span class="lineNum">     417 </span>                :<span class="lineCov">   16948475 :         X[i] = t;</span></a>
+<a name="412"><span class="lineNum">     412 </span>        [<span class="branchCov" title="Branch 0 was taken 16970919 times"> + </span><span class="branchCov" title="Branch 1 was taken 3700618 times"> + </span>]:<span class="lineCov">   20671537 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
+<a name="413"><span class="lineNum">     413 </span>                :<span class="lineCov">   16970919 :         mbedtls_mpi_uint t = c + A[i];</span></a>
+<a name="414"><span class="lineNum">     414 </span>                :<span class="lineCov">   16970919 :         c = (t &lt; A[i]);</span></a>
+<a name="415"><span class="lineNum">     415 </span>                :<span class="lineCov">   16970919 :         t += B[i];</span></a>
+<a name="416"><span class="lineNum">     416 </span>                :<span class="lineCov">   16970919 :         c += (t &lt; B[i]);</span></a>
+<a name="417"><span class="lineNum">     417 </span>                :<span class="lineCov">   16970919 :         X[i] = t;</span></a>
 <a name="418"><span class="lineNum">     418 </span>                :            :     }</a>
 <a name="419"><span class="lineNum">     419 </span>                :            : </a>
-<a name="420"><span class="lineNum">     420 </span>                :<span class="lineCov">    3695407 :     return c;</span></a>
+<a name="420"><span class="lineNum">     420 </span>                :<span class="lineCov">    3700618 :     return c;</span></a>
 <a name="421"><span class="lineNum">     421 </span>                :            : }</a>
 <a name="422"><span class="lineNum">     422 </span>                :            : </a>
 <a name="423"><span class="lineNum">     423 </span>                :<span class="lineNoCov">          0 : mbedtls_mpi_uint mbedtls_mpi_core_add_if(mbedtls_mpi_uint *X,</span></a>
@@ -513,89 +513,89 @@
 <a name="441"><span class="lineNum">     441 </span>                :<span class="lineNoCov">          0 :     return c;</span></a>
 <a name="442"><span class="lineNum">     442 </span>                :            : }</a>
 <a name="443"><span class="lineNum">     443 </span>                :            : </a>
-<a name="444"><span class="lineNum">     444 </span>                :<span class="lineCov">   19364081 : mbedtls_mpi_uint mbedtls_mpi_core_sub(mbedtls_mpi_uint *X,</span></a>
+<a name="444"><span class="lineNum">     444 </span>                :<span class="lineCov">   19390392 : mbedtls_mpi_uint mbedtls_mpi_core_sub(mbedtls_mpi_uint *X,</span></a>
 <a name="445"><span class="lineNum">     445 </span>                :            :                                       const mbedtls_mpi_uint *A,</a>
 <a name="446"><span class="lineNum">     446 </span>                :            :                                       const mbedtls_mpi_uint *B,</a>
 <a name="447"><span class="lineNum">     447 </span>                :            :                                       size_t limbs)</a>
 <a name="448"><span class="lineNum">     448 </span>                :            : {</a>
-<a name="449"><span class="lineNum">     449 </span>                :<span class="lineCov">   19364081 :     mbedtls_mpi_uint c = 0;</span></a>
+<a name="449"><span class="lineNum">     449 </span>                :<span class="lineCov">   19390392 :     mbedtls_mpi_uint c = 0;</span></a>
 <a name="450"><span class="lineNum">     450 </span>                :            : </a>
-<a name="451"><span class="lineNum">     451 </span>        [<span class="branchCov" title="Branch 0 was taken 81422249 times"> + </span><span class="branchCov" title="Branch 1 was taken 19364081 times"> + </span>]:<span class="lineCov">  100786330 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
-<a name="452"><span class="lineNum">     452 </span>                :<span class="lineCov">   81422249 :         mbedtls_mpi_uint z = (A[i] &lt; c);</span></a>
-<a name="453"><span class="lineNum">     453 </span>                :<span class="lineCov">   81422249 :         mbedtls_mpi_uint t = A[i] - c;</span></a>
-<a name="454"><span class="lineNum">     454 </span>                :<span class="lineCov">   81422249 :         c = (t &lt; B[i]) + z;</span></a>
-<a name="455"><span class="lineNum">     455 </span>                :<span class="lineCov">   81422249 :         X[i] = t - B[i];</span></a>
+<a name="451"><span class="lineNum">     451 </span>        [<span class="branchCov" title="Branch 0 was taken 81552533 times"> + </span><span class="branchCov" title="Branch 1 was taken 19390392 times"> + </span>]:<span class="lineCov">  100942925 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
+<a name="452"><span class="lineNum">     452 </span>                :<span class="lineCov">   81552533 :         mbedtls_mpi_uint z = (A[i] &lt; c);</span></a>
+<a name="453"><span class="lineNum">     453 </span>                :<span class="lineCov">   81552533 :         mbedtls_mpi_uint t = A[i] - c;</span></a>
+<a name="454"><span class="lineNum">     454 </span>                :<span class="lineCov">   81552533 :         c = (t &lt; B[i]) + z;</span></a>
+<a name="455"><span class="lineNum">     455 </span>                :<span class="lineCov">   81552533 :         X[i] = t - B[i];</span></a>
 <a name="456"><span class="lineNum">     456 </span>                :            :     }</a>
 <a name="457"><span class="lineNum">     457 </span>                :            : </a>
-<a name="458"><span class="lineNum">     458 </span>                :<span class="lineCov">   19364081 :     return c;</span></a>
+<a name="458"><span class="lineNum">     458 </span>                :<span class="lineCov">   19390392 :     return c;</span></a>
 <a name="459"><span class="lineNum">     459 </span>                :            : }</a>
 <a name="460"><span class="lineNum">     460 </span>                :            : </a>
-<a name="461"><span class="lineNum">     461 </span>                :<span class="lineCov">   33375799 : mbedtls_mpi_uint mbedtls_mpi_core_mla(mbedtls_mpi_uint *d, size_t d_len,</span></a>
+<a name="461"><span class="lineNum">     461 </span>                :<span class="lineCov">   33437866 : mbedtls_mpi_uint mbedtls_mpi_core_mla(mbedtls_mpi_uint *d, size_t d_len,</span></a>
 <a name="462"><span class="lineNum">     462 </span>                :            :                                       const mbedtls_mpi_uint *s, size_t s_len,</a>
 <a name="463"><span class="lineNum">     463 </span>                :            :                                       mbedtls_mpi_uint b)</a>
 <a name="464"><span class="lineNum">     464 </span>                :            : {</a>
-<a name="465"><span class="lineNum">     465 </span>                :<span class="lineCov">   33375799 :     mbedtls_mpi_uint c = 0; /* carry */</span></a>
+<a name="465"><span class="lineNum">     465 </span>                :<span class="lineCov">   33437866 :     mbedtls_mpi_uint c = 0; /* carry */</span></a>
 <a name="466"><span class="lineNum">     466 </span>                :            :     /*</a>
 <a name="467"><span class="lineNum">     467 </span>                :            :      * It is a documented precondition of this function that d_len &gt;= s_len.</a>
 <a name="468"><span class="lineNum">     468 </span>                :            :      * If that's not the case, we swap these round: this turns what would be</a>
 <a name="469"><span class="lineNum">     469 </span>                :            :      * a buffer overflow into an incorrect result.</a>
 <a name="470"><span class="lineNum">     470 </span>                :            :      */</a>
-<a name="471"><span class="lineNum">     471 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 33375799 times"> + </span>]:<span class="lineCov">   33375799 :     if (d_len &lt; s_len) {</span></a>
+<a name="471"><span class="lineNum">     471 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 33437866 times"> + </span>]:<span class="lineCov">   33437866 :     if (d_len &lt; s_len) {</span></a>
 <a name="472"><span class="lineNum">     472 </span>                :<span class="lineNoCov">          0 :         s_len = d_len;</span></a>
 <a name="473"><span class="lineNum">     473 </span>                :            :     }</a>
-<a name="474"><span class="lineNum">     474 </span>                :<span class="lineCov">   33375799 :     size_t excess_len = d_len - s_len;</span></a>
-<a name="475"><span class="lineNum">     475 </span>                :<span class="lineCov">   33375799 :     size_t steps_x8 = s_len / 8;</span></a>
-<a name="476"><span class="lineNum">     476 </span>                :<span class="lineCov">   33375799 :     size_t steps_x1 = s_len &amp; 7;</span></a>
+<a name="474"><span class="lineNum">     474 </span>                :<span class="lineCov">   33437866 :     size_t excess_len = d_len - s_len;</span></a>
+<a name="475"><span class="lineNum">     475 </span>                :<span class="lineCov">   33437866 :     size_t steps_x8 = s_len / 8;</span></a>
+<a name="476"><span class="lineNum">     476 </span>                :<span class="lineCov">   33437866 :     size_t steps_x1 = s_len &amp; 7;</span></a>
 <a name="477"><span class="lineNum">     477 </span>                :            : </a>
-<a name="478"><span class="lineNum">     478 </span>        [<span class="branchCov" title="Branch 0 was taken 46752932 times"> + </span><span class="branchCov" title="Branch 1 was taken 33375799 times"> + </span>]:<span class="lineCov">   80128731 :     while (steps_x8--) {</span></a>
-<a name="479"><span class="lineNum">     479 </span>                :<span class="lineCov">   46752932 :         MULADDC_X8_INIT</span></a>
+<a name="478"><span class="lineNum">     478 </span>        [<span class="branchCov" title="Branch 0 was taken 46966214 times"> + </span><span class="branchCov" title="Branch 1 was taken 33437866 times"> + </span>]:<span class="lineCov">   80404080 :     while (steps_x8--) {</span></a>
+<a name="479"><span class="lineNum">     479 </span>                :<span class="lineCov">   46966214 :         MULADDC_X8_INIT</span></a>
 <a name="480"><span class="lineNum">     480 </span>                :            :         MULADDC_X8_CORE</a>
 <a name="481"><span class="lineNum">     481 </span>                :            :             MULADDC_X8_STOP</a>
 <a name="482"><span class="lineNum">     482 </span>                :            :     }</a>
 <a name="483"><span class="lineNum">     483 </span>                :            : </a>
-<a name="484"><span class="lineNum">     484 </span>        [<span class="branchCov" title="Branch 0 was taken 100585448 times"> + </span><span class="branchCov" title="Branch 1 was taken 33375799 times"> + </span>]:<span class="lineCov">  133961247 :     while (steps_x1--) {</span></a>
-<a name="485"><span class="lineNum">     485 </span>                :<span class="lineCov">  100585448 :         MULADDC_X1_INIT</span></a>
+<a name="484"><span class="lineNum">     484 </span>        [<span class="branchCov" title="Branch 0 was taken 100743092 times"> + </span><span class="branchCov" title="Branch 1 was taken 33437866 times"> + </span>]:<span class="lineCov">  134180958 :     while (steps_x1--) {</span></a>
+<a name="485"><span class="lineNum">     485 </span>                :<span class="lineCov">  100743092 :         MULADDC_X1_INIT</span></a>
 <a name="486"><span class="lineNum">     486 </span>                :            :         MULADDC_X1_CORE</a>
 <a name="487"><span class="lineNum">     487 </span>                :            :             MULADDC_X1_STOP</a>
 <a name="488"><span class="lineNum">     488 </span>                :            :     }</a>
 <a name="489"><span class="lineNum">     489 </span>                :            : </a>
-<a name="490"><span class="lineNum">     490 </span>        [<span class="branchCov" title="Branch 0 was taken 50053078 times"> + </span><span class="branchCov" title="Branch 1 was taken 33375799 times"> + </span>]:<span class="lineCov">   83428877 :     while (excess_len--) {</span></a>
-<a name="491"><span class="lineNum">     491 </span>                :<span class="lineCov">   50053078 :         *d += c;</span></a>
-<a name="492"><span class="lineNum">     492 </span>                :<span class="lineCov">   50053078 :         c = (*d &lt; c);</span></a>
-<a name="493"><span class="lineNum">     493 </span>                :<span class="lineCov">   50053078 :         d++;</span></a>
+<a name="490"><span class="lineNum">     490 </span>        [<span class="branchCov" title="Branch 0 was taken 50180918 times"> + </span><span class="branchCov" title="Branch 1 was taken 33437866 times"> + </span>]:<span class="lineCov">   83618784 :     while (excess_len--) {</span></a>
+<a name="491"><span class="lineNum">     491 </span>                :<span class="lineCov">   50180918 :         *d += c;</span></a>
+<a name="492"><span class="lineNum">     492 </span>                :<span class="lineCov">   50180918 :         c = (*d &lt; c);</span></a>
+<a name="493"><span class="lineNum">     493 </span>                :<span class="lineCov">   50180918 :         d++;</span></a>
 <a name="494"><span class="lineNum">     494 </span>                :            :     }</a>
 <a name="495"><span class="lineNum">     495 </span>                :            : </a>
-<a name="496"><span class="lineNum">     496 </span>                :<span class="lineCov">   33375799 :     return c;</span></a>
+<a name="496"><span class="lineNum">     496 </span>                :<span class="lineCov">   33437866 :     return c;</span></a>
 <a name="497"><span class="lineNum">     497 </span>                :            : }</a>
 <a name="498"><span class="lineNum">     498 </span>                :            : </a>
-<a name="499"><span class="lineNum">     499 </span>                :<span class="lineCov">    5930245 : void mbedtls_mpi_core_mul(mbedtls_mpi_uint *X,</span></a>
+<a name="499"><span class="lineNum">     499 </span>                :<span class="lineCov">    5938087 : void mbedtls_mpi_core_mul(mbedtls_mpi_uint *X,</span></a>
 <a name="500"><span class="lineNum">     500 </span>                :            :                           const mbedtls_mpi_uint *A, size_t A_limbs,</a>
 <a name="501"><span class="lineNum">     501 </span>                :            :                           const mbedtls_mpi_uint *B, size_t B_limbs)</a>
 <a name="502"><span class="lineNum">     502 </span>                :            : {</a>
-<a name="503"><span class="lineNum">     503 </span>                :<span class="lineCov">    5930245 :     memset(X, 0, (A_limbs + B_limbs) * ciL);</span></a>
+<a name="503"><span class="lineNum">     503 </span>                :<span class="lineCov">    5938087 :     memset(X, 0, (A_limbs + B_limbs) * ciL);</span></a>
 <a name="504"><span class="lineNum">     504 </span>                :            : </a>
-<a name="505"><span class="lineNum">     505 </span>        [<span class="branchCov" title="Branch 0 was taken 23665422 times"> + </span><span class="branchCov" title="Branch 1 was taken 5930245 times"> + </span>]:<span class="lineCov">   29595667 :     for (size_t i = 0; i &lt; B_limbs; i++) {</span></a>
-<a name="506"><span class="lineNum">     506 </span>                :<span class="lineCov">   23665422 :         (void) mbedtls_mpi_core_mla(X + i, A_limbs + 1, A, A_limbs, B[i]);</span></a>
+<a name="505"><span class="lineNum">     505 </span>        [<span class="branchCov" title="Branch 0 was taken 23696706 times"> + </span><span class="branchCov" title="Branch 1 was taken 5938087 times"> + </span>]:<span class="lineCov">   29634793 :     for (size_t i = 0; i &lt; B_limbs; i++) {</span></a>
+<a name="506"><span class="lineNum">     506 </span>                :<span class="lineCov">   23696706 :         (void) mbedtls_mpi_core_mla(X + i, A_limbs + 1, A, A_limbs, B[i]);</span></a>
 <a name="507"><span class="lineNum">     507 </span>                :            :     }</a>
-<a name="508"><span class="lineNum">     508 </span>                :<span class="lineCov">    5930245 : }</span></a>
+<a name="508"><span class="lineNum">     508 </span>                :<span class="lineCov">    5938087 : }</span></a>
 <a name="509"><span class="lineNum">     509 </span>                :            : </a>
 <a name="510"><span class="lineNum">     510 </span>                :            : /*</a>
 <a name="511"><span class="lineNum">     511 </span>                :            :  * Fast Montgomery initialization (thanks to Tom St Denis).</a>
 <a name="512"><span class="lineNum">     512 </span>                :            :  */</a>
-<a name="513"><span class="lineNum">     513 </span>                :<span class="lineCov">        855 : mbedtls_mpi_uint mbedtls_mpi_core_montmul_init(const mbedtls_mpi_uint *N)</span></a>
+<a name="513"><span class="lineNum">     513 </span>                :<span class="lineCov">        859 : mbedtls_mpi_uint mbedtls_mpi_core_montmul_init(const mbedtls_mpi_uint *N)</span></a>
 <a name="514"><span class="lineNum">     514 </span>                :            : {</a>
-<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">        855 :     mbedtls_mpi_uint x = N[0];</span></a>
+<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">        859 :     mbedtls_mpi_uint x = N[0];</span></a>
 <a name="516"><span class="lineNum">     516 </span>                :            : </a>
-<a name="517"><span class="lineNum">     517 </span>                :<span class="lineCov">        855 :     x += ((N[0] + 2) &amp; 4) &lt;&lt; 1;</span></a>
+<a name="517"><span class="lineNum">     517 </span>                :<span class="lineCov">        859 :     x += ((N[0] + 2) &amp; 4) &lt;&lt; 1;</span></a>
 <a name="518"><span class="lineNum">     518 </span>                :            : </a>
-<a name="519"><span class="lineNum">     519 </span>        [<span class="branchCov" title="Branch 0 was taken 3420 times"> + </span><span class="branchCov" title="Branch 1 was taken 855 times"> + </span>]:<span class="lineCov">       4275 :     for (unsigned int i = biL; i &gt;= 8; i /= 2) {</span></a>
-<a name="520"><span class="lineNum">     520 </span>                :<span class="lineCov">       3420 :         x *= (2 - (N[0] * x));</span></a>
+<a name="519"><span class="lineNum">     519 </span>        [<span class="branchCov" title="Branch 0 was taken 3436 times"> + </span><span class="branchCov" title="Branch 1 was taken 859 times"> + </span>]:<span class="lineCov">       4295 :     for (unsigned int i = biL; i &gt;= 8; i /= 2) {</span></a>
+<a name="520"><span class="lineNum">     520 </span>                :<span class="lineCov">       3436 :         x *= (2 - (N[0] * x));</span></a>
 <a name="521"><span class="lineNum">     521 </span>                :            :     }</a>
 <a name="522"><span class="lineNum">     522 </span>                :            : </a>
-<a name="523"><span class="lineNum">     523 </span>                :<span class="lineCov">        855 :     return ~x + 1;</span></a>
+<a name="523"><span class="lineNum">     523 </span>                :<span class="lineCov">        859 :     return ~x + 1;</span></a>
 <a name="524"><span class="lineNum">     524 </span>                :            : }</a>
 <a name="525"><span class="lineNum">     525 </span>                :            : </a>
-<a name="526"><span class="lineNum">     526 </span>                :<span class="lineCov">     155702 : void mbedtls_mpi_core_montmul(mbedtls_mpi_uint *X,</span></a>
+<a name="526"><span class="lineNum">     526 </span>                :<span class="lineCov">     155964 : void mbedtls_mpi_core_montmul(mbedtls_mpi_uint *X,</span></a>
 <a name="527"><span class="lineNum">     527 </span>                :            :                               const mbedtls_mpi_uint *A,</a>
 <a name="528"><span class="lineNum">     528 </span>                :            :                               const mbedtls_mpi_uint *B,</a>
 <a name="529"><span class="lineNum">     529 </span>                :            :                               size_t B_limbs,</a>
@@ -604,17 +604,17 @@
 <a name="532"><span class="lineNum">     532 </span>                :            :                               mbedtls_mpi_uint mm,</a>
 <a name="533"><span class="lineNum">     533 </span>                :            :                               mbedtls_mpi_uint *T)</a>
 <a name="534"><span class="lineNum">     534 </span>                :            : {</a>
-<a name="535"><span class="lineNum">     535 </span>                :<span class="lineCov">     155702 :     memset(T, 0, (2 * AN_limbs + 1) * ciL);</span></a>
+<a name="535"><span class="lineNum">     535 </span>                :<span class="lineCov">     155964 :     memset(T, 0, (2 * AN_limbs + 1) * ciL);</span></a>
 <a name="536"><span class="lineNum">     536 </span>                :            : </a>
-<a name="537"><span class="lineNum">     537 </span>        [<span class="branchCov" title="Branch 0 was taken 4576945 times"> + </span><span class="branchCov" title="Branch 1 was taken 155702 times"> + </span>]:<span class="lineCov">    4732647 :     for (size_t i = 0; i &lt; AN_limbs; i++) {</span></a>
+<a name="537"><span class="lineNum">     537 </span>        [<span class="branchCov" title="Branch 0 was taken 4591879 times"> + </span><span class="branchCov" title="Branch 1 was taken 155964 times"> + </span>]:<span class="lineCov">    4747843 :     for (size_t i = 0; i &lt; AN_limbs; i++) {</span></a>
 <a name="538"><span class="lineNum">     538 </span>                :            :         /* T = (T + u0*B + u1*N) / 2^biL */</a>
-<a name="539"><span class="lineNum">     539 </span>                :<span class="lineCov">    4576945 :         mbedtls_mpi_uint u0 = A[i];</span></a>
-<a name="540"><span class="lineNum">     540 </span>                :<span class="lineCov">    4576945 :         mbedtls_mpi_uint u1 = (T[0] + u0 * B[0]) * mm;</span></a>
+<a name="539"><span class="lineNum">     539 </span>                :<span class="lineCov">    4591879 :         mbedtls_mpi_uint u0 = A[i];</span></a>
+<a name="540"><span class="lineNum">     540 </span>                :<span class="lineCov">    4591879 :         mbedtls_mpi_uint u1 = (T[0] + u0 * B[0]) * mm;</span></a>
 <a name="541"><span class="lineNum">     541 </span>                :            : </a>
-<a name="542"><span class="lineNum">     542 </span>                :<span class="lineCov">    4576945 :         (void) mbedtls_mpi_core_mla(T, AN_limbs + 2, B, B_limbs, u0);</span></a>
-<a name="543"><span class="lineNum">     543 </span>                :<span class="lineCov">    4576945 :         (void) mbedtls_mpi_core_mla(T, AN_limbs + 2, N, AN_limbs, u1);</span></a>
+<a name="542"><span class="lineNum">     542 </span>                :<span class="lineCov">    4591879 :         (void) mbedtls_mpi_core_mla(T, AN_limbs + 2, B, B_limbs, u0);</span></a>
+<a name="543"><span class="lineNum">     543 </span>                :<span class="lineCov">    4591879 :         (void) mbedtls_mpi_core_mla(T, AN_limbs + 2, N, AN_limbs, u1);</span></a>
 <a name="544"><span class="lineNum">     544 </span>                :            : </a>
-<a name="545"><span class="lineNum">     545 </span>                :<span class="lineCov">    4576945 :         T++;</span></a>
+<a name="545"><span class="lineNum">     545 </span>                :<span class="lineCov">    4591879 :         T++;</span></a>
 <a name="546"><span class="lineNum">     546 </span>                :            :     }</a>
 <a name="547"><span class="lineNum">     547 </span>                :            : </a>
 <a name="548"><span class="lineNum">     548 </span>                :            :     /*</a>
@@ -627,8 +627,8 @@
 <a name="555"><span class="lineNum">     555 </span>                :            :      * loop above.</a>
 <a name="556"><span class="lineNum">     556 </span>                :            :      */</a>
 <a name="557"><span class="lineNum">     557 </span>                :            : </a>
-<a name="558"><span class="lineNum">     558 </span>                :<span class="lineCov">     155702 :     mbedtls_mpi_uint carry  = T[AN_limbs];</span></a>
-<a name="559"><span class="lineNum">     559 </span>                :<span class="lineCov">     155702 :     mbedtls_mpi_uint borrow = mbedtls_mpi_core_sub(X, T, N, AN_limbs);</span></a>
+<a name="558"><span class="lineNum">     558 </span>                :<span class="lineCov">     155964 :     mbedtls_mpi_uint carry  = T[AN_limbs];</span></a>
+<a name="559"><span class="lineNum">     559 </span>                :<span class="lineCov">     155964 :     mbedtls_mpi_uint borrow = mbedtls_mpi_core_sub(X, T, N, AN_limbs);</span></a>
 <a name="560"><span class="lineNum">     560 </span>                :            : </a>
 <a name="561"><span class="lineNum">     561 </span>                :            :     /*</a>
 <a name="562"><span class="lineNum">     562 </span>                :            :      * Using R as the Montgomery radix (auxiliary modulus) i.e. 2^(biL*AN_limbs):</a>
@@ -644,39 +644,39 @@
 <a name="572"><span class="lineNum">     572 </span>                :            :      * So the correct return value is already in X if (carry ^ borrow) = 0,</a>
 <a name="573"><span class="lineNum">     573 </span>                :            :      * but is in (the lower AN_limbs limbs of) T if (carry ^ borrow) = 1.</a>
 <a name="574"><span class="lineNum">     574 </span>                :            :      */</a>
-<a name="575"><span class="lineNum">     575 </span>                :<span class="lineCov">     155702 :     mbedtls_ct_memcpy_if(mbedtls_ct_bool(carry ^ borrow),</span></a>
+<a name="575"><span class="lineNum">     575 </span>                :<span class="lineCov">     155964 :     mbedtls_ct_memcpy_if(mbedtls_ct_bool(carry ^ borrow),</span></a>
 <a name="576"><span class="lineNum">     576 </span>                :            :                          (unsigned char *) X,</a>
 <a name="577"><span class="lineNum">     577 </span>                :            :                          (unsigned char *) T,</a>
 <a name="578"><span class="lineNum">     578 </span>                :            :                          NULL,</a>
 <a name="579"><span class="lineNum">     579 </span>                :            :                          AN_limbs * sizeof(mbedtls_mpi_uint));</a>
-<a name="580"><span class="lineNum">     580 </span>                :<span class="lineCov">     155702 : }</span></a>
+<a name="580"><span class="lineNum">     580 </span>                :<span class="lineCov">     155964 : }</span></a>
 <a name="581"><span class="lineNum">     581 </span>                :            : </a>
-<a name="582"><span class="lineNum">     582 </span>                :<span class="lineCov">        375 : int mbedtls_mpi_core_get_mont_r2_unsafe(mbedtls_mpi *X,</span></a>
+<a name="582"><span class="lineNum">     582 </span>                :<span class="lineCov">        377 : int mbedtls_mpi_core_get_mont_r2_unsafe(mbedtls_mpi *X,</span></a>
 <a name="583"><span class="lineNum">     583 </span>                :            :                                         const mbedtls_mpi *N)</a>
 <a name="584"><span class="lineNum">     584 </span>                :            : {</a>
-<a name="585"><span class="lineNum">     585 </span>                :<span class="lineCov">        375 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
+<a name="585"><span class="lineNum">     585 </span>                :<span class="lineCov">        377 :     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;</span></a>
 <a name="586"><span class="lineNum">     586 </span>                :            : </a>
-<a name="587"><span class="lineNum">     587 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 375 times"> + </span>]:<span class="lineCov">        375 :     MBEDTLS_MPI_CHK(mbedtls_mpi_lset(X, 1));</span></a>
-<a name="588"><span class="lineNum">     588 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 375 times"> + </span>]:<span class="lineCov">        375 :     MBEDTLS_MPI_CHK(mbedtls_mpi_shift_l(X, N-&gt;n * 2 * biL));</span></a>
-<a name="589"><span class="lineNum">     589 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 375 times"> + </span>]:<span class="lineCov">        375 :     MBEDTLS_MPI_CHK(mbedtls_mpi_mod_mpi(X, X, N));</span></a>
-<a name="590"><span class="lineNum">     590 </span>        [<span class="branchCov" title="Branch 0 was taken 375 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        375 :     MBEDTLS_MPI_CHK(mbedtls_mpi_shrink(X, N-&gt;n));</span></a>
+<a name="587"><span class="lineNum">     587 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 377 times"> + </span>]:<span class="lineCov">        377 :     MBEDTLS_MPI_CHK(mbedtls_mpi_lset(X, 1));</span></a>
+<a name="588"><span class="lineNum">     588 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 377 times"> + </span>]:<span class="lineCov">        377 :     MBEDTLS_MPI_CHK(mbedtls_mpi_shift_l(X, N-&gt;n * 2 * biL));</span></a>
+<a name="589"><span class="lineNum">     589 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 377 times"> + </span>]:<span class="lineCov">        377 :     MBEDTLS_MPI_CHK(mbedtls_mpi_mod_mpi(X, X, N));</span></a>
+<a name="590"><span class="lineNum">     590 </span>        [<span class="branchCov" title="Branch 0 was taken 377 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">        377 :     MBEDTLS_MPI_CHK(mbedtls_mpi_shrink(X, N-&gt;n));</span></a>
 <a name="591"><span class="lineNum">     591 </span>                :            : </a>
-<a name="592"><span class="lineNum">     592 </span>                :<span class="lineCov">        375 : cleanup:</span></a>
-<a name="593"><span class="lineNum">     593 </span>                :<span class="lineCov">        375 :     return ret;</span></a>
+<a name="592"><span class="lineNum">     592 </span>                :<span class="lineCov">        377 : cleanup:</span></a>
+<a name="593"><span class="lineNum">     593 </span>                :<span class="lineCov">        377 :     return ret;</span></a>
 <a name="594"><span class="lineNum">     594 </span>                :            : }</a>
 <a name="595"><span class="lineNum">     595 </span>                :            : </a>
 <a name="596"><span class="lineNum">     596 </span>                :            : MBEDTLS_STATIC_TESTABLE</a>
-<a name="597"><span class="lineNum">     597 </span>                :<span class="lineCov">      49854 : void mbedtls_mpi_core_ct_uint_table_lookup(mbedtls_mpi_uint *dest,</span></a>
+<a name="597"><span class="lineNum">     597 </span>                :<span class="lineCov">      49982 : void mbedtls_mpi_core_ct_uint_table_lookup(mbedtls_mpi_uint *dest,</span></a>
 <a name="598"><span class="lineNum">     598 </span>                :            :                                            const mbedtls_mpi_uint *table,</a>
 <a name="599"><span class="lineNum">     599 </span>                :            :                                            size_t limbs,</a>
 <a name="600"><span class="lineNum">     600 </span>                :            :                                            size_t count,</a>
 <a name="601"><span class="lineNum">     601 </span>                :            :                                            size_t index)</a>
 <a name="602"><span class="lineNum">     602 </span>                :            : {</a>
-<a name="603"><span class="lineNum">     603 </span>        [<span class="branchCov" title="Branch 0 was taken 262896 times"> + </span><span class="branchCov" title="Branch 1 was taken 49854 times"> + </span>]:<span class="lineCov">     312750 :     for (size_t i = 0; i &lt; count; i++, table += limbs) {</span></a>
-<a name="604"><span class="lineNum">     604 </span>                :<span class="lineCov">     262896 :         mbedtls_ct_condition_t assign = mbedtls_ct_uint_eq(i, index);</span></a>
-<a name="605"><span class="lineNum">     605 </span>                :<span class="lineCov">     262896 :         mbedtls_mpi_core_cond_assign(dest, table, limbs, assign);</span></a>
+<a name="603"><span class="lineNum">     603 </span>        [<span class="branchCov" title="Branch 0 was taken 263152 times"> + </span><span class="branchCov" title="Branch 1 was taken 49982 times"> + </span>]:<span class="lineCov">     313134 :     for (size_t i = 0; i &lt; count; i++, table += limbs) {</span></a>
+<a name="604"><span class="lineNum">     604 </span>                :<span class="lineCov">     263152 :         mbedtls_ct_condition_t assign = mbedtls_ct_uint_eq(i, index);</span></a>
+<a name="605"><span class="lineNum">     605 </span>                :<span class="lineCov">     263152 :         mbedtls_mpi_core_cond_assign(dest, table, limbs, assign);</span></a>
 <a name="606"><span class="lineNum">     606 </span>                :            :     }</a>
-<a name="607"><span class="lineNum">     607 </span>                :<span class="lineCov">      49854 : }</span></a>
+<a name="607"><span class="lineNum">     607 </span>                :<span class="lineCov">      49982 : }</span></a>
 <a name="608"><span class="lineNum">     608 </span>                :            : </a>
 <a name="609"><span class="lineNum">     609 </span>                :            : /* Fill X with n_bytes random bytes.</a>
 <a name="610"><span class="lineNum">     610 </span>                :            :  * X must already have room for those bytes.</a>
@@ -764,34 +764,34 @@
 <a name="692"><span class="lineNum">     692 </span>                :<span class="lineCov">       1124 :     return ret;</span></a>
 <a name="693"><span class="lineNum">     693 </span>                :            : }</a>
 <a name="694"><span class="lineNum">     694 </span>                :            : </a>
-<a name="695"><span class="lineNum">     695 </span>                :<span class="lineCov">        828 : static size_t exp_mod_get_window_size(size_t Ebits)</span></a>
+<a name="695"><span class="lineNum">     695 </span>                :<span class="lineCov">        832 : static size_t exp_mod_get_window_size(size_t Ebits)</span></a>
 <a name="696"><span class="lineNum">     696 </span>                :            : {</a>
 <a name="697"><span class="lineNum">     697 </span>                :            : #if MBEDTLS_MPI_WINDOW_SIZE &gt;= 6</a>
 <a name="698"><span class="lineNum">     698 </span>                :            :     return (Ebits &gt; 671) ? 6 : (Ebits &gt; 239) ? 5 : (Ebits &gt;  79) ? 4 : 1;</a>
 <a name="699"><span class="lineNum">     699 </span>                :            : #elif MBEDTLS_MPI_WINDOW_SIZE == 5</a>
 <a name="700"><span class="lineNum">     700 </span>                :            :     return (Ebits &gt; 239) ? 5 : (Ebits &gt;  79) ? 4 : 1;</a>
 <a name="701"><span class="lineNum">     701 </span>                :            : #elif MBEDTLS_MPI_WINDOW_SIZE &gt; 1</a>
-<a name="702"><span class="lineNum">     702 </span>        [<span class="branchCov" title="Branch 0 was taken 120 times"> + </span><span class="branchCov" title="Branch 1 was taken 708 times"> + </span>]:<span class="lineCov">        828 :     return (Ebits &gt;  79) ? MBEDTLS_MPI_WINDOW_SIZE : 1;</span></a>
+<a name="702"><span class="lineNum">     702 </span>        [<span class="branchCov" title="Branch 0 was taken 120 times"> + </span><span class="branchCov" title="Branch 1 was taken 712 times"> + </span>]:<span class="lineCov">        832 :     return (Ebits &gt;  79) ? MBEDTLS_MPI_WINDOW_SIZE : 1;</span></a>
 <a name="703"><span class="lineNum">     703 </span>                :            : #else</a>
 <a name="704"><span class="lineNum">     704 </span>                :            :     (void) Ebits;</a>
 <a name="705"><span class="lineNum">     705 </span>                :            :     return 1;</a>
 <a name="706"><span class="lineNum">     706 </span>                :            : #endif</a>
 <a name="707"><span class="lineNum">     707 </span>                :            : }</a>
 <a name="708"><span class="lineNum">     708 </span>                :            : </a>
-<a name="709"><span class="lineNum">     709 </span>                :<span class="lineCov">        414 : size_t mbedtls_mpi_core_exp_mod_working_limbs(size_t AN_limbs, size_t E_limbs)</span></a>
+<a name="709"><span class="lineNum">     709 </span>                :<span class="lineCov">        416 : size_t mbedtls_mpi_core_exp_mod_working_limbs(size_t AN_limbs, size_t E_limbs)</span></a>
 <a name="710"><span class="lineNum">     710 </span>                :            : {</a>
-<a name="711"><span class="lineNum">     711 </span>                :<span class="lineCov">        414 :     const size_t wsize = exp_mod_get_window_size(E_limbs * biL);</span></a>
-<a name="712"><span class="lineNum">     712 </span>                :<span class="lineCov">        414 :     const size_t welem = ((size_t) 1) &lt;&lt; wsize;</span></a>
+<a name="711"><span class="lineNum">     711 </span>                :<span class="lineCov">        416 :     const size_t wsize = exp_mod_get_window_size(E_limbs * biL);</span></a>
+<a name="712"><span class="lineNum">     712 </span>                :<span class="lineCov">        416 :     const size_t welem = ((size_t) 1) &lt;&lt; wsize;</span></a>
 <a name="713"><span class="lineNum">     713 </span>                :            : </a>
 <a name="714"><span class="lineNum">     714 </span>                :            :     /* How big does each part of the working memory pool need to be? */</a>
-<a name="715"><span class="lineNum">     715 </span>                :<span class="lineCov">        414 :     const size_t table_limbs   = welem * AN_limbs;</span></a>
-<a name="716"><span class="lineNum">     716 </span>                :<span class="lineCov">        414 :     const size_t select_limbs  = AN_limbs;</span></a>
-<a name="717"><span class="lineNum">     717 </span>                :<span class="lineCov">        414 :     const size_t temp_limbs    = 2 * AN_limbs + 1;</span></a>
+<a name="715"><span class="lineNum">     715 </span>                :<span class="lineCov">        416 :     const size_t table_limbs   = welem * AN_limbs;</span></a>
+<a name="716"><span class="lineNum">     716 </span>                :<span class="lineCov">        416 :     const size_t select_limbs  = AN_limbs;</span></a>
+<a name="717"><span class="lineNum">     717 </span>                :<span class="lineCov">        416 :     const size_t temp_limbs    = 2 * AN_limbs + 1;</span></a>
 <a name="718"><span class="lineNum">     718 </span>                :            : </a>
-<a name="719"><span class="lineNum">     719 </span>                :<span class="lineCov">        414 :     return table_limbs + select_limbs + temp_limbs;</span></a>
+<a name="719"><span class="lineNum">     719 </span>                :<span class="lineCov">        416 :     return table_limbs + select_limbs + temp_limbs;</span></a>
 <a name="720"><span class="lineNum">     720 </span>                :            : }</a>
 <a name="721"><span class="lineNum">     721 </span>                :            : </a>
-<a name="722"><span class="lineNum">     722 </span>                :<span class="lineCov">        414 : static void exp_mod_precompute_window(const mbedtls_mpi_uint *A,</span></a>
+<a name="722"><span class="lineNum">     722 </span>                :<span class="lineCov">        416 : static void exp_mod_precompute_window(const mbedtls_mpi_uint *A,</span></a>
 <a name="723"><span class="lineNum">     723 </span>                :            :                                       const mbedtls_mpi_uint *N,</a>
 <a name="724"><span class="lineNum">     724 </span>                :            :                                       size_t AN_limbs,</a>
 <a name="725"><span class="lineNum">     725 </span>                :            :                                       mbedtls_mpi_uint mm,</a>
@@ -801,22 +801,22 @@
 <a name="729"><span class="lineNum">     729 </span>                :            :                                       mbedtls_mpi_uint *temp)</a>
 <a name="730"><span class="lineNum">     730 </span>                :            : {</a>
 <a name="731"><span class="lineNum">     731 </span>                :            :     /* W[0] = 1 (in Montgomery presentation) */</a>
-<a name="732"><span class="lineNum">     732 </span>                :<span class="lineCov">        414 :     memset(Wtable, 0, AN_limbs * ciL);</span></a>
-<a name="733"><span class="lineNum">     733 </span>                :<span class="lineCov">        414 :     Wtable[0] = 1;</span></a>
-<a name="734"><span class="lineNum">     734 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_core_montmul(Wtable, Wtable, RR, AN_limbs, N, AN_limbs, mm, temp);</span></a>
+<a name="732"><span class="lineNum">     732 </span>                :<span class="lineCov">        416 :     memset(Wtable, 0, AN_limbs * ciL);</span></a>
+<a name="733"><span class="lineNum">     733 </span>                :<span class="lineCov">        416 :     Wtable[0] = 1;</span></a>
+<a name="734"><span class="lineNum">     734 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_core_montmul(Wtable, Wtable, RR, AN_limbs, N, AN_limbs, mm, temp);</span></a>
 <a name="735"><span class="lineNum">     735 </span>                :            : </a>
 <a name="736"><span class="lineNum">     736 </span>                :            :     /* W[1] = A (already in Montgomery presentation) */</a>
-<a name="737"><span class="lineNum">     737 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_uint *W1 = Wtable + AN_limbs;</span></a>
-<a name="738"><span class="lineNum">     738 </span>                :<span class="lineCov">        414 :     memcpy(W1, A, AN_limbs * ciL);</span></a>
+<a name="737"><span class="lineNum">     737 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_uint *W1 = Wtable + AN_limbs;</span></a>
+<a name="738"><span class="lineNum">     738 </span>                :<span class="lineCov">        416 :     memcpy(W1, A, AN_limbs * ciL);</span></a>
 <a name="739"><span class="lineNum">     739 </span>                :            : </a>
 <a name="740"><span class="lineNum">     740 </span>                :            :     /* W[i+1] = W[i] * W[1], i &gt;= 2 */</a>
-<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_uint *Wprev = W1;</span></a>
-<a name="742"><span class="lineNum">     742 </span>        [<span class="branchCov" title="Branch 0 was taken 360 times"> + </span><span class="branchCov" title="Branch 1 was taken 414 times"> + </span>]:<span class="lineCov">        774 :     for (size_t i = 2; i &lt; welem; i++) {</span></a>
+<a name="741"><span class="lineNum">     741 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_uint *Wprev = W1;</span></a>
+<a name="742"><span class="lineNum">     742 </span>        [<span class="branchCov" title="Branch 0 was taken 360 times"> + </span><span class="branchCov" title="Branch 1 was taken 416 times"> + </span>]:<span class="lineCov">        776 :     for (size_t i = 2; i &lt; welem; i++) {</span></a>
 <a name="743"><span class="lineNum">     743 </span>                :<span class="lineCov">        360 :         mbedtls_mpi_uint *Wcur = Wprev + AN_limbs;</span></a>
 <a name="744"><span class="lineNum">     744 </span>                :<span class="lineCov">        360 :         mbedtls_mpi_core_montmul(Wcur, Wprev, W1, AN_limbs, N, AN_limbs, mm, temp);</span></a>
 <a name="745"><span class="lineNum">     745 </span>                :<span class="lineCov">        360 :         Wprev = Wcur;</span></a>
 <a name="746"><span class="lineNum">     746 </span>                :            :     }</a>
-<a name="747"><span class="lineNum">     747 </span>                :<span class="lineCov">        414 : }</span></a>
+<a name="747"><span class="lineNum">     747 </span>                :<span class="lineCov">        416 : }</span></a>
 <a name="748"><span class="lineNum">     748 </span>                :            : </a>
 <a name="749"><span class="lineNum">     749 </span>                :            : /* Exponentiation: X := A^E mod N.</a>
 <a name="750"><span class="lineNum">     750 </span>                :            :  *</a>
@@ -830,7 +830,7 @@
 <a name="758"><span class="lineNum">     758 </span>                :            :  * (The difference is that the body in our loop processes a single bit instead</a>
 <a name="759"><span class="lineNum">     759 </span>                :            :  * of a full window.)</a>
 <a name="760"><span class="lineNum">     760 </span>                :            :  */</a>
-<a name="761"><span class="lineNum">     761 </span>                :<span class="lineCov">        414 : void mbedtls_mpi_core_exp_mod(mbedtls_mpi_uint *X,</span></a>
+<a name="761"><span class="lineNum">     761 </span>                :<span class="lineCov">        416 : void mbedtls_mpi_core_exp_mod(mbedtls_mpi_uint *X,</span></a>
 <a name="762"><span class="lineNum">     762 </span>                :            :                               const mbedtls_mpi_uint *A,</a>
 <a name="763"><span class="lineNum">     763 </span>                :            :                               const mbedtls_mpi_uint *N,</a>
 <a name="764"><span class="lineNum">     764 </span>                :            :                               size_t AN_limbs,</a>
@@ -839,27 +839,27 @@
 <a name="767"><span class="lineNum">     767 </span>                :            :                               const mbedtls_mpi_uint *RR,</a>
 <a name="768"><span class="lineNum">     768 </span>                :            :                               mbedtls_mpi_uint *T)</a>
 <a name="769"><span class="lineNum">     769 </span>                :            : {</a>
-<a name="770"><span class="lineNum">     770 </span>                :<span class="lineCov">        414 :     const size_t wsize = exp_mod_get_window_size(E_limbs * biL);</span></a>
-<a name="771"><span class="lineNum">     771 </span>                :<span class="lineCov">        414 :     const size_t welem = ((size_t) 1) &lt;&lt; wsize;</span></a>
+<a name="770"><span class="lineNum">     770 </span>                :<span class="lineCov">        416 :     const size_t wsize = exp_mod_get_window_size(E_limbs * biL);</span></a>
+<a name="771"><span class="lineNum">     771 </span>                :<span class="lineCov">        416 :     const size_t welem = ((size_t) 1) &lt;&lt; wsize;</span></a>
 <a name="772"><span class="lineNum">     772 </span>                :            : </a>
 <a name="773"><span class="lineNum">     773 </span>                :            :     /* This is how we will use the temporary storage T, which must have space</a>
 <a name="774"><span class="lineNum">     774 </span>                :            :      * for table_limbs, select_limbs and (2 * AN_limbs + 1) for montmul. */</a>
-<a name="775"><span class="lineNum">     775 </span>                :<span class="lineCov">        414 :     const size_t table_limbs  = welem * AN_limbs;</span></a>
-<a name="776"><span class="lineNum">     776 </span>                :<span class="lineCov">        414 :     const size_t select_limbs = AN_limbs;</span></a>
+<a name="775"><span class="lineNum">     775 </span>                :<span class="lineCov">        416 :     const size_t table_limbs  = welem * AN_limbs;</span></a>
+<a name="776"><span class="lineNum">     776 </span>                :<span class="lineCov">        416 :     const size_t select_limbs = AN_limbs;</span></a>
 <a name="777"><span class="lineNum">     777 </span>                :            : </a>
 <a name="778"><span class="lineNum">     778 </span>                :            :     /* Pointers to specific parts of the temporary working memory pool */</a>
-<a name="779"><span class="lineNum">     779 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_uint *const Wtable  = T;</span></a>
-<a name="780"><span class="lineNum">     780 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_uint *const Wselect = Wtable  +  table_limbs;</span></a>
-<a name="781"><span class="lineNum">     781 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_uint *const temp    = Wselect + select_limbs;</span></a>
+<a name="779"><span class="lineNum">     779 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_uint *const Wtable  = T;</span></a>
+<a name="780"><span class="lineNum">     780 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_uint *const Wselect = Wtable  +  table_limbs;</span></a>
+<a name="781"><span class="lineNum">     781 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_uint *const temp    = Wselect + select_limbs;</span></a>
 <a name="782"><span class="lineNum">     782 </span>                :            : </a>
 <a name="783"><span class="lineNum">     783 </span>                :            :     /*</a>
 <a name="784"><span class="lineNum">     784 </span>                :            :      * Window precomputation</a>
 <a name="785"><span class="lineNum">     785 </span>                :            :      */</a>
 <a name="786"><span class="lineNum">     786 </span>                :            : </a>
-<a name="787"><span class="lineNum">     787 </span>                :<span class="lineCov">        414 :     const mbedtls_mpi_uint mm = mbedtls_mpi_core_montmul_init(N);</span></a>
+<a name="787"><span class="lineNum">     787 </span>                :<span class="lineCov">        416 :     const mbedtls_mpi_uint mm = mbedtls_mpi_core_montmul_init(N);</span></a>
 <a name="788"><span class="lineNum">     788 </span>                :            : </a>
 <a name="789"><span class="lineNum">     789 </span>                :            :     /* Set Wtable[i] = A^(2^i) (in Montgomery representation) */</a>
-<a name="790"><span class="lineNum">     790 </span>                :<span class="lineCov">        414 :     exp_mod_precompute_window(A, N, AN_limbs,</span></a>
+<a name="790"><span class="lineNum">     790 </span>                :<span class="lineCov">        416 :     exp_mod_precompute_window(A, N, AN_limbs,</span></a>
 <a name="791"><span class="lineNum">     791 </span>                :            :                               mm, RR,</a>
 <a name="792"><span class="lineNum">     792 </span>                :            :                               welem, Wtable, temp);</a>
 <a name="793"><span class="lineNum">     793 </span>                :            : </a>
@@ -868,64 +868,64 @@
 <a name="796"><span class="lineNum">     796 </span>                :            :      */</a>
 <a name="797"><span class="lineNum">     797 </span>                :            : </a>
 <a name="798"><span class="lineNum">     798 </span>                :            :     /* X = 1 (in Montgomery presentation) initially */</a>
-<a name="799"><span class="lineNum">     799 </span>                :<span class="lineCov">        414 :     memcpy(X, Wtable, AN_limbs * ciL);</span></a>
+<a name="799"><span class="lineNum">     799 </span>                :<span class="lineCov">        416 :     memcpy(X, Wtable, AN_limbs * ciL);</span></a>
 <a name="800"><span class="lineNum">     800 </span>                :            : </a>
 <a name="801"><span class="lineNum">     801 </span>                :            :     /* We'll process the bits of E from most significant</a>
 <a name="802"><span class="lineNum">     802 </span>                :            :      * (limb_index=E_limbs-1, E_bit_index=biL-1) to least significant</a>
 <a name="803"><span class="lineNum">     803 </span>                :            :      * (limb_index=0, E_bit_index=0). */</a>
-<a name="804"><span class="lineNum">     804 </span>                :<span class="lineCov">        414 :     size_t E_limb_index = E_limbs;</span></a>
-<a name="805"><span class="lineNum">     805 </span>                :<span class="lineCov">        414 :     size_t E_bit_index = 0;</span></a>
+<a name="804"><span class="lineNum">     804 </span>                :<span class="lineCov">        416 :     size_t E_limb_index = E_limbs;</span></a>
+<a name="805"><span class="lineNum">     805 </span>                :<span class="lineCov">        416 :     size_t E_bit_index = 0;</span></a>
 <a name="806"><span class="lineNum">     806 </span>                :            :     /* At any given time, window contains window_bits bits from E.</a>
 <a name="807"><span class="lineNum">     807 </span>                :            :      * window_bits can go up to wsize. */</a>
-<a name="808"><span class="lineNum">     808 </span>                :<span class="lineCov">        414 :     size_t window_bits = 0;</span></a>
-<a name="809"><span class="lineNum">     809 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_uint window = 0;</span></a>
+<a name="808"><span class="lineNum">     808 </span>                :<span class="lineCov">        416 :     size_t window_bits = 0;</span></a>
+<a name="809"><span class="lineNum">     809 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_uint window = 0;</span></a>
 <a name="810"><span class="lineNum">     810 </span>                :            : </a>
 <a name="811"><span class="lineNum">     811 </span>                :            :     do {</a>
 <a name="812"><span class="lineNum">     812 </span>                :            :         /* Square */</a>
-<a name="813"><span class="lineNum">     813 </span>                :<span class="lineCov">     104192 :         mbedtls_mpi_core_montmul(X, X, X, AN_limbs, N, AN_limbs, mm, temp);</span></a>
+<a name="813"><span class="lineNum">     813 </span>                :<span class="lineCov">     104320 :         mbedtls_mpi_core_montmul(X, X, X, AN_limbs, N, AN_limbs, mm, temp);</span></a>
 <a name="814"><span class="lineNum">     814 </span>                :            : </a>
 <a name="815"><span class="lineNum">     815 </span>                :            :         /* Move to the next bit of the exponent */</a>
-<a name="816"><span class="lineNum">     816 </span>        [<span class="branchCov" title="Branch 0 was taken 1628 times"> + </span><span class="branchCov" title="Branch 1 was taken 102564 times"> + </span>]:<span class="lineCov">     104192 :         if (E_bit_index == 0) {</span></a>
-<a name="817"><span class="lineNum">     817 </span>                :<span class="lineCov">       1628 :             --E_limb_index;</span></a>
-<a name="818"><span class="lineNum">     818 </span>                :<span class="lineCov">       1628 :             E_bit_index = biL - 1;</span></a>
+<a name="816"><span class="lineNum">     816 </span>        [<span class="branchCov" title="Branch 0 was taken 1630 times"> + </span><span class="branchCov" title="Branch 1 was taken 102690 times"> + </span>]:<span class="lineCov">     104320 :         if (E_bit_index == 0) {</span></a>
+<a name="817"><span class="lineNum">     817 </span>                :<span class="lineCov">       1630 :             --E_limb_index;</span></a>
+<a name="818"><span class="lineNum">     818 </span>                :<span class="lineCov">       1630 :             E_bit_index = biL - 1;</span></a>
 <a name="819"><span class="lineNum">     819 </span>                :            :         } else {</a>
-<a name="820"><span class="lineNum">     820 </span>                :<span class="lineCov">     102564 :             --E_bit_index;</span></a>
+<a name="820"><span class="lineNum">     820 </span>                :<span class="lineCov">     102690 :             --E_bit_index;</span></a>
 <a name="821"><span class="lineNum">     821 </span>                :            :         }</a>
 <a name="822"><span class="lineNum">     822 </span>                :            :         /* Insert next exponent bit into window */</a>
-<a name="823"><span class="lineNum">     823 </span>                :<span class="lineCov">     104192 :         ++window_bits;</span></a>
-<a name="824"><span class="lineNum">     824 </span>                :<span class="lineCov">     104192 :         window &lt;&lt;= 1;</span></a>
-<a name="825"><span class="lineNum">     825 </span>                :<span class="lineCov">     104192 :         window |= (E[E_limb_index] &gt;&gt; E_bit_index) &amp; 1;</span></a>
+<a name="823"><span class="lineNum">     823 </span>                :<span class="lineCov">     104320 :         ++window_bits;</span></a>
+<a name="824"><span class="lineNum">     824 </span>                :<span class="lineCov">     104320 :         window &lt;&lt;= 1;</span></a>
+<a name="825"><span class="lineNum">     825 </span>                :<span class="lineCov">     104320 :         window |= (E[E_limb_index] &gt;&gt; E_bit_index) &amp; 1;</span></a>
 <a name="826"><span class="lineNum">     826 </span>                :            : </a>
 <a name="827"><span class="lineNum">     827 </span>                :            :         /* Clear window if it's full. Also clear the window at the end,</a>
 <a name="828"><span class="lineNum">     828 </span>                :            :          * when we've finished processing the exponent. */</a>
-<a name="829"><span class="lineNum">     829 </span>  [<span class="branchCov" title="Branch 0 was taken 54396 times"> + </span><span class="branchCov" title="Branch 1 was taken 49796 times"> + </span><span class="branchCov" title="Branch 2 was taken 888 times"> + </span><span class="branchCov" title="Branch 3 was taken 53508 times"> + </span>]:<span class="lineCov">     104192 :         if (window_bits == wsize ||</span></a>
+<a name="829"><span class="lineNum">     829 </span>  [<span class="branchCov" title="Branch 0 was taken 54396 times"> + </span><span class="branchCov" title="Branch 1 was taken 49924 times"> + </span><span class="branchCov" title="Branch 2 was taken 888 times"> + </span><span class="branchCov" title="Branch 3 was taken 53508 times"> + </span>]:<span class="lineCov">     104320 :         if (window_bits == wsize ||</span></a>
 <a name="830"><span class="lineNum">     830 </span>        [<span class="branchCov" title="Branch 0 was taken 58 times"> + </span><span class="branchCov" title="Branch 1 was taken 830 times"> + </span>]:<span class="lineCov">        888 :             (E_bit_index == 0 &amp;&amp; E_limb_index == 0)) {</span></a>
 <a name="831"><span class="lineNum">     831 </span>                :            :             /* Select Wtable[window] without leaking window through</a>
 <a name="832"><span class="lineNum">     832 </span>                :            :              * memory access patterns. */</a>
-<a name="833"><span class="lineNum">     833 </span>                :<span class="lineCov">      49854 :             mbedtls_mpi_core_ct_uint_table_lookup(Wselect, Wtable,</span></a>
+<a name="833"><span class="lineNum">     833 </span>                :<span class="lineCov">      49982 :             mbedtls_mpi_core_ct_uint_table_lookup(Wselect, Wtable,</span></a>
 <a name="834"><span class="lineNum">     834 </span>                :            :                                                   AN_limbs, welem, window);</a>
 <a name="835"><span class="lineNum">     835 </span>                :            :             /* Multiply X by the selected element. */</a>
-<a name="836"><span class="lineNum">     836 </span>                :<span class="lineCov">      49854 :             mbedtls_mpi_core_montmul(X, X, Wselect, AN_limbs, N, AN_limbs, mm,</span></a>
+<a name="836"><span class="lineNum">     836 </span>                :<span class="lineCov">      49982 :             mbedtls_mpi_core_montmul(X, X, Wselect, AN_limbs, N, AN_limbs, mm,</span></a>
 <a name="837"><span class="lineNum">     837 </span>                :            :                                      temp);</a>
-<a name="838"><span class="lineNum">     838 </span>                :<span class="lineCov">      49854 :             window = 0;</span></a>
-<a name="839"><span class="lineNum">     839 </span>                :<span class="lineCov">      49854 :             window_bits = 0;</span></a>
+<a name="838"><span class="lineNum">     838 </span>                :<span class="lineCov">      49982 :             window = 0;</span></a>
+<a name="839"><span class="lineNum">     839 </span>                :<span class="lineCov">      49982 :             window_bits = 0;</span></a>
 <a name="840"><span class="lineNum">     840 </span>                :            :         }</a>
-<a name="841"><span class="lineNum">     841 </span>  [<span class="branchCov" title="Branch 0 was taken 102564 times"> + </span><span class="branchCov" title="Branch 1 was taken 1628 times"> + </span><span class="branchCov" title="Branch 2 was taken 1214 times"> + </span><span class="branchCov" title="Branch 3 was taken 414 times"> + </span>]:<span class="lineCov">     104192 :     } while (!(E_bit_index == 0 &amp;&amp; E_limb_index == 0));</span></a>
-<a name="842"><span class="lineNum">     842 </span>                :<span class="lineCov">        414 : }</span></a>
+<a name="841"><span class="lineNum">     841 </span>  [<span class="branchCov" title="Branch 0 was taken 102690 times"> + </span><span class="branchCov" title="Branch 1 was taken 1630 times"> + </span><span class="branchCov" title="Branch 2 was taken 1214 times"> + </span><span class="branchCov" title="Branch 3 was taken 416 times"> + </span>]:<span class="lineCov">     104320 :     } while (!(E_bit_index == 0 &amp;&amp; E_limb_index == 0));</span></a>
+<a name="842"><span class="lineNum">     842 </span>                :<span class="lineCov">        416 : }</span></a>
 <a name="843"><span class="lineNum">     843 </span>                :            : </a>
-<a name="844"><span class="lineNum">     844 </span>                :<span class="lineCov">    4225518 : mbedtls_mpi_uint mbedtls_mpi_core_sub_int(mbedtls_mpi_uint *X,</span></a>
+<a name="844"><span class="lineNum">     844 </span>                :<span class="lineCov">    4232035 : mbedtls_mpi_uint mbedtls_mpi_core_sub_int(mbedtls_mpi_uint *X,</span></a>
 <a name="845"><span class="lineNum">     845 </span>                :            :                                           const mbedtls_mpi_uint *A,</a>
 <a name="846"><span class="lineNum">     846 </span>                :            :                                           mbedtls_mpi_uint c,  /* doubles as carry */</a>
 <a name="847"><span class="lineNum">     847 </span>                :            :                                           size_t limbs)</a>
 <a name="848"><span class="lineNum">     848 </span>                :            : {</a>
-<a name="849"><span class="lineNum">     849 </span>        [<span class="branchCov" title="Branch 0 was taken 19668872 times"> + </span><span class="branchCov" title="Branch 1 was taken 4225518 times"> + </span>]:<span class="lineCov">   23894390 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
-<a name="850"><span class="lineNum">     850 </span>                :<span class="lineCov">   19668872 :         mbedtls_mpi_uint s = A[i];</span></a>
-<a name="851"><span class="lineNum">     851 </span>                :<span class="lineCov">   19668872 :         mbedtls_mpi_uint t = s - c;</span></a>
-<a name="852"><span class="lineNum">     852 </span>                :<span class="lineCov">   19668872 :         c = (t &gt; s);</span></a>
-<a name="853"><span class="lineNum">     853 </span>                :<span class="lineCov">   19668872 :         X[i] = t;</span></a>
+<a name="849"><span class="lineNum">     849 </span>        [<span class="branchCov" title="Branch 0 was taken 19699427 times"> + </span><span class="branchCov" title="Branch 1 was taken 4232035 times"> + </span>]:<span class="lineCov">   23931462 :     for (size_t i = 0; i &lt; limbs; i++) {</span></a>
+<a name="850"><span class="lineNum">     850 </span>                :<span class="lineCov">   19699427 :         mbedtls_mpi_uint s = A[i];</span></a>
+<a name="851"><span class="lineNum">     851 </span>                :<span class="lineCov">   19699427 :         mbedtls_mpi_uint t = s - c;</span></a>
+<a name="852"><span class="lineNum">     852 </span>                :<span class="lineCov">   19699427 :         c = (t &gt; s);</span></a>
+<a name="853"><span class="lineNum">     853 </span>                :<span class="lineCov">   19699427 :         X[i] = t;</span></a>
 <a name="854"><span class="lineNum">     854 </span>                :            :     }</a>
 <a name="855"><span class="lineNum">     855 </span>                :            : </a>
-<a name="856"><span class="lineNum">     856 </span>                :<span class="lineCov">    4225518 :     return c;</span></a>
+<a name="856"><span class="lineNum">     856 </span>                :<span class="lineCov">    4232035 :     return c;</span></a>
 <a name="857"><span class="lineNum">     857 </span>                :            : }</a>
 <a name="858"><span class="lineNum">     858 </span>                :            : </a>
 <a name="859"><span class="lineNum">     859 </span>                :<span class="lineNoCov">          0 : mbedtls_ct_condition_t mbedtls_mpi_core_check_zero_ct(const mbedtls_mpi_uint *A,</span></a>
@@ -941,7 +941,7 @@
 <a name="869"><span class="lineNum">     869 </span>                :<span class="lineNoCov">          0 :     return mbedtls_ct_bool(bits);</span></a>
 <a name="870"><span class="lineNum">     870 </span>                :            : }</a>
 <a name="871"><span class="lineNum">     871 </span>                :            : </a>
-<a name="872"><span class="lineNum">     872 </span>                :<span class="lineCov">        441 : void mbedtls_mpi_core_to_mont_rep(mbedtls_mpi_uint *X,</span></a>
+<a name="872"><span class="lineNum">     872 </span>                :<span class="lineCov">        443 : void mbedtls_mpi_core_to_mont_rep(mbedtls_mpi_uint *X,</span></a>
 <a name="873"><span class="lineNum">     873 </span>                :            :                                   const mbedtls_mpi_uint *A,</a>
 <a name="874"><span class="lineNum">     874 </span>                :            :                                   const mbedtls_mpi_uint *N,</a>
 <a name="875"><span class="lineNum">     875 </span>                :            :                                   size_t AN_limbs,</a>
@@ -949,20 +949,20 @@
 <a name="877"><span class="lineNum">     877 </span>                :            :                                   const mbedtls_mpi_uint *rr,</a>
 <a name="878"><span class="lineNum">     878 </span>                :            :                                   mbedtls_mpi_uint *T)</a>
 <a name="879"><span class="lineNum">     879 </span>                :            : {</a>
-<a name="880"><span class="lineNum">     880 </span>                :<span class="lineCov">        441 :     mbedtls_mpi_core_montmul(X, A, rr, AN_limbs, N, AN_limbs, mm, T);</span></a>
-<a name="881"><span class="lineNum">     881 </span>                :<span class="lineCov">        441 : }</span></a>
+<a name="880"><span class="lineNum">     880 </span>                :<span class="lineCov">        443 :     mbedtls_mpi_core_montmul(X, A, rr, AN_limbs, N, AN_limbs, mm, T);</span></a>
+<a name="881"><span class="lineNum">     881 </span>                :<span class="lineCov">        443 : }</span></a>
 <a name="882"><span class="lineNum">     882 </span>                :            : </a>
-<a name="883"><span class="lineNum">     883 </span>                :<span class="lineCov">        414 : void mbedtls_mpi_core_from_mont_rep(mbedtls_mpi_uint *X,</span></a>
+<a name="883"><span class="lineNum">     883 </span>                :<span class="lineCov">        416 : void mbedtls_mpi_core_from_mont_rep(mbedtls_mpi_uint *X,</span></a>
 <a name="884"><span class="lineNum">     884 </span>                :            :                                     const mbedtls_mpi_uint *A,</a>
 <a name="885"><span class="lineNum">     885 </span>                :            :                                     const mbedtls_mpi_uint *N,</a>
 <a name="886"><span class="lineNum">     886 </span>                :            :                                     size_t AN_limbs,</a>
 <a name="887"><span class="lineNum">     887 </span>                :            :                                     mbedtls_mpi_uint mm,</a>
 <a name="888"><span class="lineNum">     888 </span>                :            :                                     mbedtls_mpi_uint *T)</a>
 <a name="889"><span class="lineNum">     889 </span>                :            : {</a>
-<a name="890"><span class="lineNum">     890 </span>                :<span class="lineCov">        414 :     const mbedtls_mpi_uint Rinv = 1;    /* 1/R in Mont. rep =&gt; 1 */</span></a>
+<a name="890"><span class="lineNum">     890 </span>                :<span class="lineCov">        416 :     const mbedtls_mpi_uint Rinv = 1;    /* 1/R in Mont. rep =&gt; 1 */</span></a>
 <a name="891"><span class="lineNum">     891 </span>                :            : </a>
-<a name="892"><span class="lineNum">     892 </span>                :<span class="lineCov">        414 :     mbedtls_mpi_core_montmul(X, A, &amp;Rinv, 1, N, AN_limbs, mm, T);</span></a>
-<a name="893"><span class="lineNum">     893 </span>                :<span class="lineCov">        414 : }</span></a>
+<a name="892"><span class="lineNum">     892 </span>                :<span class="lineCov">        416 :     mbedtls_mpi_core_montmul(X, A, &amp;Rinv, 1, N, AN_limbs, mm, T);</span></a>
+<a name="893"><span class="lineNum">     893 </span>                :<span class="lineCov">        416 : }</span></a>
 <a name="894"><span class="lineNum">     894 </span>                :            : </a>
 <a name="895"><span class="lineNum">     895 </span>                :            : #endif /* MBEDTLS_BIGNUM_C */</a>
 </pre>
