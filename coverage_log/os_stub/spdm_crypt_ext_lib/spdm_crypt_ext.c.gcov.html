@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-06-25 08:16:56</td>
+            <td class="headerValue">2024-06-26 08:17:15</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -228,9 +228,9 @@
 <a name="156"><span class="lineNum">     156 </span>                :            :  *</a>
 <a name="157"><span class="lineNum">     157 </span>                :            :  * @return hash function</a>
 <a name="158"><span class="lineNum">     158 </span>                :            :  **/</a>
-<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">        169 : static libspdm_hash_all_func libspdm_spdm_measurement_hash_func(uint32_t measurement_hash_algo)</span></a>
+<a name="159"><span class="lineNum">     159 </span>                :<span class="lineCov">        214 : static libspdm_hash_all_func libspdm_spdm_measurement_hash_func(uint32_t measurement_hash_algo)</span></a>
 <a name="160"><span class="lineNum">     160 </span>                :            : {</a>
-<a name="161"><span class="lineNum">     161 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 169 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        169 :     switch (measurement_hash_algo) {</span></a>
+<a name="161"><span class="lineNum">     161 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 214 times"> + </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">        214 :     switch (measurement_hash_algo) {</span></a>
 <span class="lineNum">         </span>   <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchNoCov" title="Branch 6 was not taken"> - </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span>]
 <a name="162"><span class="lineNum">     162 </span>                :<span class="lineNoCov">          0 :     case SPDM_ALGORITHMS_MEASUREMENT_HASH_ALGO_TPM_ALG_SHA_256:</span></a>
 <a name="163"><span class="lineNum">     163 </span>                :            : #if LIBSPDM_SHA256_SUPPORT</a>
@@ -239,9 +239,9 @@
 <a name="166"><span class="lineNum">     166 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="167"><span class="lineNum">     167 </span>                :            :         break;</a>
 <a name="168"><span class="lineNum">     168 </span>                :            : #endif</a>
-<a name="169"><span class="lineNum">     169 </span>                :<span class="lineCov">        169 :     case SPDM_ALGORITHMS_MEASUREMENT_HASH_ALGO_TPM_ALG_SHA_384:</span></a>
+<a name="169"><span class="lineNum">     169 </span>                :<span class="lineCov">        214 :     case SPDM_ALGORITHMS_MEASUREMENT_HASH_ALGO_TPM_ALG_SHA_384:</span></a>
 <a name="170"><span class="lineNum">     170 </span>                :            : #if LIBSPDM_SHA384_SUPPORT</a>
-<a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">        169 :         return libspdm_sha384_hash_all;</span></a>
+<a name="171"><span class="lineNum">     171 </span>                :<span class="lineCov">        214 :         return libspdm_sha384_hash_all;</span></a>
 <a name="172"><span class="lineNum">     172 </span>                :            : #else</a>
 <a name="173"><span class="lineNum">     173 </span>                :            :         LIBSPDM_ASSERT(false);</a>
 <a name="174"><span class="lineNum">     174 </span>                :            :         break;</a>
@@ -289,16 +289,16 @@
 <a name="216"><span class="lineNum">     216 </span>                :<span class="lineNoCov">          0 :     return NULL;</span></a>
 <a name="217"><span class="lineNum">     217 </span>                :            : }</a>
 <a name="218"><span class="lineNum">     218 </span>                :            : </a>
-<a name="219"><span class="lineNum">     219 </span>                :<span class="lineCov">        169 : bool libspdm_measurement_hash_all(uint32_t measurement_hash_algo,</span></a>
+<a name="219"><span class="lineNum">     219 </span>                :<span class="lineCov">        214 : bool libspdm_measurement_hash_all(uint32_t measurement_hash_algo,</span></a>
 <a name="220"><span class="lineNum">     220 </span>                :            :                                   const void *data, size_t data_size,</a>
 <a name="221"><span class="lineNum">     221 </span>                :            :                                   uint8_t *hash_value)</a>
 <a name="222"><span class="lineNum">     222 </span>                :            : {</a>
 <a name="223"><span class="lineNum">     223 </span>                :            :     libspdm_hash_all_func hash_function;</a>
-<a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">        169 :     hash_function = libspdm_spdm_measurement_hash_func(measurement_hash_algo);</span></a>
-<a name="225"><span class="lineNum">     225 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 169 times"> + </span>]:<span class="lineCov">        169 :     if (hash_function == NULL) {</span></a>
+<a name="224"><span class="lineNum">     224 </span>                :<span class="lineCov">        214 :     hash_function = libspdm_spdm_measurement_hash_func(measurement_hash_algo);</span></a>
+<a name="225"><span class="lineNum">     225 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 214 times"> + </span>]:<span class="lineCov">        214 :     if (hash_function == NULL) {</span></a>
 <a name="226"><span class="lineNum">     226 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="227"><span class="lineNum">     227 </span>                :            :     }</a>
-<a name="228"><span class="lineNum">     228 </span>                :<span class="lineCov">        169 :     return hash_function(data, data_size, hash_value);</span></a>
+<a name="228"><span class="lineNum">     228 </span>                :<span class="lineCov">        214 :     return hash_function(data, data_size, hash_value);</span></a>
 <a name="229"><span class="lineNum">     229 </span>                :            : }</a>
 <a name="230"><span class="lineNum">     230 </span>                :            : </a>
 <a name="231"><span class="lineNum">     231 </span>                :<span class="lineCov">          6 : size_t libspdm_get_aysm_nid(uint32_t base_asym_algo)</span></a>

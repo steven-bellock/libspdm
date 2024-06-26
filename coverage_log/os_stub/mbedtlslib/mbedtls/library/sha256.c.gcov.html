@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-06-25 08:16:56</td>
+            <td class="headerValue">2024-06-26 08:17:15</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -556,7 +556,7 @@
 <a name="485"><span class="lineNum">     485 </span>                :            :  */</a>
 <a name="486"><span class="lineNum">     486 </span>                :            : static</a>
 <a name="487"><span class="lineNum">     487 </span>                :            : #endif</a>
-<a name="488"><span class="lineNum">     488 </span>                :<span class="lineCov">      44356 : int mbedtls_internal_sha256_process_c(mbedtls_sha256_context *ctx,</span></a>
+<a name="488"><span class="lineNum">     488 </span>                :<span class="lineCov">      44371 : int mbedtls_internal_sha256_process_c(mbedtls_sha256_context *ctx,</span></a>
 <a name="489"><span class="lineNum">     489 </span>                :            :                                       const unsigned char data[SHA256_BLOCK_SIZE])</a>
 <a name="490"><span class="lineNum">     490 </span>                :            : {</a>
 <a name="491"><span class="lineNum">     491 </span>                :            :     struct {</a>
@@ -566,8 +566,8 @@
 <a name="495"><span class="lineNum">     495 </span>                :            : </a>
 <a name="496"><span class="lineNum">     496 </span>                :            :     unsigned int i;</a>
 <a name="497"><span class="lineNum">     497 </span>                :            : </a>
-<a name="498"><span class="lineNum">     498 </span>        [<span class="branchCov" title="Branch 0 was taken 354848 times"> + </span><span class="branchCov" title="Branch 1 was taken 44356 times"> + </span>]:<span class="lineCov">     399204 :     for (i = 0; i &lt; 8; i++) {</span></a>
-<a name="499"><span class="lineNum">     499 </span>                :<span class="lineCov">     354848 :         local.A[i] = ctx-&gt;state[i];</span></a>
+<a name="498"><span class="lineNum">     498 </span>        [<span class="branchCov" title="Branch 0 was taken 354968 times"> + </span><span class="branchCov" title="Branch 1 was taken 44371 times"> + </span>]:<span class="lineCov">     399339 :     for (i = 0; i &lt; 8; i++) {</span></a>
+<a name="499"><span class="lineNum">     499 </span>                :<span class="lineCov">     354968 :         local.A[i] = ctx-&gt;state[i];</span></a>
 <a name="500"><span class="lineNum">     500 </span>                :            :     }</a>
 <a name="501"><span class="lineNum">     501 </span>                :            : </a>
 <a name="502"><span class="lineNum">     502 </span>                :            : #if defined(MBEDTLS_SHA256_SMALLER)</a>
@@ -588,57 +588,57 @@
 <a name="517"><span class="lineNum">     517 </span>                :            :         local.A[0] = local.temp1;</a>
 <a name="518"><span class="lineNum">     518 </span>                :            :     }</a>
 <a name="519"><span class="lineNum">     519 </span>                :            : #else /* MBEDTLS_SHA256_SMALLER */</a>
-<a name="520"><span class="lineNum">     520 </span>        [<span class="branchCov" title="Branch 0 was taken 709696 times"> + </span><span class="branchCov" title="Branch 1 was taken 44356 times"> + </span>]:<span class="lineCov">     754052 :     for (i = 0; i &lt; 16; i++) {</span></a>
-<a name="521"><span class="lineNum">     521 </span>                :<span class="lineCov">    1419392 :         local.W[i] = MBEDTLS_GET_UINT32_BE(data, 4 * i);</span></a>
+<a name="520"><span class="lineNum">     520 </span>        [<span class="branchCov" title="Branch 0 was taken 709936 times"> + </span><span class="branchCov" title="Branch 1 was taken 44371 times"> + </span>]:<span class="lineCov">     754307 :     for (i = 0; i &lt; 16; i++) {</span></a>
+<a name="521"><span class="lineNum">     521 </span>                :<span class="lineCov">    1419872 :         local.W[i] = MBEDTLS_GET_UINT32_BE(data, 4 * i);</span></a>
 <a name="522"><span class="lineNum">     522 </span>                :            :     }</a>
 <a name="523"><span class="lineNum">     523 </span>                :            : </a>
-<a name="524"><span class="lineNum">     524 </span>        [<span class="branchCov" title="Branch 0 was taken 88712 times"> + </span><span class="branchCov" title="Branch 1 was taken 44356 times"> + </span>]:<span class="lineCov">     133068 :     for (i = 0; i &lt; 16; i += 8) {</span></a>
-<a name="525"><span class="lineNum">     525 </span>                :<span class="lineCov">      88712 :         P(local.A[0], local.A[1], local.A[2], local.A[3], local.A[4],</span></a>
+<a name="524"><span class="lineNum">     524 </span>        [<span class="branchCov" title="Branch 0 was taken 88742 times"> + </span><span class="branchCov" title="Branch 1 was taken 44371 times"> + </span>]:<span class="lineCov">     133113 :     for (i = 0; i &lt; 16; i += 8) {</span></a>
+<a name="525"><span class="lineNum">     525 </span>                :<span class="lineCov">      88742 :         P(local.A[0], local.A[1], local.A[2], local.A[3], local.A[4],</span></a>
 <a name="526"><span class="lineNum">     526 </span>                :            :           local.A[5], local.A[6], local.A[7], local.W[i+0], K[i+0]);</a>
-<a name="527"><span class="lineNum">     527 </span>                :<span class="lineCov">      88712 :         P(local.A[7], local.A[0], local.A[1], local.A[2], local.A[3],</span></a>
+<a name="527"><span class="lineNum">     527 </span>                :<span class="lineCov">      88742 :         P(local.A[7], local.A[0], local.A[1], local.A[2], local.A[3],</span></a>
 <a name="528"><span class="lineNum">     528 </span>                :            :           local.A[4], local.A[5], local.A[6], local.W[i+1], K[i+1]);</a>
-<a name="529"><span class="lineNum">     529 </span>                :<span class="lineCov">      88712 :         P(local.A[6], local.A[7], local.A[0], local.A[1], local.A[2],</span></a>
+<a name="529"><span class="lineNum">     529 </span>                :<span class="lineCov">      88742 :         P(local.A[6], local.A[7], local.A[0], local.A[1], local.A[2],</span></a>
 <a name="530"><span class="lineNum">     530 </span>                :            :           local.A[3], local.A[4], local.A[5], local.W[i+2], K[i+2]);</a>
-<a name="531"><span class="lineNum">     531 </span>                :<span class="lineCov">      88712 :         P(local.A[5], local.A[6], local.A[7], local.A[0], local.A[1],</span></a>
+<a name="531"><span class="lineNum">     531 </span>                :<span class="lineCov">      88742 :         P(local.A[5], local.A[6], local.A[7], local.A[0], local.A[1],</span></a>
 <a name="532"><span class="lineNum">     532 </span>                :            :           local.A[2], local.A[3], local.A[4], local.W[i+3], K[i+3]);</a>
-<a name="533"><span class="lineNum">     533 </span>                :<span class="lineCov">      88712 :         P(local.A[4], local.A[5], local.A[6], local.A[7], local.A[0],</span></a>
+<a name="533"><span class="lineNum">     533 </span>                :<span class="lineCov">      88742 :         P(local.A[4], local.A[5], local.A[6], local.A[7], local.A[0],</span></a>
 <a name="534"><span class="lineNum">     534 </span>                :            :           local.A[1], local.A[2], local.A[3], local.W[i+4], K[i+4]);</a>
-<a name="535"><span class="lineNum">     535 </span>                :<span class="lineCov">      88712 :         P(local.A[3], local.A[4], local.A[5], local.A[6], local.A[7],</span></a>
+<a name="535"><span class="lineNum">     535 </span>                :<span class="lineCov">      88742 :         P(local.A[3], local.A[4], local.A[5], local.A[6], local.A[7],</span></a>
 <a name="536"><span class="lineNum">     536 </span>                :            :           local.A[0], local.A[1], local.A[2], local.W[i+5], K[i+5]);</a>
-<a name="537"><span class="lineNum">     537 </span>                :<span class="lineCov">      88712 :         P(local.A[2], local.A[3], local.A[4], local.A[5], local.A[6],</span></a>
+<a name="537"><span class="lineNum">     537 </span>                :<span class="lineCov">      88742 :         P(local.A[2], local.A[3], local.A[4], local.A[5], local.A[6],</span></a>
 <a name="538"><span class="lineNum">     538 </span>                :            :           local.A[7], local.A[0], local.A[1], local.W[i+6], K[i+6]);</a>
-<a name="539"><span class="lineNum">     539 </span>                :<span class="lineCov">      88712 :         P(local.A[1], local.A[2], local.A[3], local.A[4], local.A[5],</span></a>
+<a name="539"><span class="lineNum">     539 </span>                :<span class="lineCov">      88742 :         P(local.A[1], local.A[2], local.A[3], local.A[4], local.A[5],</span></a>
 <a name="540"><span class="lineNum">     540 </span>                :            :           local.A[6], local.A[7], local.A[0], local.W[i+7], K[i+7]);</a>
 <a name="541"><span class="lineNum">     541 </span>                :            :     }</a>
 <a name="542"><span class="lineNum">     542 </span>                :            : </a>
-<a name="543"><span class="lineNum">     543 </span>        [<span class="branchCov" title="Branch 0 was taken 266136 times"> + </span><span class="branchCov" title="Branch 1 was taken 44356 times"> + </span>]:<span class="lineCov">     310492 :     for (i = 16; i &lt; 64; i += 8) {</span></a>
-<a name="544"><span class="lineNum">     544 </span>                :<span class="lineCov">     266136 :         P(local.A[0], local.A[1], local.A[2], local.A[3], local.A[4],</span></a>
+<a name="543"><span class="lineNum">     543 </span>        [<span class="branchCov" title="Branch 0 was taken 266226 times"> + </span><span class="branchCov" title="Branch 1 was taken 44371 times"> + </span>]:<span class="lineCov">     310597 :     for (i = 16; i &lt; 64; i += 8) {</span></a>
+<a name="544"><span class="lineNum">     544 </span>                :<span class="lineCov">     266226 :         P(local.A[0], local.A[1], local.A[2], local.A[3], local.A[4],</span></a>
 <a name="545"><span class="lineNum">     545 </span>                :            :           local.A[5], local.A[6], local.A[7], R(i+0), K[i+0]);</a>
-<a name="546"><span class="lineNum">     546 </span>                :<span class="lineCov">     266136 :         P(local.A[7], local.A[0], local.A[1], local.A[2], local.A[3],</span></a>
+<a name="546"><span class="lineNum">     546 </span>                :<span class="lineCov">     266226 :         P(local.A[7], local.A[0], local.A[1], local.A[2], local.A[3],</span></a>
 <a name="547"><span class="lineNum">     547 </span>                :            :           local.A[4], local.A[5], local.A[6], R(i+1), K[i+1]);</a>
-<a name="548"><span class="lineNum">     548 </span>                :<span class="lineCov">     266136 :         P(local.A[6], local.A[7], local.A[0], local.A[1], local.A[2],</span></a>
+<a name="548"><span class="lineNum">     548 </span>                :<span class="lineCov">     266226 :         P(local.A[6], local.A[7], local.A[0], local.A[1], local.A[2],</span></a>
 <a name="549"><span class="lineNum">     549 </span>                :            :           local.A[3], local.A[4], local.A[5], R(i+2), K[i+2]);</a>
-<a name="550"><span class="lineNum">     550 </span>                :<span class="lineCov">     266136 :         P(local.A[5], local.A[6], local.A[7], local.A[0], local.A[1],</span></a>
+<a name="550"><span class="lineNum">     550 </span>                :<span class="lineCov">     266226 :         P(local.A[5], local.A[6], local.A[7], local.A[0], local.A[1],</span></a>
 <a name="551"><span class="lineNum">     551 </span>                :            :           local.A[2], local.A[3], local.A[4], R(i+3), K[i+3]);</a>
-<a name="552"><span class="lineNum">     552 </span>                :<span class="lineCov">     266136 :         P(local.A[4], local.A[5], local.A[6], local.A[7], local.A[0],</span></a>
+<a name="552"><span class="lineNum">     552 </span>                :<span class="lineCov">     266226 :         P(local.A[4], local.A[5], local.A[6], local.A[7], local.A[0],</span></a>
 <a name="553"><span class="lineNum">     553 </span>                :            :           local.A[1], local.A[2], local.A[3], R(i+4), K[i+4]);</a>
-<a name="554"><span class="lineNum">     554 </span>                :<span class="lineCov">     266136 :         P(local.A[3], local.A[4], local.A[5], local.A[6], local.A[7],</span></a>
+<a name="554"><span class="lineNum">     554 </span>                :<span class="lineCov">     266226 :         P(local.A[3], local.A[4], local.A[5], local.A[6], local.A[7],</span></a>
 <a name="555"><span class="lineNum">     555 </span>                :            :           local.A[0], local.A[1], local.A[2], R(i+5), K[i+5]);</a>
-<a name="556"><span class="lineNum">     556 </span>                :<span class="lineCov">     266136 :         P(local.A[2], local.A[3], local.A[4], local.A[5], local.A[6],</span></a>
+<a name="556"><span class="lineNum">     556 </span>                :<span class="lineCov">     266226 :         P(local.A[2], local.A[3], local.A[4], local.A[5], local.A[6],</span></a>
 <a name="557"><span class="lineNum">     557 </span>                :            :           local.A[7], local.A[0], local.A[1], R(i+6), K[i+6]);</a>
-<a name="558"><span class="lineNum">     558 </span>                :<span class="lineCov">     266136 :         P(local.A[1], local.A[2], local.A[3], local.A[4], local.A[5],</span></a>
+<a name="558"><span class="lineNum">     558 </span>                :<span class="lineCov">     266226 :         P(local.A[1], local.A[2], local.A[3], local.A[4], local.A[5],</span></a>
 <a name="559"><span class="lineNum">     559 </span>                :            :           local.A[6], local.A[7], local.A[0], R(i+7), K[i+7]);</a>
 <a name="560"><span class="lineNum">     560 </span>                :            :     }</a>
 <a name="561"><span class="lineNum">     561 </span>                :            : #endif /* MBEDTLS_SHA256_SMALLER */</a>
 <a name="562"><span class="lineNum">     562 </span>                :            : </a>
-<a name="563"><span class="lineNum">     563 </span>        [<span class="branchCov" title="Branch 0 was taken 354848 times"> + </span><span class="branchCov" title="Branch 1 was taken 44356 times"> + </span>]:<span class="lineCov">     399204 :     for (i = 0; i &lt; 8; i++) {</span></a>
-<a name="564"><span class="lineNum">     564 </span>                :<span class="lineCov">     354848 :         ctx-&gt;state[i] += local.A[i];</span></a>
+<a name="563"><span class="lineNum">     563 </span>        [<span class="branchCov" title="Branch 0 was taken 354968 times"> + </span><span class="branchCov" title="Branch 1 was taken 44371 times"> + </span>]:<span class="lineCov">     399339 :     for (i = 0; i &lt; 8; i++) {</span></a>
+<a name="564"><span class="lineNum">     564 </span>                :<span class="lineCov">     354968 :         ctx-&gt;state[i] += local.A[i];</span></a>
 <a name="565"><span class="lineNum">     565 </span>                :            :     }</a>
 <a name="566"><span class="lineNum">     566 </span>                :            : </a>
 <a name="567"><span class="lineNum">     567 </span>                :            :     /* Zeroise buffers and variables to clear sensitive data from memory. */</a>
-<a name="568"><span class="lineNum">     568 </span>                :<span class="lineCov">      44356 :     mbedtls_platform_zeroize(&amp;local, sizeof(local));</span></a>
+<a name="568"><span class="lineNum">     568 </span>                :<span class="lineCov">      44371 :     mbedtls_platform_zeroize(&amp;local, sizeof(local));</span></a>
 <a name="569"><span class="lineNum">     569 </span>                :            : </a>
-<a name="570"><span class="lineNum">     570 </span>                :<span class="lineCov">      44356 :     return 0;</span></a>
+<a name="570"><span class="lineNum">     570 </span>                :<span class="lineCov">      44371 :     return 0;</span></a>
 <a name="571"><span class="lineNum">     571 </span>                :            : }</a>
 <a name="572"><span class="lineNum">     572 </span>                :            : </a>
 <a name="573"><span class="lineNum">     573 </span>                :            : #endif /* !MBEDTLS_SHA256_PROCESS_ALT &amp;&amp; !MBEDTLS_SHA256_USE_ARMV8_A_CRYPTO_ONLY */</a>
@@ -646,23 +646,23 @@
 <a name="575"><span class="lineNum">     575 </span>                :            : </a>
 <a name="576"><span class="lineNum">     576 </span>                :            : #if !defined(MBEDTLS_SHA256_USE_ARMV8_A_CRYPTO_ONLY)</a>
 <a name="577"><span class="lineNum">     577 </span>                :            : </a>
-<a name="578"><span class="lineNum">     578 </span>                :<span class="lineCov">       7100 : static size_t mbedtls_internal_sha256_process_many_c(</span></a>
+<a name="578"><span class="lineNum">     578 </span>                :<span class="lineCov">       7105 : static size_t mbedtls_internal_sha256_process_many_c(</span></a>
 <a name="579"><span class="lineNum">     579 </span>                :            :     mbedtls_sha256_context *ctx, const uint8_t *data, size_t len)</a>
 <a name="580"><span class="lineNum">     580 </span>                :            : {</a>
-<a name="581"><span class="lineNum">     581 </span>                :<span class="lineCov">       7100 :     size_t processed = 0;</span></a>
+<a name="581"><span class="lineNum">     581 </span>                :<span class="lineCov">       7105 :     size_t processed = 0;</span></a>
 <a name="582"><span class="lineNum">     582 </span>                :            : </a>
-<a name="583"><span class="lineNum">     583 </span>        [<span class="branchCov" title="Branch 0 was taken 35326 times"> + </span><span class="branchCov" title="Branch 1 was taken 7100 times"> + </span>]:<span class="lineCov">      42426 :     while (len &gt;= SHA256_BLOCK_SIZE) {</span></a>
-<a name="584"><span class="lineNum">     584 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 35326 times"> + </span>]:<span class="lineCov">      35326 :         if (mbedtls_internal_sha256_process_c(ctx, data) != 0) {</span></a>
+<a name="583"><span class="lineNum">     583 </span>        [<span class="branchCov" title="Branch 0 was taken 35341 times"> + </span><span class="branchCov" title="Branch 1 was taken 7105 times"> + </span>]:<span class="lineCov">      42446 :     while (len &gt;= SHA256_BLOCK_SIZE) {</span></a>
+<a name="584"><span class="lineNum">     584 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 35341 times"> + </span>]:<span class="lineCov">      35341 :         if (mbedtls_internal_sha256_process_c(ctx, data) != 0) {</span></a>
 <a name="585"><span class="lineNum">     585 </span>                :<span class="lineNoCov">          0 :             return 0;</span></a>
 <a name="586"><span class="lineNum">     586 </span>                :            :         }</a>
 <a name="587"><span class="lineNum">     587 </span>                :            : </a>
-<a name="588"><span class="lineNum">     588 </span>                :<span class="lineCov">      35326 :         data += SHA256_BLOCK_SIZE;</span></a>
-<a name="589"><span class="lineNum">     589 </span>                :<span class="lineCov">      35326 :         len  -= SHA256_BLOCK_SIZE;</span></a>
+<a name="588"><span class="lineNum">     588 </span>                :<span class="lineCov">      35341 :         data += SHA256_BLOCK_SIZE;</span></a>
+<a name="589"><span class="lineNum">     589 </span>                :<span class="lineCov">      35341 :         len  -= SHA256_BLOCK_SIZE;</span></a>
 <a name="590"><span class="lineNum">     590 </span>                :            : </a>
-<a name="591"><span class="lineNum">     591 </span>                :<span class="lineCov">      35326 :         processed += SHA256_BLOCK_SIZE;</span></a>
+<a name="591"><span class="lineNum">     591 </span>                :<span class="lineCov">      35341 :         processed += SHA256_BLOCK_SIZE;</span></a>
 <a name="592"><span class="lineNum">     592 </span>                :            :     }</a>
 <a name="593"><span class="lineNum">     593 </span>                :            : </a>
-<a name="594"><span class="lineNum">     594 </span>                :<span class="lineCov">       7100 :     return processed;</span></a>
+<a name="594"><span class="lineNum">     594 </span>                :<span class="lineCov">       7105 :     return processed;</span></a>
 <a name="595"><span class="lineNum">     595 </span>                :            : }</a>
 <a name="596"><span class="lineNum">     596 </span>                :            : </a>
 <a name="597"><span class="lineNum">     597 </span>                :            : #endif /* !MBEDTLS_SHA256_USE_ARMV8_A_CRYPTO_ONLY */</a>
@@ -743,19 +743,19 @@
 <a name="672"><span class="lineNum">     672 </span>                :<span class="lineCov">       1876 :         left = 0;</span></a>
 <a name="673"><span class="lineNum">     673 </span>                :            :     }</a>
 <a name="674"><span class="lineNum">     674 </span>                :            : </a>
-<a name="675"><span class="lineNum">     675 </span>        [<span class="branchCov" title="Branch 0 was taken 7100 times"> + </span><span class="branchCov" title="Branch 1 was taken 21626 times"> + </span>]:<span class="lineCov">      28726 :     while (ilen &gt;= SHA256_BLOCK_SIZE) {</span></a>
+<a name="675"><span class="lineNum">     675 </span>        [<span class="branchCov" title="Branch 0 was taken 7105 times"> + </span><span class="branchCov" title="Branch 1 was taken 21626 times"> + </span>]:<span class="lineCov">      28731 :     while (ilen &gt;= SHA256_BLOCK_SIZE) {</span></a>
 <a name="676"><span class="lineNum">     676 </span>                :            :         size_t processed =</a>
-<a name="677"><span class="lineNum">     677 </span>                :<span class="lineCov">       7100 :             mbedtls_internal_sha256_process_many(ctx, input, ilen);</span></a>
-<a name="678"><span class="lineNum">     678 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7100 times"> + </span>]:<span class="lineCov">       7100 :         if (processed &lt; SHA256_BLOCK_SIZE) {</span></a>
+<a name="677"><span class="lineNum">     677 </span>                :<span class="lineCov">       7105 :             mbedtls_internal_sha256_process_many(ctx, input, ilen);</span></a>
+<a name="678"><span class="lineNum">     678 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 7105 times"> + </span>]:<span class="lineCov">       7105 :         if (processed &lt; SHA256_BLOCK_SIZE) {</span></a>
 <a name="679"><span class="lineNum">     679 </span>                :<span class="lineNoCov">          0 :             return MBEDTLS_ERR_ERROR_GENERIC_ERROR;</span></a>
 <a name="680"><span class="lineNum">     680 </span>                :            :         }</a>
 <a name="681"><span class="lineNum">     681 </span>                :            : </a>
-<a name="682"><span class="lineNum">     682 </span>                :<span class="lineCov">       7100 :         input += processed;</span></a>
-<a name="683"><span class="lineNum">     683 </span>                :<span class="lineCov">       7100 :         ilen  -= processed;</span></a>
+<a name="682"><span class="lineNum">     682 </span>                :<span class="lineCov">       7105 :         input += processed;</span></a>
+<a name="683"><span class="lineNum">     683 </span>                :<span class="lineCov">       7105 :         ilen  -= processed;</span></a>
 <a name="684"><span class="lineNum">     684 </span>                :            :     }</a>
 <a name="685"><span class="lineNum">     685 </span>                :            : </a>
-<a name="686"><span class="lineNum">     686 </span>        [<span class="branchCov" title="Branch 0 was taken 17823 times"> + </span><span class="branchCov" title="Branch 1 was taken 3803 times"> + </span>]:<span class="lineCov">      21626 :     if (ilen &gt; 0) {</span></a>
-<a name="687"><span class="lineNum">     687 </span>                :<span class="lineCov">      17823 :         memcpy((void *) (ctx-&gt;buffer + left), input, ilen);</span></a>
+<a name="686"><span class="lineNum">     686 </span>        [<span class="branchCov" title="Branch 0 was taken 17818 times"> + </span><span class="branchCov" title="Branch 1 was taken 3808 times"> + </span>]:<span class="lineCov">      21626 :     if (ilen &gt; 0) {</span></a>
+<a name="687"><span class="lineNum">     687 </span>                :<span class="lineCov">      17818 :         memcpy((void *) (ctx-&gt;buffer + left), input, ilen);</span></a>
 <a name="688"><span class="lineNum">     688 </span>                :            :     }</a>
 <a name="689"><span class="lineNum">     689 </span>                :            : </a>
 <a name="690"><span class="lineNum">     690 </span>                :<span class="lineCov">      21626 :     return 0;</span></a>
