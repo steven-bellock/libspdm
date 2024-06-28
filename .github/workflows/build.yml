@@ -28,7 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-20.04
+          - ubuntu-24.04
           - windows-latest
         crypto:
           - mbedtls
@@ -53,9 +53,9 @@ jobs:
           - "-DLIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT=1 -DLIBSPDM_FIPS_MODE=1 -DLIBSPDM_ENABLE_CAPABILITY_CSR_CAP_EX=1"
           - "-DDISABLE_TESTS=1"
         exclude:
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             toolchain: VS2019
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             arch: ia32
           - os: windows-latest
             toolchain: GCC
@@ -111,7 +111,7 @@ jobs:
         with:
           arch: x86
       - name:  Toolchain Setup - Clang
-        if:  matrix.toolchain == 'CLANG' || matrix.toolchain == 'LIBFUZZER' && matrix.os == 'ubuntu-latest'
+        if:  matrix.toolchain == 'CLANG' || matrix.toolchain == 'LIBFUZZER' && matrix.os == 'ubuntu-24.04'
         run: |
           sudo apt-get update
           sudo apt-get install llvm
@@ -129,7 +129,7 @@ jobs:
             cmake:p
             make:p
       - name: Toolchain Setup - ARM_GNU
-        if: matrix.toolchain == 'ARM_GNU' && matrix.os == 'ubuntu-latest'
+        if: matrix.toolchain == 'ARM_GNU' && matrix.os == 'ubuntu-24.04'
         run: |
           wget https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu.tar.xz
           tar -xvf gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu.tar.xz -C ~/
@@ -139,7 +139,7 @@ jobs:
           submodules: recursive
 
       - name: Build - Linux
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-24.04'
         run: |
           export PATH=~/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu/bin:$PATH
           mkdir build
@@ -169,7 +169,7 @@ jobs:
           make copy_sample_key
           make
       - name: Build - Linux - GCOV=ON
-        if: matrix.os == 'ubuntu-latest' && matrix.toolchain == 'GCC' && matrix.target == 'Debug' && matrix.arch == 'x64'
+        if: matrix.os == 'ubuntu-24.04' && matrix.toolchain == 'GCC' && matrix.target == 'Debug' && matrix.arch == 'x64'
         run: |
           mkdir build_gcov
           cd build_gcov
@@ -213,7 +213,7 @@ jobs:
           cd build/bin
           ./test_spdm_fips
       - name: Fuzz test with initial seed
-        if: matrix.os == 'ubuntu-latest' && matrix.arch == 'x64' && matrix.configurations != '-DDISABLE_TESTS=1'
+        if: matrix.os == 'ubuntu-24.04' && matrix.arch == 'x64' && matrix.configurations != '-DDISABLE_TESTS=1'
         run: |
           cd build/bin
           ./run_initial_seed.sh
