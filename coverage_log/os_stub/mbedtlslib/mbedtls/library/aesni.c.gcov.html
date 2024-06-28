@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-06-27 08:15:49</td>
+            <td class="headerValue">2024-06-28 08:15:47</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">6</td>
@@ -117,12 +117,12 @@
 <a name="46"><span class="lineNum">      46 </span>                :            : /*</a>
 <a name="47"><span class="lineNum">      47 </span>                :            :  * AES-NI support detection routine</a>
 <a name="48"><span class="lineNum">      48 </span>                :            :  */</a>
-<a name="49"><span class="lineNum">      49 </span>                :<span class="lineCov">       5058 : int mbedtls_aesni_has_support(unsigned int what)</span></a>
+<a name="49"><span class="lineNum">      49 </span>                :<span class="lineCov">       5083 : int mbedtls_aesni_has_support(unsigned int what)</span></a>
 <a name="50"><span class="lineNum">      50 </span>                :            : {</a>
 <a name="51"><span class="lineNum">      51 </span>                :            :     static int done = 0;</a>
 <a name="52"><span class="lineNum">      52 </span>                :            :     static unsigned int c = 0;</a>
 <a name="53"><span class="lineNum">      53 </span>                :            : </a>
-<a name="54"><span class="lineNum">      54 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 5056 times"> + </span>]:<span class="lineCov">       5058 :     if (!done) {</span></a>
+<a name="54"><span class="lineNum">      54 </span>        [<span class="branchCov" title="Branch 0 was taken 2 times"> + </span><span class="branchCov" title="Branch 1 was taken 5081 times"> + </span>]:<span class="lineCov">       5083 :     if (!done) {</span></a>
 <a name="55"><span class="lineNum">      55 </span>                :            : #if MBEDTLS_AESNI_HAVE_CODE == 2</a>
 <a name="56"><span class="lineNum">      56 </span>                :            :         static int info[4] = { 0, 0, 0, 0 };</a>
 <a name="57"><span class="lineNum">      57 </span>                :            : #if defined(_MSC_VER)</a>
@@ -141,7 +141,7 @@
 <a name="70"><span class="lineNum">      70 </span>                :<span class="lineCov">          2 :         done = 1;</span></a>
 <a name="71"><span class="lineNum">      71 </span>                :            :     }</a>
 <a name="72"><span class="lineNum">      72 </span>                :            : </a>
-<a name="73"><span class="lineNum">      73 </span>                :<span class="lineCov">       5058 :     return (c &amp; what) != 0;</span></a>
+<a name="73"><span class="lineNum">      73 </span>                :<span class="lineCov">       5083 :     return (c &amp; what) != 0;</span></a>
 <a name="74"><span class="lineNum">      74 </span>                :            : }</a>
 <a name="75"><span class="lineNum">      75 </span>                :            : #endif /* !MBEDTLS_AES_USE_HARDWARE_ONLY */</a>
 <a name="76"><span class="lineNum">      76 </span>                :            : </a>
@@ -522,12 +522,12 @@
 <a name="451"><span class="lineNum">     451 </span>                :            : /*</a>
 <a name="452"><span class="lineNum">     452 </span>                :            :  * AES-NI AES-ECB block en(de)cryption</a>
 <a name="453"><span class="lineNum">     453 </span>                :            :  */</a>
-<a name="454"><span class="lineNum">     454 </span>                :<span class="lineCov">       3506 : int mbedtls_aesni_crypt_ecb(mbedtls_aes_context *ctx,</span></a>
+<a name="454"><span class="lineNum">     454 </span>                :<span class="lineCov">       3531 : int mbedtls_aesni_crypt_ecb(mbedtls_aes_context *ctx,</span></a>
 <a name="455"><span class="lineNum">     455 </span>                :            :                             int mode,</a>
 <a name="456"><span class="lineNum">     456 </span>                :            :                             const unsigned char input[16],</a>
 <a name="457"><span class="lineNum">     457 </span>                :            :                             unsigned char output[16])</a>
 <a name="458"><span class="lineNum">     458 </span>                :            : {</a>
-<a name="459"><span class="lineNum">     459 </span>                :<span class="lineCov">       3506 :     asm (&quot;movdqu    (%3), %%xmm0    \n\t&quot; // load input</span></a>
+<a name="459"><span class="lineNum">     459 </span>                :<span class="lineCov">       3531 :     asm (&quot;movdqu    (%3), %%xmm0    \n\t&quot; // load input</span></a>
 <a name="460"><span class="lineNum">     460 </span>                :            :          &quot;movdqu    (%1), %%xmm1    \n\t&quot; // load round key 0</a>
 <a name="461"><span class="lineNum">     461 </span>                :            :          &quot;pxor      %%xmm1, %%xmm0  \n\t&quot; // round 0</a>
 <a name="462"><span class="lineNum">     462 </span>                :            :          &quot;add       $16, %1         \n\t&quot; // point to next round key</a>
@@ -559,18 +559,18 @@
 <a name="488"><span class="lineNum">     488 </span>                :            :          &quot;3:                        \n\t&quot;</a>
 <a name="489"><span class="lineNum">     489 </span>                :            :          &quot;movdqu    %%xmm0, (%4)    \n\t&quot; // export output</a>
 <a name="490"><span class="lineNum">     490 </span>                :            :          :</a>
-<a name="491"><span class="lineNum">     491 </span>                :<span class="lineCov">       3506 :          : &quot;r&quot; (ctx-&gt;nr), &quot;r&quot; (ctx-&gt;buf + ctx-&gt;rk_offset), &quot;r&quot; (mode), &quot;r&quot; (input), &quot;r&quot; (output)</span></a>
+<a name="491"><span class="lineNum">     491 </span>                :<span class="lineCov">       3531 :          : &quot;r&quot; (ctx-&gt;nr), &quot;r&quot; (ctx-&gt;buf + ctx-&gt;rk_offset), &quot;r&quot; (mode), &quot;r&quot; (input), &quot;r&quot; (output)</span></a>
 <a name="492"><span class="lineNum">     492 </span>                :            :          : &quot;memory&quot;, &quot;cc&quot;, &quot;xmm0&quot;, &quot;xmm1&quot;);</a>
 <a name="493"><span class="lineNum">     493 </span>                :            : </a>
 <a name="494"><span class="lineNum">     494 </span>                :            : </a>
-<a name="495"><span class="lineNum">     495 </span>                :<span class="lineCov">       3506 :     return 0;</span></a>
+<a name="495"><span class="lineNum">     495 </span>                :<span class="lineCov">       3531 :     return 0;</span></a>
 <a name="496"><span class="lineNum">     496 </span>                :            : }</a>
 <a name="497"><span class="lineNum">     497 </span>                :            : </a>
 <a name="498"><span class="lineNum">     498 </span>                :            : /*</a>
 <a name="499"><span class="lineNum">     499 </span>                :            :  * GCM multiplication: c = a times b in GF(2^128)</a>
 <a name="500"><span class="lineNum">     500 </span>                :            :  * Based on [CLMUL-WP] algorithms 1 (with equation 27) and 5.</a>
 <a name="501"><span class="lineNum">     501 </span>                :            :  */</a>
-<a name="502"><span class="lineNum">     502 </span>                :<span class="lineCov">       3510 : void mbedtls_aesni_gcm_mult(unsigned char c[16],</span></a>
+<a name="502"><span class="lineNum">     502 </span>                :<span class="lineCov">       3535 : void mbedtls_aesni_gcm_mult(unsigned char c[16],</span></a>
 <a name="503"><span class="lineNum">     503 </span>                :            :                             const unsigned char a[16],</a>
 <a name="504"><span class="lineNum">     504 </span>                :            :                             const unsigned char b[16])</a>
 <a name="505"><span class="lineNum">     505 </span>                :            : {</a>
@@ -578,12 +578,12 @@
 <a name="507"><span class="lineNum">     507 </span>                :            :     size_t i;</a>
 <a name="508"><span class="lineNum">     508 </span>                :            : </a>
 <a name="509"><span class="lineNum">     509 </span>                :            :     /* The inputs are in big-endian order, so byte-reverse them */</a>
-<a name="510"><span class="lineNum">     510 </span>        [<span class="branchCov" title="Branch 0 was taken 56160 times"> + </span><span class="branchCov" title="Branch 1 was taken 3510 times"> + </span>]:<span class="lineCov">      59670 :     for (i = 0; i &lt; 16; i++) {</span></a>
-<a name="511"><span class="lineNum">     511 </span>                :<span class="lineCov">      56160 :         aa[i] = a[15 - i];</span></a>
-<a name="512"><span class="lineNum">     512 </span>                :<span class="lineCov">      56160 :         bb[i] = b[15 - i];</span></a>
+<a name="510"><span class="lineNum">     510 </span>        [<span class="branchCov" title="Branch 0 was taken 56560 times"> + </span><span class="branchCov" title="Branch 1 was taken 3535 times"> + </span>]:<span class="lineCov">      60095 :     for (i = 0; i &lt; 16; i++) {</span></a>
+<a name="511"><span class="lineNum">     511 </span>                :<span class="lineCov">      56560 :         aa[i] = a[15 - i];</span></a>
+<a name="512"><span class="lineNum">     512 </span>                :<span class="lineCov">      56560 :         bb[i] = b[15 - i];</span></a>
 <a name="513"><span class="lineNum">     513 </span>                :            :     }</a>
 <a name="514"><span class="lineNum">     514 </span>                :            : </a>
-<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">       3510 :     asm (&quot;movdqu (%0), %%xmm0               \n\t&quot; // a1:a0</span></a>
+<a name="515"><span class="lineNum">     515 </span>                :<span class="lineCov">       3535 :     asm (&quot;movdqu (%0), %%xmm0               \n\t&quot; // a1:a0</span></a>
 <a name="516"><span class="lineNum">     516 </span>                :            :          &quot;movdqu (%1), %%xmm1               \n\t&quot; // b1:b0</a>
 <a name="517"><span class="lineNum">     517 </span>                :            : </a>
 <a name="518"><span class="lineNum">     518 </span>                :            :          /*</a>
@@ -671,11 +671,11 @@
 <a name="600"><span class="lineNum">     600 </span>                :            :          : &quot;memory&quot;, &quot;cc&quot;, &quot;xmm0&quot;, &quot;xmm1&quot;, &quot;xmm2&quot;, &quot;xmm3&quot;, &quot;xmm4&quot;, &quot;xmm5&quot;);</a>
 <a name="601"><span class="lineNum">     601 </span>                :            : </a>
 <a name="602"><span class="lineNum">     602 </span>                :            :     /* Now byte-reverse the outputs */</a>
-<a name="603"><span class="lineNum">     603 </span>        [<span class="branchCov" title="Branch 0 was taken 56160 times"> + </span><span class="branchCov" title="Branch 1 was taken 3510 times"> + </span>]:<span class="lineCov">      59670 :     for (i = 0; i &lt; 16; i++) {</span></a>
-<a name="604"><span class="lineNum">     604 </span>                :<span class="lineCov">      56160 :         c[i] = cc[15 - i];</span></a>
+<a name="603"><span class="lineNum">     603 </span>        [<span class="branchCov" title="Branch 0 was taken 56560 times"> + </span><span class="branchCov" title="Branch 1 was taken 3535 times"> + </span>]:<span class="lineCov">      60095 :     for (i = 0; i &lt; 16; i++) {</span></a>
+<a name="604"><span class="lineNum">     604 </span>                :<span class="lineCov">      56560 :         c[i] = cc[15 - i];</span></a>
 <a name="605"><span class="lineNum">     605 </span>                :            :     }</a>
 <a name="606"><span class="lineNum">     606 </span>                :            : </a>
-<a name="607"><span class="lineNum">     607 </span>                :<span class="lineCov">       3510 :     return;</span></a>
+<a name="607"><span class="lineNum">     607 </span>                :<span class="lineCov">       3535 :     return;</span></a>
 <a name="608"><span class="lineNum">     608 </span>                :            : }</a>
 <a name="609"><span class="lineNum">     609 </span>                :            : </a>
 <a name="610"><span class="lineNum">     610 </span>                :            : /*</a>
