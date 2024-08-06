@@ -24,6 +24,7 @@ target_sources(test_spdm_requester
         get_certificate.c
         challenge.c
         get_event_types.c
+        subscribe_event_types.c
         get_measurements.c
         get_measurement_extension_log.c
         key_exchange.c
@@ -50,10 +51,12 @@ target_sources(test_spdm_requester
         error_test/key_exchange_err.c
         error_test/get_measurements_err.c
         error_test/get_event_types_err.c
+        error_test/subscribe_event_types_err.c
         error_test/vendor_request_err.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/common.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/algo.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/support.c
+        ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/event_support.c
 )
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
