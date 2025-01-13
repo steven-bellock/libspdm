@@ -196,7 +196,7 @@ libspdm_return_t libspdm_get_response_psk_exchange(libspdm_context_t *spdm_conte
                 0, response_size, response);
         }
         if (spdm_context->connection_info.algorithm.key_schedule !=
-            SPDM_ALGORITHMS_KEY_SCHEDULE_HMAC_HASH) {
+            SPDM_ALGORITHMS_KEY_SCHEDULE_SPDM) {
             return libspdm_generate_error_response(
                 spdm_context,
                 SPDM_ERROR_CODE_INVALID_REQUEST,

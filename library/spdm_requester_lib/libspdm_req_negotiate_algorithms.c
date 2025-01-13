@@ -566,7 +566,7 @@ static libspdm_return_t libspdm_try_negotiate_algorithms(libspdm_context_t *spdm
                 SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PSK_CAP,
                 SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_PSK_CAP)) {
             if (spdm_context->connection_info.algorithm.key_schedule !=
-                SPDM_ALGORITHMS_KEY_SCHEDULE_HMAC_HASH) {
+                SPDM_ALGORITHMS_KEY_SCHEDULE_SPDM) {
                 status = LIBSPDM_STATUS_NEGOTIATION_FAIL;
                 goto receive_done;
             }
