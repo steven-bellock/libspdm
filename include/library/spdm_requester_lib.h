@@ -338,7 +338,6 @@ libspdm_return_t libspdm_get_measurement_ex(void *spdm_context, const uint32_t *
                                             void *responder_nonce,
                                             void *opaque_data,
                                             size_t *opaque_data_size);
-
 /**
  * This function sends GET_MEASUREMENT to get measurement from the device.
  *
@@ -380,6 +379,12 @@ libspdm_return_t libspdm_get_measurement_ex2(void *spdm_context, const uint32_t 
                                              void *responder_nonce,
                                              void *opaque_data,
                                              size_t *opaque_data_size);
+
+libspdm_return_t libspdm_get_std_measurement_report(void *spdm_context, const uint32_t *session_id,
+                                                    uint8_t slot_id,
+                                                    const void *requester_nonce_in,
+                                                    uint32_t *measurement_record_length,
+                                                    void *measurement_record);
 #endif /* LIBSPDM_ENABLE_CAPABILITY_MEAS_CAP*/
 
 #if LIBSPDM_SEND_GET_ENDPOINT_INFO_SUPPORT
