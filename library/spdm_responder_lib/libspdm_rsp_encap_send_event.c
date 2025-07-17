@@ -54,6 +54,9 @@ libspdm_return_t libspdm_get_encap_request_send_event(
         return LIBSPDM_STATUS_INVALID_STATE_LOCAL;
     }
 
+    LIBSPDM_ASSERT(event_count != 0);
+    LIBSPDM_ASSERT(events_list_size != 0);
+
     spdm_request->event_count = event_count;
 
     return LIBSPDM_STATUS_SUCCESS;

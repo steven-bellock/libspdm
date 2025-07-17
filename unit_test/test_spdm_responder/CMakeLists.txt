@@ -48,6 +48,7 @@ target_sources(test_spdm_responder
         error_test/vendor_response_err.c
         error_test/endpoint_info_err.c
         error_test/encap_get_endpoint_info_err.c
+        error_test/encap_send_event_err.c
         set_certificate_rsp.c
         csr.c
         receive_send.c

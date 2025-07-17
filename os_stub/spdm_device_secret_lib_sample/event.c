@@ -23,6 +23,7 @@ uint8_t g_event_group_count = 1;
 bool g_event_all_subscribe = false;
 bool g_event_all_unsubscribe = false;
 uint32_t g_event_count = 1;
+bool g_generate_event_list_error = false;
 
 #if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
 bool libspdm_event_get_types(
@@ -105,6 +106,10 @@ bool libspdm_generate_event_list(
     size_t *events_list_size,
     void *events_list)
 {
+    if (g_generate_event_list_error) {
+        return false;
+    }
+
     *event_count = g_event_count;
 
     for (uint32_t index = 0; index < *events_list_size; index++)
