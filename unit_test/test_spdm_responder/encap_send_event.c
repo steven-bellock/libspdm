@@ -128,7 +128,6 @@ static void test_responder_encap_send_event_case2(void **state)
     assert_false(need_continue);
 }
 
-
 int libspdm_responder_encap_send_event_test_main(void)
 {
     const struct CMUnitTest spdm_responder_key_update_tests[] = {

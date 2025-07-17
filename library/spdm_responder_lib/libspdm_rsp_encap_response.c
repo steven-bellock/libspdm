@@ -242,6 +242,30 @@ void libspdm_init_get_endpoint_info_encap_state(void *spdm_context, uint32_t ses
 }
 #endif /* LIBSPDM_SEND_GET_ENDPOINT_INFO_SUPPORT */
 
+#if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
+void libspdm_init_send_event_encap_state(void *spdm_context, uint32_t session_id)
+{
+    libspdm_context_t *context;
+
+    LIBSPDM_ASSERT(session_id != INVALID_SESSION_ID);
+
+    context = spdm_context;
+
+    context->encap_context.current_request_op_code = 0x00;
+    context->encap_context.request_id = 0;
+    context->encap_context.last_encap_request_size = 0;
+    libspdm_zero_mem(&context->encap_context.last_encap_request_header,
+                     sizeof(context->encap_context.last_encap_request_header));
+    context->response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;
+
+    libspdm_zero_mem(context->encap_context.request_op_code_sequence,
+                     sizeof(context->encap_context.request_op_code_sequence));
+    context->encap_context.request_op_code_count = 1;
+    context->encap_context.request_op_code_sequence[0] = SPDM_SEND_EVENT;
+    context->encap_context.session_id = session_id;
+}
+#endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
+
 libspdm_return_t libspdm_get_response_encapsulated_request(
     libspdm_context_t *spdm_context, size_t request_size, const void *request,
     size_t *response_size, void *response)
