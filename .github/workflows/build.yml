@@ -57,17 +57,17 @@ jobs:
             toolchain: VS2019
           - os: ubuntu-latest
             arch: ia32
-          - os: windows-latest
+          - os: windows-2025
             toolchain: GCC
             arch: ia32
-          - os: windows-latest
+          - os: windows-2025
             toolchain: GCC
             crypto: mbedtls
-          - os: windows-latest
+          - os: windows-2025
             toolchain: LIBFUZZER
           - crypto: openssl
             arch: ia32
-          - os: windows-latest
+          - os: windows-2025
             toolchain: CLANG
           - target: Debug
             toolchain: CLANG
@@ -85,7 +85,7 @@ jobs:
             toolchain: LIBFUZZER
           - arch: aarch64
             toolchain: CLANG
-          - os: windows-latest
+          - os: windows-2025
             toolchain: ARM_GNU
           - arch: x64
             toolchain: ARM_GNU
@@ -116,7 +116,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install llvm
       - name: 'Toolchain Setup - MinGW (x64)'
-        if: matrix.toolchain == 'GCC' && matrix.arch == 'x64' && matrix.os == 'windows-latest'
+        if: matrix.toolchain == 'GCC' && matrix.arch == 'x64' && matrix.os == 'windows-2025'
         uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
@@ -150,7 +150,7 @@ jobs:
           make copy_seed
           make -j`nproc`
       - name: Build - Windows
-        if: matrix.os == 'windows-latest' && matrix.toolchain != 'GCC'
+        if: matrix.os == 'windows-2025' && matrix.toolchain != 'GCC'
         run: |
           mkdir build
           cd build
@@ -159,7 +159,7 @@ jobs:
           nmake copy_sample_key
           nmake
       - name: Build - Windows MinGW
-        if: matrix.os == 'windows-latest' && matrix.toolchain == 'GCC'
+        if: matrix.os == 'windows-2025' && matrix.toolchain == 'GCC'
         shell: msys2 {0}
         run: |
           mkdir build
