@@ -7,7 +7,7 @@
 #include "spdm_unit_test.h"
 #include "internal/libspdm_requester_lib.h"
 
-#if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP
+#if LIBSPDM_SEND_CHALLENGE_SUPPORT
 
 static size_t m_libspdm_local_buffer_size;
 static uint8_t m_libspdm_local_buffer[LIBSPDM_MAX_MESSAGE_M1M2_BUFFER_SIZE];
@@ -17,10 +17,8 @@ static uint8_t m_libspdm_opaque_data[SPDM_MAX_OPAQUE_DATA_SIZE];
 
 static uint8_t m_requester_context[SPDM_REQ_CONTEXT_SIZE];
 
-libspdm_return_t libspdm_requester_challenge_test_send_message(void *spdm_context,
-                                                               size_t request_size,
-                                                               const void *request,
-                                                               uint64_t timeout)
+static libspdm_return_t send_message(
+    void *spdm_context, size_t request_size, const void *request, uint64_t timeout)
 {
     libspdm_test_context_t *spdm_test_context;
     const uint8_t *ptr;
@@ -144,9 +142,8 @@ libspdm_return_t libspdm_requester_challenge_test_send_message(void *spdm_contex
     }
 }
 
-libspdm_return_t libspdm_requester_challenge_test_receive_message(
-    void *spdm_context, size_t *response_size,
-    void **response, uint64_t timeout)
+static libspdm_return_t receive_message(
+    void *spdm_context, size_t *response_size, void **response, uint64_t timeout)
 {
     libspdm_test_context_t *spdm_test_context;
 
@@ -1990,7 +1987,7 @@ libspdm_return_t libspdm_requester_challenge_test_receive_message(
  * device error.
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR.
  **/
-void libspdm_test_requester_challenge_case1(void **state)
+static void req_challenge_case1(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2070,7 +2067,7 @@ void libspdm_test_requester_challenge_case1(void **state)
  * no opaque data and a signature on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case2(void **state)
+static void req_challenge_case2(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2155,7 +2152,7 @@ void libspdm_test_requester_challenge_case2(void **state)
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR, and the "C"
  * transcript buffer is not set.
  **/
-void libspdm_test_requester_challenge_case3(void **state)
+static void req_challenge_case3(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2228,7 +2225,7 @@ void libspdm_test_requester_challenge_case3(void **state)
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR, and the "C"
  * transcript buffer is reset.
  **/
-void libspdm_test_requester_challenge_case4(void **state)
+static void req_challenge_case4(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2301,7 +2298,7 @@ void libspdm_test_requester_challenge_case4(void **state)
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR, and the "C"
  * transcript buffer is reset.
  **/
-void libspdm_test_requester_challenge_case5(void **state)
+static void req_challenge_case5(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2374,7 +2371,7 @@ void libspdm_test_requester_challenge_case5(void **state)
  * message to the challenge, with no opaque data and a signature on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case6(void **state)
+static void req_challenge_case6(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2446,7 +2443,7 @@ void libspdm_test_requester_challenge_case6(void **state)
  * transcript buffer is reset, and the communication is reset to expect a new
  * GET_VERSION message.
  **/
-void libspdm_test_requester_challenge_case7(void **state)
+static void req_challenge_case7(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2521,7 +2518,7 @@ void libspdm_test_requester_challenge_case7(void **state)
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR, and the "C"
  * buffer stores nothing.
  **/
-void libspdm_test_requester_challenge_case8(void **state)
+static void req_challenge_case8(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2595,7 +2592,7 @@ void libspdm_test_requester_challenge_case8(void **state)
  * on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case9(void **state)
+static void req_challenge_case9(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -2666,7 +2663,7 @@ void libspdm_test_requester_challenge_case9(void **state)
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR, and the "C"
  * transcript buffer is not set.
  **/
-void libspdm_test_requester_challenge_case10(void **state) {
+static void req_challenge_case10(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -2731,7 +2728,7 @@ void libspdm_test_requester_challenge_case10(void **state) {
  * response message, smaller then a standard SPDM message header.
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR,.
  **/
-void libspdm_test_requester_challenge_case11(void **state) {
+static void req_challenge_case11(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -2794,7 +2791,7 @@ void libspdm_test_requester_challenge_case11(void **state) {
  * The remaining message data is as a correct CHALLENGE_AUTH message.
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR.
  **/
-void libspdm_test_requester_challenge_case12(void **state) {
+static void req_challenge_case12(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -2858,7 +2855,7 @@ void libspdm_test_requester_challenge_case12(void **state) {
  * The remaining message data is as a correct CHALLENGE_AUTH message.
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR.
  **/
-void libspdm_test_requester_challenge_case13(void **state) {
+static void req_challenge_case13(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -2921,7 +2918,7 @@ void libspdm_test_requester_challenge_case13(void **state) {
  * The remaining message data is as a correct CHALLENGE_AUTH message.
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR.
  **/
-void libspdm_test_requester_challenge_case14(void **state) {
+static void req_challenge_case14(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -2981,7 +2978,7 @@ void libspdm_test_requester_challenge_case14(void **state) {
 /**
  * Test 15: free to be populated by test.
  **/
-void libspdm_test_requester_challenge_case15(void **state) {
+static void req_challenge_case15(void **state) {
 }
 
 /**
@@ -2997,7 +2994,7 @@ void libspdm_test_requester_challenge_case15(void **state) {
  * data with bytes from the string "libspdm", and a signature on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case16(void **state) {
+static void req_challenge_case16(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3074,7 +3071,7 @@ void libspdm_test_requester_challenge_case16(void **state) {
  * but with an invalid signature.
  * Expected behavior: client returns a status of RETURN_SECURITY_VIOLATION.
  **/
-void libspdm_test_requester_challenge_case17(void **state) {
+static void req_challenge_case17(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3144,7 +3141,7 @@ void libspdm_test_requester_challenge_case17(void **state) {
  * no opaque data and a signature on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case18(void **state) {
+static void req_challenge_case18(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3214,7 +3211,7 @@ void libspdm_test_requester_challenge_case18(void **state) {
  * no opaque data and a signature on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case19(void **state) {
+static void req_challenge_case19(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3279,7 +3276,7 @@ void libspdm_test_requester_challenge_case19(void **state) {
  * Busy (0x03), ResponseNotReady (0x42), and RequestResync (0x43).
  * Expected behavior: client returns a status of RETURN_DEVICE_ERROR.
  **/
-void libspdm_test_requester_challenge_case20(void **state) {
+static void req_challenge_case20(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3362,7 +3359,7 @@ void libspdm_test_requester_challenge_case20(void **state) {
  * Test 21: test correct CHALLENGE_AUTH message with multiple slot numbers
  * Expected behavior: success and slot_id is included in slot_mask.
  **/
-void libspdm_test_requester_challenge_case21(void **state) {
+static void req_challenge_case21(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3428,7 +3425,7 @@ void libspdm_test_requester_challenge_case21(void **state) {
  * Expected Behavior: requester returns the status RETURN_SUCCESS and a CHALLENGE_AUTH message is
  * received, buffer C appends the exchanged CHALLENGE and CHALLENGE_AUTH messages.
  **/
-void libspdm_test_requester_challenge_case22(void **state)
+static void req_challenge_case22(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -3520,7 +3517,7 @@ void libspdm_test_requester_challenge_case22(void **state)
  * no opaque data and a signature on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case23(void **state)
+static void req_challenge_case23(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -3622,7 +3619,7 @@ void libspdm_test_requester_challenge_case23(void **state)
  * Test 24: Challenge using provisioned public key (slot_id 0xFF)
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case24(void **state)
+static void req_challenge_case24(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -3669,7 +3666,7 @@ void libspdm_test_requester_challenge_case24(void **state)
  * Test 25: Error case, CHALLENGE_AUTH message contains opaque_length greater than the maximum allowed.
  * Expected Behavior: get a LIBSPDM_STATUS_INVALID_MSG_FIELD return code.
  **/
-void libspdm_test_requester_challenge_case25(void **state) {
+static void req_challenge_case25(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3733,7 +3730,7 @@ void libspdm_test_requester_challenge_case25(void **state) {
  * data with bytes from the string "libspdm", and a signature on the sent nonce.
  * Expected behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case26(void **state) {
+static void req_challenge_case26(void **state) {
     libspdm_return_t status;
     libspdm_test_context_t    *spdm_test_context;
     libspdm_context_t  *spdm_context;
@@ -3802,7 +3799,7 @@ void libspdm_test_requester_challenge_case26(void **state) {
  * Test 27: Successful case , With the correct challenge context field
  * Expected Behavior: client returns a status of RETURN_SUCCESS.
  **/
-void libspdm_test_requester_challenge_case27(void **state)
+static void req_challenge_case27(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -3879,7 +3876,7 @@ void libspdm_test_requester_challenge_case27(void **state)
  * Test 28: Error case , challenge context fields are inconsistent
  * Expected Behavior: get a LIBSPDM_STATUS_INVALID_MSG_FIELD return code
  **/
-void libspdm_test_requester_challenge_case28(void **state)
+static void req_challenge_case28(void **state)
 {
     libspdm_return_t status;
     libspdm_test_context_t *spdm_test_context;
@@ -3949,71 +3946,72 @@ void libspdm_test_requester_challenge_case28(void **state)
 
 int libspdm_requester_challenge_test_main(void)
 {
-    const struct CMUnitTest spdm_requester_challenge_tests[] = {
+    const struct CMUnitTest test_cases[] = {
         /* SendRequest failed*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case1),
+        cmocka_unit_test(req_challenge_case1),
         /* Successful response*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case2),
+        cmocka_unit_test(req_challenge_case2),
         /* connection_state check failed*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case3),
+        cmocka_unit_test(req_challenge_case3),
         /* Error response: SPDM_ERROR_CODE_INVALID_REQUEST*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case4),
+        cmocka_unit_test(req_challenge_case4),
         /* Always SPDM_ERROR_CODE_BUSY*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case5),
+        cmocka_unit_test(req_challenge_case5),
         /* SPDM_ERROR_CODE_BUSY + Successful response*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case6),
+        cmocka_unit_test(req_challenge_case6),
         /* Error response: SPDM_ERROR_CODE_REQUEST_RESYNCH*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case7),
+        cmocka_unit_test(req_challenge_case7),
         /* Always SPDM_ERROR_CODE_RESPONSE_NOT_READY*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case8),
+        cmocka_unit_test(req_challenge_case8),
         /* SPDM_ERROR_CODE_RESPONSE_NOT_READY + Successful response*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case9),
+        cmocka_unit_test(req_challenge_case9),
         /* SpdmCmdReceiveState check failed*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case10),
+        cmocka_unit_test(req_challenge_case10),
         /* Successful response + device error*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case11),
-        cmocka_unit_test(libspdm_test_requester_challenge_case12),
-        cmocka_unit_test(libspdm_test_requester_challenge_case13),
-        cmocka_unit_test(libspdm_test_requester_challenge_case14),
+        cmocka_unit_test(req_challenge_case11),
+        cmocka_unit_test(req_challenge_case12),
+        cmocka_unit_test(req_challenge_case13),
+        cmocka_unit_test(req_challenge_case14),
         /* Invalid parameter*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case15),
+        cmocka_unit_test(req_challenge_case15),
         /* Successful response*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case16),
+        cmocka_unit_test(req_challenge_case16),
         /* Signature check failed*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case17),
+        cmocka_unit_test(req_challenge_case17),
         /* Successful response*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case18),
-        cmocka_unit_test(libspdm_test_requester_challenge_case19),
+        cmocka_unit_test(req_challenge_case18),
+        cmocka_unit_test(req_challenge_case19),
         /* Unexpected errors*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case20),
+        cmocka_unit_test(req_challenge_case20),
+        cmocka_unit_test(req_challenge_case21),
         /* Buffer verification*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case22),
+        cmocka_unit_test(req_challenge_case22),
         /* Challeng differenr slot with GetCert*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case23),
+        cmocka_unit_test(req_challenge_case23),
         /* Challeng using provisioned public key (slot_id 0xFF) */
-        cmocka_unit_test(libspdm_test_requester_challenge_case24),
+        cmocka_unit_test(req_challenge_case24),
         /* opaque_length greater than the maximum allowed */
-        cmocka_unit_test(libspdm_test_requester_challenge_case25),
+        cmocka_unit_test(req_challenge_case25),
         /* the OpaqueDataFmt1 bit is selected in OtherParamsSelection of ALGORITHMS*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case26),
+        cmocka_unit_test(req_challenge_case26),
         /* Successful response, With the correct challenge context field*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case27),
+        cmocka_unit_test(req_challenge_case27),
         /* Error response: challenge context fields are inconsistent*/
-        cmocka_unit_test(libspdm_test_requester_challenge_case28),
+        cmocka_unit_test(req_challenge_case28),
     };
 
     libspdm_test_context_t test_context = {
         LIBSPDM_TEST_CONTEXT_VERSION,
         true,
-        libspdm_requester_challenge_test_send_message,
-        libspdm_requester_challenge_test_receive_message,
+        send_message,
+        receive_message,
     };
 
     libspdm_setup_test_context(&test_context);
 
-    return cmocka_run_group_tests(spdm_requester_challenge_tests,
+    return cmocka_run_group_tests(test_cases,
                                   libspdm_unit_test_group_setup,
                                   libspdm_unit_test_group_teardown);
 }
 
-#endif /* SPDM_ENABLE_CHALLEGE*/
+#endif /* LIBSPDM_SEND_CHALLENGE_SUPPORT */
