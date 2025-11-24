@@ -84,7 +84,9 @@ Example encapsulated state management handler:
 ```C
 /* libspdm receives a GET_ENCAPSULATED_REQUEST message and calls into libspdm_encap_state_handler */
 
-libspdm_return_t libspdm_encap_state_handler (void *spdm_context, uint32_t *session_id, ...)
+libspdm_return_t libspdm_encap_state_handler(
+    void *spdm_context, uint32_t *session_id,
+    uint8_t request_code, size_t request_size, const void *request...)
 {
     /* Integrator can use a pointer in libspdm_session_info or larger spdm_context to access
      * Integrator-defined state related to the encapsulated flow. */
@@ -108,3 +110,8 @@ libspdm_return_t libspdm_encap_state_handler (void *spdm_context, uint32_t *sess
     }
 }
 ```
+`request_code` is
+- SPDM_CHALLENGE
+- SPDM_KEY_EXCHANGE
+- SPDM_GET_ENCAPSULATED_REQUEST
+- SPDM_DELIVER_ENCAPSULATED_RESPONSE
