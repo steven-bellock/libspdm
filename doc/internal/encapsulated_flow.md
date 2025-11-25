@@ -46,6 +46,9 @@ Integrator may
 - Evaluate `CHALLENGE.OpaqueData` or `FINISH.OpaqueData` to determine whether or not to accept
   authentication of the Requester.
 
+Alternatively, Integrator may opt for a more automated mutual authentication flow where libspdm does
+not issue `GET_DIGEST` and retrieves the certificate chain, if applicable, from Slot 0.
+
 ### Secure Session Management
 
 For `KEY_UPDATE` Integrator may specify `UpdateKey` or `UpdateAllKeys`. Presumably libspdm would
@@ -86,7 +89,7 @@ Example encapsulated state management handler:
 
 libspdm_return_t libspdm_encap_state_handler(
     void *spdm_context, uint32_t *session_id,
-    uint8_t request_code, size_t request_size, const void *request...)
+    uint8_t request_code, bool mut_auth, size_t request_size, const void *request...)
 {
     /* Integrator can use a pointer in libspdm_session_info or larger spdm_context to access
      * Integrator-defined state related to the encapsulated flow. */
@@ -110,7 +113,7 @@ libspdm_return_t libspdm_encap_state_handler(
     }
 }
 ```
-`request_code` is
+`request_code` is one of
 - SPDM_CHALLENGE
 - SPDM_KEY_EXCHANGE
 - SPDM_GET_ENCAPSULATED_REQUEST
