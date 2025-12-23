@@ -71,7 +71,7 @@ static void test_responder_encap_send_event_err_case1(void **state)
 
     g_generate_event_list_error = true;
 
-    status = libspdm_get_encap_request_send_event(spdm_context, &request_buffer_size,
+    status = libspdm_get_encap_request_send_event(spdm_context, m_session_id, &request_buffer_size,
                                                   m_send_buffer);
 
     assert_int_equal(status, LIBSPDM_STATUS_INVALID_STATE_LOCAL);

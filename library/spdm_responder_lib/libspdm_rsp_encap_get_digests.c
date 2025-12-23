@@ -8,12 +8,19 @@
 
 #if (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT)
 
-libspdm_return_t libspdm_get_encap_request_get_digest(libspdm_context_t *spdm_context,
-                                                      size_t *encap_request_size,
-                                                      void *encap_request)
+libspdm_return_t libspdm_get_encap_request_get_digests(void *context,
+                                                       const uint32_t *session_id,
+                                                       size_t *encap_request_size,
+                                                       void *encap_request)
 {
     spdm_get_digest_request_t *spdm_request;
     libspdm_return_t status;
+    libspdm_context_t *spdm_context;
+    libspdm_session_info_t *session_info;
+
+    spdm_context = context;
+    session_info = (session_id != NULL) ?
+                   libspdm_get_session_info_via_session_id(spdm_context, *session_id) : NULL;
 
     spdm_context->encap_context.last_encap_request_size = 0;
 
@@ -32,7 +39,7 @@ libspdm_return_t libspdm_get_encap_request_get_digest(libspdm_context_t *spdm_co
 
     spdm_request = encap_request;
 
-    libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,
+    libspdm_reset_message_buffer_via_request_code(spdm_context, session_info,
                                                   spdm_request->header.request_response_code);
 
     spdm_request->header.spdm_version = libspdm_get_connection_version (spdm_context);
