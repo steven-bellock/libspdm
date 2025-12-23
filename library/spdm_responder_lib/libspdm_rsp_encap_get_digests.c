@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2025 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -8,9 +8,9 @@
 
 #if (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT)
 
-libspdm_return_t libspdm_get_encap_request_get_digest(libspdm_context_t *spdm_context,
-                                                      size_t *encap_request_size,
-                                                      void *encap_request)
+libspdm_return_t libspdm_get_encap_request_get_digests(libspdm_context_t *spdm_context,
+                                                       size_t *encap_request_size,
+                                                       void *encap_request)
 {
     spdm_get_digest_request_t *spdm_request;
     libspdm_return_t status;
