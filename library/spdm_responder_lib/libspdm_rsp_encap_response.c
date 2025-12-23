@@ -8,6 +8,16 @@
 
 #if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP
 
+void libspdm_register_encap_flow_handler(void *spdm_context,
+                                         libspdm_encap_flow_handler_func encap_flow_handler)
+{
+    libspdm_context_t *context;
+
+    context = spdm_context;
+
+    context->encap_flow_handler_callback = (void *)encap_flow_handler;
+}
+
 /**
  * Get the SPDM encapsulated request.
  *
@@ -49,17 +59,9 @@ static libspdm_return_t libspdm_get_encap_struct_via_op_code
 
     const libspdm_encap_response_struct_t encap_response_struct[] = {
         #if LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT
-        { SPDM_GET_DIGESTS, libspdm_get_encap_request_get_digest,
+        { SPDM_GET_DIGESTS, libspdm_get_encap_request_get_digests,
           libspdm_process_encap_response_digest },
-
-        { SPDM_GET_CERTIFICATE, libspdm_get_encap_request_get_certificate,
-          libspdm_process_encap_response_certificate },
         #endif /* LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT */
-
-        #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT)
-        { SPDM_CHALLENGE, libspdm_get_encap_request_challenge,
-          libspdm_process_encap_response_challenge_auth },
-        #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT) */
 
         { SPDM_KEY_UPDATE, libspdm_get_encap_request_key_update,
           libspdm_process_encap_response_key_update },
@@ -155,8 +157,6 @@ static libspdm_return_t libspdm_process_encapsulated_response(
             }
         }
     }
-
-    spdm_context->encap_context.request_id += 1;
 
     /* Move to next request. */
     if (!need_continue) {
@@ -275,6 +275,7 @@ libspdm_return_t libspdm_get_response_encapsulated_request(
     size_t encap_request_size;
     libspdm_return_t status;
     const spdm_get_encapsulated_request_request_t *spdm_request;
+    bool terminate_flow;
 
     spdm_request = request;
 
@@ -309,7 +310,6 @@ libspdm_return_t libspdm_get_response_encapsulated_request(
                     spdm_context,
                     SPDM_ERROR_CODE_NO_PENDING_REQUESTS, 0,
                     response_size, response);
-
             } else {
                 return libspdm_generate_error_response(
                     spdm_context,
@@ -348,22 +348,32 @@ libspdm_return_t libspdm_get_response_encapsulated_request(
     spdm_response = response;
     spdm_response->header.spdm_version = spdm_request->header.spdm_version;
     spdm_response->header.request_response_code = SPDM_ENCAPSULATED_REQUEST;
-    spdm_response->header.param1 = 0;
+    spdm_response->header.param1 = 1;
     spdm_response->header.param2 = 0;
 
     encap_request_size = *response_size - sizeof(spdm_encapsulated_request_response_t);
     encap_request = spdm_response + 1;
 
-    status = libspdm_process_encapsulated_response(
-        spdm_context, 0, NULL, &encap_request_size, encap_request);
+    if (spdm_context->encap_context.flow_type == LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH) {
+        LIBSPDM_ASSERT(spdm_context->encap_flow_handler_callback != NULL);
+
+        status = ((libspdm_encap_flow_handler_func)spdm_context->encap_flow_handler_callback)(
+            spdm_context, NULL, spdm_context->encap_context.flow_type, 0, &terminate_flow,
+            &encap_request_size, encap_request);
+    } else {
+        status = libspdm_process_encapsulated_response(
+            spdm_context, 0, NULL, &encap_request_size, encap_request);
+    }
+
     if (LIBSPDM_STATUS_IS_ERROR(status)) {
         spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
         return libspdm_generate_error_response(
             spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,
             response_size, response);
     }
+
+    spdm_context->encap_context.request_id = 1;
     *response_size = sizeof(spdm_encapsulated_request_response_t) + encap_request_size;
-    spdm_response->header.param1 = spdm_context->encap_context.request_id;
 
     if (encap_request_size == 0) {
         spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
@@ -379,12 +389,12 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
     const spdm_deliver_encapsulated_response_request_t *spdm_request;
     size_t spdm_request_size;
     spdm_encapsulated_response_ack_response_t *spdm_response;
-    const void *encap_response;
     size_t encap_response_size;
     void *encap_request;
     size_t encap_request_size;
     libspdm_return_t status;
     size_t ack_header_size;
+    bool terminate_flow;
 
     spdm_request = request;
 
@@ -432,7 +442,6 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
                                                response_size, response);
     }
 
-    encap_response = (spdm_request + 1);
     encap_response_size = spdm_request_size - sizeof(spdm_deliver_encapsulated_response_request_t);
 
     if (spdm_request->header.spdm_version >= SPDM_MESSAGE_VERSION_12) {
@@ -461,9 +470,18 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
     libspdm_reset_message_buffer_via_request_code(spdm_context, NULL,
                                                   spdm_request->header.request_response_code);
 
-    status = libspdm_process_encapsulated_response(
-        spdm_context, encap_response_size, encap_response,
-        &encap_request_size, encap_request);
+    if (spdm_context->encap_context.flow_type == LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH) {
+        LIBSPDM_ASSERT(spdm_context->encap_flow_handler_callback != NULL);
+
+        status = ((libspdm_encap_flow_handler_func)spdm_context->encap_flow_handler_callback)(
+            spdm_context, NULL, spdm_context->encap_context.flow_type,
+            spdm_context->encap_context.last_encap_request_header.request_response_code,
+            &terminate_flow, &encap_request_size, encap_request);
+    } else {
+        status = libspdm_process_encapsulated_response(
+            spdm_context, 0, NULL, &encap_request_size, encap_request);
+    }
+
     if (LIBSPDM_STATUS_IS_ERROR(status)) {
         spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
         return libspdm_generate_error_response(
@@ -477,7 +495,11 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
         spdm_response->ack_request_id = spdm_request->header.param1;
     }
 
-    if (encap_request_size == 0) {
+    if (terminate_flow) {
+        spdm_response->header.param1 = 0;
+        spdm_response->header.param2 = SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_ABSENT;
+        *response_size = sizeof(spdm_encapsulated_response_ack_response_t);
+    } else if (encap_request_size == 0) {
         spdm_response->header.param1 = 0;
         spdm_response->header.param2 = SPDM_ENCAPSULATED_RESPONSE_ACK_RESPONSE_PAYLOAD_TYPE_ABSENT;
         if ((spdm_context->encap_context.req_slot_id != 0) &&
@@ -515,35 +537,11 @@ void libspdm_init_basic_mut_auth_encap_state(libspdm_context_t *spdm_context)
     libspdm_zero_mem(&spdm_context->encap_context.last_encap_request_header,
                      sizeof(spdm_context->encap_context.last_encap_request_header));
     spdm_context->mut_auth_cert_chain_buffer_size = 0;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH;
 
     /* Clear Cache. */
     libspdm_reset_message_mut_b(spdm_context);
     libspdm_reset_message_mut_c(spdm_context);
-
-    /* Possible Sequence:
-     * 1. Basic Mutual Auth:
-     *    1.1 GET_DIGEST/GET_CERTIFICATE/CHALLENGE (encap_context.req_slot_id must not be 0xFF)
-     *    1.2 CHALLENGE (REQUEST_FLAGS_PUB_KEY_ID_CAP, encap_context req_slot_id must be 0xFF) */
-    libspdm_zero_mem(spdm_context->encap_context.request_op_code_sequence,
-                     sizeof(spdm_context->encap_context.request_op_code_sequence));
-    /* Basic Mutual Auth*/
-    if (libspdm_is_capabilities_flag_supported(
-            spdm_context, false,
-            SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP, 0)) {
-        LIBSPDM_ASSERT (spdm_context->encap_context.req_slot_id == 0xFF);
-
-        spdm_context->encap_context.request_op_code_count = 1;
-        spdm_context->encap_context.request_op_code_sequence[0] = SPDM_CHALLENGE;
-    } else {
-        LIBSPDM_ASSERT (spdm_context->encap_context.req_slot_id != 0xFF);
-        LIBSPDM_ASSERT(spdm_context->mut_auth_cert_chain_buffer != NULL);
-        LIBSPDM_ASSERT(spdm_context->mut_auth_cert_chain_buffer_max_size != 0);
-
-        spdm_context->encap_context.request_op_code_count = 3;
-        spdm_context->encap_context.request_op_code_sequence[0] = SPDM_GET_DIGESTS;
-        spdm_context->encap_context.request_op_code_sequence[1] = SPDM_GET_CERTIFICATE;
-        spdm_context->encap_context.request_op_code_sequence[2] = SPDM_CHALLENGE;
-    }
 
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;
 }
