@@ -244,6 +244,18 @@ typedef enum {
     LIBSPDM_RESPONSE_STATE_MAX
 } libspdm_response_state_t;
 
+#if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP
+typedef enum {
+    LIBSPDM_ENCAP_NONE,
+    LIBSPDM_ENCAP_BASIC_MUT_AUTH,
+    LIBSPDM_ENCAP_SESSION_MUTH_AUTH,
+    LIBSPDM_ENCAP_REQUESTER_INITIATED,
+
+    /* MAX */
+    LIBSPDM_ENCAP_MAX
+} libspdm_encap_flow_type_t;
+#endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */
+
 /* These macros apply only if the negotiated SPDM version is 1.0 or 1.1.
  * The default verification mode is big endian only. */
 #define LIBSPDM_SPDM_10_11_VERIFY_SIGNATURE_ENDIAN_BIG_ONLY 0

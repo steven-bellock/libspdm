@@ -8,6 +8,16 @@
 
 #if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP
 
+void libspdm_register_encap_flow_handler(void *spdm_context,
+                                          libspdm_encap_flow_handler_func encap_flow_handler)
+{
+    libspdm_context_t *context;
+
+    context = spdm_context;
+
+    context->encap_flow_handler_callback = (void *)encap_flow_handler;
+}
+
 /**
  * Get the SPDM encapsulated request.
  *

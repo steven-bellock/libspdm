@@ -603,6 +603,8 @@ typedef struct {
      * Register can know when session keys are updated during KEY_UPDATE operations. */
     void *spdm_key_update_callback;
 
+    void *encap_flow_handler_callback;
+
     libspdm_local_context_t local_context;
 
     libspdm_connection_info_t connection_info;
