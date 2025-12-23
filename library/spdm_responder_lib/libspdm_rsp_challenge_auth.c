@@ -9,6 +9,23 @@
 
 #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP
 
+#if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && \
+    (LIBSPDM_SEND_CHALLENGE_SUPPORT)
+static void init_encap_state(libspdm_context_t *spdm_context)
+{
+    spdm_context->encap_context.request_id = 0;
+    spdm_context->encap_context.last_encap_request_size = 0;
+    libspdm_zero_mem(&spdm_context->encap_context.last_encap_request_header,
+                     sizeof(spdm_context->encap_context.last_encap_request_header));
+    spdm_context->encap_context.cert_chain_buffer_size = 0;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH;
+
+    /* Clear Cache. */
+    libspdm_reset_message_mut_b(spdm_context);
+    libspdm_reset_message_mut_c(spdm_context);
+}
+#endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (...) */
+
 libspdm_return_t libspdm_get_response_challenge_auth(libspdm_context_t *spdm_context,
                                                      size_t request_size,
                                                      const void *request,
@@ -165,7 +182,8 @@ libspdm_return_t libspdm_get_response_challenge_auth(libspdm_context_t *spdm_con
     spdm_response->header.request_response_code = SPDM_CHALLENGE_AUTH;
     auth_attribute = (uint8_t)(slot_id & 0xF);
 
-    #if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP
+    #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && \
+    (LIBSPDM_SEND_CHALLENGE_SUPPORT)
     if (spdm_request->header.spdm_version >= SPDM_MESSAGE_VERSION_11) {
         if (libspdm_is_capabilities_flag_supported(
                 spdm_context, false,
@@ -186,13 +204,13 @@ libspdm_return_t libspdm_get_response_challenge_auth(libspdm_context_t *spdm_con
                                                  request_context_size,
                                                  request_context)) {
                 auth_attribute |= SPDM_CHALLENGE_AUTH_RESPONSE_ATTRIBUTE_BASIC_MUT_AUTH_REQ;
-                libspdm_init_basic_mut_auth_encap_state(spdm_context);
+                init_encap_state(spdm_context);
                 LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,
                                "Basic mutual authentication is a deprecated feature.\n"));
             }
         }
     }
-    #endif /* LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP */
+    #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (...) */
 
     spdm_response->header.param1 = auth_attribute;
 

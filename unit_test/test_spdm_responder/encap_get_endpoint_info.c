@@ -92,6 +92,8 @@ static void rsp_encap_get_endpoint_info_case1(void **state)
 
     /* Subcase 1: slot_id = 0 */
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
         spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
@@ -146,6 +148,8 @@ static void rsp_encap_get_endpoint_info_case1(void **state)
 
     /* Subcase 2: slot_id = 1 */
     spdm_context->encap_context.req_slot_id = 1;
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
         spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
@@ -238,6 +242,8 @@ static void rsp_encap_get_endpoint_info_case2(void **state)
     spdm_context->local_context.peer_public_key_provision_size = data_size;
 
     spdm_context->encap_context.req_slot_id = 0xFF;
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
         spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
@@ -318,6 +324,7 @@ static void rsp_encap_get_endpoint_info_case3(void **state)
     spdm_context->get_endpoint_info_callback = get_endpoint_info_callback;
 
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
         spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
@@ -437,6 +444,8 @@ static void rsp_encap_get_endpoint_info_case4(void **state)
     }
 
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
         spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
@@ -489,6 +498,72 @@ static void rsp_encap_get_endpoint_info_case4(void **state)
 #endif
 }
 
+/**
+ * Test 5: Normal case, request an endpoint info without a signature while the Requester's
+ * EP_INFO_CAP_SIG is set.
+ * Expected Behavior: get a LIBSPDM_STATUS_SUCCESS return code and correct endpoint_info. The
+ * response is processed according to the RequestAttributes that were sent, not the Requester's
+ * capability.
+ **/
+static void rsp_encap_get_endpoint_info_case5(void **state)
+{
+    libspdm_return_t status;
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    spdm_endpoint_info_response_t *spdm_response;
+    uint8_t temp_buf[LIBSPDM_SENDER_BUFFER_SIZE];
+    bool need_continue;
+    uint8_t *ptr;
+    size_t response_size;
+    uint32_t endpoint_info_size;
+
+    spdm_test_context = *state;
+    spdm_test_context->case_id = 0x5;
+    spdm_context = spdm_test_context->spdm_context;
+    spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_13 <<
+                                            SPDM_VERSION_NUMBER_SHIFT_BIT;
+    spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
+    spdm_context->connection_info.capability.flags = 0;
+    /* The Requester can sign, but the Integrator did not ask for a signature. */
+    spdm_context->connection_info.capability.flags |=
+        SPDM_GET_CAPABILITIES_REQUEST_FLAGS_EP_INFO_CAP_SIG;
+    spdm_context->get_endpoint_info_callback = get_endpoint_info_callback;
+
+    spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
+    endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
+    libspdm_generate_device_endpoint_info(
+        spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED,
+        &endpoint_info_size, m_endpoint_info_buffer_receive);
+
+    response_size = sizeof(spdm_endpoint_info_response_t) +
+                    sizeof(uint32_t) + endpoint_info_size;
+
+    spdm_response = (void *)temp_buf;
+    spdm_response->header.spdm_version = SPDM_MESSAGE_VERSION_13;
+    spdm_response->header.request_response_code = SPDM_ENDPOINT_INFO;
+    spdm_response->header.param1 = 0;
+    spdm_response->header.param2 = spdm_context->encap_context.req_slot_id &
+                                   SPDM_ENDPOINT_INFO_RESPONSE_SLOT_ID_MASK;
+    spdm_response->reserved = 0;
+
+    ptr = (void *)(spdm_response + 1);
+    libspdm_write_uint32(ptr, endpoint_info_size); /* ep_info_len */
+    ptr += sizeof(uint32_t);
+
+    libspdm_copy_mem(ptr, endpoint_info_size, m_endpoint_info_buffer_receive, endpoint_info_size);
+    ptr += endpoint_info_size;
+
+    status = libspdm_process_encap_response_endpoint_info(spdm_context, response_size,
+                                                          spdm_response, &need_continue);
+    assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+    for (uint32_t index = 0; index < endpoint_info_size; index++) {
+        assert_int_equal (m_endpoint_info_buffer_receive[index],
+                          m_endpoint_info_buffer_send[index]);
+    }
+}
+
 int libspdm_rsp_encap_get_endpoint_info_test(void)
 {
     const struct CMUnitTest test_cases[] = {
@@ -500,6 +575,8 @@ int libspdm_rsp_encap_get_endpoint_info_test(void)
         cmocka_unit_test(rsp_encap_get_endpoint_info_case3),
         /* Success request endpoint info with signature in a session */
         cmocka_unit_test(rsp_encap_get_endpoint_info_case4),
+        /* no signature requested while the Requester's EP_INFO_CAP_SIG is set */
+        cmocka_unit_test(rsp_encap_get_endpoint_info_case5),
     };
 
     libspdm_test_context_t test_context = {
