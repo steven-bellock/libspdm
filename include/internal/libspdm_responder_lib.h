@@ -555,6 +555,8 @@ libspdm_return_t libspdm_process_encap_response_certificate(
  * @retval RETURN_BUFFER_TOO_SMALL      The buffer is too small to hold the data.
  **/
 libspdm_return_t libspdm_get_encap_request_challenge(libspdm_context_t *spdm_context,
+                                                     uint8_t req_slot_id,
+                                                     void *requester_context,
                                                      size_t *encap_request_size,
                                                      void *encap_request);
 
