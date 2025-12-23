@@ -472,6 +472,13 @@ Refer to spdm_server_init() in [spdm_responder.c](https://github.com/DMTF/spdm-e
 
    libspdm_register_vendor_callback_func(spdm_context, libspdm_vendor_response_func);
    ```
+   3.3 This callback drives the Responder's encapsulated flows, in which the Responder sends
+   SPDM request messages to the Requester.
+   ```C
+   libspdm_register_encap_flow_handler(spdm_context, encap_flow_handler);
+   ```
+   The [encapsulated flow user guide](https://github.com/DMTF/libspdm/blob/main/doc/encapsulated_flow_user_guide.md) describes the
+   handler and the flows it drives.
 
 4. Free the memory of contexts within the SPDM context when all flow is over.
    This function does not free the SPDM context itself.

@@ -303,3 +303,318 @@ A function pointer to the `libspdm_key_update_callback_func` function.
 ### Details
 TBD
 <br/><br/>
+
+
+## Encapsulated Requests
+
+---
+### libspdm_encap_flow_handler_func
+---
+
+### Description
+Is called when libspdm needs the next encapsulated request, or when the encapsulated flow can be
+terminated.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The session the encapsulated flow belongs to, or NULL if it is not associated with a session. When
+both endpoints have set `HANDSHAKE_IN_THE_CLEAR_CAP` the session-based mutual authentication flow is
+conducted outside of a session, and this is still the session that the flow belongs to.
+
+**encap_flow_type**<br/>
+Specifies the encapsulated flow that is in progress. Its value is one of
+- `LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH`
+    - The basic mutual authentication flow, signaled by the Responder in `CHALLENGE_AUTH`.
+- `LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH`
+    - The session-based mutual authentication flow, signaled by the Responder in
+      `KEY_EXCHANGE_RSP`.
+- `LIBSPDM_ENCAP_FLOW_REQ_INITIATED`
+    - A flow that the Requester began with `GET_ENCAPSULATED_REQUEST`.
+
+**last_request_code**<br/>
+The request code of the encapsulated request whose response has just been processed. Its value is 0
+when libspdm is responding to `GET_ENCAPSULATED_REQUEST`.
+
+**error_code**<br/>
+If the Requester delivered an encapsulated `ERROR` then its `ErrorCode`, and the encapsulated
+flow terminates once this function returns. Its value is 0 otherwise.
+
+**terminate_flow**<br/>
+Its value is false on input. On output, set to true to end the encapsulated flow.
+`encap_request_size` is then ignored. It must be set to true when `error_code` is non-zero.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+The Integrator populates the buffer by calling one of the `libspdm_get_encap_request_*` functions,
+passing `session_id` through to it unmodified. Returning an error terminates the flow with
+`ERROR(Unspecified)`, as does producing a request that is not legal for `encap_flow_type`.
+<br/><br/>
+libspdm does not call this function when it determines the next message itself: while a multi-part
+`GET_CERTIFICATE` or `KEY_UPDATE` is in progress, when reissuing an outstanding request with
+`RESPOND_IF_READY`, or when it must terminate the flow on the Responder's behalf.
+<br/><br/>
+It is called when the Requester delivers an encapsulated `ERROR`, including
+`ErrorCode=ResponseNotReady`, so that the Integrator learns why the flow ended. libspdm then
+terminates the flow by clearing `ENCAPSULATED_RESPONSE_ACK.Param2`. For `ResponseNotReady` the
+outstanding request is retained and reissued with `RESPOND_IF_READY` when the Requester returns
+with `GET_ENCAPSULATED_REQUEST`.
+<br/><br/>
+
+
+---
+### libspdm_register_encap_flow_handler
+---
+
+### Description
+Registers the location of the `libspdm_encap_flow_handler_func` function into the context.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**encap_flow_handler**<br/>
+A function pointer to the `libspdm_encap_flow_handler_func` function.
+
+### Details
+The Integrator shall register a handler if the Responder's `ENCAP_CAP` is set.
+<br/><br/>
+
+
+---
+### libspdm_get_encap_request_get_digests
+---
+
+### Description
+Populates the buffer with an encapsulated `GET_DIGESTS` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The `session_id` given to `libspdm_encap_flow_handler_func`.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+Returns `LIBSPDM_STATUS_UNSUPPORTED_CAP` if the Requester's `CERT_CAP` is not set.
+<br/><br/>
+
+
+---
+### libspdm_get_encap_request_get_certificate
+---
+
+### Description
+Populates the buffer with an encapsulated `GET_CERTIFICATE` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The `session_id` given to `libspdm_encap_flow_handler_func`.
+
+**slot_id**<br/>
+The slot of the Requester's certificate chain to be retrieved.
+
+**cert_chain_max_size**<br/>
+The size, in bytes, of `cert_chain`.
+
+**cert_chain**<br/>
+A pointer to a buffer that will store the Requester's certificate chain.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+If the certificate chain spans multiple messages then libspdm issues the remaining requests itself,
+accumulating the chain into `cert_chain`, and calls `libspdm_encap_flow_handler_func` once the
+entire chain has been retrieved.
+<br/><br/>
+`cert_chain` shall therefore remain valid until the handler is next called, which is longer than
+the call itself. A local variable of the function that calls
+`libspdm_responder_dispatch_message`, or a member of the Integrator's own per-connection state, is
+suitable; a local variable of the handler is not. Returns `LIBSPDM_STATUS_INVALID_PARAMETER` if
+`cert_chain` is NULL or `cert_chain_max_size` is 0.
+<br/><br/>
+
+
+---
+### libspdm_get_encap_cert_chain_size
+---
+
+### Description
+Gets the size of the Requester's certificate chain that the encapsulated `GET_CERTIFICATE` requests
+retrieved.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The `session_id` given to `libspdm_encap_flow_handler_func`.
+
+**cert_chain_size**<br/>
+On output, indicates the size, in bytes, of the certificate chain that was written to the buffer
+given to `libspdm_get_encap_request_get_certificate`.
+
+### Details
+This is how the Integrator learns how much of its buffer is valid. It is normally called from
+`libspdm_encap_flow_handler_func` when `last_request_code` is `SPDM_GET_CERTIFICATE`.
+<br/><br/>
+
+
+---
+### libspdm_get_encap_request_challenge
+---
+
+### Description
+Populates the buffer with an encapsulated `CHALLENGE` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**req_slot_id**<br/>
+The slot of the Requester's certificate chain to be authenticated against.
+
+**requester_context**<br/>
+For SPDM 1.3 and above, a buffer of `SPDM_REQ_CONTEXT_SIZE` bytes holding the `Context` field, or
+NULL for a zero-filled `Context`. It is ignored below SPDM 1.3.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+This is only legal in the basic mutual authentication flow, whose messages are always sent outside
+of a session. libspdm terminates the flow once the encapsulated `CHALLENGE_AUTH` response has been
+delivered.
+<br/><br/>
+
+
+---
+### libspdm_get_encap_request_key_update
+---
+
+### Description
+Populates the buffer with an encapsulated `KEY_UPDATE` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The session in which the request is sent.
+
+**operation**<br/>
+`SPDM_KEY_UPDATE_OPERATIONS_UPDATE_KEY` or `SPDM_KEY_UPDATE_OPERATIONS_VERIFY_NEW_KEY`.
+`SPDM_KEY_UPDATE_OPERATIONS_UPDATE_ALL_KEYS` is currently not legal in the encapsulated flow.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+`session_id` is passed by value, so the Integrator dereferences the `session_id` given to
+`libspdm_encap_flow_handler_func`. After the acknowledgement libspdm issues the subsequent
+`KEY_UPDATE` with `VerifyNewKey` itself.
+<br/><br/>
+
+
+---
+### libspdm_get_encap_request_get_endpoint_info
+---
+
+### Description
+Populates the buffer with an encapsulated `GET_ENDPOINT_INFO` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The `session_id` given to `libspdm_encap_flow_handler_func`.
+
+**sub_code**<br/>
+The `SubCode` of the request.
+
+**slot_id**<br/>
+The slot of the Requester's certificate chain used to sign the response.
+
+**request_attributes**<br/>
+`SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED` to request a signature, otherwise 0.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+libspdm records `request_attributes` and processes the `ENDPOINT_INFO` response accordingly, so a
+signature is expected if, and only if, the Integrator asked for one. Requesting a signature when the
+Requester's `EP_INFO_CAP_SIG` is not set returns `LIBSPDM_STATUS_UNSUPPORTED_CAP`.
+<br/><br/>
+
+
+---
+### libspdm_get_encap_request_send_event
+---
+
+### Description
+Populates the buffer with an encapsulated `SEND_EVENT` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The session in which the request is sent.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+`session_id` is passed by value, so the Integrator dereferences the `session_id` given to
+`libspdm_encap_flow_handler_func`.
+<br/><br/>

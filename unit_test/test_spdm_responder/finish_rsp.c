@@ -1870,8 +1870,6 @@ static void rsp_finish_rsp_case18(void **state)
     spdm_context->local_context.peer_public_key_provision = data2;
     spdm_context->local_context.peer_public_key_provision_size = data_size2;
 
-    spdm_context->encap_context.req_slot_id = 0xFF;
-
     libspdm_reset_message_a(spdm_context);
 
     session_id = 0xFFFFFFFF;
@@ -2101,6 +2099,7 @@ static void rsp_finish_rsp_case19(void **state)
     free(data2);
 }
 
+#if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP
 /**
  * Test 20: receiving a invalid FINISH request message, enable mutual authentication with using the encapsulated request flow,
  * that is KEY_EXCHANGE_RSP.MutAuthRequested equals 0x02.
@@ -2258,6 +2257,7 @@ static void rsp_finish_rsp_case20(void **state)
     free(data1);
     free(data2);
 }
+#endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */
 
 /**
  * Test 21: receiving a valid FINISH request message, due to disable mutual authentication,
@@ -3885,7 +3885,9 @@ int libspdm_rsp_finish_rsp_test(void)
         cmocka_unit_test(rsp_finish_rsp_case18),
         /* Invalid SlotID in FINISH request message when mutual authentication */
         cmocka_unit_test_setup(rsp_finish_rsp_case19, libspdm_unit_test_group_setup),
+        #if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP
         cmocka_unit_test_setup(rsp_finish_rsp_case20, libspdm_unit_test_group_setup),
+        #endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */
         /* If FINISH.Param1 != 0x01, then FINISH.Param2 is reserved, shall be ignored when read */
         cmocka_unit_test_setup(rsp_finish_rsp_case21, libspdm_unit_test_group_setup),
         /* If KEY_EXCHANGE_RSP.MutAuthRequested equals neither 0x02 nor 0x04, FINISH.Param2 no need match ENCAPSULATED_RESPONSE_ACK.EncapsulatedRequest */

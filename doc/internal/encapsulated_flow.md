@@ -126,13 +126,13 @@ during the handshake phase, the inferred `session_id` is passed to the Integrato
 
 The Requester-initiated encapsulated flow begins with the Requester sending
 `GET_ENCAPSULATED_REQUEST`. If outside of a session then the following encapsulated requests are
-legal.
+legal:
 - `GET_DIGESTS`
 - `GET_CERTIFICATE`
 - `GET_ENDPOINT_INFO`
 
 Within a session the above encapsulated requests are all legal, with the addition of the following
-encapsulated requests.
+encapsulated requests:
 - `GET_SUPPORTED_EVENT_TYPES`
 - `SUBSCRIBE_EVENT_TYPES`
 - `SEND_EVENT`
@@ -181,9 +181,9 @@ For encapsulated requests that originate from the Integrator the basic flow is
 Example encapsulated state management handler:
 ```C
 /* libspdm receives a GET_ENCAPSULATED_REQUEST or DELIVER_ENCAPSULATED_RESPONSE message and calls
- * into libspdm_encap_state_handler. */
+ * into encap_flow_handler. */
 
-libspdm_return_t libspdm_encap_state_handler(
+libspdm_return_t encap_flow_handler(
     void *spdm_context,
     const uint32_t *session_id,
     libspdm_encap_flow_type_t encap_flow_type,
@@ -259,7 +259,7 @@ libspdm_return_t libspdm_encap_state_handler(
 When multiple encapsulated `GET_CERTIFICATE` requests are issued to retrieve a single certificate
 chain, then libspdm handles the multiple `ENCAPSULATED_RESPONSE` and `DELIVER_ENCAPSULATED_RESPONSE`
 messages. Once the entire certificate chain has been retrieved then libspdm calls
-`libspdm_encap_state_handler`.
+`encap_flow_handler()`.
 
 When an encapsulated `KEY_UPDATE` request with `UpdateKey` or `UpdateAllKeys` is issued, libspdm
 will handle sending the subsequent `KEY_UPDATE` with `VerifyNewKey`.

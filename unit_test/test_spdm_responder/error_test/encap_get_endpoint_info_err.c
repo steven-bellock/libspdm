@@ -85,6 +85,7 @@ static void rsp_encap_get_endpoint_info_err_case1(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
 
     response_size = sizeof(spdm_error_response_t);
 
@@ -180,6 +181,8 @@ static void rsp_encap_get_endpoint_info_err_case2(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
 
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
@@ -345,7 +348,8 @@ static void rsp_encap_get_endpoint_info_err_case3(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
-
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
         spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
@@ -437,6 +441,7 @@ static void rsp_encap_get_endpoint_info_err_case4(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
 
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
@@ -510,6 +515,7 @@ static void rsp_encap_get_endpoint_info_err_case5(void **state)
     spdm_context->get_endpoint_info_callback = get_endpoint_info_callback_in_err;
 
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
 
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(

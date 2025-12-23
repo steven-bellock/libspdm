@@ -177,6 +177,58 @@ bool libspdm_generate_key_exchange_rsp_signature(libspdm_context_t *spdm_context
     return result;
 }
 
+#if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP)
+/**
+ * Initialize the encapsulated state for session-based mutual authentication.
+ *
+ * @param  spdm_context        A pointer to the SPDM context.
+ * @param  session_info        The session that mutual authentication occurs within.
+ * @param  mut_auth_requested  The MutAuthRequested value returned in KEY_EXCHANGE_RSP.
+ * @param  req_slot_id         The Requester's certificate slot.
+ **/
+static void init_encap_state(libspdm_context_t *spdm_context,
+                             libspdm_session_info_t *session_info,
+                             uint8_t mut_auth_requested,
+                             uint8_t req_slot_id)
+{
+    libspdm_encap_context_t *encap_context;
+
+    LIBSPDM_ASSERT(
+        (mut_auth_requested == SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST) ||
+        (mut_auth_requested == SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS));
+
+    LIBSPDM_ASSERT(req_slot_id < SPDM_MAX_SLOT_COUNT);
+
+    encap_context = &session_info->encap_context;
+    encap_context->req_slot_id = req_slot_id;
+    encap_context->mut_auth_req_slot_id = req_slot_id;
+    encap_context->request_id = 0;
+    encap_context->last_encap_request_size = 0;
+    encap_context->flow_type = LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH;
+
+    libspdm_zero_mem(&encap_context->last_encap_request_header,
+                     sizeof(encap_context->last_encap_request_header));
+    encap_context->cert_chain_buffer_size = 0;
+
+    /* Clear cache. */
+    libspdm_reset_message_mut_b(spdm_context);
+    libspdm_reset_message_mut_c(spdm_context);
+
+    switch (mut_auth_requested) {
+    case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST:
+        break;
+    case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS:
+        /* GET_DIGESTS was embedded in KEY_EXCHANGE_RSP; prime the ACK handler to treat the
+         * first DELIVER_ENCAPSULATED_RESPONSE as a DIGESTS reply. */
+        encap_context->last_encap_request_header.request_response_code = SPDM_GET_DIGESTS;
+        break;
+    default:
+        LIBSPDM_ASSERT(false);
+        break;
+    }
+}
+#endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) */
+
 libspdm_return_t libspdm_get_response_key_exchange(libspdm_context_t *spdm_context,
                                                    size_t request_size,
                                                    const void *request,
@@ -564,6 +616,8 @@ libspdm_return_t libspdm_get_response_key_exchange(libspdm_context_t *spdm_conte
                                                 req_opaque_data,
                                                 &mandatory_mut_auth);
         if (mut_auth_requested != 0) {
+            const bool req_pub_key_id_cap = libspdm_is_capabilities_flag_supported(
+                spdm_context, false, SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP, 0);
             const bool req_mut_auth_cap = libspdm_is_capabilities_flag_supported(
                 spdm_context, false, SPDM_GET_CAPABILITIES_REQUEST_FLAGS_MUT_AUTH_CAP, 0);
             const bool req_encap_cap = libspdm_is_capabilities_flag_supported(
@@ -573,6 +627,25 @@ libspdm_return_t libspdm_get_response_key_exchange(libspdm_context_t *spdm_conte
                  SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST) ||
                 (mut_auth_requested ==
                  SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS);
+
+            switch (mut_auth_requested) {
+            case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED:
+            case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST:
+            case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS:
+                break;
+            default:
+                libspdm_free_session_id(spdm_context, session_id);
+                return libspdm_generate_error_response(spdm_context,
+                                                       SPDM_ERROR_CODE_UNSPECIFIED, 0,
+                                                       response_size, response);
+            }
+            if (req_pub_key_id_cap &&
+                (mut_auth_requested != SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED)) {
+                libspdm_free_session_id(spdm_context, session_id);
+                return libspdm_generate_error_response(spdm_context,
+                                                       SPDM_ERROR_CODE_UNSPECIFIED, 0,
+                                                       response_size, response);
+            }
 
             /* If Integrator requires mutual authentication but Requester does not support mutual
              * authentication, or Integrator requires the encapsulated mutual authentication flow
@@ -595,11 +668,19 @@ libspdm_return_t libspdm_get_response_key_exchange(libspdm_context_t *spdm_conte
             if (!need_encap) {
                 spdm_response->mut_auth_requested = mut_auth_requested;
                 spdm_response->req_slot_id_param = req_slot_id;
-            } else if (need_encap && req_encap_cap) {
+                /* There is no encapsulated flow to retrieve the Requester's certificate chain,
+                 * so the Responder already possesses it. Record the slot that the Requester is
+                 * being told to sign FINISH with, as FINISH verification reads it. */
+                session_info->peer_used_cert_chain_slot_id = req_slot_id;
+            }
+            #if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP
+            else if (need_encap && req_encap_cap) {
                 spdm_response->mut_auth_requested = mut_auth_requested;
                 session_info->peer_used_cert_chain_slot_id = req_slot_id;
-                libspdm_init_mut_auth_encap_state(spdm_context, mut_auth_requested);
+                init_encap_state(spdm_context, session_info, mut_auth_requested,
+                                 req_slot_id);
             }
+            #endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */
         }
     }
     #endif /* LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP */
