@@ -9,36 +9,29 @@
 #if (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && (LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP)
 
 libspdm_return_t libspdm_get_encap_request_send_event(
-    libspdm_context_t *spdm_context,
+    void *context,
+    uint32_t session_id,
     size_t *encap_request_size,
     void *encap_request)
 {
+    libspdm_context_t *spdm_context;
     spdm_send_event_request_t *spdm_request;
-    uint32_t session_id;
+    libspdm_session_info_t *session_info;
+    libspdm_session_state_t session_state;
     uint32_t event_count;
     size_t events_list_size;
 
+    spdm_context = context;
     spdm_request = encap_request;
 
-    if (spdm_context->last_spdm_request_session_id_valid) {
-        libspdm_session_info_t *session_info;
-        libspdm_session_state_t session_state;
-
-        session_id = spdm_context->last_spdm_request_session_id;
-        session_info = libspdm_get_session_info_via_session_id(spdm_context, session_id);
-
-        if (session_info == NULL) {
-            return LIBSPDM_STATUS_INVALID_STATE_LOCAL;
-        }
-
-        session_state = libspdm_secured_message_get_session_state(
-            session_info->secured_message_context);
-
-        if (session_state != LIBSPDM_SESSION_STATE_ESTABLISHED) {
-            return LIBSPDM_STATUS_INVALID_STATE_LOCAL;
-        }
-    } else {
-        return LIBSPDM_STATUS_ERROR_PEER;
+    session_info = libspdm_get_session_info_via_session_id(spdm_context, session_id);
+    if (session_info == NULL) {
+        return LIBSPDM_STATUS_INVALID_STATE_LOCAL;
+    }
+    session_state = libspdm_secured_message_get_session_state(
+        session_info->secured_message_context);
+    if (session_state != LIBSPDM_SESSION_STATE_ESTABLISHED) {
+        return LIBSPDM_STATUS_INVALID_STATE_LOCAL;
     }
 
     spdm_request->header.spdm_version = libspdm_get_connection_version(spdm_context);
