@@ -9,15 +9,22 @@
 
 #if LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP
 
-libspdm_return_t libspdm_get_encap_request_key_update(libspdm_context_t *spdm_context,
+libspdm_return_t libspdm_get_encap_request_key_update(void *context,
+                                                      uint8_t operation,
                                                       size_t *encap_request_size,
                                                       void *encap_request)
 {
+    libspdm_context_t *spdm_context;
     spdm_key_update_request_t *spdm_request;
     uint32_t session_id;
     libspdm_session_info_t *session_info;
     libspdm_session_state_t session_state;
     bool result;
+
+    LIBSPDM_ASSERT((operation == SPDM_KEY_UPDATE_OPERATIONS_UPDATE_KEY) ||
+                   (operation == SPDM_KEY_UPDATE_OPERATIONS_VERIFY_NEW_KEY));
+
+    spdm_context = context;
 
     spdm_context->encap_context.last_encap_request_size = 0;
 
@@ -57,8 +64,7 @@ libspdm_return_t libspdm_get_encap_request_key_update(libspdm_context_t *spdm_co
     libspdm_reset_message_buffer_via_request_code(spdm_context, session_info,
                                                   spdm_request->header.request_response_code);
 
-    if (spdm_context->encap_context.last_encap_request_header.request_response_code !=
-        SPDM_KEY_UPDATE) {
+    if (operation == SPDM_KEY_UPDATE_OPERATIONS_UPDATE_KEY) {
         spdm_request->header.param1 = SPDM_KEY_UPDATE_OPERATIONS_UPDATE_KEY;
         spdm_request->header.param2 = 0;
         if (!libspdm_get_random_number(sizeof(spdm_request->header.param2),

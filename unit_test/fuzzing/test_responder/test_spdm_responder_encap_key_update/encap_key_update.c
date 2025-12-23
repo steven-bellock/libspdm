@@ -179,7 +179,8 @@ void libspdm_test_get_encap_request_key_update_case1(void **State)
                               SECURED_SPDM_VERSION_11 << SPDM_VERSION_NUMBER_SHIFT_BIT, true);
     libspdm_secured_message_set_session_state(session_info->secured_message_context,
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
-    libspdm_get_encap_request_key_update(spdm_context, &encap_request_size, spdm_request);
+    libspdm_get_encap_request_key_update(spdm_context, SPDM_KEY_UPDATE_OPERATIONS_UPDATE_KEY,
+                                         &encap_request_size, spdm_request);
     free(spdm_request);
     free(data);
 }
@@ -232,7 +233,8 @@ void libspdm_test_get_encap_request_key_update_case2(void **State)
                               SECURED_SPDM_VERSION_11 << SPDM_VERSION_NUMBER_SHIFT_BIT, true);
     libspdm_secured_message_set_session_state(session_info->secured_message_context,
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
-    libspdm_get_encap_request_key_update(spdm_context, &encap_request_size, spdm_request);
+    libspdm_get_encap_request_key_update(spdm_context, SPDM_KEY_UPDATE_OPERATIONS_UPDATE_KEY,
+                                         &encap_request_size, spdm_request);
     free(spdm_request);
     free(data);
 }

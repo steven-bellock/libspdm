@@ -174,3 +174,6 @@ When multiple encapsulated `GET_CERTIFICATE` requests are issued to retrieve a s
 chain, then libspdm handles the multiple `ENCAPSULATED_RESPONSE` and `DELIVER_ENCAPSULATED_RESPONSE`
 messages. Once the entire certificate chain has been retrieved then libspdm calls
 `libspdm_encap_state_handler`.
+
+When an encapsulated `KEY_UPDATE` request with `UpdateKey` or `UpdateAllKeys` is issued, libspdm
+will handle sending the subsequent `KEY_UPDATE` with `VerifyNewKey`.
