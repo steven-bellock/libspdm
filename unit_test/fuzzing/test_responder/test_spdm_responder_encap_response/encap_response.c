@@ -21,6 +21,15 @@ libspdm_test_context_t m_libspdm_response_encapsulated_request_test_context = {
     false,
 };
 
+static libspdm_return_t libspdm_fuzzing_encap_handler(
+    void *spdm_context, const uint32_t *session_id,
+    libspdm_encap_flow_type_t flow_type, uint8_t last_request_code,
+    bool *terminate_flow, size_t *request_size, void *request)
+{
+    *terminate_flow = true;
+    return LIBSPDM_STATUS_SUCCESS;
+}
+
 void libspdm_test_get_response_encapsulated_request_case1(void **State)
 {
     libspdm_test_context_t *spdm_test_context;
@@ -36,11 +45,6 @@ void libspdm_test_get_response_encapsulated_request_case1(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-    spdm_context->encap_context.current_request_op_code = 0;
-    spdm_context->encap_context.request_op_code_sequence[0] = SPDM_GET_DIGESTS;
-
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
     spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_11 <<
@@ -54,6 +58,7 @@ void libspdm_test_get_response_encapsulated_request_case1(void **State)
     spdm_context->connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
     libspdm_reset_message_b(spdm_context);
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_request(spdm_context,
                                               spdm_test_context->test_buffer_size,
@@ -79,8 +84,6 @@ void libspdm_test_get_response_encapsulated_request_case2(void **State)
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
 
-    spdm_context->encap_context.current_request_op_code = SPDM_CHALLENGE;
-
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
@@ -89,6 +92,7 @@ void libspdm_test_get_response_encapsulated_request_case2(void **State)
         sizeof(local_certificate_chain);
     libspdm_set_mem(local_certificate_chain, sizeof(local_certificate_chain), (uint8_t)(0xFF));
 
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_request(spdm_context,
                                               spdm_test_context->test_buffer_size,
@@ -113,8 +117,6 @@ void libspdm_test_get_response_encapsulated_request_case3(void **State)
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
 
-    spdm_context->encap_context.current_request_op_code = SPDM_GET_DIGESTS;
-
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
@@ -123,6 +125,7 @@ void libspdm_test_get_response_encapsulated_request_case3(void **State)
         sizeof(local_certificate_chain);
     libspdm_set_mem(local_certificate_chain, sizeof(local_certificate_chain), (uint8_t)(0xFF));
 
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_request(spdm_context,
                                               spdm_test_context->test_buffer_size,
@@ -147,8 +150,6 @@ void libspdm_test_get_response_encapsulated_request_case4(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NOT_READY;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-
-    spdm_context->encap_context.current_request_op_code = SPDM_GET_DIGESTS;
 
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;
@@ -180,10 +181,7 @@ void libspdm_test_get_response_encapsulated_request_case5(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-    spdm_context->encap_context.current_request_op_code = 0;
-
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_request(spdm_context,
                                               spdm_test_context->test_buffer_size,
@@ -207,12 +205,6 @@ void libspdm_test_get_response_encapsulated_response_ack_case1(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-
-    spdm_context->encap_context.current_request_op_code = 0;
-    spdm_context->encap_context.request_op_code_sequence[0] = SPDM_GET_DIGESTS;
-
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
     spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_11 <<
@@ -226,6 +218,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case1(void **State)
     spdm_context->connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
     libspdm_reset_message_b(spdm_context);
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
 
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_response_ack(spdm_context,
@@ -249,10 +242,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case2(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-    spdm_context->encap_context.current_request_op_code = 0;
-
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
     response_size = sizeof(response);
 
     libspdm_get_response_encapsulated_response_ack(spdm_context,
@@ -279,10 +269,6 @@ void libspdm_test_get_response_encapsulated_response_ack_case3(void **State)
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-    spdm_context->encap_context.current_request_op_code = SPDM_GET_DIGESTS;
-    spdm_context->encap_context.request_op_code_sequence[0] = SPDM_GET_DIGESTS;
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_11 <<
                                             SPDM_VERSION_NUMBER_SHIFT_BIT;
@@ -302,6 +288,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case3(void **State)
     libspdm_set_mem(local_certificate_chain, sizeof(local_certificate_chain), (uint8_t)(0xFF));
 
     libspdm_reset_message_b(spdm_context);
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
 
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_response_ack(spdm_context,
@@ -324,9 +311,6 @@ void libspdm_test_get_response_encapsulated_response_ack_case4(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_response_ack(spdm_context,
                                                    spdm_test_context->test_buffer_size,
@@ -347,9 +331,6 @@ void libspdm_test_get_response_encapsulated_response_ack_case5(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NOT_READY;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_response_ack(spdm_context,
                                                    spdm_test_context->test_buffer_size,
@@ -372,12 +353,6 @@ void libspdm_test_get_response_encapsulated_response_ack_case6(void **State)
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_PROCESSING_ENCAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
-    spdm_context->encap_context.request_op_code_count =
-        LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT;
-
-    spdm_context->encap_context.current_request_op_code = 0;
-    spdm_context->encap_context.request_op_code_sequence[0] = SPDM_GET_DIGESTS;
-
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
     spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_12 <<
@@ -391,6 +366,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case6(void **State)
     spdm_context->connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
     libspdm_reset_message_b(spdm_context);
+    libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
 
     response_size = sizeof(response);
     libspdm_get_response_encapsulated_response_ack(spdm_context,

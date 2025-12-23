@@ -475,21 +475,15 @@ typedef struct {
     uint8_t peer_used_cert_chain_slot_id;
 } libspdm_session_info_t;
 
-#define LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT 3
 typedef struct {
-    /* Valid OpCode: GET_DIGEST/GET_CERTIFICATE/CHALLENGE/KEY_UPDATE/GET_ENDPOINT_INFO/SEND_EVENT
-     * The last one is 0x00, as a terminator. */
-    uint8_t request_op_code_sequence[LIBSPDM_MAX_ENCAP_REQUEST_OP_CODE_SEQUENCE_COUNT + 1];
-    uint8_t request_op_code_count;
-    uint8_t current_request_op_code;
     uint8_t request_id;
     uint8_t req_slot_id;
     spdm_message_header_t last_encap_request_header;
     size_t last_encap_request_size;
     uint32_t cert_chain_total_len;
     uint8_t req_context[SPDM_REQ_CONTEXT_SIZE];
-    uint32_t session_id;
     bool use_large_cert_chain;
+    libspdm_encap_flow_type_t flow_type;
 } libspdm_encap_context_t;
 
 #if LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP
@@ -602,6 +596,9 @@ typedef struct {
     /* Register libspdm_key_update_callback function (responder only)
      * Register can know when session keys are updated during KEY_UPDATE operations. */
     void *spdm_key_update_callback;
+
+    /* Callback function so that Integrator can specify encapsulated requests (responder only) */
+    void *encap_flow_handler_callback;
 
     libspdm_local_context_t local_context;
 

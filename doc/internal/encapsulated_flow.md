@@ -141,29 +141,43 @@ Example encapsulated state management handler:
 /* libspdm receives a GET_ENCAPSULATED_REQUEST or DELIVER_ENCAPSULATED_RESPONSE message and calls
  * into libspdm_encap_state_handler. */
 
-libspdm_return_t libspdm_encap_state_handler (void *spdm_context,
-                                              uint32_t *session_id,
-                                              libspdm_encap_flow_type_t encap_flow_type, ...)
+libspdm_return_t libspdm_encap_state_handler(
+    void *spdm_context,
+    const uint32_t *session_id,
+    libspdm_encap_flow_type_t encap_flow_type,
+    uint8_t last_request_code,
+    bool *terminate_flow,
+    size_t *encap_request_size,
+    void *encap_request)
 {
     /* Integrator can use a pointer in libspdm_session_info or non-session spdm_context to access
      * Integrator-defined state related to the encapsulated flow. */
 
     switch (state) {
     case a:
-    /* Get digests. Information can be retrieved via LIBSPDM_DATA_PEER_* and libspdm_get_data. */
-    return libspdm_encap_get_digest(..., session_id);
-
+        /* Get digests. Information can be retrieved via LIBSPDM_DATA_PEER_* and libspdm_get_data. */
+        return libspdm_get_encap_request_get_digests(spdm_context, session_id,
+                                                     encap_request_size, encap_request);
     case b:
-    /* Get certificate chain from certificate slot 5. */
-    return libspdm_encap_get_certificate(..., session_id, 5);
-
+        /* Get certificate chain from certificate slot 5. */
+        return libspdm_get_encap_request_get_certificate(spdm_context, session_id, 5,
+                                                         encap_request_size, encap_request);
     case c:
-    /* Get endpoint information using certificate slot 5. */
-    return libspdm_encap_get_endpoint_info(..., session_id, ..., 5, ...);
-
+        /* Get endpoint information using certificate slot 5, with signature requested. */
+        return libspdm_get_encap_request_get_endpoint_info(
+            spdm_context, session_id,
+            SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
+            5,
+            SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED,
+            encap_request_size, encap_request);
     case d:
-    /* Terminate encapsulated flow. */
-    return libspdm_encap_terminate_flow(..., session_id);
+        /* Send events. */
+        return libspdm_get_encap_request_send_event(spdm_context, *session_id,
+                                                    encap_request_size, encap_request);
+    case e:
+        /* Terminate encapsulated flow. */
+        *terminate_flow = true;
+        return LIBSPDM_STATUS_SUCCESS;
     }
 }
 ```
@@ -174,3 +188,6 @@ When multiple encapsulated `GET_CERTIFICATE` requests are issued to retrieve a s
 chain, then libspdm handles the multiple `ENCAPSULATED_RESPONSE` and `DELIVER_ENCAPSULATED_RESPONSE`
 messages. Once the entire certificate chain has been retrieved then libspdm calls
 `libspdm_encap_state_handler`.
+
+When an encapsulated `KEY_UPDATE` request with `UpdateKey` or `UpdateAllKeys` is issued, libspdm
+will handle sending the subsequent `KEY_UPDATE` with `VerifyNewKey`.

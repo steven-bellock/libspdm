@@ -583,11 +583,49 @@ libspdm_return_t libspdm_build_response(void *spdm_context, const uint32_t *sess
         #endif /* LIBSPDM_ENABLE_CAPABILITY_CHUNK_CAP */
 
         if (get_response_func != NULL) {
-            status = get_response_func(
-                context,
-                context->last_spdm_request_size,
-                context->last_spdm_request,
-                &my_response_size, my_response);
+            bool reject_request = false;
+#if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP
+            /* During session-based mutual authentication, enforce that the Requester sends
+             * the next request required by the mut_auth_requested bits before the encap
+             * flow begins (while response_state is still NORMAL). */
+            if (session_id != NULL && session_info != NULL &&
+                context->encap_context.flow_type == LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH &&
+                context->response_state == LIBSPDM_RESPONSE_STATE_NORMAL) {
+                libspdm_session_state_t sess_state;
+                uint8_t expected_code = 0;
+                sess_state = libspdm_secured_message_get_session_state(
+                    session_info->secured_message_context);
+                if (sess_state == LIBSPDM_SESSION_STATE_HANDSHAKING) {
+                    switch (session_info->mut_auth_requested) {
+                    case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED:
+                        expected_code = SPDM_FINISH;
+                        break;
+                    case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST:
+                        expected_code = SPDM_GET_ENCAPSULATED_REQUEST;
+                        break;
+                    case SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_GET_DIGESTS:
+                        expected_code = SPDM_DELIVER_ENCAPSULATED_RESPONSE;
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                if (expected_code != 0 &&
+                    spdm_request->request_response_code != expected_code) {
+                    status = libspdm_generate_error_response(context,
+                        SPDM_ERROR_CODE_UNEXPECTED_REQUEST, 0,
+                        &my_response_size, my_response);
+                    reject_request = true;
+                }
+            }
+#endif /* LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP */
+            if (!reject_request) {
+                status = get_response_func(
+                    context,
+                    context->last_spdm_request_size,
+                    context->last_spdm_request,
+                    &my_response_size, my_response);
+            }
         }
     }
     if (is_app_message || (get_response_func == NULL)) {
