@@ -13,19 +13,6 @@
 
 static uint8_t m_endpoint_info_buffer_receive[LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE];
 
-libspdm_return_t get_endpoint_info_callback_in_err (
-    void *spdm_context,
-    uint8_t subcode,
-    uint8_t param2,
-    uint8_t request_attributes,
-    uint32_t endpoint_info_size,
-    const void *endpoint_info)
-{
-    /* should never reach here */
-    LIBSPDM_ASSERT (0);
-    return LIBSPDM_STATUS_UNSUPPORTED_CAP;
-}
-
 /**
  * Test 1: Error case, get an error response
  * Expected Behavior: get a RETURN_DEVICE_ERROR return code,
@@ -54,7 +41,11 @@ static void rsp_encap_get_endpoint_info_err_case1(void **state)
         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_EP_INFO_CAP_SIG;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
     spdm_context->connection_info.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;
-    spdm_context->get_endpoint_info_callback = get_endpoint_info_callback_in_err;
+    /* No payload buffer is provided. Every case below must fail before the endpoint information
+     * is delivered, so reaching delivery would return a status that no case expects. */
+    spdm_context->encap_context.payload_buffer = NULL;
+    spdm_context->encap_context.payload_buffer_max_size = 0;
+    spdm_context->encap_context.payload_buffer_size = 0;
 
     if (!libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,
                                                          m_libspdm_use_req_asym_algo, &data,
@@ -85,6 +76,7 @@ static void rsp_encap_get_endpoint_info_err_case1(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
 
     response_size = sizeof(spdm_error_response_t);
 
@@ -149,7 +141,11 @@ static void rsp_encap_get_endpoint_info_err_case2(void **state)
         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_EP_INFO_CAP_SIG;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
     spdm_context->connection_info.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;
-    spdm_context->get_endpoint_info_callback = get_endpoint_info_callback_in_err;
+    /* No payload buffer is provided. Every case below must fail before the endpoint information
+     * is delivered, so reaching delivery would return a status that no case expects. */
+    spdm_context->encap_context.payload_buffer = NULL;
+    spdm_context->encap_context.payload_buffer_max_size = 0;
+    spdm_context->encap_context.payload_buffer_size = 0;
 
     if (!libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,
                                                          m_libspdm_use_req_asym_algo, &data,
@@ -180,6 +176,8 @@ static void rsp_encap_get_endpoint_info_err_case2(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
 
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
@@ -314,7 +312,11 @@ static void rsp_encap_get_endpoint_info_err_case3(void **state)
         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_EP_INFO_CAP_SIG;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
     spdm_context->connection_info.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;
-    spdm_context->get_endpoint_info_callback = get_endpoint_info_callback_in_err;
+    /* No payload buffer is provided. Every case below must fail before the endpoint information
+     * is delivered, so reaching delivery would return a status that no case expects. */
+    spdm_context->encap_context.payload_buffer = NULL;
+    spdm_context->encap_context.payload_buffer_max_size = 0;
+    spdm_context->encap_context.payload_buffer_size = 0;
 
     if (!libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,
                                                          m_libspdm_use_req_asym_algo, &data,
@@ -345,7 +347,8 @@ static void rsp_encap_get_endpoint_info_err_case3(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
-
+    spdm_context->encap_context.req_attributes =
+        SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
         spdm_context, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
@@ -406,7 +409,11 @@ static void rsp_encap_get_endpoint_info_err_case4(void **state)
         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_EP_INFO_CAP_NO_SIG; /* no signature */
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
     spdm_context->connection_info.algorithm.req_base_asym_alg = m_libspdm_use_req_asym_algo;
-    spdm_context->get_endpoint_info_callback = get_endpoint_info_callback_in_err;
+    /* No payload buffer is provided. Every case below must fail before the endpoint information
+     * is delivered, so reaching delivery would return a status that no case expects. */
+    spdm_context->encap_context.payload_buffer = NULL;
+    spdm_context->encap_context.payload_buffer_max_size = 0;
+    spdm_context->encap_context.payload_buffer_size = 0;
 
     if (!libspdm_read_requester_public_certificate_chain(m_libspdm_use_hash_algo,
                                                          m_libspdm_use_req_asym_algo, &data,
@@ -437,6 +444,7 @@ static void rsp_encap_get_endpoint_info_err_case4(void **state)
 #endif
     }
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
 
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
@@ -507,9 +515,14 @@ static void rsp_encap_get_endpoint_info_err_case5(void **state)
     spdm_context->connection_info.capability.flags = 0;
     spdm_context->connection_info.capability.flags |=
         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_EP_INFO_CAP_NO_SIG; /* no signature */
-    spdm_context->get_endpoint_info_callback = get_endpoint_info_callback_in_err;
+    /* No payload buffer is provided. Every case below must fail before the endpoint information
+     * is delivered, so reaching delivery would return a status that no case expects. */
+    spdm_context->encap_context.payload_buffer = NULL;
+    spdm_context->encap_context.payload_buffer_max_size = 0;
+    spdm_context->encap_context.payload_buffer_size = 0;
 
     spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.req_attributes = 0;
 
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
     libspdm_generate_device_endpoint_info(
