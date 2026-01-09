@@ -2682,7 +2682,7 @@ void libspdm_register_device_buffer_func(
 
     context = spdm_context;
     context->sender_buffer_size = sender_buffer_size;
-    context->receiver_buffer_size = receiver_buffer_size;
+            context->receiver_buffer_size = receiver_buffer_size;
     context->acquire_sender_buffer = acquire_sender_buffer;
     context->release_sender_buffer = release_sender_buffer;
     context->acquire_receiver_buffer = acquire_receiver_buffer;
