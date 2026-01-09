@@ -17,7 +17,7 @@ uint32_t libspdm_get_scratch_buffer_secure_message_offset(libspdm_context_t *spd
 uint32_t libspdm_get_scratch_buffer_secure_message_capacity(libspdm_context_t *spdm_context) {
     return spdm_context->local_context.capability.max_spdm_msg_size +
            spdm_context->local_context.capability.transport_header_size +
-           spdm_context->local_context.capability.transport_tail_size;
+spdm_context->local_context.capability.transport_tail_size;
 }
 
 /* second section */
