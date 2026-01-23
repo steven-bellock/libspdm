@@ -1794,6 +1794,19 @@ static bool libspdm_convert_subject_to_string(uint8_t *ptr, size_t obj_len,
                 (libspdm_consttime_is_mem_equal(cur->oid, internal_p, obj_len))) {
                 /*Concat subject string*/
 
+                /*move to string*/
+                internal_p += obj_len;
+                ret = libspdm_asn1_get_tag(&internal_p, end, &obj_len, cur->default_tag);
+                if (!ret) {
+                    return false;
+                }
+
+                /*check total space needed: name + '=' + value + ',' + '\0'*/
+                if (buff_len < (int32_t)(cur->name_len + 1 + obj_len + 1 + 1)) {
+                    LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,"the buffer is too small"));
+                    return false;
+                }
+
                 /*for example: CN=*/
                 libspdm_copy_mem(buffer, buff_len, cur->name, cur->name_len);
                 buff_len = (int32_t)(buff_len - cur->name_len);
@@ -1802,13 +1815,6 @@ static bool libspdm_convert_subject_to_string(uint8_t *ptr, size_t obj_len,
                 buff_len--;
                 buffer++;
 
-                /*move to string*/
-                internal_p += obj_len;
-                ret = libspdm_asn1_get_tag(&internal_p, end, &obj_len, cur->default_tag);
-                if (!ret) {
-                    return false;
-                }
-
                 /*for example: AU,*/
                 libspdm_copy_mem(buffer, buff_len, internal_p, obj_len);
                 buff_len = (int32_t)(buff_len - obj_len);
@@ -1816,11 +1822,6 @@ static bool libspdm_convert_subject_to_string(uint8_t *ptr, size_t obj_len,
                 *buffer = ',';
                 buff_len--;
                 buffer++;
-
-                if (buff_len < 0) {
-                    LIBSPDM_DEBUG((LIBSPDM_DEBUG_INFO,"the buffer is too small"));
-                    return false;
-                }
                 break;
             }
         }
