@@ -27,7 +27,7 @@
  *                         For normal message, requester pointer point to transport_message + transport header size
  *                         For secured message, requester pointer will point to the scratch buffer + transport header size in spdm_context.
  **/
-libspdm_return_t libspdm_send_request(void *spdm_context, const uint32_t *session_id,
+libspdm_return_t libspdm_send_request(libspdm_context_t *spdm_context, const uint32_t *session_id,
                                       bool is_app_message,
                                       size_t request_size, void *request);
 
@@ -46,7 +46,7 @@ libspdm_return_t libspdm_send_request(void *spdm_context, const uint32_t *sessio
  *                         For normal message, response pointer still point to original transport_message.
  *                         For secured message, response pointer will point to the scratch buffer in spdm_context.
  **/
-libspdm_return_t libspdm_receive_response(void *spdm_context, const uint32_t *session_id,
+libspdm_return_t libspdm_receive_response(libspdm_context_t *spdm_context, const uint32_t *session_id,
                                           bool is_app_message,
                                           size_t *response_size, void **response);
 
@@ -388,7 +388,7 @@ libspdm_return_t libspdm_encapsulated_request(libspdm_context_t *spdm_context,
  * @retval RETURN_DEVICE_ERROR          A device error occurs when communicates with the device.
  * @retval RETURN_SECURITY_VIOLATION    Any verification fails.
  **/
-libspdm_return_t libspdm_get_encap_response_digest(void *spdm_context,
+libspdm_return_t libspdm_get_encap_response_digest(libspdm_context_t *spdm_context,
                                                    size_t request_size,
                                                    void *request,
                                                    size_t *response_size,
@@ -411,7 +411,7 @@ libspdm_return_t libspdm_get_encap_response_digest(void *spdm_context,
  * @retval RETURN_DEVICE_ERROR          A device error occurs when communicates with the device.
  * @retval RETURN_SECURITY_VIOLATION    Any verification fails.
  **/
-libspdm_return_t libspdm_get_encap_response_certificate(void *spdm_context,
+libspdm_return_t libspdm_get_encap_response_certificate(libspdm_context_t *spdm_context,
                                                         size_t request_size,
                                                         void *request,
                                                         size_t *response_size,
@@ -438,7 +438,7 @@ libspdm_return_t libspdm_get_encap_response_certificate(void *spdm_context,
  * @retval RETURN_SECURITY_VIOLATION    Any verification fails.
  **/
 libspdm_return_t libspdm_get_encap_response_challenge_auth(
-    void *spdm_context, size_t request_size, void *request,
+    libspdm_context_t *spdm_context, size_t request_size, void *request,
     size_t *response_size, void *response);
 #endif /* LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP */
 #endif /* LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP */
@@ -461,7 +461,7 @@ libspdm_return_t libspdm_get_encap_response_challenge_auth(
  * @retval RETURN_DEVICE_ERROR          A device error occurs when communicates with the device.
  * @retval RETURN_SECURITY_VIOLATION    Any verification fails.
  **/
-libspdm_return_t libspdm_get_encap_response_key_update(void *spdm_context,
+libspdm_return_t libspdm_get_encap_response_key_update(libspdm_context_t *spdm_context,
                                                        size_t request_size,
                                                        void *request,
                                                        size_t *response_size,
@@ -469,27 +469,27 @@ libspdm_return_t libspdm_get_encap_response_key_update(void *spdm_context,
 #endif /* ((LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP) || (LIBSPDM_ENABLE_CAPABILITY_PSK_CAP)) */
 
 #if LIBSPDM_EVENT_RECIPIENT_SUPPORT
-libspdm_return_t libspdm_get_encap_response_event_ack(void *spdm_context,
+libspdm_return_t libspdm_get_encap_response_event_ack(libspdm_context_t *spdm_context,
                                                       size_t request_size,
                                                       void *request,
                                                       size_t *response_size,
                                                       void *response);
 #endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */
 #if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
-libspdm_return_t libspdm_get_encap_supported_event_types(void *spdm_context,
+libspdm_return_t libspdm_get_encap_supported_event_types(libspdm_context_t *spdm_context,
                                                          size_t request_size,
                                                          void *request,
                                                          size_t *response_size,
                                                          void *response);
 
-libspdm_return_t libspdm_get_encap_subscribe_event_types_ack(void *spdm_context,
+libspdm_return_t libspdm_get_encap_subscribe_event_types_ack(libspdm_context_t *spdm_context,
                                                              size_t request_size,
                                                              void *request,
                                                              size_t *response_size,
                                                              void *response);
 #endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
 #if LIBSPDM_ENABLE_CAPABILITY_ENDPOINT_INFO_CAP
-libspdm_return_t libspdm_get_encap_response_endpoint_info(void *spdm_context,
+libspdm_return_t libspdm_get_encap_response_endpoint_info(libspdm_context_t *spdm_context,
                                                           size_t request_size,
                                                           void *request,
                                                           size_t *response_size,

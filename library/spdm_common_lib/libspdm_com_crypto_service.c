@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2025 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -16,27 +16,24 @@
  * @return key pair ID.
  */
 uint8_t libspdm_slot_id_to_key_pair_id (
-    void *spdm_context,
+    libspdm_context_t *spdm_context,
     uint8_t slot_id,
     bool is_requester)
 {
-    libspdm_context_t *context;
-
-    context = spdm_context;
     if (slot_id == 0xFF || slot_id == 0xF) {
         return 0;
     }
     if (is_requester) {
-        if (!context->connection_info.multi_key_conn_req) {
+        if (!spdm_context->connection_info.multi_key_conn_req) {
             return 0;
         }
     } else {
-        if (!context->connection_info.multi_key_conn_rsp) {
+        if (!spdm_context->connection_info.multi_key_conn_rsp) {
             return 0;
         }
     }
     LIBSPDM_ASSERT(slot_id < SPDM_MAX_SLOT_COUNT);
-    return context->local_context.local_key_pair_id[slot_id];
+    return spdm_context->local_context.local_key_pair_id[slot_id];
 }
 
 #if LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT

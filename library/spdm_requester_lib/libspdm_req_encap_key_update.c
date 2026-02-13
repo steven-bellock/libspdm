@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2025 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -10,7 +10,7 @@
 #if (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && \
     ((LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP) || (LIBSPDM_ENABLE_CAPABILITY_PSK_CAP))
 
-libspdm_return_t libspdm_get_encap_response_key_update(void *spdm_context,
+libspdm_return_t libspdm_get_encap_response_key_update(libspdm_context_t *spdm_context,
                                                        size_t request_size,
                                                        void *request,
                                                        size_t *response_size,
@@ -19,61 +19,59 @@ libspdm_return_t libspdm_get_encap_response_key_update(void *spdm_context,
     uint32_t session_id;
     spdm_key_update_response_t *spdm_response;
     spdm_key_update_request_t *spdm_request;
-    libspdm_context_t *context;
     libspdm_session_info_t *session_info;
     libspdm_session_state_t session_state;
     spdm_key_update_request_t *prev_spdm_request;
     spdm_key_update_request_t spdm_key_init_update_operation;
     bool result;
 
-    context = spdm_context;
     spdm_request = request;
 
-    if (libspdm_get_connection_version(context) < SPDM_MESSAGE_VERSION_11) {
+    if (libspdm_get_connection_version(spdm_context) < SPDM_MESSAGE_VERSION_11) {
         return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,
+            spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,
             SPDM_KEY_UPDATE, response_size, response);
     }
 
-    if (spdm_request->header.spdm_version != libspdm_get_connection_version(context)) {
+    if (spdm_request->header.spdm_version != libspdm_get_connection_version(spdm_context)) {
         return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_VERSION_MISMATCH,
+            spdm_context, SPDM_ERROR_CODE_VERSION_MISMATCH,
             0, response_size, response);
     }
 
     if (!libspdm_is_capabilities_flag_supported(
-            context, true,
+            spdm_context, true,
             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_UPD_CAP,
             SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_UPD_CAP)) {
         return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,
+            spdm_context, SPDM_ERROR_CODE_UNSUPPORTED_REQUEST,
             SPDM_KEY_UPDATE, response_size, response);
     }
 
-    if (!context->last_spdm_request_session_id_valid) {
-        if (libspdm_get_connection_version(context) >= SPDM_MESSAGE_VERSION_12) {
-            return libspdm_generate_encap_error_response(context,
+    if (!spdm_context->last_spdm_request_session_id_valid) {
+        if (libspdm_get_connection_version(spdm_context) >= SPDM_MESSAGE_VERSION_12) {
+            return libspdm_generate_encap_error_response(spdm_context,
                                                          SPDM_ERROR_CODE_SESSION_REQUIRED, 0,
                                                          response_size, response);
         } else {
-            return libspdm_generate_encap_error_response(context,
+            return libspdm_generate_encap_error_response(spdm_context,
                                                          SPDM_ERROR_CODE_UNSPECIFIED, 0,
                                                          response_size, response);
         }
     }
-    session_id = context->last_spdm_request_session_id;
+    session_id = spdm_context->last_spdm_request_session_id;
     session_info =
-        libspdm_get_session_info_via_session_id(context, session_id);
+        libspdm_get_session_info_via_session_id(spdm_context, session_id);
     if (session_info == NULL) {
         return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
+            spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
             response_size, response);
     }
     session_state = libspdm_secured_message_get_session_state(
         session_info->secured_message_context);
     if (session_state != LIBSPDM_SESSION_STATE_ESTABLISHED) {
         return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
+            spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
             response_size, response);
     }
 
@@ -81,7 +79,7 @@ libspdm_return_t libspdm_get_encap_response_key_update(void *spdm_context,
      * thus don't need to consider transport layer padding, just check its exact size */
     if (request_size != sizeof(spdm_key_update_request_t)) {
         return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
+            spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
             response_size, response);
     }
 
@@ -136,11 +134,11 @@ libspdm_return_t libspdm_get_encap_response_key_update(void *spdm_context,
 
     if (!result) {
         return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
+            spdm_context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
             response_size, response);
     }
 
-    libspdm_reset_message_buffer_via_request_code(context, session_info,
+    libspdm_reset_message_buffer_via_request_code(spdm_context, session_info,
                                                   spdm_request->header.request_response_code);
 
     LIBSPDM_ASSERT(*response_size >= sizeof(spdm_key_update_response_t));

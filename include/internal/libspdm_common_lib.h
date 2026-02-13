@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2025 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -865,7 +865,7 @@ void libspdm_init_managed_buffer(void *managed_buffer, size_t max_buffer_size);
  * @param  spdm_session_info             A pointer to the SPDM session context.
  * @param  spdm_request                   The SPDM request code.
  */
-void libspdm_reset_message_buffer_via_request_code(void *context, void *session_info,
+void libspdm_reset_message_buffer_via_request_code(libspdm_context_t *context, void *session_info,
                                                    uint8_t request_code);
 
 /**
@@ -2005,7 +2005,7 @@ bool libspdm_validate_svh_vendor_id_len(uint16_t id, uint8_t vendor_id_len);
  * @return key pair ID.
  */
 uint8_t libspdm_slot_id_to_key_pair_id (
-    void *spdm_context,
+    libspdm_context_t *spdm_context,
     uint8_t slot_id,
     bool is_requester);
 

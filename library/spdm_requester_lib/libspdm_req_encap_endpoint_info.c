@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2025 DMTF. All rights reserved.
+ *  Copyright 2025-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -8,7 +8,7 @@
 
 #if (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENDPOINT_INFO_CAP)
 
-libspdm_return_t libspdm_get_encap_response_endpoint_info(void *spdm_context,
+libspdm_return_t libspdm_get_encap_response_endpoint_info(libspdm_context_t *spdm_context,
                                                           size_t request_size,
                                                           void *request,
                                                           size_t *response_size,

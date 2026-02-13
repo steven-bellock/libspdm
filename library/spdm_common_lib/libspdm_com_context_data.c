@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2025 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -1523,17 +1523,14 @@ void libspdm_reset_message_encap_e(libspdm_context_t *spdm_context, void *sessio
  * @param  spdm_session_info             A pointer to the SPDM session context.
  * @param  spdm_request                   The SPDM request code.
  */
-void libspdm_reset_message_buffer_via_request_code(void *context, void *session_info,
+void libspdm_reset_message_buffer_via_request_code(libspdm_context_t *context, void *session_info,
                                                    uint8_t request_code)
 {
-    libspdm_context_t *spdm_context;
-
-    spdm_context = context;
     /**
      * Any request other than SPDM_GET_MEASUREMENTS resets L1/L2
      */
     if (request_code != SPDM_GET_MEASUREMENTS) {
-        libspdm_reset_message_m(spdm_context, session_info);
+        libspdm_reset_message_m(context, session_info);
     }
     /**
      * If the Requester issued GET_MEASUREMENTS or KEY_EXCHANGE or FINISH or PSK_EXCHANGE
@@ -1552,27 +1549,27 @@ void libspdm_reset_message_buffer_via_request_code(void *context, void *session_
     case SPDM_GET_ENCAPSULATED_REQUEST:
     case SPDM_END_SESSION:
     case SPDM_GET_MEASUREMENT_EXTENSION_LOG:
-        if (spdm_context->connection_info.connection_state <
+        if (context->connection_info.connection_state <
             LIBSPDM_CONNECTION_STATE_AUTHENTICATED) {
-            libspdm_reset_message_b(spdm_context);
-            libspdm_reset_message_c(spdm_context);
-            libspdm_reset_message_mut_b(spdm_context);
-            libspdm_reset_message_mut_c(spdm_context);
+            libspdm_reset_message_b(context);
+            libspdm_reset_message_c(context);
+            libspdm_reset_message_mut_b(context);
+            libspdm_reset_message_mut_c(context);
         }
         break;
     case SPDM_DELIVER_ENCAPSULATED_RESPONSE:
-        if (spdm_context->connection_info.connection_state <
+        if (context->connection_info.connection_state <
             LIBSPDM_CONNECTION_STATE_AUTHENTICATED) {
-            libspdm_reset_message_b(spdm_context);
-            libspdm_reset_message_c(spdm_context);
+            libspdm_reset_message_b(context);
+            libspdm_reset_message_c(context);
         }
         break;
     case SPDM_GET_DIGESTS:
-        libspdm_reset_message_b(spdm_context);
+        libspdm_reset_message_b(context);
         break;
     case SPDM_GET_ENDPOINT_INFO:
-        libspdm_reset_message_e(spdm_context, session_info);
-        libspdm_reset_message_encap_e(spdm_context, session_info);
+        libspdm_reset_message_e(context, session_info);
+        libspdm_reset_message_encap_e(context, session_info);
         break;
     default:
         break;
