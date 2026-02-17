@@ -12,6 +12,14 @@ on:
           options:
             - 'Release'
             - 'Debug'
+        transcript:
+          type: choice
+          description: 'LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT Value'
+          required: true
+          options:
+            - '0'
+            - '1'
+
 jobs:
   coverity:
     strategy:
@@ -35,7 +43,7 @@ jobs:
         PATH=$PATH:$(pwd)/cov-analysis/bin
         mkdir build
         cd build
-        cmake -DTOOLCHAIN=GCC -DTARGET=${{ inputs.build }} -DCRYPTO=mbedtls ..
+        cmake -E env CFLAGS="-DLIBSPDM_FIPS_MODE=1 -DLIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT=${{ inputs.transcript }}" cmake -DTOOLCHAIN=GCC -DTARGET=${{ inputs.build }} -DCRYPTO=mbedtls ..
         cov-build --dir cov-int make -j`nproc`
         tar czf libspdm.tgz cov-int
         curl --form token=${{ secrets.COVERITY_SCAN_TOKEN }} \
