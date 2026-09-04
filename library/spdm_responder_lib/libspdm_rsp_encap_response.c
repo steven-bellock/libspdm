@@ -527,6 +527,16 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
         status = libspdm_dispatch_process_encap_response(
             spdm_context, last_request_code,
             encap_response_size, encap_response, &need_continue);
+
+        if ((session_id_ptr != NULL) &&
+            (libspdm_get_session_info_via_session_id(spdm_context, *session_id_ptr) == NULL)) {
+            /* Processing the encapsulated response ended the session that the flow belongs to,
+             * which also discarded encap_context. There is no flow left to continue and no state
+             * to give the Integrator. */
+            return libspdm_generate_error_response(
+                spdm_context, SPDM_ERROR_CODE_UNSPECIFIED, 0, response_size, response);
+        }
+
         if (LIBSPDM_STATUS_IS_ERROR(status)) {
             const spdm_error_response_t *encap_error = encap_response;
 

@@ -3434,6 +3434,98 @@ static void rsp_encapsulated_response_ack_case24(void **State)
 }
 
 /**
+ * Test 26 (DELIVER_ENCAPSULATED_RESPONSE) the Requester answers an encapsulated KEY_UPDATE with
+ * ERROR(DecryptError), which ends the session that the encapsulated flow belongs to.
+ * Expected behavior: Responder returns ERROR(Unspecified). The Integrator's handler is not
+ * consulted, as neither the flow nor the session it names still exists.
+ **/
+static void rsp_encapsulated_response_ack_case26(void **State)
+{
+    libspdm_return_t status;
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    spdm_deliver_encapsulated_response_request_t *spdm_request;
+    spdm_error_response_t *encap_error;
+    spdm_error_response_t *spdm_response;
+    uint8_t temp_buf[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    size_t response_size;
+    uint32_t session_id;
+    libspdm_session_info_t *session_info;
+
+    spdm_test_context = *State;
+    spdm_context = spdm_test_context->spdm_context;
+    /* No handler case is defined for this case_id, so the test fails if the handler is consulted. */
+    spdm_test_context->case_id = 0xA6;
+    m_case_id = spdm_test_context->case_id;
+    spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
+
+    spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
+    spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
+    spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
+    spdm_context->connection_info.capability.flags |=
+        SPDM_GET_CAPABILITIES_REQUEST_FLAGS_KEY_UPD_CAP;
+    spdm_context->local_context.capability.flags |=
+        SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_KEY_UPD_CAP;
+    spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_11 <<
+                                            SPDM_VERSION_NUMBER_SHIFT_BIT;
+    spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
+    spdm_context->connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;
+    spdm_context->connection_info.algorithm.dhe_named_group = m_libspdm_use_dhe_algo;
+    spdm_context->connection_info.algorithm.aead_cipher_suite = m_libspdm_use_aead_algo;
+    libspdm_register_encap_flow_handler(spdm_context, encap_flow_handler);
+
+    session_id = 0xFFFFFFFF;
+    spdm_context->latest_session_id = session_id;
+    spdm_context->last_spdm_request_session_id_valid = true;
+    spdm_context->last_spdm_request_session_id = session_id;
+    session_info = &spdm_context->session_info[0];
+    libspdm_session_info_init(spdm_context, session_info, session_id,
+                              SECURED_SPDM_VERSION_11 << SPDM_VERSION_NUMBER_SHIFT_BIT, true);
+    libspdm_secured_message_set_session_state(session_info->secured_message_context,
+                                              LIBSPDM_SESSION_STATE_ESTABLISHED);
+
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.request_id = 0;
+    session_info->encap_context.last_encap_request_header.spdm_version = SPDM_MESSAGE_VERSION_11;
+    session_info->encap_context.last_encap_request_header.request_response_code = SPDM_KEY_UPDATE;
+    session_info->encap_context.last_encap_request_header.param1 =
+        SPDM_KEY_UPDATE_OPERATIONS_UPDATE_KEY;
+    session_info->encap_context.last_encap_request_header.param2 = 0x5A;
+
+    spdm_request = (void *)temp_buf;
+    libspdm_copy_mem(spdm_request, sizeof(temp_buf),
+                     &m_libspdm_m_deliver_encapsulated_response_request_t1,
+                     m_libspdm_m_deliver_encapsulated_response_request_t1_size);
+
+    encap_error = (void *)(temp_buf + sizeof(spdm_deliver_encapsulated_response_request_t));
+    encap_error->header.spdm_version = SPDM_MESSAGE_VERSION_11;
+    encap_error->header.request_response_code = SPDM_ERROR;
+    encap_error->header.param1 = SPDM_ERROR_CODE_DECRYPT_ERROR;
+    encap_error->header.param2 = 0;
+
+    response_size = sizeof(response);
+    status = libspdm_get_response_encapsulated_response_ack(
+        spdm_context,
+        sizeof(spdm_deliver_encapsulated_response_request_t) + sizeof(spdm_error_response_t),
+        spdm_request, &response_size, response);
+    assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+
+    assert_int_equal(response_size, sizeof(spdm_error_response_t));
+    spdm_response = (void *)response;
+    assert_int_equal(spdm_response->header.request_response_code, SPDM_ERROR);
+    assert_int_equal(spdm_response->header.param1, SPDM_ERROR_CODE_UNSPECIFIED);
+    assert_int_equal(spdm_response->header.param2, 0);
+
+    /* DecryptError ends the session, so the flow it belonged to is gone with it. */
+    assert_int_equal(session_info->session_id, INVALID_SESSION_ID);
+    assert_int_equal(spdm_context->latest_session_id, INVALID_SESSION_ID);
+    assert_int_equal(session_info->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_NONE);
+
+    spdm_context->last_spdm_request_session_id_valid = false;
+}
+
+/**
  * Test 25 (DELIVER_ENCAPSULATED_RESPONSE) the Request ID is at its maximum value and the flow
  * continues with another encapsulated request.
  * Expected behavior: the Request ID wraps to 1 rather than to 0, since Param1 of 0 is reserved for
@@ -3746,6 +3838,8 @@ int libspdm_rsp_encapsulated_request_test(void)
         cmocka_unit_test(rsp_encapsulated_response_ack_case24),
         /* The Request ID wraps to 1 rather than 0 */
         cmocka_unit_test(rsp_encapsulated_response_ack_case25),
+        /* An encapsulated ERROR(DecryptError) ends the session the flow belongs to */
+        cmocka_unit_test(rsp_encapsulated_response_ack_case26),
         /* The Integrator's handler produces no request without terminating the flow */
         cmocka_unit_test(rsp_encapsulated_request_case18),
 #if LIBSPDM_RESPOND_IF_READY_SUPPORT
