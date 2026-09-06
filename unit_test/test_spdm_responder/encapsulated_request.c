@@ -3801,6 +3801,75 @@ static void rsp_encapsulated_request_case20(void **State)
     assert_int_equal(spdm_context->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_NONE);
 }
 
+/**
+ * Test 28 (DELIVER_ENCAPSULATED_RESPONSE) the Requester delivers an encapsulated ERROR whose
+ * ErrorCode is the reserved value 0x00.
+ * Expected behavior: Responder returns ERROR(InvalidResponseCode) and tears the flow down. The
+ * Integrator's handler is not consulted, as an ErrorCode of 0x00 cannot be reported to it.
+ **/
+static void rsp_encapsulated_response_ack_case28(void **State)
+{
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    spdm_error_response_t *spdm_response;
+    uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    size_t response_size;
+
+    spdm_test_context = *State;
+    spdm_context = spdm_test_context->spdm_context;
+    /* No handler case is defined for this case_id, so the test fails if the handler is consulted. */
+    spdm_test_context->case_id = 0xA8;
+    m_case_id = spdm_test_context->case_id;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+
+    response_size = sizeof(response);
+    deliver_encap_error(spdm_context, SPDM_KEY_UPDATE, 0x00, sizeof(spdm_error_response_t),
+                        response, &response_size);
+
+    assert_int_equal(response_size, sizeof(spdm_error_response_t));
+    spdm_response = (void *)response;
+    assert_int_equal(spdm_response->header.request_response_code, SPDM_ERROR);
+    assert_int_equal(spdm_response->header.param1, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE);
+    assert_int_equal(spdm_response->header.param2, 0);
+    assert_int_equal(spdm_context->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_NONE);
+}
+
+#if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT)
+/**
+ * Test 29 (DELIVER_ENCAPSULATED_RESPONSE) the Requester declines the encapsulated CHALLENGE of the
+ * basic mutual authentication flow with an ERROR whose ErrorCode is the reserved value 0x00.
+ * Expected behavior: Responder returns ERROR(InvalidResponseCode). The flow must not be reported
+ * as having completed normally, which is what an ErrorCode of 0x00 would otherwise indicate.
+ **/
+static void rsp_encapsulated_response_ack_case29(void **State)
+{
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    spdm_error_response_t *spdm_response;
+    uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    size_t response_size;
+
+    spdm_test_context = *State;
+    spdm_context = spdm_test_context->spdm_context;
+    /* No handler case is defined for this case_id, so the test fails if the handler is consulted. */
+    spdm_test_context->case_id = 0xA9;
+    m_case_id = spdm_test_context->case_id;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH;
+
+    response_size = sizeof(response);
+    deliver_encap_error(spdm_context, SPDM_CHALLENGE, 0x00, sizeof(spdm_error_response_t),
+                        response, &response_size);
+
+    assert_int_equal(response_size, sizeof(spdm_error_response_t));
+    spdm_response = (void *)response;
+    /* Not ENCAPSULATED_RESPONSE_ACK, which would report the flow as having ended normally. */
+    assert_int_equal(spdm_response->header.request_response_code, SPDM_ERROR);
+    assert_int_equal(spdm_response->header.param1, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE);
+    assert_int_equal(spdm_response->header.param2, 0);
+    assert_int_equal(spdm_context->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_NONE);
+}
+#endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT) */
+
 int libspdm_rsp_encapsulated_request_test(void)
 {
     const struct CMUnitTest test_cases[] = {
@@ -3936,6 +4005,12 @@ int libspdm_rsp_encapsulated_request_test(void)
         /* A payload larger than the Integrator's buffer is not the Requester's fault */
         cmocka_unit_test(rsp_encapsulated_response_ack_case27),
 #endif /* LIBSPDM_SEND_GET_ENDPOINT_INFO_SUPPORT */
+        /* An encapsulated ERROR whose ErrorCode is the reserved 0x00 */
+        cmocka_unit_test(rsp_encapsulated_response_ack_case28),
+#if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT)
+        /* The same, declining the CHALLENGE of the basic mutual authentication flow */
+        cmocka_unit_test(rsp_encapsulated_response_ack_case29),
+#endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT) */
         /* The Integrator's handler produces no request without terminating the flow */
         cmocka_unit_test(rsp_encapsulated_request_case18),
 #if LIBSPDM_RESPOND_IF_READY_SUPPORT

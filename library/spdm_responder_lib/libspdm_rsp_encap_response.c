@@ -457,6 +457,7 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
     bool terminate_flow;
     bool need_continue;
     bool response_not_ready;
+    bool encap_error_received;
     uint8_t last_request_code;
     uint8_t error_code;
     const uint32_t *session_id_ptr;
@@ -549,6 +550,7 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
     terminate_flow = false;
     need_continue = false;
     response_not_ready = false;
+    encap_error_received = false;
     error_code = 0;
     last_request_code = encap_context->last_encap_request_header.request_response_code;
     /* This is the session the flow belongs to, which is not necessarily the session the message
@@ -594,8 +596,19 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
                     spdm_context, process_error_code, 0, response_size, response);
             }
 
+            if (encap_error->header.param1 == 0) {
+                /* ErrorCode 0x00 is reserved, so this ERROR is malformed. It also cannot be
+                 * reported to the handler, as an error_code of 0 is how the absence of an
+                 * encapsulated ERROR is conveyed. */
+                encap_context->flow_type = LIBSPDM_ENCAP_FLOW_NONE;
+                return libspdm_generate_error_response(
+                    spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,
+                    response_size, response);
+            }
+
             /* The Requester delivered an encapsulated ERROR. Report its code to the handler so
              * that the Integrator learns why the flow ended. */
+            encap_error_received = true;
             error_code = encap_error->header.param1;
 
             if (status == LIBSPDM_STATUS_NOT_READY_PEER) {
@@ -641,7 +654,7 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
         }
 
         #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT)
-        if ((error_code == 0) && (last_request_code == SPDM_CHALLENGE)) {
+        if (!encap_error_received && (last_request_code == SPDM_CHALLENGE)) {
             /* Basic mutual authentication concludes with the encapsulated CHALLENGE_AUTH
              * response. The Responder must then terminate the encapsulated flow by clearing
              * ENCAPSULATED_RESPONSE_ACK.Param2, so the Integrator's handler is not consulted
@@ -667,7 +680,7 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
             spdm_context, SPDM_ERROR_CODE_UNSPECIFIED, 0, response_size, response);
     }
 
-    if (error_code != 0) {
+    if (encap_error_received) {
         /* An encapsulated ERROR ends the flow, so the Integrator acknowledges it rather than
          * supplying another request. */
         LIBSPDM_ASSERT(terminate_flow);
