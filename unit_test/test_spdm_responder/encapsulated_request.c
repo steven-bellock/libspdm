@@ -1813,7 +1813,7 @@ static void rsp_encapsulated_response_ack_case9(void **State)
     EncapsulatedResponse->header.param1 = SPDM_ERROR_CODE_RESPONSE_NOT_READY;
     EncapsulatedResponse->header.param2 = 0;
     EncapsulatedResponse->extend_error_data.rd_exponent = 1;
-    EncapsulatedResponse->extend_error_data.rd_tm = 1;
+    EncapsulatedResponse->extend_error_data.rd_tm = 2;
     EncapsulatedResponse->extend_error_data.request_code = SPDM_GET_DIGESTS;
     EncapsulatedResponse->extend_error_data.token = 0;
 
@@ -1845,7 +1845,7 @@ static void rsp_encapsulated_response_ack_case9(void **State)
     assert_int_equal(spdm_context->encap_context.response_not_ready_data.request_code,
                      SPDM_GET_DIGESTS);
     assert_int_equal(spdm_context->encap_context.response_not_ready_data.rd_exponent, 1);
-    assert_int_equal(spdm_context->encap_context.response_not_ready_data.rd_tm, 1);
+    assert_int_equal(spdm_context->encap_context.response_not_ready_data.rd_tm, 2);
 #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */
 
     assert_int_equal(spdm_response->ack_request_id,
@@ -3997,6 +3997,92 @@ static void rsp_encapsulated_request_case21(void **State)
 }
 #endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
 
+#if (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT) && (LIBSPDM_RESPOND_IF_READY_SUPPORT)
+/**
+ * Test 30 (DELIVER_ENCAPSULATED_RESPONSE) the Requester returns ERROR(ResponseNotReady) whose
+ * extended data does not describe the request that was deferred, or names a retry interval that
+ * DSP0274 does not permit.
+ * Expected behavior: Responder returns ERROR(InvalidResponseCode) and tears the flow down, rather
+ * than reissuing RESPOND_IF_READY built from fields it cannot use.
+ **/
+static void rsp_encapsulated_response_ack_case30(void **State)
+{
+    libspdm_return_t status;
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    spdm_deliver_encapsulated_response_request_t *spdm_request;
+    spdm_error_response_data_response_not_ready_t *encap_error;
+    spdm_error_response_t *spdm_response;
+    uint8_t temp_buf[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    size_t response_size;
+    size_t index;
+
+    /* RequestCode does not match the outstanding GET_DIGESTS, RDTM is not greater than 1, and
+     * RDTExponent is beyond what the Responder will wait. */
+    const uint8_t bad_request_code[] = { SPDM_GET_CERTIFICATE, SPDM_GET_DIGESTS, SPDM_GET_DIGESTS };
+    const uint8_t bad_rd_tm[]        = { 2,                    1,                2 };
+    const uint8_t bad_rd_exponent[]  = { 1,                    1,                LIBSPDM_MAX_RDT_EXPONENT + 1 };
+
+    spdm_test_context = *State;
+    spdm_context = spdm_test_context->spdm_context;
+    /* No handler case is defined for this case_id, so the test fails if the handler is consulted. */
+    spdm_test_context->case_id = 0xB1;
+    m_case_id = spdm_test_context->case_id;
+
+    for (index = 0; index < LIBSPDM_ARRAY_SIZE(bad_request_code); index++) {
+        spdm_context->last_spdm_request_session_id_valid = false;
+        spdm_context->latest_session_id = INVALID_SESSION_ID;
+        spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
+        spdm_context->encap_context.request_id = 0xFF;
+        spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH;
+        spdm_context->encap_context.last_encap_request_header.request_response_code =
+            SPDM_GET_DIGESTS;
+        spdm_context->encap_context.last_encap_request_size = sizeof(spdm_message_header_t);
+        spdm_context->encap_context.response_not_ready = false;
+        spdm_context->connection_info.capability.flags |=
+            SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
+        spdm_context->local_context.capability.flags |=
+            SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
+        spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
+        spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_12 <<
+                                                SPDM_VERSION_NUMBER_SHIFT_BIT;
+        libspdm_register_encap_flow_handler(spdm_context, encap_flow_handler);
+
+        spdm_request = (void *)temp_buf;
+        libspdm_copy_mem(spdm_request, sizeof(temp_buf),
+                         &m_libspdm_m_deliver_encapsulated_response_request_t2,
+                         m_libspdm_m_deliver_encapsulated_response_request_t2_size);
+
+        encap_error = (void *)(temp_buf + sizeof(spdm_deliver_encapsulated_response_request_t));
+        encap_error->header.spdm_version = SPDM_MESSAGE_VERSION_12;
+        encap_error->header.request_response_code = SPDM_ERROR;
+        encap_error->header.param1 = SPDM_ERROR_CODE_RESPONSE_NOT_READY;
+        encap_error->header.param2 = 0;
+        encap_error->extend_error_data.request_code = bad_request_code[index];
+        encap_error->extend_error_data.rd_tm = bad_rd_tm[index];
+        encap_error->extend_error_data.rd_exponent = bad_rd_exponent[index];
+        encap_error->extend_error_data.token = 0x5A;
+
+        response_size = sizeof(response);
+        status = libspdm_get_response_encapsulated_response_ack(
+            spdm_context,
+            sizeof(spdm_deliver_encapsulated_response_request_t) +
+            sizeof(spdm_error_response_data_response_not_ready_t),
+            spdm_request, &response_size, response);
+        assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+
+        assert_int_equal(response_size, sizeof(spdm_error_response_t));
+        spdm_response = (void *)response;
+        assert_int_equal(spdm_response->header.request_response_code, SPDM_ERROR);
+        assert_int_equal(spdm_response->header.param1, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE);
+        assert_int_equal(spdm_context->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_NONE);
+        /* Nothing was retained, so no RESPOND_IF_READY can be built from it. */
+        assert_false(spdm_context->encap_context.response_not_ready);
+    }
+}
+#endif /* (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT) && (LIBSPDM_RESPOND_IF_READY_SUPPORT) */
+
 int libspdm_rsp_encapsulated_request_test(void)
 {
     const struct CMUnitTest test_cases[] = {
@@ -4132,6 +4218,10 @@ int libspdm_rsp_encapsulated_request_test(void)
         /* A payload larger than the Integrator's buffer is not the Requester's fault */
         cmocka_unit_test(rsp_encapsulated_response_ack_case27),
 #endif /* LIBSPDM_SEND_GET_ENDPOINT_INFO_SUPPORT */
+#if (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT) && (LIBSPDM_RESPOND_IF_READY_SUPPORT)
+        /* ResponseNotReady extended data that the Responder cannot use */
+        cmocka_unit_test(rsp_encapsulated_response_ack_case30),
+#endif /* (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT) && (LIBSPDM_RESPOND_IF_READY_SUPPORT) */
         /* An encapsulated ERROR whose ErrorCode is the reserved 0x00 */
         cmocka_unit_test(rsp_encapsulated_response_ack_case28),
 #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT)

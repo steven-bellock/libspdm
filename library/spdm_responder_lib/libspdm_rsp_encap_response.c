@@ -576,6 +576,9 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
 
         if (LIBSPDM_STATUS_IS_ERROR(status)) {
             const spdm_error_response_t *encap_error = encap_response;
+#if LIBSPDM_RESPOND_IF_READY_SUPPORT
+            const spdm_error_data_response_not_ready_t *not_ready_data;
+#endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */
 
             if ((encap_response_size < sizeof(spdm_error_response_t)) ||
                 (encap_error->header.request_response_code != SPDM_ERROR)) {
@@ -626,9 +629,24 @@ libspdm_return_t libspdm_get_response_encapsulated_response_ack(
                         spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,
                         response_size, response);
                 }
+                not_ready_data = (const void *)((const uint8_t *)encap_response +
+                                                sizeof(spdm_error_response_t));
+
+                /* The Requester echoes the request it is deferring, and the Responder knows which
+                 * request that is. A mismatch, or a retry interval the Responder cannot honour,
+                 * means the extended data cannot be used to reissue the request. */
+                if ((not_ready_data->request_code != last_request_code) ||
+                    (not_ready_data->rd_tm <= 1) ||
+                    (not_ready_data->rd_exponent > LIBSPDM_MAX_RDT_EXPONENT)) {
+                    encap_context->flow_type = LIBSPDM_ENCAP_FLOW_NONE;
+                    return libspdm_generate_error_response(
+                        spdm_context, SPDM_ERROR_CODE_INVALID_RESPONSE_CODE, 0,
+                        response_size, response);
+                }
+
                 libspdm_copy_mem(&encap_context->response_not_ready_data,
                                  sizeof(encap_context->response_not_ready_data),
-                                 (const uint8_t *)encap_response + sizeof(spdm_error_response_t),
+                                 not_ready_data,
                                  sizeof(spdm_error_data_response_not_ready_t));
                 encap_context->response_not_ready_flow_type = encap_context->flow_type;
                 encap_context->response_not_ready = true;
