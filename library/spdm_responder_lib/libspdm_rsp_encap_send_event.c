@@ -15,6 +15,7 @@ libspdm_return_t libspdm_get_encap_request_send_event(
     void *encap_request)
 {
     libspdm_context_t *spdm_context;
+    libspdm_encap_context_t *encap_context;
     spdm_send_event_request_t *spdm_request;
     libspdm_session_info_t *session_info;
     libspdm_session_state_t session_state;
@@ -23,6 +24,14 @@ libspdm_return_t libspdm_get_encap_request_send_event(
 
     spdm_context = context;
     spdm_request = encap_request;
+
+    encap_context = libspdm_get_encap_context(spdm_context, &session_id);
+    if (encap_context == NULL) {
+        /* session_id does not refer to an existing session. */
+        return LIBSPDM_STATUS_INVALID_STATE_LOCAL;
+    }
+
+    encap_context->last_encap_request_size = 0;
 
     session_info = libspdm_get_session_info_via_session_id(spdm_context, session_id);
     if (session_info == NULL) {
@@ -53,6 +62,11 @@ libspdm_return_t libspdm_get_encap_request_send_event(
     spdm_request->event_count = event_count;
 
     *encap_request_size = sizeof(spdm_send_event_request_t) + events_list_size;
+
+    libspdm_copy_mem(&encap_context->last_encap_request_header,
+                     sizeof(encap_context->last_encap_request_header),
+                     &spdm_request->header, sizeof(spdm_message_header_t));
+    encap_context->last_encap_request_size = *encap_request_size;
 
     return LIBSPDM_STATUS_SUCCESS;
 }

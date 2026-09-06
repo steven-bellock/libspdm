@@ -44,6 +44,10 @@ static size_t m_libspdm_m_deliver_encapsulated_response_request_t2_size =
     sizeof(m_libspdm_m_deliver_encapsulated_response_request_t2);
 #endif /* LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT */
 
+#if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
+extern uint32_t g_event_count;
+#endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
+
 static uint32_t m_case_id;
 #if LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT
 /* Number of encapsulated GET_DIGESTS requests still to be issued by handler case 0x91. */
@@ -55,6 +59,10 @@ static uint8_t m_legality_request_code;
 /* The error_code the handler was last called with, so that a test can show the handler was
  * reached and given the Requester's ErrorCode. */
 static uint8_t m_observed_error_code;
+#if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
+/* Set when the handler is told that the encapsulated EVENT_ACK answered its SEND_EVENT. */
+static bool m_send_event_acknowledged;
+#endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
 
 static libspdm_return_t encap_flow_handler(
     void *spdm_context, const uint32_t *session_id, libspdm_encap_flow_type_t encap_flow_type,
@@ -313,6 +321,20 @@ static libspdm_return_t encap_flow_handler(
     case 0x9E:
         /* The Integrator's handler fails. */
         return LIBSPDM_STATUS_INVALID_STATE_LOCAL;
+#if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
+    case 0xB0:
+        /* Issue SEND_EVENT, then confirm that the encapsulated EVENT_ACK is reported as the
+         * response to it rather than as a new flow. */
+        assert_non_null(session_id);
+        if (last_request_code == 0) {
+            return libspdm_get_encap_request_send_event(spdm_context, *session_id,
+                                                        request_size, request);
+        }
+        assert_int_equal(last_request_code, SPDM_SEND_EVENT);
+        m_send_event_acknowledged = true;
+        *terminate_flow = true;
+        break;
+#endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
     case 0x9F: {
         /* Same as case 0x95, but the Integrator reports a size that is smaller than a bare ERROR
          * message. libspdm must reject it rather than propagate a truncated message. */
@@ -3870,6 +3892,111 @@ static void rsp_encapsulated_response_ack_case29(void **State)
 }
 #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT) */
 
+#if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
+/**
+ * Test 21 (GET_ENCAPSULATED_REQUEST then DELIVER_ENCAPSULATED_RESPONSE) a complete encapsulated
+ * SEND_EVENT round trip within a session.
+ * Expected behavior: the Responder records SEND_EVENT as the outstanding request, so the
+ * encapsulated EVENT_ACK is validated and reported to the handler as the response to it. A
+ * SEND_EVENT that is not recorded would present the EVENT_ACK as last_request_code 0, which is how
+ * a new flow is signalled.
+ **/
+static void rsp_encapsulated_request_case21(void **State)
+{
+    libspdm_return_t status;
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    libspdm_session_info_t *session_info;
+    spdm_encapsulated_request_response_t *spdm_response;
+    spdm_deliver_encapsulated_response_request_t *spdm_request;
+    spdm_event_ack_response_t *event_ack;
+    const spdm_send_event_request_t *encap_request;
+    uint8_t temp_buf[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    uint8_t response[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    size_t response_size;
+    uint32_t session_id;
+
+    spdm_test_context = *State;
+    spdm_context = spdm_test_context->spdm_context;
+    spdm_test_context->case_id = 0xB0;
+    m_case_id = spdm_test_context->case_id;
+    m_send_event_acknowledged = false;
+
+    spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
+    spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
+    spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_13 <<
+                                            SPDM_VERSION_NUMBER_SHIFT_BIT;
+    spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
+    spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
+    spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_EVENT_CAP;
+    spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
+    spdm_context->connection_info.algorithm.base_asym_algo = m_libspdm_use_asym_algo;
+    spdm_context->connection_info.algorithm.dhe_named_group = m_libspdm_use_dhe_algo;
+    spdm_context->connection_info.algorithm.aead_cipher_suite = m_libspdm_use_aead_algo;
+    libspdm_register_encap_flow_handler(spdm_context, encap_flow_handler);
+
+    session_id = 0xFFFFFFFF;
+    spdm_context->latest_session_id = session_id;
+    spdm_context->last_spdm_request_session_id_valid = true;
+    spdm_context->last_spdm_request_session_id = session_id;
+    session_info = &spdm_context->session_info[0];
+    libspdm_session_info_init(spdm_context, session_info, session_id,
+                              SECURED_SPDM_VERSION_11 << SPDM_VERSION_NUMBER_SHIFT_BIT, true);
+    libspdm_secured_message_set_session_state(session_info->secured_message_context,
+                                              LIBSPDM_SESSION_STATE_ESTABLISHED);
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_NONE;
+    session_info->encap_context.request_id = 0;
+#if LIBSPDM_RESPOND_IF_READY_SUPPORT
+    session_info->encap_context.response_not_ready = false;
+#endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */
+
+    g_event_count = 1;
+
+    /* The Requester polls, and the Responder answers with the encapsulated SEND_EVENT. */
+    response_size = sizeof(response);
+    status = libspdm_get_response_encapsulated_request(spdm_context,
+                                                       m_libspdm_encapsulated_request_t2_size,
+                                                       &m_libspdm_encapsulated_request_t2,
+                                                       &response_size, response);
+    assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+    spdm_response = (void *)response;
+    assert_int_equal(spdm_response->header.request_response_code, SPDM_ENCAPSULATED_REQUEST);
+    encap_request = (const void *)(spdm_response + 1);
+    assert_int_equal(encap_request->header.request_response_code, SPDM_SEND_EVENT);
+
+    /* The outstanding request is recorded, so the EVENT_ACK can be attributed to it. */
+    assert_int_equal(session_info->encap_context.last_encap_request_header.request_response_code,
+                     SPDM_SEND_EVENT);
+    assert_int_not_equal(session_info->encap_context.last_encap_request_size, 0);
+
+    /* The Requester delivers the EVENT_ACK. */
+    spdm_request = (void *)temp_buf;
+    spdm_request->header.spdm_version = SPDM_MESSAGE_VERSION_13;
+    spdm_request->header.request_response_code = SPDM_DELIVER_ENCAPSULATED_RESPONSE;
+    spdm_request->header.param1 = session_info->encap_context.request_id;
+    spdm_request->header.param2 = 0;
+
+    event_ack = (void *)(temp_buf + sizeof(spdm_deliver_encapsulated_response_request_t));
+    event_ack->header.spdm_version = SPDM_MESSAGE_VERSION_13;
+    event_ack->header.request_response_code = SPDM_EVENT_ACK;
+    event_ack->header.param1 = 0;
+    event_ack->header.param2 = 0;
+
+    response_size = sizeof(response);
+    status = libspdm_get_response_encapsulated_response_ack(
+        spdm_context,
+        sizeof(spdm_deliver_encapsulated_response_request_t) + sizeof(spdm_event_ack_response_t),
+        spdm_request, &response_size, response);
+    assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+
+    /* The handler was told the EVENT_ACK answered its SEND_EVENT. */
+    assert_true(m_send_event_acknowledged);
+    assert_int_equal(session_info->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_NONE);
+
+    spdm_context->last_spdm_request_session_id_valid = false;
+}
+#endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
+
 int libspdm_rsp_encapsulated_request_test(void)
 {
     const struct CMUnitTest test_cases[] = {
@@ -4019,6 +4146,10 @@ int libspdm_rsp_encapsulated_request_test(void)
 #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */
         /* The Integrator's ERROR is smaller than a bare ERROR message */
         cmocka_unit_test(rsp_encapsulated_request_case20),
+#if LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP
+        /* A complete encapsulated SEND_EVENT round trip within a session */
+        cmocka_unit_test(rsp_encapsulated_request_case21),
+#endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
     };
 
     libspdm_test_context_t test_context = {
