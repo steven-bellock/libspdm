@@ -434,7 +434,8 @@ The SPDM context.
 The `session_id` given to `libspdm_encap_flow_handler_func`.
 
 **slot_id**<br/>
-The slot of the Requester's certificate chain to be retrieved.
+The slot of the Requester's certificate chain to be retrieved, which is less than
+`SPDM_MAX_SLOT_COUNT`.
 
 **cert_chain_max_size**<br/>
 The size, in bytes, of `cert_chain`.
@@ -458,7 +459,7 @@ entire chain has been retrieved.
 the call itself. A local variable of the function that calls
 `libspdm_responder_dispatch_message`, or a member of the Integrator's own per-connection state, is
 suitable; a local variable of the handler is not. Returns `LIBSPDM_STATUS_INVALID_PARAMETER` if
-`cert_chain` is NULL or `cert_chain_max_size` is 0.
+`cert_chain` is NULL, `cert_chain_max_size` is 0, or `slot_id` is not a valid slot.
 <br/><br/>
 
 
@@ -506,7 +507,8 @@ Populates the buffer with an encapsulated `CHALLENGE` request.
 The SPDM context.
 
 **req_slot_id**<br/>
-The slot of the Requester's certificate chain to be authenticated against.
+The slot of the Requester's certificate chain to be authenticated against, or 0xFF if the
+Requester's public key was provisioned.
 
 **requester_context**<br/>
 For SPDM 1.3 and above, a buffer of `SPDM_REQ_CONTEXT_SIZE` bytes holding the `Context` field, or
@@ -522,7 +524,8 @@ A pointer to a buffer that will store the encapsulated request.
 ### Details
 This is only legal in the basic mutual authentication flow, whose messages are always sent outside
 of a session. libspdm terminates the flow once the encapsulated `CHALLENGE_AUTH` response has been
-delivered.
+delivered. Returns `LIBSPDM_STATUS_INVALID_PARAMETER` if `req_slot_id` is neither a valid slot nor
+0xFF.
 <br/><br/>
 
 
@@ -578,7 +581,8 @@ The `session_id` given to `libspdm_encap_flow_handler_func`.
 The `SubCode` of the request.
 
 **slot_id**<br/>
-The slot of the Requester's certificate chain used to sign the response.
+The slot of the Requester's certificate chain used to sign the response, or 0xF if the Requester's
+public key was provisioned. It is only meaningful when a signature is requested.
 
 **request_attributes**<br/>
 `SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED` to request a signature, otherwise 0.
@@ -606,7 +610,8 @@ is read with `libspdm_get_encap_payload_size`. `ep_info` shall therefore remain 
 handler is next called, which is longer than the call itself. A local variable of the function that
 calls `libspdm_responder_dispatch_message`, or a member of the Integrator's own per-connection
 state, is suitable; a local variable of the handler is not. Returns
-`LIBSPDM_STATUS_INVALID_PARAMETER` if `ep_info` is NULL or `ep_info_max_size` is 0.
+`LIBSPDM_STATUS_INVALID_PARAMETER` if `ep_info` is NULL, `ep_info_max_size` is 0, or `slot_id` is
+neither a valid slot nor 0xF.
 <br/><br/>
 If the Requester returns more endpoint information than `ep_info` can hold then the response is not
 accepted and the encapsulated flow is terminated, in the same way as an oversized certificate chain.

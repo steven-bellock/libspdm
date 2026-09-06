@@ -653,6 +653,65 @@ static void rsp_encap_get_certificate_case6(void **state)
     spdm_context->encap_context.payload_buffer_size = 0;
 }
 
+/**
+ * Test 7: the slot of the Requester's certificate chain is bounds-checked.
+ * Expected Behavior: a slot that is not less than SPDM_MAX_SLOT_COUNT is rejected with
+ * LIBSPDM_STATUS_INVALID_PARAMETER before anything is recorded, as the CERTIFICATE response would
+ * otherwise be recorded in per-slot state that has no such entry. GET_CERTIFICATE has no slot value
+ * that designates a provisioned public key, so 0xFF is rejected too. The highest valid slot is
+ * accepted and placed in the request.
+ **/
+static void rsp_encap_get_certificate_case7(void **state)
+{
+    libspdm_return_t status;
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    const spdm_get_certificate_request_t *spdm_request;
+    uint8_t encap_request[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    uint8_t cert_chain[LIBSPDM_MAX_CERT_CHAIN_SIZE];
+    size_t encap_request_size;
+    size_t index;
+    const uint8_t invalid_slot_id[] = { SPDM_MAX_SLOT_COUNT, 0xF, 0xFF };
+
+    spdm_test_context = *state;
+    spdm_test_context->case_id = 0x7;
+    spdm_context = spdm_test_context->spdm_context;
+    spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_11 <<
+                                            SPDM_VERSION_NUMBER_SHIFT_BIT;
+    spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
+    spdm_context->connection_info.capability.flags |=
+        SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
+    spdm_context->last_spdm_request_session_id_valid = false;
+
+    for (index = 0; index < LIBSPDM_ARRAY_SIZE(invalid_slot_id); index++) {
+        spdm_context->encap_context.req_slot_id = 0;
+        spdm_context->encap_context.payload_buffer = NULL;
+
+        encap_request_size = sizeof(encap_request);
+        status = libspdm_get_encap_request_get_certificate(
+            spdm_context, NULL, invalid_slot_id[index], sizeof(cert_chain), cert_chain,
+            &encap_request_size, encap_request);
+        assert_int_equal(status, LIBSPDM_STATUS_INVALID_PARAMETER);
+
+        /* Neither the slot nor the buffer was recorded. */
+        assert_int_equal(spdm_context->encap_context.req_slot_id, 0);
+        assert_null(spdm_context->encap_context.payload_buffer);
+    }
+
+    encap_request_size = sizeof(encap_request);
+    status = libspdm_get_encap_request_get_certificate(
+        spdm_context, NULL, SPDM_MAX_SLOT_COUNT - 1, sizeof(cert_chain), cert_chain,
+        &encap_request_size, encap_request);
+    assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+    spdm_request = (const void *)encap_request;
+    assert_int_equal(spdm_request->header.param1, SPDM_MAX_SLOT_COUNT - 1);
+    assert_int_equal(spdm_context->encap_context.req_slot_id, SPDM_MAX_SLOT_COUNT - 1);
+
+    spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.payload_buffer = NULL;
+    spdm_context->encap_context.payload_buffer_size = 0;
+}
+
 int libspdm_rsp_encap_get_certificate_test(void)
 {
     const struct CMUnitTest test_cases[] = {
@@ -671,6 +730,8 @@ int libspdm_rsp_encap_get_certificate_test(void)
         cmocka_unit_test(rsp_encap_get_certificate_case5),
         /* Integrator-supplied certificate chain buffer and its size getter */
         cmocka_unit_test(rsp_encap_get_certificate_case6),
+        /* The slot of the Requester's certificate chain is bounds-checked */
+        cmocka_unit_test(rsp_encap_get_certificate_case7),
     };
 
     libspdm_test_context_t test_context = {

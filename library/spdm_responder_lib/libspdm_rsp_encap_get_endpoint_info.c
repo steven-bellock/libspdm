@@ -33,6 +33,13 @@ libspdm_return_t libspdm_get_encap_request_get_endpoint_info(
         return LIBSPDM_STATUS_INVALID_PARAMETER;
     }
 
+    if ((slot_id >= SPDM_MAX_SLOT_COUNT) && (slot_id != 0xF)) {
+        /* SlotID is a four-bit field in which 0xF designates the Requester's provisioned public
+         * key. Any other slot indexes per-slot state of SPDM_MAX_SLOT_COUNT entries, which
+         * ENDPOINT_INFO is verified against. */
+        return LIBSPDM_STATUS_INVALID_PARAMETER;
+    }
+
     encap_context = libspdm_get_encap_context(spdm_context, session_id);
     if (encap_context == NULL) {
         /* session_id does not refer to an existing session. */

@@ -23,6 +23,12 @@ libspdm_return_t libspdm_get_encap_request_challenge(void *context,
 
     spdm_context = context;
 
+    if ((req_slot_id >= SPDM_MAX_SLOT_COUNT) && (req_slot_id != 0xFF)) {
+        /* 0xFF designates the Requester's provisioned public key. Any other slot indexes per-slot
+         * state of SPDM_MAX_SLOT_COUNT entries, which CHALLENGE_AUTH is verified against. */
+        return LIBSPDM_STATUS_INVALID_PARAMETER;
+    }
+
     encap_context = libspdm_get_encap_context_via_last_request(spdm_context);
 
     encap_context->last_encap_request_size = 0;

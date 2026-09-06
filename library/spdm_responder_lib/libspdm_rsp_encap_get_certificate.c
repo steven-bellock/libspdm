@@ -25,6 +25,13 @@ libspdm_return_t libspdm_get_encap_request_get_certificate(void *context,
         return LIBSPDM_STATUS_INVALID_PARAMETER;
     }
 
+    if (req_slot_id >= SPDM_MAX_SLOT_COUNT) {
+        /* The slot indexes per-slot state of SPDM_MAX_SLOT_COUNT entries, in which the
+         * Requester's certificate chain is recorded once retrieved. GET_CERTIFICATE has no slot
+         * value that designates a provisioned public key. */
+        return LIBSPDM_STATUS_INVALID_PARAMETER;
+    }
+
     encap_context = libspdm_get_encap_context(spdm_context, session_id);
     if (encap_context == NULL) {
         /* session_id does not refer to an existing session. */

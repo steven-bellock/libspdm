@@ -191,7 +191,7 @@ static void rsp_encap_get_endpoint_info_case1(void **state)
 }
 
 /**
- * Test 2: Normal case, request a endpoint info with signature, req_slot_id = 0xFF
+ * Test 2: Normal case, request a endpoint info with signature, req_slot_id = 0xF
  * Expected Behavior: get a LIBSPDM_STATUS_SUCCESS return code, correct endpoint_info
  *                    and an empty transcript.message_encap_e
  **/
@@ -231,7 +231,7 @@ static void rsp_encap_get_endpoint_info_case2(void **state)
     spdm_context->local_context.peer_public_key_provision = data;
     spdm_context->local_context.peer_public_key_provision_size = data_size;
 
-    spdm_context->encap_context.req_slot_id = 0xFF;
+    spdm_context->encap_context.req_slot_id = 0xF;
     spdm_context->encap_context.req_attributes =
         SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED;
     endpoint_info_size = LIBSPDM_TEST_ENDPOINT_INFO_BUFFER_SIZE;
@@ -688,12 +688,80 @@ static void rsp_encap_get_endpoint_info_case7(void **state)
     spdm_context->encap_context.payload_buffer_max_size = sizeof(m_endpoint_info_buffer_send);
 }
 
+/**
+ * Test 8: the slot of the Requester's certificate chain is bounds-checked.
+ * Expected Behavior: a slot that is not less than SPDM_MAX_SLOT_COUNT is rejected with
+ * LIBSPDM_STATUS_INVALID_PARAMETER before anything is recorded, as ENDPOINT_INFO would otherwise be
+ * verified against per-slot state that has no such entry. SlotID is a four-bit field, so 0xFF is
+ * rejected too. 0xF, which designates the Requester's provisioned public key, and the highest valid
+ * slot are accepted and placed in the request.
+ **/
+static void rsp_encap_get_endpoint_info_case8(void **state)
+{
+    libspdm_return_t status;
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    const spdm_get_endpoint_info_request_t *spdm_request;
+    uint8_t encap_request[LIBSPDM_MAX_SPDM_MSG_SIZE];
+    size_t encap_request_size;
+    size_t index;
+    const uint8_t invalid_slot_id[] = { SPDM_MAX_SLOT_COUNT, 0xE, 0xFF };
+    const uint8_t valid_slot_id[] = { SPDM_MAX_SLOT_COUNT - 1, 0xF };
+
+    spdm_test_context = *state;
+    spdm_test_context->case_id = 0x8;
+    spdm_context = spdm_test_context->spdm_context;
+    spdm_context->connection_info.version = SPDM_MESSAGE_VERSION_13 <<
+                                            SPDM_VERSION_NUMBER_SHIFT_BIT;
+    spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
+    spdm_context->connection_info.capability.flags = 0;
+    spdm_context->connection_info.capability.flags |=
+        SPDM_GET_CAPABILITIES_REQUEST_FLAGS_EP_INFO_CAP_SIG;
+    spdm_context->last_spdm_request_session_id_valid = false;
+
+    for (index = 0; index < LIBSPDM_ARRAY_SIZE(invalid_slot_id); index++) {
+        spdm_context->encap_context.req_slot_id = 0;
+        spdm_context->encap_context.payload_buffer = NULL;
+
+        encap_request_size = sizeof(encap_request);
+        status = libspdm_get_encap_request_get_endpoint_info(
+            spdm_context, NULL, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
+            invalid_slot_id[index], SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED,
+            sizeof(m_endpoint_info_buffer_send), m_endpoint_info_buffer_send,
+            &encap_request_size, encap_request);
+        assert_int_equal(status, LIBSPDM_STATUS_INVALID_PARAMETER);
+
+        /* Neither the slot nor the buffer was recorded. */
+        assert_int_equal(spdm_context->encap_context.req_slot_id, 0);
+        assert_null(spdm_context->encap_context.payload_buffer);
+    }
+
+    for (index = 0; index < LIBSPDM_ARRAY_SIZE(valid_slot_id); index++) {
+        libspdm_reset_message_encap_e(spdm_context, NULL);
+
+        encap_request_size = sizeof(encap_request);
+        status = libspdm_get_encap_request_get_endpoint_info(
+            spdm_context, NULL, SPDM_GET_ENDPOINT_INFO_REQUEST_SUBCODE_DEVICE_CLASS_IDENTIFIER,
+            valid_slot_id[index], SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED,
+            sizeof(m_endpoint_info_buffer_send), m_endpoint_info_buffer_send,
+            &encap_request_size, encap_request);
+        assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+        spdm_request = (const void *)encap_request;
+        assert_int_equal(spdm_request->header.param2, valid_slot_id[index]);
+        assert_int_equal(spdm_context->encap_context.req_slot_id, valid_slot_id[index]);
+    }
+
+    libspdm_reset_message_encap_e(spdm_context, NULL);
+    spdm_context->encap_context.req_slot_id = 0;
+    spdm_context->encap_context.payload_buffer = m_endpoint_info_buffer_send;
+}
+
 int libspdm_rsp_encap_get_endpoint_info_test(void)
 {
     const struct CMUnitTest test_cases[] = {
         /* Success request endpoint info with signature */
         cmocka_unit_test(rsp_encap_get_endpoint_info_case1),
-        /* Success request endpoint info with signature, req_slot_id = 0xFF */
+        /* Success request endpoint info with signature, req_slot_id = 0xF */
         cmocka_unit_test(rsp_encap_get_endpoint_info_case2),
         /* Success request endpoint info without signature */
         cmocka_unit_test(rsp_encap_get_endpoint_info_case3),
@@ -705,6 +773,8 @@ int libspdm_rsp_encap_get_endpoint_info_test(void)
         cmocka_unit_test(rsp_encap_get_endpoint_info_case6),
         /* More endpoint information is returned than the buffer can hold */
         cmocka_unit_test(rsp_encap_get_endpoint_info_case7),
+        /* The slot of the Requester's certificate chain is bounds-checked */
+        cmocka_unit_test(rsp_encap_get_endpoint_info_case8),
     };
 
     libspdm_test_context_t test_context = {

@@ -325,7 +325,8 @@ libspdm_return_t libspdm_get_encap_request_get_digests(void *spdm_context,
  *
  * @param  spdm_context         A pointer to the SPDM context.
  * @param  session_id           The session_id given to libspdm_encap_flow_handler_func.
- * @param  slot_id              The slot of the Requester's certificate chain to be retrieved.
+ * @param  slot_id              The slot of the Requester's certificate chain to be retrieved,
+ *                              which is less than SPDM_MAX_SLOT_COUNT.
  * @param  cert_chain_max_size  The size, in bytes, of cert_chain.
  * @param  cert_chain           A pointer to a buffer that will store the certificate chain.
  * @param  encap_request_size   On input, the size in bytes of the encapsulated request buffer.
@@ -333,7 +334,8 @@ libspdm_return_t libspdm_get_encap_request_get_digests(void *spdm_context,
  * @param  encap_request        A pointer to the encapsulated request data.
  *
  * @retval LIBSPDM_STATUS_SUCCESS            The encapsulated request is returned.
- * @retval LIBSPDM_STATUS_INVALID_PARAMETER  cert_chain is NULL or cert_chain_max_size is 0.
+ * @retval LIBSPDM_STATUS_INVALID_PARAMETER  cert_chain is NULL, cert_chain_max_size is 0, or
+ *                                           slot_id is not a valid slot.
  **/
 libspdm_return_t libspdm_get_encap_request_get_certificate(void *spdm_context,
                                                            const uint32_t *session_id,
@@ -361,6 +363,7 @@ libspdm_return_t libspdm_get_encap_request_get_certificate(void *spdm_context,
  *
  * @retval RETURN_SUCCESS               The encapsulated request is returned.
  * @retval RETURN_BUFFER_TOO_SMALL      The buffer is too small to hold the data.
+ * @retval LIBSPDM_STATUS_INVALID_PARAMETER  req_slot_id is neither a valid slot nor 0xFF.
  **/
 libspdm_return_t libspdm_get_encap_request_challenge(void *spdm_context,
                                                      uint8_t req_slot_id,
@@ -408,7 +411,9 @@ libspdm_return_t libspdm_get_encap_request_key_update(void *spdm_context,
  * @param  spdm_context        A pointer to the SPDM context.
  * @param  session_id          The session_id given to libspdm_encap_flow_handler_func.
  * @param  sub_code            Subcode for the GET_ENDPOINT_INFO request.
- * @param  slot_id             Slot ID to include in the request.
+ * @param  slot_id             The slot of the Requester's certificate chain that signs the
+ *                             response, or 0xF if its public key was provisioned. It is only
+ *                             meaningful when a signature is requested.
  * @param  request_attributes  Request attributes; set
  *                             SPDM_GET_ENDPOINT_INFO_REQUEST_ATTRIBUTE_SIGNATURE_REQUESTED
  *                             to request a signature.
@@ -419,7 +424,8 @@ libspdm_return_t libspdm_get_encap_request_key_update(void *spdm_context,
  * @param  encap_request       Buffer to receive the encapsulated request.
  *
  * @retval LIBSPDM_STATUS_SUCCESS            The encapsulated request is returned.
- * @retval LIBSPDM_STATUS_INVALID_PARAMETER  ep_info is NULL or ep_info_max_size is 0.
+ * @retval LIBSPDM_STATUS_INVALID_PARAMETER  ep_info is NULL, ep_info_max_size is 0, or slot_id
+ *                                           is neither a valid slot nor 0xF.
  **/
 libspdm_return_t libspdm_get_encap_request_get_endpoint_info(
     void *spdm_context,
