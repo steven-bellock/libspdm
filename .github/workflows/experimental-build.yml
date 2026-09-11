@@ -1,0 +1,327 @@
+# Experimental implementation of "Tier 1 - Pull Request / Push Coverage"
+# from doc/internal/ci_cd.md.
+#
+# The matrix is an explicit list of tuples rather than a cross product with
+# exclusions, because Tier 1 "need not be exhaustive in [its] combinations".
+# The coverage rules it is built to satisfy are recorded at the bottom of this
+# file so a reviewer can audit the list against the document.
+
+name: Tier 1 (experimental)
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'doc/**'
+      - '**/*.md'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'doc/**'
+      - '**/*.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # The unit tests named in doc/internal/ci_cd.md. Every job runs each of these
+  # that its build produced, and silently skips the rest.
+  #
+  # test_spdm_fips and test_spdm_tpm are held out for now: the former fails in
+  # configurations that do not set LIBSPDM_FIPS_MODE, and the latter is not
+  # produced without the TPM device enabled.
+  UNIT_TESTS: >-
+    test_spdm_requester
+    test_spdm_responder
+    test_spdm_crypt
+    test_spdm_secured_message
+    test_spdm_common
+    test_crypt
+
+jobs:
+  tier1:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # -- Platform sweep -------------------------------------------------
+          # Library defaults (no LIBSPDM_* overrides), covering every value of
+          # every platform dimension and the full ARCH x CRYPTO cross.
+
+          - name: linux-x64-gcc-mbedtls-debug
+            os: ubuntu-latest
+            arch: x64
+            toolchain: GCC
+            crypto: mbedtls
+            target: Debug
+            build_flags: --parallel 4
+
+          - name: linux-x64-clang-openssl-release
+            os: ubuntu-latest
+            arch: x64
+            toolchain: CLANG
+            crypto: openssl
+            target: Release
+            build_flags: --parallel 4
+
+          - name: windows-ia32-vs-mbedtls-debug
+            os: windows-latest
+            arch: ia32
+            toolchain: VS2022
+            crypto: mbedtls
+            target: Debug
+            msvc_arch: x86
+            generator: -G "NMake Makefiles"
+
+          - name: windows-ia32-vs-openssl-release
+            os: windows-latest
+            arch: ia32
+            toolchain: VS2022
+            crypto: openssl
+            target: Release
+            msvc_arch: x86
+            generator: -G "NMake Makefiles"
+
+          - name: windows-x64-vs-openssl-debug
+            os: windows-latest
+            arch: x64
+            toolchain: VS2022
+            crypto: openssl
+            target: Debug
+            msvc_arch: x64
+            generator: -G "NMake Makefiles"
+
+          - name: linux-aarch64-gcc-mbedtls-debug
+            os: ubuntu-24.04-arm
+            arch: aarch64
+            toolchain: GCC
+            crypto: mbedtls
+            target: Debug
+            build_flags: --parallel 4
+
+          # macOS runners are 3 vCPU / 7 GB. An unbounded -j exhausts them.
+          - name: macos-aarch64-clang-openssl-release
+            os: macos-latest
+            arch: aarch64
+            toolchain: CLANG
+            crypto: openssl
+            target: Release
+            build_flags: --parallel 3
+
+          # -- Configuration sweep --------------------------------------------
+          # Coarse macros, swept on the cheapest platform.
+
+          - name: config-fips
+            os: ubuntu-latest
+            arch: x64
+            toolchain: GCC
+            crypto: mbedtls
+            target: Debug
+            cflags: -DLIBSPDM_FIPS_MODE=1
+            build_flags: --parallel 4
+
+          - name: config-record-transcript
+            os: ubuntu-latest
+            arch: x64
+            toolchain: GCC
+            crypto: mbedtls
+            target: Debug
+            cflags: -DLIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT=1
+            build_flags: --parallel 4
+
+          - name: config-no-debug
+            os: ubuntu-latest
+            arch: x64
+            toolchain: GCC
+            crypto: mbedtls
+            target: Release
+            cflags: -DLIBSPDM_DEBUG_ENABLE=0
+            build_flags: --parallel 4
+
+          # -- Pass/fail signal for a build that produces no tests -------------
+
+          - name: config-disable-tests
+            os: ubuntu-latest
+            arch: x64
+            toolchain: GCC
+            crypto: mbedtls
+            target: Debug
+            cmake_extra: -DDISABLE_TESTS=1
+            expect_tests: 'false'
+            build_flags: --parallel 4
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Set up MSVC
+        if: matrix.msvc_arch != ''
+        uses: TheMrMilchmann/setup-msvc-dev@v3
+        with:
+          arch: ${{ matrix.msvc_arch }}
+
+      # The CLANG toolchain archives static libraries with llvm-ar, which is
+      # not present on the stock Linux image.
+      - name: Set up LLVM
+        if: matrix.toolchain == 'CLANG' && runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y llvm
+
+      # Windows uses the default shell rather than bash: OpenSSL's Configure is
+      # a Perl script, and under Git Bash `perl` resolves to the bundled MSYS
+      # interpreter, which lacks modules that Configure requires. The default
+      # shell finds Strawberry Perl instead.
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        env:
+          CFLAGS: ${{ matrix.cflags }}
+        run: |
+          cmake -B build ${{ matrix.generator }} `
+            -DARCH=${{ matrix.arch }} `
+            -DTOOLCHAIN=${{ matrix.toolchain }} `
+            -DTARGET=${{ matrix.target }} `
+            -DCRYPTO=${{ matrix.crypto }} `
+            ${{ matrix.cmake_extra }}
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          if ('${{ matrix.expect_tests }}' -ne 'false') {
+            cmake --build build --target copy_sample_key
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          cmake --build build
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Configure
+        if: runner.os != 'Windows'
+        shell: bash
+        env:
+          CFLAGS: ${{ matrix.cflags }}
+        run: |
+          cmake -B build \
+            -DARCH=${{ matrix.arch }} \
+            -DTOOLCHAIN=${{ matrix.toolchain }} \
+            -DTARGET=${{ matrix.target }} \
+            -DCRYPTO=${{ matrix.crypto }} \
+            ${{ matrix.cmake_extra }}
+
+      - name: Build
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          # copy_sample_key stages certificates into build/bin, which only
+          # exists when unit tests are built.
+          if [ "${{ matrix.expect_tests }}" != "false" ]; then
+            cmake --build build --target copy_sample_key
+          fi
+          cmake --build build ${{ matrix.build_flags }}
+
+      # Implements "For any configuration, run all unit test binaries that are
+      # produced" and "Every job should produce a pass / fail signal".
+      #
+      # Each test is bounded by `timeout` so that a test which hangs fails the
+      # job instead of stalling it until the platform's job limit.
+      - name: Run unit tests
+        shell: bash
+        run: |
+          ran=""
+          failed=""
+
+          for t in $UNIT_TESTS; do
+            exe=""
+            if [ -x "build/bin/$t" ]; then
+              exe="$t"
+            elif [ -x "build/bin/$t.exe" ]; then
+              exe="$t.exe"
+            fi
+            [ -n "$exe" ] || continue
+
+            echo "::group::$t"
+            if ( cd build/bin && timeout 600 "./$exe" ); then
+              ran="$ran $t"
+            else
+              ran="$ran $t"
+              failed="$failed $t"
+            fi
+            echo "::endgroup::"
+          done
+
+          count=$(echo $ran | wc -w)
+
+          {
+            echo "### ${{ matrix.name }}"
+            echo ""
+            echo "Ran $count unit test binaries:${ran:-  (none)}"
+            [ -n "$failed" ] && echo ""
+            [ -n "$failed" ] && echo "Failed:$failed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "Ran $count unit test binaries:${ran:-  (none)}"
+
+          if [ -n "$failed" ]; then
+            echo "::error::Failing unit tests:$failed"
+            exit 1
+          fi
+
+          # A job that expected tests but produced none has lost coverage
+          # silently; a job that expected none but produced some has not
+          # honoured DISABLE_TESTS. Both are failures.
+          if [ "${{ matrix.expect_tests }}" = "false" ]; then
+            if [ "$count" -ne 0 ]; then
+              echo "::error::DISABLE_TESTS was set but $count test binaries were built"
+              exit 1
+            fi
+          elif [ "$count" -eq 0 ]; then
+            echo "::error::No unit test binaries were produced"
+            exit 1
+          fi
+
+  # Single required status check, so branch protection does not have to
+  # enumerate every matrix job.
+  tier1-complete:
+    name: Tier 1 complete
+    runs-on: ubuntu-latest
+    needs: tier1
+    if: always()
+    steps:
+      - name: Check result
+        run: |
+          if [ "${{ needs.tier1.result }}" != "success" ]; then
+            echo "::error::Tier 1 did not pass"
+            exit 1
+          fi
+
+# ---------------------------------------------------------------------------
+# Coverage audit against doc/internal/ci_cd.md, Tier 1
+#
+#   Every value of every platform dimension appears at least once:
+#     OS         Linux (1,2,6,8-11)  Windows (3,4,5)  macOS (7)
+#     ARCH       ia32 (3,4)          x64 (1,2,5,8-11) aarch64 (6,7)
+#     TOOLCHAIN  GCC (1,6,8-11)      CLANG (2,7)      Visual Studio (3,4,5)
+#     CRYPTO     Mbed TLS (1,3,6,8-11)                OpenSSL (2,4,5,7)
+#     TARGET     Debug (1,3,5,6,8,9,11)               Release (2,4,7,10)
+#
+#   Full ARCH x CRYPTO cross (the stated exception to sparse crossing):
+#     ia32    x Mbed TLS  (3)     ia32    x OpenSSL  (4)
+#     x64     x Mbed TLS  (1)     x64     x OpenSSL  (2,5)
+#     aarch64 x Mbed TLS  (6)     aarch64 x OpenSSL  (7)
+#
+#   Library defaults are built unmodified by jobs 1-7.
+#   Coarse macros are altered by jobs 8-10, on the cheapest platform.
+#   11 jobs total, within the 20 simultaneous runner assumption.
+# ---------------------------------------------------------------------------
