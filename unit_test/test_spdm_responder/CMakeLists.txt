@@ -37,6 +37,7 @@ target_sources(test_spdm_responder
         encap_get_certificate.c
         encap_get_digests.c
         encap_get_endpoint_info.c
+        encap_get_supported_event_types.c
         encap_key_update.c
         encap_challenge.c
         encapsulated_request.c
@@ -53,6 +54,7 @@ target_sources(test_spdm_responder
         error_test/vendor_defined_response_err.c
         error_test/endpoint_info_err.c
         error_test/encap_get_endpoint_info_err.c
+        error_test/encap_get_supported_event_types_err.c
         error_test/encap_send_event_err.c
         error_test/event_ack_err.c
         set_certificate_rsp.c

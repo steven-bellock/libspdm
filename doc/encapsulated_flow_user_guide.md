@@ -54,10 +54,12 @@ once within a flow, such as retrieving certificate chains from several slots.
 ### Buffer Allocation and Ownership
 
 Some encapsulated requests take a buffer from the Integrator rather than allocating one, and libspdm
-writes the Requester's payload into it. `libspdm_get_encap_request_get_certificate()` and
-`libspdm_get_encap_request_get_endpoint_info()` both do this, and in each case the buffer must
-remain valid after the handler returns. This is why the examples below give these buffers static
-storage duration rather than placing them on the stack.
+writes the Requester's payload into it. `libspdm_get_encap_request_get_certificate()`,
+`libspdm_get_encap_request_get_endpoint_info()`, and
+`libspdm_get_encap_request_get_supported_event_types()` all do this, and in each case the buffer
+must remain valid after the handler returns. This is why the examples below give these buffers
+static storage duration rather than placing them on the stack. The same applies to the
+`EventGroupCount` that accompanies the list of supported event groups.
 
 The certificate chain is the demanding case. libspdm retains the pointer and copies each
 `CERTIFICATE` response into it as the chain arrives, issuing as many encapsulated `GET_CERTIFICATE`
@@ -251,6 +253,8 @@ session then the following encapsulated requests are legal:
 
 Within a session the above encapsulated requests are all legal, with the addition of the following
 encapsulated requests:
+- `GET_SUPPORTED_EVENT_TYPES`
+    - SPDM 1.3+
 - `SEND_EVENT`
     - SPDM 1.3+
 - `KEY_UPDATE`
@@ -332,7 +336,8 @@ libspdm_return_t encap_flow_handler(
             return LIBSPDM_STATUS_SUCCESS;
         }
 
-        /* libspdm_get_encap_request_send_event() would be issued the same way. Note that these
+        /* libspdm_get_encap_request_get_supported_event_types() and
+         * libspdm_get_encap_request_send_event() would be issued here too. Note that these
          * functions take the session identifier by value, as they have no meaning outside of a
          * session. */
         return libspdm_get_encap_request_key_update(spdm_context, *session_id,

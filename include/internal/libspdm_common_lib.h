@@ -481,6 +481,9 @@ typedef struct {
     void *payload_buffer;
     size_t payload_buffer_size;
     size_t payload_buffer_max_size;
+#if LIBSPDM_EVENT_RECIPIENT_SUPPORT
+    uint8_t *event_group_count;
+#endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */
     bool use_large_cert_chain;
     libspdm_encap_flow_type_t flow_type;
 #if LIBSPDM_RESPOND_IF_READY_SUPPORT

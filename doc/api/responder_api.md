@@ -644,3 +644,53 @@ A pointer to a buffer that will store the encapsulated request.
 `session_id` is passed by value, so the Integrator dereferences the `session_id` given to
 `libspdm_encap_flow_handler_func`.
 <br/><br/>
+
+
+---
+### libspdm_get_encap_request_get_supported_event_types
+---
+
+### Description
+Populates the buffer with an encapsulated `GET_SUPPORTED_EVENT_TYPES` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The session in which the request is sent.
+
+**event_group_count**<br/>
+A pointer that will store the number of event groups in `supported_event_groups_list`.
+
+**supported_event_groups_list_size**<br/>
+The size, in bytes, of `supported_event_groups_list`.
+
+**supported_event_groups_list**<br/>
+A pointer to a buffer that will store the list of event groups that the Requester supports.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+The Requester is the Event Notifier, so it is the endpoint whose `EVENT_CAP` is checked. If it is
+not set, or the connection is earlier than SPDM 1.3, then `LIBSPDM_STATUS_UNSUPPORTED_CAP` is
+returned.
+<br/><br/>
+`session_id` is passed by value, so the Integrator dereferences the `session_id` given to
+`libspdm_encap_flow_handler_func`. `GET_SUPPORTED_EVENT_TYPES` is prohibited outside of a session.
+<br/><br/>
+libspdm writes the `SupportedEventGroupsList` into `supported_event_groups_list` and
+`EventGroupCount` into `event_group_count` once the response is verified, and the size of the list
+is read with `libspdm_get_encap_payload_size`. Both shall therefore remain valid until the handler
+is next called, which is longer than the call itself. Returns
+`LIBSPDM_STATUS_INVALID_PARAMETER` if either is NULL or `supported_event_groups_list_size` is 0.
+<br/><br/>
+If the Requester returns a larger list than `supported_event_groups_list` can hold then the response
+is not accepted and the encapsulated flow is terminated.
+<br/><br/>

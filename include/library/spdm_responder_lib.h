@@ -466,6 +466,47 @@ libspdm_return_t libspdm_get_encap_request_send_event(
     size_t *encap_request_size,
     void *encap_request);
 #endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
+
+#if LIBSPDM_EVENT_RECIPIENT_SUPPORT
+/**
+ * Get the SPDM encapsulated GET_SUPPORTED_EVENT_TYPES request.
+ *
+ * This is intended to be called by the integrator's encap flow handler to build
+ * the next encapsulated request within the handler callback.
+ *
+ * libspdm writes the Requester's list of supported event groups into
+ * supported_event_groups_list and its number of event groups into event_group_count, so both
+ * shall remain valid until the handler is next called. The size of the list can then be read with
+ * libspdm_get_encap_payload_size.
+ *
+ * @param  spdm_context                      A pointer to the SPDM context.
+ * @param  session_id                        The session in which the event types are retrieved.
+ * @param  event_group_count                 A pointer that will store the number of event groups
+ *                                           in supported_event_groups_list.
+ * @param  supported_event_groups_list_size  The size, in bytes, of supported_event_groups_list.
+ * @param  supported_event_groups_list       A pointer to a buffer that will store the list of
+ *                                           event groups that the Requester supports.
+ * @param  encap_request_size                On input: size of the encap_request buffer.
+ *                                           On output: size of the written request.
+ * @param  encap_request                     Buffer to receive the encapsulated request.
+ *
+ * @retval LIBSPDM_STATUS_SUCCESS              The encapsulated request is returned.
+ * @retval LIBSPDM_STATUS_INVALID_PARAMETER    event_group_count or supported_event_groups_list is
+ *                                             NULL, or supported_event_groups_list_size is 0.
+ * @retval LIBSPDM_STATUS_INVALID_STATE_LOCAL  session_id does not refer to an existing session, or
+ *                                             the session is not established.
+ * @retval LIBSPDM_STATUS_UNSUPPORTED_CAP      The connection is earlier than SPDM 1.3, or the
+ *                                             Requester does not support EVENT_CAP.
+ **/
+libspdm_return_t libspdm_get_encap_request_get_supported_event_types(
+    void *spdm_context,
+    uint32_t session_id,
+    uint8_t *event_group_count,
+    size_t supported_event_groups_list_size,
+    void *supported_event_groups_list,
+    size_t *encap_request_size,
+    void *encap_request);
+#endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */
 #endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */
 
 #if LIBSPDM_ENABLE_VENDOR_DEFINED_MESSAGES

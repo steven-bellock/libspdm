@@ -563,6 +563,22 @@ libspdm_return_t libspdm_process_encap_response_event_ack(
     libspdm_context_t *spdm_context, size_t encap_response_size,
     const void *encap_response, bool *need_continue);
 #endif /* LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP */
+
+#if LIBSPDM_EVENT_RECIPIENT_SUPPORT
+/**
+ * Process the SPDM encapsulated SUPPORTED_EVENT_TYPES response.
+ *
+ * @param  spdm_context         A pointer to the SPDM context.
+ * @param  encap_response_size  Size, in bytes, of the encapsulated response data.
+ * @param  encap_response       A pointer to the encapsulated response data.
+ * @param  need_continue        Indicate if encapsulated communication need continue.
+ *
+ * @retval LIBSPDM_STATUS_SUCCESS  The encapsulated response is processed.
+ **/
+libspdm_return_t libspdm_process_encap_response_supported_event_types(
+    libspdm_context_t *spdm_context, size_t encap_response_size,
+    const void *encap_response, bool *need_continue);
+#endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */
 #endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */
 
 #if LIBSPDM_EVENT_RECIPIENT_SUPPORT
