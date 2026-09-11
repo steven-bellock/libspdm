@@ -694,3 +694,55 @@ is next called, which is longer than the call itself. Returns
 If the Requester returns a larger list than `supported_event_groups_list` can hold then the response
 is not accepted and the encapsulated flow is terminated.
 <br/><br/>
+
+
+---
+### libspdm_get_encap_request_subscribe_event_types
+---
+
+### Description
+Populates the buffer with an encapsulated `SUBSCRIBE_EVENT_TYPES` request.
+
+### Parameters
+
+**spdm_context**<br/>
+The SPDM context.
+
+**session_id**<br/>
+The session in which the subscription is made.
+
+**subscribe_event_group_count**<br/>
+The number of event groups in `subscribe_list`. If it is 0 then the subscription to all events is
+cleared, and `subscribe_list_len` shall be 0 and `subscribe_list` shall be NULL.
+
+**subscribe_list_len**<br/>
+The size, in bytes, of `subscribe_list`.
+
+**subscribe_list**<br/>
+The list of event groups and event types to subscribe to.
+
+**encap_request_size**<br/>
+On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
+stored. On output, indicates the size, in bytes, of the encapsulated request.
+
+**encap_request**<br/>
+A pointer to a buffer that will store the encapsulated request.
+
+### Details
+The subscription replaces whatever the Requester currently holds for this session, so
+`subscribe_list` names every event type that the Responder wishes to receive. A
+`subscribe_event_group_count` of 0 therefore unsubscribes from everything, and libspdm sends only
+the message header as the specification requires.
+<br/><br/>
+The Requester is the Event Notifier, so it is the endpoint whose `EVENT_CAP` is checked. If it is
+not set, or the connection is earlier than SPDM 1.3, then `LIBSPDM_STATUS_UNSUPPORTED_CAP` is
+returned.
+<br/><br/>
+`session_id` is passed by value, so the Integrator dereferences the `session_id` given to
+`libspdm_encap_flow_handler_func`. `SUBSCRIBE_EVENT_TYPES` is prohibited outside of a session.
+<br/><br/>
+`subscribe_list` is copied into `encap_request` before this function returns, so unlike the buffers
+that receive a payload it does not have to outlive the call. The Integrator determines its size, so
+a list that does not fit in `encap_request` returns `LIBSPDM_STATUS_BUFFER_TOO_SMALL` rather than
+being truncated.
+<br/><br/>

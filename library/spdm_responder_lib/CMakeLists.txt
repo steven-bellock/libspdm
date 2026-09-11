@@ -25,6 +25,7 @@ target_sources(spdm_responder_lib
         libspdm_rsp_encap_respond_if_ready.c
         libspdm_rsp_encap_response.c
         libspdm_rsp_encap_send_event.c
+        libspdm_rsp_encap_subscribe_event_types.c
         libspdm_rsp_end_session_ack.c
         libspdm_rsp_endpoint_info.c
         libspdm_rsp_error.c

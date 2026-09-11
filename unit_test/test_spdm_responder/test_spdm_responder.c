@@ -93,6 +93,8 @@ int libspdm_rsp_encap_send_event_error_test(void);
 #if LIBSPDM_EVENT_RECIPIENT_SUPPORT
 int libspdm_rsp_encap_get_supported_event_types_test(void);
 int libspdm_rsp_encap_get_supported_event_types_error_test(void);
+int libspdm_rsp_encap_subscribe_event_types_test(void);
+int libspdm_rsp_encap_subscribe_event_types_error_test(void);
 #endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */
 #endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP*/
 
@@ -287,6 +289,12 @@ int main(void)
         return_value = 1;
     }
     if (libspdm_rsp_encap_get_supported_event_types_error_test() != 0) {
+        return_value = 1;
+    }
+    if (libspdm_rsp_encap_subscribe_event_types_test() != 0) {
+        return_value = 1;
+    }
+    if (libspdm_rsp_encap_subscribe_event_types_error_test() != 0) {
         return_value = 1;
     }
     #endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */

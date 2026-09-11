@@ -255,6 +255,8 @@ Within a session the above encapsulated requests are all legal, with the additio
 encapsulated requests:
 - `GET_SUPPORTED_EVENT_TYPES`
     - SPDM 1.3+
+- `SUBSCRIBE_EVENT_TYPES`
+    - SPDM 1.3+
 - `SEND_EVENT`
     - SPDM 1.3+
 - `KEY_UPDATE`
@@ -336,7 +338,8 @@ libspdm_return_t encap_flow_handler(
             return LIBSPDM_STATUS_SUCCESS;
         }
 
-        /* libspdm_get_encap_request_get_supported_event_types() and
+        /* libspdm_get_encap_request_get_supported_event_types(),
+         * libspdm_get_encap_request_subscribe_event_types(), and
          * libspdm_get_encap_request_send_event() would be issued here too. Note that these
          * functions take the session identifier by value, as they have no meaning outside of a
          * session. */

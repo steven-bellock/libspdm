@@ -74,6 +74,9 @@ static libspdm_return_t libspdm_dispatch_process_encap_response(
     case SPDM_GET_SUPPORTED_EVENT_TYPES:
         return libspdm_process_encap_response_supported_event_types(
             spdm_context, encap_response_size, encap_response, need_continue);
+    case SPDM_SUBSCRIBE_EVENT_TYPES:
+        return libspdm_process_encap_response_subscribe_event_types_ack(
+            spdm_context, encap_response_size, encap_response, need_continue);
 #endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */
     default:
         LIBSPDM_ASSERT(false);
@@ -173,6 +176,7 @@ static bool libspdm_is_encap_request_legal(libspdm_encap_flow_type_t flow_type,
         case SPDM_GET_ENDPOINT_INFO:
             return true;
         case SPDM_GET_SUPPORTED_EVENT_TYPES:
+        case SPDM_SUBSCRIBE_EVENT_TYPES:
         case SPDM_SEND_EVENT:
         case SPDM_KEY_UPDATE:
             /* Only legal within a session. */

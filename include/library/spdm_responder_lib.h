@@ -506,6 +506,45 @@ libspdm_return_t libspdm_get_encap_request_get_supported_event_types(
     void *supported_event_groups_list,
     size_t *encap_request_size,
     void *encap_request);
+
+/**
+ * Get the SPDM encapsulated SUBSCRIBE_EVENT_TYPES request.
+ *
+ * This is intended to be called by the integrator's encap flow handler to build
+ * the next encapsulated request within the handler callback.
+ *
+ * The subscription replaces whatever the Requester currently holds for this session, so
+ * subscribe_list names every event type that the Responder wishes to receive.
+ *
+ * @param  spdm_context                 A pointer to the SPDM context.
+ * @param  session_id                   The session in which the subscription is made.
+ * @param  subscribe_event_group_count  The number of event groups in subscribe_list. If it is 0
+ *                                      then the subscription to all events is cleared, and
+ *                                      subscribe_list_len shall be 0 and subscribe_list shall be
+ *                                      NULL.
+ * @param  subscribe_list_len           The size, in bytes, of subscribe_list.
+ * @param  subscribe_list               The list of event groups and event types to subscribe to.
+ * @param  encap_request_size           On input: size of the encap_request buffer.
+ *                                      On output: size of the written request.
+ * @param  encap_request                Buffer to receive the encapsulated request.
+ *
+ * @retval LIBSPDM_STATUS_SUCCESS              The encapsulated request is returned.
+ * @retval LIBSPDM_STATUS_INVALID_PARAMETER    subscribe_event_group_count does not agree with
+ *                                             subscribe_list_len and subscribe_list.
+ * @retval LIBSPDM_STATUS_INVALID_STATE_LOCAL  session_id does not refer to an existing session, or
+ *                                             the session is not established.
+ * @retval LIBSPDM_STATUS_UNSUPPORTED_CAP      The connection is earlier than SPDM 1.3, or the
+ *                                             Requester does not support EVENT_CAP.
+ * @retval LIBSPDM_STATUS_BUFFER_TOO_SMALL     subscribe_list does not fit in encap_request.
+ **/
+libspdm_return_t libspdm_get_encap_request_subscribe_event_types(
+    void *spdm_context,
+    uint32_t session_id,
+    uint8_t subscribe_event_group_count,
+    uint32_t subscribe_list_len,
+    const void *subscribe_list,
+    size_t *encap_request_size,
+    void *encap_request);
 #endif /* LIBSPDM_EVENT_RECIPIENT_SUPPORT */
 #endif /* LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP */
 
