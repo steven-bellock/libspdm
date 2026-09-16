@@ -117,7 +117,7 @@ static libspdm_return_t encap_flow_handler(
 #endif /* LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT */
     case 0x3:
         assert_null(session_id);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         assert_int_equal(last_request_code, 0);
 
         *terminate_flow = true;
@@ -182,10 +182,10 @@ static libspdm_return_t encap_flow_handler(
         *terminate_flow = true;
         return LIBSPDM_STATUS_SUCCESS;
     case 0x90:
-        /* Requester-initiated flow within a secure session. The session is whichever one the
+        /* General flow within a secure session. The session is whichever one the
          * GET_ENCAPSULATED_REQUEST arrived on. */
         assert_non_null(session_id);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         assert_int_equal(last_request_code, 0);
 
         return libspdm_get_encap_request_get_digests(spdm_context, session_id, request_size,
@@ -202,7 +202,7 @@ static libspdm_return_t encap_flow_handler(
     case 0x6:
         assert_non_null(session_id);
         assert_int_equal(*session_id, 0xFFFFFFFF);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         assert_int_equal(last_request_code, 0);
 
         return libspdm_get_encap_request_key_update(
@@ -214,7 +214,7 @@ static libspdm_return_t encap_flow_handler(
             request_size, request);
     case 0x7:
         assert_null(session_id);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         assert_int_equal(last_request_code, 0);
 
         *terminate_flow = true;
@@ -224,7 +224,7 @@ static libspdm_return_t encap_flow_handler(
     case 0x8:
         assert_non_null(session_id);
         assert_int_equal(*session_id, 0xFFFFFFFF);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         assert_int_equal(last_request_code, 0);
 
         return libspdm_get_encap_request_get_endpoint_info(
@@ -259,9 +259,9 @@ static libspdm_return_t encap_flow_handler(
                                                      request);
     case 0x99:
         /* Same message, but without handshake in the clear the non-session context is used, so
-         * this is an ordinary Requester-initiated flow outside of a session. */
+         * this is an ordinary general flow outside of a session. */
         assert_null(session_id);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         *terminate_flow = true;
         return LIBSPDM_STATUS_SUCCESS;
 #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (..) */
@@ -320,7 +320,7 @@ static libspdm_return_t encap_flow_handler(
     case 0x83:
         assert_non_null(session_id);
         assert_int_equal(*session_id, 0xFFFFFFFF);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         assert_int_equal(last_request_code, SPDM_KEY_UPDATE);
         *terminate_flow = true;
         break;
@@ -373,7 +373,7 @@ static libspdm_return_t encap_flow_handler(
          * starts the retrieval and is next consulted once the whole chain has arrived, as libspdm
          * requests the intermediate portions itself. */
         assert_null(session_id);
-        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+        assert_int_equal(encap_flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
         assert_int_equal(error_code, 0);
         if (last_request_code == 0) {
             return libspdm_get_encap_request_get_certificate(
@@ -605,7 +605,7 @@ static void rsp_encapsulated_request_case3(void **State)
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
 
     spdm_context->encap_context.request_id = 0;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;
@@ -811,7 +811,7 @@ static void rsp_encapsulated_request_case6(void **State)
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
     libspdm_register_encap_flow_handler(spdm_context, encap_flow_handler);
     session_info->encap_context.request_id = 0;
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 
     response_size = sizeof(response);
     status = libspdm_get_response_encapsulated_request(spdm_context,
@@ -868,7 +868,7 @@ static void rsp_encapsulated_request_case7(void **State)
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
 
     spdm_context->encap_context.request_id = 0;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->last_spdm_request_session_id_valid = false;
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;
@@ -976,7 +976,7 @@ static void rsp_encapsulated_request_case8(void **State)
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
 
     session_info->encap_context.request_id = 0;
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 
     libspdm_reset_message_a(spdm_context);
     libspdm_reset_message_encap_e(spdm_context, session_info);
@@ -1200,7 +1200,7 @@ static void rsp_encapsulated_request_case12(void **State)
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
     libspdm_register_encap_flow_handler(spdm_context, encap_flow_handler);
     session_info->encap_context.request_id = 0;
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 
     response_size = sizeof(response);
     status = libspdm_get_response_encapsulated_request(spdm_context,
@@ -1444,7 +1444,7 @@ static void rsp_encapsulated_response_ack_case3(void **State)
     libspdm_secured_message_set_session_state(session_info->secured_message_context,
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
 
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     session_info->encap_context.request_id = 0;
 
     session_info->encap_context.last_encap_request_header.spdm_version = SPDM_MESSAGE_VERSION_11;
@@ -1496,7 +1496,7 @@ static void rsp_encapsulated_response_ack_case4(void **State)
     /* This flow occurs outside of a session, so the connection-wide encapsulated context is
      * used. */
     spdm_context->last_spdm_request_session_id_valid = false;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
     libspdm_reset_message_b(spdm_context);
@@ -1625,7 +1625,7 @@ static void rsp_encapsulated_response_ack_case7(void **State)
     spdm_context->last_spdm_request_session_id_valid = false;
     spdm_context->encap_context.request_id = 0xFF;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
 
@@ -2178,7 +2178,7 @@ static void rsp_encapsulated_response_ack_case11(void **State)
     libspdm_secured_message_set_session_state(session_info->secured_message_context,
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
 
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     session_info->encap_context.request_id = 0;
 
     /* The Responder's outstanding encapsulated request is KEY_UPDATE with UpdateKey. */
@@ -2224,7 +2224,7 @@ static void rsp_encapsulated_response_ack_case11(void **State)
     assert_int_equal(verify_new_key->header.param1, SPDM_KEY_UPDATE_OPERATIONS_VERIFY_NEW_KEY);
 
     /* The flow continues; it is not torn down. */
-    assert_int_equal(session_info->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+    assert_int_equal(session_info->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
 }
 
 #if LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT
@@ -2296,7 +2296,7 @@ static void rsp_encapsulated_request_case13(void **State)
     spdm_response_requester = (void *)response;
     assert_int_equal(spdm_response_requester->header.request_response_code,
                      SPDM_ENCAPSULATED_REQUEST);
-    assert_int_equal(session_info_1->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+    assert_int_equal(session_info_1->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
     /* Session2 is untouched by Session1's flow. */
     assert_int_equal(session_info_2->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_NONE);
 
@@ -2316,8 +2316,8 @@ static void rsp_encapsulated_request_case13(void **State)
                      SPDM_ENCAPSULATED_REQUEST);
 
     /* Both flows are open simultaneously. */
-    assert_int_equal(session_info_1->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
-    assert_int_equal(session_info_2->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+    assert_int_equal(session_info_1->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
+    assert_int_equal(session_info_2->encap_context.flow_type, LIBSPDM_ENCAP_FLOW_GENERAL);
     assert_int_equal(spdm_context->response_state, LIBSPDM_RESPONSE_STATE_NORMAL);
 
     session_info_1->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_NONE;
@@ -2785,7 +2785,7 @@ static void rsp_encapsulated_response_ack_case15(void **State)
             SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
         spdm_context->local_context.local_cert_chain_provision_size[0] = data_size;
         spdm_context->local_context.local_cert_chain_provision[0] = data;
-        spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+        spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
         spdm_context->encap_context.request_id = 0;
         spdm_context->encap_context.last_encap_request_header.request_response_code =
             SPDM_GET_DIGESTS;
@@ -3010,7 +3010,7 @@ static void rsp_encapsulated_request_case15(void **State)
                      LIBSPDM_STATUS_INVALID_STATE_LOCAL);
 
     /* A flow, but not the one the slot belongs to. */
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     assert_int_equal(libspdm_set_data(spdm_context, LIBSPDM_DATA_SESSION_ENCAP_REQ_SLOT_ID,
                                       &parameter, &slot_id, sizeof(slot_id)),
                      LIBSPDM_STATUS_INVALID_STATE_LOCAL);
@@ -3062,16 +3062,16 @@ static void rsp_encapsulated_request_case16(void **State)
         { LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH, false, SPDM_GET_DIGESTS, false },
         { LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH, true, SPDM_CHALLENGE, false },
 
-        /* A Requester-initiated flow permits more, but session management and events only within
+        /* A general flow permits more, but session management and events only within
          * a session. */
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, false, SPDM_GET_DIGESTS, true },
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, false, SPDM_GET_ENDPOINT_INFO, true },
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, true, SPDM_KEY_UPDATE, true },
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, true, SPDM_SEND_EVENT, true },
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, false, SPDM_KEY_UPDATE, false },
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, false, SPDM_SEND_EVENT, false },
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, false, SPDM_CHALLENGE, false },
-        { LIBSPDM_ENCAP_FLOW_REQ_INITIATED, false, SPDM_END_SESSION, false },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, false, SPDM_GET_DIGESTS, true },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, false, SPDM_GET_ENDPOINT_INFO, true },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, true, SPDM_KEY_UPDATE, true },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, true, SPDM_SEND_EVENT, true },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, false, SPDM_KEY_UPDATE, false },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, false, SPDM_SEND_EVENT, false },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, false, SPDM_CHALLENGE, false },
+        { LIBSPDM_ENCAP_FLOW_GENERAL, false, SPDM_END_SESSION, false },
     };
 
     spdm_test_context = *State;
@@ -3131,7 +3131,7 @@ static void rsp_encapsulated_request_case16(void **State)
 
 /**
  * Test 17 (GET_ENCAPSULATED_REQUEST) the Responder itself asked for the flow in CHALLENGE_AUTH, so
- * it cannot then report that no request is pending. Only a Requester-initiated flow may be declined
+ * it cannot then report that no request is pending. Only a general flow may be declined
  * with NoPendingRequests.
  * Expected behavior: Responder generates ERROR(Unspecified) and tears the flow down.
  **/
@@ -3246,7 +3246,7 @@ static void rsp_encapsulated_response_ack_case18(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_test_context->case_id = 0xA0;
     m_case_id = spdm_test_context->case_id;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     /* No payload buffer is provided, as the Requester declines with an ERROR and the endpoint
      * information is never delivered. */
     spdm_context->encap_context.payload_buffer = NULL;
@@ -3285,7 +3285,7 @@ static void rsp_encapsulated_response_ack_case19(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_test_context->case_id = 0xA1;
     m_case_id = spdm_test_context->case_id;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 
     response_size = sizeof(response);
     deliver_encap_error(spdm_context, SPDM_SEND_EVENT,
@@ -3315,7 +3315,7 @@ static void rsp_encapsulated_response_ack_case22(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_test_context->case_id = 0x9E;
     m_case_id = spdm_test_context->case_id;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 
     /* A last request code of zero means no encapsulated response is processed, so the handler is
      * consulted directly. */
@@ -3347,7 +3347,7 @@ static void rsp_encapsulated_response_ack_case23(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_test_context->case_id = 0x9B;
     m_case_id = spdm_test_context->case_id;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     /* KEY_UPDATE is only legal within a session, and this flow is outside of one. */
     m_legality_request_code = SPDM_KEY_UPDATE;
 
@@ -3477,7 +3477,7 @@ static void rsp_encapsulated_request_case19(void **State)
     spdm_context->latest_session_id = INVALID_SESSION_ID;
     spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_NONE;
     spdm_context->encap_context.response_not_ready = true;
-    spdm_context->encap_context.response_not_ready_flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.response_not_ready_flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     /* Nothing was retained, so there is no request to reissue. */
     spdm_context->encap_context.last_encap_request_size = 0;
     libspdm_register_encap_flow_handler(spdm_context, encap_flow_handler);
@@ -3830,7 +3830,7 @@ static void rsp_encapsulated_response_ack_case31(void **State)
             assert_int_equal(get_certificate->offset, offset);
             assert_int_equal(get_certificate->length, expected_length);
             assert_int_equal(spdm_context->encap_context.flow_type,
-                             LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+                             LIBSPDM_ENCAP_FLOW_GENERAL);
         } else {
             /* The whole chain has arrived, so the handler is consulted, and it ends the flow. */
             assert_int_equal(m_handler_calls, 2);
@@ -3966,7 +3966,7 @@ static void rsp_encapsulated_response_ack_case32(void **State)
             assert_int_equal(get_certificate->large_offset, offset);
             assert_int_equal(get_certificate->large_length, expected_length);
             assert_int_equal(spdm_context->encap_context.flow_type,
-                             LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+                             LIBSPDM_ENCAP_FLOW_GENERAL);
         } else {
             assert_int_equal(m_handler_calls, 2);
             assert_int_equal(ack->header.param1, 0);
@@ -4166,12 +4166,12 @@ int libspdm_rsp_encapsulated_request_test(void)
         /*Success Case: Responder generates CHALLENGE in BASIC_MUT_AUTH flow*/
         cmocka_unit_test(rsp_encapsulated_request_case5),
 #endif
-        /* Success Case: Responder generates KEY_UPDATE in REQ_INITIATED flow */
+        /* Success Case: Responder generates KEY_UPDATE in the general flow */
         cmocka_unit_test(rsp_encapsulated_request_case6),
         /*response_state : LIBSPDM_RESPONSE_STATE_NORMAL with NoPendingRequests error. */
         cmocka_unit_test(rsp_encapsulated_request_case7),
 #if LIBSPDM_SEND_GET_ENDPOINT_INFO_SUPPORT
-        /* Success Case: Responder generates GET_ENDPOINT_INFO in REQ_INITIATED flow */
+        /* Success Case: Responder generates GET_ENDPOINT_INFO in the general flow */
         cmocka_unit_test(rsp_encapsulated_request_case8),
         /* Error Case: Integrator returns a request that is illegal in the basic mutual
          * authentication flow */
@@ -4252,7 +4252,7 @@ int libspdm_rsp_encapsulated_request_test(void)
 #endif /* (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (..) */
         /* Per-flow encapsulated request legality, including the in-session arms */
         cmocka_unit_test(rsp_encapsulated_request_case16),
-        /* Only a Requester-initiated flow may be declined with NoPendingRequests */
+        /* Only a general flow may be declined with NoPendingRequests */
         cmocka_unit_test(rsp_encapsulated_request_case17),
 #if LIBSPDM_SEND_GET_ENDPOINT_INFO_SUPPORT
         /* An encapsulated ERROR is routed to the endpoint information processing function */

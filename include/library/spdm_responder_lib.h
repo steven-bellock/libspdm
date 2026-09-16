@@ -240,7 +240,7 @@ void libspdm_register_key_update_callback_func(
  * @param  encap_flow_type    One of
  *                            - LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH
  *                            - LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH
- *                            - LIBSPDM_ENCAP_FLOW_REQ_INITIATED
+ *                            - LIBSPDM_ENCAP_FLOW_GENERAL
  * @param  last_request_code  One of the SPDM_* request codes. If this function is called due to
  *                            GET_ENCAPSULATED_REQUEST then its value is 0x00.
  * @param  error_code         If the Requester delivered an encapsulated ERROR then its ErrorCode,

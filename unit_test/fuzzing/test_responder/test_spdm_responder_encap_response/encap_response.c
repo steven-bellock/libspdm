@@ -43,7 +43,7 @@ void libspdm_test_get_response_encapsulated_request_case1(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_context->encap_context.request_id = 0x00;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
@@ -84,7 +84,7 @@ void libspdm_test_get_response_encapsulated_request_case2(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_context->encap_context.request_id = 0x00;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
 
@@ -183,7 +183,7 @@ void libspdm_test_get_response_encapsulated_request_case5(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_context->encap_context.request_id = 0x00;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
     libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
@@ -208,7 +208,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case1(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_context->encap_context.request_id = 0x01;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
@@ -248,7 +248,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case2(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_context->encap_context.request_id = 0x01;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
     libspdm_register_encap_flow_handler(spdm_context, libspdm_fuzzing_encap_handler);
@@ -274,7 +274,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case3(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_context->encap_context.request_id = 0x01;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_CERT_CAP;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
@@ -363,7 +363,7 @@ void libspdm_test_get_response_encapsulated_response_ack_case6(void **State)
     spdm_context = spdm_test_context->spdm_context;
     spdm_context->encap_context.request_id = 0xFF;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_ENCAP_CAP;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_ENCAP_CAP;
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;

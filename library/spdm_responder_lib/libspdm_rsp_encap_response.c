@@ -161,7 +161,7 @@ static bool libspdm_is_encap_request_legal(libspdm_encap_flow_type_t flow_type,
             return false;
         }
         return (request_code == SPDM_GET_DIGESTS) || (request_code == SPDM_GET_CERTIFICATE);
-    case LIBSPDM_ENCAP_FLOW_REQ_INITIATED:
+    case LIBSPDM_ENCAP_FLOW_GENERAL:
         switch (request_code) {
         case SPDM_GET_DIGESTS:
         case SPDM_GET_CERTIFICATE:
@@ -329,10 +329,10 @@ libspdm_return_t libspdm_get_response_encapsulated_request(
         #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */
 
         if (!recovering) {
-            /* Requester-initiated encap flow; initialize the encap context. The mutual
+            /* General encap flow; initialize the encap context. The mutual
              * authentication flows have already set flow_type in CHALLENGE_AUTH or
              * KEY_EXCHANGE_RSP. */
-            encap_context->flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+            encap_context->flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
             encap_context->request_id = 0;
             encap_context->last_encap_request_size = 0;
             libspdm_zero_mem(&encap_context->last_encap_request_header,
@@ -411,7 +411,7 @@ libspdm_return_t libspdm_get_response_encapsulated_request(
         }
         return LIBSPDM_STATUS_SUCCESS;
     } else if (terminate_flow) {
-        if (encap_context->flow_type != LIBSPDM_ENCAP_FLOW_REQ_INITIATED) {
+        if (encap_context->flow_type != LIBSPDM_ENCAP_FLOW_GENERAL) {
             /* The Responder asked for this flow in CHALLENGE_AUTH or KEY_EXCHANGE_RSP, so it
              * cannot then report that it has no request pending. */
             LIBSPDM_DEBUG((LIBSPDM_DEBUG_ERROR,

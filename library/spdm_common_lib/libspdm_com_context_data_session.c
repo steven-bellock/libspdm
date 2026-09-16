@@ -207,7 +207,7 @@ const uint32_t *libspdm_get_encap_session_id_via_last_request(libspdm_context_t 
     /* When both endpoints have set HANDSHAKE_IN_THE_CLEAR_CAP the session-based mutual
      * authentication flow is conducted outside of a session. The flow is still tracked in the
      * session's encapsulated context, so resolve it from the session that is handshaking. The
-     * flow type is checked so that this does not capture a Requester-initiated flow that legitimately
+     * flow type is checked so that this does not capture a general flow that legitimately
      * runs outside of a session. */
     if ((spdm_context->latest_session_id != INVALID_SESSION_ID) &&
         libspdm_is_capabilities_flag_supported(

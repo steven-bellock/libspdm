@@ -1536,7 +1536,7 @@ static void libspdm_test_responder_receive_send_rsp_case16(void **state)
          * flow is terminated but the GET_DIGESTS it interrupted is still outstanding. */
         session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_NONE;
         session_info->encap_context.response_not_ready = true;
-        session_info->encap_context.response_not_ready_flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+        session_info->encap_context.response_not_ready_flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
         session_info->encap_context.response_not_ready_data.request_code = SPDM_GET_DIGESTS;
         session_info->encap_context.response_not_ready_data.token = 0x5A;
         session_info->encap_context.response_not_ready_data.rd_exponent = 1;

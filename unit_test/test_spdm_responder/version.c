@@ -418,12 +418,12 @@ static void rsp_version_case10(void **state)
     spdm_context->connection_info.algorithm.dhe_named_group = m_libspdm_use_dhe_algo;
     spdm_context->connection_info.algorithm.aead_cipher_suite = m_libspdm_use_aead_algo;
 
-    /* A Requester-initiated flow outside of a session, interrupted by ResponseNotReady. */
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    /* A general flow outside of a session, interrupted by ResponseNotReady. */
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.request_id = 2;
 #if LIBSPDM_RESPOND_IF_READY_SUPPORT
     spdm_context->encap_context.response_not_ready = true;
-    spdm_context->encap_context.response_not_ready_flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.response_not_ready_flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 #endif /* LIBSPDM_RESPOND_IF_READY_SUPPORT */
 
     /* A session-based mutual authentication flow within a session, likewise interrupted. */

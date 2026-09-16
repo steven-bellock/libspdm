@@ -128,10 +128,10 @@ static void rsp_encapsulated_request_err_case1(void **state)
 
     set_standard_state(spdm_context);
 
-    /* GET_CERTIFICATE for slot 0 is outstanding under Request ID 0 in a Requester-initiated flow,
+    /* GET_CERTIFICATE for slot 0 is outstanding under Request ID 0 in a general flow,
      * in the regular form, and none of the chain has been received yet. */
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.last_encap_request_header.request_response_code =
         SPDM_GET_CERTIFICATE;
     spdm_context->encap_context.req_slot_id = 0;
@@ -209,7 +209,7 @@ static void rsp_encapsulated_request_err_case2(void **state)
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
     spdm_context->connection_info.capability.flags |=
         SPDM_GET_CAPABILITIES_REQUEST_FLAGS_LARGE_RESP_CAP;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.last_encap_request_header.request_response_code =
         SPDM_GET_CERTIFICATE;
     spdm_context->encap_context.req_slot_id = 0;
@@ -262,7 +262,7 @@ static void rsp_encapsulated_request_err_case3(void **state)
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
     spdm_context->connection_info.capability.flags &=
         ~SPDM_GET_CAPABILITIES_REQUEST_FLAGS_LARGE_RESP_CAP;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.last_encap_request_header.request_response_code =
         SPDM_GET_CERTIFICATE;
     spdm_context->encap_context.req_slot_id = 0;
@@ -308,10 +308,10 @@ static void rsp_encapsulated_request_err_case4(void **state)
 
     set_standard_state(spdm_context);
 
-    /* GET_CERTIFICATE for slot 0 is outstanding under Request ID 0 in a Requester-initiated flow,
+    /* GET_CERTIFICATE for slot 0 is outstanding under Request ID 0 in a general flow,
      * in the regular form, and none of the chain has been received yet. */
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.last_encap_request_header.request_response_code =
         SPDM_GET_CERTIFICATE;
     spdm_context->encap_context.req_slot_id = 0;
@@ -358,10 +358,10 @@ static void rsp_encapsulated_request_err_case5(void **state)
 
     set_standard_state(spdm_context);
 
-    /* GET_CERTIFICATE for slot 0 is outstanding under Request ID 0 in a Requester-initiated flow,
-     * in the regular form, and the Integrator's buffer holds less than one portion. */
+    /* GET_CERTIFICATE for slot 0 is outstanding under Request ID 0 in a general flow, in the
+     * regular form, and the Integrator's buffer holds less than one portion. */
     spdm_context->connection_info.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CERT_CAP;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.last_encap_request_header.request_response_code =
         SPDM_GET_CERTIFICATE;
     spdm_context->encap_context.req_slot_id = 0;
@@ -558,7 +558,7 @@ static void rsp_encapsulated_request_err_case7(void **state)
     spdm_context->latest_session_id = INVALID_SESSION_ID;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
     spdm_context->encap_context.request_id = 0xFF;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.last_encap_request_header.request_response_code = SPDM_GET_DIGESTS;
     spdm_context->encap_context.last_encap_request_size = sizeof(spdm_message_header_t);
 #if LIBSPDM_RESPOND_IF_READY_SUPPORT
@@ -615,7 +615,7 @@ static void rsp_encapsulated_request_err_case8(void **state)
     spdm_test_context = *state;
     spdm_context = spdm_test_context->spdm_context;
     spdm_test_context->case_id = 0x8;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 
     response_size = sizeof(response);
     deliver_encap_error(spdm_context, SPDM_GET_DIGESTS,
@@ -762,7 +762,7 @@ static void rsp_encapsulated_request_err_case10(void **state)
     libspdm_secured_message_set_session_state(session_info->secured_message_context,
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
 
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     session_info->encap_context.request_id = 0;
     session_info->encap_context.last_encap_request_header.spdm_version = SPDM_MESSAGE_VERSION_11;
     session_info->encap_context.last_encap_request_header.request_response_code = SPDM_KEY_UPDATE;
@@ -848,7 +848,7 @@ static void rsp_encapsulated_request_err_case11(void **state)
     libspdm_secured_message_set_session_state(session_info->secured_message_context,
                                               LIBSPDM_SESSION_STATE_ESTABLISHED);
 
-    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     session_info->encap_context.request_id = 0;
     session_info->encap_context.last_encap_request_header.spdm_version = SPDM_MESSAGE_VERSION_11;
     session_info->encap_context.last_encap_request_header.request_response_code = SPDM_KEY_UPDATE;
@@ -916,7 +916,7 @@ static void rsp_encapsulated_request_err_case12(void **state)
     spdm_context->latest_session_id = INVALID_SESSION_ID;
     spdm_context->response_state = LIBSPDM_RESPONSE_STATE_NORMAL;
     spdm_context->encap_context.request_id = 0xFF;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
     spdm_context->encap_context.last_encap_request_header.request_response_code =
         SPDM_GET_ENDPOINT_INFO;
     spdm_context->encap_context.last_encap_request_size = sizeof(spdm_message_header_t);
@@ -992,7 +992,7 @@ static void rsp_encapsulated_request_err_case13(void **state)
     spdm_test_context = *state;
     spdm_context = spdm_test_context->spdm_context;
     spdm_test_context->case_id = 0xD;
-    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_REQ_INITIATED;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_GENERAL;
 
     response_size = sizeof(response);
     deliver_encap_error(spdm_context, SPDM_KEY_UPDATE, 0x00, sizeof(spdm_error_response_t),

@@ -332,7 +332,7 @@ Specifies the encapsulated flow that is in progress. Its value is one of
 - `LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH`
     - The session-based mutual authentication flow, signaled by the Responder in
       `KEY_EXCHANGE_RSP`.
-- `LIBSPDM_ENCAP_FLOW_REQ_INITIATED`
+- `LIBSPDM_ENCAP_FLOW_GENERAL`
     - A flow that the Requester began with `GET_ENCAPSULATED_REQUEST`.
 
 **last_request_code**<br/>

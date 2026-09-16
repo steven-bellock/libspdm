@@ -255,13 +255,13 @@ typedef enum {
     LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH,
 
     /* Endpoint is in the session-based mutual authentication encapsulated flow.
-     * This state is is triggered by the Responder via its KEY_EXCHANGE_RSP response. */
+     * This state is triggered by the Responder via its KEY_EXCHANGE_RSP response. */
     LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH,
 
-    /* Endpoint is in a requester-initiated encapsulated flow.
+    /* Endpoint is in the general encapsulated flow.
      * This state is triggered by the Requester when it sends GET_ENCAPSULATED_REQUEST without an
      * in-band trigger from the Responder. */
-    LIBSPDM_ENCAP_FLOW_REQ_INITIATED
+    LIBSPDM_ENCAP_FLOW_GENERAL
 } libspdm_encap_flow_type_t;
 
 /* These macros apply only if the negotiated SPDM version is 1.0 or 1.1.

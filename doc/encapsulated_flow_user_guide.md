@@ -20,7 +20,7 @@ libspdm classifies encapsulated flows into three types:
     - Triggered by the Responder through its `CHALLENGE_AUTH` response to the Requester.
 - Session-based Mutual Authentication
     - Triggered by the Responder through its `KEY_EXCHANGE_RSP` response to the Requester.
-- Requester-initiated
+- General
     - Triggered by the Requester when it sends the `GET_ENCAPSULATED_REQUEST` message to the
       Responder.
     - The Requester may send this message periodically, or the Responder may possess an out-of-band
@@ -239,7 +239,7 @@ Note that `session_id` is never `NULL` in this flow. When both endpoints have se
 `HANDSHAKE_IN_THE_CLEAR_CAP` the encapsulated messages are exchanged outside of a session, but
 libspdm still passes the session identifier that the flow belongs to.
 
-### Requester-initiated
+### General
 
 This flow begins when the Requester sends `GET_ENCAPSULATED_REQUEST` without the Responder
 triggering it via an SPDM response message. If the `GET_ENCAPSULATED_REQUEST` is outside of a
@@ -271,7 +271,7 @@ libspdm_return_t encap_flow_handler(
     static uint8_t cert_chain[0x1000];
     static uint8_t ep_info[0x100];
 
-    LIBSPDM_ASSERT(encap_flow_type == LIBSPDM_ENCAP_FLOW_REQ_INITIATED);
+    LIBSPDM_ASSERT(encap_flow_type == LIBSPDM_ENCAP_FLOW_GENERAL);
 
     if (error_code != 0) {
         /* The Requester returned an encapsulated ERROR, whose ErrorCode is in error_code, so this
