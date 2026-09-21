@@ -8,7 +8,9 @@
 #include "industry_standard/spdm.h"
 #include "internal/libspdm_device_secret_lib.h"
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
 static uint8_t m_libspdm_oid_subject_alt_name[] = { 0x55, 0x1D, 0x11 };
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
 /**
  * save the CSR
@@ -127,6 +129,7 @@ size_t libspdm_get_aysm_nid_from_file_name(char *Path, size_t len)
  **/
 bool libspdm_validate_crypt_x509(char *Path, size_t len)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool status;
     const uint8_t *leaf_cert;
     size_t leaf_cert_len;
@@ -659,6 +662,9 @@ cleanup:
     }
 #endif
     return status;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
 
 void libspdm_dump_hex_str(const uint8_t *buffer, size_t buffer_size)
@@ -678,6 +684,7 @@ void libspdm_dump_hex_str(const uint8_t *buffer, size_t buffer_size)
  **/
 bool libspdm_validate_crypt_x509_expiration(void)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool status;
     bool expected;
     bool result;
@@ -769,4 +776,7 @@ cleanup:
     }
 
     return result;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }

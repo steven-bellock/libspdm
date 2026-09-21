@@ -99,6 +99,7 @@ bool libspdm_read_responder_public_certificate_chain_by_size(
     uint32_t base_hash_algo, uint32_t base_asym_algo, uint16_t chain_id,
     void **data, size_t *size, void **hash, size_t *hash_size)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool res;
     void *file_data;
     size_t file_size;
@@ -201,4 +202,7 @@ bool libspdm_read_responder_public_certificate_chain_by_size(
 
     free(file_data);
     return true;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }

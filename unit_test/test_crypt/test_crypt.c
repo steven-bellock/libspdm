@@ -73,36 +73,48 @@ bool libspdm_cryptest_main(void)
     }
     #endif /* LIBSPDM_RSA_SSA_SUPPORT */
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("ecp256", sizeof("ecp256"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("ecp384", sizeof("ecp384"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("rsa2048", sizeof("rsa2048"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("rsa3072", sizeof("rsa3072"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509_expiration();
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
     #if LIBSPDM_EDDSA_ED25519_SUPPORT
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("ed25519", sizeof("ed25519"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
     #endif /* LIBSPDM_EDDSA_ED25519_SUPPORT */
 
     #if LIBSPDM_EDDSA_ED448_SUPPORT
@@ -118,27 +130,35 @@ bool libspdm_cryptest_main(void)
     #endif /* LIBSPDM_SM2_DSA_SUPPORT */
 
     #if LIBSPDM_ML_DSA_SUPPORT
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("mldsa44", sizeof("mldsa44"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("mldsa65", sizeof("mldsa65"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("mldsa87", sizeof("mldsa87"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
     #endif /* LIBSPDM_ML_DSA_SUPPORT */
 
     #if LIBSPDM_SLH_DSA_SUPPORT
+#if LIBSPDM_CERT_PARSE_SUPPORT
     status = libspdm_validate_crypt_x509("slh-dsa-sha2-128s", sizeof("slh-dsa-sha2-128s"));
     if (!status) {
         return status;
     }
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
     #endif /* LIBSPDM_SLH_DSA_SUPPORT */
 
     #if LIBSPDM_FFDHE_SUPPORT

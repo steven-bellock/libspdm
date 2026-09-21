@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2022 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -577,6 +577,7 @@ bool libspdm_validate_crypt_rsa_2(void)
         libspdm_my_print("[Pass]");
     }
 
+#if LIBSPDM_CERT_PARSE_SUPPORT
     /* Retrieve RSA Public key from X509 Certificate. */
     libspdm_my_print("\n- Retrieve RSA Public key from X509 ... ");
     libspdm_rsa_free(rsa_pub_key);
@@ -605,6 +606,8 @@ bool libspdm_validate_crypt_rsa_2(void)
     } else {
         libspdm_my_print("[Pass]\n");
     }
+
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 
     free_pool(signature);
 

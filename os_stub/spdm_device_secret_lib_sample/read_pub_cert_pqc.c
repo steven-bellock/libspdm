@@ -423,6 +423,7 @@ bool libspdm_read_pqc_responder_public_certificate_chain(
     uint32_t base_hash_algo, uint32_t pqc_asym_algo, void **data,
     size_t *size, void **hash, size_t *hash_size)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool res;
     void *file_data;
     size_t file_size;
@@ -562,6 +563,9 @@ bool libspdm_read_pqc_responder_public_certificate_chain(
 
     free(file_data);
     return true;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
 
 /*This alias cert chain is partial, from root CA to device certificate CA.*/
@@ -569,6 +573,7 @@ bool libspdm_read_pqc_responder_public_certificate_chain_alias_cert_till_dev_cer
     uint32_t base_hash_algo, uint32_t pqc_asym_algo, void **data,
     size_t *size, void **hash, size_t *hash_size)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool res;
     void *file_data;
     size_t file_size;
@@ -726,6 +731,9 @@ bool libspdm_read_pqc_responder_public_certificate_chain_alias_cert_till_dev_cer
 
     free(file_data);
     return true;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
 
 /*This alias cert chain is entire, from root CA to leaf certificate.*/
@@ -733,6 +741,7 @@ bool libspdm_read_pqc_responder_public_certificate_chain_alias_cert(
     uint32_t base_hash_algo, uint32_t pqc_asym_algo, void **data,
     size_t *size, void **hash, size_t *hash_size)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool res;
     void *file_data;
     size_t file_size;
@@ -890,12 +899,16 @@ bool libspdm_read_pqc_responder_public_certificate_chain_alias_cert(
 
     free(file_data);
     return true;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
 
 bool libspdm_read_pqc_responder_public_certificate_chain_per_slot(
     uint8_t slot_id, uint32_t base_hash_algo, uint32_t pqc_asym_algo,
     void **data, size_t *size, void **hash, size_t *hash_size)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool res;
     void *file_data;
     size_t file_size;
@@ -1140,6 +1153,9 @@ bool libspdm_read_pqc_responder_public_certificate_chain_per_slot(
 
     free(file_data);
     return true;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
 
 
@@ -1147,6 +1163,7 @@ bool libspdm_read_pqc_requester_public_certificate_chain(
     uint32_t base_hash_algo, uint32_t req_pqc_asym_alg, void **data,
     size_t *size, void **hash, size_t *hash_size)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool res;
     void *file_data;
     size_t file_size;
@@ -1286,6 +1303,9 @@ bool libspdm_read_pqc_requester_public_certificate_chain(
 
     free(file_data);
     return true;
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
 
 bool libspdm_read_responder_pqc_certificate(uint32_t pqc_asym_algo,

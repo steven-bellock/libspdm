@@ -47,6 +47,7 @@ uint8_t m_libspdm_dice_tcbinfo_type[] = {0x46, 0x69, 0x72, 0x6D, 0x77, 0x61, 0x7
 /*verify cert DiceTcbInfo extension*/
 bool libspdm_verify_cert_dicetcbinfo(const void *cert, size_t cert_size,
                                      size_t *spdm_get_dice_tcb_info_size) {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool result;
     uint8_t spdm_dice_tcb_info[256];
     size_t spdm_dice_tcb_info_size;
@@ -194,6 +195,9 @@ bool libspdm_verify_cert_dicetcbinfo(const void *cert, size_t cert_size,
     } else {
         return false;
     }
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
 
 /*callback function for verifying cert_chain DiceTcbInfo extension*/
@@ -202,6 +206,7 @@ bool libspdm_verify_spdm_cert_chain_with_dice(void *spdm_context, uint8_t slot_i
                                               const void **trust_anchor,
                                               size_t *trust_anchor_size)
 {
+#if LIBSPDM_CERT_PARSE_SUPPORT
     bool result;
     libspdm_context_t *context;
     const uint8_t *cert_chain_data;
@@ -286,4 +291,7 @@ bool libspdm_verify_spdm_cert_chain_with_dice(void *spdm_context, uint8_t slot_i
     } else {
         return false;
     }
+#else
+    return false;
+#endif /* LIBSPDM_CERT_PARSE_SUPPORT */
 }
