@@ -240,10 +240,55 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          submodules: recursive
+          # The submodules are fetched in a later step so that cmocka can be served
+          # from the cache. A fetch failure inside this step aborts the job before
+          # any cache is consulted, which is what makes cmocka's host a source of
+          # unrelated test failures.
+          submodules: false
           # Nothing after this step needs to talk to the remote, and the jobs
           # run build scripts from the pull request's own tree.
           persist-credentials: false
+
+      # cmocka is the only submodule not hosted on github.com, and gitlab.com is
+      # reachable less reliably from the runners. Its source does not vary by
+      # configuration, so a single entry keyed on the pinned revision serves every
+      # matrix entry, and gitlab.com is contacted only when that pin moves.
+      - name: cmocka revision
+        id: cmocka
+        shell: bash
+        run: |
+          echo "sha=$(git ls-tree HEAD unit_test/cmockalib/cmocka | awk '{print $3}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache cmocka
+        id: cmocka-cache
+        uses: actions/cache@v6
+        with:
+          path: unit_test/cmockalib/cmocka
+          key: cmocka-${{ steps.cmocka.outputs.sha }}
+
+      - name: Fetch submodules
+        shell: bash
+        run: |
+          # Retry rather than fail the job on a transient fetch error. A cache hit
+          # means cmocka is already present, so it is not fetched at all.
+          fetch() {
+            for attempt in 1 2 3; do
+              if git submodule update --init --recursive "$1"; then
+                return 0
+              fi
+              echo "fetch of $1 failed, attempt $attempt"
+              sleep $((attempt * 15))
+            done
+            return 1
+          }
+
+          if [ "${{ steps.cmocka-cache.outputs.cache-hit }}" != "true" ]; then
+            fetch unit_test/cmockalib/cmocka
+          fi
+          fetch os_stub/mbedtlslib/mbedtls
+          if [ "${{ matrix.crypto }}" = "openssl" ]; then
+            fetch os_stub/openssllib/openssl
+          fi
       # OpenSSL is an ExternalProject with its own CFLAGS, so no LIBSPDM_*
       # macro reaches it: one entry serves every configuration on a given
       # platform. Measured at ~100 MB on POSIX and ~344 MB on Windows, so
@@ -616,10 +661,55 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          submodules: recursive
+          # The submodules are fetched in a later step so that cmocka can be served
+          # from the cache. A fetch failure inside this step aborts the job before
+          # any cache is consulted, which is what makes cmocka's host a source of
+          # unrelated test failures.
+          submodules: false
           # Nothing after this step needs to talk to the remote, and the jobs
           # run build scripts from the pull request's own tree.
           persist-credentials: false
+
+      # cmocka is the only submodule not hosted on github.com, and gitlab.com is
+      # reachable less reliably from the runners. Its source does not vary by
+      # configuration, so a single entry keyed on the pinned revision serves every
+      # matrix entry, and gitlab.com is contacted only when that pin moves.
+      - name: cmocka revision
+        id: cmocka
+        shell: bash
+        run: |
+          echo "sha=$(git ls-tree HEAD unit_test/cmockalib/cmocka | awk '{print $3}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache cmocka
+        id: cmocka-cache
+        uses: actions/cache@v6
+        with:
+          path: unit_test/cmockalib/cmocka
+          key: cmocka-${{ steps.cmocka.outputs.sha }}
+
+      - name: Fetch submodules
+        shell: bash
+        run: |
+          # Retry rather than fail the job on a transient fetch error. A cache hit
+          # means cmocka is already present, so it is not fetched at all.
+          fetch() {
+            for attempt in 1 2 3; do
+              if git submodule update --init --recursive "$1"; then
+                return 0
+              fi
+              echo "fetch of $1 failed, attempt $attempt"
+              sleep $((attempt * 15))
+            done
+            return 1
+          }
+
+          if [ "${{ steps.cmocka-cache.outputs.cache-hit }}" != "true" ]; then
+            fetch unit_test/cmockalib/cmocka
+          fi
+          fetch os_stub/mbedtlslib/mbedtls
+          if [ "${{ matrix.crypto }}" = "openssl" ]; then
+            fetch os_stub/openssllib/openssl
+          fi
       # OpenSSL is an ExternalProject with its own CFLAGS, so no LIBSPDM_*
       # macro reaches it: one entry serves every configuration on a given
       # platform. Measured at ~100 MB on POSIX and ~344 MB on Windows, so
@@ -969,10 +1059,55 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          submodules: recursive
+          # The submodules are fetched in a later step so that cmocka can be served
+          # from the cache. A fetch failure inside this step aborts the job before
+          # any cache is consulted, which is what makes cmocka's host a source of
+          # unrelated test failures.
+          submodules: false
           # Nothing after this step needs to talk to the remote, and the jobs
           # run build scripts from the pull request's own tree.
           persist-credentials: false
+
+      # cmocka is the only submodule not hosted on github.com, and gitlab.com is
+      # reachable less reliably from the runners. Its source does not vary by
+      # configuration, so a single entry keyed on the pinned revision serves every
+      # matrix entry, and gitlab.com is contacted only when that pin moves.
+      - name: cmocka revision
+        id: cmocka
+        shell: bash
+        run: |
+          echo "sha=$(git ls-tree HEAD unit_test/cmockalib/cmocka | awk '{print $3}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache cmocka
+        id: cmocka-cache
+        uses: actions/cache@v6
+        with:
+          path: unit_test/cmockalib/cmocka
+          key: cmocka-${{ steps.cmocka.outputs.sha }}
+
+      - name: Fetch submodules
+        shell: bash
+        run: |
+          # Retry rather than fail the job on a transient fetch error. A cache hit
+          # means cmocka is already present, so it is not fetched at all.
+          fetch() {
+            for attempt in 1 2 3; do
+              if git submodule update --init --recursive "$1"; then
+                return 0
+              fi
+              echo "fetch of $1 failed, attempt $attempt"
+              sleep $((attempt * 15))
+            done
+            return 1
+          }
+
+          if [ "${{ steps.cmocka-cache.outputs.cache-hit }}" != "true" ]; then
+            fetch unit_test/cmockalib/cmocka
+          fi
+          fetch os_stub/mbedtlslib/mbedtls
+          if [ "${{ matrix.crypto }}" = "openssl" ]; then
+            fetch os_stub/openssllib/openssl
+          fi
 
       - name: Set up MSYS2
         uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # v2.32.0
