@@ -1,6 +1,10 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project("libspdm" C)
+
+# The toolchain blocks below choose the MSVC C runtime through their link libraries, so CMake must
+# not add /MD or /MDd.
+set(CMAKE_MSVC_RUNTIME_LIBRARY "")
 file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/VERSION.md CMAKE_INPUT_PROJECT_VERSION)
 string(REGEX MATCH "[0-9]+\\.[0-9]+\\.[0-9]+" PROJECT_VERSION ${CMAKE_INPUT_PROJECT_VERSION})
 set(CMAKE_PROJECT_VERSION ${PROJECT_VERSION})
