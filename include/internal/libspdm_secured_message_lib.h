@@ -7,11 +7,7 @@
 #ifndef SPDM_SECURED_MESSAGE_LIB_INTERNAL_H
 #define SPDM_SECURED_MESSAGE_LIB_INTERNAL_H
 
-#include "library/spdm_secured_message_lib.h"
-#include "library/spdm_crypt_lib.h"
 #include "internal/libspdm_common_lib.h"
-#include "hal/library/memlib.h"
-#include "hal/library/cryptlib.h"
 
 #if LIBSPDM_MAX_DHE_SS_SIZE >= LIBSPDM_MAX_KEM_SS_SIZE
 #define LIBSPDM_MAX_SHARED_KEY_SIZE LIBSPDM_MAX_DHE_SS_SIZE

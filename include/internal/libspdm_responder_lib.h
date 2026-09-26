@@ -8,7 +8,6 @@
 #define SPDM_RESPONDER_LIB_INTERNAL_H
 
 #include "library/spdm_responder_lib.h"
-#include "library/spdm_secured_message_lib.h"
 #include "internal/libspdm_common_lib.h"
 #include "hal/library/responder/watchdoglib.h"
 

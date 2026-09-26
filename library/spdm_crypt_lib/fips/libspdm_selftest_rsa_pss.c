@@ -7,7 +7,6 @@
 #include "internal/libspdm_crypt_lib.h"
 #include "internal/libspdm_common_lib.h"
 #include "internal/libspdm_fips_lib.h"
-#include "library/spdm_crypt_lib.h"
 
 #if LIBSPDM_FIPS_MODE
 

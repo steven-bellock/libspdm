@@ -5,10 +5,7 @@
  **/
 
 #include "library/spdm_transport_pcidoe_lib.h"
-#include "industry_standard/pcidoe.h"
 #include "internal/libspdm_common_lib.h"
-#include "hal/library/debuglib.h"
-#include "hal/library/memlib.h"
 
 uint8_t libspdm_pci_doe_get_sequence_number(uint64_t sequence_number,
                                             uint8_t *sequence_number_buffer)

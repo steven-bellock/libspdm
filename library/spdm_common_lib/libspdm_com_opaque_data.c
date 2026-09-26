@@ -4,7 +4,6 @@
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
-#include "internal/libspdm_common_lib.h"
 #include "internal/libspdm_secured_message_lib.h"
 
 size_t libspdm_get_opaque_data_version_selection_data_size(const libspdm_context_t *spdm_context)

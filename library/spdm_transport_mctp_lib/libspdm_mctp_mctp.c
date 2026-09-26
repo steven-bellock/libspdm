@@ -5,10 +5,7 @@
  **/
 
 #include "library/spdm_transport_mctp_lib.h"
-#include "industry_standard/mctp.h"
 #include "internal/libspdm_common_lib.h"
-#include "hal/library/debuglib.h"
-#include "hal/library/memlib.h"
 
 uint8_t libspdm_mctp_get_sequence_number(uint64_t sequence_number,
                                          uint8_t *sequence_number_buffer)

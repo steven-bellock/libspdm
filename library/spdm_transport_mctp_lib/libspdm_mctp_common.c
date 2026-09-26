@@ -5,7 +5,6 @@
  **/
 
 #include "library/spdm_transport_mctp_lib.h"
-#include "library/spdm_secured_message_lib.h"
 #include "hal/library/debuglib.h"
 
 /**
