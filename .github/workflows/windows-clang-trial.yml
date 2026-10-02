@@ -1,0 +1,185 @@
+# One-off trial: does TOOLCHAIN=CLANG (clang-cl and lld-link) build and pass the unit tests on
+# Windows? No other workflow builds it. The steps follow Tier 1's windows-msvc job, without its
+# caches and reproducer.
+name: Windows Clang Trial
+
+on:
+  push:
+    branches:
+      - windows-clang-trial
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  BASE_CFLAGS: -DLIBSPDM_CHECK_MACRO=1 -DLIBSPDM_DEBUG_LIBSPDM_ASSERT_CONFIG=3
+
+jobs:
+  windows-clang:
+    name: ${{ matrix.name }}
+    runs-on: windows-latest
+    # Without Tier 1's OpenSSL cache, an OpenSSL job builds OpenSSL with serial nmake.
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: windows-x64-clang-mbedtls-debug
+            arch: x64
+            msvc_arch: x64
+            crypto: mbedtls
+            target: Debug
+          - name: windows-x64-clang-mbedtls-release
+            arch: x64
+            msvc_arch: x64
+            crypto: mbedtls
+            target: Release
+          - name: windows-x64-clang-openssl-debug
+            arch: x64
+            msvc_arch: x64
+            crypto: openssl
+            target: Debug
+          - name: windows-x64-clang-openssl-release
+            arch: x64
+            msvc_arch: x64
+            crypto: openssl
+            target: Release
+          - name: windows-ia32-clang-mbedtls-debug
+            arch: ia32
+            msvc_arch: x86
+            crypto: mbedtls
+            target: Debug
+          - name: windows-ia32-clang-mbedtls-release
+            arch: ia32
+            msvc_arch: x86
+            crypto: mbedtls
+            target: Release
+          - name: windows-ia32-clang-openssl-debug
+            arch: ia32
+            msvc_arch: x86
+            crypto: openssl
+            target: Debug
+          - name: windows-ia32-clang-openssl-release
+            arch: ia32
+            msvc_arch: x86
+            crypto: openssl
+            target: Release
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: false
+          persist-credentials: false
+
+      - name: Fetch submodules
+        shell: bash
+        run: |
+          fetch() {
+            for attempt in 1 2 3; do
+              if git submodule update --init --recursive "$1"; then
+                return 0
+              fi
+              echo "fetch of $1 failed, attempt $attempt"
+              sleep $((attempt * 15))
+            done
+            return 1
+          }
+
+          fetch unit_test/cmockalib/cmocka
+          fetch os_stub/mbedtlslib/mbedtls
+          if [ "${{ matrix.crypto }}" = "openssl" ]; then
+            fetch os_stub/openssllib/openssl
+          fi
+
+      - name: Set up MSVC
+        uses: TheMrMilchmann/setup-msvc-dev@368ef7d1ee4d1171b31d4a7f67f4d954f903f5a9 # v4.1.0
+        with:
+          arch: ${{ matrix.msvc_arch }}
+
+      - name: Show toolchain
+        run: |
+          Get-Command clang-cl, lld-link, cl, nmake -ErrorAction Continue | Format-Table -AutoSize Name, Source
+          clang-cl --version
+          lld-link --version
+          cmake --version
+
+      # The default shell, not bash: OpenSSL's Configure is a Perl script, and under Git Bash
+      # `perl` resolves to the bundled MSYS interpreter, which lacks modules Configure requires.
+      - name: Configure
+        id: configure
+        env:
+          CFLAGS: ${{ env.BASE_CFLAGS }}
+        run: |
+          cmake -B build -G "NMake Makefiles" `
+            -DARCH=${{ matrix.arch }} `
+            -DTOOLCHAIN=CLANG `
+            -DTARGET=${{ matrix.target }} `
+            -DCRYPTO=${{ matrix.crypto }}
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      # /K keeps nmake going past a failing target, so one run shows every target that fails,
+      # and the test steps below still run whichever tests did build.
+      - name: Build
+        run: |
+          cmake --build build --target copy_sample_key
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake --build build -- /K
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Prepare test runner
+        if: ${{ !cancelled() && steps.configure.outcome == 'success' }}
+        shell: bash
+        run: |
+          cat > run_test.sh <<'RUNNER'
+          #!/usr/bin/env bash
+          set -uo pipefail
+          t="$1"
+          if [ ! -x "build/bin/$t.exe" ]; then
+            echo "::error::$t was not built"
+            echo "- \`$t\`: **not built**" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          ( cd build/bin && timeout 600 "./$t.exe" )
+          rc=$?
+          if [ "$rc" -eq 0 ]; then
+            echo "- \`$t\`: pass" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- \`$t\`: **FAIL** (exit $rc)" >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::$t failed with exit $rc"
+          fi
+          exit $rc
+          RUNNER
+          chmod +x run_test.sh
+          echo "### ${{ matrix.name }}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Test Requester
+        if: ${{ !cancelled() && steps.configure.outcome == 'success' }}
+        shell: bash
+        run: ./run_test.sh test_spdm_requester
+
+      - name: Test Responder
+        if: ${{ !cancelled() && steps.configure.outcome == 'success' }}
+        shell: bash
+        run: ./run_test.sh test_spdm_responder
+
+      - name: Test Common
+        if: ${{ !cancelled() && steps.configure.outcome == 'success' }}
+        shell: bash
+        run: ./run_test.sh test_spdm_common
+
+      - name: Test SPDM Crypt
+        if: ${{ !cancelled() && steps.configure.outcome == 'success' }}
+        shell: bash
+        run: ./run_test.sh test_spdm_crypt
+
+      - name: Test Crypt
+        if: ${{ !cancelled() && steps.configure.outcome == 'success' }}
+        shell: bash
+        run: ./run_test.sh test_crypt
+
+      - name: Test Secured Message
+        if: ${{ !cancelled() && steps.configure.outcome == 'success' }}
+        shell: bash
+        run: ./run_test.sh test_spdm_secured_message
