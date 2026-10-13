@@ -16,6 +16,7 @@ target_sources(test_spdm_fips
     PRIVATE
         test_spdm_fips.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/support.c
+        ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/force_error.c
 )
 
 if(TOOLCHAIN STREQUAL "ARM_DS2022")

@@ -2855,11 +2855,17 @@ static int libspdm_crypt_lib_test_main(void)
                                   libspdm_crypt_lib_teardown);
 }
 
+int libspdm_crypto_fault_test_main(void);
+
 int main(void)
 {
     int return_value = 0;
 
     if (libspdm_crypt_lib_test_main() != 0) {
+        return_value = 1;
+    }
+
+    if (libspdm_crypto_fault_test_main() != 0) {
         return_value = 1;
     }
 
