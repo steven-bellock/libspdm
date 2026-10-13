@@ -16,6 +16,7 @@ target_sources(test_spdm_common
     PRIVATE
         test_spdm_common.c
         context_data.c
+        error_test/context_data_err.c
         support.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/common.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/algo.c
