@@ -64,19 +64,23 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Also runs the crypto failure tests; see the audit at the end.
           - name: linux-x64-gcc-mbedtls-debug
             os: ubuntu-latest
             arch: x64
             toolchain: GCC
             crypto: mbedtls
             target: Debug
+            cmake_extra: -DCRYPTO_FAULT_INJECTION=ON
 
+          # Also runs the crypto failure tests; see the audit at the end.
           - name: linux-x64-clang-openssl-release
             os: ubuntu-latest
             arch: x64
             toolchain: CLANG
             crypto: openssl
             target: Release
+            cmake_extra: -DCRYPTO_FAULT_INJECTION=ON
 
           - name: linux-aarch64-gcc-mbedtls-debug
             os: ubuntu-24.04-arm
@@ -85,12 +89,14 @@ jobs:
             crypto: mbedtls
             target: Debug
 
+          # Also runs the crypto failure tests; see the audit at the end.
           - name: macos-aarch64-clang-openssl-release
             os: macos-latest
             arch: aarch64
             toolchain: CLANG
             crypto: openssl
             target: Release
+            cmake_extra: -DCRYPTO_FAULT_INJECTION=ON
 
           # With LTO, GCC reports late warnings such as -Wmaybe-uninitialized
           # only at the link, where libspdm passes no warning options. Fat LTO
@@ -182,6 +188,7 @@ jobs:
           # Coarse macros, swept on the reference platform unless the macro's
           # domain depends on the cryptography backend.
 
+          # Also runs the crypto failure tests, the self-tests' among them.
           - name: config-fips
             os: ubuntu-latest
             arch: x64
@@ -189,10 +196,12 @@ jobs:
             crypto: mbedtls
             target: Debug
             cflags: -DLIBSPDM_FIPS_MODE=1
+            cmake_extra: -DCRYPTO_FAULT_INJECTION=ON
             extra_tests: test_spdm_fips
 
           # Mbed TLS pins EdDSA and the PQC algorithms to 0, so their FIPS
-          # self-tests run only against OpenSSL.
+          # self-tests run only against OpenSSL. Also runs the crypto failure
+          # tests, the self-tests' among them.
           - name: config-fips-openssl
             os: ubuntu-latest
             arch: x64
@@ -200,6 +209,7 @@ jobs:
             crypto: openssl
             target: Debug
             cflags: -DLIBSPDM_FIPS_MODE=1
+            cmake_extra: -DCRYPTO_FAULT_INJECTION=ON
             extra_tests: test_spdm_fips
 
           - name: config-respond-if-ready-off
@@ -906,6 +916,7 @@ jobs:
             msvc_arch: x64
             generator: NMake Makefiles
 
+          # Also runs the crypto failure tests; see the audit at the end.
           - name: windows-x64-vs-mbedtls-debug
             os: windows-latest
             arch: x64
@@ -914,6 +925,7 @@ jobs:
             target: Debug
             msvc_arch: x64
             generator: NMake Makefiles
+            cmake_extra: -DCRYPTO_FAULT_INJECTION=ON
 
           - name: windows-ia32-vs-openssl-debug
             os: windows-latest
@@ -945,7 +957,8 @@ jobs:
           # CLANG on Windows compiles with clang-cl and links with lld-link,
           # using the developer environment's headers and libraries. OpenSSL's
           # build still uses cl, so the OpenSSL job also links clang-cl code
-          # against an MSVC-built OpenSSL.
+          # against an MSVC-built OpenSSL. Also runs the crypto failure tests;
+          # see the audit at the end.
           - name: windows-x64-clang-openssl-debug
             os: windows-latest
             arch: x64
@@ -954,6 +967,7 @@ jobs:
             target: Debug
             msvc_arch: x64
             generator: NMake Makefiles
+            cmake_extra: -DCRYPTO_FAULT_INJECTION=ON
 
           - name: windows-ia32-clang-mbedtls-release
             os: windows-latest
@@ -1975,6 +1989,14 @@ jobs:
 #
 #   Extended unit tests run where their requirement is met:
 #     test_spdm_fips -> config-fips, config-fips-openssl.
+#
+#   Crypto failure tests, which need CRYPTO_FAULT_INJECTION=ON, run with GCC,
+#   Clang, Apple Clang, Visual Studio and clang-cl, and in both FIPS
+#   configurations:
+#     linux-x64-gcc-mbedtls-debug          linux-x64-clang-openssl-release
+#     macos-aarch64-clang-openssl-release  windows-x64-vs-mbedtls-debug
+#     windows-x64-clang-openssl-debug      config-fips
+#     config-fips-openssl
 #
 #   Fuzzing seed replay, 2 jobs:
 #     fuzz-libfuzzer-mbedtls-debug   AddressSanitizer, Mbed TLS

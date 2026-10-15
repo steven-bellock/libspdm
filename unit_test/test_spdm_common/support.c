@@ -125,6 +125,13 @@ static void libspdm_test_common_get_fips_mode(void **state)
     assert_int_equal(libspdm_get_fips_mode(), LIBSPDM_FIPS_MODE);
 }
 
+static libspdm_test_context_t m_libspdm_common_support_test_context = {
+    LIBSPDM_TEST_CONTEXT_VERSION,
+    true,
+    NULL,
+    NULL,
+};
+
 int libspdm_common_support_test_main(void)
 {
     const struct CMUnitTest test_cases[] = {
@@ -137,6 +144,8 @@ int libspdm_common_support_test_main(void)
         cmocka_unit_test(libspdm_test_common_get_fips_mode),
 
     };
+
+    libspdm_setup_test_context(&m_libspdm_common_support_test_context);
 
     return cmocka_run_group_tests(test_cases,
                                   libspdm_unit_test_group_setup,

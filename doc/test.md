@@ -90,6 +90,29 @@ For riscv64 (RISCV64 GCC): `qemu-riscv64 -L /usr/riscv64-linux-gnu <TestBinary>`
 
    The final report is index.html.
 
+### Inject Cryptography Failures
+
+The unit tests can make calls into the cryptography backend fail, to test how libspdm handles a
+failed hash, HMAC, HKDF, AEAD, random number, signature, key exchange or X.509 operation. Build them
+with `-DCRYPTO_FAULT_INJECTION=ON`.
+
+```
+cmake -DARCH=x64 -DTOOLCHAIN=GCC -DTARGET=Debug -DCRYPTO=mbedtls -DCRYPTO_FAULT_INJECTION=ON ..
+```
+
+The option compiles the cryptography backend (`cryptlib_mbedtls` or `cryptlib_openssl`) with
+`unit_test/cryptlib_fault/cryptlib_fault_rename.h`, which renames each function of the backend API
+to `libspdm_real_*`. The forwarders in `unit_test/cryptlib_fault/cryptlib_fault_forward.c` take the
+API names, so calls into the backend from outside it go through them. The one exception is the
+variadic `libspdm_x509_construct_certificate_stack()`, which keeps its name. The core libraries are
+compiled as they are without the option. Tests force errors with the cryptography targets of
+`libspdm_force_error()`, as [unit_test_template.md](internal/unit_test_template.md) describes, and
+the tests that need the option call `skip()` without it.
+
+After a change to `include/hal/library/cryptlib/*.h` or
+`os_stub/include/hal/library/cryptlib_ext.h`, run `script/generate_cryptlib_fault.py` to update the
+forwarders. CI checks that they are current.
+
 ### Run fuzzing
 
 1) Fuzzing in Linux with [AFL](https://lcamtuf.coredump.cx/afl/)

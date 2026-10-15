@@ -15,7 +15,9 @@ target_include_directories(test_spdm_crypt
 target_sources(test_spdm_crypt
     PRIVATE
         test_spdm_crypt.c
+        crypto_fault.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/support.c
+        ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/force_error.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/algo.c
 )
 

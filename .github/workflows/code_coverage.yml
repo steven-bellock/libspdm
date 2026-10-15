@@ -70,7 +70,9 @@ jobs:
           sudo apt-get install --no-install-recommends -y lcov
           mkdir build
           cd build
-          cmake -E env CFLAGS="${{ env.BASE_CFLAGS }} -DLIBSPDM_FIPS_MODE=1" cmake -DTOOLCHAIN=GCC -DTARGET=Debug -DCRYPTO=${{ matrix.crypto }} -DGCOV=ON ..
+          # CRYPTO_FAULT_INJECTION lets the unit tests reach the crypto error
+          # paths.
+          cmake -E env CFLAGS="${{ env.BASE_CFLAGS }} -DLIBSPDM_FIPS_MODE=1" cmake -DTOOLCHAIN=GCC -DTARGET=Debug -DCRYPTO=${{ matrix.crypto }} -DGCOV=ON -DCRYPTO_FAULT_INJECTION=ON ..
           make -j`nproc`
           make copy_sample_key
           make copy_seed

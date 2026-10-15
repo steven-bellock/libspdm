@@ -59,6 +59,7 @@ set(X509_IGNORE_TIME ${X509_IGNORE_TIME} CACHE STRING "Choose if libspdm-provide
 set(DEVICE ${DEVICE} CACHE STRING "Choose the test device: sample tpm, and default is sample" FORCE)
 
 option(LIBSPDM_TPM_SUPPORT "Add TPM support in crypt_ext" OFF)
+option(CRYPTO_FAULT_INJECTION "Let the unit tests make cryptography backend calls fail" OFF)
 
 if(NOT GCOV)
     set(GCOV "OFF")
@@ -867,6 +868,9 @@ else()
         add_subdirectory(os_stub/spdm_cert_verify_callback_sample)
 
         if(NOT DISABLE_TESTS STREQUAL "1")
+            if(CRYPTO_FAULT_INJECTION)
+            add_subdirectory(unit_test/cryptlib_fault)
+            endif()
             add_subdirectory(unit_test/spdm_transport_test_lib)
             add_subdirectory(unit_test/cmockalib)
 

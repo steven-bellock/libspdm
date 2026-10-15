@@ -77,6 +77,7 @@ target_sources(test_spdm_requester
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/common.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/algo.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/support.c
+        ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/force_error.c
         ${LIBSPDM_DIR}/unit_test/spdm_unit_test_common/event_support.c
 )
 

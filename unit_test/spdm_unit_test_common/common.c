@@ -13,9 +13,6 @@ static uint8_t m_send_receive_buffer[LIBSPDM_MAX_SENDER_RECEIVER_BUFFER_SIZE];
 static bool m_sender_buffer_acquired = false;
 static bool m_receiver_buffer_acquired = false;
 
-static bool m_error_acquire_sender_buffer = false;
-static bool m_error_acquire_receiver_buffer = false;
-
 #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && \
     (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT)
 static uint8_t m_cert_chain_buffer[SPDM_MAX_CERTIFICATE_CHAIN_SIZE];
@@ -25,7 +22,7 @@ libspdm_return_t spdm_device_acquire_sender_buffer (
     void *context, void **msg_buf_ptr)
 {
     assert_true (!m_sender_buffer_acquired && !m_receiver_buffer_acquired);
-    if (m_error_acquire_sender_buffer) {
+    if (libspdm_apply_buffer_error(LIBSPDM_ERR_ACQUIRE_SENDER_BUFFER)) {
         return LIBSPDM_STATUS_ACQUIRE_FAIL;
     } else {
         *msg_buf_ptr = m_send_receive_buffer;
@@ -49,7 +46,7 @@ libspdm_return_t spdm_device_acquire_receiver_buffer (
 {
     assert_true (!m_sender_buffer_acquired && !m_receiver_buffer_acquired);
 
-    if (m_error_acquire_receiver_buffer) {
+    if (libspdm_apply_buffer_error(LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER)) {
         return LIBSPDM_STATUS_ACQUIRE_FAIL;
     } else {
         *msg_buf_ptr = m_send_receive_buffer;
@@ -129,8 +126,9 @@ int libspdm_unit_test_group_setup(void **state)
 
     libspdm_unit_test_resize_scratch_buffer(spdm_test_context);
 
-    m_error_acquire_sender_buffer = false;
-    m_error_acquire_receiver_buffer = false;
+    libspdm_release_error(LIBSPDM_ERR_ACQUIRE_SENDER_BUFFER);
+    libspdm_release_error(LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER);
+    libspdm_release_error(LIBSPDM_ERR_CRYPTO_ANY);
 
     #if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && \
     (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT)
@@ -181,28 +179,4 @@ int libspdm_unit_test_reset_context(void **state)
     }
 
     return libspdm_unit_test_group_setup(state);
-}
-
-void libspdm_force_error (libspdm_error_target_t target)
-{
-    switch (target) {
-    case LIBSPDM_ERR_ACQUIRE_SENDER_BUFFER:
-        m_error_acquire_sender_buffer = true;
-        break;
-    case LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER:
-        m_error_acquire_receiver_buffer = true;
-        break;
-    }
-}
-
-void libspdm_release_error (libspdm_error_target_t target)
-{
-    switch (target) {
-    case LIBSPDM_ERR_ACQUIRE_SENDER_BUFFER:
-        m_error_acquire_sender_buffer = false;
-        break;
-    case LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER:
-        m_error_acquire_receiver_buffer = false;
-        break;
-    }
 }

@@ -225,14 +225,79 @@ void libspdm_dump_data(const uint8_t *buffer, size_t buffer_size);
 void libspdm_dump_hex(const uint8_t *buffer, size_t buffer_size);
 bool libspdm_read_input_file(const char *file_name, void **file_data, size_t *file_size);
 
+/* Set to 1 when the unit tests are built with CRYPTO_FAULT_INJECTION ON. */
+#ifndef LIBSPDM_CRYPTO_FAULT_INJECTION
+#define LIBSPDM_CRYPTO_FAULT_INJECTION 0
+#endif
+
 typedef enum
 {
     LIBSPDM_ERR_ACQUIRE_SENDER_BUFFER,
-    LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER
+    LIBSPDM_ERR_ACQUIRE_RECEIVER_BUFFER,
+
+    /* Crypto backend operations, which need LIBSPDM_CRYPTO_FAULT_INJECTION. */
+    LIBSPDM_ERR_CRYPTO_ANY,             /* every operation that can fail */
+    LIBSPDM_ERR_CRYPTO_HASH_ALL,
+    LIBSPDM_ERR_CRYPTO_HASH_NEW,
+    LIBSPDM_ERR_CRYPTO_HASH_INIT,
+    LIBSPDM_ERR_CRYPTO_HASH_UPDATE,
+    LIBSPDM_ERR_CRYPTO_HASH_FINAL,
+    LIBSPDM_ERR_CRYPTO_HASH_DUPLICATE,
+    LIBSPDM_ERR_CRYPTO_HMAC,            /* hmac_*: all, new, set_key, update and final */
+    LIBSPDM_ERR_CRYPTO_HKDF_EXTRACT,
+    LIBSPDM_ERR_CRYPTO_HKDF_EXPAND,     /* hkdf_*_expand and hkdf_*_extract_and_expand */
+    LIBSPDM_ERR_CRYPTO_AEAD_ENCRYPT,
+    LIBSPDM_ERR_CRYPTO_AEAD_DECRYPT,
+    LIBSPDM_ERR_CRYPTO_RANDOM,
+    LIBSPDM_ERR_CRYPTO_ASYM_KEY,        /* key contexts and keys, and keys from DER, PEM or X.509 */
+    LIBSPDM_ERR_CRYPTO_ASYM_SIGN,
+    LIBSPDM_ERR_CRYPTO_ASYM_VERIFY,
+    LIBSPDM_ERR_CRYPTO_DHE_NEW,
+    LIBSPDM_ERR_CRYPTO_DHE_GENERATE,
+    LIBSPDM_ERR_CRYPTO_DHE_COMPUTE,
+    LIBSPDM_ERR_CRYPTO_KEM_NEW,
+    LIBSPDM_ERR_CRYPTO_KEM_GENERATE,
+    LIBSPDM_ERR_CRYPTO_KEM_ENCAPSULATE,
+    LIBSPDM_ERR_CRYPTO_KEM_DECAPSULATE,
+    LIBSPDM_ERR_CRYPTO_X509_PARSE,      /* asn1_get_tag, x509_get_* and x509_set_date_time */
+    LIBSPDM_ERR_CRYPTO_X509_VERIFY,     /* x509_verify_cert and x509_verify_cert_chain */
+    LIBSPDM_ERR_CRYPTO_CSR              /* gen_x509_csr and x509_construct_certificate */
 } libspdm_error_target_t;
 
+typedef enum
+{
+    LIBSPDM_ERR_ACTION_FAIL,            /* return false or NULL */
+    LIBSPDM_ERR_ACTION_CORRUPT_OUTPUT   /* succeed, then flip one bit of the output */
+} libspdm_error_action_t;
+
+/* The target fails every time until it is released. For a crypto target this is
+ * libspdm_force_error_ex(target, 0, UINT32_MAX, LIBSPDM_ERR_ACTION_FAIL). */
 void libspdm_force_error (libspdm_error_target_t target);
+
+/* Releasing a crypto target also zeroes its counts. Releasing LIBSPDM_ERR_CRYPTO_ANY releases every
+ * crypto target. */
 void libspdm_release_error (libspdm_error_target_t target);
+
+/* For a crypto target, lets the next skip calls of the target succeed, then applies the action to
+ * the count calls after them. */
+void libspdm_force_error_ex (libspdm_error_target_t target, uint32_t skip, uint32_t count,
+                             libspdm_error_action_t action);
+
+/* Returns the number of calls that the forced error applied to since the target was forced. */
+uint32_t libspdm_get_forced_error_count (libspdm_error_target_t target);
+
+/* For a crypto target, returns the number of calls of the target since it was last forced or
+ * released, whether or not they failed. */
+uint32_t libspdm_get_crypto_call_count (libspdm_error_target_t target);
+
+/* While suspended, crypto calls are neither counted nor failed, for test code that uses crypto
+ * itself. Suspensions nest. */
+void libspdm_suspend_crypto_errors (void);
+void libspdm_resume_crypto_errors (void);
+
+/* Returns whether a buffer target is forced, and counts the error if it is. For the harness's
+ * device buffer functions. */
+bool libspdm_apply_buffer_error (libspdm_error_target_t target);
 
 void generate_dmtf_event_group(void *buffer, uint8_t *total_bytes, uint32_t attributes,
                                bool inc_event_lost, bool inc_meas_changed,

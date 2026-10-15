@@ -207,3 +207,48 @@ spdm_request.header.request_response_code = SPDM_GET_SUPPORTED_EVENT_TYPES;
 spdm_request.header.param1 = 0;
 spdm_request.header.param2 = 0;
 ```
+
+### Cryptography Error Tests
+
+When the unit tests are built with `CRYPTO_FAULT_INJECTION` ON (see [test.md](../test.md)), a test
+can make calls into the cryptography backend fail. `libspdm_force_error()` with a
+`LIBSPDM_ERR_CRYPTO_*` target makes every call of that operation fail until the target is released,
+while `libspdm_force_error_ex()` instead applies `LIBSPDM_ERR_ACTION_FAIL` or
+`LIBSPDM_ERR_ACTION_CORRUPT_OUTPUT` to some calls, after skipping others.
+
+Write cryptography error tests as follows:
+- Force the error immediately before the call under test, so that the calls of the setup are not
+  counted.
+- Read `libspdm_get_forced_error_count()` and release the target before asserting anything, because
+  a failed assert leaves the test, and a target that is still forced fails the later tests.
+- Assert the forced error count, so that the test fails if the call under test stops making the
+  cryptography call.
+- Guard the test with `#if LIBSPDM_CRYPTO_FAULT_INJECTION`, and call `skip()` in the `#else` branch.
+- Call `libspdm_suspend_crypto_errors()` and `libspdm_resume_crypto_errors()` around test code that
+  uses cryptography itself, so that its cryptography calls neither count nor fail.
+
+For example
+```C
+/**
+ * Test 1: describe the test case.
+ * Expected behavior: describe the expected behavior of the unit under test.
+ * Skipped if CRYPTO_FAULT_INJECTION is OFF.
+ **/
+static void rsp_message_name_err_case1(void **state)
+{
+#if LIBSPDM_CRYPTO_FAULT_INJECTION
+    ...
+
+    /* {ERROR} The random number generator fails. */
+    libspdm_force_error(LIBSPDM_ERR_CRYPTO_RANDOM);
+    status = ...;
+    error_count = libspdm_get_forced_error_count(LIBSPDM_ERR_CRYPTO_RANDOM);
+    libspdm_release_error(LIBSPDM_ERR_CRYPTO_RANDOM);
+
+    assert_int_equal(error_count, 1);
+    assert_int_equal(status, LIBSPDM_STATUS_LOW_ENTROPY);
+#else
+    skip();
+#endif /* LIBSPDM_CRYPTO_FAULT_INJECTION */
+}
+```
