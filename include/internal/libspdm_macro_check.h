@@ -27,6 +27,21 @@
 
 #define LIBSPDM_KEM_ALGO_SUPPORT (LIBSPDM_ML_KEM_SUPPORT)
 
+/* Encapsulated requests that the Requester can respond to. */
+#define LIBSPDM_ENCAP_RECEIVE_SUPPORT \
+    ((LIBSPDM_ENABLE_CAPABILITY_CERT_CAP) || \
+     ((LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP)) || \
+     (LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP) || (LIBSPDM_ENABLE_CAPABILITY_PSK_CAP) || \
+     (LIBSPDM_EVENT_RECIPIENT_SUPPORT) || (LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP) || \
+     (LIBSPDM_ENABLE_CAPABILITY_ENDPOINT_INFO_CAP))
+
+/* Encapsulated requests that the Responder can send. */
+#define LIBSPDM_ENCAP_SEND_SUPPORT \
+    ((LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT) || \
+     ((LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_SEND_CHALLENGE_SUPPORT)) || \
+     (LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP) || (LIBSPDM_ENABLE_CAPABILITY_PSK_CAP) || \
+     (LIBSPDM_ENABLE_CAPABILITY_EVENT_CAP) || (LIBSPDM_SEND_GET_ENDPOINT_INFO_SUPPORT))
+
 #if LIBSPDM_FIPS_MODE
 #define LIBSPDM_FIPS_ASYM_ALGO_SUPPORT \
     ((LIBSPDM_RSA_SSA_SUPPORT) || (LIBSPDM_RSA_PSS_SUPPORT) || (LIBSPDM_ECDSA_SUPPORT) || \
@@ -80,20 +95,8 @@
     #error If PSK_CAP is enabled then at least one AEAD algorithm must also be enabled.
 #endif
 
-#if (LIBSPDM_ENABLE_CAPABILITY_CERT_CAP) && !LIBSPDM_HASH_ALGO_SUPPORT
-    #error If CERT_CAP is enabled then at least one HASH algorithm must also be enabled.
-#endif
-
-#if (LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP) && !LIBSPDM_HASH_ALGO_SUPPORT
-    #error If CHAL_CAP is enabled then at least one HASH algorithm must also be enabled.
-#endif
-
-#if (LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP) && !LIBSPDM_HASH_ALGO_SUPPORT
-    #error If KEY_EX_CAP is enabled then at least one HASH algorithm must also be enabled.
-#endif
-
-#if (LIBSPDM_ENABLE_CAPABILITY_PSK_CAP) && !LIBSPDM_HASH_ALGO_SUPPORT
-    #error If PSK_CAP is enabled then at least one HASH algorithm must also be enabled.
+#if !LIBSPDM_HASH_ALGO_SUPPORT
+    #error At least one HASH algorithm must be enabled.
 #endif
 
 #if !(LIBSPDM_ENABLE_CAPABILITY_GET_KEY_PAIR_INFO_CAP) && \
@@ -106,6 +109,11 @@
     #error If endpoint is an event recipient then ENCAP_CAP must also be enabled.
 #endif
 
+#if (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && \
+    !((LIBSPDM_ENCAP_RECEIVE_SUPPORT) || (LIBSPDM_ENCAP_SEND_SUPPORT))
+    #error If ENCAP_CAP is enabled then at least one encapsulated message must also be sent or received.
+#endif
+
 #if (LIBSPDM_SEND_GET_CERTIFICATE_SUPPORT) && !(LIBSPDM_CERT_PARSE_SUPPORT)
     #error If SEND_GET_CERTIFICATE_SUPPORT is enabled then CERT_PARSE_SUPPORT must also be enabled.
 #endif
@@ -114,8 +122,17 @@
     #error LIBSPDM_MAX_VERSION_COUNT must be between 1 and 255 inclusive.
 #endif
 
-#if (LIBSPDM_MAX_SESSION_COUNT) > 65535
-    #error LIBSPDM_MAX_SESSION_COUNT must be less than 65536.
+#if ((LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP) || (LIBSPDM_ENABLE_CAPABILITY_PSK_CAP)) && \
+    ((LIBSPDM_MAX_SESSION_COUNT) == 0)
+    #error If KEY_EX_CAP or PSK_CAP is enabled then LIBSPDM_MAX_SESSION_COUNT must be greater than 0.
+#endif
+
+#if (LIBSPDM_MAX_SESSION_COUNT) > 1000
+    #error LIBSPDM_MAX_SESSION_COUNT must not exceed 1000.
+#endif
+
+#if (LIBSPDM_ENABLE_CAPABILITY_PSK_CAP) && ((LIBSPDM_PSK_CONTEXT_LENGTH) < 32)
+    #error If PSK_CAP is enabled then LIBSPDM_PSK_CONTEXT_LENGTH must be at least 32.
 #endif
 
 #if LIBSPDM_FIPS_MODE
@@ -150,6 +167,8 @@
 #undef LIBSPDM_HASH_ALGO_SUPPORT
 #undef LIBSPDM_PQC_ASYM_ALGO_SUPPORT
 #undef LIBSPDM_KEM_ALGO_SUPPORT
+#undef LIBSPDM_ENCAP_RECEIVE_SUPPORT
+#undef LIBSPDM_ENCAP_SEND_SUPPORT
 
 #if LIBSPDM_FIPS_MODE
 #undef LIBSPDM_FIPS_ASYM_ALGO_SUPPORT

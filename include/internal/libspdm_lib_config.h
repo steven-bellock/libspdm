@@ -1,6 +1,6 @@
 /**
  *  Copyright Notice:
- *  Copyright 2021-2025 DMTF. All rights reserved.
+ *  Copyright 2021-2026 DMTF. All rights reserved.
  *  License: BSD 3-Clause License. For full text see link: https://github.com/DMTF/libspdm/blob/main/LICENSE.md
  **/
 
@@ -83,6 +83,14 @@
                               (LIBSPDM_SHA3_512_SUPPORT))
 
 #define LIBSPDM_SM3_SUPPORT (LIBSPDM_SM3_256_SUPPORT)
+
+#if ((LIBSPDM_SHA512_SUPPORT) || (LIBSPDM_SHA3_512_SUPPORT))
+#define LIBSPDM_MAX_HASH_SIZE 64
+#elif ((LIBSPDM_SHA384_SUPPORT) || (LIBSPDM_SHA3_384_SUPPORT))
+#define LIBSPDM_MAX_HASH_SIZE 48
+#elif ((LIBSPDM_SHA256_SUPPORT) || (LIBSPDM_SHA3_256_SUPPORT) || (LIBSPDM_SM3_256_SUPPORT))
+#define LIBSPDM_MAX_HASH_SIZE 32
+#endif /* LIBSPDM_MAX_HASH_SIZE */
 
 #define LIBSPDM_ML_DSA_SUPPORT ((LIBSPDM_ML_DSA_44_SUPPORT) || \
                                 (LIBSPDM_ML_DSA_65_SUPPORT) || \
