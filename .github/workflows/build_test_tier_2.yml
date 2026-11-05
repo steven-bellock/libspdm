@@ -2771,7 +2771,8 @@ jobs:
     needs: stack-usage
     if: >-
       !cancelled() && needs['stack-usage'].result == 'success'
-      && github.ref == 'refs/heads/main'
+      && (github.ref == 'refs/heads/main'
+      || github.ref == 'refs/heads/tier2-stack-usage-trial')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
