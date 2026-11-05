@@ -166,8 +166,10 @@ release does not build position-independent executables by default, so its jobs 
 as PIE executables, which succeeds only if the libraries are position-independent. Code
 configuration sweeps alter finer-grained macro values with ASAN/UBSAN/MSAN monitoring, and with
 Clang's check for implicit integer conversions that truncate a value in libspdm's own code, and the
-same configurations are built again as optimized GCC builds. If a test fails then maintainers are
-notified via the creation of a GitHub issue with a `Daily Test Failure` label.
+same configurations are built again as optimized GCC builds. Tier 2 also measures the stack frame
+of each function in `library/` with GCC in a few configurations, and publishes the measurements from
+`main` to https://dmtf.github.io/libspdm/stack_usage/. If a test fails then maintainers are notified
+via the creation of a GitHub issue with a `Daily Test Failure` label.
 Tier 2 can also be run manually with `workflow_dispatch`, on any branch and in a fork, and a test
 failure within a manual run does not open an issue. A manual run runs all of Tier 2's job families
 by default, and can leave any of them out.

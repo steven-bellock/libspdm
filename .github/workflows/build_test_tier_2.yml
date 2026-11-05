@@ -13,9 +13,12 @@
 #     as GCC Release builds, in configs-release, and a few of them with MSVC
 #     and MinGW, in windows-msvc and mingw, and
 #   - MSan on the defaults and a selection of those configurations, and ASan
-#     and UBSan with GCC and on aarch64, in the sanitizers family, and
+#     and UBSan with GCC and on aarch64, in the sanitizers family,
 #   - the libraries alone, without the unit tests, with the cross toolchains
-#     for Linux that Ubuntu packages, in the cross family.
+#     for Linux that Ubuntu packages, in the cross family, and
+#   - the stack frame of each function in library/, in a few configurations,
+#     in the stack-usage family, published from main to
+#     https://dmtf.github.io/libspdm/stack_usage/.
 #
 # Unlike Tier 1, each platform family's matrix is a cross product, so the matrix
 # itself shows that every combination is covered. The family split and the
@@ -65,6 +68,10 @@ on:
         description: 'Cross toolchains, libraries only'
         type: boolean
         default: true
+      stack-usage:
+        description: 'Stack usage of the libraries'
+        type: boolean
+        default: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -108,22 +115,26 @@ jobs:
   #
   # max-parallel applies to each job family separately, so posix, windows-msvc,
   # mingw and configs run at most 5 + 4 + 2 + 5 = 16 jobs at once. versions
-  # waits for posix and then takes over its 5, sanitizers waits for versions and
-  # mingw and then takes over their 7, configs-release waits for configs and
+  # waits for posix and then takes over its 5, stack-usage waits for mingw and
+  # then takes over its 2, sanitizers waits for versions and stack-usage and
+  # then takes over their 7, configs-release waits for configs and
   # windows-msvc and then takes over their 9, and cross waits for sanitizers
   # and configs-release and then takes over their 16. That leaves 4 of the 20
   # runners that doc/internal/continuous_integration.md assumes for pull
-  # requests and pushes. posix's riscv64 jobs run on the RISE project's RISC-V
-  # runners, not GitHub's, but they count against posix's 5 all the same. If
-  # every job took that document's worst case of 20 minutes, mingw would finish
-  # in at most five rounds, or 100 minutes, within Tier 2's two hours.
-  # windows-msvc, at 34 jobs, configs followed by configs-release, at 228, and
-  # posix followed by versions and then sanitizers, at 98, cannot meet that
-  # worst case. Their jobs take about 2 to 10 minutes, and the riscv64 jobs up
-  # to about 20, so windows-msvc finishes within about 45 minutes, configs'
-  # chain within about 60 and posix's within about 65. cross's jobs only build,
-  # so it adds about 5 minutes, and the timing report warns if a run takes
-  # longer than two hours.
+  # requests and pushes, or 3 during the minute that stack-usage-publish
+  # takes. posix's riscv64 jobs run on the RISE project's RISC-V runners, not
+  # GitHub's, but they count against posix's 5 all the same. If every job took
+  # that document's worst case of 20 minutes, mingw would finish in at most
+  # five rounds, or 100 minutes, within Tier 2's two hours, but stack-usage's
+  # two more rounds would not. windows-msvc, at 34 jobs, configs followed by
+  # configs-release, at 228, and posix followed by versions and then
+  # sanitizers, at 98, cannot meet that worst case either. Their jobs take
+  # about 2 to 10 minutes, and the riscv64 jobs up to about 20, so
+  # windows-msvc finishes within about 45 minutes, configs' chain within about
+  # 60 and posix's within about 65. stack-usage's jobs take about 3 minutes, so
+  # mingw's chain finishes within about 30. cross's jobs only build, so it
+  # adds about 5 minutes, and the timing report warns if a run takes longer
+  # than two hours.
 
   posix:
     name: ${{ format('{0}-{1}-{2}-{3}-{4}', matrix.platform, matrix.arch, matrix.tc, matrix.crypto, matrix.tgt) }}
@@ -2570,6 +2581,633 @@ jobs:
             build/CMakeCache.txt
           retention-days: 14
 
+  # The stack frame of each function in library/, as GCC reports it with
+  # -fstack-usage, in Release builds on x64, ia32 and aarch64, each with Mbed
+  # TLS, with OpenSSL and with neither RSA nor FFDHE, since the algorithms set
+  # the sizes of the largest local buffers. STACK_USAGE turns off link-time
+  # optimization, without which GCC generates the code, and so the stack
+  # usage, only when linking. Only the library/ targets are built, which takes
+  # seconds. stack-usage-publish publishes the measurements. The jobs start
+  # once mingw has finished, whether or not it passed, and run in the runners
+  # that it used, so Tier 2 never runs more jobs at once. A manual run does not
+  # wait for a family that it leaves out. The steps are cross's, without
+  # OpenSSL's build, plus Measure.
+  stack-usage:
+    name: ${{ format('stack-usage-{0}', matrix.arch) }}
+    needs: mingw
+    if: >-
+      !cancelled() && (github.repository == 'DMTF/libspdm'
+      || github.event_name != 'schedule')
+      && (github.event_name != 'workflow_dispatch' || inputs['stack-usage'])
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          # ia32 is built on x64, with the -m32 that the toolchain files add.
+          - {arch: x64, os: ubuntu-24.04}
+          - {arch: ia32, os: ubuntu-24.04}
+          - {arch: aarch64, os: ubuntu-24.04-arm}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # See the posix family.
+          submodules: false
+          persist-credentials: false
+
+      # No unit test is built, so cmocka is not fetched. Neither Mbed TLS nor
+      # OpenSSL is built either, but CMake needs their sources to configure.
+      - name: Fetch submodules
+        shell: bash
+        run: |
+          # Retry rather than fail the job on a transient fetch error.
+          fetch() {
+            local path=$1
+            shift
+            for attempt in 1 2 3; do
+              if git submodule update --init "$@" "$path"; then
+                return 0
+              fi
+              echo "fetch of $path failed, attempt $attempt"
+              sleep $((attempt * 15))
+            done
+            return 1
+          }
+
+          # libspdm builds Mbed TLS and OpenSSL from the pinned commits' sources
+          # alone, so neither their history nor their own submodules are fetched.
+          fetch os_stub/mbedtlslib/mbedtls --depth 1
+          fetch os_stub/openssllib/openssl --depth 1
+
+      - name: Install packages
+        if: matrix.arch == 'ia32'
+        shell: bash
+        run: |
+          # A stalled mirror can outlast apt-get's own timeouts, so each attempt
+          # is bounded, and a failed one is retried.
+          apt_install() {
+            for attempt in 1 2 3; do
+              if sudo timeout -k 10 300 apt-get update &&
+                 sudo timeout -k 10 300 apt-get install --no-install-recommends -y "$@"; then
+                return 0
+              fi
+              echo "apt-get install $* failed, attempt $attempt"
+              sleep $((attempt * 15))
+            done
+            return 1
+          }
+
+          # The 32-bit C library, which CMake's compiler check links with.
+          apt_install gcc-multilib
+
+      - name: Measure
+        shell: bash
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          # Every directory in library/ is a CMake target of the same name, and
+          # only those targets are built, so neither Mbed TLS nor OpenSSL is.
+          targets=()
+          for dir in library/*/; do
+            targets+=("$(basename "$dir")")
+          done
+          jobs=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc 2>/dev/null || echo 2)
+
+          mkdir -p stack-usage
+          data=stack-usage/stack-usage-$ARCH.tsv
+          meta=stack-usage/stack-usage-$ARCH.meta
+          : > "$data"
+          {
+            printf 'arch\t%s\n' "$ARCH"
+            printf 'compiler\t%s\n' "$(gcc --version | head -1)"
+            printf 'image\t%s %s\n' "${ImageOS:-unknown}" "${ImageVersion:-unknown}"
+            printf 'base_cflags\t%s\n' "$BASE_CFLAGS"
+            printf 'targets\t%s\n' "${targets[*]}"
+          } > "$meta"
+
+          # Takes the configuration's name, its CRYPTO, its extra CFLAGS and a
+          # description for the page.
+          measure() {
+            local build=build-$1
+            printf 'config\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4" >> "$meta"
+            CFLAGS="$BASE_CFLAGS $3" cmake -B "$build" -DARCH="$ARCH" -DTOOLCHAIN=GCC \
+              -DTARGET=Release -DCRYPTO="$2" -DSTACK_USAGE=ON -DDISABLE_TESTS=1
+            cmake --build "$build" --parallel "$jobs" --target "${targets[@]}"
+            local target files
+            for target in "${targets[@]}"; do
+              # GCC writes no .su file when it compiles with LTO.
+              mapfile -t files < <(find "$build/library/$target" -name '*.su' | sort)
+              if [ ${#files[@]} -eq 0 ]; then
+                echo "::error::GCC wrote no stack usage for $target in $1"
+                exit 1
+              fi
+              # Each line of a .su file holds FILE:LINE:COLUMN:FUNCTION, the
+              # frame size in bytes and its qualifier, separated by tabs.
+              awk -F '\t' -v config="$1" -v library="$target" -v root="$PWD/" '{
+                n = split($1, a, ":")
+                file = a[1]
+                if (index(file, root) == 1) file = substr(file, length(root) + 1)
+                printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", config, library, file, a[2], a[n], $2, $3
+              }' "${files[@]}" >> "$data"
+            done
+          }
+
+          measure mbedtls mbedtls "" \
+            "Mbed TLS. CMake turns off the algorithms that Mbed TLS lacks, PQC among them."
+          measure openssl openssl "" \
+            "OpenSSL, with the default configuration's algorithms, PQC included."
+          no_rsa_ffdhe=
+          for alg in RSA_SSA_2048 RSA_SSA_3072 RSA_SSA_4096 RSA_PSS_2048 RSA_PSS_3072 \
+                     RSA_PSS_4096 FFDHE_2048 FFDHE_3072 FFDHE_4096; do
+            no_rsa_ffdhe="$no_rsa_ffdhe -DLIBSPDM_${alg}_SUPPORT=0"
+          done
+          measure ecc-only mbedtls "${no_rsa_ffdhe# }" \
+            "Mbed TLS without RSA or FFDHE, so ECDSA and ECDHE are the only asymmetric algorithms."
+
+          # The largest frame and the number of frames over 512 bytes in each
+          # configuration.
+          {
+            echo "### Stack usage on $ARCH"
+            echo
+            echo "| Configuration | Functions | Largest frame | Frames over 512 bytes |"
+            echo "|---|---|---|---|"
+            awk -F '\t' '
+              !($1 in n) { order[++configs] = $1 }
+              {
+                n[$1]++
+                if ($6 + 0 > max[$1]) { max[$1] = $6 + 0; fn[$1] = $5 }
+                if ($6 + 0 > 512) big[$1]++
+              }
+              END {
+                for (i = 1; i <= configs; i++) {
+                  c = order[i]
+                  printf "| %s | %d | %d bytes, `%s` | %d |\n", c, n[c], max[c], fn[c], big[c]
+                }
+              }' "$data"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the measurements
+        uses: actions/upload-artifact@v7
+        with:
+          name: stack-usage-${{ matrix.arch }}
+          path: stack-usage/
+          if-no-files-found: error
+          # The artifact only carries the measurements to stack-usage-publish.
+          retention-days: 7
+
+  # Publishes the stack-usage family's measurements from main to
+  # https://dmtf.github.io/libspdm/stack_usage/, with the changes since the
+  # previous publication. Like code_coverage.yml, it replaces its own directory
+  # in github_pages and force-pushes a single parentless commit, so the jobs
+  # that publish in both workflows share a concurrency group, and neither drops
+  # what the other has just pushed. It is not in tier2-complete's needs, so a
+  # failure to publish does not open the Daily Test Failure issue.
+  stack-usage-publish:
+    name: Publish stack usage
+    needs: stack-usage
+    if: >-
+      !cancelled() && needs['stack-usage'].result == 'success'
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout github_pages
+        uses: actions/checkout@v7
+        with:
+          ref: github_pages
+
+      - name: Download the measurements
+        uses: actions/download-artifact@v8
+        with:
+          pattern: stack-usage-*
+          merge-multiple: true
+          path: ${{ runner.temp }}/stack-usage
+
+      # The page compares the measurements with the previous publication's
+      # data.json before it replaces the directory.
+      - name: Generate the page
+        run: |
+          python3 -I - "$RUNNER_TEMP/stack-usage" stack_usage <<'PAGE'
+          import datetime, html, json, os, shutil, sys
+
+          src, out = sys.argv[1], sys.argv[2]
+          ARCH_ORDER = ["x64", "ia32", "aarch64"]
+          # Frames larger than this are highlighted.
+          LARGE = 512
+          # The longest lists in the changes section.
+          MAX_CHANGES = 100
+          MAX_NAMES = 50
+
+          server = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
+          repo = os.environ.get("GITHUB_REPOSITORY", "DMTF/libspdm")
+          sha = os.environ.get("GITHUB_SHA", "")
+          run_url = "%s/%s/actions/runs/%s" % (server, repo, os.environ.get("GITHUB_RUN_ID", ""))
+          now = datetime.datetime.now(datetime.timezone.utc)
+
+
+          def esc(s):
+              return html.escape(str(s), quote=True)
+
+
+          # The measurements: one .meta and one .tsv file per architecture.
+          arch_info, configs = {}, {}
+          for name in sorted(os.listdir(src)):
+              if not name.endswith(".meta"):
+                  continue
+              info = {}
+              with open(os.path.join(src, name)) as f:
+                  for line in f:
+                      fields = line.rstrip("\n").split("\t")
+                      if fields[0] == "config":
+                          configs.setdefault(fields[1], {"crypto": fields[2], "cflags": fields[3],
+                                                         "description": fields[4]})
+                      else:
+                          info[fields[0]] = fields[1]
+              arch_info[info["arch"]] = info
+          archs = sorted(arch_info, key=lambda a: (ARCH_ORDER.index(a) if a in ARCH_ORDER else 99, a))
+          columns = [(a, c) for a in archs for c in configs]
+          col_index = {col: i for i, col in enumerate(columns)}
+
+          # One row per function, keyed by library, source file and function name. A
+          # function that a header defines appears in each library that emits it.
+          rows = {}
+          for arch in archs:
+              with open(os.path.join(src, "stack-usage-%s.tsv" % arch)) as f:
+                  for line in f:
+                      config, library, path, lineno, function, size, qualifier = line.rstrip("\n").split("\t")
+                      row = rows.setdefault((library, path, function), {
+                          "line": int(lineno), "bytes": [None] * len(columns),
+                          "qualifiers": [None] * len(columns)})
+                      i = col_index[(arch, config)]
+                      # A header's static function can be emitted by several files.
+                      if row["bytes"][i] is None or int(size) > row["bytes"][i]:
+                          row["bytes"][i], row["qualifiers"][i] = int(size), qualifier
+
+          # The previous publication, if any, for the changes since then.
+          previous, before = None, {}
+          try:
+              with open(os.path.join(out, "data.json")) as f:
+                  previous = json.load(f)
+              prev_cols = [tuple(c) for c in previous["columns"]]
+              for fn in previous["functions"]:
+                  key = (fn["library"], fn["file"], fn["function"])
+                  for col, size in zip(prev_cols, fn["bytes"]):
+                      if size is not None:
+                          before[key + col] = size
+          except (OSError, ValueError, KeyError, TypeError):
+              previous, before = None, {}
+
+          # Each changed function with its changes by column, the largest change first.
+          changed, added, removed = [], [], []
+          if previous is not None:
+              prev_keys = {k[:3] for k in before}
+              for key, row in rows.items():
+                  if key not in prev_keys:
+                      added.append(key)
+                      continue
+                  changes = {}
+                  for i, (col, size) in enumerate(zip(columns, row["bytes"])):
+                      old = before.get(key + col)
+                      if size is not None and old is not None and size != old:
+                          changes[i] = (old, size)
+                  if changes:
+                      changed.append((max(abs(new - old) for old, new in changes.values()), key, changes))
+              removed = sorted(prev_keys - set(rows))
+              changed.sort(key=lambda c: (-c[0], c[1]))
+              added.sort()
+
+          # The rows, largest frame first.
+          order = sorted(rows, key=lambda k: (-max(b for b in rows[k]["bytes"] if b is not None), k))
+
+
+          def source_link(path, line):
+              return '<a href="%s/%s/blob/%s/%s#L%d">%s:%d</a>' % (
+                  esc(server), esc(repo), esc(sha), esc(path), line, esc(path), line)
+
+
+          def bytes_cell(size, qualifier, delta=None):
+              if size is None:
+                  return '<td class="num none" data-v="-1">&ndash;</td>'
+              classes = ["num"]
+              if size > LARGE:
+                  classes.append("large")
+              text = str(size)
+              # An unbounded dynamic frame is only partly counted.
+              if qualifier == "dynamic":
+                  text += "*"
+              if delta:
+                  text += ' <span class="delta%s">%+d</span>' % (" down" if delta < 0 else "", delta)
+              return '<td class="%s" data-v="%d">%s</td>' % (" ".join(classes), size, text)
+
+
+          def column_header(col):
+              return "%s %s" % col
+
+
+          # The two header rows of a table with a column per architecture and
+          # configuration, after the Function and Library columns and, if asked for,
+          # Source. Sortable headers carry the index of their column.
+          def column_headers(sortable, source=False):
+              leading = ["Function", "Library"] + (["Source"] if source else [])
+              first = ['<th rowspan="2" scope="col"%s>%s</th>' % (' data-col="%d"' % i if sortable else "", name)
+                       for i, name in enumerate(leading)]
+              first += ['<th colspan="%d" scope="colgroup">%s</th>' % (len(configs), esc(arch)) for arch in archs]
+              second = ['<th class="num" scope="col" title="%s"%s>%s</th>'
+                        % (esc(column_header(col)), ' data-col="%d" data-num' % (i + len(leading)) if sortable else "",
+                           esc(col[1]))
+                        for i, col in enumerate(columns)]
+              return "<tr>%s</tr><tr>%s</tr></thead>" % ("".join(first), "".join(second))
+
+
+          parts = []
+          add = parts.append
+          short = sha[:8]
+          date = now.strftime("%d-%b-%Y %H:%M UTC")
+          commit_link = '<a href="%s/%s/commit/%s"><code>%s</code></a>' % (esc(server), esc(repo), esc(sha), esc(short))
+
+          add("""<!doctype html>
+          <html lang="en">
+          <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>libspdm stack usage</title>
+          <style>
+          :root { --fg: #1f2328; --muted: #59636e; --bg: #ffffff; --line: #d1d9e0; --alt: #f6f8fa;
+            --large: #fff1d6; --link: #0969da; --up: #b42318; --down: #116329; }
+          @media (prefers-color-scheme: dark) {
+            :root { --fg: #e6edf3; --muted: #9198a1; --bg: #0d1117; --line: #3d444d; --alt: #151b23;
+              --large: #3d2e00; --link: #4493f8; --up: #ff7b72; --down: #3fb950; }
+          }
+          * { box-sizing: border-box; }
+          body { margin: 0 auto; max-width: 1200px; padding: 16px; background: var(--bg); color: var(--fg);
+            font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+          a { color: var(--link); }
+          h1 { font-size: 1.6em; margin: 0.4em 0; }
+          h2 { font-size: 1.25em; margin: 1.6em 0 0.5em; border-bottom: 1px solid var(--line); padding-bottom: 0.2em; }
+          code, pre { font: 0.9em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+          pre { background: var(--alt); padding: 12px; overflow-x: auto; }
+          .muted { color: var(--muted); }
+          .scroll { overflow: auto; border: 1px solid var(--line); }
+          .scroll.tall { max-height: 75vh; }
+          table { border-collapse: collapse; width: 100%; }
+          th, td { padding: 4px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+          thead th { background: var(--alt); position: sticky; top: 0; z-index: 1; }
+          thead tr:nth-child(2) th { top: 2em; }
+          tbody tr:nth-child(even) td { background: var(--alt); }
+          td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+          td.large { background: var(--large) !important; font-weight: 600; }
+          td.none { color: var(--muted); }
+          th[data-col] { cursor: pointer; }
+          th[aria-sort="ascending"]::after { content: " \\25B2"; }
+          th[aria-sort="descending"]::after { content: " \\25BC"; }
+          .delta { font-size: 0.8em; color: var(--up); }
+          .delta.down { color: var(--down); }
+          .fn { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+          input[type=search] { font: inherit; padding: 4px 8px; width: min(100%, 24em); color: var(--fg);
+            background: var(--bg); border: 1px solid var(--line); }
+          .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 8px 0; }
+          </style>
+          </head>
+          <body>
+          """)
+
+          add("<h1>libspdm stack usage</h1>")
+          add("<p>The stack frame of each function in <code>library/</code>, in bytes, as GCC reports it with "
+              "<code>-fstack-usage</code>. Tier 2 measured <code>main</code> at %s on %s "
+              '(<a href="%s">run</a>, <a href="data.json">data.json</a>).</p>' % (commit_link, esc(date), esc(run_url)))
+
+          add("<ul>")
+          add("<li>Each number is the function's own frame. It does not include the functions that it calls, "
+              "so a call needs the sum of the frames along its deepest call chain.</li>")
+          add("<li>Only <code>library/</code> is measured. The cryptography wrappers and libraries, the HAL and "
+              "the Integrator's callbacks add their own frames.</li>")
+          add("<li>The builds are Release builds (<code>-Os</code>) without link-time optimization, which "
+              "<code>STACK_USAGE</code> turns off. With LTO, inlining across files can change the frames.</li>")
+          add("<li>Frames over %d bytes are highlighted. A number marked * is a frame that changes size by an "
+              "amount that GCC cannot bound, and counts only its fixed part. GCC names the parts that it splits "
+              "out of a function or specializes, such as <code>.part.0</code> and <code>.constprop.0</code>, "
+              "as functions of their own.</li>" % LARGE)
+          add("<li>The numbers depend on the compiler and on the configuration macros, which size many local "
+              "buffers.</li>")
+          add("</ul>")
+
+          add("<h2>Configurations</h2>")
+          add('<div class="scroll"><table><thead><tr><th>Name</th><th>Description</th><th>CMake</th></tr></thead><tbody>')
+          for name, cfg in configs.items():
+              cmake = "-DCRYPTO=%s" % cfg["crypto"]
+              if cfg["cflags"]:
+                  cmake += " and CFLAGS=%s" % cfg["cflags"]
+              add("<tr><td><code>%s</code></td><td>%s</td><td><code>%s</code></td></tr>"
+                  % (esc(name), esc(cfg["description"]), esc(cmake)))
+          add("</tbody></table></div>")
+
+          add('<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Architecture</th><th>Compiler</th>'
+              "<th>Runner image</th></tr></thead><tbody>")
+          for arch in archs:
+              info = arch_info[arch]
+              add("<tr><td>%s</td><td>%s</td><td>%s</td></tr>"
+                  % (esc(arch), esc(info.get("compiler", "")), esc(info.get("image", ""))))
+          add("</tbody></table></div>")
+
+          # The largest frame in each library.
+          libraries = sorted({k[0] for k in rows})
+          add("<h2>Largest frame per library</h2>")
+          add('<div class="scroll"><table><thead><tr><th rowspan="2">Library</th>')
+          for arch in archs:
+              add('<th colspan="%d">%s</th>' % (len(configs), esc(arch)))
+          add("</tr><tr>")
+          for arch, config in columns:
+              add('<th class="num">%s</th>' % esc(config))
+          add("</tr></thead><tbody>")
+
+
+          def largest(keys, i):
+              best = None
+              for k in keys:
+                  size = rows[k]["bytes"][i]
+                  if size is not None and (best is None or size > best[0]):
+                      best = (size, k[2])
+              return best
+
+
+          for library in libraries + [None]:
+              keys = [k for k in rows if library is None or k[0] == library]
+              label = "<code>%s</code>" % esc(library) if library else "<strong>All of <code>library/</code></strong>"
+              cells = []
+              for i in range(len(columns)):
+                  best = largest(keys, i)
+                  if best is None:
+                      cells.append('<td class="num none">&ndash;</td>')
+                  else:
+                      cls = "num large" if best[0] > LARGE else "num"
+                      cells.append('<td class="%s" title="%s">%d</td>' % (cls, esc(best[1]), best[0]))
+              add("<tr><td>%s</td>%s</tr>" % (label, "".join(cells)))
+          counts = []
+          for i in range(len(columns)):
+              counts.append('<td class="num">%d</td>' % sum(
+                  1 for r in rows.values() if r["bytes"][i] is not None and r["bytes"][i] > LARGE))
+          add("<tr><td>Frames over %d bytes</td>%s</tr>" % (LARGE, "".join(counts)))
+          add("</tbody></table></div>")
+          add('<p class="muted">Hover over a number for its function.</p>')
+
+          # The changes since the previous publication.
+          add("<h2>Changes</h2>")
+          if previous is None:
+              add("<p>There is no earlier publication to compare with.</p>")
+          else:
+              prev_sha = previous.get("commit", "")
+              prev_link = '<a href="%s/%s/commit/%s"><code>%s</code></a>' % (
+                  esc(server), esc(repo), esc(prev_sha), esc(prev_sha[:8]))
+              add("<p>Since %s, published on %s.</p>" % (prev_link, esc(previous.get("date", "an unknown date"))))
+              if not (changed or added or removed):
+                  add("<p>No frame changed.</p>")
+              if changed:
+                  add("<p>%d %s changed. Each changed frame shows its new size and the change.</p>"
+                      % (len(changed), "function's frames" if len(changed) == 1 else "functions' frames"))
+                  add('<div class="scroll"><table><thead>%s<tbody>' % column_headers(sortable=False))
+                  for _, key, changes in changed[:MAX_CHANGES]:
+                      cells = []
+                      for i in range(len(columns)):
+                          if i in changes:
+                              old, new = changes[i]
+                              cells.append('<td class="num">%d <span class="delta%s">%+d</span></td>'
+                                           % (new, " down" if new < old else "", new - old))
+                          else:
+                              cells.append('<td class="num none"></td>')
+                      add('<tr><td class="fn">%s</td><td>%s</td>%s</tr>' % (esc(key[2]), esc(key[0]), "".join(cells)))
+                  add("</tbody></table></div>")
+                  if len(changed) > MAX_CHANGES:
+                      add("<p>And %d more functions.</p>" % (len(changed) - MAX_CHANGES))
+              for title, keys in (("New functions", added), ("Removed functions", removed)):
+                  if keys:
+                      names = ", ".join('<span class="fn">%s</span>' % esc(k[2]) for k in keys[:MAX_NAMES])
+                      more = " and %d more" % (len(keys) - MAX_NAMES) if len(keys) > MAX_NAMES else ""
+                      add("<p>%s: %s%s.</p>" % (title, names, more))
+
+          # Every function.
+          add("<h2>All functions</h2>")
+          add('<div class="controls"><label for="filter">Filter</label>'
+              '<input id="filter" type="search" placeholder="Function, library or file">'
+              '<span id="count" class="muted" aria-live="polite">%d functions</span></div>' % len(rows))
+          add('<div class="scroll tall"><table id="functions"><thead>%s<tbody>' % column_headers(True, source=True))
+          for key in order:
+              library, path, function = key
+              row = rows[key]
+              cells = []
+              for col, size, qualifier in zip(columns, row["bytes"], row["qualifiers"]):
+                  old = before.get(key + col)
+                  delta = size - old if size is not None and old is not None and size != old else None
+                  cells.append(bytes_cell(size, qualifier, delta))
+              add('<tr><td class="fn">%s</td><td>%s</td><td>%s</td>%s</tr>'
+                  % (esc(function), esc(library), source_link(path, row["line"]), "".join(cells)))
+          add("</tbody></table></div>")
+
+          # How to measure a build.
+          first = next(iter(configs.items()))
+          targets = arch_info[archs[0]].get("targets", "")
+          base = arch_info[archs[0]].get("base_cflags", "")
+          add("<h2>Measuring a build</h2>")
+          add("<p>The <code>%s</code> configuration on %s, for example. Each <code>.su</code> file lies next to "
+              "its object file, so <code>build/library</code> holds only <code>library/</code>.</p>"
+              % (esc(first[0]), esc(archs[0])))
+          add("<pre>%s</pre>" % esc(
+              "CFLAGS='%s' cmake -B build -DARCH=%s -DTOOLCHAIN=GCC -DTARGET=Release -DCRYPTO=%s "
+              "-DSTACK_USAGE=ON -DDISABLE_TESTS=1\n"
+              "cmake --build build --target %s\n"
+              "find build/library -name '*.su' -exec cat {} + | sort -t \"$(printf '\\t')\" -k2,2nr | head"
+              % ((base + " " + first[1]["cflags"]).strip(), archs[0], first[1]["crypto"], targets)))
+
+          add("""<script>
+          (function () {
+            var table = document.getElementById("functions");
+            var body = table.tBodies[0];
+            var rows = Array.prototype.slice.call(body.rows);
+            var filter = document.getElementById("filter");
+            var count = document.getElementById("count");
+            var sorted = null, dir = 1;
+            rows.forEach(function (r) {
+              r.searchKey = [0, 1, 2].map(function (i) { return r.cells[i].textContent; }).join(" ").toLowerCase();
+            });
+            function value(row, col) {
+              var cell = row.cells[col];
+              var v = cell.getAttribute("data-v");
+              return v === null ? cell.textContent.toLowerCase() : Number(v);
+            }
+            table.tHead.addEventListener("click", function (e) {
+              var th = e.target.closest("th[data-col]");
+              if (!th) return;
+              var col = Number(th.getAttribute("data-col"));
+              dir = th === sorted ? -dir : (th.hasAttribute("data-num") ? -1 : 1);
+              if (sorted && sorted !== th) sorted.removeAttribute("aria-sort");
+              sorted = th;
+              th.setAttribute("aria-sort", dir > 0 ? "ascending" : "descending");
+              rows.sort(function (a, b) {
+                var x = value(a, col), y = value(b, col);
+                return (x < y ? -1 : x > y ? 1 : 0) * dir;
+              });
+              rows.forEach(function (r) { body.appendChild(r); });
+            });
+            filter.addEventListener("input", function () {
+              var q = filter.value.trim().toLowerCase();
+              var shown = 0;
+              rows.forEach(function (r) {
+                var hit = !q || r.searchKey.indexOf(q) >= 0;
+                r.hidden = !hit;
+                if (hit) shown++;
+              });
+              count.textContent = (q ? shown + " of " : "") + rows.length + " functions";
+            });
+          })();
+          </script>
+          </body>
+          </html>
+          """)
+
+          # The page replaces the previous one, with data.json for scripts.
+          shutil.rmtree(out, ignore_errors=True)
+          os.makedirs(out)
+          with open(os.path.join(out, "index.html"), "w") as f:
+              f.write("\n".join(parts))
+          data = {
+              "commit": sha,
+              "date": date,
+              "run": run_url,
+              "architectures": [dict(arch_info[a]) for a in archs],
+              "configurations": [dict(name=n, **c) for n, c in configs.items()],
+              "columns": [list(c) for c in columns],
+              "functions": [
+                  {"library": k[0], "file": k[1], "line": rows[k]["line"], "function": k[2],
+                   "bytes": rows[k]["bytes"], "qualifiers": rows[k]["qualifiers"]}
+                  for k in order
+              ],
+          }
+          with open(os.path.join(out, "data.json"), "w") as f:
+              json.dump(data, f, separators=(",", ":"))
+          print("%d functions in %d columns, %d changed frames, %d new and %d removed functions"
+                % (len(rows), len(columns), len(changed), len(added), len(removed)))
+          PAGE
+
+      - name: Publish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -f stack_usage
+          # github_pages holds a single parentless commit, so its history does
+          # not grow.
+          commit=$(git commit-tree "$(git write-tree)" -m "Publish stack usage.")
+          git push --force origin "$commit:refs/heads/github_pages"
+          owner=${GITHUB_REPOSITORY%%/*}
+          echo "Published to https://${owner,,}.github.io/${GITHUB_REPOSITORY#*/}/stack_usage/" >> "$GITHUB_STEP_SUMMARY"
+
   # Implements the code configuration sweeps of "Tier 2 - Daily Coverage":
   # finer-grained macro values under ASan and UBSan, on the document's reference
   # platform, Linux x64, with Clang's check for implicit conversions that
@@ -4503,14 +5141,14 @@ jobs:
   # Sanitizer runs that configs does not make: MemorySanitizer, which cannot
   # share a build with ASan, on the defaults, on Tier 1's coarse configurations
   # and on the pairwise rows of configs, and ASan and UBSan with GCC and on
-  # aarch64. The jobs start once versions and mingw have finished, whether or
-  # not they passed, and run in the runners that those families used, so Tier
-  # 2 never runs more jobs at once. A manual run does not wait for a family
-  # that it leaves out. The steps are configs', without those that no job here
-  # needs, plus Select sanitizer.
+  # aarch64. The jobs start once versions and stack-usage have finished,
+  # whether or not they passed, and run in the runners that those families
+  # used, so Tier 2 never runs more jobs at once. A manual run does not wait
+  # for a family that it leaves out. The steps are configs', without those that
+  # no job here needs, plus Select sanitizer.
   sanitizers:
     name: ${{ matrix.name }}
-    needs: [versions, mingw]
+    needs: [versions, stack-usage]
     if: >-
       !cancelled() && (github.repository == 'DMTF/libspdm'
       || github.event_name != 'schedule')
@@ -5400,7 +6038,7 @@ jobs:
   tier2-complete:
     name: Tier 2 complete
     runs-on: ubuntu-latest
-    needs: [posix, versions, windows-msvc, mingw, configs, configs-release, sanitizers, cross]
+    needs: [posix, versions, windows-msvc, mingw, stack-usage, configs, configs-release, sanitizers, cross]
     if: >-
       always() && (github.repository == 'DMTF/libspdm'
       || github.event_name != 'schedule')
@@ -5557,6 +6195,7 @@ jobs:
           || needs.versions.result != 'success'
           || needs['windows-msvc'].result != 'success'
           || needs.mingw.result != 'success'
+          || needs['stack-usage'].result != 'success'
           || needs.configs.result != 'success'
           || needs['configs-release'].result != 'success'
           || needs.sanitizers.result != 'success'
@@ -5603,11 +6242,12 @@ jobs:
           versions="${{ needs.versions.result }}"
           msvc="${{ needs['windows-msvc'].result }}"
           mingw="${{ needs.mingw.result }}"
+          stack="${{ needs['stack-usage'].result }}"
           configs="${{ needs.configs.result }}"
           release="${{ needs['configs-release'].result }}"
           sanitizers="${{ needs.sanitizers.result }}"
           cross="${{ needs.cross.result }}"
-          echo "posix=$posix versions=$versions windows-msvc=$msvc mingw=$mingw configs=$configs configs-release=$release sanitizers=$sanitizers cross=$cross"
+          echo "posix=$posix versions=$versions windows-msvc=$msvc mingw=$mingw stack-usage=$stack configs=$configs configs-release=$release sanitizers=$sanitizers cross=$cross"
           failed=
           selected=0
           # Takes the family, its result, and its input, which only a manual
@@ -5622,6 +6262,7 @@ jobs:
           check versions "$versions" "${{ inputs.versions }}"
           check windows-msvc "$msvc" "${{ inputs['windows-msvc'] }}"
           check mingw "$mingw" "${{ inputs.mingw }}"
+          check stack-usage "$stack" "${{ inputs['stack-usage'] }}"
           check configs "$configs" "${{ inputs.configs }}"
           check configs-release "$release" "${{ inputs['configs-release'] }}"
           check sanitizers "$sanitizers" "${{ inputs.sanitizers }}"

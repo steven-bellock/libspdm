@@ -177,6 +177,11 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+    # Tier 2's stack-usage-publish also force-pushes github_pages, so the jobs
+    # that publish in both workflows wait for each other.
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
     steps:
       - name: Checkout github_pages
         uses: actions/checkout@v7

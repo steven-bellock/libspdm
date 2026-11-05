@@ -604,6 +604,9 @@ For riscv64 (RISCV64 GCC): `qemu-riscv64 -L /usr/riscv64-linux-gnu <TestBinary>`
 
 ### Collect Stack Usage
 
+Tier 2 publishes the stack usage of each function in `library/` on `main` at
+https://dmtf.github.io/libspdm/stack_usage/.
+
 1) Stack usage with GCC -fstack-usage flag
 
    Build with -DSTACK_USAGE=ON
