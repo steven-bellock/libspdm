@@ -121,7 +121,7 @@ jobs:
   # windows-msvc and then takes over their 9, and cross waits for sanitizers
   # and configs-release and then takes over their 16. That leaves 4 of the 20
   # runners that doc/internal/continuous_integration.md assumes for pull
-  # requests and pushes, or 3 during the minute that stack-usage-publish
+  # requests and pushes, or 3 for the few seconds that stack-usage-publish
   # takes. posix's riscv64 jobs run on the RISE project's RISC-V runners, not
   # GitHub's, but they count against posix's 5 all the same. If every job took
   # that document's worst case of 20 minutes, mingw would finish in at most
@@ -131,8 +131,8 @@ jobs:
   # sanitizers, at 98, cannot meet that worst case either. Their jobs take
   # about 2 to 10 minutes, and the riscv64 jobs up to about 20, so
   # windows-msvc finishes within about 45 minutes, configs' chain within about
-  # 60 and posix's within about 65. stack-usage's jobs take about 3 minutes, so
-  # mingw's chain finishes within about 30. cross's jobs only build, so it
+  # 60 and posix's within about 65. stack-usage's jobs take under a minute, so
+  # mingw's chain finishes within about 25. cross's jobs only build, so it
   # adds about 5 minutes, and the timing report warns if a run takes longer
   # than two hours.
 
@@ -2582,16 +2582,17 @@ jobs:
           retention-days: 14
 
   # The stack frame of each function in library/, as GCC reports it with
-  # -fstack-usage, in Release builds on x64, ia32 and aarch64, each with Mbed
-  # TLS, with OpenSSL and with neither RSA nor FFDHE, since the algorithms set
-  # the sizes of the largest local buffers. STACK_USAGE turns off link-time
-  # optimization, without which GCC generates the code, and so the stack
-  # usage, only when linking. Only the library/ targets are built, which takes
-  # seconds. stack-usage-publish publishes the measurements. The jobs start
-  # once mingw has finished, whether or not it passed, and run in the runners
-  # that it used, so Tier 2 never runs more jobs at once. A manual run does not
-  # wait for a family that it leaves out. The steps are cross's, without
-  # OpenSSL's build, plus Measure.
+  # -fstack-usage, in Release builds on x64, ia32 and aarch64, each in three
+  # algorithm configurations, since the algorithms set the sizes of the
+  # largest local buffers, and with the transcript recorded, which compiles in
+  # the code that buffers it. STACK_USAGE turns off link-time optimization,
+  # without which GCC generates the code, and so the stack usage, only when
+  # linking. Only the library/ targets are built, which takes seconds.
+  # stack-usage-publish publishes the measurements. The jobs start once mingw
+  # has finished, whether or not it passed, and run in the runners that it
+  # used, so Tier 2 never runs more jobs at once. A manual run does not wait
+  # for a family that it leaves out. The steps are cross's, without OpenSSL's
+  # build, plus Measure.
   stack-usage:
     name: ${{ format('stack-usage-{0}', matrix.arch) }}
     needs: mingw
@@ -2619,8 +2620,9 @@ jobs:
           submodules: false
           persist-credentials: false
 
-      # No unit test is built, so cmocka is not fetched. Neither Mbed TLS nor
-      # OpenSSL is built either, but CMake needs their sources to configure.
+      # No unit test is built, so cmocka is not fetched. The builds are
+      # configured with OpenSSL, as Measure explains, and CMake needs its source
+      # to configure, though it is not built. Mbed TLS is not needed at all.
       - name: Fetch submodules
         shell: bash
         run: |
@@ -2638,9 +2640,7 @@ jobs:
             return 1
           }
 
-          # libspdm builds Mbed TLS and OpenSSL from the pinned commits' sources
-          # alone, so neither their history nor their own submodules are fetched.
-          fetch os_stub/mbedtlslib/mbedtls --depth 1
+          # Neither OpenSSL's history nor its own submodules are needed.
           fetch os_stub/openssllib/openssl --depth 1
 
       - name: Install packages
@@ -2670,12 +2670,18 @@ jobs:
           ARCH: ${{ matrix.arch }}
         run: |
           # Every directory in library/ is a CMake target of the same name, and
-          # only those targets are built, so neither Mbed TLS nor OpenSSL is.
+          # only those targets are built.
           targets=()
           for dir in library/*/; do
             targets+=("$(basename "$dir")")
           done
           jobs=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc 2>/dev/null || echo 2)
+          # CMake needs a CRYPTO value to configure, and it turns off the
+          # algorithms that the chosen library lacks, which for OpenSSL are the
+          # fewest. library/ includes nothing from the library, and no target
+          # that uses it is built. Each configuration then turns off more
+          # algorithms with libspdm's own macros.
+          options=(-DTOOLCHAIN=GCC -DTARGET=Release -DCRYPTO=openssl -DSTACK_USAGE=ON -DDISABLE_TESTS=1)
 
           mkdir -p stack-usage
           data=stack-usage/stack-usage-$ARCH.tsv
@@ -2685,17 +2691,17 @@ jobs:
             printf 'arch\t%s\n' "$ARCH"
             printf 'compiler\t%s\n' "$(gcc --version | head -1)"
             printf 'image\t%s %s\n' "${ImageOS:-unknown}" "${ImageVersion:-unknown}"
+            printf 'cmake\t%s\n' "${options[*]}"
             printf 'base_cflags\t%s\n' "$BASE_CFLAGS"
             printf 'targets\t%s\n' "${targets[*]}"
           } > "$meta"
 
-          # Takes the configuration's name, its CRYPTO, its extra CFLAGS and a
-          # description for the page.
+          # Takes the configuration's name, its macros and a description for
+          # the page.
           measure() {
             local build=build-$1
-            printf 'config\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4" >> "$meta"
-            CFLAGS="$BASE_CFLAGS $3" cmake -B "$build" -DARCH="$ARCH" -DTOOLCHAIN=GCC \
-              -DTARGET=Release -DCRYPTO="$2" -DSTACK_USAGE=ON -DDISABLE_TESTS=1
+            printf 'config\t%s\t%s\t%s\n' "$1" "$2" "$3" >> "$meta"
+            CFLAGS="$BASE_CFLAGS $2" cmake -B "$build" -DARCH="$ARCH" "${options[@]}"
             cmake --build "$build" --parallel "$jobs" --target "${targets[@]}"
             local target files
             for target in "${targets[@]}"; do
@@ -2716,17 +2722,29 @@ jobs:
             done
           }
 
-          measure mbedtls mbedtls "" \
-            "Mbed TLS. CMake turns off the algorithms that Mbed TLS lacks, PQC among them."
-          measure openssl openssl "" \
-            "OpenSSL, with the default configuration's algorithms, PQC included."
-          no_rsa_ffdhe=
-          for alg in RSA_SSA_2048 RSA_SSA_3072 RSA_SSA_4096 RSA_PSS_2048 RSA_PSS_3072 \
-                     RSA_PSS_4096 FFDHE_2048 FFDHE_3072 FFDHE_4096; do
-            no_rsa_ffdhe="$no_rsa_ffdhe -DLIBSPDM_${alg}_SUPPORT=0"
-          done
-          measure ecc-only mbedtls "${no_rsa_ffdhe# }" \
-            "Mbed TLS without RSA or FFDHE, so ECDSA and ECDHE are the only asymmetric algorithms."
+          # Prints a macro that turns off each named algorithm.
+          off() {
+            local alg
+            for alg in "$@"; do
+              printf ' -DLIBSPDM_%s_SUPPORT=0' "$alg"
+            done
+          }
+          pqc=$(off ML_DSA_44 ML_DSA_65 ML_DSA_87 \
+            SLH_DSA_SHA2_128S SLH_DSA_SHAKE_128S SLH_DSA_SHA2_128F SLH_DSA_SHAKE_128F \
+            SLH_DSA_SHA2_192S SLH_DSA_SHAKE_192S SLH_DSA_SHA2_192F SLH_DSA_SHAKE_192F \
+            SLH_DSA_SHA2_256S SLH_DSA_SHAKE_256S SLH_DSA_SHA2_256F SLH_DSA_SHAKE_256F \
+            ML_KEM_512 ML_KEM_768 ML_KEM_1024)
+          not_ecc=$(off RSA_SSA_2048 RSA_SSA_3072 RSA_SSA_4096 RSA_PSS_2048 RSA_PSS_3072 \
+            RSA_PSS_4096 FFDHE_2048 FFDHE_3072 FFDHE_4096 EDDSA_ED25519 EDDSA_ED448 SM2_DSA_P256)
+          # Recording the transcript compiles in the code that buffers it.
+          transcript=-DLIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT=1
+
+          measure all "$transcript" \
+            "Every algorithm that the CMake build supports, PQC included."
+          measure no-pqc "$transcript$pqc" \
+            "Without ML-DSA, SLH-DSA or ML-KEM."
+          measure ecc-only "$transcript$pqc$not_ecc" \
+            "ECDSA and ECDHE are the only asymmetric algorithms."
 
           # The largest frame and the number of frames over 512 bytes in each
           # configuration.
@@ -2829,8 +2847,7 @@ jobs:
                   for line in f:
                       fields = line.rstrip("\n").split("\t")
                       if fields[0] == "config":
-                          configs.setdefault(fields[1], {"crypto": fields[2], "cflags": fields[3],
-                                                         "description": fields[4]})
+                          configs.setdefault(fields[1], {"cflags": fields[2], "description": fields[3]})
                       else:
                           info[fields[0]] = fields[1]
               arch_info[info["arch"]] = info
@@ -2853,36 +2870,54 @@ jobs:
                       if row["bytes"][i] is None or int(size) > row["bytes"][i]:
                           row["bytes"][i], row["qualifiers"][i] = int(size), qualifier
 
-          # The previous publication, if any, for the changes since then.
-          previous, before = None, {}
+          # The previous publication, if any, for the changes since then. Only the
+          # configurations whose macros have not changed are compared.
+          previous, before, compared, prev_compilers = None, {}, set(), {}
           try:
               with open(os.path.join(out, "data.json")) as f:
                   previous = json.load(f)
+              prev_cflags = {c["name"]: c.get("cflags") for c in previous["configurations"]}
+              compared = {name for name, cfg in configs.items() if prev_cflags.get(name) == cfg["cflags"]}
               prev_cols = [tuple(c) for c in previous["columns"]]
               for fn in previous["functions"]:
                   key = (fn["library"], fn["file"], fn["function"])
                   for col, size in zip(prev_cols, fn["bytes"]):
-                      if size is not None:
+                      if size is not None and col[1] in compared:
                           before[key + col] = size
+              prev_compilers = {a["arch"]: a.get("compiler") for a in previous["architectures"]}
           except (OSError, ValueError, KeyError, TypeError):
-              previous, before = None, {}
+              previous, before, compared, prev_compilers = None, {}, set(), {}
+
+          notes = []
+          if previous is not None:
+              for name in configs:
+                  if name not in compared:
+                      notes.append("The <code>%s</code> configuration is new or has changed, so it is not compared."
+                                   % esc(name))
+              for arch in archs:
+                  old, new = prev_compilers.get(arch), arch_info[arch].get("compiler")
+                  if old and old != new:
+                      notes.append("The compiler for %s changed from %s to %s, which can change frames without a "
+                                   "change to the source." % (esc(arch), esc(old), esc(new)))
 
           # Each changed function with its changes by column, the largest change first.
           changed, added, removed = [], [], []
-          if previous is not None:
+          if compared:
+              compared_cols = [i for i, col in enumerate(columns) if col[1] in compared]
               prev_keys = {k[:3] for k in before}
-              for key, row in rows.items():
+              present = {key for key, row in rows.items() if any(row["bytes"][i] is not None for i in compared_cols)}
+              for key in present:
                   if key not in prev_keys:
                       added.append(key)
                       continue
                   changes = {}
-                  for i, (col, size) in enumerate(zip(columns, row["bytes"])):
-                      old = before.get(key + col)
+                  for i in compared_cols:
+                      size, old = rows[key]["bytes"][i], before.get(key + columns[i])
                       if size is not None and old is not None and size != old:
                           changes[i] = (old, size)
                   if changes:
                       changed.append((max(abs(new - old) for old, new in changes.values()), key, changes))
-              removed = sorted(prev_keys - set(rows))
+              removed = sorted(prev_keys - present)
               changed.sort(key=lambda c: (-c[0], c[1]))
               added.sort()
 
@@ -2989,8 +3024,8 @@ jobs:
           add("<ul>")
           add("<li>Each number is the function's own frame. It does not include the functions that it calls, "
               "so a call needs the sum of the frames along its deepest call chain.</li>")
-          add("<li>Only <code>library/</code> is measured. The cryptography wrappers and libraries, the HAL and "
-              "the Integrator's callbacks add their own frames.</li>")
+          add("<li>Only <code>library/</code> is measured. The cryptography and HAL functions that it calls, "
+              "and the Integrator's callbacks, add their own frames.</li>")
           add("<li>The builds are Release builds (<code>-Os</code>) without link-time optimization, which "
               "<code>STACK_USAGE</code> turns off. With LTO, inlining across files can change the frames.</li>")
           add("<li>Frames over %d bytes are highlighted. A number marked * is a frame that changes size by an "
@@ -3002,13 +3037,16 @@ jobs:
           add("</ul>")
 
           add("<h2>Configurations</h2>")
-          add('<div class="scroll"><table><thead><tr><th>Name</th><th>Description</th><th>CMake</th></tr></thead><tbody>')
+          add("<p>Each configuration sets <code>LIBSPDM_RECORD_TRANSCRIPT_DATA_SUPPORT</code> to 1, which compiles "
+              "in the code that buffers the transcript, and turns off the algorithms that it leaves out. Every other "
+              "macro keeps its default from <code>spdm_lib_config.h</code>.</p>")
+          add('<div class="scroll"><table><thead><tr><th>Name</th><th>Description</th><th>Macros</th></tr></thead><tbody>')
           for name, cfg in configs.items():
-              cmake = "-DCRYPTO=%s" % cfg["crypto"]
-              if cfg["cflags"]:
-                  cmake += " and CFLAGS=%s" % cfg["cflags"]
-              add("<tr><td><code>%s</code></td><td>%s</td><td><code>%s</code></td></tr>"
-                  % (esc(name), esc(cfg["description"]), esc(cmake)))
+              macros = cfg["cflags"].split()
+              add("<tr><td><code>%s</code></td><td>%s</td><td><details><summary>%d %s</summary><code>%s</code>"
+                  "</details></td></tr>"
+                  % (esc(name), esc(cfg["description"]), len(macros), "macro" if len(macros) == 1 else "macros",
+                     "<br>".join(esc(m) for m in macros)))
           add("</tbody></table></div>")
 
           add('<div class="scroll" style="margin-top:12px"><table><thead><tr><th>Architecture</th><th>Compiler</th>'
@@ -3069,7 +3107,9 @@ jobs:
               prev_link = '<a href="%s/%s/commit/%s"><code>%s</code></a>' % (
                   esc(server), esc(repo), esc(prev_sha), esc(prev_sha[:8]))
               add("<p>Since %s, published on %s.</p>" % (prev_link, esc(previous.get("date", "an unknown date"))))
-              if not (changed or added or removed):
+              for note in notes:
+                  add("<p>%s</p>" % note)
+              if compared and not (changed or added or removed):
                   add("<p>No frame changed.</p>")
               if changed:
                   add("<p>%d %s changed. Each changed frame shows its new size and the change.</p>"
@@ -3113,19 +3153,19 @@ jobs:
           add("</tbody></table></div>")
 
           # How to measure a build.
-          first = next(iter(configs.items()))
-          targets = arch_info[archs[0]].get("targets", "")
-          base = arch_info[archs[0]].get("base_cflags", "")
+          first_name, first_cfg = next(iter(configs.items()))
+          info = arch_info[archs[0]]
           add("<h2>Measuring a build</h2>")
-          add("<p>The <code>%s</code> configuration on %s, for example. Each <code>.su</code> file lies next to "
-              "its object file, so <code>build/library</code> holds only <code>library/</code>.</p>"
-              % (esc(first[0]), esc(archs[0])))
+          add("<p>The <code>%s</code> configuration on %s, for example. CMake needs a <code>CRYPTO</code> value, "
+              "and that library's submodule, to configure, but building only the <code>library/</code> targets "
+              "compiles nothing from it. Each <code>.su</code> file lies next to its object file, so "
+              "<code>build/library</code> holds only <code>library/</code>.</p>" % (esc(first_name), esc(archs[0])))
           add("<pre>%s</pre>" % esc(
-              "CFLAGS='%s' cmake -B build -DARCH=%s -DTOOLCHAIN=GCC -DTARGET=Release -DCRYPTO=%s "
-              "-DSTACK_USAGE=ON -DDISABLE_TESTS=1\n"
+              "CFLAGS='%s' cmake -B build -DARCH=%s %s\n"
               "cmake --build build --target %s\n"
               "find build/library -name '*.su' -exec cat {} + | sort -t \"$(printf '\\t')\" -k2,2nr | head"
-              % ((base + " " + first[1]["cflags"]).strip(), archs[0], first[1]["crypto"], targets)))
+              % ((info.get("base_cflags", "") + " " + first_cfg["cflags"]).strip(), archs[0], info.get("cmake", ""),
+                 info.get("targets", ""))))
 
           add("""<script>
           (function () {
@@ -3182,6 +3222,7 @@ jobs:
               "commit": sha,
               "date": date,
               "run": run_url,
+              "cmake": arch_info[archs[0]].get("cmake", ""),
               "architectures": [dict(arch_info[a]) for a in archs],
               "configurations": [dict(name=n, **c) for n, c in configs.items()],
               "columns": [list(c) for c in columns],
