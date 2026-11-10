@@ -236,6 +236,16 @@ void libspdm_register_key_update_callback_func(
  * be processed. libspdm then ignores terminate_flow, encap_request_size and encap_request, and
  * sends the response to the Requester itself.
  *
+ * Otherwise this function may produce an ERROR message in place of an encapsulated request, such
+ * as ERROR(InvalidPolicy) to reject the Requester's encapsulated response. libspdm sends it to the
+ * Requester and terminates the encapsulated flow.
+ *
+ * A LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH or LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH flow fails if it
+ * terminates with an error, whether that error comes from the Requester, from libspdm or from
+ * this function. The Requester is then not authenticated, so libspdm discards the certificate
+ * chains that the flow retrieved. A failed LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH flow ends with an
+ * ERROR response, after which libspdm terminates the session.
+ *
  * @param  spdm_context           A pointer to the SPDM context.
  * @param  session_id             If non-NULL, the session ID.
  * @param  encap_flow_type        One of

@@ -86,10 +86,10 @@ terminates the flow, so here too the handler cannot continue it. A handler can t
 reason, as the examples below do.
 
 libspdm terminates the flow with an `ENCAPSULATED_RESPONSE_ACK` that carries no further request,
-and clears its `Param2`. The session-based mutual authentication flow is the exception: its final
-`ENCAPSULATED_RESPONSE_ACK` must designate the Requester's certificate slot, so libspdm sets
-`Param2` to `2` and sends the slot held by `LIBSPDM_DATA_SESSION_ENCAP_REQ_SLOT_ID`. That slot is
-`0` unless the Integrator has changed it.
+and clears its `Param2`. The session-based mutual authentication flow is the exception: the
+Requester has not completed mutual authentication, so session establishment halts. libspdm
+responds with `ERROR(Unspecified)` instead, and terminates the session once that response has been
+encoded. See Rejecting the Requester below.
 
 `ErrorCode == ResponseNotReady` is the one value that does not mean the operation has failed. The
 Requester is asking for more time rather than declining the request, and the encapsulated request
@@ -109,6 +109,26 @@ not resume the flow in the following cases:
 
 In these cases the Integrator should release its per-flow state as it would for any other
 `ErrorCode`.
+
+### Rejecting the Requester
+
+The handler can reject the Requester's encapsulated response, for example a certificate chain that
+does not satisfy the Integrator's policy, by writing an `ERROR` message such as
+`ERROR(InvalidPolicy)` into `encap_request` in place of a request. libspdm sends that `ERROR` to the
+Requester and terminates the flow.
+
+A mutual authentication flow fails whenever it terminates with an error: the handler rejected the
+Requester or returned an error itself, libspdm could not process the Requester's encapsulated
+response, or the Requester returned an encapsulated `ERROR` other than a `ResponseNotReady` that
+libspdm resumes. The Requester is then not authenticated, so libspdm discards the certificate chains
+that the flow retrieved, and no later `CHALLENGE_AUTH` or `FINISH` signature can be verified against
+them. For session-based mutual authentication libspdm also terminates the
+session once the `ERROR` response has been encoded, so the session never reaches the application
+phase. The session state callback is notified with `LIBSPDM_SESSION_STATE_NOT_STARTED`.
+
+In the session-based flow the Responder requested mutual authentication in `KEY_EXCHANGE_RSP`, so
+the handler must issue a request when the Requester sends `GET_ENCAPSULATED_REQUEST`. Ending the
+flow there without a request is also a failure.
 
 ## Encapsulated Flows
 
@@ -219,9 +239,8 @@ libspdm_return_t encap_flow_handler(
         /* The Requester returned an encapsulated ERROR, whose ErrorCode is in error_code, or its
          * encapsulated response could not be processed. If encap_response_status is
          * LIBSPDM_STATUS_NOT_READY_PEER then libspdm resumes the flow later, except in the cases
-         * listed under Encapsulated Errors above. Otherwise the flow ends here without the
-         * Requester's certificate chain, although after an encapsulated ERROR libspdm still
-         * designates a certificate slot in the final ENCAPSULATED_RESPONSE_ACK. */
+         * listed under Encapsulated Errors above. Otherwise mutual authentication has failed, and
+         * libspdm terminates the session. */
         return LIBSPDM_STATUS_SUCCESS;
     }
 
@@ -240,11 +259,19 @@ libspdm_return_t encap_flow_handler(
                                                          sizeof(cert_chain), cert_chain,
                                                          encap_request_size, encap_request);
     case SPDM_GET_CERTIFICATE: {
-        /* The certificate chain has been retrieved, so designate the slot that the Requester
-         * must sign FINISH with. KEY_EXCHANGE_RSP.SlotIDParam could not convey it, so libspdm
-         * sends it in the final ENCAPSULATED_RESPONSE_ACK. */
         libspdm_data_parameter_t parameter;
         uint8_t slot_id = 5;
+
+        if (!integrator_accepts_cert_chain(spdm_context, session_id, cert_chain)) {
+            /* Reject the Requester. libspdm sends this ERROR, discards the certificate chain and
+             * terminates the session. See Rejecting the Requester above. */
+            return libspdm_generate_error_response(spdm_context, SPDM_ERROR_CODE_INVALID_POLICY,
+                                                   0, encap_request_size, encap_request);
+        }
+
+        /* The certificate chain has been retrieved and accepted, so designate the slot that the
+         * Requester must sign FINISH with. KEY_EXCHANGE_RSP.SlotIDParam could not convey it, so
+         * libspdm sends it in the final ENCAPSULATED_RESPONSE_ACK. */
 
         libspdm_zero_mem(&parameter, sizeof(parameter));
         parameter.location = LIBSPDM_DATA_LOCATION_SESSION;
