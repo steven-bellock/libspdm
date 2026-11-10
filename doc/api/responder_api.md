@@ -339,13 +339,17 @@ Specifies the encapsulated flow that is in progress. Its value is one of
 The request code of the encapsulated request whose response has just been processed. Its value is 0
 when libspdm is responding to `GET_ENCAPSULATED_REQUEST`.
 
+**encap_response_status**<br/>
+The status of processing the Requester's encapsulated response to `last_request_code`. Its value is
+`LIBSPDM_STATUS_SUCCESS` when `last_request_code` is 0. If it is an error then the encapsulated flow
+terminates once this function returns.
+
 **error_code**<br/>
-If the Requester delivered an encapsulated `ERROR` then its `ErrorCode`, and the encapsulated
-flow terminates once this function returns. Its value is 0 otherwise.
+If the Requester delivered an encapsulated `ERROR` then its `ErrorCode`. Its value is 0 otherwise.
 
 **terminate_flow**<br/>
 Its value is false on input. On output, set to true to end the encapsulated flow.
-`encap_request_size` is then ignored. It must be set to true when `error_code` is non-zero.
+`encap_request_size` is then ignored.
 
 **encap_request_size**<br/>
 On input, indicates the size, in bytes, of the buffer in which the encapsulated request will be
@@ -364,10 +368,23 @@ libspdm does not call this function when it determines the next message itself: 
 `RESPOND_IF_READY`, or when it must terminate the flow on the Responder's behalf.
 <br/><br/>
 It is called when the Requester delivers an encapsulated `ERROR`, including
-`ErrorCode=ResponseNotReady`, so that the Integrator learns why the flow ended. libspdm then
-terminates the flow by clearing `ENCAPSULATED_RESPONSE_ACK.Param2`. For `ResponseNotReady` the
-outstanding request is retained and reissued with `RESPOND_IF_READY` when the Requester returns
-with `GET_ENCAPSULATED_REQUEST`.
+`ErrorCode=ResponseNotReady`, so that the Integrator learns why the flow ended.
+`encap_response_status` is then `LIBSPDM_STATUS_NOT_READY_PEER` for `ResponseNotReady`,
+`LIBSPDM_STATUS_BUSY_PEER` for `Busy`, `LIBSPDM_STATUS_SESSION_MSG_ERROR` for `DecryptError`, and
+`LIBSPDM_STATUS_ERROR_PEER` for any other `ErrorCode`. libspdm terminates the flow by clearing
+`ENCAPSULATED_RESPONSE_ACK.Param2`. For `ResponseNotReady` the outstanding request is retained and
+reissued with `RESPOND_IF_READY` when the Requester returns with `GET_ENCAPSULATED_REQUEST`.
+<br/><br/>
+It is also called when libspdm cannot process the Requester's encapsulated response, for example
+because it is malformed, its signature does not verify, or it does not fit in the buffer that the
+Integrator supplied, and when libspdm cannot build the next part of a multi-part request.
+`encap_response_status` is then the error, and `error_code` is 0 unless the Requester delivered a
+malformed encapsulated `ERROR`. libspdm sends an `ERROR` response to the Requester and terminates
+the flow.
+<br/><br/>
+In either case the Integrator cannot continue the flow, so libspdm ignores `terminate_flow`,
+`encap_request_size` and the contents of `encap_request`, and the function should not produce a
+request.
 <br/><br/>
 
 
