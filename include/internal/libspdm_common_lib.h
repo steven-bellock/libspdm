@@ -501,6 +501,9 @@ typedef struct {
     size_t payload_buffer_size;
     size_t payload_buffer_max_size;
     bool use_large_cert_chain;
+    /* The slots whose certificate chain this flow has recorded, so that a mutual authentication
+     * flow that fails can discard them. */
+    uint8_t recorded_cert_chain_slot_mask;
     libspdm_encap_flow_type_t flow_type;
 #if LIBSPDM_RESPOND_IF_READY_SUPPORT
     bool response_not_ready;
@@ -656,6 +659,10 @@ typedef struct {
 
     /* Cache latest session ID for HANDSHAKE_IN_THE_CLEAR */
     uint32_t latest_session_id;
+
+    /* The session that libspdm_build_response terminates once the response it is building has
+     * been encoded, or INVALID_SESSION_ID (responder only). */
+    uint32_t session_id_to_terminate;
 
     /* Register for Responder state, be initial to Normal (responder only) */
     libspdm_response_state_t response_state;

@@ -2424,6 +2424,98 @@ static void libspdm_test_responder_receive_send_rsp_case27(void** state)
 #endif
 }
 
+/**
+ * Test 28: session-based mutual authentication with the handshake in the clear, where the
+ * Integrator's handler fails to issue the first encapsulated request.
+ * Expected behavior: libspdm_build_response() sends ERROR(Unspecified). The flow has failed, so
+ * once the ERROR has been encoded libspdm terminates the session, which notifies the session state
+ * callback of LIBSPDM_SESSION_STATE_NOT_STARTED.
+ * Skipped if LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP, LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP or
+ * LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP is not set.
+ **/
+static void libspdm_test_responder_receive_send_rsp_case28(void **state)
+{
+#if (LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP) && (LIBSPDM_ENABLE_CAPABILITY_ENCAP_CAP) && \
+    (LIBSPDM_ENABLE_CAPABILITY_KEY_EX_CAP)
+    libspdm_return_t status;
+    libspdm_test_context_t *spdm_test_context;
+    libspdm_context_t *spdm_context;
+    libspdm_session_info_t *session_info;
+    spdm_message_header_t spdm_request;
+    spdm_error_response_t *spdm_response;
+    void *message;
+    size_t message_size;
+    uint8_t *response;
+    size_t response_size;
+    uint32_t transport_header_size;
+    uint32_t session_id;
+
+    spdm_test_context = *state;
+    spdm_context = spdm_test_context->spdm_context;
+    spdm_test_context->case_id = 28;
+    session_id = 0xFFFFFFFF;
+
+    set_basic_mut_auth_state(spdm_context);
+    libspdm_register_encap_flow_handler(spdm_context, receive_send_encap_handler);
+    libspdm_register_session_state_callback_func(spdm_context,
+                                                 libspdm_test_session_state_callback);
+    spdm_context->connection_info.capability.flags |=
+        SPDM_GET_CAPABILITIES_REQUEST_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;
+    spdm_context->local_context.capability.flags |=
+        SPDM_GET_CAPABILITIES_RESPONSE_FLAGS_HANDSHAKE_IN_THE_CLEAR_CAP;
+    spdm_context->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_NONE;
+    spdm_context->encap_context.has_last_encap_request = false;
+
+    /* The state that KEY_EXCHANGE_RSP with MutAuthRequested bit 1 leaves behind. */
+    session_info = &spdm_context->session_info[0];
+    libspdm_session_info_init(spdm_context, session_info, session_id,
+                              SECURED_SPDM_VERSION_11 << SPDM_VERSION_NUMBER_SHIFT_BIT, false);
+    libspdm_secured_message_set_session_state(session_info->secured_message_context,
+                                              LIBSPDM_SESSION_STATE_HANDSHAKING);
+    spdm_context->latest_session_id = session_id;
+    session_info->mut_auth_requested =
+        SPDM_KEY_EXCHANGE_RESPONSE_MUT_AUTH_REQUESTED_WITH_ENCAP_REQUEST;
+    session_info->encap_context.flow_type = LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH;
+
+    libspdm_zero_mem(&spdm_request, sizeof(spdm_request));
+    spdm_request.spdm_version = SPDM_MESSAGE_VERSION_11;
+    spdm_request.request_response_code = SPDM_GET_ENCAPSULATED_REQUEST;
+    libspdm_copy_mem(spdm_context->last_spdm_request,
+                     libspdm_get_scratch_buffer_last_spdm_request_capacity(spdm_context),
+                     &spdm_request, sizeof(spdm_request));
+    spdm_context->last_spdm_request_size = sizeof(spdm_request);
+    spdm_context->last_spdm_request_session_id_valid = false;
+
+    m_session_state_callback_count = 0;
+    m_session_state_callback_last_state = LIBSPDM_SESSION_STATE_HANDSHAKING;
+
+    libspdm_acquire_sender_buffer(spdm_context, &message_size, (void **)&message);
+    response = message;
+    response_size = message_size;
+    libspdm_zero_mem(response, response_size);
+
+    status = libspdm_build_response(spdm_context, NULL, false,
+                                    &response_size, (void **)&response);
+    assert_int_equal(status, LIBSPDM_STATUS_SUCCESS);
+
+    transport_header_size = spdm_context->local_context.capability.transport_header_size;
+    spdm_response = (spdm_error_response_t *)((uint8_t *)message + transport_header_size);
+    assert_int_equal(spdm_response->header.request_response_code, SPDM_ERROR);
+    assert_int_equal(spdm_response->header.param1, SPDM_ERROR_CODE_UNSPECIFIED);
+
+    /* The session that the flow belonged to has ended. */
+    assert_null(libspdm_get_session_info_via_session_id(spdm_context, session_id));
+    assert_int_equal(spdm_context->session_id_to_terminate, INVALID_SESSION_ID);
+    assert_int_equal(m_session_state_callback_count, 1);
+    assert_int_equal(m_session_state_callback_last_state, LIBSPDM_SESSION_STATE_NOT_STARTED);
+
+    libspdm_release_sender_buffer(spdm_context);
+    libspdm_register_session_state_callback_func(spdm_context, NULL);
+#else
+    skip();
+#endif
+}
+
 
 int libspdm_rsp_receive_send_test(void)
 {
@@ -2528,6 +2620,9 @@ int libspdm_rsp_receive_send_test(void)
                                libspdm_unit_test_reset_context),
         /* a large response is bound to the session of the request that produced it */
         cmocka_unit_test_setup(libspdm_test_responder_receive_send_rsp_case27,
+                               libspdm_unit_test_reset_context),
+        /* a failed session mutual auth flow terminates the session after the response */
+        cmocka_unit_test_setup(libspdm_test_responder_receive_send_rsp_case28,
                                libspdm_unit_test_reset_context),
     };
 

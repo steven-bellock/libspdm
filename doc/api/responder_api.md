@@ -394,6 +394,23 @@ Integrator learns that the Requester is authenticated. libspdm then terminates t
 `ENCAPSULATED_RESPONSE_ACK.Param2`, and ignores the return value, `terminate_flow`,
 `encap_request_size` and the contents of `encap_request`.
 <br/><br/>
+Otherwise the Integrator can reject the Requester's encapsulated response, for example because its
+certificate chain does not satisfy the Integrator's policy, by writing an `ERROR` message such as
+`ERROR(InvalidPolicy)` into `encap_request` instead of a request. libspdm sends that `ERROR` to the
+Requester and terminates the flow.
+<br/><br/>
+A mutual authentication flow, `LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH` or
+`LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH`, fails when it terminates with an error, whether the Requester
+delivered an encapsulated `ERROR` other than a `ResponseNotReady` that libspdm resumes, libspdm
+could not process the Requester's encapsulated response, or this function returned an error or
+produced an `ERROR` message. The Requester is then not authenticated, so libspdm discards the
+certificate chains that the flow retrieved. A failed `LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH` flow ends
+with an `ERROR` response, rather than with an `ENCAPSULATED_RESPONSE_ACK` that designates the
+Requester's certificate slot, and once that response has been encoded libspdm terminates the
+session, so the session cannot be established. A `LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH` flow cannot
+fail once the `CHALLENGE_AUTH` signature has been verified, so the Integrator rejects the Requester
+before it issues `CHALLENGE`.
+<br/><br/>
 
 
 ---
