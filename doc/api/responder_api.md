@@ -393,11 +393,13 @@ certificate chain does not satisfy the Integrator's policy, by writing an `ERROR
 terminates the flow.
 <br/><br/>
 A mutual authentication flow fails if it terminates with an error, whether that error comes from
-libspdm or from this function. The Requester is then not authenticated, so libspdm discards the
-certificate chains that the flow retrieved. A failed `LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH` flow ends
-with an `ERROR` response, after which libspdm terminates the session. A
-`LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH` flow cannot fail once the `CHALLENGE_AUTH` signature has been
-verified, so the Integrator rejects the Requester before it issues `CHALLENGE`.
+the Requester, other than a `ResponseNotReady` that libspdm resumes, from libspdm or from this
+function. The Requester is then not authenticated, so libspdm discards the certificate chains that
+the flow retrieved. A failed `LIBSPDM_ENCAP_FLOW_SESS_MUT_AUTH` flow ends with an `ERROR` response,
+or with an `ENCAPSULATED_RESPONSE_ACK` that carries no request if the Requester returned
+`ResponseNotReady`, and libspdm then terminates the session. A `LIBSPDM_ENCAP_FLOW_BASIC_MUT_AUTH`
+flow cannot fail once the `CHALLENGE_AUTH` signature has been verified, so the Integrator rejects
+the Requester before it issues `CHALLENGE`.
 <br/><br/>
 
 
