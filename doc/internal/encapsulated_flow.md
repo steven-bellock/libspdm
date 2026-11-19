@@ -71,10 +71,10 @@ the Requester fails, the Integrator would send an `InvalidPolicy` or `Unspecifie
 Requester, and both the encapsulated flow and session establishment would halt.
 
 libspdm treats every failure of a mutual authentication flow this way, whether the Integrator's
-handler fails or libspdm cannot process the Requester's encapsulated response. It discards the
-certificate chains that the flow retrieved, and for session-based mutual authentication it
-terminates the session once the `ERROR` response has been encoded with the session's handshake
-keys, as it does after `END_SESSION_ACK`.
+handler rejects the Requester or libspdm cannot process the Requester's encapsulated response. It
+discards the certificate chains that the flow retrieved, and for session-based mutual
+authentication it terminates the session once the `ERROR` response has been encoded with the
+session's handshake keys, as it does after `END_SESSION_ACK`.
 
 ### Secure Session Management
 
