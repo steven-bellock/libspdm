@@ -229,7 +229,6 @@ void libspdm_register_key_update_callback_func(
  * - when a multi-part GET_CERTIFICATE or KEY_UPDATE is still in progress
  * - when the outstanding request is reissued with RESPOND_IF_READY after the Requester delivered
  *   an encapsulated ERROR(ResponseNotReady)
- * - when the flow is one that libspdm must terminate on the Responder's behalf
  *
  * See https://github.com/DMTF/libspdm/blob/main/doc/encapsulated_flow_user_guide.md for how it is
  * called in each encapsulated flow.
