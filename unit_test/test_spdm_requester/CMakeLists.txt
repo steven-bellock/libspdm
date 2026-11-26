@@ -69,6 +69,7 @@ target_sources(test_spdm_requester
         error_test/encap_supported_event_types_err.c
         error_test/encap_subscribe_event_types_ack_err.c
         error_test/encap_certificate_err.c
+        error_test/encap_challenge_auth_err.c
         error_test/get_csr_err.c
         error_test/get_measurement_extension_log_err.c
         error_test/psk_exchange_err.c

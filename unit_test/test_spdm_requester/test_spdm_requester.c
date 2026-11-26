@@ -67,6 +67,7 @@ int libspdm_req_encap_certificate_error_test(void);
 #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */
 #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP
 int libspdm_req_encap_challenge_auth_test(void);
+int libspdm_req_encap_challenge_auth_error_test(void);
 #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */
 #endif /* LIBSPDM_ENABLE_CAPABILITY_MUT_AUTH_CAP */
 #if LIBSPDM_EVENT_RECIPIENT_SUPPORT
@@ -262,6 +263,9 @@ int main(void)
     #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */
     #if LIBSPDM_ENABLE_CAPABILITY_CHAL_CAP
     if (libspdm_req_encap_challenge_auth_test() != 0) {
+        return_value = 1;
+    }
+    if (libspdm_req_encap_challenge_auth_error_test() != 0) {
         return_value = 1;
     }
     #endif /* LIBSPDM_ENABLE_CAPABILITY_CERT_CAP */

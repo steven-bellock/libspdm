@@ -323,6 +323,8 @@ static void req_encap_challenge_auth_case6(void **state)
 
     spdm_context->local_context.capability.flags = 0;
     spdm_context->local_context.capability.flags |= SPDM_GET_CAPABILITIES_REQUEST_FLAGS_CHAL_CAP;
+    spdm_context->local_context.capability.flags |=
+        SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP;
 
     spdm_context->connection_info.connection_state = LIBSPDM_CONNECTION_STATE_NEGOTIATED;
     spdm_context->connection_info.algorithm.base_hash_algo = m_libspdm_use_hash_algo;

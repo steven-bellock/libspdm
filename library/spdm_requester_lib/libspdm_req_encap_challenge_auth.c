@@ -95,10 +95,25 @@ libspdm_return_t libspdm_get_encap_response_challenge_auth(
     }
 
     /* The Responder shall not request a slot that is not provisioned. */
-    if ((slot_id != 0xFF) && (context->local_context.local_cert_chain_provision[slot_id] == NULL)) {
-        return libspdm_generate_encap_error_response(
-            context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
-            response_size, response);
+    if (slot_id != 0xFF) {
+        if (context->local_context.local_cert_chain_provision[slot_id] == NULL) {
+            return libspdm_generate_encap_error_response(
+                context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
+                response_size, response);
+        }
+    } else {
+        if (!libspdm_is_capabilities_flag_supported(
+                context, true, SPDM_GET_CAPABILITIES_REQUEST_FLAGS_PUB_KEY_ID_CAP, 0)) {
+            return libspdm_generate_encap_error_response(
+                context, SPDM_ERROR_CODE_INVALID_REQUEST, 0,
+                response_size, response);
+        }
+        /* The Integrator set PUB_KEY_ID_CAP but did not provision the public key. */
+        if (context->local_context.local_public_key_provision == NULL) {
+            return libspdm_generate_encap_error_response(
+                context, SPDM_ERROR_CODE_UNSPECIFIED, 0,
+                response_size, response);
+        }
     }
 
     libspdm_reset_message_buffer_via_request_code(context, NULL,
